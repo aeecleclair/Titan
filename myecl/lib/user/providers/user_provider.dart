@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/user/models/list_users.dart';
 import 'package:myecl/user/models/user.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
 
@@ -7,11 +6,19 @@ final userRepositoryProvider = Provider((ref) {
   return UserRepository();
 });
 
-final user = FutureProvider.autoDispose.family<Future<User>, String>((ref, userId) async {
+final futureUser = FutureProvider.autoDispose.family<User, String>((ref, userId) async {
   return ref.watch(userRepositoryProvider).getUsers(userId);
 });
 
-final userList = FutureProvider.autoDispose((ref) async {
+final user = Provider.autoDispose.family<User, String>((ref, userId) {
+  return ref.watch(futureUser(userId)).when(
+    data: (data) => data,
+    error: (err, stack) => User.empty(),
+    loading: () => User.empty(),
+    );
+});
+
+final futureUserList = FutureProvider.autoDispose((ref) async {
   return ref.watch(userRepositoryProvider).getAllUsers();
 });
 

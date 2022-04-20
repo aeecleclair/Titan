@@ -1,30 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/home/ui/app_drawer.dart';
-import 'package:myecl/user/models/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
-
-void main() {
-  runApp(const ProviderScope(child: MyApp()));
-}
-
-class MyApp extends ConsumerWidget {
-  const MyApp({Key? key}) : super(key: key);
+class TopBar extends ConsumerWidget {
+  const TopBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'MyECL',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: AppDrawer()
-    );
-  }
-
-  Widget getTopBar(User user) {
+    final me = ref.watch(user("a4237b44-e0a6-4e0c-9cfd-7a418752dafc"));
     return Column(
       children: [
         Container(
@@ -44,7 +27,7 @@ class MyApp extends ConsumerWidget {
                       SizedBox(
                         width: 200,
                         child: Text(
-                          user.nickname,
+                          me.nickname,
                           style: TextStyle(
                               color: Colors.grey.shade100,
                               fontSize: 20,
@@ -57,7 +40,7 @@ class MyApp extends ConsumerWidget {
                       SizedBox(
                           width: 200,
                           child: Text(
-                            user.firstname + " " + user.name,
+                            me.firstname + " " + me.name,
                             style: TextStyle(
                               color: Colors.grey.shade100,
                               fontSize: 15,
