@@ -9,12 +9,17 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.2
+  flash: ^2.0.3+2
   flutter:
     sdk: flutter
   flutter_hooks: ^0.18.2+1
   flutter_riverpod: ^1.0.3
+  font_awesome_flutter: ^10.1.0
+  heroicons: ^0.4.0
   hooks_riverpod: ^1.0.3
   http: ^0.13.4
+  smooth_page_indicator: ^1.0.0+2
+  uuid: ^3.0.6
 
 dev_dependencies:
   flutter_lints: ^1.0.0

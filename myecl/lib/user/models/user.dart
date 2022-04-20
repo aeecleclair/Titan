@@ -1,56 +1,52 @@
 class User {
-  String? id;
-  String? type;
-  String? name;
-  String? firstname;
-  String? nickname;
-  String? email;
-  DateTime? birthday;
-  String? phone;
-  String? floor;
-  List<String>? associations;
-
-  User(
-      {this.id,
-      this.type,
-      this.name,
-      this.firstname,
-      this.nickname,
-      this.email,
-      this.birthday,
-      this.phone,
-      this.floor,
-      this.associations});
+  User({
+    required this.name,
+    required this.firstname,
+    required this.nickname,
+    required this.id,
+    required this.email,
+    required this.birthday,
+    required this.promo,
+    required this.floor,
+    required this.createdOn,
+    required this.groups,
+  });
+  late final String name;
+  late final String firstname;
+  late final String nickname;
+  late final String id;
+  late final String email;
+  late final String birthday;
+  late final int promo;
+  late final String floor;
+  late final String createdOn;
+  late final List<dynamic> groups;
 
   User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    type = json['type'];
     name = json['name'];
     firstname = json['firstname'];
     nickname = json['nickname'];
+    id = json['id'];
     email = json['email'];
-    if (json['birthday'] != null) {
-      birthday = DateTime.parse(json['birthday']);
-    } else {
-      birthday = null;
-    }
-    phone = json['phone'];
+    birthday = json['birthday'];
+    promo = json['promo'];
     floor = json['floor'];
-    associations = json['associations'].cast<String>();
+    createdOn = json['created_on'];
+    groups = List.castFrom<dynamic, dynamic>(json['groups']);
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['type'] = type;
-    data['name'] = name;
-    data['firstname'] = firstname;
-    data['nickname'] = nickname;
-    data['email'] = email;
-    data['birthday'] = birthday.toString();
-    data['phone'] = phone;
-    data['floor'] = floor;
-    data['associations'] = associations;
-    return data;
+    final _data = <String, dynamic>{};
+    _data['name'] = name;
+    _data['firstname'] = firstname;
+    _data['nickname'] = nickname;
+    _data['id'] = id;
+    _data['email'] = email;
+    _data['birthday'] = birthday;
+    _data['promo'] = promo;
+    _data['floor'] = floor;
+    _data['created_on'] = createdOn;
+    _data['groups'] = groups;
+    return _data;
   }
 }
