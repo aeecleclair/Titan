@@ -41,13 +41,12 @@ class SwipeControllerNotifier extends StateNotifier<AnimationController> {
     }
   }
 
-  void onDragEnd(DragEndDetails endDetails) {
+  void onDragEnd(DragEndDetails endDetails, double width) {
     if (!state.isDismissed && !state.isCompleted) {
       double _minFlingVelocity = 365.0;
       double dragVelocity = endDetails.velocity.pixelsPerSecond.dx.abs();
       if (dragVelocity >= _minFlingVelocity) {
-        double visualVelovity = endDetails.velocity.pixelsPerSecond.dx /
-            MediaQuery.of(useContext()).size.width;
+        double visualVelovity = endDetails.velocity.pixelsPerSecond.dx / width;
         state.fling(velocity: visualVelovity);
       } else if (state.value < 0.5) {
         close();
@@ -57,3 +56,10 @@ class SwipeControllerNotifier extends StateNotifier<AnimationController> {
     }
   }
 }
+
+final swipeControllerProvider = StateNotifierProvider.family<
+    SwipeControllerNotifier,
+    AnimationController,
+    AnimationController>((ref, animationController) {
+  return SwipeControllerNotifier(animationController);
+});

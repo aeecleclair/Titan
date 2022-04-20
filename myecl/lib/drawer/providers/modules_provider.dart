@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/home/class/module.dart';
+import 'package:myecl/drawer/class/module.dart';
 
 class ModuleListNotifier extends StateNotifier<List<Module>> {
   ModuleListNotifier([List<Module>? listModule]) : super(listModule ?? []);

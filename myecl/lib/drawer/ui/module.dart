@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/home/class/module.dart';
-import 'package:myecl/home/providers/page_provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/drawer/providers/page_provider.dart';
+import 'package:myecl/drawer/providers/swipe_provider.dart';
 
-class ModuleUI extends ConsumerWidget {
+class ModuleUI extends HookConsumerWidget {
+  const ModuleUI({Key? key, required this.m, required this.controllerNotifier}) : super(key: key);
+
+  static Duration duration = const Duration(milliseconds: 200);
+
+  final SwipeControllerNotifier controllerNotifier;
   final Module m;
-  const ModuleUI({Key? key, required this.m}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(pageProvider);
     final pageNotifier = ref.watch(pageProvider.notifier);
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       key: ValueKey(m.pos),
       child: Container(
         margin: const EdgeInsets.only(top: 8, bottom: 8),
         width: 220,
-        color: Colors.grey.withOpacity(0.001),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -61,7 +66,7 @@ class ModuleUI extends ConsumerWidget {
       },
       onDoubleTap: () {
         pageNotifier.setPage(m.pos);
-        // widget.toggle();
+        controllerNotifier.toggle();
       },
     );
   }

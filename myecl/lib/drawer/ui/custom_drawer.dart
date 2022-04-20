@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/home/ui/bottom_bar.dart';
-import 'package:myecl/home/ui/fake_page.dart';
-import 'package:myecl/home/ui/list_module.dart';
-import 'package:myecl/home/ui/top_bar.dart';
+import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/drawer/ui/bottom_bar.dart';
+import 'package:myecl/drawer/ui/fake_page.dart';
+import 'package:myecl/drawer/ui/list_module.dart';
+import 'package:myecl/drawer/ui/top_bar.dart';
 
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({Key? key}) : super(key: key);
-
+  final SwipeControllerNotifier controllerNotifier;
+  const CustomDrawer({Key? key, required this.controllerNotifier}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class CustomDrawer extends StatelessWidget {
                   child: SizedBox(
                 width: 200,
                 height: MediaQuery.of(context).size.height * 4.5 / 10,
-                child: const ListModule()
+                child: ListModule(controllerNotifier: controllerNotifier)
                 )
               ),
               const FakePage(),
