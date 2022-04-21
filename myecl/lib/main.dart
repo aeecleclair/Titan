@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
-import 'package:myecl/user/models/user.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));

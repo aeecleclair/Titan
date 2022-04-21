@@ -27,7 +27,7 @@ final listModuleProvider =
     Module(
         name: "Réservation", icon: Icons.access_alarm, pos: 1, selected: false),
     Module(name: "Prêt", icon: Icons.access_alarm, pos: 2, selected: false),
-    Module(name: "Module 5", icon: Icons.access_alarm, pos: 3, selected: false),
+    Module(name: "Amap", icon: Icons.access_alarm, pos: 3, selected: false),
     Module(name: "Module 6", icon: Icons.access_alarm, pos: 4, selected: false),
     Module(name: "Module 7", icon: Icons.access_alarm, pos: 5, selected: false),
     Module(name: "Module 8", icon: Icons.access_alarm, pos: 6, selected: false),

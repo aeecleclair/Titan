@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/home/providers/scrollcontroller_provider.dart';
+import 'package:myecl/home/providers/scrolled_provider.dart';
 import 'package:myecl/home/providers/today_provider.dart';
 import 'package:myecl/home/tools/functions.dart';
 import 'package:myecl/home/ui/current_time.dart';
@@ -15,16 +16,20 @@ class TodaysEvents extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final today = ref.watch(nowProvider);
-    print(today);
     final _scrollController = ref.watch(scrollControllerProvider);
-    Timer.periodic(const Duration(milliseconds: 1), (t) {
-      if (_scrollController.positions.isNotEmpty) {
-        _scrollController.jumpTo(
-          (today.hour + today.minute / 60 + today.second / 3600) * 90.0 - 150,
-        );
-        t.cancel();
-      }
-    });
+    final _hasScrolled = ref.watch(hasScrolledProvider);
+    final _hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
+    if (!_hasScrolled) {
+      Timer.periodic(const Duration(milliseconds: 1), (t) {
+        if (_scrollController.positions.isNotEmpty) {
+          _scrollController.jumpTo(
+            (today.hour + today.minute / 60 + today.second / 3600) * 90.0 - 150,
+          );
+          t.cancel();
+          _hasScrolledNotifier.setHasScrolled(true);
+        }
+      });
+    }
     return SizedBox(
       height: MediaQuery.of(context).size.height * .65,
       child: Container(

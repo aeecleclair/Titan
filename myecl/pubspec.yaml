@@ -20,6 +20,7 @@ dependencies:
   hooks_riverpod: ^1.0.3
   http: ^0.13.4
   smooth_page_indicator: ^1.0.0+2
+  syncfusion_flutter_calendar: ^20.1.50
   uuid: ^3.0.6
 
 dev_dependencies:
@@ -28,5 +29,8 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+
+  assets:
+    - assets/images/test3.jpg
 
   uses-material-design: true

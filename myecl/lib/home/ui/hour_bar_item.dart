@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/home/class/res.dart';
+import 'package:myecl/home/class/event.dart';
 import 'package:myecl/home/providers/res_provider.dart';
 import 'package:myecl/home/tools/functions.dart';
 
@@ -13,14 +13,14 @@ class HourBarItems extends ConsumerWidget {
     List<Widget> hourBar = [];
     double dh = 0;
     double dl = 0;
-    for (Res r in res) {
+    for (Event r in res) {
       double ph = r.h - dh;
       hourBar.add(SizedBox(
         height: (ph - dl) * 90.0,
       ));
       hourBar.add(
         Container(
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 2, bottom: 2),
+          margin: const EdgeInsets.only(left: 20, right: 15, top: 2, bottom: 2),
           width: 500,
           height: r.l * 90.0 - 4,
           decoration: BoxDecoration(

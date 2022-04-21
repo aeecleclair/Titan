@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/home/providers/scrolled_provider.dart';
 
 class ModuleUI extends HookConsumerWidget {
   const ModuleUI({Key? key, required this.m, required this.controllerNotifier}) : super(key: key);
@@ -16,6 +17,7 @@ class ModuleUI extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(pageProvider);
     final pageNotifier = ref.watch(pageProvider.notifier);
+    final hasScrolled = ref.watch(hasScrolledProvider.notifier);
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       key: ValueKey(m.pos),
@@ -63,10 +65,16 @@ class ModuleUI extends HookConsumerWidget {
       ),
       onTap: () {
         pageNotifier.setPage(m.pos);
+        if (m.pos > 0) {
+          hasScrolled.setHasScrolled(false);
+        }
       },
       onDoubleTap: () {
         pageNotifier.setPage(m.pos);
         controllerNotifier.toggle();
+        if (m.pos > 0) {
+          hasScrolled.setHasScrolled(false);
+        }
       },
     );
   }
