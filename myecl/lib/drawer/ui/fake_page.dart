@@ -16,7 +16,7 @@ class FakePage extends StatelessWidget {
             color: Color.fromARGB(79, 51, 144, 206),
             spreadRadius: 3,
             blurRadius: 5,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: Offset(0, 3),
           ),
         ],
         color: const Color.fromARGB(255, 51, 144, 206),

@@ -8,8 +8,7 @@ import 'package:myecl/amap/tools/constants.dart';
 
 class ProduitUiInList extends ConsumerWidget {
   final int i;
-  const ProduitUiInList({Key? key, required this.i})
-      : super(key: key);
+  const ProduitUiInList({Key? key, required this.i}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,8 +26,6 @@ class ProduitUiInList extends ConsumerWidget {
             Container(
               width: 20,
             ),
-
-            // Le nom du produit
             Expanded(
               child: Text(
                 p.nom,
@@ -38,7 +35,6 @@ class ProduitUiInList extends ConsumerWidget {
             ),
             Row(
               children: [
-                // le prix du produit
                 Container(
                   width: 40,
                   alignment: Alignment.centerRight,
@@ -50,8 +46,6 @@ class ProduitUiInList extends ConsumerWidget {
                 Container(
                   width: 10,
                 ),
-
-                // le bouton diminuer
                 GestureDetector(
                   child: Container(
                     width: 25,
@@ -60,24 +54,19 @@ class ProduitUiInList extends ConsumerWidget {
                     child: HeroIcon(
                       HeroIcons.minusSm,
                       size: 20,
-                      // La couleur change pour indiquer si on peut encore diminuer ou non
                       color: p.quantite > 0
                           ? ColorConstants.l2.withOpacity(0.8)
                           : ColorConstants.background3,
                     ),
                   ),
                   onTap: () {
-                    // Si on peut diminuer
                     if (p.quantite > 0) {
-                      // On modifie la quantité commandée du produit et le prix
                       produitsNotifier.setQuantity(p.id, p.quantite - 1);
                       prixNotofier.setPrix(
                           double.parse((prix - p.prix).toStringAsFixed(2)));
                     }
                   },
                 ),
-
-                // La quantité de produit commandée
                 Container(
                   width: 15,
                   alignment: Alignment.center,
@@ -87,8 +76,6 @@ class ProduitUiInList extends ConsumerWidget {
                         fontSize: 13, fontWeight: FontWeight.w700),
                   ),
                 ),
-
-                // Le bouton augmenter
                 GestureDetector(
                   child: Container(
                     width: 25,
@@ -97,16 +84,13 @@ class ProduitUiInList extends ConsumerWidget {
                     child: HeroIcon(
                       HeroIcons.plusSm,
                       size: 20,
-                      // La couleur change pour indiquer si on peut encore augmenter ou non
                       color: p.quantite < 5
                           ? ColorConstants.l2.withOpacity(0.8)
                           : ColorConstants.background3,
                     ),
                   ),
                   onTap: () {
-                    // Si on peut augmenter
                     if (p.quantite < 5) {
-                      // On modifie la quantité commandée du produit et le prix
                       produitsNotifier.setQuantity(p.id, p.quantite + 1);
                       prixNotofier.setPrix(
                           double.parse((prix + p.prix).toStringAsFixed(2)));

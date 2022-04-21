@@ -5,7 +5,8 @@ import 'package:myecl/reservation/providers/reservation_page_provider.dart';
 class Button extends ConsumerWidget {
   final String text;
   final int index;
-  const Button({Key? key, required this.text, required this.index}) : super(key: key);
+  const Button({Key? key, required this.text, required this.index})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

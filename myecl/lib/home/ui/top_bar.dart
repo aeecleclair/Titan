@@ -32,13 +32,14 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            Text("MyECL",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey.shade100,
-                  ),
-                ),
+            Text(
+              "MyECL",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey.shade100,
+              ),
+            ),
             const SizedBox(
               width: 70,
             ),

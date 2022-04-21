@@ -26,8 +26,6 @@ class ProduitUi extends ConsumerWidget {
             Container(
               width: 20,
             ),
-
-            // Le nom du produit
             Expanded(
               child: Text(
                 p.nom,
@@ -40,8 +38,6 @@ class ProduitUi extends ConsumerWidget {
                 Container(
                   width: 15,
                 ),
-
-                // le prix du produit
                 Container(
                   width: 40,
                   alignment: Alignment.centerRight,
@@ -53,8 +49,6 @@ class ProduitUi extends ConsumerWidget {
                 Container(
                   width: 15,
                 ),
-
-                // Le bouton pour modifier le produit
                 GestureDetector(
                   child: Container(
                     padding: const EdgeInsets.all(7),
@@ -88,8 +82,6 @@ class ProduitUi extends ConsumerWidget {
                 Container(
                   width: 15,
                 ),
-
-                // le bouton pour supprimer le produit
                 GestureDetector(
                   child: Container(
                     padding: const EdgeInsets.all(7),
@@ -115,18 +107,16 @@ class ProduitUi extends ConsumerWidget {
                   onTap: () {
                     showDialog(
                         context: context,
-                        builder: (BuildContext context) =>
-                            // Crée la fenêtre de confirmation
-                            CustomDialogBox(
-                                descriptions: "Supprimer le produit ?",
-                                title: "Suppression",
-                                onYes: () {
-                                  ref
-                                      .watch(listeProduitprovider.notifier)
-                                      .deleteProduit(p.id);
-                                  displayToast(
-                                      context, TypeMsg.msg, "Produit supprimé");
-                                }));
+                        builder: (BuildContext context) => CustomDialogBox(
+                            descriptions: "Supprimer le produit ?",
+                            title: "Suppression",
+                            onYes: () {
+                              ref
+                                  .watch(listeProduitprovider.notifier)
+                                  .deleteProduit(p.id);
+                              displayToast(
+                                  context, TypeMsg.msg, "Produit supprimé");
+                            }));
                   },
                 )
               ],

@@ -7,7 +7,7 @@ class ModuleListNotifier extends StateNotifier<List<Module>> {
 
   void select(int i) {
     List<Module> r = state.sublist(0);
-    // on trouve le produit dans la commande et on change sa quantité
+
     for (int j = 0; j < r.length; j++) {
       if (i == j) {
         r[i].selected = true;
@@ -15,7 +15,7 @@ class ModuleListNotifier extends StateNotifier<List<Module>> {
         r[j].selected = false;
       }
     }
-    // On met à jour l'état
+
     state = r;
   }
 }

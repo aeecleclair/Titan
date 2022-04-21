@@ -8,7 +8,9 @@ class ReservationButton extends ConsumerWidget {
   final Reservation res;
   final Color color;
   final int state;
-  const ReservationButton({ Key? key, required this.res, required this.color, required this.state }) : super(key: key);
+  const ReservationButton(
+      {Key? key, required this.res, required this.color, required this.state})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

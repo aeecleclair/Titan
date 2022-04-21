@@ -9,13 +9,11 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/admin_page/produit_ui.dart';
 
-/// La page Administrateur du module AMAP
 class AdminPage extends HookConsumerWidget {
   const AdminPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // On récupère la liste des produits
     final produits = ref.watch(listeProduitprovider);
     final categories = ref.watch(listeCategorieProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
@@ -24,17 +22,15 @@ class AdminPage extends HookConsumerWidget {
     Map<String, List<Widget>> dictCateListWidget = {
       for (var item in categories) item: []
     };
-    // Pour chaque produit
+
     for (Produit p in produits) {
-      // On ajoute Le widget crée à partir du produit dans le dictionnaire (le ! impose que dictCateListWidget[...] existe, null-safety)
       dictCateListWidget[p.categorie]!
           .add(ProduitUi(p: p, i: produits.indexOf(p)));
     }
-    // La liste des widgets à afficher
+
     List<Widget> listWidget = [];
-    // Pour chaque clée
+
     for (String c in categories) {
-      // On crée un widget pour afficher la clée
       listWidget.add(Container(
           height: 70,
           alignment: Alignment.centerLeft,
@@ -50,7 +46,7 @@ class AdminPage extends HookConsumerWidget {
               ),
             ),
           )));
-      // On ajoute les widgets s'ils existent, une liste vide sinon (ils existent toujours, la catégorie a été crée à partir, null-safety)
+
       listWidget += dictCateListWidget[c] ?? [];
     }
 
@@ -76,8 +72,6 @@ class AdminPage extends HookConsumerWidget {
                   const SizedBox(
                     height: 40,
                   ),
-
-                  // On ajoute tout les widgets contenus dans listWidget
                   ...listWidget
                 ],
               ),

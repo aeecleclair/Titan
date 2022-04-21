@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/amap/tools/constants.dart';
 
-/// Les textes de présentation de l'AMAP
 class TextPresentation extends StatelessWidget {
   const TextPresentation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: ColorConstants.background2.withOpacity(0.5)),
+      decoration:
+          BoxDecoration(color: ColorConstants.background2.withOpacity(0.5)),
       child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Container(

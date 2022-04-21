@@ -35,11 +35,10 @@ class TopBar extends HookConsumerWidget {
                           if (page == 3) {
                             pageNotifier.setAmapPage(0);
                           } else {
-                            // Si on est sur la page des produits on annule la commande ou ses changements
                             if (page == 2) {
                               clearCmd(ref);
                             }
-                            // On revient sur la page précédente
+
                             pageNotifier.setAmapPage(max(page - 1, 0));
                           }
                         }

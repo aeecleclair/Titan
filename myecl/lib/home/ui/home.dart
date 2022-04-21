@@ -5,34 +5,34 @@ import 'package:myecl/home/ui/last_info.dart';
 import 'package:myecl/home/ui/todays_events.dart';
 import 'package:myecl/home/ui/top_bar.dart';
 
-
 class HomePage extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
-  const HomePage({Key? key, required this.controllerNotifier}) : super(key: key);
+  const HomePage({Key? key, required this.controllerNotifier})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 1, 49, 68),
-              Color.fromARGB(255, 2, 84, 104),
-            ],
-          ),
-        ),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              TopBar(controllerNotifier: controllerNotifier),
-              const TodaysEvents(),
-              const LastInfos(),
-            ],
-          ),
-        )));
+        body: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(255, 1, 49, 68),
+                  Color.fromARGB(255, 2, 84, 104),
+                ],
+              ),
+            ),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  TopBar(controllerNotifier: controllerNotifier),
+                  const TodaysEvents(),
+                  const LastInfos(),
+                ],
+              ),
+            )));
   }
 }

@@ -20,10 +20,10 @@ class AmapPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            TopBar(controllerNotifier: controllerNotifier,),
-            const Expanded(
-              child: PageSwitcher()
+            TopBar(
+              controllerNotifier: controllerNotifier,
             ),
+            const Expanded(child: PageSwitcher()),
           ],
         ),
       ),

@@ -11,7 +11,8 @@ class UserListRepository {
   };
 
   Future<List<SimpleUser>> getAllUsers() async {
-    final response = await http.get(Uri.parse(host + "users/"), headers: headers);
+    final response =
+        await http.get(Uri.parse(host + "users/"), headers: headers);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return data.map<SimpleUser>((json) => SimpleUser.fromJson(json)).toList();

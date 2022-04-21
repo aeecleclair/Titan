@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/amap/tools/constants.dart';
 
-
-/// Le bouton vert (ce n'est pas un bouton, il doit être contenu dans un GestureDectector)
 class GreenBtn extends StatelessWidget {
-
-  /// le texte du bouton
   final String text;
 
-  /// Initialisation
   const GreenBtn({Key? key, required this.text}) : super(key: key);
 
   @override
@@ -16,7 +11,6 @@ class GreenBtn extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       child: Container(
-        // Le bouton prend 65 % de la largeur de l'écran
         width: MediaQuery.of(context).size.width * 0.65,
         height: 70,
         decoration: BoxDecoration(

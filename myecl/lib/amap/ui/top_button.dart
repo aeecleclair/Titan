@@ -5,7 +5,12 @@ class TopButton extends StatelessWidget {
   final String text;
   final bool selected;
   final Function onclick;
-  const TopButton({Key? key, required this.text, required this.selected, required this.onclick}) : super(key: key);
+  const TopButton(
+      {Key? key,
+      required this.text,
+      required this.selected,
+      required this.onclick})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +25,12 @@ class TopButton extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            // la couleur dépend de si on est sur la page correspondante
             colors: selected
                 ? [ColorConstants.l2, ColorConstants.gradient2]
                 : [Colors.transparent, Colors.transparent],
           ),
           boxShadow: [
             BoxShadow(
-              // Le bouton pour aller sur la page des commandes
               color: selected
                   ? ColorConstants.gradient2.withOpacity(0.4)
                   : Colors.transparent,
@@ -42,7 +45,6 @@ class TopButton extends StatelessWidget {
           style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w800,
-              // Le bouton pour aller sur la page des commandes
               color: selected
                   ? ColorConstants.background
                   : const Color(0xff387200)),

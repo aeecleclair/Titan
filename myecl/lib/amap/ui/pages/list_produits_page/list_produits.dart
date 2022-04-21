@@ -12,28 +12,24 @@ import 'package:myecl/amap/providers/scroll_controller_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/list_produits_page/produit_ui_list.dart';
 
-/// Affichage de la liste des produits
 class ListProduits extends HookConsumerWidget {
   const ListProduits({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // L'animation du message "Voir plus"
     final hideAnimation = useAnimationController(
         duration: const Duration(milliseconds: 200), initialValue: 1);
-    // le controlleur de défilement horizontal des liste de produits
+
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
     final produits = ref.watch(listeProduitprovider);
     final pageController = ref.watch(pageControllerProvider);
     final categories = ref.watch(listeCategorieProvider);
 
-    // On crée un dictionnaire <catégorie, liste des produits de cette catégorie>
     Map<String, List<Widget>> dictCateListWidget = {
       for (var item in categories) item: []
     };
-    // Pour chaque produit
+
     for (Produit p in produits) {
-      // On ajoute Le widget crée à partir du produit dans le dictionnaire (le ! impose que dictCateListWidget[...] existe, null-safety)
       dictCateListWidget[p.categorie]!
           .add(ProduitUiInList(i: produits.indexOf(p)));
     }
@@ -43,27 +39,20 @@ class ListProduits extends HookConsumerWidget {
         child: PageView(
           scrollDirection: Axis.horizontal,
           controller: pageController,
-          // Quand on change de liste de produit (défilement horizontal)
           onPageChanged: (index) {
-            // Si on peut scroller dans la liste (donc .positions existe)
             if (scrollController.positions.isNotEmpty) {
-              // On scrolle vers le haut
               scrollController.jumpTo(0);
             }
-            // On réaffiche le message
+
             hideAnimation.animateTo(1);
           },
           physics: const BouncingScrollPhysics(),
-
-          // On itère sur chaque catégorie
           children: categories.map((c) {
-            // h est la différence entre la hauteur consacrée à la liste dans l'affichage et la hauteur réelle de la liste (donc h < 0 implique qu'il faudra scroller pour tout voir)
             double h = MediaQuery.of(context).size.height -
                 270 -
                 50 * (dictCateListWidget[c]!.length + 1);
             return Builder(
               builder: (BuildContext context) {
-                // la liste des widgets à afficher dans la liste, on y met déjà la catégorie
                 List<Widget> listWidgetProduit = [
                   Container(
                     height: 50,
@@ -79,10 +68,9 @@ class ListProduits extends HookConsumerWidget {
                     ),
                   )
                 ];
-                // On ajoute les widgets s'ils existent, une liste vide sinon (ils existent toujours, la catégorie a été crée à partir, null-safety)
+
                 listWidgetProduit += dictCateListWidget[c] ?? [];
 
-                // S'il faut faire défiler la liste
                 if (h < 0) {
                   return Stack(
                     children: [
@@ -104,30 +92,22 @@ class ListProduits extends HookConsumerWidget {
                                       children: listWidgetProduit,
                                     ),
                                   )))),
-
-                      // Le texte "Voir plus"
                       Positioned(
-                        // On le positionne en fonction des dimensions du téléphone
                         top: MediaQuery.of(context).size.height - 350,
                         left: (MediaQuery.of(context).size.width - 150) / 2,
-                        // Pour le faire disparaître
                         child: FadeTransition(
                           opacity: hideAnimation,
                           child: ScaleTransition(
                               scale: hideAnimation,
                               child: GestureDetector(
-                                // Si on clique dessus
                                 onTap: (() {
-                                  // On fait disparaître le texte
                                   hideAnimation.animateTo(0);
-                                  // On fait défiler la liste vers le bas jusqu'au dernier produit
+
                                   scrollController.animateTo(-h + 5,
                                       duration:
                                           const Duration(milliseconds: 350),
                                       curve: Curves.decelerate);
                                 }),
-
-                                // Le texte "Voir plus"
                                 child: Container(
                                     width: 150,
                                     height: 50,
@@ -171,7 +151,6 @@ class ListProduits extends HookConsumerWidget {
                       )
                     ],
                   );
-                  // Sinon, on n'as pas besoin de faire défiler la liste, on garde alors une simple colonne
                 } else {
                   return ClipRRect(
                       borderRadius: const BorderRadius.all(Radius.circular(25)),

@@ -5,5 +5,9 @@ class Event {
   Color color;
   double h;
   double l;
-  Event({required this.title, required this.h, required this.l, required this.color});
+  Event(
+      {required this.title,
+      required this.h,
+      required this.l,
+      required this.color});
 }

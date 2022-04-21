@@ -12,8 +12,7 @@ class BottomBar extends StatelessWidget {
           height: 40,
         ),
         GestureDetector(
-          onTap: () {
-          },
+          onTap: () {},
           child: Row(
             children: [
               Container(

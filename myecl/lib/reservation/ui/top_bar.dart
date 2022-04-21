@@ -29,11 +29,15 @@ class TopBar extends HookConsumerWidget {
                         if (page == 0) {
                           controllerNotifier.toggle();
                         } else {
-                          ref.watch(reservationPageProvider.notifier).setReservationPage(0);
+                          ref
+                              .watch(reservationPageProvider.notifier)
+                              .setReservationPage(0);
                         }
                       },
                       icon: FaIcon(
-                        page == 0 ? FontAwesomeIcons.chevronRight : FontAwesomeIcons.chevronLeft,
+                        page == 0
+                            ? FontAwesomeIcons.chevronRight
+                            : FontAwesomeIcons.chevronLeft,
                         color: Colors.grey.shade100,
                       ));
                 },

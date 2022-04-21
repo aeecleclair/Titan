@@ -11,13 +11,11 @@ import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/modif_produits/text_entry.dart';
 
-// La page pour modifier un produit (ou le crée)
 class ModifProduit extends HookConsumerWidget {
   const ModifProduit({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Garde l'état du Form
     final _formKey = GlobalKey<FormState>();
     final produitsNotifier = ref.watch(listeProduitprovider.notifier);
     final produits = ref.watch(listeProduitprovider);
@@ -25,15 +23,12 @@ class ModifProduit extends HookConsumerWidget {
     final produitModif = ref.watch(produitModifProvider);
     final modifProduit = produitModif != -1;
 
-    /// Le nom du produit (on le remplit si on doit modifier un produit, donc si produitModif est différent de -1)
     final nomController = useTextEditingController(
         text: modifProduit ? produits[produitModif].nom : "");
 
-    /// Le prix du produit (on le remplit si on doit modifier un produit, donc si produitModif est différent de -1)
     final prixController = useTextEditingController(
         text: modifProduit ? produits[produitModif].prix.toString() : "");
 
-    /// La catégorie du produit (on le remplit si on doit modifier un produit, donc si produitModif est différent de -1)
     final beginState = modifProduit
         ? produits[produitModif].categorie
         : TextConstants.creerCategorie;
@@ -41,7 +36,6 @@ class ModifProduit extends HookConsumerWidget {
     final categorieNotifier =
         ref.watch(cateSelectionneeProvider(beginState).notifier);
 
-    ///
     final nouvelleCategorie = useTextEditingController(text: "");
     final categorie = ref.watch(listeCategorieProvider);
     return Column(
@@ -59,7 +53,6 @@ class ModifProduit extends HookConsumerWidget {
                     alignment: Alignment.center,
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
-                      // new line
                       child: Column(
                         children: [
                           Container(
@@ -67,7 +60,6 @@ class ModifProduit extends HookConsumerWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Le nom
                                 const Text(
                                   "Nom",
                                   style: TextStyle(
@@ -79,12 +71,8 @@ class ModifProduit extends HookConsumerWidget {
                                 const SizedBox(
                                   height: 10,
                                 ),
-
-                                // Le zone pour entrer le texte
                                 TextEntry(
-                                  // La fonction à valider pour pouvoir ajouter le produit
                                   validator: (value) {
-                                    // S'il y a un texte
                                     if (value == null || value.isEmpty) {
                                       return 'Veuillez remplir ce champ';
                                     }
@@ -92,16 +80,12 @@ class ModifProduit extends HookConsumerWidget {
                                   },
                                   enabled: true,
                                   onChanged: (_) {},
-                                  // Le texte entrer dans cette zone est stockée dans le controlleur
                                   textEditingController: nomController,
-                                  // Le type de clavier, ici classique
                                   keyboardType: TextInputType.text,
                                 ),
                                 const SizedBox(
                                   height: 30,
                                 ),
-
-                                // Le prix
                                 const Text(
                                   "Prix",
                                   style: TextStyle(
@@ -113,15 +97,10 @@ class ModifProduit extends HookConsumerWidget {
                                 const SizedBox(
                                   height: 10,
                                 ),
-
-                                // Le zone pour entrer le texte
                                 TextEntry(
-                                    // La fonction à valider pour pouvoir ajouter le produit
                                     validator: (value) {
-                                      // S'il y a un texte
                                       if (value == null || value.isEmpty) {
                                         return 'Veuillez remplir ce champ';
-                                        // Si ce n'est pas un nombre (faut quand même copier coller un texte, faut le vouloir)
                                       } else if (double.tryParse(value) ==
                                           null) {
                                         return 'Un nombre est attendu';
@@ -130,15 +109,11 @@ class ModifProduit extends HookConsumerWidget {
                                     },
                                     enabled: true,
                                     onChanged: (_) {},
-                                    // Le type de clavier, ici le pavé numérique
                                     keyboardType: TextInputType.number,
-                                    // Le texte entrer dans cette zone est stockée dans le controlleur
                                     textEditingController: prixController),
                                 const SizedBox(
                                   height: 30,
                                 ),
-
-                                // La catégorie
                                 const Text(
                                   "Catégorie",
                                   style: TextStyle(
@@ -150,7 +125,6 @@ class ModifProduit extends HookConsumerWidget {
                                 const SizedBox(
                                   height: 10,
                                 ),
-
                                 Container(
                                   alignment: Alignment.center,
                                   child: DropdownButtonFormField<String>(
@@ -169,24 +143,20 @@ class ModifProduit extends HookConsumerWidget {
                                       contentPadding:
                                           const EdgeInsets.symmetric(
                                               horizontal: 10),
-                                      // La forme de la bordure de la zone
                                       border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(16.0),
                                       ),
-                                      // La couleur de la bordure
                                       enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(16.0),
                                           borderSide: const BorderSide(
                                               color: ColorConstants.enabled)),
-                                      // La couleur de la bordure en cas d'erreur
                                       errorBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(16.0),
                                           borderSide: const BorderSide(
                                               color: ColorConstants.red)),
-                                      // La couleur de la bordure quand on sélectionne la zone
                                       focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(16.0),
@@ -224,10 +194,7 @@ class ModifProduit extends HookConsumerWidget {
                                 const SizedBox(
                                   height: 10,
                                 ),
-
-                                // Le zone pour entrer le texte
                                 TextEntry(
-                                  // La fonction à valider pour pouvoir ajouter le produit, ici rien
                                   validator: ((value) {
                                     if ((value == null || value.isEmpty) &&
                                         categorieController ==
@@ -241,52 +208,44 @@ class ModifProduit extends HookConsumerWidget {
                                   onChanged: (value) {
                                     nouvelleCategorie.text = value ?? "";
                                   },
-                                  // Le texte entrer dans cette zone est stockée dans le controlleur
                                   textEditingController: nouvelleCategorie,
-                                  // Le type de clavier, ici classique
                                   keyboardType: TextInputType.text,
                                 ),
                                 const SizedBox(
                                   height: 40,
                                 ),
-
-                                // Le bouton de validation
                                 GestureDetector(
                                   child: GreenBtn(
                                     text: modifProduit ? "Modifier" : "Ajouter",
                                   ),
                                   onTap: () {
-                                    // Si tous les champs sont valides
                                     if (_formKey.currentState!.validate()) {
                                       String cate = categorieController ==
                                               TextConstants.creerCategorie
                                           ? nouvelleCategorie.text
                                           : categorieController;
-                                      // Si on doit ajouter un produit
+
                                       if (modifProduit) {
-                                        // On modifie le produit
                                         produitsNotifier.updateProduit(
                                             produits[produitModif].id,
                                             nomController.text,
                                             double.parse(prixController.text),
                                             cate);
-                                        // On affiche le message de validation
+
                                         displayToast(context, TypeMsg.msg,
                                             "Produit modifié");
-                                        // Sinon, on doit changer un produit
                                       } else {
-                                        // On ajoute un produit
                                         produitsNotifier.addProduit(
                                             nomController.text,
                                             double.parse(prixController.text),
                                             cate);
-                                        // On affiche le message de validation
+
                                         displayToast(context, TypeMsg.msg,
                                             "Produit ajouté");
                                       }
-                                      // On change de page
+
                                       pageNotifier.setAmapPage(3);
-                                      // On enlève les textes
+
                                       nomController.clear();
                                       prixController.clear();
                                       categorieNotifier.setText(

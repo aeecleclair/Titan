@@ -6,7 +6,7 @@ import 'package:myecl/amap/ui/pages/cmd_page/affichage_commandes.dart';
 import 'package:myecl/amap/ui/pages/list_produits_page/list_produits_page.dart';
 import 'package:myecl/amap/ui/pages/main_page/text.dart';
 import 'package:myecl/amap/ui/pages/modif_produits/modif_produit.dart';
-import 'package:myecl/amap/ui/pages/page_scheme.dart';
+import 'package:myecl/amap/ui/page_scheme.dart';
 
 class PageSwitcher extends ConsumerWidget {
   const PageSwitcher({Key? key}) : super(key: key);

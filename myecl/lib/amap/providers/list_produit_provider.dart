@@ -2,112 +2,60 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/produit.dart';
 import 'package:uuid/uuid.dart';
 
-/// Permet de crée des identifiants unique pour chaque produit et commande
 var _uuid = const Uuid();
 
-
-/// Le notifier de la liste des produits, permet de modifier la liste des produits
 class ListProduitNotifier extends StateNotifier<List<Produit>> {
   ListProduitNotifier([List<Produit>? listProduits])
       : super(listProduits ?? []);
-
-  /// **Change la quantité du produit dont l'identifiant est donné**
-  ///
-  /// Paramètres :
-  /// * id (String) l'identifiant du produit
-  /// * i (int) la nouvelle quantité
   void setQuantity(String id, int i) {
-    // C'est une compréhension de liste (il n'y a pas d'accolades)
     state = [
-      // Pour chaque produit
       for (final p in state)
-        // Si c'est le produit que l'on cherche
         if (p.id == id)
-          // On retourne un nouveau produit dont on a modifié la quantité
           Produit(
               id: p.id,
               nom: p.nom,
               prix: p.prix,
               quantite: i,
               categorie: p.categorie)
-        // Sinon on retourne le produit
         else
           p,
     ];
   }
 
-  /// **Ajoute un produit à la liste**
-  ///
-  /// Paramètres :
-  /// * nom (String) le nom du produit
-  /// * prix (double) le prix du produit
-  /// * categorie (String) la catégorie du produit
   void addProduit(String nom, double prix, String categorie) {
     state = [
-      /** On récupère tous les objets contenus dans state (ici de type List<Produit>)
-       *
-       * Code équivalent :
-       *
-       * ```dart
-        List<Produit> r = state.sublist(0);
-        r.append(Produit(...));
-        state = r;
-       * ```
-       */
       ...state,
-      // On ajoute un produit
       Produit(
-          // On génère un identifiant aléatoirement
           id: _uuid.v4(),
           nom: nom,
           prix: prix,
-          // Ce produit n'as pas encore été commandé
           quantite: 0,
           categorie: categorie),
     ];
   }
 
-  /// **Met à jour le produit dont on donne l'identifiant et les nouvelles informations**
-  ///
-  /// Paramètres :
-  /// * id (String) l'identifiant
-  /// * nom (String) le nom du produit
-  /// * prix (double) le prix du produit
-  /// * categorie (String) la catégorie du produit
   void updateProduit(String id, String nom, double prix, String categorie) {
-    // C'est une compréhension de liste (il n'y a pas d'accolade)
     state = [
-      // Pour chaque produit
       for (final p in state)
-        // Si c'est le produit que l'on cherche
         if (p.id == id)
-          // On retourne un nouveau produit dont on a modifié les paramètres
           Produit(
               id: p.id,
               nom: nom,
               prix: prix,
               quantite: p.quantite,
               categorie: categorie)
-        // Sinon on retourne le produit
         else
           p,
     ];
   }
 
-  /// **Supprime le produit dont on donne l'identifiant de la liste des produits**
-  ///
-  /// Paramètre :
-  /// * id (String) l'identifiant
   void deleteProduit(String id) {
-    // On enlève le produit qui a le même identifiant que l'identifiant
     state = state.where((p) => p.id != id).toList();
   }
 }
 
-/// Le provider de la liste des produits, permet d'avoir accès à la liste des produits partout dans l'application
 final listeProduitprovider =
     StateNotifierProvider<ListProduitNotifier, List<Produit>>((ref) {
-  // TODO Le liste doit être vide puis initialisée avec la réponse du serveur
   return ListProduitNotifier([
     Produit(
         id: _uuid.v4(),

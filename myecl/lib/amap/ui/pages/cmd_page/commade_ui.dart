@@ -49,8 +49,6 @@ class CommandeUi extends ConsumerWidget {
                 width: 30,
                 height: 60,
               ),
-
-              // La date de la commande
               Expanded(
                 child: Text(
                   "Date : " +
@@ -65,8 +63,6 @@ class CommandeUi extends ConsumerWidget {
                       color: ColorConstants.l1),
                 ),
               ),
-
-              // Le bouton pour dérouler les produits de la commande
               GestureDetector(
                 child: Container(
                   width: 50,
@@ -80,18 +76,13 @@ class CommandeUi extends ConsumerWidget {
                   ),
                 ),
                 onTap: () {
-                  // On change la valeur de expanded de la commande
                   cmdsNotifier.toggleExpanded(cmds[i].id);
                 },
               )
             ],
           ),
-
-          // Disjonction de cas en fonction de la valeur de expanded de la commande
           cmds[i].expanded
-              // Si il faut tout afficher
               ? Column(
-                  // Pour chaque produit
                   children: c.produits
                       .map((p) => Container(
                           margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -103,8 +94,6 @@ class CommandeUi extends ConsumerWidget {
                               Container(
                                 width: 20,
                               ),
-
-                              // Le nom et la quantité
                               Expanded(
                                 child: Text(
                                   p.nom +
@@ -124,7 +113,6 @@ class CommandeUi extends ConsumerWidget {
                               ),
                               Row(
                                 children: [
-                                  // Le prix du produit multiplié par la quantité commandée
                                   Container(
                                     width: 40,
                                     alignment: Alignment.centerRight,
@@ -145,7 +133,6 @@ class CommandeUi extends ConsumerWidget {
                             ],
                           )))
                       .toList())
-              // Sinon on n'affiche rien
               : Container(),
           Container(
             height: 10,
@@ -156,8 +143,6 @@ class CommandeUi extends ConsumerWidget {
               Container(
                 width: 25,
               ),
-
-              // Le nombre de produit
               Container(
                 width: 140,
                 alignment: Alignment.centerLeft,
@@ -171,8 +156,6 @@ class CommandeUi extends ConsumerWidget {
                       color: ColorConstants.textLight),
                 ),
               ),
-
-              // Le prix du produit
               Container(
                   width: 140,
                   alignment: Alignment.centerLeft,
@@ -192,12 +175,9 @@ class CommandeUi extends ConsumerWidget {
           Container(
             height: 20,
           ),
-
-          // Si on affiche tout, on ajoute les boutons
           cmds[i].expanded
               ? Row(
                   children: [
-                    // Le bouton pour modifier le produit
                     GestureDetector(
                       child: Container(
                         height: 70,
@@ -206,7 +186,7 @@ class CommandeUi extends ConsumerWidget {
                             borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(23),
                                 topLeft: Radius.circular(23)),
-                            color: ColorConstants.background2),
+                            color: ColorConstants.background3),
                         alignment: Alignment.center,
                         child: const Text("Modifier",
                             style: TextStyle(
@@ -224,8 +204,6 @@ class CommandeUi extends ConsumerWidget {
                         pageNotifier.setAmapPage(2);
                       },
                     ),
-
-                    // le bouton pour supprimer le produit
                     GestureDetector(
                       child: Container(
                         height: 70,
@@ -234,32 +212,29 @@ class CommandeUi extends ConsumerWidget {
                             borderRadius: const BorderRadius.only(
                                 bottomRight: Radius.circular(23),
                                 topRight: Radius.circular(23)),
-                            color: ColorConstants.background2),
+                            color: ColorConstants.background3),
                         alignment: Alignment.center,
                         child: const Text("Supprimer",
                             style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
-                                color: ColorConstants.redGradient1)),
+                                color: Color.fromARGB(255, 144, 54, 61))),
                       ),
                       onTap: () {
                         showDialog(
                             context: context,
-                            builder: (BuildContext context) =>
-                                // Crée la fenêtre de confirmation
-                                CustomDialogBox(
-                                    descriptions: "Supprimer la commande ?",
-                                    title: "Suppression",
-                                    onYes: () {
-                                      deleteCmd(ref, i);
-                                      displayToast(context, TypeMsg.msg,
-                                          "Commande supprimée");
-                                    }));
+                            builder: (BuildContext context) => CustomDialogBox(
+                                descriptions: "Supprimer la commande ?",
+                                title: "Suppression",
+                                onYes: () {
+                                  deleteCmd(ref, i);
+                                  displayToast(context, TypeMsg.msg,
+                                      "Commande supprimée");
+                                }));
                       },
                     )
                   ],
                 )
-              // Sinon on affiche rien
               : Container()
         ],
       ),

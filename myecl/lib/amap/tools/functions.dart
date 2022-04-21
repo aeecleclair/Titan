@@ -10,32 +10,19 @@ import 'package:myecl/amap/providers/list_produit_provider.dart';
 import 'package:myecl/amap/providers/prix_commande_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 
-
-/// **Remet les quantités des produits et le prix à 0**
-///
-/// Paramètre :
-/// * ref (WidgetRef) permet d'accéder aux providers
 void clearCmd(WidgetRef ref) {
-  // On récupère les providers nécessaires
   final produits = ref.watch(listeProduitprovider);
   final produitsNotifier = ref.watch(listeProduitprovider.notifier);
   final prixNotofier = ref.watch(prixProvider.notifier);
-  // Pour chaque produit
+
   for (Produit p in produits) {
-    // On met la quantité à 0
     produitsNotifier.setQuantity(p.id, 0);
   }
-  // On met le prix à 0
+
   prixNotofier.setPrix(0.0);
 }
 
-
-/// **Remet les quantités des produits et le prix à 0, renvoie vers la page des commandes et supprime, si nécessaire la commande**
-///
-/// Paramètre :
-/// * ref (WidgetRef) permet d'accéder aux providers
 void cancelCmd(WidgetRef ref) {
-  // On récupère les providers nécessaires
   final indexCmd = ref.watch(indexCmdProvider);
   final pageNotifier = ref.watch(amapPageProvider.notifier);
   pageNotifier.setAmapPage(1);
@@ -45,35 +32,19 @@ void cancelCmd(WidgetRef ref) {
   }
 }
 
-
-/// **Supprime la commande**
-///
-/// Paramètres :
-/// * ref (WidgetRef) permet d'accéder aux providers
-/// * i (int) l'indice de la commande à supprimer
 void deleteCmd(WidgetRef ref, int i) {
-  // On récupère les providers nécessaires
   final indexCmdNotifier = ref.watch(indexCmdProvider.notifier);
   final cmdsNotifier = ref.watch(listCommandeProvider.notifier);
   indexCmdNotifier.setIndex(-1);
   cmdsNotifier.removeCommande(i);
 }
 
-/// **Les différents type de message**
 enum TypeMsg { msg, error }
 
-
-/// **Affiche un message en haut de la page avec le texte donné**
-///
-/// Paramètres :
-/// * context (BuildContext) le contexte, nécessaire pour la création du Toast
-/// * type (TypeMsg) le type de toast à afficher
-/// * text (String) le message à afficher
 void displayToast(BuildContext context, TypeMsg type, String text) {
   LinearGradient linearGradient;
   HeroIcons icon;
 
-  // On change la couleur et l'icône en fonction du type de message
   switch (type) {
     case TypeMsg.msg:
       linearGradient = const LinearGradient(
@@ -110,8 +81,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
                 Container(
                   width: 40,
                   alignment: Alignment.center,
-                  child: HeroIcon(icon,
-                      color: ColorConstants.background),
+                  child: HeroIcon(icon, color: ColorConstants.background),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width - 120,

@@ -6,7 +6,8 @@ import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
 
 class ModuleUI extends HookConsumerWidget {
-  const ModuleUI({Key? key, required this.m, required this.controllerNotifier}) : super(key: key);
+  const ModuleUI({Key? key, required this.m, required this.controllerNotifier})
+      : super(key: key);
 
   static Duration duration = const Duration(milliseconds: 200);
 

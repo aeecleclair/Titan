@@ -12,7 +12,8 @@ class UserRepository {
   };
 
   Future<List<SimpleUser>> getAllUsers() async {
-    final response = await http.get(Uri.parse(host + "users/"), headers: headers);
+    final response =
+        await http.get(Uri.parse(host + "users/"), headers: headers);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return data.map<SimpleUser>((json) => SimpleUser.fromJson(json)).toList();
@@ -42,10 +43,8 @@ class UserRepository {
   }
 
   Future<bool> updateUsers(String userId, User user) async {
-    final response = await http.put(
-        Uri.parse(host + "users/" + userId),
-        headers: headers,
-        body: json.encode(user.toJson()));
+    final response = await http.put(Uri.parse(host + "users/" + userId),
+        headers: headers, body: json.encode(user.toJson()));
     if (response.statusCode == 200) {
       return true;
     } else {

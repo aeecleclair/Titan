@@ -63,8 +63,6 @@ class HourBarItems extends ConsumerWidget {
       dl = r.l;
     }
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: hourBar
-      );
+        crossAxisAlignment: CrossAxisAlignment.start, children: hourBar);
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/commande.dart';
@@ -12,14 +11,13 @@ class ListeCommandes extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cmds = ref.watch(listCommandeProvider);
-    // La liste des widgets commandes
+
     List<Widget> listWidgetCommande = [];
-    // S'il y a des commandes
+
     if (cmds.isNotEmpty) {
       for (Commande c in cmds) {
         listWidgetCommande.add(CommandeUi(c: c));
       }
-      // S'il n'y pas de commannde
     } else {
       listWidgetCommande.add(Column(
         children: [
@@ -38,11 +36,10 @@ class ListeCommandes extends HookConsumerWidget {
       ));
     }
 
-    // On ajoute le bouton "Ajouter"
     listWidgetCommande.add(const AddButton());
     return SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(children: listWidgetCommande),
+      physics: const BouncingScrollPhysics(),
+      child: Column(children: listWidgetCommande),
     );
   }
 }

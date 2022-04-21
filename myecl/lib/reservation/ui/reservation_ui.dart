@@ -6,11 +6,11 @@ import 'package:myecl/reservation/ui/reservation_button.dart';
 class ReservationUi extends ConsumerWidget {
   final Reservation r;
   final bool isAdmin;
-  const ReservationUi({Key? key, required this.r, required this.isAdmin}) : super(key: key);
+  const ReservationUi({Key? key, required this.r, required this.isAdmin})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final isAdmin = ref.read(isAdminProvider);
     return SizedBox(
       height: 95,
       width: MediaQuery.of(context).size.width,
@@ -66,33 +66,39 @@ class ReservationUi extends ConsumerWidget {
                     width: 115,
                     child: Row(
                       children: [
-                        ReservationButton(res: r, color: const Color.fromARGB(255, 1, 49, 68), state: 2),
+                        ReservationButton(
+                            res: r,
+                            color: const Color.fromARGB(255, 1, 49, 68),
+                            state: 2),
                         const SizedBox(
                           width: 5,
                         ),
-                        ReservationButton(res: r, color: const Color.fromARGB(255, 9, 106, 130), state :1)
+                        ReservationButton(
+                            res: r,
+                            color: const Color.fromARGB(255, 9, 106, 130),
+                            state: 1)
                       ],
                     ),
                   )
                 : Container(
-              width: 100,
-              alignment: Alignment.center,
-              child: Text(
-                r.state == 0
-                    ? "En attente"
-                    : r.state == 1
-                        ? "Validée"
-                        : "Refusée",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: r.state == 2
-                      ? const Color.fromARGB(255, 1, 49, 68)
-                      : r.state == 1
-                          ? const Color.fromARGB(255, 9, 106, 130)
-                          : const Color.fromARGB(255, 63, 120, 134),
-                ),
-              ),
-            )
+                    width: 100,
+                    alignment: Alignment.center,
+                    child: Text(
+                      r.state == 0
+                          ? "En attente"
+                          : r.state == 1
+                              ? "Validée"
+                              : "Refusée",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: r.state == 2
+                            ? const Color.fromARGB(255, 1, 49, 68)
+                            : r.state == 1
+                                ? const Color.fromARGB(255, 9, 106, 130)
+                                : const Color.fromARGB(255, 63, 120, 134),
+                      ),
+                    ),
+                  )
           ],
         ),
       ),
