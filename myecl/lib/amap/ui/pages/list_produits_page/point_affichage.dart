@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/providers/list_produit_provider.dart';
 import 'package:myecl/amap/providers/page_controller_provider.dart';
+import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -10,9 +10,9 @@ class Dots extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final produits = ref.watch(listeProduitprovider);
-    final pageController = ref.watch(pageControllerProvider);
-    int len = {...produits.map((e) => e.categorie)}.length;
+    final products = ref.watch(productListProvider);
+    final pageController = ref.watch(amapPageControllerProvider);
+    int len = {...products.map((e) => e.categorie)}.length;
     return SmoothPageIndicator(
       controller: pageController,
       count: len,

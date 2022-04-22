@@ -9,6 +9,6 @@ String getPageTitle(int i) {
     case 3:
       return 'Administrateur';
     default:
-      return 'Reservation';
+      return 'Booking';
   }
 }

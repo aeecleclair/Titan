@@ -2,7 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/ui/top_button.dart';
-import 'package:myecl/reservation/providers/is_admin_provider.dart';
+import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
 
 class MainPageBtn extends HookConsumerWidget {
   const MainPageBtn({Key? key}) : super(key: key);
@@ -11,10 +11,10 @@ class MainPageBtn extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(amapPageProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
-    final isAdmin = ref.watch(isAdminProvider);
+    final isAdmin = ref.watch(isAmapAdminProvider);
     List<Widget> btns = [
       TopButton(
-          text: "Mes commandes",
+          text: "Mes Orders",
           selected: page == 0,
           onclick: () {
             pageNotifier.setAmapPage(0);

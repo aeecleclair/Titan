@@ -34,7 +34,7 @@ class CustomDrawer extends StatelessWidget {
                 const FakePage(),
               ],
             ),
-            const BottomBar(),
+            BottomBar(controllerNotifier: controllerNotifier),
           ],
         ),
       ),

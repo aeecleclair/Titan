@@ -1,10 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 
 class TopBar extends HookConsumerWidget {
@@ -13,12 +9,10 @@ class TopBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(amapPageProvider);
-    final pageNotifier = ref.watch(amapPageProvider.notifier);
     return Column(
       children: [
         const SizedBox(
-          height: 42,
+          height: 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -29,32 +23,16 @@ class TopBar extends HookConsumerWidget {
                 builder: (BuildContext appBarContext) {
                   return IconButton(
                       onPressed: () {
-                        if (page == 0) {
-                          controllerNotifier.toggle();
-                        } else {
-                          if (page == 3) {
-                            pageNotifier.setAmapPage(0);
-                          } else {
-                            if (page == 2) {
-                              clearCmd(ref);
-                              pageNotifier.setAmapPage(0);
-                            } else {
-                              pageNotifier.setAmapPage(max(page - 1, 0));
-                            }
-                          }
-                        }
+                        controllerNotifier.toggle();
                       },
-                      icon: FaIcon(
-                        page == 0
-                            ? FontAwesomeIcons.chevronRight
-                            : FontAwesomeIcons.chevronLeft,
-                        color: const Color.fromARGB(255, 0, 0, 0),
+                      icon: const FaIcon(FontAwesomeIcons.chevronRight,
+                        color: Color.fromARGB(255, 4, 4, 4),
                       ));
                 },
               ),
             ),
             const Text(
-              "Amap",
+              "Paramètres",
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w500,
@@ -65,6 +43,9 @@ class TopBar extends HookConsumerWidget {
               width: 70,
             ),
           ],
+        ),
+        const SizedBox(
+          height: 20,
         ),
       ],
     );

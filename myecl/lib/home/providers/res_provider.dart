@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/home/class/event.dart';
 
-final resListProvider = StateNotifierProvider<ResList, List<Event>>((ref) {
-  return ResList();
+final resListProvider =
+    StateNotifierProvider<ResListNotifier, List<Event>>((ref) {
+  return ResListNotifier();
 });
 
-class ResList extends StateNotifier<List<Event>> {
-  ResList()
+class ResListNotifier extends StateNotifier<List<Event>> {
+  ResListNotifier()
       : super([
           Event(
               title: "Réu 1",

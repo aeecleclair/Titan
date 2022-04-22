@@ -23,16 +23,16 @@ class ModuleListNotifier extends StateNotifier<List<Module>> {
 final listModuleProvider =
     StateNotifierProvider<ModuleListNotifier, List<Module>>((ref) {
   return ModuleListNotifier([
-    Module(name: "Accueil", icon: Icons.access_alarm, pos: 0, selected: true),
+    Module(name: "Accueil", icon: Icons.access_alarm, pos: 1, selected: true),
     Module(
-        name: "Réservation", icon: Icons.access_alarm, pos: 1, selected: false),
-    Module(name: "Prêt", icon: Icons.access_alarm, pos: 2, selected: false),
-    Module(name: "Amap", icon: Icons.access_alarm, pos: 3, selected: false),
-    Module(name: "Module 6", icon: Icons.access_alarm, pos: 4, selected: false),
-    Module(name: "Module 7", icon: Icons.access_alarm, pos: 5, selected: false),
-    Module(name: "Module 8", icon: Icons.access_alarm, pos: 6, selected: false),
-    Module(name: "Module 9", icon: Icons.access_alarm, pos: 7, selected: false),
+        name: "Réservation", icon: Icons.access_alarm, pos: 2, selected: false),
+    Module(name: "Prêt", icon: Icons.access_alarm, pos: 3, selected: false),
+    Module(name: "Amap", icon: Icons.access_alarm, pos: 4, selected: false),
+    Module(name: "Module 6", icon: Icons.access_alarm, pos: 5, selected: false),
+    Module(name: "Module 7", icon: Icons.access_alarm, pos: 6, selected: false),
+    Module(name: "Module 8", icon: Icons.access_alarm, pos: 7, selected: false),
+    Module(name: "Module 9", icon: Icons.access_alarm, pos: 8, selected: false),
     Module(
-        name: "Module 10", icon: Icons.access_alarm, pos: 8, selected: false),
+        name: "Module 10", icon: Icons.access_alarm, pos: 9, selected: false),
   ]);
 });

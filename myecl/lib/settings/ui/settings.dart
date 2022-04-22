@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/reservation/ui/page_switcher.dart';
-import 'package:myecl/reservation/ui/top_bar.dart';
+import 'package:myecl/settings/ui/settings_form.dart';
+import 'package:myecl/settings/ui/top_bar.dart';
 
-class ReservationPage extends ConsumerWidget {
+class SettingsPage extends ConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
-  const ReservationPage({Key? key, required this.controllerNotifier})
+  const SettingsPage({Key? key, required this.controllerNotifier})
       : super(key: key);
 
   @override
@@ -14,14 +14,15 @@ class ReservationPage extends ConsumerWidget {
     return Scaffold(
         body: Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color.fromARGB(255, 1, 49, 68),
-            Color.fromARGB(255, 2, 84, 104),
-          ],
-        ),
+        color: Color.fromARGB(255, 255, 255, 255),
+        // gradient: LinearGradient(
+        //   begin: Alignment.topCenter,
+        //   end: Alignment.bottomCenter,
+        //   colors: [
+        //     Color.fromARGB(255, 1, 49, 68),
+        //     Color.fromARGB(255, 2, 84, 104),
+        //   ],
+        // ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -29,7 +30,7 @@ class ReservationPage extends ConsumerWidget {
           TopBar(
             controllerNotifier: controllerNotifier,
           ),
-          const PageSwitcher()
+          const SettingsForm(),
         ],
       ),
     ));

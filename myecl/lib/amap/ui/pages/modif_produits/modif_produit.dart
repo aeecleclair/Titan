@@ -2,42 +2,42 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/providers/categorie_selectionnee_provider.dart';
-import 'package:myecl/amap/providers/index_produit_modifie_provider.dart';
-import 'package:myecl/amap/providers/list_categorie_provider.dart';
-import 'package:myecl/amap/providers/list_produit_provider.dart';
+import 'package:myecl/amap/providers/modified_product_index_provider.dart';
+import 'package:myecl/amap/providers/product_list_provider.dart';
+import 'package:myecl/amap/providers/selected_category_provider.dart';
+import 'package:myecl/amap/providers/category_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/modif_produits/text_entry.dart';
 
-class ModifProduit extends HookConsumerWidget {
-  const ModifProduit({Key? key}) : super(key: key);
+class ModifProduct extends HookConsumerWidget {
+  const ModifProduct({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _formKey = GlobalKey<FormState>();
-    final produitsNotifier = ref.watch(listeProduitprovider.notifier);
-    final produits = ref.watch(listeProduitprovider);
+    final productsNotifier = ref.watch(productListProvider.notifier);
+    final products = ref.watch(productListProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
-    final produitModif = ref.watch(produitModifProvider);
-    final modifProduit = produitModif != -1;
+    final productModif = ref.watch(modifiedProductProvider);
+    final modifProduct = productModif != -1;
 
     final nomController = useTextEditingController(
-        text: modifProduit ? produits[produitModif].nom : "");
+        text: modifProduct ? products[productModif].nom : "");
 
     final prixController = useTextEditingController(
-        text: modifProduit ? produits[produitModif].prix.toString() : "");
+        text: modifProduct ? products[productModif].prix.toString() : "");
 
-    final beginState = modifProduit
-        ? produits[produitModif].categorie
+    final beginState = modifProduct
+        ? products[productModif].categorie
         : TextConstants.creerCategorie;
-    final categorieController = ref.watch(cateSelectionneeProvider(beginState));
+    final categorieController = ref.watch(selectedCategoryProvider(beginState));
     final categorieNotifier =
-        ref.watch(cateSelectionneeProvider(beginState).notifier);
+        ref.watch(selectedCategoryProvider(beginState).notifier);
 
     final nouvelleCategorie = useTextEditingController(text: "");
-    final categorie = ref.watch(listeCategorieProvider);
+    final categorie = ref.watch(categoryListProvider);
     return Column(
       children: [
         const SizedBox(
@@ -216,7 +216,7 @@ class ModifProduit extends HookConsumerWidget {
                                 ),
                                 GestureDetector(
                                   child: GreenBtn(
-                                    text: modifProduit ? "Modifier" : "Ajouter",
+                                    text: modifProduct ? "Modifier" : "Ajouter",
                                   ),
                                   onTap: () {
                                     if (_formKey.currentState!.validate()) {
@@ -225,23 +225,23 @@ class ModifProduit extends HookConsumerWidget {
                                           ? nouvelleCategorie.text
                                           : categorieController;
 
-                                      if (modifProduit) {
-                                        produitsNotifier.updateProduit(
-                                            produits[produitModif].id,
+                                      if (modifProduct) {
+                                        productsNotifier.updateProduct(
+                                            products[productModif].id,
                                             nomController.text,
                                             double.parse(prixController.text),
                                             cate);
 
                                         displayToast(context, TypeMsg.msg,
-                                            "Produit modifié");
+                                            "Product modifié");
                                       } else {
-                                        produitsNotifier.addProduit(
+                                        productsNotifier.addProduct(
                                             nomController.text,
                                             double.parse(prixController.text),
                                             cate);
 
                                         displayToast(context, TypeMsg.msg,
-                                            "Produit ajouté");
+                                            "Product ajouté");
                                       }
 
                                       pageNotifier.setAmapPage(3);

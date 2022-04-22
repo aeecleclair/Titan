@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/reservation/providers/reservation_page_provider.dart';
+import 'package:myecl/booking/providers/booking_page_provider.dart';
 
 class Button extends ConsumerWidget {
   final String text;
@@ -12,7 +12,7 @@ class Button extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: (() {
-        ref.read(reservationPageProvider.notifier).setReservationPage(index);
+        ref.read(bookingPageProvider.notifier).setBookingPage(index);
       }),
       child: SizedBox(
           height: 50,

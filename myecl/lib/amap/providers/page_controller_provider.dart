@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final pageControllerProvider =
+final amapPageControllerProvider =
     StateNotifierProvider<AmapPageControllerNotifier, PageController>(
   (ref) {
     return AmapPageControllerNotifier();

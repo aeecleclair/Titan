@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final hasScrolledProvider = StateNotifierProvider<HasScrolled, bool>((ref) {
-  return HasScrolled();
+final hasScrolledProvider = StateNotifierProvider<HasScrolledNotifier, bool>((ref) {
+  return HasScrolledNotifier();
 });
 
-class HasScrolled extends StateNotifier<bool> {
-  HasScrolled() : super(false);
+class HasScrolledNotifier extends StateNotifier<bool> {
+  HasScrolledNotifier() : super(false);
 
   void setHasScrolled(bool i) {
     state = i;

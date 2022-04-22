@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/amap/class/produit.dart';
-import 'package:myecl/amap/providers/list_produit_provider.dart';
-import 'package:myecl/amap/providers/prix_commande_provider.dart';
+import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/amap/providers/order_price_provider.dart';
+import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 
-class ProduitUiInList extends ConsumerWidget {
+class ProductUiInList extends ConsumerWidget {
   final int i;
-  const ProduitUiInList({Key? key, required this.i}) : super(key: key);
+  const ProductUiInList({Key? key, required this.i}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final produits = ref.watch(listeProduitprovider);
-    final produitsNotifier = ref.watch(listeProduitprovider.notifier);
+    final products = ref.watch(productListProvider);
+    final productsNotifier = ref.watch(productListProvider.notifier);
     final prix = ref.watch(prixProvider);
     final prixNotofier = ref.watch(prixProvider.notifier);
-    Produit p = produits[i];
+    Product p = products[i];
     return Container(
         height: 50,
         alignment: Alignment.centerLeft,
@@ -61,8 +61,8 @@ class ProduitUiInList extends ConsumerWidget {
                   ),
                   onTap: () {
                     if (p.quantite > 0) {
-                      produitsNotifier.setQuantity(p.id, p.quantite - 1);
-                      prixNotofier.setPrix(
+                      productsNotifier.setQuantity(p.id, p.quantite - 1);
+                      prixNotofier.setOrderPrice(
                           double.parse((prix - p.prix).toStringAsFixed(2)));
                     }
                   },
@@ -91,8 +91,8 @@ class ProduitUiInList extends ConsumerWidget {
                   ),
                   onTap: () {
                     if (p.quantite < 5) {
-                      produitsNotifier.setQuantity(p.id, p.quantite + 1);
-                      prixNotofier.setPrix(
+                      productsNotifier.setQuantity(p.id, p.quantite + 1);
+                      prixNotofier.setOrderPrice(
                           double.parse((prix + p.prix).toStringAsFixed(2)));
                     }
                   },

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/reservation/providers/reservation_page_provider.dart';
-import 'package:myecl/reservation/tools/functions.dart';
+import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/booking/tools/functions.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -11,7 +11,7 @@ class TopBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(reservationPageProvider);
+    final page = ref.watch(bookingPageProvider);
     return Column(
       children: [
         const SizedBox(
@@ -30,8 +30,8 @@ class TopBar extends HookConsumerWidget {
                           controllerNotifier.toggle();
                         } else {
                           ref
-                              .watch(reservationPageProvider.notifier)
-                              .setReservationPage(0);
+                              .watch(bookingPageProvider.notifier)
+                              .setBookingPage(0);
                         }
                       },
                       icon: FaIcon(

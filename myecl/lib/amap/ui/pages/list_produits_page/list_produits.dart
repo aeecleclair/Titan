@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/produit.dart';
-import 'package:myecl/amap/providers/list_categorie_provider.dart';
-import 'package:myecl/amap/providers/list_produit_provider.dart';
+import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/amap/providers/category_list_provider.dart';
 import 'package:myecl/amap/providers/page_controller_provider.dart';
+import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/scroll_controller_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/list_produits_page/produit_ui_list.dart';
 
-class ListProduits extends HookConsumerWidget {
-  const ListProduits({Key? key}) : super(key: key);
+class ListProducts extends HookConsumerWidget {
+  const ListProducts({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,17 +21,17 @@ class ListProduits extends HookConsumerWidget {
         duration: const Duration(milliseconds: 200), initialValue: 1);
 
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
-    final produits = ref.watch(listeProduitprovider);
-    final pageController = ref.watch(pageControllerProvider);
-    final categories = ref.watch(listeCategorieProvider);
+    final products = ref.watch(productListProvider);
+    final pageController = ref.watch(amapPageControllerProvider);
+    final categories = ref.watch(categoryListProvider);
 
     Map<String, List<Widget>> dictCateListWidget = {
       for (var item in categories) item: []
     };
 
-    for (Produit p in produits) {
+    for (Product p in products) {
       dictCateListWidget[p.categorie]!
-          .add(ProduitUiInList(i: produits.indexOf(p)));
+          .add(ProductUiInList(i: products.indexOf(p)));
     }
 
     return SizedBox(
@@ -53,7 +53,7 @@ class ListProduits extends HookConsumerWidget {
                 50 * (dictCateListWidget[c]!.length + 1);
             return Builder(
               builder: (BuildContext context) {
-                List<Widget> listWidgetProduit = [
+                List<Widget> listWidgetProduct = [
                   Container(
                     height: 50,
                     alignment: Alignment.centerLeft,
@@ -69,7 +69,7 @@ class ListProduits extends HookConsumerWidget {
                   )
                 ];
 
-                listWidgetProduit += dictCateListWidget[c] ?? [];
+                listWidgetProduct += dictCateListWidget[c] ?? [];
 
                 if (h < 0) {
                   return Stack(
@@ -89,7 +89,7 @@ class ListProduits extends HookConsumerWidget {
                                           .withOpacity(0.5),
                                     ),
                                     child: Column(
-                                      children: listWidgetProduit,
+                                      children: listWidgetProduct,
                                     ),
                                   )))),
                       Positioned(
@@ -161,7 +161,7 @@ class ListProduits extends HookConsumerWidget {
                                 color:
                                     ColorConstants.background2.withOpacity(0.5),
                               ),
-                              child: Column(children: listWidgetProduit))));
+                              child: Column(children: listWidgetProduct))));
                 }
               },
             );

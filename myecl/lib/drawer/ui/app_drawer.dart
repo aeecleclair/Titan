@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/ui/amap.dart';
+import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
 import 'package:myecl/home/ui/home.dart';
-import 'package:myecl/reservation/ui/reservation.dart';
+import 'package:myecl/settings/ui/settings.dart';
 
 class AppDrawer extends HookConsumerWidget {
   static Duration duration = const Duration(milliseconds: 200);
@@ -20,10 +21,14 @@ class AppDrawer extends HookConsumerWidget {
   Widget getPage(int page, SwipeControllerNotifier _controllerNotifier) {
     switch (page) {
       case 0:
-        return HomePage(controllerNotifier: _controllerNotifier);
+        return SettingsPage(controllerNotifier: _controllerNotifier);
       case 1:
-        return ReservationPage(controllerNotifier: _controllerNotifier);
+        return HomePage(controllerNotifier: _controllerNotifier);
+      case 2:
+        return BookingPage(controllerNotifier: _controllerNotifier);
       case 3:
+      // return AmapPage(controllerNotifier: _controllerNotifier);
+      case 4:
         return AmapPage(controllerNotifier: _controllerNotifier);
       default:
         return Scaffold(

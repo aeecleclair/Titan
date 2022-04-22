@@ -1,10 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/class/produit.dart';
+import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/providers/index_produit_modifie_provider.dart';
-import 'package:myecl/amap/providers/list_categorie_provider.dart';
-import 'package:myecl/amap/providers/list_produit_provider.dart';
+import 'package:myecl/amap/providers/category_list_provider.dart';
+import 'package:myecl/amap/providers/modified_product_index_provider.dart';
+import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/admin_page/produit_ui.dart';
@@ -14,18 +14,18 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final produits = ref.watch(listeProduitprovider);
-    final categories = ref.watch(listeCategorieProvider);
+    final products = ref.watch(productListProvider);
+    final categories = ref.watch(categoryListProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
-    final produitModif = ref.read(produitModifProvider.notifier);
+    final productModif = ref.read(modifiedProductProvider.notifier);
 
     Map<String, List<Widget>> dictCateListWidget = {
       for (var item in categories) item: []
     };
 
-    for (Produit p in produits) {
+    for (Product p in products) {
       dictCateListWidget[p.categorie]!
-          .add(ProduitUi(p: p, i: produits.indexOf(p)));
+          .add(ProductUi(p: p, i: products.indexOf(p)));
     }
 
     List<Widget> listWidget = [];
@@ -64,9 +64,9 @@ class AdminPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   GestureDetector(
-                      child: const GreenBtn(text: "Ajouter un produit"),
+                      child: const GreenBtn(text: "Ajouter un Product"),
                       onTap: () {
-                        produitModif.setIndexProduit(-1);
+                        productModif.setModifiedProduct(-1);
                         pageNotifier.setAmapPage(4);
                       }),
                   const SizedBox(

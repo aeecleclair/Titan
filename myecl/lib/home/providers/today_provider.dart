@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Now extends StateNotifier<DateTime> {
-  Now() : super(DateTime.now()) {
+class NowNotifier extends StateNotifier<DateTime> {
+  NowNotifier() : super(DateTime.now()) {
     _timer = Timer.periodic(const Duration(seconds: 10), (_) {
       state = DateTime.now();
     });
@@ -18,6 +18,6 @@ class Now extends StateNotifier<DateTime> {
   }
 }
 
-final nowProvider = StateNotifierProvider<Now, DateTime>((ref) {
-  return Now();
+final nowProvider = StateNotifierProvider<NowNotifier, DateTime>((ref) {
+  return NowNotifier();
 });

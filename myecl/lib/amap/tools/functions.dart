@@ -2,28 +2,28 @@ import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/produit.dart';
+import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/providers/index_commande_provider.dart';
-import 'package:myecl/amap/providers/list_commande_provider.dart';
-import 'package:myecl/amap/providers/list_produit_provider.dart';
-import 'package:myecl/amap/providers/prix_commande_provider.dart';
+import 'package:myecl/amap/providers/order_index_provider.dart';
+import 'package:myecl/amap/providers/order_list_provider.dart';
+import 'package:myecl/amap/providers/order_price_provider.dart';
+import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 
 void clearCmd(WidgetRef ref) {
-  final produits = ref.watch(listeProduitprovider);
-  final produitsNotifier = ref.watch(listeProduitprovider.notifier);
+  final products = ref.watch(productListProvider);
+  final productsNotifier = ref.watch(productListProvider.notifier);
   final prixNotofier = ref.watch(prixProvider.notifier);
 
-  for (Produit p in produits) {
-    produitsNotifier.setQuantity(p.id, 0);
+  for (Product p in products) {
+    productsNotifier.setQuantity(p.id, 0);
   }
 
-  prixNotofier.setPrix(0.0);
+  prixNotofier.setOrderPrice(0.0);
 }
 
 void cancelCmd(WidgetRef ref) {
-  final indexCmd = ref.watch(indexCmdProvider);
+  final indexCmd = ref.watch(orderIndexProvider);
   final pageNotifier = ref.watch(amapPageProvider.notifier);
   pageNotifier.setAmapPage(1);
   clearCmd(ref);
@@ -33,10 +33,10 @@ void cancelCmd(WidgetRef ref) {
 }
 
 void deleteCmd(WidgetRef ref, int i) {
-  final indexCmdNotifier = ref.watch(indexCmdProvider.notifier);
-  final cmdsNotifier = ref.watch(listCommandeProvider.notifier);
+  final indexCmdNotifier = ref.watch(orderIndexProvider.notifier);
+  final cmdsNotifier = ref.watch(orderListProvider.notifier);
   indexCmdNotifier.setIndex(-1);
-  cmdsNotifier.removeCommande(i);
+  cmdsNotifier.removeOrder(i);
 }
 
 enum TypeMsg { msg, error }

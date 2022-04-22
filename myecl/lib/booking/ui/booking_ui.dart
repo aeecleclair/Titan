@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/reservation/class/res.dart';
-import 'package:myecl/reservation/ui/reservation_button.dart';
+import 'package:myecl/booking/class/res.dart';
+import 'package:myecl/booking/ui/booking_button.dart';
 
-class ReservationUi extends ConsumerWidget {
-  final Reservation r;
+class BookingUi extends ConsumerWidget {
+  final Booking r;
   final bool isAdmin;
-  const ReservationUi({Key? key, required this.r, required this.isAdmin})
+  const BookingUi({Key? key, required this.r, required this.isAdmin})
       : super(key: key);
 
   @override
@@ -66,14 +66,14 @@ class ReservationUi extends ConsumerWidget {
                     width: 115,
                     child: Row(
                       children: [
-                        ReservationButton(
+                        BookingButton(
                             res: r,
                             color: const Color.fromARGB(255, 1, 49, 68),
                             state: 2),
                         const SizedBox(
                           width: 5,
                         ),
-                        ReservationButton(
+                        BookingButton(
                             res: r,
                             color: const Color.fromARGB(255, 9, 106, 130),
                             state: 1)

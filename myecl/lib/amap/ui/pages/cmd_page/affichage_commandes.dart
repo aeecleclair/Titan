@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/commande.dart';
-import 'package:myecl/amap/providers/list_commande_provider.dart';
+import 'package:myecl/amap/class/order.dart';
+import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/ui/pages/cmd_page/add_button.dart';
 import 'package:myecl/amap/ui/pages/cmd_page/commade_ui.dart';
 
-class ListeCommandes extends HookConsumerWidget {
-  const ListeCommandes({Key? key}) : super(key: key);
+class ListeOrders extends HookConsumerWidget {
+  const ListeOrders({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cmds = ref.watch(listCommandeProvider);
+    final cmds = ref.watch(orderListProvider);
 
-    List<Widget> listWidgetCommande = [];
+    List<Widget> listWidgetOrder = [];
 
     if (cmds.isNotEmpty) {
-      for (Commande c in cmds) {
-        listWidgetCommande.add(CommandeUi(c: c));
+      for (Order c in cmds) {
+        listWidgetOrder.add(OrderUi(c: c));
       }
     } else {
-      listWidgetCommande.add(Column(
+      listWidgetOrder.add(Column(
         children: [
           Container(
             height: 70,
             alignment: Alignment.center,
             child: Text(
-              "Pas de commande actuellement",
+              "Pas de Order actuellement",
               style: TextStyle(color: Colors.grey.shade600),
             ),
           ),
@@ -36,10 +36,10 @@ class ListeCommandes extends HookConsumerWidget {
       ));
     }
 
-    listWidgetCommande.add(const AddButton());
+    listWidgetOrder.add(const AddButton());
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      child: Column(children: listWidgetCommande),
+      child: Column(children: listWidgetOrder),
     );
   }
 }

@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/reservation/providers/is_admin_provider.dart';
-import 'package:myecl/reservation/providers/reservation_page_provider.dart';
-import 'package:myecl/reservation/ui/button.dart';
-import 'package:myecl/reservation/ui/calendar.dart';
-import 'package:myecl/reservation/ui/form_page.dart';
-import 'package:myecl/reservation/ui/list_reservation.dart';
+import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
+import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/booking/ui/button.dart';
+import 'package:myecl/booking/ui/calendar.dart';
+import 'package:myecl/booking/ui/form_page.dart';
+import 'package:myecl/booking/ui/booking_list.dart';
 
 class PageSwitcher extends ConsumerWidget {
   const PageSwitcher({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(reservationPageProvider);
-    final isAdmin = ref.read(isAdminProvider);
+    final page = ref.watch(bookingPageProvider);
+    final isAdmin = ref.read(isBookingAdminProvider);
     switch (page) {
       case 0:
         return Expanded(
@@ -41,9 +41,9 @@ class PageSwitcher extends ConsumerWidget {
       case 1:
         return const FormPage();
       case 2:
-        return const ListReservation(isAdmin: false);
+        return const ListBooking(isAdmin: false);
       case 3:
-        return const ListReservation(isAdmin: true);
+        return const ListBooking(isAdmin: true);
       default:
         return Container();
     }

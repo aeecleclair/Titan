@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/amap/class/produit.dart';
+import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/providers/index_produit_modifie_provider.dart';
-import 'package:myecl/amap/providers/list_produit_provider.dart';
+import 'package:myecl/amap/providers/modified_product_index_provider.dart';
+import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 
-class ProduitUi extends ConsumerWidget {
-  final Produit p;
+class ProductUi extends ConsumerWidget {
+  final Product p;
   final int i;
-  const ProduitUi({Key? key, required this.p, required this.i})
+  const ProductUi({Key? key, required this.p, required this.i})
       : super(key: key);
 
   @override
@@ -72,10 +72,10 @@ class ProduitUi extends ConsumerWidget {
                     ),
                   ),
                   onTap: () {
-                    final produitModif =
-                        ref.watch(produitModifProvider.notifier);
+                    final productModif =
+                        ref.watch(modifiedProductProvider.notifier);
                     final pageNotifier = ref.watch(amapPageProvider.notifier);
-                    produitModif.setIndexProduit(i);
+                    productModif.setModifiedProduct(i);
                     pageNotifier.setAmapPage(4);
                   },
                 ),
@@ -108,14 +108,14 @@ class ProduitUi extends ConsumerWidget {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) => CustomDialogBox(
-                            descriptions: "Supprimer le produit ?",
+                            descriptions: "Supprimer le Product ?",
                             title: "Suppression",
                             onYes: () {
                               ref
-                                  .watch(listeProduitprovider.notifier)
-                                  .deleteProduit(p.id);
+                                  .watch(productListProvider.notifier)
+                                  .deleteProduct(p.id);
                               displayToast(
-                                  context, TypeMsg.msg, "Produit supprimé");
+                                  context, TypeMsg.msg, "Product supprimé");
                             }));
                   },
                 )

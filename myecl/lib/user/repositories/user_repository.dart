@@ -22,7 +22,7 @@ class UserRepository {
     }
   }
 
-  Future<User> getUsers(String userId) async {
+  Future<User> getUser(String userId) async {
     final response =
         await http.get(Uri.parse(host + "users/" + userId), headers: headers);
     if (response.statusCode == 200) {
@@ -32,7 +32,7 @@ class UserRepository {
     }
   }
 
-  Future<bool> deleteUsers(String userId) async {
+  Future<bool> deleteUser(String userId) async {
     final response = await http.delete(Uri.parse(host + "users/" + userId),
         headers: headers);
     if (response.statusCode == 200) {
@@ -42,13 +42,14 @@ class UserRepository {
     }
   }
 
-  Future<bool> updateUsers(String userId, User user) async {
-    final response = await http.put(Uri.parse(host + "users/" + userId),
-        headers: headers, body: json.encode(user.toJson()));
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      throw Exception("Failed to update users");
-    }
+  Future<bool> updateUser(String userId, User user) async {
+    return true;
+    // final response = await http.put(Uri.parse(host + "users/" + userId),
+    //     headers: headers, body: json.encode(user.toJson()));
+    // if (response.statusCode == 200) {
+    //   return true;
+    // } else {
+    //   throw Exception("Failed to update users");
+    // }
   }
 }

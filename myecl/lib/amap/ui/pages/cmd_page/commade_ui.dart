@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/amap/class/commande.dart';
-import 'package:myecl/amap/class/produit.dart';
+import 'package:myecl/amap/class/order.dart';
+import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/providers/index_commande_provider.dart';
-import 'package:myecl/amap/providers/list_commande_provider.dart';
-import 'package:myecl/amap/providers/list_produit_provider.dart';
-import 'package:myecl/amap/providers/prix_commande_provider.dart';
+import 'package:myecl/amap/providers/order_index_provider.dart';
+import 'package:myecl/amap/providers/order_list_provider.dart';
+import 'package:myecl/amap/providers/order_price_provider.dart';
+import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 
-class CommandeUi extends ConsumerWidget {
-  final Commande c;
-  const CommandeUi({Key? key, required this.c}) : super(key: key);
+class OrderUi extends ConsumerWidget {
+  final Order c;
+  const OrderUi({Key? key, required this.c}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cmds = ref.watch(listCommandeProvider);
-    final cmdsNotifier = ref.watch(listCommandeProvider.notifier);
-    final produitsNotifier = ref.watch(listeProduitprovider.notifier);
-    final indexCmdNotifier = ref.watch(indexCmdProvider.notifier);
+    final cmds = ref.watch(orderListProvider);
+    final cmdsNotifier = ref.watch(orderListProvider.notifier);
+    final productsNotifier = ref.watch(productListProvider.notifier);
+    final indexCmdNotifier = ref.watch(orderIndexProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final prixNotofier = ref.watch(prixProvider.notifier);
     final i = cmds.indexOf(c);
@@ -83,7 +83,7 @@ class CommandeUi extends ConsumerWidget {
           ),
           cmds[i].expanded
               ? Column(
-                  children: c.produits
+                  children: c.products
                       .map((p) => Container(
                           margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                           alignment: Alignment.center,
@@ -147,9 +147,9 @@ class CommandeUi extends ConsumerWidget {
                 width: 140,
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  c.produits.length.toString() +
-                      " produit" +
-                      (c.produits.length != 1 ? "s" : ""),
+                  c.products.length.toString() +
+                      " Product" +
+                      (c.products.length != 1 ? "s" : ""),
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
@@ -161,7 +161,7 @@ class CommandeUi extends ConsumerWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Prix : " +
-                        (c.produits.map((p) => p.quantite * p.prix))
+                        (c.products.map((p) => p.quantite * p.prix))
                             .reduce((value, element) => value + element)
                             .toStringAsFixed(2) +
                         "€",
@@ -196,11 +196,11 @@ class CommandeUi extends ConsumerWidget {
                       ),
                       onTap: () {
                         indexCmdNotifier.setIndex(i);
-                        for (Produit p
-                            in cmds[i].produits.where((e) => e.quantite != 0)) {
-                          produitsNotifier.setQuantity(p.id, p.quantite);
+                        for (Product p
+                            in cmds[i].products.where((e) => e.quantite != 0)) {
+                          productsNotifier.setQuantity(p.id, p.quantite);
                         }
-                        prixNotofier.setPrix(cmdsNotifier.getPrix(i));
+                        prixNotofier.setOrderPrice(cmdsNotifier.getPrix(i));
                         pageNotifier.setAmapPage(2);
                       },
                     ),
@@ -224,12 +224,12 @@ class CommandeUi extends ConsumerWidget {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) => CustomDialogBox(
-                                descriptions: "Supprimer la commande ?",
+                                descriptions: "Supprimer la Order ?",
                                 title: "Suppression",
                                 onYes: () {
                                   deleteCmd(ref, i);
-                                  displayToast(context, TypeMsg.msg,
-                                      "Commande supprimée");
+                                  displayToast(
+                                      context, TypeMsg.msg, "Order supprimée");
                                 }));
                       },
                     )

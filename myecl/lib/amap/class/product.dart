@@ -1,4 +1,4 @@
-class Produit {
+class Product {
   final String id;
 
   final String nom;
@@ -9,7 +9,7 @@ class Produit {
 
   final String categorie;
 
-  Produit({
+  Product({
     required this.id,
     required this.nom,
     required this.prix,
@@ -17,7 +17,7 @@ class Produit {
     required this.categorie,
   });
 
-  Produit copy({id, nom, prix, quantite, categorie}) => Produit(
+  Product copy({id, nom, prix, quantite, categorie}) => Product(
         id: id ?? this.id,
         nom: nom ?? this.nom,
         prix: prix ?? this.prix,

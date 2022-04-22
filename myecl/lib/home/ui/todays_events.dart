@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/home/providers/scrollcontroller_provider.dart';
+import 'package:myecl/home/providers/scroll_controller_provider.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
 import 'package:myecl/home/providers/today_provider.dart';
 import 'package:myecl/home/tools/functions.dart';

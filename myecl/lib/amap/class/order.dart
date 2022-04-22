@@ -1,23 +1,23 @@
-import 'package:myecl/amap/class/produit.dart';
+import 'package:myecl/amap/class/product.dart';
 
-class Commande {
+class Order {
   final String id;
 
   final DateTime date;
 
-  final List<Produit> produits;
+  final List<Product> products;
 
   final bool expanded;
 
-  Commande(
+  Order(
       {required this.id,
       required this.date,
-      required this.produits,
+      required this.products,
       this.expanded = false});
 
-  Commande copy({id, date, produits, expanded}) => Commande(
+  Order copy({id, date, products, expanded}) => Order(
       id: id ?? this.id,
       date: date ?? this.date,
-      produits: produits ?? this.produits,
+      products: products ?? this.products,
       expanded: expanded ?? this.expanded);
 }

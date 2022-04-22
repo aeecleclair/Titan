@@ -64,4 +64,30 @@ class User {
     createdOn = '';
     groups = [];
   }
+
+  User copyWith({
+    String? name,
+    String? firstname,
+    String? nickname,
+    String? id,
+    String? email,
+    String? birthday,
+    int? promo,
+    String? floor,
+    String? createdOn,
+    List<Groups>? groups,
+  }) {
+    return User(
+      name: name ?? this.name,
+      firstname: firstname ?? this.firstname,
+      nickname: nickname ?? this.nickname,
+      id: id ?? this.id,
+      email: email ?? this.email,
+      birthday: birthday ?? this.birthday,
+      promo: promo ?? this.promo,
+      floor: floor ?? this.floor,
+      createdOn: createdOn ?? this.createdOn,
+      groups: groups ?? this.groups,
+    );
+  }
 }

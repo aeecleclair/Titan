@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/reservation/providers/list_reservation_provider.dart';
-import 'package:myecl/reservation/ui/reservation_ui.dart';
+import 'package:myecl/booking/providers/booking_list_provider.dart';
+import 'package:myecl/booking/ui/booking_ui.dart';
 
-class ListReservation extends ConsumerWidget {
+class ListBooking extends ConsumerWidget {
   final bool isAdmin;
-  const ListReservation({Key? key, required this.isAdmin}) : super(key: key);
+  const ListBooking({Key? key, required this.isAdmin}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final res = ref.watch(listReservationProvider);
+    final res = ref.watch(bookingListProvider);
     return Expanded(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: res
-              .map((r) => ReservationUi(
+              .map((r) => BookingUi(
                     r: r,
-                    isAdmin: false,
+                    isAdmin: isAdmin,
                   ))
               .toList(),
         ),

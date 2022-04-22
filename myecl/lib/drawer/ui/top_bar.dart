@@ -7,7 +7,7 @@ class TopBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final me = ref.watch(user("a4237b44-e0a6-4e0c-9cfd-7a418752dafc"));
+    final me = ref.watch(userProvider);
     return Column(
       children: [
         Container(

@@ -66,14 +66,14 @@ class ModuleUI extends HookConsumerWidget {
       ),
       onTap: () {
         pageNotifier.setPage(m.pos);
-        if (m.pos > 0) {
+        if (m.pos != 1) {
           hasScrolled.setHasScrolled(false);
         }
       },
       onDoubleTap: () {
         pageNotifier.setPage(m.pos);
         controllerNotifier.toggle();
-        if (m.pos > 0) {
+        if (m.pos != 1) {
           hasScrolled.setHasScrolled(false);
         }
       },
