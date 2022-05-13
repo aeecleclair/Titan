@@ -25,21 +25,21 @@ class ModifProduct extends HookConsumerWidget {
     final productModif = ref.watch(modifiedProductProvider);
     final modifProduct = productModif != -1;
 
-    final nomController = useTextEditingController(
-        text: modifProduct ? products[productModif].nom : "");
+    final nameController = useTextEditingController(
+        text: modifProduct ? products[productModif].name : "");
 
-    final prixController = useTextEditingController(
-        text: modifProduct ? products[productModif].prix.toString() : "");
+    final priceController = useTextEditingController(
+        text: modifProduct ? products[productModif].price.toString() : "");
 
     final beginState = modifProduct
-        ? products[productModif].categorie
-        : TextConstants.creerCategorie;
-    final categorieController = ref.watch(selectedCategoryProvider(beginState));
-    final categorieNotifier =
+        ? products[productModif].category
+        : TextConstants.creercategory;
+    final categoryController = ref.watch(selectedCategoryProvider(beginState));
+    final categoryNotifier =
         ref.watch(selectedCategoryProvider(beginState).notifier);
 
-    final nouvelleCategorie = useTextEditingController(text: "");
-    final categorie = ref.watch(categoryListProvider);
+    final nouvellecategory = useTextEditingController(text: "");
+    final category = ref.watch(categoryListProvider);
     return Column(
       children: [
         const SizedBox(
@@ -63,7 +63,7 @@ class ModifProduct extends HookConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  "Nom",
+                                  "name",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 20,
@@ -82,14 +82,14 @@ class ModifProduct extends HookConsumerWidget {
                                   },
                                   enabled: true,
                                   onChanged: (_) {},
-                                  textEditingController: nomController,
+                                  textEditingController: nameController,
                                   keyboardType: TextInputType.text,
                                 ),
                                 const SizedBox(
                                   height: 30,
                                 ),
                                 const Text(
-                                  "Prix",
+                                  "price",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 20,
@@ -105,14 +105,14 @@ class ModifProduct extends HookConsumerWidget {
                                         return 'Veuillez remplir ce champ';
                                       } else if (double.tryParse(value) ==
                                           null) {
-                                        return 'Un nombre est attendu';
+                                        return 'Un namebre est attendu';
                                       }
                                       return null;
                                     },
                                     enabled: true,
                                     onChanged: (_) {},
                                     keyboardType: TextInputType.number,
-                                    textEditingController: prixController),
+                                    textEditingController: priceController),
                                 const SizedBox(
                                   height: 30,
                                 ),
@@ -130,13 +130,13 @@ class ModifProduct extends HookConsumerWidget {
                                 Container(
                                   alignment: Alignment.center,
                                   child: DropdownButtonFormField<String>(
-                                    value: categorieController,
+                                    value: categoryController,
                                     validator: ((value) {
                                       if ((value == null ||
                                               value ==
                                                   TextConstants
-                                                      .creerCategorie) &&
-                                          nouvelleCategorie.text.isEmpty) {
+                                                      .creercategory) &&
+                                          nouvellecategory.text.isEmpty) {
                                         return 'Veuillez créer une catégorie ou en choisir une';
                                       }
                                       return null;
@@ -167,8 +167,8 @@ class ModifProduct extends HookConsumerWidget {
                                           )),
                                     ),
                                     items: [
-                                      TextConstants.creerCategorie,
-                                      ...categorie
+                                      TextConstants.creercategory,
+                                      ...category
                                     ].map((String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
@@ -176,9 +176,9 @@ class ModifProduct extends HookConsumerWidget {
                                       );
                                     }).toList(),
                                     onChanged: (value) {
-                                      categorieNotifier.setText(value ??
-                                          TextConstants.creerCategorie);
-                                      nouvelleCategorie.text = "";
+                                      categoryNotifier.setText(
+                                          value ?? TextConstants.creercategory);
+                                      nouvellecategory.text = "";
                                     },
                                   ),
                                 ),
@@ -199,18 +199,18 @@ class ModifProduct extends HookConsumerWidget {
                                 TextEntry(
                                   validator: ((value) {
                                     if ((value == null || value.isEmpty) &&
-                                        categorieController ==
-                                            TextConstants.creerCategorie) {
+                                        categoryController ==
+                                            TextConstants.creercategory) {
                                       return 'Veuillez choisir une catégorie ou en créer une';
                                     }
                                     return null;
                                   }),
-                                  enabled: categorieController ==
-                                      TextConstants.creerCategorie,
+                                  enabled: categoryController ==
+                                      TextConstants.creercategory,
                                   onChanged: (value) {
-                                    nouvelleCategorie.text = value ?? "";
+                                    nouvellecategory.text = value ?? "";
                                   },
-                                  textEditingController: nouvelleCategorie,
+                                  textEditingController: nouvellecategory,
                                   keyboardType: TextInputType.text,
                                 ),
                                 const SizedBox(
@@ -222,19 +222,19 @@ class ModifProduct extends HookConsumerWidget {
                                   ),
                                   onTap: () {
                                     if (_formKey.currentState!.validate()) {
-                                      String cate = categorieController ==
-                                              TextConstants.creerCategorie
-                                          ? nouvelleCategorie.text
-                                          : categorieController;
+                                      String cate = categoryController ==
+                                              TextConstants.creercategory
+                                          ? nouvellecategory.text
+                                          : categoryController;
 
-                                        Product newProduct = Product(
-                                          id: products[productModif].id,
-                                          nom: nomController.text,
-                                          prix: double.parse(
-                                              prixController.text),
-                                          categorie: cate,
-                                          quantite: 0,
-                                        );
+                                      Product newProduct = Product(
+                                        id: products[productModif].id,
+                                        name: nameController.text,
+                                        price:
+                                            double.parse(priceController.text),
+                                        category: cate,
+                                        quantity: 0,
+                                      );
                                       if (modifProduct) {
                                         productsNotifier.updateProduct(
                                             newProduct.id, newProduct);
@@ -251,11 +251,11 @@ class ModifProduct extends HookConsumerWidget {
 
                                       pageNotifier.setAmapPage(3);
 
-                                      nomController.clear();
-                                      prixController.clear();
-                                      categorieNotifier.setText(
-                                          TextConstants.creerCategorie);
-                                      nouvelleCategorie.clear();
+                                      nameController.clear();
+                                      priceController.clear();
+                                      categoryNotifier
+                                          .setText(TextConstants.creercategory);
+                                      nouvellecategory.clear();
                                     }
                                   },
                                 ),

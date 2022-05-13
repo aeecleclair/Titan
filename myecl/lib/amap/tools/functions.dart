@@ -2,7 +2,6 @@ import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
@@ -11,13 +10,10 @@ import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 
 void clearCmd(WidgetRef ref) {
-  final products = ref.watch(productListProvider);
   final productsNotifier = ref.watch(productListProvider.notifier);
-  final prixNotofier = ref.watch(prixProvider.notifier);
-
+  final priceNotofier = ref.watch(priceProvider.notifier);
   productsNotifier.resetQuantity();
-
-  prixNotofier.setOrderPrice(0.0);
+  priceNotofier.setOrderPrice(0.0);
 }
 
 void cancelCmd(WidgetRef ref) {
@@ -34,7 +30,7 @@ void deleteCmd(WidgetRef ref, int i) {
   final indexCmdNotifier = ref.watch(orderIndexProvider.notifier);
   final cmdsNotifier = ref.watch(orderListProvider.notifier);
   indexCmdNotifier.setIndex(-1);
-  cmdsNotifier.removeOrder(i);
+  cmdsNotifier.deleteOrder(i);
 }
 
 enum TypeMsg { msg, error }

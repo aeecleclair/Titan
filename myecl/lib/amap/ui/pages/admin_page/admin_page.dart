@@ -15,22 +15,22 @@ class AdminPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
-    final categories = ref.watch(categoryListProvider);
+    final categorys = ref.watch(categoryListProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final productModif = ref.read(modifiedProductProvider.notifier);
 
     Map<String, List<Widget>> dictCateListWidget = {
-      for (var item in categories) item: []
+      for (var item in categorys) item: []
     };
 
     for (Product p in products) {
-      dictCateListWidget[p.categorie]!
+      dictCateListWidget[p.category]!
           .add(ProductUi(p: p, i: products.indexOf(p)));
     }
 
     List<Widget> listWidget = [];
 
-    for (String c in categories) {
+    for (String c in categorys) {
       listWidget.add(Container(
           height: 70,
           alignment: Alignment.centerLeft,

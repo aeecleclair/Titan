@@ -1,81 +1,174 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
-import 'package:uuid/uuid.dart';
+import 'package:myecl/amap/repositories/order_list_repository.dart';
 
-var _uuid = const Uuid();
+class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
+  final OrderListRepository _repository = OrderListRepository();
+  List<Order> lastLoadedOrders = [];
+  OrderListNotifier() : super(const AsyncValue.loading());
 
-class OrderListNotifier extends StateNotifier<List<Order>> {
-  OrderListNotifier([List<Order>? listCmd]) : super(listCmd ?? []);
-
-  void addProduct(int i, Product p) {
-    state[i].products.add(p.copy());
-  }
-
-  void removeProducts(int i, Product p) {
-    state[i].products.removeWhere((element) => element.nom == p.nom);
-  }
-
-  void removeOrder(int i) {
-    state = state.sublist(0)..removeAt(i);
-  }
-
-  void addOrder(DateTime date, List<Product> products) {
-    state = [
-      ...state,
-      Order(
-        id: _uuid.v4(),
-        date: date,
-        products: products,
-      ),
-    ];
-  }
-
-  void setProductQuantite(int i, Product p, int quantite) {
-    List<Order> r = state.sublist(0);
-
-    for (int j = 0; j < r[i].products.length; j++) {
-      if (r[i].products[j].id == p.id) {
-        r[i].products[j].quantite = quantite;
-      }
+  Future<AsyncValue<List<Order>>> loadOrderList() async {
+    try {
+      final orders = await _repository.getAllOrders();
+      lastLoadedOrders = orders;
+      state = AsyncValue.data(orders);
+    } catch (e) {
+      state = AsyncValue.error(e);
     }
-
-    state = r;
+    return state;
   }
 
-  void toggleExpanded(String id) {
-    state = [
-      for (final p in state)
-        if (p.id == id)
-          Order(
-              id: p.id,
-              date: p.date,
-              products: p.products,
-              expanded: !p.expanded)
-        else
-          p,
-    ];
+  Future<AsyncValue<List<Order>>> addOrder(Order order) async {
+    try {
+      if (await _repository.createOrder(order)) {
+        lastLoadedOrders.add(order);
+        state = AsyncValue.data(lastLoadedOrders);
+      } else {
+        state = AsyncValue.error(Exception("Failed to create order"));
+      }
+    } catch (e) {
+      state = AsyncValue.error(e);
+    }
+    return state;
   }
 
-  void setProducts(String id, List<Product> products) {
-    state = [
-      for (final p in state)
-        if (p.id == id)
-          Order(
-              id: p.id, date: p.date, products: products, expanded: p.expanded)
-        else
-          p,
-    ];
+  Future<AsyncValue<List<Order>>> updateOrder(
+      String orderId, Order order) async {
+    try {
+      if (await _repository.updateOrder(orderId, order)) {
+        lastLoadedOrders.replaceRange(
+            lastLoadedOrders.indexOf(lastLoadedOrders
+                .firstWhere((element) => element.id == orderId)),
+            1,
+            [order]);
+        state = AsyncValue.data(lastLoadedOrders);
+      } else {
+        state = AsyncValue.error(Exception("Failed to update order"));
+      }
+    } catch (e) {
+      state = AsyncValue.error(e);
+    }
+    return state;
   }
 
-  double getPrix(int i) {
-    return state[i]
-        .products
-        .map((e) => e.prix * e.quantite)
-        .reduce((value, element) => value + element);
+  Future<AsyncValue<List<Order>>> deleteOrder(int indexOrder) async {
+    try {
+      String orderId = lastLoadedOrders[indexOrder].id;
+      if (await _repository.deleteOrder(orderId)) {
+        lastLoadedOrders.removeWhere((element) => element.id == orderId);
+        state = AsyncValue.data(lastLoadedOrders);
+      } else {
+        state = AsyncValue.error(Exception("Failed to delete order"));
+      }
+    } catch (e) {
+      state = AsyncValue.error(e);
+    }
+    return state;
+  }
+
+  Future<AsyncValue<List<Order>>> addProduct(
+      int indexOrder, Product product) async {
+    try {
+      final order = lastLoadedOrders[indexOrder];
+      order.products.add(product);
+      if (await _repository.updateOrder(order.id, order)) {
+        lastLoadedOrders.replaceRange(
+            lastLoadedOrders.indexOf(lastLoadedOrders
+                .firstWhere((element) => element.id == order.id)),
+            1,
+            [order]);
+        state = AsyncValue.data(lastLoadedOrders);
+      } else {
+        state = AsyncValue.error(Exception("Failed to update order"));
+      }
+    } catch (e) {
+      state = AsyncValue.error(e);
+    }
+    return state;
+  }
+
+  Future<AsyncValue<List<Order>>> deleteProduct(
+      int indexOrder, Product product) async {
+    try {
+      final order = lastLoadedOrders[indexOrder];
+      order.products.remove(product);
+      if (await _repository.updateOrder(order.id, order)) {
+        lastLoadedOrders.replaceRange(
+            lastLoadedOrders.indexOf(lastLoadedOrders
+                .firstWhere((element) => element.id == order.id)),
+            1,
+            [order]);
+        state = AsyncValue.data(lastLoadedOrders);
+      } else {
+        state = AsyncValue.error(Exception("Failed to update order"));
+      }
+    } catch (e) {
+      state = AsyncValue.error(e);
+    }
+    return state;
+  }
+
+  Future<AsyncValue<List<Order>>> updateProduct(
+      int indexOrder, Product product) async {
+    try {
+      final order = lastLoadedOrders[indexOrder];
+      order.products.replaceRange(
+          order.products.indexOf(
+              order.products.firstWhere((element) => element.id == product.id)),
+          1,
+          [product]);
+      if (await _repository.updateOrder(order.id, order)) {
+        lastLoadedOrders.replaceRange(
+            lastLoadedOrders.indexOf(lastLoadedOrders
+                .firstWhere((element) => element.id == order.id)),
+            1,
+            [order]);
+        state = AsyncValue.data(lastLoadedOrders);
+      } else {
+        state = AsyncValue.error(Exception("Failed to update order"));
+      }
+    } catch (e) {
+      state = AsyncValue.error(e);
+    }
+    return state;
+  }
+
+  Future<AsyncValue<List<Order>>> setProductQuantity(
+      int indexOrder, Product product, int newQuantity) async {
+    return updateProduct(indexOrder, product.copy(quantity: newQuantity));
+  }
+
+  Future<AsyncValue<List<Order>>> toggleExpanded(int indexOrder) async {
+    return updateOrder(
+        lastLoadedOrders[indexOrder].id,
+        lastLoadedOrders[indexOrder]
+            .copy(expanded: !lastLoadedOrders[indexOrder].expanded));
+  }
+
+  Future<AsyncValue<List<Order>>> setProducts(
+      int indexOrder, List<Product> newListProduct) async {
+    return updateOrder(lastLoadedOrders[indexOrder].id,
+        lastLoadedOrders[indexOrder].copy(products: newListProduct));
+  }
+
+  Future<double> getprice(int indexOrder) async {
+    double _price = 0;
+    try {
+      final order = lastLoadedOrders[indexOrder];
+      for (var product in order.products) {
+        _price += product.price * product.quantity;
+      }
+    } catch (e) {
+      state = AsyncValue.error(e);
+    }
+    return _price;
   }
 }
 
-final orderListProvider = StateNotifierProvider<OrderListNotifier, List<Order>>((ref) {
-  return OrderListNotifier([]);
+final orderListProvider =
+    StateNotifierProvider<OrderListNotifier, AsyncValue<List<Order>>>((ref) {
+  OrderListNotifier _orderListNotifier = OrderListNotifier();
+  _orderListNotifier.loadOrderList();
+  return _orderListNotifier;
 });

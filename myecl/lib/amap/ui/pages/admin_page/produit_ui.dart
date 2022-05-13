@@ -28,7 +28,7 @@ class ProductUi extends ConsumerWidget {
             ),
             Expanded(
               child: Text(
-                p.nom,
+                p.name,
                 style: const TextStyle(fontSize: 13),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -42,7 +42,7 @@ class ProductUi extends ConsumerWidget {
                   width: 40,
                   alignment: Alignment.centerRight,
                   child: Text(
-                    p.prix.toStringAsFixed(2) + "€",
+                    p.price.toStringAsFixed(2) + "€",
                     style: const TextStyle(fontSize: 13),
                   ),
                 ),

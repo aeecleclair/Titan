@@ -17,5 +17,5 @@ class ColorConstants {
 }
 
 class TextConstants {
-  static const String creerCategorie = "Créer une catégorie";
+  static const String creercategory = "Créer une catégorie";
 }

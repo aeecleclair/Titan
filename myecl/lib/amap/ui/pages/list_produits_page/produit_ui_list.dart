@@ -14,8 +14,8 @@ class ProductUiInList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
     final productsNotifier = ref.watch(productListProvider.notifier);
-    final prix = ref.watch(prixProvider);
-    final prixNotofier = ref.watch(prixProvider.notifier);
+    final price = ref.watch(priceProvider);
+    final priceNotofier = ref.watch(priceProvider.notifier);
     Product p = products[i];
     return Container(
         height: 50,
@@ -28,7 +28,7 @@ class ProductUiInList extends ConsumerWidget {
             ),
             Expanded(
               child: Text(
-                p.nom,
+                p.name,
                 style: const TextStyle(fontSize: 13),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -39,7 +39,7 @@ class ProductUiInList extends ConsumerWidget {
                   width: 40,
                   alignment: Alignment.centerRight,
                   child: Text(
-                    p.prix.toStringAsFixed(2) + "€",
+                    p.price.toStringAsFixed(2) + "€",
                     style: const TextStyle(fontSize: 13),
                   ),
                 ),
@@ -54,16 +54,16 @@ class ProductUiInList extends ConsumerWidget {
                     child: HeroIcon(
                       HeroIcons.minusSm,
                       size: 20,
-                      color: p.quantite > 0
+                      color: p.quantity > 0
                           ? ColorConstants.l2.withOpacity(0.8)
                           : ColorConstants.background3,
                     ),
                   ),
                   onTap: () {
-                    if (p.quantite > 0) {
-                      productsNotifier.setQuantity(p.id, p.quantite - 1);
-                      prixNotofier.setOrderPrice(
-                          double.parse((prix - p.prix).toStringAsFixed(2)));
+                    if (p.quantity > 0) {
+                      productsNotifier.setQuantity(p.id, p.quantity - 1);
+                      priceNotofier.setOrderPrice(
+                          double.parse((price - p.price).toStringAsFixed(2)));
                     }
                   },
                 ),
@@ -71,7 +71,7 @@ class ProductUiInList extends ConsumerWidget {
                   width: 15,
                   alignment: Alignment.center,
                   child: Text(
-                    p.quantite.toString(),
+                    p.quantity.toString(),
                     style: const TextStyle(
                         fontSize: 13, fontWeight: FontWeight.w700),
                   ),
@@ -84,16 +84,16 @@ class ProductUiInList extends ConsumerWidget {
                     child: HeroIcon(
                       HeroIcons.plusSm,
                       size: 20,
-                      color: p.quantite < 5
+                      color: p.quantity < 5
                           ? ColorConstants.l2.withOpacity(0.8)
                           : ColorConstants.background3,
                     ),
                   ),
                   onTap: () {
-                    if (p.quantite < 5) {
-                      productsNotifier.setQuantity(p.id, p.quantite + 1);
-                      prixNotofier.setOrderPrice(
-                          double.parse((prix + p.prix).toStringAsFixed(2)));
+                    if (p.quantity < 5) {
+                      productsNotifier.setQuantity(p.id, p.quantity + 1);
+                      priceNotofier.setOrderPrice(
+                          double.parse((price + p.price).toStringAsFixed(2)));
                     }
                   },
                 ),

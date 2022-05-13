@@ -18,12 +18,12 @@ class OrderUi extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cmds = ref.watch(orderListProvider);
+    final cmds = ref.watch(orderListProvider.notifier).lastLoadedOrders;
     final cmdsNotifier = ref.watch(orderListProvider.notifier);
     final productsNotifier = ref.watch(productListProvider.notifier);
     final indexCmdNotifier = ref.watch(orderIndexProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
-    final prixNotofier = ref.watch(prixProvider.notifier);
+    final priceNotofier = ref.watch(priceProvider.notifier);
     final i = cmds.indexOf(c);
     return Container(
       margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
@@ -76,7 +76,7 @@ class OrderUi extends ConsumerWidget {
                   ),
                 ),
                 onTap: () {
-                  cmdsNotifier.toggleExpanded(cmds[i].id);
+                  cmdsNotifier.toggleExpanded(i);
                 },
               )
             ],
@@ -96,9 +96,9 @@ class OrderUi extends ConsumerWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  p.nom +
+                                  p.name +
                                       " (quantité : " +
-                                      p.quantite.toString() +
+                                      p.quantity.toString() +
                                       ")",
                                   style: const TextStyle(
                                     fontSize: 13,
@@ -117,7 +117,8 @@ class OrderUi extends ConsumerWidget {
                                     width: 40,
                                     alignment: Alignment.centerRight,
                                     child: Text(
-                                      (p.quantite * p.prix).toStringAsFixed(2) +
+                                      (p.quantity * p.price)
+                                              .toStringAsFixed(2) +
                                           "€",
                                       style: const TextStyle(
                                         fontSize: 13,
@@ -160,8 +161,8 @@ class OrderUi extends ConsumerWidget {
                   width: 140,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Prix : " +
-                        (c.products.map((p) => p.quantite * p.prix))
+                    "price : " +
+                        (c.products.map((p) => p.quantity * p.price))
                             .reduce((value, element) => value + element)
                             .toStringAsFixed(2) +
                         "€",
@@ -197,10 +198,12 @@ class OrderUi extends ConsumerWidget {
                       onTap: () {
                         indexCmdNotifier.setIndex(i);
                         for (Product p
-                            in cmds[i].products.where((e) => e.quantite != 0)) {
-                          productsNotifier.setQuantity(p.id, p.quantite);
+                            in cmds[i].products.where((e) => e.quantity != 0)) {
+                          productsNotifier.setQuantity(p.id, p.quantity);
                         }
-                        prixNotofier.setOrderPrice(cmdsNotifier.getPrix(i));
+                        cmdsNotifier.getprice(i).then((value) {
+                          priceNotofier.setOrderPrice(value);
+                        });
                         pageNotifier.setAmapPage(2);
                       },
                     ),
@@ -228,8 +231,8 @@ class OrderUi extends ConsumerWidget {
                                 title: "Suppression",
                                 onYes: () {
                                   deleteCmd(ref, i);
-                                  displayToast(
-                                      context, TypeMsg.msg, "Commande supprimée");
+                                  displayToast(context, TypeMsg.msg,
+                                      "Commande supprimée");
                                 }));
                       },
                     )

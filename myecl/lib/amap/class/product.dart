@@ -1,39 +1,39 @@
 class Product {
   Product({
     required this.id,
-    required this.nom,
-    required this.prix,
-    required this.quantite,
-    required this.categorie,
+    required this.name,
+    required this.price,
+    required this.quantity,
+    required this.category,
   });
   late final String id;
-  late final String nom;
-  late final double prix;
-  late final int quantite;
-  late final String categorie;
+  late final String name;
+  late final double price;
+  late final int quantity;
+  late final String category;
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    nom = json['nom'];
-    prix = json['prix'];
-    quantite = json['quantite'];
-    categorie = json['categorie'];
+    name = json['name'];
+    price = json['price'];
+    quantity = json['quantity'];
+    category = json['category'];
   }
-  Product copy({id, nom, prix, quantite, categorie}) => Product(
+  Product copy({id, name, price, quantity, category}) => Product(
         id: id ?? this.id,
-        nom: nom ?? this.nom,
-        prix: prix ?? this.prix,
-        quantite: quantite ?? this.quantite,
-        categorie: categorie ?? this.categorie,
+        name: name ?? this.name,
+        price: price ?? this.price,
+        quantity: quantity ?? this.quantity,
+        category: category ?? this.category,
       );
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['id'] = id;
-    _data['nom'] = nom;
-    _data['prix'] = prix;
-    _data['quantite'] = quantite;
-    _data['categorie'] = categorie;
+    _data['name'] = name;
+    _data['price'] = price;
+    _data['quantity'] = quantity;
+    _data['category'] = category;
     return _data;
   }
 }

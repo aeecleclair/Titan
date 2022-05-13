@@ -1,6 +1,7 @@
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/order_index_provider.dart';
@@ -11,6 +12,7 @@ import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
+import 'package:uuid/uuid.dart';
 
 class Boutons extends HookConsumerWidget {
   const Boutons({Key? key}) : super(key: key);
@@ -18,29 +20,33 @@ class Boutons extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
-    final cmds = ref.read(orderListProvider);
+    final cmds = ref.read(orderListProvider.notifier).lastLoadedOrders;
     final cmdsNotifier = ref.watch(orderListProvider.notifier);
     final indexCmd = ref.watch(orderIndexProvider);
     final pageNotifier = ref.read(amapPageProvider.notifier);
-    final prix = ref.watch(prixProvider);
+    final price = ref.watch(priceProvider);
     return SizedBox(
         height: 90,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           GestureDetector(
               child: GreenBtn(
-                  text: "Confirmer (" + prix.toStringAsFixed(2) + "€)"),
+                  text: "Confirmer (" + price.toStringAsFixed(2) + "€)"),
               onTap: () {
-                if (prix != 0.0) {
+                if (price != 0.0) {
                   List<Product> prod = [];
                   for (var p in products) {
-                    if (p.quantite != 0) {
+                    if (p.quantity != 0) {
                       prod.add(p.copy());
                     }
                   }
                   if (indexCmd == -1) {
-                    cmdsNotifier.addOrder(DateTime.now(), prod);
+                    Order newOrder = Order(
+                        products: prod,
+                        date: DateTime.now(),
+                        id: const Uuid().v4(),);
+                    cmdsNotifier.addOrder(newOrder);
                   } else {
-                    cmdsNotifier.setProducts(cmds[indexCmd].id, prod);
+                    cmdsNotifier.setProducts(indexCmd, prod);
                   }
                   pageNotifier.setAmapPage(0);
                   clearCmd(ref);
@@ -73,7 +79,7 @@ class Boutons extends HookConsumerWidget {
               ),
             ),
             onTap: () {
-              if (prix != 0.0 || indexCmd != -1) {
+              if (price != 0.0 || indexCmd != -1) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) => CustomDialogBox(

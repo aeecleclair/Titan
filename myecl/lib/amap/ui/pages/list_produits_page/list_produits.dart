@@ -23,14 +23,14 @@ class ListProducts extends HookConsumerWidget {
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
     final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
     final pageController = ref.watch(amapPageControllerProvider);
-    final categories = ref.watch(categoryListProvider);
+    final categorys = ref.watch(categoryListProvider);
 
     Map<String, List<Widget>> dictCateListWidget = {
-      for (var item in categories) item: []
+      for (var item in categorys) item: []
     };
 
     for (Product p in products) {
-      dictCateListWidget[p.categorie]!
+      dictCateListWidget[p.category]!
           .add(ProductUiInList(i: products.indexOf(p)));
     }
 
@@ -47,7 +47,7 @@ class ListProducts extends HookConsumerWidget {
             hideAnimation.animateTo(1);
           },
           physics: const BouncingScrollPhysics(),
-          children: categories.map((c) {
+          children: categorys.map((c) {
             double h = MediaQuery.of(context).size.height -
                 270 -
                 50 * (dictCateListWidget[c]!.length + 1);

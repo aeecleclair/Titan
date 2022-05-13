@@ -12,7 +12,7 @@ class Dots extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
     final pageController = ref.watch(amapPageControllerProvider);
-    int len = {...products.map((e) => e.categorie)}.length;
+    int len = {...products.map((e) => e.category)}.length;
     return SmoothPageIndicator(
       controller: pageController,
       count: len,

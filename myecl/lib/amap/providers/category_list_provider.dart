@@ -4,11 +4,11 @@ import 'package:myecl/amap/providers/product_list_provider.dart';
 class CategoryListNotifier extends StateNotifier<List<String>> {
   CategoryListNotifier([List<String>? cmds]) : super(cmds ?? []);
 
-  void ajouterCategorie(String c) {
+  void ajoutercategory(String c) {
     state = [...state, c]..sort();
   }
 
-  void removeCategorie(String c) {
+  void removecategory(String c) {
     state = state.sublist(0)..remove(c);
   }
 }
@@ -18,6 +18,6 @@ final categoryListProvider =
   final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
 
   return CategoryListNotifier([
-    ...{...products.map((e) => e.categorie)}
+    ...{...products.map((e) => e.category)}
   ]..sort());
 });

@@ -35,16 +35,16 @@ class SettingsForm extends HookConsumerWidget {
         child: Column(
           children: [
             UserFieldModifier(
-              label: "Prénom",
+              label: "Préname",
               controller: firstNameController,
               keyboardType: TextInputType.text,
             ),
             UserFieldModifier(
-                label: "Nom",
+                label: "name",
                 controller: nameController,
                 keyboardType: TextInputType.text),
             UserFieldModifier(
-                label: "Surnom",
+                label: "Surname",
                 controller: nickNameController,
                 keyboardType: TextInputType.text),
             UserFieldModifier(
@@ -116,28 +116,31 @@ class SettingsForm extends HookConsumerWidget {
                       ),
                     ])),
             UserFieldModifier(
-                label: "Id",
-                keyboardType: TextInputType.text,
-                controller: idController,), //! Même pas visible
+              label: "Id",
+              keyboardType: TextInputType.text,
+              controller: idController,
+            ), //! Même pas visible
             ElevatedButton(
               onPressed: () {
-                ref.read(userProvider.notifier).updateUser(
-                  meNotifier.copyWith(
-                    birthday: dateController.value.text,
-                    id: idController.value.text,
-                    firstname: firstNameController.value.text,
-                    name: nameController.value.text,
-                    nickname: nickNameController.value.text,
-                    email: emailController.value.text,
-                    promo: int.parse(promoController.value.text),
-                    floor: floorController.value.text,
-                  )).then((value) =>
-                    value.when(
-                      data: (d) => displayToast(context, TypeMsg.msg, "Profil modifié"),
-                      error: (e, s) => displayToast(context, TypeMsg.error, "Erreur lors de la modification du profil"),
-                      loading: () {},
-                    )
-                );
+                ref
+                    .read(userProvider.notifier)
+                    .updateUser(meNotifier.copyWith(
+                      birthday: dateController.value.text,
+                      id: idController.value.text,
+                      firstname: firstNameController.value.text,
+                      name: nameController.value.text,
+                      nickname: nickNameController.value.text,
+                      email: emailController.value.text,
+                      promo: int.parse(promoController.value.text),
+                      floor: floorController.value.text,
+                    ))
+                    .then((value) => value.when(
+                          data: (d) => displayToast(
+                              context, TypeMsg.msg, "Profil modifié"),
+                          error: (e, s) => displayToast(context, TypeMsg.error,
+                              "Erreur lors de la modification du profil"),
+                          loading: () {},
+                        ));
               },
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,

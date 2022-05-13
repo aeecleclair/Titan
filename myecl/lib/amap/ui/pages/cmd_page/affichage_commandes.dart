@@ -10,7 +10,7 @@ class ListeOrders extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cmds = ref.watch(orderListProvider);
+    final cmds = ref.watch(orderListProvider.notifier).lastLoadedOrders;
 
     List<Widget> listWidgetOrder = [];
 
