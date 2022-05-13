@@ -14,7 +14,7 @@ class MainPageBtn extends HookConsumerWidget {
     final isAdmin = ref.watch(isAmapAdminProvider);
     List<Widget> btns = [
       TopButton(
-          text: "Mes Orders",
+          text: "Mes Commandes",
           selected: page == 0,
           onclick: () {
             pageNotifier.setAmapPage(0);

@@ -8,6 +8,12 @@ class TopBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final me = ref.watch(userProvider);
+    final meNotifier = ref.watch(userProvider.notifier);
+    final user = me.when(
+      data: (user) => user,
+      loading: () => meNotifier.lastLoadedUser,
+      error: (e, s) => meNotifier.lastLoadedUser,
+    );
     return Column(
       children: [
         Container(
@@ -27,7 +33,7 @@ class TopBar extends ConsumerWidget {
                       SizedBox(
                         width: 200,
                         child: Text(
-                          me.nickname,
+                          user.nickname,
                           style: TextStyle(
                               color: Colors.grey.shade100,
                               fontSize: 20,
@@ -40,7 +46,7 @@ class TopBar extends ConsumerWidget {
                       SizedBox(
                           width: 200,
                           child: Text(
-                            me.firstname + " " + me.name,
+                            user.firstname + " " + user.name,
                             style: TextStyle(
                               color: Colors.grey.shade100,
                               fontSize: 15,

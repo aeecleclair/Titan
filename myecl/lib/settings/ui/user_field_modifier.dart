@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class UserFieldModifier extends StatelessWidget {
   final String label;
-  final String value;
   final TextInputType keyboardType;
+  final TextEditingController controller;
   const UserFieldModifier(
       {Key? key,
       required this.label,
-      required this.value,
-      required this.keyboardType})
+      required this.keyboardType,
+      required this.controller})
       : super(key: key);
 
   @override
@@ -18,7 +18,8 @@ class UserFieldModifier extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(
+          Container(
+            alignment: Alignment.centerLeft,
             width: MediaQuery.of(context).size.width * 0.25,
             child: Text(
               label,
@@ -32,8 +33,8 @@ class UserFieldModifier extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.45,
             child: TextFormField(
+              controller: controller,
               keyboardType: keyboardType,
-              initialValue: value,
               decoration: const InputDecoration(
                 contentPadding: EdgeInsets.all(10),
                 isDense: true,

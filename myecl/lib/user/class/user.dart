@@ -1,4 +1,4 @@
-import 'package:myecl/user/models/group.dart';
+import 'package:myecl/user/class/group.dart';
 
 class User {
   User({

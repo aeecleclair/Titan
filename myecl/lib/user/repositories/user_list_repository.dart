@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:myecl/user/models/list_users.dart';
+import 'package:myecl/user/class/list_users.dart';
 import 'package:http/http.dart' as http;
 
 class UserListRepository {

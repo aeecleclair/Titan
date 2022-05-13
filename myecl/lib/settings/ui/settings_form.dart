@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/settings/ui/user_field_modifier.dart';
-import 'package:myecl/user/models/user.dart';
+import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class SettingsForm extends HookConsumerWidget {
@@ -11,9 +12,23 @@ class SettingsForm extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final me = ref.watch(userProvider);
+    final meNotifier = ref.watch(userProvider.notifier).lastLoadedUser;
     final dateController = useTextEditingController();
-    dateController.text = me.birthday;
+    dateController.text = meNotifier.birthday;
+    final idController = useTextEditingController();
+    idController.text = meNotifier.id;
+    final firstNameController = useTextEditingController();
+    firstNameController.text = meNotifier.firstname;
+    final nameController = useTextEditingController();
+    nameController.text = meNotifier.name;
+    final nickNameController = useTextEditingController();
+    nickNameController.text = meNotifier.nickname;
+    final emailController = useTextEditingController();
+    emailController.text = meNotifier.email;
+    final promoController = useTextEditingController();
+    promoController.text = meNotifier.promo.toString();
+    final floorController = useTextEditingController();
+    floorController.text = meNotifier.floor.toString();
     return Expanded(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -21,31 +36,33 @@ class SettingsForm extends HookConsumerWidget {
           children: [
             UserFieldModifier(
               label: "Prénom",
-              value: me.firstname,
+              controller: firstNameController,
               keyboardType: TextInputType.text,
             ),
             UserFieldModifier(
-                label: "Nom", value: me.name, keyboardType: TextInputType.text),
+                label: "Nom",
+                controller: nameController,
+                keyboardType: TextInputType.text),
             UserFieldModifier(
                 label: "Surnom",
-                value: me.nickname,
+                controller: nickNameController,
                 keyboardType: TextInputType.text),
             UserFieldModifier(
                 label: "Email",
-                value: me.email,
+                controller: emailController,
                 keyboardType: TextInputType.emailAddress),
             UserFieldModifier(
                 label: "Promo",
-                value: me.promo.toString(),
+                controller: promoController,
                 keyboardType: TextInputType.number), //! Surement pas modifiable
             UserFieldModifier(
                 label: "Étage",
-                value: me.floor,
+                controller: floorController,
                 keyboardType: TextInputType.text),
-            UserFieldModifier(
-                label: "Type de compte",
-                value: me.groups.map((e) => e.name).join(', '),
-                keyboardType: TextInputType.text), //! pas modifiable
+            // UserFieldModifier(
+            //     label: "Type de compte",
+            //     controller: ,
+            //     keyboardType: TextInputType.text), //! pas modifiable
             Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
@@ -64,7 +81,7 @@ class SettingsForm extends HookConsumerWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => _selectDate(context, me, ref),
+                        onTap: () => _selectDate(context, meNotifier, ref),
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width * 0.45,
                           child: AbsorbPointer(
@@ -100,8 +117,40 @@ class SettingsForm extends HookConsumerWidget {
                     ])),
             UserFieldModifier(
                 label: "Id",
-                value: me.id,
-                keyboardType: TextInputType.text), //! Même pas visible
+                keyboardType: TextInputType.text,
+                controller: idController,), //! Même pas visible
+            ElevatedButton(
+              onPressed: () {
+                ref.read(userProvider.notifier).updateUser(
+                  meNotifier.copyWith(
+                    birthday: dateController.value.text,
+                    id: idController.value.text,
+                    firstname: firstNameController.value.text,
+                    name: nameController.value.text,
+                    nickname: nickNameController.value.text,
+                    email: emailController.value.text,
+                    promo: int.parse(promoController.value.text),
+                    floor: floorController.value.text,
+                  )).then((value) =>
+                    value.when(
+                      data: (d) => displayToast(context, TypeMsg.msg, "Profil modifié"),
+                      error: (e, s) => displayToast(context, TypeMsg.error, "Erreur lors de la modification du profil"),
+                      loading: () {},
+                    )
+                );
+              },
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: const Text(
+                  "Enregistrer",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Color.fromARGB(255, 158, 158, 158),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

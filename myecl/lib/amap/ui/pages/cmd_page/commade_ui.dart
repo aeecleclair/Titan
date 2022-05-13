@@ -52,7 +52,7 @@ class OrderUi extends ConsumerWidget {
               Expanded(
                 child: Text(
                   "Date : " +
-                      c.date.day.toString() +
+                      c.date.day.toString().padLeft(2, "0") +
                       "/" +
                       c.date.month.toString().padLeft(2, "0") +
                       "/" +
@@ -148,7 +148,7 @@ class OrderUi extends ConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   c.products.length.toString() +
-                      " Product" +
+                      " produit" +
                       (c.products.length != 1 ? "s" : ""),
                   style: const TextStyle(
                       fontSize: 18,
@@ -224,12 +224,12 @@ class OrderUi extends ConsumerWidget {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) => CustomDialogBox(
-                                descriptions: "Supprimer la Order ?",
+                                descriptions: "Supprimer la commande ?",
                                 title: "Suppression",
                                 onYes: () {
                                   deleteCmd(ref, i);
                                   displayToast(
-                                      context, TypeMsg.msg, "Order supprimée");
+                                      context, TypeMsg.msg, "Commande supprimée");
                                 }));
                       },
                     )

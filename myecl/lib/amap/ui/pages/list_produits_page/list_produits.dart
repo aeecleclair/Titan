@@ -21,7 +21,7 @@ class ListProducts extends HookConsumerWidget {
         duration: const Duration(milliseconds: 200), initialValue: 1);
 
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
-    final products = ref.watch(productListProvider);
+    final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
     final pageController = ref.watch(amapPageControllerProvider);
     final categories = ref.watch(categoryListProvider);
 

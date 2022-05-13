@@ -15,7 +15,7 @@ class CategoryListNotifier extends StateNotifier<List<String>> {
 
 final categoryListProvider =
     StateNotifierProvider<CategoryListNotifier, List<String>>((ref) {
-  final products = ref.watch(productListProvider);
+  final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
 
   return CategoryListNotifier([
     ...{...products.map((e) => e.categorie)}

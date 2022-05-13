@@ -14,7 +14,7 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final products = ref.watch(productListProvider);
+    final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
     final categories = ref.watch(categoryListProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final productModif = ref.read(modifiedProductProvider.notifier);
@@ -64,7 +64,7 @@ class AdminPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   GestureDetector(
-                      child: const GreenBtn(text: "Ajouter un Product"),
+                      child: const GreenBtn(text: "Ajouter un produit"),
                       onTap: () {
                         productModif.setModifiedProduct(-1);
                         pageNotifier.setAmapPage(4);

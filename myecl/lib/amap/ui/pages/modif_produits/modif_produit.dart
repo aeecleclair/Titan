@@ -1,6 +1,7 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/modified_product_index_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
@@ -10,6 +11,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/modif_produits/text_entry.dart';
+import 'package:uuid/uuid.dart';
 
 class ModifProduct extends HookConsumerWidget {
   const ModifProduct({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class ModifProduct extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final _formKey = GlobalKey<FormState>();
     final productsNotifier = ref.watch(productListProvider.notifier);
-    final products = ref.watch(productListProvider);
+    final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final productModif = ref.watch(modifiedProductProvider);
     final modifProduct = productModif != -1;
@@ -225,20 +227,23 @@ class ModifProduct extends HookConsumerWidget {
                                           ? nouvelleCategorie.text
                                           : categorieController;
 
+                                        Product newProduct = Product(
+                                          id: products[productModif].id,
+                                          nom: nomController.text,
+                                          prix: double.parse(
+                                              prixController.text),
+                                          categorie: cate,
+                                          quantite: 0,
+                                        );
                                       if (modifProduct) {
                                         productsNotifier.updateProduct(
-                                            products[productModif].id,
-                                            nomController.text,
-                                            double.parse(prixController.text),
-                                            cate);
+                                            newProduct.id, newProduct);
 
                                         displayToast(context, TypeMsg.msg,
                                             "Product modifié");
                                       } else {
-                                        productsNotifier.addProduct(
-                                            nomController.text,
-                                            double.parse(prixController.text),
-                                            cate);
+                                        newProduct.id = const Uuid().v4();
+                                        productsNotifier.addProduct(newProduct);
 
                                         displayToast(context, TypeMsg.msg,
                                             "Product ajouté");

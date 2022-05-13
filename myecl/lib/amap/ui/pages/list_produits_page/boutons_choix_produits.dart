@@ -17,7 +17,7 @@ class Boutons extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final products = ref.read(productListProvider);
+    final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
     final cmds = ref.read(orderListProvider);
     final cmdsNotifier = ref.watch(orderListProvider.notifier);
     final indexCmd = ref.watch(orderIndexProvider);
