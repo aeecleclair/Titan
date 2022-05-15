@@ -13,7 +13,8 @@ class Dots extends HookConsumerWidget {
     final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
     final pageController = ref.watch(amapPageControllerProvider);
     int len = {...products.map((e) => e.category)}.length;
-    return SmoothPageIndicator(
+    return len > 0
+    ? SmoothPageIndicator(
       controller: pageController,
       count: len,
       effect: WormEffect(
@@ -26,6 +27,7 @@ class Dots extends HookConsumerWidget {
             duration: const Duration(milliseconds: 500),
             curve: Curves.decelerate);
       },
-    );
+    )
+    : const SizedBox();
   }
 }

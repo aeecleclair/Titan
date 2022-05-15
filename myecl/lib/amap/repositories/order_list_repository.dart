@@ -17,7 +17,8 @@ class OrderListRepository {
       final data = json.decode(response.body);
       return data.map<Order>((json) => Order.fromJson(json)).toList();
     } else {
-      throw Exception('Failed to load orders');
+      final data = json.decode(response.body);
+      throw Exception(data.get('detail'));
     }
   }
 
@@ -27,7 +28,8 @@ class OrderListRepository {
     if (response.statusCode == 200) {
       return true;
     } else {
-      throw Exception("Failed to update orders");
+      final data = json.decode(response.body);
+      throw Exception(data.get('detail'));
     }
   }
 
@@ -37,7 +39,8 @@ class OrderListRepository {
     if (response.statusCode == 200) {
       return true;
     } else {
-      throw Exception("Failed to delete orders");
+      final data = json.decode(response.body);
+      throw Exception(data.get('detail'));
     }
   }
 
@@ -47,7 +50,8 @@ class OrderListRepository {
     if (response.statusCode == 200) {
       return Order.fromJson(json.decode(response.body));
     } else {
-      throw Exception("Failed to load orders");
+      final data = json.decode(response.body);
+      throw Exception(data.get('detail'));
     }
   }
 
@@ -57,7 +61,8 @@ class OrderListRepository {
     if (response.statusCode == 201) {
       return true;
     } else {
-      throw Exception("Failed to create orders");
+      final data = json.decode(response.body);
+      throw Exception(data.get('detail'));
     }
   }
 }

@@ -11,6 +11,10 @@ class UserRepository {
     "Accept": "application/json",
   };
 
+  void setToken(String token) {
+    headers["Authorization"] = "Bearer $token";
+  }
+
   Future<List<SimpleUser>> getAllUsers() async {
     final response =
         await http.get(Uri.parse(host + "users/"), headers: headers);

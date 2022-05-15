@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/user/class/user.dart';
+import 'package:myecl/user/providers/auth_token_provider.dart';
 import 'package:myecl/user/providers/user_id_provider.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
 
@@ -7,6 +9,10 @@ class UserNotifier extends StateNotifier<AsyncValue<User>> {
   final UserRepository _userRepository = UserRepository();
   User lastLoadedUser = User.empty();
   UserNotifier() : super(const AsyncValue.loading());
+
+  void setToken(String token) {
+    _userRepository.setToken(token);
+  }
 
   void setUser(User user) {
     try {
@@ -46,6 +52,7 @@ class UserNotifier extends StateNotifier<AsyncValue<User>> {
 final userProvider =
     StateNotifierProvider<UserNotifier, AsyncValue<User>>((ref) {
   UserNotifier _userNotifier = UserNotifier();
+  _userNotifier.setToken(ref.read(authTokenProvider));
   _userNotifier.loadUser(ref.watch(userIdProvider));
   return _userNotifier;
 });
