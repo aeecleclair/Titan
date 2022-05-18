@@ -4,7 +4,6 @@ import 'package:myecl/user/repositories/user_list_repository.dart';
 
 final userListRepositoryProvider = Provider((ref) {
   UserListRepository _userListRepository = UserListRepository();
-  _userListRepository.setToken(ref.read(authTokenProvider));
   return _userListRepository;
 });
 

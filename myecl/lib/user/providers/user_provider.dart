@@ -10,9 +10,6 @@ class UserNotifier extends StateNotifier<AsyncValue<User>> {
   User lastLoadedUser = User.empty();
   UserNotifier() : super(const AsyncValue.loading());
 
-  void setToken(String token) {
-    _userRepository.setToken(token);
-  }
 
   void setUser(User user) {
     try {
@@ -52,7 +49,6 @@ class UserNotifier extends StateNotifier<AsyncValue<User>> {
 final userProvider =
     StateNotifierProvider<UserNotifier, AsyncValue<User>>((ref) {
   UserNotifier _userNotifier = UserNotifier();
-  _userNotifier.setToken(ref.read(authTokenProvider));
   _userNotifier.loadUser(ref.watch(userIdProvider));
   return _userNotifier;
 });

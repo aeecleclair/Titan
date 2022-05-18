@@ -11,9 +11,6 @@ class UserRepository {
     "Accept": "application/json",
   };
 
-  void setToken(String token) {
-    headers["Authorization"] = "Bearer $token";
-  }
 
   Future<List<SimpleUser>> getAllUsers() async {
     final response =
