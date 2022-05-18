@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
-import 'package:myecl/login/ui/test_from_decoration.dart';
+import 'package:myecl/login/ui/text_from_decoration.dart';
 
 class Register extends StatelessWidget {
   const Register({Key? key, required this.onSignInPressed}) : super(key: key);
@@ -20,7 +20,12 @@ class Register extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Create\nAccount',
+                  'Créer\nun compte',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -35,7 +40,7 @@ class Register extends StatelessWidget {
                           fontSize: 18,
                           color: Colors.white,
                         ),
-                        decoration: registerInputDecoration(hintText: 'Email')),
+                        decoration: registerInputDecoration(hintText: 'Mail')),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -44,11 +49,11 @@ class Register extends StatelessWidget {
                         fontSize: 18,
                         color: Colors.white,
                       ),
-                      decoration: registerInputDecoration(hintText: 'Password'),
+                      decoration: registerInputDecoration(hintText: 'Mot de passe'),
                     ),
                   ),
                   SignUpBar(
-                    label: 'Sign up',
+                    label: 'Créer',
                     isLoading: true,
                     onPressed: () {
                     },
@@ -58,9 +63,10 @@ class Register extends StatelessWidget {
                     child: InkWell(
                       splashColor: Colors.white,
                       onTap: () {
+                        onSignInPressed();
                       },
                       child: const Text(
-                        'Sign in',
+                        'Se connecter',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,

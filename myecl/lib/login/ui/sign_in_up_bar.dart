@@ -89,13 +89,16 @@ class _LoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 100),
-      child: Visibility(
-        visible: isLoading,
-        child: const LinearProgressIndicator(
-          backgroundColor:ColorConstants.darkBlue,
-          color: ColorConstants.darkOrange,
+      child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Visibility(
+          visible: isLoading,
+          child: const LinearProgressIndicator(
+            backgroundColor:ColorConstants.darkBlue,
+            color: ColorConstants.darkOrange,
+          ),
         ),
-      ),
+      )
     );
   }
 }

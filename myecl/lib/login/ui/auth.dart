@@ -5,13 +5,12 @@ import 'package:myecl/login/ui/background_painter.dart';
 import 'package:myecl/login/ui/reigster.dart';
 import 'package:myecl/login/ui/sign_in.dart';
 
-class AuthScreen extends StatelessWidget {
-  AuthScreen({Key? key}) : super(key: key);
-
-  final ValueNotifier<bool> _showSignInPage = useValueNotifier(true);
+class AuthScreen extends HookWidget {
+  const AuthScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<bool> _showSignInPage = useValueNotifier(true);
     AnimationController _controller =
         useAnimationController(duration: const Duration(seconds: 2));
     return Scaffold(
@@ -20,7 +19,7 @@ class AuthScreen extends StatelessWidget {
           SizedBox.expand(
             child: CustomPaint(
               painter: BackgroundPainter(
-                animation: _controller.view,
+                animation: _controller,
               ),
             ),
           ),

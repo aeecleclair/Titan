@@ -13,9 +13,12 @@ class AuthTokenProvider extends StateNotifier<AsyncValue<String>> {
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
   String lastToken = "";
   String tokenName = "my_ecl_auth_token";
+  bool isLoggedIn = false;
+  bool loading = false;
   AuthTokenProvider() : super(const AsyncValue.loading());
 
-  void getTokenFromRequest(String username, String password) async {
+  Future<AsyncValue> getTokenFromRequest(String username, String password) async {
+    loading = true;
     try {
       final token = await _authTokenRepository.getToken(username, password);
       state = AsyncValue.data(token);
@@ -23,9 +26,13 @@ class AuthTokenProvider extends StateNotifier<AsyncValue<String>> {
     } catch (e) {
       state = AsyncValue.error(e);
     }
+    shouldRefreshToken();
+    loading = false;
+    return state;
   }
 
   void getTokenFromStorage() {
+    loading = true;
     _secureStorage.read(key: tokenName).then((token) {
       if (token != null) {
         state = AsyncValue.data(token);
@@ -34,22 +41,25 @@ class AuthTokenProvider extends StateNotifier<AsyncValue<String>> {
         state = AsyncValue.error(Exception("No token in storage"));
       }
     });
+    shouldRefreshToken();
+    loading = false;
   }
 
   void storeToken() {
-    _secureStorage.write(key: tokenName, value: lastToken);
+    // ! Pour les tests, il faut décommenter la ligne suivante à la fin
+    // _secureStorage.write(key: tokenName, value: lastToken);
   }
 
-  Future<bool> souldRefreshToken() async {
+  void shouldRefreshToken() {
     return state.when(
       data: (token) {
-        return JwtDecoder.isExpired(token);
+        isLoggedIn = JwtDecoder.isExpired(token);
       },
       error: (e, s) {
-        return true;
+        isLoggedIn = true;
       },
       loading: () {
-        return true;
+        isLoggedIn = true;
       },
     );
   }
