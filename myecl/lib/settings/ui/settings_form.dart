@@ -35,16 +35,16 @@ class SettingsForm extends HookConsumerWidget {
         child: Column(
           children: [
             UserFieldModifier(
-              label: "Préname",
+              label: "Prénom",
               controller: firstNameController,
               keyboardType: TextInputType.text,
             ),
             UserFieldModifier(
-                label: "name",
+                label: "Nom",
                 controller: nameController,
                 keyboardType: TextInputType.text),
             UserFieldModifier(
-                label: "Surname",
+                label: "Surnom",
                 controller: nickNameController,
                 keyboardType: TextInputType.text),
             UserFieldModifier(
@@ -52,7 +52,7 @@ class SettingsForm extends HookConsumerWidget {
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress),
             UserFieldModifier(
-                label: "Promo",
+                label: "Promotion",
                 controller: promoController,
                 keyboardType: TextInputType.number), //! Surement pas modifiable
             UserFieldModifier(
@@ -66,30 +66,31 @@ class SettingsForm extends HookConsumerWidget {
             Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                child: Row(
+                child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.25,
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(bottom: 3),
+                        padding: const EdgeInsets.only(left: 10),
                         child: const Text(
                           "Date de naissance",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w400,
                             color: Color.fromARGB(255, 158, 158, 158),
                           ),
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => _selectDate(context, meNotifier, ref),
+                        onTap: () => _selectDate(context, meNotifier, dateController),
                         child: SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.45,
                           child: AbsorbPointer(
                             child: TextFormField(
                               controller: dateController,
                               // initialValue: dateController.value.text,
                               decoration: const InputDecoration(
-                                icon: Icon(Icons.calendar_today),
                                 contentPadding: EdgeInsets.all(10),
                                 isDense: true,
                                 enabledBorder: UnderlineInputBorder(
@@ -110,18 +111,23 @@ class SettingsForm extends HookConsumerWidget {
                                 }
                                 return null;
                               },
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ])),
-            UserFieldModifier(
-              label: "Id",
-              keyboardType: TextInputType.text,
-              controller: idController,
-            ), //! Même pas visible
-            ElevatedButton(
-              onPressed: () {
+            // UserFieldModifier(
+            //   label: "Id",
+            //   keyboardType: TextInputType.text,
+            //   controller: idController,
+            // ), //! Même pas visible
+            GestureDetector(
+              onTap: () {
                 ref
                     .read(userProvider.notifier)
                     .updateUser(meNotifier.copyWith(
@@ -142,14 +148,28 @@ class SettingsForm extends HookConsumerWidget {
                           loading: () {},
                         ));
               },
-              child: SizedBox(
+              child: Container(
                 width: MediaQuery.of(context).size.width * 0.5,
+                margin: const EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color.fromARGB(255, 53, 165, 209),
+                      Color.fromARGB(255, 23, 138, 238),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(23),
+                ),
                 child: const Text(
                   "Enregistrer",
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Color.fromARGB(255, 158, 158, 158),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromARGB(255, 255, 255, 255),
                   ),
                 ),
               ),
@@ -160,16 +180,14 @@ class SettingsForm extends HookConsumerWidget {
     );
   }
 
-  _selectDate(BuildContext context, User me, WidgetRef ref) async {
-    final meNotifier = ref.watch(userProvider.notifier);
+  _selectDate(BuildContext context, User me, TextEditingController dateController) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: DateTime.parse(me.birthday),
         firstDate: DateTime(1900),
         lastDate: DateTime.now());
-    meNotifier.updateUser(me.copyWith(
-        birthday: picked == null
+    dateController.text = picked == null
             ? me.birthday
-            : DateFormat('yyyy-MM-dd').format(picked)));
+            : DateFormat('yyyy-MM-dd').format(picked);
   }
 }

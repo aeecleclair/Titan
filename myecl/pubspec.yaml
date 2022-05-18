@@ -1,7 +1,7 @@
 name: myecl
 description: A new Flutter project.
 
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.2
+  animations: ^2.0.2
   datetime_picker_formfield: ^2.0.0
   flash: ^2.0.3+2
   flutter:
@@ -31,7 +32,6 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
-
   assets:
     - assets/images/test3.jpg
 

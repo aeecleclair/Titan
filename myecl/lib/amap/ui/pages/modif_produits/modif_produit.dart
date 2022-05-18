@@ -63,7 +63,7 @@ class ModifProduct extends HookConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  "name",
+                                  "Nom",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 20,
@@ -89,7 +89,7 @@ class ModifProduct extends HookConsumerWidget {
                                   height: 30,
                                 ),
                                 const Text(
-                                  "price",
+                                  "Prix",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 20,
@@ -103,7 +103,7 @@ class ModifProduct extends HookConsumerWidget {
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Veuillez remplir ce champ';
-                                      } else if (double.tryParse(value) ==
+                                      } else if (double.tryParse(value.replaceAll(',', '.')) ==
                                           null) {
                                         return 'Un namebre est attendu';
                                       }
@@ -226,36 +226,57 @@ class ModifProduct extends HookConsumerWidget {
                                               TextConstants.creercategory
                                           ? nouvellecategory.text
                                           : categoryController;
-
-                                      Product newProduct = Product(
-                                        id: products[productModif].id,
-                                        name: nameController.text,
-                                        price:
-                                            double.parse(priceController.text),
-                                        category: cate,
-                                        quantity: 0,
-                                      );
                                       if (modifProduct) {
-                                        productsNotifier.updateProduct(
-                                            newProduct.id, newProduct);
+                                        Product newProduct = Product(
+                                          id: products[productModif].id,
+                                          name: nameController.text,
+                                          price: double.parse(
+                                              priceController.text.replaceAll(
+                                                  ',', '.')),
+                                          category: cate,
+                                          quantity: 0,
+                                        );
+                                        productsNotifier
+                                            .updateProduct(
+                                                newProduct.id, newProduct)
+                                            .then((value) {
+                                          if (value) {
+                                            displayToast(context, TypeMsg.msg,
+                                                "Product modifié");
+                                          } else {
+                                            displayToast(context, TypeMsg.error,
+                                                "Erreur lors de la modification du produit");
+                                          }
+                                          pageNotifier.setAmapPage(3);
 
-                                        displayToast(context, TypeMsg.msg,
-                                            "Product modifié");
+                                          nameController.clear();
+                                          priceController.clear();
+                                          categoryNotifier.setText(
+                                              TextConstants.creercategory);
+                                          nouvellecategory.clear();
+                                        });
                                       } else {
-                                        newProduct.id = const Uuid().v4();
-                                        productsNotifier.addProduct(newProduct);
-
-                                        displayToast(context, TypeMsg.msg,
-                                            "Product ajouté");
+                                        Product newProduct = Product(
+                                          id: const Uuid().v4(),
+                                          name: nameController.text,
+                                          price: double.parse(
+                                              priceController.text.replaceAll(
+                                                  ',', '.')),
+                                          category: cate,
+                                          quantity: 0,
+                                        );
+                                        productsNotifier
+                                            .addProduct(newProduct)
+                                            .then((value) {
+                                          if (value) {
+                                            displayToast(context, TypeMsg.msg,
+                                                "Product ajouté");
+                                          } else {
+                                            displayToast(context, TypeMsg.error,
+                                                "Erreur lors de la modification du produit");
+                                          }
+                                        });
                                       }
-
-                                      pageNotifier.setAmapPage(3);
-
-                                      nameController.clear();
-                                      priceController.clear();
-                                      categoryNotifier
-                                          .setText(TextConstants.creercategory);
-                                      nouvellecategory.clear();
                                     }
                                   },
                                 ),

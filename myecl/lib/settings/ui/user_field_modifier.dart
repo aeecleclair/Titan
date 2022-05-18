@@ -15,23 +15,24 @@ class UserFieldModifier extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             alignment: Alignment.centerLeft,
-            width: MediaQuery.of(context).size.width * 0.25,
+            margin: const EdgeInsets.only(bottom: 3),
+            padding: const EdgeInsets.only(left: 10),
             child: Text(
               label,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: Color.fromARGB(255, 158, 158, 158),
               ),
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.45,
             child: TextFormField(
               controller: controller,
               keyboardType: keyboardType,
@@ -52,7 +53,7 @@ class UserFieldModifier extends StatelessWidget {
               ),
               style: const TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
                 color: Color.fromARGB(255, 0, 0, 0),
               ),
             ),

@@ -18,21 +18,22 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
     return state;
   }
 
-  Future<AsyncValue<List<Product>>> addProduct(Product product) async {
+  Future<bool> addProduct(Product product) async {
     try {
       if (await _productListRepository.createProduct(product)) {
         lastLoadedProducts.add(product);
         state = AsyncValue.data(lastLoadedProducts);
+        return true;
       } else {
         state = AsyncValue.error(Exception("Failed to add product"));
       }
     } catch (e) {
       state = AsyncValue.error(e);
     }
-    return state;
+    return false;
   }
 
-  Future<AsyncValue<List<Product>>> updateProduct(
+  Future<bool> updateProduct(
       String productId, Product product) async {
     try {
       if (await _productListRepository.updateProduct(productId, product)) {
@@ -42,52 +43,56 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
             1,
             [product]);
         state = AsyncData(lastLoadedProducts);
+        return true;
       } else {
         state = AsyncValue.error(Exception("Failed to update product"));
       }
     } catch (e) {
       state = AsyncValue.error(e);
     }
-    return state;
+    return false;
   }
 
-  Future<AsyncValue<List<Product>>> deleteProduct(String productId) async {
+  Future<bool> deleteProduct(String productId) async {
     try {
       if (await _productListRepository.deleteProduct(productId)) {
         lastLoadedProducts.remove(lastLoadedProducts
             .firstWhere((element) => element.id == productId));
         state = AsyncData(lastLoadedProducts);
+        return true;
       } else {
         state = AsyncValue.error(Exception("Failed to delete product"));
       }
     } catch (e) {
       state = AsyncValue.error(e);
     }
-    return state;
+    return false;
   }
 
-  Future<AsyncValue<List<Product>>> setQuantity(String productId, int i) async {
+  Future<bool> setQuantity(String productId, int i) async {
     try {
       lastLoadedProducts
           .firstWhere((element) => element.id == productId)
           .quantity = i;
       state = AsyncData(lastLoadedProducts);
+      return true;
     } catch (e) {
       state = AsyncValue.error(e);
     }
-    return state;
+    return false;
   }
 
-  Future<AsyncValue<List<Product>>> resetQuantity() async {
+  Future<bool> resetQuantity() async {
     try {
       for (var element in lastLoadedProducts) {
         element.quantity = 0;
       }
       state = AsyncData(lastLoadedProducts);
+      return true;
     } catch (e) {
       state = AsyncValue.error(e);
     }
-    return state;
+    return false;
   }
 }
 
