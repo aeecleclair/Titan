@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:myecl/user/providers/auth_token_provider.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class TopBar extends ConsumerWidget {
@@ -14,6 +16,10 @@ class TopBar extends ConsumerWidget {
       loading: () => meNotifier.lastLoadedUser,
       error: (e, s) => meNotifier.lastLoadedUser,
     );
+    final auth = ref.watch(authTokenProvider.notifier);
+    if (ref.watch(isLoggedInProvider)) {
+      meNotifier.loadUser(user.id);
+    }
     return Column(
       children: [
         Container(
@@ -54,6 +60,27 @@ class TopBar extends ConsumerWidget {
                           ))
                     ]),
               ],
+            ),
+            GestureDetector(
+              onTap: () {
+                auth.deleteToken();
+              },
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width: 50,
+                    height: 40,
+                    child: FaIcon(
+                      FontAwesomeIcons.rightFromBracket,
+                      color: Colors.grey.shade100,
+                      size: 30,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         )

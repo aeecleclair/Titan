@@ -13,17 +13,13 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authTokenProvider.notifier);
-    auth.getTokenFromStorage();
-    auth.shouldRefreshToken();
+    final isLoggedIn = ref.watch(isLoggedInProvider);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'MyECL',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: auth.isLoggedIn
-        ? const AppDrawer()
-        : const AuthScreen());
+        home: isLoggedIn ? const AppDrawer() : const AuthScreen());
   }
 }

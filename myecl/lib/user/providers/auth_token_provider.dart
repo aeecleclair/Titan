@@ -5,62 +5,100 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 final authTokenProvider =
     StateNotifierProvider<AuthTokenProvider, AsyncValue<String>>((ref) {
-  return AuthTokenProvider();
+  AuthTokenProvider _authProvider = AuthTokenProvider();
+  _authProvider.getTokenFromStorage();
+  return _authProvider;
+});
+
+final isLoggedInProvider = Provider((ref) {
+  return ref.watch(authTokenProvider).when(
+    data: (token) {
+      return token.isEmpty ? false : !JwtDecoder.isExpired(token);
+    },
+    error: (e, s) {
+      return false;
+    },
+    loading: () {
+      return false;
+    },
+  );
+});
+
+final loadingrovider = Provider((ref) {
+  return ref.watch(authTokenProvider).when(
+    data: (token) {
+      return token.isNotEmpty;
+    },
+    error: (e, s) {
+      return false;
+    },
+    loading: () {
+      return true;
+    },
+  );
+});
+
+final idProvider = Provider((ref) {
+  return ref.watch(authTokenProvider).when(
+    data: (token) {
+      return token.isEmpty ? null : JwtDecoder.decode(token)["sub"];
+    },
+    error: (e, s) {
+      return null;
+    },
+    loading: () {
+      return null;
+    },
+  );
 });
 
 class AuthTokenProvider extends StateNotifier<AsyncValue<String>> {
   final _authTokenRepository = AuthTokenRepository();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
-  String lastToken = "";
   String tokenName = "my_ecl_auth_token";
-  bool isLoggedIn = false;
-  bool loading = false;
   AuthTokenProvider() : super(const AsyncValue.loading());
 
-  Future<AsyncValue> getTokenFromRequest(String username, String password) async {
-    loading = true;
+  Future<AsyncValue> getTokenFromRequest(
+      String username, String password) async {
+    state = const AsyncValue.loading();
     try {
       final token = await _authTokenRepository.getToken(username, password);
       state = AsyncValue.data(token);
-      lastToken = token;
     } catch (e) {
       state = AsyncValue.error(e);
     }
-    shouldRefreshToken();
-    loading = false;
     return state;
   }
 
   void getTokenFromStorage() {
-    loading = true;
+    state = const AsyncValue.loading();
     _secureStorage.read(key: tokenName).then((token) {
       if (token != null) {
         state = AsyncValue.data(token);
-        lastToken = token;
       } else {
         state = AsyncValue.error(Exception("No token in storage"));
       }
     });
-    shouldRefreshToken();
-    loading = false;
   }
 
   void storeToken() {
     // ! Pour les tests, il faut décommenter la ligne suivante à la fin
-    // _secureStorage.write(key: tokenName, value: lastToken);
+    state.when(
+        data: (token) => _secureStorage.write(key: tokenName, value: token),
+        error: (e, s) {
+          print("Error while storing token");
+        },
+        loading: () {
+          print("Loading while storing token");
+        });
   }
 
-  void shouldRefreshToken() {
-    return state.when(
-      data: (token) {
-        isLoggedIn = JwtDecoder.isExpired(token);
-      },
-      error: (e, s) {
-        isLoggedIn = true;
-      },
-      loading: () {
-        isLoggedIn = true;
-      },
-    );
+  void deleteToken() {
+    try {
+      _secureStorage.delete(key: tokenName);
+      state = const AsyncValue.data("");
+    } catch (e) {
+      state = AsyncValue.error(e);
+    }
   }
 }

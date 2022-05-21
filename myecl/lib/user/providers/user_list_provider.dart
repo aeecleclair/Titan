@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/user/providers/auth_token_provider.dart';
 import 'package:myecl/user/repositories/user_list_repository.dart';
 
 final userListRepositoryProvider = Provider((ref) {

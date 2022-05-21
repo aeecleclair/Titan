@@ -53,9 +53,9 @@ class User {
   }
 
   User.empty() {
-    name = 'name';
-    firstname = 'Préname';
-    nickname = 'Surname';
+    name = 'Nom';
+    firstname = 'Prénom';
+    nickname = 'Surnom';
     id = '';
     email = '';
     birthday = '';

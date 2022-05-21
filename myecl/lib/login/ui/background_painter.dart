@@ -40,7 +40,7 @@ class BackgroundPainter extends CustomPainter {
           ..color = ColorConstants.orange
           ..style = PaintingStyle.fill,
         linePaint = Paint()
-          ..color = Color.fromRGBO(255, 183, 77, 1)
+          ..color = const Color.fromRGBO(255, 183, 77, 1)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 4,
         liquidAnim = CurvedAnimation(

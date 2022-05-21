@@ -12,7 +12,9 @@ class SettingsForm extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final meNotifier = ref.watch(userProvider.notifier).lastLoadedUser;
+    final userNotifier = ref.read(userProvider.notifier);
+    final meNotifier = userNotifier.lastLoadedUser;
+    final user = ref.read(userProvider);
     final dateController = useTextEditingController();
     dateController.text = meNotifier.birthday;
     final idController = useTextEditingController();
@@ -84,7 +86,8 @@ class SettingsForm extends HookConsumerWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => _selectDate(context, meNotifier, dateController),
+                        onTap: () =>
+                            _selectDate(context, meNotifier, dateController),
                         child: SizedBox(
                           child: AbsorbPointer(
                             child: TextFormField(
@@ -128,25 +131,23 @@ class SettingsForm extends HookConsumerWidget {
             // ), //! Même pas visible
             GestureDetector(
               onTap: () {
-                ref
-                    .read(userProvider.notifier)
-                    .updateUser(meNotifier.copyWith(
-                      birthday: dateController.value.text,
-                      id: idController.value.text,
-                      firstname: firstNameController.value.text,
-                      name: nameController.value.text,
-                      nickname: nickNameController.value.text,
-                      email: emailController.value.text,
-                      promo: int.parse(promoController.value.text),
-                      floor: floorController.value.text,
-                    ))
-                    .then((value) => value.when(
-                          data: (d) => displayToast(
-                              context, TypeMsg.msg, "Profil modifié"),
-                          error: (e, s) => displayToast(context, TypeMsg.error,
-                              "Erreur lors de la modification du profil"),
-                          loading: () {},
-                        ));
+                userNotifier.updateUser(meNotifier.copyWith(
+                  birthday: dateController.value.text,
+                  id: idController.value.text,
+                  firstname: firstNameController.value.text,
+                  name: nameController.value.text,
+                  nickname: nickNameController.value.text,
+                  email: emailController.value.text,
+                  promo: int.parse(promoController.value.text),
+                  floor: floorController.value.text,
+                ));
+                user.when(
+                  data: (d) =>
+                      displayToast(context, TypeMsg.msg, "Profil modifié"),
+                  error: (e, s) => displayToast(context, TypeMsg.error,
+                      "Erreur lors de la modification du profil"),
+                  loading: () {},
+                );
               },
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.5,
@@ -180,14 +181,14 @@ class SettingsForm extends HookConsumerWidget {
     );
   }
 
-  _selectDate(BuildContext context, User me, TextEditingController dateController) async {
+  _selectDate(BuildContext context, User me,
+      TextEditingController dateController) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: DateTime.parse(me.birthday),
         firstDate: DateTime(1900),
         lastDate: DateTime.now());
-    dateController.text = picked == null
-            ? me.birthday
-            : DateFormat('yyyy-MM-dd').format(picked);
+    dateController.text =
+        picked == null ? me.birthday : DateFormat('yyyy-MM-dd').format(picked);
   }
 }

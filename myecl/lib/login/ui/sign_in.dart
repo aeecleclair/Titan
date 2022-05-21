@@ -55,7 +55,7 @@ class SignIn extends HookConsumerWidget {
                                 hintText: "Mot de passe"),
                             controller: password,)),
                     SignInBar(
-                      isLoading: auth.loading,
+                      isLoading: ref.watch(loadingrovider),
                       label: "Se connecter",
                       onPressed: () {
                         auth.getTokenFromRequest(username.text, password.text).then((value) =>
