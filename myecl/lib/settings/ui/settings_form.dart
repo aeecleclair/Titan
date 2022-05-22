@@ -12,25 +12,25 @@ class SettingsForm extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userNotifier = ref.read(userProvider.notifier);
-    final meNotifier = userNotifier.lastLoadedUser;
-    final user = ref.read(userProvider);
+    final asyncUserNotifier = ref.read(asyncUserProvider.notifier);
+    final user = ref.watch(userProvider);
+    final asyncUser = ref.read(asyncUserProvider);
     final dateController = useTextEditingController();
-    dateController.text = meNotifier.birthday;
+    dateController.text = user.birthday;
     final idController = useTextEditingController();
-    idController.text = meNotifier.id;
+    idController.text = user.id;
     final firstNameController = useTextEditingController();
-    firstNameController.text = meNotifier.firstname;
+    firstNameController.text = user.firstname;
     final nameController = useTextEditingController();
-    nameController.text = meNotifier.name;
+    nameController.text = user.name;
     final nickNameController = useTextEditingController();
-    nickNameController.text = meNotifier.nickname;
+    nickNameController.text = user.nickname;
     final emailController = useTextEditingController();
-    emailController.text = meNotifier.email;
+    emailController.text = user.email;
     final promoController = useTextEditingController();
-    promoController.text = meNotifier.promo.toString();
+    promoController.text = user.promo.toString();
     final floorController = useTextEditingController();
-    floorController.text = meNotifier.floor.toString();
+    floorController.text = user.floor.toString();
     return Expanded(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -61,10 +61,6 @@ class SettingsForm extends HookConsumerWidget {
                 label: "Étage",
                 controller: floorController,
                 keyboardType: TextInputType.text),
-            // UserFieldModifier(
-            //     label: "Type de compte",
-            //     controller: ,
-            //     keyboardType: TextInputType.text), //! pas modifiable
             Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
@@ -86,8 +82,7 @@ class SettingsForm extends HookConsumerWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () =>
-                            _selectDate(context, meNotifier, dateController),
+                        onTap: () => _selectDate(context, user, dateController),
                         child: SizedBox(
                           child: AbsorbPointer(
                             child: TextFormField(
@@ -124,14 +119,9 @@ class SettingsForm extends HookConsumerWidget {
                         ),
                       ),
                     ])),
-            // UserFieldModifier(
-            //   label: "Id",
-            //   keyboardType: TextInputType.text,
-            //   controller: idController,
-            // ), //! Même pas visible
             GestureDetector(
               onTap: () {
-                userNotifier.updateUser(meNotifier.copyWith(
+                asyncUserNotifier.updateUser(user.copyWith(
                   birthday: dateController.value.text,
                   id: idController.value.text,
                   firstname: firstNameController.value.text,
@@ -141,7 +131,7 @@ class SettingsForm extends HookConsumerWidget {
                   promo: int.parse(promoController.value.text),
                   floor: floorController.value.text,
                 ));
-                user.when(
+                asyncUser.when(
                   data: (d) =>
                       displayToast(context, TypeMsg.msg, "Profil modifié"),
                   error: (e, s) => displayToast(context, TypeMsg.error,

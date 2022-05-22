@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:myecl/user/providers/auth_token_provider.dart';
+import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 
 class TopBar extends ConsumerWidget {
   const TopBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final me = ref.watch(userProvider);
-    final meNotifier = ref.watch(userProvider.notifier);
-    final user = me.when(
-      data: (user) => user,
-      loading: () => meNotifier.lastLoadedUser,
-      error: (e, s) => meNotifier.lastLoadedUser,
-    );
+    final asyncUserNotifier = ref.watch(asyncUserProvider.notifier);
+    final user = ref.watch(userProvider);
     final auth = ref.watch(authTokenProvider.notifier);
-    if (ref.watch(isLoggedInProvider)) {
-      meNotifier.loadUser(user.id);
+    if (user != User.empty()) {
+      asyncUserNotifier.loadUser(user.id);
     }
     return Column(
       children: [

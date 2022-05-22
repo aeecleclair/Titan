@@ -1,18 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/providers/auth_token_provider.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
 
 class UserNotifier extends StateNotifier<AsyncValue<User>> {
   final UserRepository _userRepository = UserRepository();
-  User lastLoadedUser = User.empty();
   UserNotifier() : super(const AsyncValue.loading());
 
   void setUser(User user) {
     try {
       state = AsyncValue.data(user);
-      lastLoadedUser = user;
     } catch (e) {
       state = AsyncValue.error(e);
     }
@@ -22,7 +20,6 @@ class UserNotifier extends StateNotifier<AsyncValue<User>> {
     try {
       final user = await _userRepository.getUser(id);
       state = AsyncValue.data(user);
-      lastLoadedUser = user;
     } catch (e) {
       state = AsyncValue.error(e);
     }
@@ -32,7 +29,6 @@ class UserNotifier extends StateNotifier<AsyncValue<User>> {
     try {
       if (await _userRepository.updateUser(user.id, user)) {
         state = AsyncValue.data(user);
-        lastLoadedUser = user;
       } else {
         state = AsyncValue.error(Exception("Failed to update user"));
       }
@@ -42,7 +38,7 @@ class UserNotifier extends StateNotifier<AsyncValue<User>> {
   }
 }
 
-final userProvider =
+final asyncUserProvider =
     StateNotifierProvider<UserNotifier, AsyncValue<User>>((ref) {
   final isLoggedIn = ref.watch(isLoggedInProvider);
   final id = ref.watch(idProvider);
@@ -51,4 +47,19 @@ final userProvider =
   } else {
     return UserNotifier();
   }
+});
+
+
+final userProvider = Provider((ref) {
+  return ref.watch(asyncUserProvider).when(
+    data: (user) {
+      return user;
+    },
+    error: (e, s) {
+      return User.empty();
+    },
+    loading: () {
+      return User.empty();
+    },
+  );
 });

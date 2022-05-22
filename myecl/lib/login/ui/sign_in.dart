@@ -5,7 +5,7 @@ import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/login/ui/text_from_decoration.dart';
-import 'package:myecl/user/providers/auth_token_provider.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 
 class SignIn extends HookConsumerWidget {
   const SignIn({Key? key, required this.onRegisterPressed}) : super(key: key);
@@ -14,7 +14,8 @@ class SignIn extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authTokenProvider.notifier);
+    final authNotifier = ref.watch(authTokenProvider.notifier);
+    final auth = ref.read(authTokenProvider);
     final username = useTextEditingController();
     final password = useTextEditingController();
     return Form(
@@ -41,37 +42,40 @@ class SignIn extends HookConsumerWidget {
                 child: ListView(
                   children: [
                     Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: TextFormField(
-                            decoration:
-                                signInInputDecoration(hintText: "Email"),
-                            controller: username,
-                            ),
-                            ),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: TextFormField(
+                        decoration: signInInputDecoration(hintText: "Email"),
+                        controller: username,
+                      ),
+                    ),
                     Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: TextFormField(
-                            decoration: signInInputDecoration(
-                                hintText: "Mot de passe"),
-                            controller: password,)),
+                          decoration:
+                              signInInputDecoration(hintText: "Mot de passe"),
+                          controller: password,
+                        )),
                     SignInBar(
                       isLoading: ref.watch(loadingrovider),
                       label: "Se connecter",
                       onPressed: () {
-                        auth.getTokenFromRequest(username.text, password.text).then((value) =>
-                        value.when(data: (token) {
-                          auth.storeToken();
-                        },
-                        error: (e, s) {
-                          displayToast(context, TypeMsg.error, e.toString());
-                        },
-                        loading: () {}));
+                        authNotifier.getTokenFromRequest(
+                            username.text, password.text);
+                        auth.when(
+                            data: (token) {
+                              // authNotifier.storeToken();
+                            },
+                            error: (e, s) {
+                              displayToast(
+                                  context, TypeMsg.error, e.toString());
+                            },
+                            loading: () {});
                       },
                     ),
                     Align(
                         alignment: Alignment.centerLeft,
                         child: InkWell(
-                          splashColor: Colors.white,
+                          splashColor: const Color.fromRGBO(255, 255, 255, 1),
                           onTap: () {
                             onRegisterPressed();
                           },
