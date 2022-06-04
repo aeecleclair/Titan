@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
@@ -19,8 +20,9 @@ class Boutons extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
-    final cmdsNotifier = ref.watch(orderListProvider.notifier);
+    final deliveryId = ref.watch(deliveryIdProvider);
+    final products = ref.watch(productListProvider(deliveryId).notifier).lastLoadedProducts;
+    final cmdsNotifier = ref.watch(orderListProvider(deliveryId).notifier);
     final indexCmd = ref.watch(orderIndexProvider);
     final pageNotifier = ref.read(amapPageProvider.notifier);
     final price = ref.watch(priceProvider);
@@ -35,7 +37,7 @@ class Boutons extends HookConsumerWidget {
                   List<Product> prod = [];
                   for (var p in products) {
                     if (p.quantity != 0) {
-                      prod.add(p.copy());
+                      prod.add(p.copyWith());
                     }
                   }
                   if (indexCmd == -1) {

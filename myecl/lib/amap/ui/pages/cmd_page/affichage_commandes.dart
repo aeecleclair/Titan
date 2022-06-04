@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/ui/pages/cmd_page/add_button.dart';
 import 'package:myecl/amap/ui/pages/cmd_page/commade_ui.dart';
@@ -10,7 +11,7 @@ class ListeOrders extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cmds = ref.watch(orderListProvider.notifier).lastLoadedOrders;
+    final cmds = ref.watch(orderList);
 
     List<Widget> listWidgetOrder = [];
 

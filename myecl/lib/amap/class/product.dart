@@ -16,10 +16,11 @@ class Product {
     id = json['id'];
     name = json['name'];
     price = json['price'];
-    quantity = json['quantity'];
+    quantity = 0;
     category = json['category'];
   }
-  Product copy({id, name, price, quantity, category}) => Product(
+
+  Product copyWith({id, name, price, quantity, category}) => Product(
         id: id ?? this.id,
         name: name ?? this.name,
         price: price ?? this.price,

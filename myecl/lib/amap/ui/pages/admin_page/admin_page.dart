@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/category_list_provider.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/modified_product_index_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -14,13 +15,14 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
-    final categorys = ref.watch(categoryListProvider);
+    final deliveryId = ref.watch(deliveryIdProvider);
+    final products = ref.watch(productListProvider(deliveryId).notifier).lastLoadedProducts;
+    final categories = ref.watch(categoryListProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final productModif = ref.read(modifiedProductProvider.notifier);
 
     Map<String, List<Widget>> dictCateListWidget = {
-      for (var item in categorys) item: []
+      for (var item in categories) item: []
     };
 
     for (Product p in products) {
@@ -30,7 +32,7 @@ class AdminPage extends HookConsumerWidget {
 
     List<Widget> listWidget = [];
 
-    for (String c in categorys) {
+    for (String c in categories) {
       listWidget.add(Container(
           height: 70,
           alignment: Alignment.centerLeft,

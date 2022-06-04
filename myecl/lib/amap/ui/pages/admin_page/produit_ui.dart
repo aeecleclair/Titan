@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/modified_product_index_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/dialog.dart';
@@ -17,6 +18,7 @@ class ProductUi extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final deliveryId = ref.watch(deliveryIdProvider);
     return Container(
         height: 55,
         alignment: Alignment.centerLeft,
@@ -112,7 +114,7 @@ class ProductUi extends ConsumerWidget {
                             title: "Suppression",
                             onYes: () {
                               ref
-                                  .watch(productListProvider.notifier)
+                                  .watch(productListProvider(deliveryId).notifier)
                                   .deleteProduct(p.id);
                               displayToast(
                                   context, TypeMsg.msg, "Product supprimé");

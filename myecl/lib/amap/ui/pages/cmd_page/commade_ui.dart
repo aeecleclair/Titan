@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
@@ -18,9 +19,10 @@ class OrderUi extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cmds = ref.watch(orderListProvider.notifier).lastLoadedOrders;
-    final cmdsNotifier = ref.watch(orderListProvider.notifier);
-    final productsNotifier = ref.watch(productListProvider.notifier);
+    final cmds = ref.watch(orderList);
+    final deliveryId = ref.watch(deliveryIdProvider);
+    final cmdsNotifier = ref.watch(orderListProvider(deliveryId).notifier);
+    final productsNotifier = ref.watch(productListProvider(deliveryId).notifier);
     final indexCmdNotifier = ref.watch(orderIndexProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final priceNotofier = ref.watch(priceProvider.notifier);

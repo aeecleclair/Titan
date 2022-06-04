@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 
 class ProductUiInList extends ConsumerWidget {
-  final int i;
-  const ProductUiInList({Key? key, required this.i}) : super(key: key);
+  final Product p;
+  const ProductUiInList({Key? key, required this.p}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
-    final productsNotifier = ref.watch(productListProvider.notifier);
+    final deliveryId = ref.watch(deliveryIdProvider);
+    final productsNotifier = ref.watch(productListProvider(deliveryId).notifier);
     final price = ref.watch(priceProvider);
     final priceNotofier = ref.watch(priceProvider.notifier);
-    Product p = products[i];
     return Container(
         height: 50,
         alignment: Alignment.centerLeft,

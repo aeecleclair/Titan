@@ -7,6 +7,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/category_list_provider.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/page_controller_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/scroll_controller_provider.dart';
@@ -23,8 +24,9 @@ class ListProducts extends HookConsumerWidget {
         duration: const Duration(milliseconds: 200), initialValue: 1);
 
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
-    final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
-    final productsState = ref.watch(productListProvider);
+    final deliveryId = ref.watch(deliveryIdProvider);
+    final products = ref.watch(productListProvider(deliveryId).notifier).lastLoadedProducts;
+    final productsState = ref.watch(productListProvider(deliveryId));
     final pageController = ref.watch(amapPageControllerProvider);
     final categories = ref.watch(categoryListProvider);
 
@@ -34,7 +36,7 @@ class ListProducts extends HookConsumerWidget {
 
     for (Product p in products) {
       dictCateListWidget[p.category]!
-          .add(ProductUiInList(i: products.indexOf(p)));
+          .add(ProductUiInList(p: p));
     }
 
     return SizedBox(

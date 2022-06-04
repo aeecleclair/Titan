@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
@@ -10,7 +11,8 @@ import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 
 void clearCmd(WidgetRef ref) {
-  final productsNotifier = ref.watch(productListProvider.notifier);
+  final deliveryId = ref.watch(deliveryIdProvider);
+  final productsNotifier = ref.watch(productListProvider(deliveryId).notifier);
   final priceNotofier = ref.watch(priceProvider.notifier);
   productsNotifier.resetQuantity();
   priceNotofier.setOrderPrice(0.0);
@@ -27,8 +29,9 @@ void cancelCmd(WidgetRef ref) {
 }
 
 void deleteCmd(WidgetRef ref, int i) {
+  final deliveryId = ref.watch(deliveryIdProvider);
   final indexCmdNotifier = ref.watch(orderIndexProvider.notifier);
-  final cmdsNotifier = ref.watch(orderListProvider.notifier);
+  final cmdsNotifier = ref.watch(orderListProvider(deliveryId).notifier);
   indexCmdNotifier.setIndex(-1);
   cmdsNotifier.deleteOrder(i);
 }

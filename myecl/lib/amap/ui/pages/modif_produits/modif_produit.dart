@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/modified_product_index_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_category_provider.dart';
@@ -19,8 +20,9 @@ class ModifProduct extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _formKey = GlobalKey<FormState>();
-    final productsNotifier = ref.watch(productListProvider.notifier);
-    final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
+    final deliveryId = ref.watch(deliveryIdProvider);
+    final productsNotifier = ref.watch(productListProvider(deliveryId).notifier);
+    final products = ref.watch(productListProvider(deliveryId).notifier).lastLoadedProducts;
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final productModif = ref.watch(modifiedProductProvider);
     final modifProduct = productModif != -1;

@@ -27,7 +27,6 @@ class OAuth2TokenRepository {
   final responseType = "code";
   final state = generateRandomString(128);
   final codeVerifier = generateRandomString(128);
-  String codeChallenge = "";
 
 
   Future<String> authorizationFlow(String username, String password) async {
@@ -45,7 +44,7 @@ class OAuth2TokenRepository {
       final response = await http.post(Uri.parse(host + "auth/authorization-flow/authorize-validation"),
           headers: headers,
           body: body).timeout(const Duration(seconds: 5));
-      if (response.statusCode != 307) {
+      if (response.statusCode != 302) {
         throw Exception('Wrong credentials');
       }
       if (!response.headers.containsKey("location")) {
@@ -81,10 +80,10 @@ class OAuth2TokenRepository {
       final response = await http.post(Uri.parse(host + "auth/token"),
           headers: headers,
           body: body).timeout(const Duration(seconds: 5));
-      print("getTokens: ${response.body}");
       if (response.statusCode == 200) {
         final token = jsonDecode(response.body)["access_token"];
-        final refreshToken = jsonDecode(response.body)["refresh_token"];
+        // final refreshToken = jsonDecode(response.body)["refresh_token"];
+        final refreshToken = "";
         return {"token": token, "refreshToken": refreshToken};
       } else {
         throw Exception('Wrong credentials');

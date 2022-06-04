@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 
 class CategoryListNotifier extends StateNotifier<List<String>> {
@@ -15,9 +16,17 @@ class CategoryListNotifier extends StateNotifier<List<String>> {
 
 final categoryListProvider =
     StateNotifierProvider<CategoryListNotifier, List<String>>((ref) {
-  final products = ref.watch(productListProvider.notifier).lastLoadedProducts;
-
-  return CategoryListNotifier([
-    ...{...products.map((e) => e.category)}
-  ]..sort());
+  final deliveryId = ref.watch(deliveryIdProvider);
+  final products = ref.watch(productListProvider(deliveryId));
+  return products.when(
+    data: (p) {
+      return CategoryListNotifier(p.map((e) => e.category).toSet().toList());
+    },
+    error: (e, s) {
+      return CategoryListNotifier([]);
+    },
+    loading: () {
+      return CategoryListNotifier([]);
+    },
+  );
 });

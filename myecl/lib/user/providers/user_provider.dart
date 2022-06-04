@@ -42,11 +42,10 @@ final asyncUserProvider =
     StateNotifierProvider<UserNotifier, AsyncValue<User>>((ref) {
   final isLoggedIn = ref.watch(isLoggedInProvider);
   final id = ref.watch(idProvider);
-  if (isLoggedIn) {
+  if (isLoggedIn && id != null) {
     return UserNotifier()..loadUser(id);
-  } else {
-    return UserNotifier();
   }
+  return UserNotifier();
 });
 
 
