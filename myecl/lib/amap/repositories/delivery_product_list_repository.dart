@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:myecl/amap/class/product.dart';
 
-class ProductListRepository {
+class DeliveryProductListRepository {
   final host = "http://10.0.2.2:8000/";
   final ext = "amap/deliveries/";
   final Map<String, String> headers = {
@@ -11,9 +11,10 @@ class ProductListRepository {
     "Accept": "application/json",
   };
 
-    Future<List<Product>> getProductList(String deliveryId) async {
-    final response = await http
-        .get(Uri.parse(host + ext + deliveryId + "product/"), headers: headers);
+  Future<List<Product>> getProductList(String deliveryId) async {
+    final response = await http.get(
+        Uri.parse(host + ext + deliveryId + "/products"),
+        headers: headers);
     if (response.statusCode == 200) {
       return List<Product>.from(
           json.decode(response.body).map((x) => Product.fromJson(x)));
@@ -24,7 +25,7 @@ class ProductListRepository {
 
   Future<bool> createProduct(String deliveryId, Product product) async {
     final response = await http.post(
-        Uri.parse(host + ext + deliveryId + "product/"),
+        Uri.parse(host + ext + deliveryId + "/products"),
         headers: headers,
         body: json.encode(product.toJson()));
     if (response.statusCode == 201) {
@@ -40,7 +41,7 @@ class ProductListRepository {
             ext +
             "deliveries/" +
             deliveryId +
-            "product/" +
+            "/products/" +
             product.id.toString()),
         headers: headers,
         body: json.encode(product.toJson()));
@@ -53,7 +54,7 @@ class ProductListRepository {
 
   Future<bool> deleteProduct(String deliveryId, String productId) async {
     final response = await http.delete(
-        Uri.parse(host + ext + deliveryId + "product/" + productId),
+        Uri.parse(host + ext + deliveryId + "/products/" + productId),
         headers: headers);
     if (response.statusCode == 200) {
       return true;

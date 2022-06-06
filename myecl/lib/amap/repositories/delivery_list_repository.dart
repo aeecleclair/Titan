@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:myecl/amap/class/delivery.dart';
-import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 
 class DeliveryListRepository {
-  final host = "http://10.0.0.2/8000/";
+  final host = "http://10.0.2.2:8000/";
   final ext = "amap/deliveries/";
   final Map<String, String> headers = {
     "Content-Type": "application/json",
@@ -60,6 +59,16 @@ class DeliveryListRepository {
       return Delivery.fromJson(json.decode(response.body));
     } else {
       throw Exception("Failed to load delivery");
+    }
+  }
+
+  Future<List<Product>> getAllProductsFromOrder(String deliveryId, String orderId) async {
+    final response = await http.get(Uri.parse(host + ext + deliveryId + "/orders/" + orderId + "/products"), headers: headers);
+    if (response.statusCode == 200) {
+      return List<Product>.from(
+          json.decode(response.body).map((x) => Product.fromJson(x)));
+    } else {
+      throw Exception("Failed to load products");
     }
   }
 }

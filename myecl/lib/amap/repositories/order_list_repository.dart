@@ -11,22 +11,22 @@ class OrderListRepository {
     "Accept": "application/json",
   };
 
-  Future<List<Order>> getOrderList(String deliveryId) async {
-    final response = await http
-        .get(Uri.parse(host + ext + deliveryId + "orders/"), headers: headers);
-    if (response.statusCode == 200) {
-      return List<Order>.from(
-          json.decode(response.body).map((x) => Order.fromJson(x)));
-    } else {
-      throw Exception("Failed to load order list");
-    }
+  String processDate(DateTime date) {
+    return date.toIso8601String().split('T')[0];
   }
 
-  Future<bool> createOrder(String deliveryId, Order order) async {
+  Future<bool> createOrder(
+      String deliveryId, Order order, String userId) async {
+    Map<String, dynamic> orderJson = order.toJson();
+    orderJson.addAll({
+      "user_id": userId,
+      "collection_slot": "midi",
+      "delivery_date": processDate(order.deliveryDate),
+    });
     final response = await http.post(
-        Uri.parse(host + ext + deliveryId + "orders/"),
+        Uri.parse(host + ext + deliveryId + "/orders"),
         headers: headers,
-        body: json.encode(order.toJson()));
+        body: json.encode(orderJson));
     if (response.statusCode == 201) {
       return true;
     } else {
@@ -38,9 +38,8 @@ class OrderListRepository {
     final response = await http.patch(
         Uri.parse(host +
             ext +
-            "deliveries/" +
             deliveryId +
-            "orders/" +
+            "/orders/" +
             order.id.toString()),
         headers: headers,
         body: json.encode(order.toJson()));
@@ -53,7 +52,7 @@ class OrderListRepository {
 
   Future<bool> deleteOrder(String deliveryId, String orderId) async {
     final response = await http.delete(
-        Uri.parse(host + ext + deliveryId + "orders/" + orderId),
+        Uri.parse(host + ext + deliveryId + "/orders/" + orderId),
         headers: headers);
     if (response.statusCode == 200) {
       return true;
@@ -64,7 +63,7 @@ class OrderListRepository {
 
   Future<Order> getOrder(String deliveryId, String orderId) async {
     final response = await http.get(
-        Uri.parse(host + ext + deliveryId + "orders/" + orderId),
+        Uri.parse(host + ext + deliveryId + "/orders/" + orderId),
         headers: headers);
     if (response.statusCode == 200) {
       return Order.fromJson(json.decode(response.body));

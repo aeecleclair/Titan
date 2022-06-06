@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
-import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/repositories/delivery_list_repository.dart';
 
 class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
@@ -94,3 +93,23 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
     }
   }
 }
+
+
+final deliveryListProvider = StateNotifierProvider<DeliveryListNotifier,
+    AsyncValue<List<Delivery>>>((ref) {
+  DeliveryListNotifier _orderListNotifier = DeliveryListNotifier();
+  _orderListNotifier.loadDeliveriesList();
+  return _orderListNotifier;
+});
+
+
+final deliveryList = Provider((ref) {
+  final deliveryProvider = ref.watch(deliveryListProvider);
+  return deliveryProvider.when(data: (orders) {
+    return orders;
+  }, error: (error, stackTrace) {
+    return [];
+  }, loading: () {
+    return [];
+  });
+});

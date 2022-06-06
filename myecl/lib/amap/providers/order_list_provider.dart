@@ -1,22 +1,29 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
+import 'package:myecl/amap/repositories/amap_user_repository.dart';
 import 'package:myecl/amap/repositories/order_list_repository.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 
 class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
   final OrderListRepository _repository = OrderListRepository();
+  final AmapUserRepository _userRepository = AmapUserRepository();
   late String deliveryId;
+  late String userId;
   OrderListNotifier() : super(const AsyncValue.loading());
 
   void setId(String id) {
     deliveryId = id;
   }
 
-  void loadOrderList() async {
+  void setUserId(String userId) {
+    this.userId = userId;
+  }
+
+  void loadOrderList(String userId) async {
     try {
-      final orders = await _repository.getOrderList(deliveryId);
+      final orders = await _userRepository.getOrderList(userId);
       state = AsyncValue.data(orders);
     } catch (e) {
       state = AsyncValue.error(e);
@@ -27,7 +34,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
     try {
       state.when(
         data: (orders) async {
-          if (await _repository.createOrder(deliveryId, order)) {
+          if (await _repository.createOrder(deliveryId, order, userId)) {
             orders.add(order);
             state = AsyncValue.data(orders);
           } else {
@@ -102,13 +109,9 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       state.when(
         data: (orders) async {
           var newOrder = orders[indexOrder]
-              .copy(products: orders[indexOrder].products..add(product));
+              .copyWith(products: orders[indexOrder].products..add(product));
           if (await _repository.updateOrder(deliveryId, newOrder)) {
-            orders.replaceRange(
-                orders.indexOf(orders.firstWhere(
-                    (element) => element.id == orders[indexOrder].id)),
-                1,
-                [newOrder]);
+            orders[indexOrder] = newOrder;
             state = AsyncValue.data(orders);
           } else {
             state = AsyncValue.error(Exception("Failed to add product"));
@@ -132,13 +135,9 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       state.when(
         data: (orders) async {
           var newOrder = orders[indexOrder]
-              .copy(products: orders[indexOrder].products..remove(product));
+              .copyWith(products: orders[indexOrder].products..remove(product));
           if (await _repository.updateOrder(deliveryId, newOrder)) {
-            orders.replaceRange(
-                orders.indexOf(orders.firstWhere(
-                    (element) => element.id == orders[indexOrder].id)),
-                1,
-                [newOrder]);
+            orders[indexOrder] = newOrder;
             state = AsyncValue.data(orders);
           } else {
             state = AsyncValue.error(Exception("Failed to delete product"));
@@ -162,16 +161,12 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
     try {
       state.when(
         data: (orders) async {
-          var newOrder = orders[indexOrder].copy(
+          var newOrder = orders[indexOrder].copyWith(
               products: orders[indexOrder].products
                 ..replaceRange(orders[indexOrder].products.indexOf(product), 1,
                     [product]));
           if (await _repository.updateOrder(deliveryId, newOrder)) {
-            orders.replaceRange(
-                orders.indexOf(orders.firstWhere(
-                    (element) => element.id == orders[indexOrder].id)),
-                1,
-                [newOrder]);
+            orders[indexOrder] = newOrder;
             state = AsyncValue.data(orders);
           } else {
             state = AsyncValue.error(Exception("Failed to update product"));
@@ -194,15 +189,10 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       int indexOrder, Product product, int newQuantity) async {
     state.when(
       data: (orders) async {
-        var newOrder = orders[indexOrder].copy(
+        orders[indexOrder] = orders[indexOrder].copyWith(
             products: orders[indexOrder].products
               ..replaceRange(orders[indexOrder].products.indexOf(product), 1,
                   [product.copyWith(quantity: newQuantity)]));
-        orders.replaceRange(
-            orders.indexOf(orders
-                .firstWhere((element) => element.id == orders[indexOrder].id)),
-            1,
-            [newOrder]);
         state = AsyncValue.data(orders);
       },
       error: (error, stackTrace) {
@@ -217,13 +207,8 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
   void toggleExpanded(int indexOrder) async {
     state.when(
       data: (orders) async {
-        var newOrder =
-            orders[indexOrder].copy(expanded: !orders[indexOrder].expanded);
-        orders.replaceRange(
-            orders.indexOf(orders
-                .firstWhere((element) => element.id == orders[indexOrder].id)),
-            1,
-            [newOrder]);
+        orders[indexOrder] =
+            orders[indexOrder].copyWith(expanded: !orders[indexOrder].expanded);
         state = AsyncValue.data(orders);
       },
       error: (error, stackTrace) {
@@ -238,12 +223,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
   void setProducts(int indexOrder, List<Product> newListProduct) async {
     state.when(
       data: (orders) async {
-        var newOrder = orders[indexOrder].copy(products: newListProduct);
-        orders.replaceRange(
-            orders.indexOf(orders
-                .firstWhere((element) => element.id == orders[indexOrder].id)),
-            1,
-            [newOrder]);
+        orders[indexOrder] = orders[indexOrder].copyWith(products: newListProduct);
         state = AsyncValue.data(orders);
       },
       error: (error, stackTrace) {
@@ -281,16 +261,18 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
 
 final orderListProvider = StateNotifierProvider.family<OrderListNotifier,
     AsyncValue<List<Order>>, String>((ref, deliveryId) {
+  final userId = ref.read(idProvider);
   OrderListNotifier _orderListNotifier = OrderListNotifier();
   _orderListNotifier.setId(deliveryId);
-  _orderListNotifier.loadOrderList();
+  _orderListNotifier.setUserId(userId);
+  _orderListNotifier.loadOrderList(userId);
   return _orderListNotifier;
 });
 
 final orderList = Provider((ref) {
   final deliveryId = ref.watch(deliveryIdProvider);
   final notifier = ref.watch(orderListProvider(deliveryId));
-  notifier.when(data: (orders) {
+  return notifier.when(data: (orders) {
     return orders;
   }, error: (error, stackTrace) {
     return [];

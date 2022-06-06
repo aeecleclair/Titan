@@ -16,10 +16,16 @@ class AdminPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryId = ref.watch(deliveryIdProvider);
-    final products = ref.watch(productListProvider(deliveryId).notifier).lastLoadedProducts;
+    final productsList = ref.watch(productListProvider(deliveryId));
     final categories = ref.watch(categoryListProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final productModif = ref.read(modifiedProductProvider.notifier);
+    final products = [];
+    productsList.when(
+      data: (list) => products.addAll(list),
+      error: (e, s) {},
+      loading: () {},
+    );
 
     Map<String, List<Widget>> dictCateListWidget = {
       for (var item in categories) item: []

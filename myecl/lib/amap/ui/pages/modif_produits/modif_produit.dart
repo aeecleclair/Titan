@@ -14,6 +14,8 @@ import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/modif_produits/text_entry.dart';
 import 'package:uuid/uuid.dart';
 
+//TODO: ne pas modif si pas de changement
+
 class ModifProduct extends HookConsumerWidget {
   const ModifProduct({Key? key}) : super(key: key);
 
@@ -21,11 +23,18 @@ class ModifProduct extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final _formKey = GlobalKey<FormState>();
     final deliveryId = ref.watch(deliveryIdProvider);
-    final productsNotifier = ref.watch(productListProvider(deliveryId).notifier);
-    final products = ref.watch(productListProvider(deliveryId).notifier).lastLoadedProducts;
+    final productsNotifier =
+        ref.watch(productListProvider(deliveryId).notifier);
+    final productsList = ref.watch(productListProvider(deliveryId));
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final productModif = ref.watch(modifiedProductProvider);
     final modifProduct = productModif != -1;
+    final products = [];
+    productsList.when(
+      data: (list) => products.addAll(list),
+      error: (e, s) {},
+      loading: () {},
+    );
 
     final nameController = useTextEditingController(
         text: modifProduct ? products[productModif].name : "");
@@ -42,6 +51,7 @@ class ModifProduct extends HookConsumerWidget {
 
     final nouvellecategory = useTextEditingController(text: "");
     final category = ref.watch(categoryListProvider);
+
     return Column(
       children: [
         const SizedBox(
@@ -105,7 +115,8 @@ class ModifProduct extends HookConsumerWidget {
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Veuillez remplir ce champ';
-                                      } else if (double.tryParse(value.replaceAll(',', '.')) ==
+                                      } else if (double.tryParse(
+                                              value.replaceAll(',', '.')) ==
                                           null) {
                                         return 'Un namebre est attendu';
                                       }
@@ -211,6 +222,10 @@ class ModifProduct extends HookConsumerWidget {
                                       TextConstants.creercategory,
                                   onChanged: (value) {
                                     nouvellecategory.text = value ?? "";
+                                    nouvellecategory.selection =
+                                        TextSelection.fromPosition(TextPosition(
+                                            offset:
+                                                nouvellecategory.text.length));
                                   },
                                   textEditingController: nouvellecategory,
                                   keyboardType: TextInputType.text,
@@ -232,19 +247,18 @@ class ModifProduct extends HookConsumerWidget {
                                         Product newProduct = Product(
                                           id: products[productModif].id,
                                           name: nameController.text,
-                                          price: double.parse(
-                                              priceController.text.replaceAll(
-                                                  ',', '.')),
+                                          price: double.parse(priceController
+                                              .text
+                                              .replaceAll(',', '.')),
                                           category: cate,
                                           quantity: 0,
                                         );
                                         productsNotifier
-                                            .updateProduct(
-                                                newProduct.id, newProduct)
+                                            .updateProduct(newProduct)
                                             .then((value) {
                                           if (value) {
                                             displayToast(context, TypeMsg.msg,
-                                                "Product modifié");
+                                                "Produit modifié");
                                           } else {
                                             displayToast(context, TypeMsg.error,
                                                 "Erreur lors de la modification du produit");
@@ -261,9 +275,9 @@ class ModifProduct extends HookConsumerWidget {
                                         Product newProduct = Product(
                                           id: const Uuid().v4(),
                                           name: nameController.text,
-                                          price: double.parse(
-                                              priceController.text.replaceAll(
-                                                  ',', '.')),
+                                          price: double.parse(priceController
+                                              .text
+                                              .replaceAll(',', '.')),
                                           category: cate,
                                           quantity: 0,
                                         );
@@ -272,11 +286,18 @@ class ModifProduct extends HookConsumerWidget {
                                             .then((value) {
                                           if (value) {
                                             displayToast(context, TypeMsg.msg,
-                                                "Product ajouté");
+                                                "Produit ajouté");
                                           } else {
                                             displayToast(context, TypeMsg.error,
                                                 "Erreur lors de la modification du produit");
                                           }
+                                          pageNotifier.setAmapPage(3);
+
+                                          nameController.clear();
+                                          priceController.clear();
+                                          categoryNotifier.setText(
+                                              TextConstants.creercategory);
+                                          nouvellecategory.clear();
                                         });
                                       }
                                     }

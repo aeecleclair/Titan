@@ -25,11 +25,16 @@ class ListProducts extends HookConsumerWidget {
 
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
     final deliveryId = ref.watch(deliveryIdProvider);
-    final products = ref.watch(productListProvider(deliveryId).notifier).lastLoadedProducts;
+    final productsList = ref.watch(productListProvider(deliveryId));
     final productsState = ref.watch(productListProvider(deliveryId));
     final pageController = ref.watch(amapPageControllerProvider);
     final categories = ref.watch(categoryListProvider);
-
+    final products = [];
+    productsList.when(
+      data: (list) => products.addAll(list),
+      error: (e, s) {},
+      loading: () {},
+    );
     Map<String, List<Widget>> dictCateListWidget = {
       for (var item in categories) item: []
     };

@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
+import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 
 class ProductUiInList extends ConsumerWidget {
@@ -14,7 +14,7 @@ class ProductUiInList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryId = ref.watch(deliveryIdProvider);
-    final productsNotifier = ref.watch(productListProvider(deliveryId).notifier);
+    final productsNotifier = ref.watch(deliveryProductListProvider(deliveryId).notifier);
     final price = ref.watch(priceProvider);
     final priceNotofier = ref.watch(priceProvider.notifier);
     return Container(

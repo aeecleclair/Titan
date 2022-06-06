@@ -5,28 +5,28 @@ import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
+import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 
 class OrderUi extends ConsumerWidget {
   final Order c;
-  const OrderUi({Key? key, required this.c}) : super(key: key);
+  final int i;
+  const OrderUi({Key? key, required this.c, required this.i}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cmds = ref.watch(orderList);
     final deliveryId = ref.watch(deliveryIdProvider);
     final cmdsNotifier = ref.watch(orderListProvider(deliveryId).notifier);
-    final productsNotifier = ref.watch(productListProvider(deliveryId).notifier);
+    final productsNotifier =
+        ref.watch(deliveryProductListProvider(deliveryId).notifier);
     final indexCmdNotifier = ref.watch(orderIndexProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final priceNotofier = ref.watch(priceProvider.notifier);
-    final i = cmds.indexOf(c);
     return Container(
       margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
       alignment: Alignment.center,
@@ -54,11 +54,11 @@ class OrderUi extends ConsumerWidget {
               Expanded(
                 child: Text(
                   "Date : " +
-                      c.date.day.toString().padLeft(2, "0") +
+                      c.deliveryDate.day.toString().padLeft(2, "0") +
                       "/" +
-                      c.date.month.toString().padLeft(2, "0") +
+                      c.deliveryDate.month.toString().padLeft(2, "0") +
                       "/" +
-                      c.date.year.toString(),
+                      c.deliveryDate.year.toString(),
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -71,7 +71,7 @@ class OrderUi extends ConsumerWidget {
                   height: 25,
                   alignment: Alignment.topCenter,
                   child: HeroIcon(
-                    cmds[i].expanded
+                    c.expanded
                         ? HeroIcons.chevronUp
                         : HeroIcons.chevronDown,
                     color: ColorConstants.textDark,
@@ -83,7 +83,7 @@ class OrderUi extends ConsumerWidget {
               )
             ],
           ),
-          cmds[i].expanded
+          c.expanded
               ? Column(
                   children: c.products
                       .map((p) => Container(
@@ -178,7 +178,7 @@ class OrderUi extends ConsumerWidget {
           Container(
             height: 20,
           ),
-          cmds[i].expanded
+          c.expanded
               ? Row(
                   children: [
                     GestureDetector(
@@ -200,7 +200,7 @@ class OrderUi extends ConsumerWidget {
                       onTap: () {
                         indexCmdNotifier.setIndex(i);
                         for (Product p
-                            in cmds[i].products.where((e) => e.quantity != 0)) {
+                            in c.products.where((e) => e.quantity != 0)) {
                           productsNotifier.setQuantity(p.id, p.quantity);
                         }
                         cmdsNotifier.getprice(i).then((value) {

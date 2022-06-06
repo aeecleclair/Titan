@@ -11,13 +11,20 @@ class ListeOrders extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cmds = ref.watch(orderList);
+    final deliveryId = ref.watch(deliveryIdProvider);
+    final orderList = ref.watch(orderListProvider(deliveryId));
+    List<Order> cmds = [];
+    orderList.when(
+      data: (orders) => cmds = orders,
+      error: (error, s) {},
+      loading: () {},
+    );
 
     List<Widget> listWidgetOrder = [];
 
     if (cmds.isNotEmpty) {
       for (Order c in cmds) {
-        listWidgetOrder.add(OrderUi(c: c));
+        listWidgetOrder.add(OrderUi(c: c, i: cmds.indexOf(c)));
       }
     } else {
       listWidgetOrder.add(Column(

@@ -21,11 +21,18 @@ class Boutons extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryId = ref.watch(deliveryIdProvider);
-    final products = ref.watch(productListProvider(deliveryId).notifier).lastLoadedProducts;
+    final productsList = ref.watch(productListProvider(deliveryId));
     final cmdsNotifier = ref.watch(orderListProvider(deliveryId).notifier);
     final indexCmd = ref.watch(orderIndexProvider);
     final pageNotifier = ref.read(amapPageProvider.notifier);
     final price = ref.watch(priceProvider);
+
+    final products = [];
+    productsList.when(
+      data: (list) => products.addAll(list),
+      error: (e, s) {},
+      loading: () {},
+    );
     return SizedBox(
         height: 90,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -43,8 +50,11 @@ class Boutons extends HookConsumerWidget {
                   if (indexCmd == -1) {
                     Order newOrder = Order(
                         products: prod,
-                        date: DateTime.now(),
-                        id: const Uuid().v4(),);
+                        deliveryDate: DateTime.now(),
+                        id: const Uuid().v4(),
+                        amount: price,
+                        deliveryId: deliveryId,
+                        productsIds: prod.map((e) => e.id).toList());
                     cmdsNotifier.addOrder(newOrder);
                   } else {
                     cmdsNotifier.setProducts(indexCmd, prod);
@@ -52,7 +62,7 @@ class Boutons extends HookConsumerWidget {
                   pageNotifier.setAmapPage(0);
                   clearCmd(ref);
                 } else {
-                  displayToast(context, TypeMsg.error, "Pas de Product");
+                  displayToast(context, TypeMsg.error, "Pas de produit");
                 }
               }),
           GestureDetector(
