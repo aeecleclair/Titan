@@ -21,168 +21,194 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
     this.userId = userId;
   }
 
-  void loadOrderList(String userId) async {
+  Future<AsyncValue<List<Order>>> loadOrderList() async {
     try {
       final orders = await _userRepository.getOrderList(userId);
       state = AsyncValue.data(orders);
     } catch (e) {
       state = AsyncValue.error(e);
     }
+    return state;
   }
 
-  void addOrder(Order order) async {
-    try {
-      state.when(
-        data: (orders) async {
+  Future<bool> addOrder(Order order) async {
+    return state.when(
+      data: (orders) async {
+        try {
           if (await _repository.createOrder(deliveryId, order, userId)) {
             orders.add(order);
             state = AsyncValue.data(orders);
+            return true;
           } else {
             state = AsyncValue.error(Exception("Failed to add order"));
+            return false;
           }
-        },
-        error: (error, s) {
-          state = AsyncValue.error(error);
-        },
-        loading: () {
-          state = const AsyncValue.error("Cannot add order while loading");
-        },
-      );
-    } catch (e) {
-      state = AsyncValue.error(e);
-    }
+        } catch (e) {
+          state = AsyncValue.error(e);
+          return false;
+        }
+      },
+      error: (error, s) {
+        state = AsyncValue.error(error);
+        return false;
+      },
+      loading: () {
+        state = const AsyncValue.error("Cannot add order while loading");
+        return false;
+      },
+    );
   }
 
-  void updateOrder(String orderId, Order order) async {
-    try {
-      state.when(
-        data: (orders) async {
-          if (await _repository.updateOrder(deliveryId, order)) {
-            orders.replaceRange(
-                orders.indexOf(
-                    orders.firstWhere((element) => element.id == orderId)),
-                1,
-                [order]);
+  Future<bool> updateOrder(Order order) async {
+    return state.when(
+      data: (orders) async {
+        try {
+          if (await _repository.updateOrder(deliveryId, order, userId)) {
+            var index = orders.indexWhere((element) => element.id == order.id);
+            orders
+                .remove(orders.firstWhere((element) => element.id == order.id));
+            orders.insert(index, order);
             state = AsyncValue.data(orders);
+            return true;
           } else {
             state = AsyncValue.error(Exception("Failed to update order"));
+            return false;
           }
-        },
-        error: (error, stackTrace) {
-          state = AsyncValue.error(error);
-        },
-        loading: () {
-          state = const AsyncValue.error("Cannot update order while loading");
-        },
-      );
-    } catch (e) {
-      state = AsyncValue.error(e);
-    }
+        } catch (e) {
+          state = AsyncValue.error(e);
+          return false;
+        }
+      },
+      error: (error, stackTrace) {
+        state = AsyncValue.error(error);
+        return false;
+      },
+      loading: () {
+        state = const AsyncValue.error("Cannot update order while loading");
+        return false;
+      },
+    );
   }
 
-  void deleteOrder(int indexOrder) async {
-    try {
-      state.when(
-        data: (orders) async {
+  Future<bool> deleteOrder(int indexOrder) async {
+    return state.when(
+      data: (orders) async {
+        try {
           if (await _repository.deleteOrder(
               deliveryId, orders[indexOrder].id)) {
             orders.removeAt(indexOrder);
             state = AsyncValue.data(orders);
+            return true;
           } else {
             state = AsyncValue.error(Exception("Failed to delete order"));
+            return false;
           }
-        },
-        error: (error, stackTrace) {
-          state = AsyncValue.error(error);
-        },
-        loading: () {
-          state = const AsyncValue.error("Cannot delete order while loading");
-        },
-      );
-    } catch (e) {
-      state = AsyncValue.error(e);
-    }
+        } catch (e) {
+          state = AsyncValue.error(e);
+          return false;
+        }
+      },
+      error: (error, stackTrace) {
+        state = AsyncValue.error(error);
+        return false;
+      },
+      loading: () {
+        state = const AsyncValue.error("Cannot delete order while loading");
+        return false;
+      },
+    );
   }
 
-  void addProduct(int indexOrder, Product product) async {
-    try {
-      state.when(
-        data: (orders) async {
+  Future<bool> addProduct(int indexOrder, Product product) async {
+    return state.when(
+      data: (orders) async {
+        try {
           var newOrder = orders[indexOrder]
               .copyWith(products: orders[indexOrder].products..add(product));
-          if (await _repository.updateOrder(deliveryId, newOrder)) {
+          if (await _repository.updateOrder(deliveryId, newOrder, userId)) {
             orders[indexOrder] = newOrder;
             state = AsyncValue.data(orders);
+            return true;
           } else {
             state = AsyncValue.error(Exception("Failed to add product"));
+            return false;
           }
-        },
-        error: (error, stackTrace) {
-          state = AsyncValue.error(error);
-        },
-        loading: () {
-          state = const AsyncValue.error("Cannot add product while loading");
-        },
-      );
-    } catch (e) {
-      state = AsyncValue.error(e);
-    }
+        } catch (e) {
+          state = AsyncValue.error(e);
+          return false;
+        }
+      },
+      error: (error, stackTrace) {
+        state = AsyncValue.error(error);
+        return false;
+      },
+      loading: () {
+        state = const AsyncValue.error("Cannot add product while loading");
+        return false;
+      },
+    );
   }
 
-  Future<AsyncValue<List<Order>>> deleteProduct(
-      int indexOrder, Product product) async {
-    try {
-      state.when(
-        data: (orders) async {
+  Future<bool> deleteProduct(int indexOrder, Product product) async {
+    return state.when(
+      data: (orders) async {
+        try {
           var newOrder = orders[indexOrder]
               .copyWith(products: orders[indexOrder].products..remove(product));
-          if (await _repository.updateOrder(deliveryId, newOrder)) {
+          if (await _repository.updateOrder(deliveryId, newOrder, userId)) {
             orders[indexOrder] = newOrder;
             state = AsyncValue.data(orders);
+            return true;
           } else {
             state = AsyncValue.error(Exception("Failed to delete product"));
+            return false;
           }
-        },
-        error: (error, stackTrace) {
-          state = AsyncValue.error(error);
-        },
-        loading: () {
-          state = const AsyncValue.error("Cannot delete product while loading");
-        },
-      );
-    } catch (e) {
-      state = AsyncValue.error(e);
-    }
-    return state;
+        } catch (e) {
+          state = AsyncValue.error(e);
+          return false;
+        }
+      },
+      error: (error, stackTrace) {
+        state = AsyncValue.error(error);
+        return false;
+      },
+      loading: () {
+        state = const AsyncValue.error("Cannot delete product while loading");
+        return false;
+      },
+    );
   }
 
-  Future<AsyncValue<List<Order>>> updateProduct(
-      int indexOrder, Product product) async {
-    try {
-      state.when(
-        data: (orders) async {
+  Future<bool> updateProduct(int indexOrder, Product product) async {
+    return state.when(
+      data: (orders) async {
+        try {
           var newOrder = orders[indexOrder].copyWith(
               products: orders[indexOrder].products
                 ..replaceRange(orders[indexOrder].products.indexOf(product), 1,
                     [product]));
-          if (await _repository.updateOrder(deliveryId, newOrder)) {
+          if (await _repository.updateOrder(deliveryId, newOrder, userId)) {
             orders[indexOrder] = newOrder;
             state = AsyncValue.data(orders);
+            return true;
           } else {
             state = AsyncValue.error(Exception("Failed to update product"));
+            return false;
           }
-        },
-        error: (error, stackTrace) {
-          state = AsyncValue.error(error);
-        },
-        loading: () {
-          state = const AsyncValue.error("Cannot update product while loading");
-        },
-      );
-    } catch (e) {
-      state = AsyncValue.error(e);
-    }
-    return state;
+        } catch (e) {
+          state = AsyncValue.error(e);
+          return false;
+        }
+      },
+      error: (error, stackTrace) {
+        state = AsyncValue.error(error);
+        return false;
+      },
+      loading: () {
+        state = const AsyncValue.error("Cannot update product while loading");
+        return false;
+      },
+    );
   }
 
   void setProductQuantity(
@@ -220,17 +246,31 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
     );
   }
 
-  void setProducts(int indexOrder, List<Product> newListProduct) async {
-    state.when(
+  Future<bool> setProducts(int indexOrder, List<Product> newListProduct) async {
+    return state.when(
       data: (orders) async {
-        orders[indexOrder] = orders[indexOrder].copyWith(products: newListProduct);
-        state = AsyncValue.data(orders);
+        try {
+          var newOrder = orders[indexOrder].copyWith(products: newListProduct);
+          if (await _repository.updateOrder(deliveryId, newOrder, userId)) {
+            orders[indexOrder] = newOrder;
+            state = AsyncValue.data(orders);
+            return true;
+          } else {
+            state = AsyncValue.error(Exception("Failed to update product"));
+            return false;
+          }
+        } catch (e) {
+          state = AsyncValue.error(e);
+          return false;
+        }
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
+        return false;
       },
       loading: () {
-        state = const AsyncValue.error("Cannot update products while loading");
+        state = const AsyncValue.error("Cannot update product while loading");
+        return false;
       },
     );
   }
@@ -265,7 +305,7 @@ final orderListProvider = StateNotifierProvider.family<OrderListNotifier,
   OrderListNotifier _orderListNotifier = OrderListNotifier();
   _orderListNotifier.setId(deliveryId);
   _orderListNotifier.setUserId(userId);
-  _orderListNotifier.loadOrderList(userId);
+  _orderListNotifier.loadOrderList();
   return _orderListNotifier;
 });
 

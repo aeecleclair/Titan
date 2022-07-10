@@ -16,8 +16,9 @@ class DeliveryProductListRepository {
         Uri.parse(host + ext + deliveryId + "/products"),
         headers: headers);
     if (response.statusCode == 200) {
+      String resp = utf8.decode(response.body.runes.toList());
       return List<Product>.from(
-          json.decode(response.body).map((x) => Product.fromJson(x)));
+          json.decode(resp).map((x) => Product.fromJson(x)));
     } else {
       throw Exception("Failed to load product list");
     }

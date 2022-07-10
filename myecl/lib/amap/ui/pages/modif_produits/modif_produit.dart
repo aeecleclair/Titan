@@ -3,11 +3,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/modified_product_index_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_category_provider.dart';
-import 'package:myecl/amap/providers/category_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
@@ -22,14 +20,14 @@ class ModifProduct extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _formKey = GlobalKey<FormState>();
-    final deliveryId = ref.watch(deliveryIdProvider);
     final productsNotifier =
-        ref.watch(productListProvider(deliveryId).notifier);
-    final productsList = ref.watch(productListProvider(deliveryId));
+        ref.watch(productListProvider.notifier);
+    final productsList = ref.watch(productListProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final productModif = ref.watch(modifiedProductProvider);
     final modifProduct = productModif != -1;
     final products = [];
+    final List<String> categories = [];
     productsList.when(
       data: (list) => products.addAll(list),
       error: (e, s) {},
@@ -50,7 +48,12 @@ class ModifProduct extends HookConsumerWidget {
         ref.watch(selectedCategoryProvider(beginState).notifier);
 
     final nouvellecategory = useTextEditingController(text: "");
-    final category = ref.watch(categoryListProvider);
+
+    products.map((e) {
+      if (!categories.contains(e.category)) {
+        categories.add(e.category);
+      }
+    }).toList();
 
     return Column(
       children: [
@@ -181,7 +184,7 @@ class ModifProduct extends HookConsumerWidget {
                                     ),
                                     items: [
                                       TextConstants.creercategory,
-                                      ...category
+                                      ...categories
                                     ].map((String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,

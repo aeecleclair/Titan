@@ -38,6 +38,8 @@ class TopBar extends HookConsumerWidget {
                             if (page == 2) {
                               clearCmd(ref);
                               pageNotifier.setAmapPage(0);
+                            } else if (page == 5){
+                              pageNotifier.setAmapPage(3);
                             } else {
                               pageNotifier.setAmapPage(max(page - 1, 0));
                             }

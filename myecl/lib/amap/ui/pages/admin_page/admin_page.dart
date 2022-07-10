@@ -2,8 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/providers/category_list_provider.dart';
-import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/modified_product_index_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -15,17 +13,22 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deliveryId = ref.watch(deliveryIdProvider);
-    final productsList = ref.watch(productListProvider(deliveryId));
-    final categories = ref.watch(categoryListProvider);
+    final productsList = ref.watch(productListProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final productModif = ref.read(modifiedProductProvider.notifier);
     final products = [];
+    final categories = [];
     productsList.when(
       data: (list) => products.addAll(list),
       error: (e, s) {},
       loading: () {},
     );
+
+    products.map((e) {
+      if (!categories.contains(e.category)) {
+        categories.add(e.category);
+      }
+    }).toList();
 
     Map<String, List<Widget>> dictCateListWidget = {
       for (var item in categories) item: []
@@ -71,6 +74,15 @@ class AdminPage extends HookConsumerWidget {
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
+                  GestureDetector(
+                      child: const GreenBtn(text: "Ajouter une commande"),
+                      onTap: () {
+                        productModif.setModifiedProduct(-1);
+                        pageNotifier.setAmapPage(5);
+                      }),
+                  const SizedBox(
+                    height: 40,
+                  ),
                   GestureDetector(
                       child: const GreenBtn(text: "Ajouter un produit"),
                       onTap: () {

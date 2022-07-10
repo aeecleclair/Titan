@@ -8,8 +8,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/category_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
+import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/page_controller_provider.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/scroll_controller_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
@@ -25,8 +25,7 @@ class ListProducts extends HookConsumerWidget {
 
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
     final deliveryId = ref.watch(deliveryIdProvider);
-    final productsList = ref.watch(productListProvider(deliveryId));
-    final productsState = ref.watch(productListProvider(deliveryId));
+    final productsList = ref.watch(deliveryProductListProvider(deliveryId));
     final pageController = ref.watch(amapPageControllerProvider);
     final categories = ref.watch(categoryListProvider);
     final products = [];
@@ -57,7 +56,7 @@ class ListProducts extends HookConsumerWidget {
               hideAnimation.animateTo(1);
             },
             physics: const BouncingScrollPhysics(),
-            children: productsState.when(
+            children: productsList.when(
               data: (d) => products.isEmpty
                   ? [
                       const Center(

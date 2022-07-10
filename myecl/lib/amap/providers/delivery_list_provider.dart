@@ -7,101 +7,111 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
       DeliveryListRepository();
   DeliveryListNotifier() : super(const AsyncValue.loading());
 
-  void loadDeliveriesList() {
-    state = const AsyncValue.loading();
-    _deliveriesListRepository.getDeliveryList().then((deliveries) {
-      state = AsyncValue.data(deliveries);
-    }).catchError((e) {
+  Future<AsyncValue<List<Delivery>>> loadDeliveriesList() async {
+    try {
+      final deliveriesList = await _deliveriesListRepository.getDeliveryList();
+      state = AsyncValue.data(deliveriesList);
+    } catch (e) {
       state = AsyncValue.error(e);
-    });
+    }
+    return state;
   }
 
-  void addDelivery(Delivery delivery) async {
-    try {
-      state.when(
-        data: (deliveries) async {
+  Future<bool> addDelivery(Delivery delivery) async {
+    return state.when(
+      data: (deliveries) async {
+        try {
           if (await _deliveriesListRepository.createDelivery(delivery)) {
             deliveries.add(delivery);
             state = AsyncValue.data(deliveries);
+            return true;
           } else {
             state = AsyncValue.error(Exception("Failed to add delivery"));
+            return false;
           }
-        },
-        error: (error, stackTrace) {
-          state = AsyncValue.error(error);
-        },
-        loading: () {
-          state = const AsyncValue.error("Cannot add delivery while loading");
-        },
-      );
-    } catch (e) {
-      state = AsyncValue.error(e);
-    }
+        } catch (e) {
+          state = AsyncValue.error(e);
+          return false;
+        }
+      },
+      error: (error, stackTrace) {
+        state = AsyncValue.error(error);
+        return false;
+      },
+      loading: () {
+        state = const AsyncValue.error("Cannot add delivery while loading");
+        return false;
+      },
+    );
   }
 
-  void updateDelivery(String deliveryId, Delivery delivery) async {
-    try {
-      state.when(
-        data: (deliveries) async {
+  Future<bool> updateDelivery(String deliveryId, Delivery delivery) async {
+    return state.when(
+      data: (deliveries) async {
+        try {
           if (await _deliveriesListRepository.updateDelivery(
               deliveryId, delivery)) {
-            deliveries.replaceRange(
-                deliveries.indexOf(deliveries
-                    .firstWhere((element) => element.id == deliveryId)),
-                1,
-                [delivery]);
+            var index = deliveries.indexWhere((p) => p.id == deliveryId);
+            deliveries.remove(deliveries.firstWhere((e) => e.id == deliveryId));
+            deliveries.insert(index, delivery);
             state = AsyncValue.data(deliveries);
+            return true;
           } else {
             state = AsyncValue.error(Exception("Failed to update delivery"));
+            return false;
           }
-        },
-        error: (error, stackTrace) {
-          state = AsyncValue.error(error);
-        },
-        loading: () {
-          state =
-              const AsyncValue.error("Cannot update delivery while loading");
-        },
-      );
-    } catch (e) {
-      state = AsyncValue.error(e);
-    }
+        } catch (e) {
+          state = AsyncValue.error(e);
+          return false;
+        }
+      },
+      error: (error, stackTrace) {
+        state = AsyncValue.error(error);
+        return false;
+      },
+      loading: () {
+        state = const AsyncValue.error("Cannot update delivery while loading");
+        return false;
+      },
+    );
   }
 
-  void deleteDelivery(String deliveryId) async {
-    try {
-      state.when(
-        data: (deliveries) async {
+  Future<bool> deleteDelivery(String deliveryId) async {
+    return state.when(
+      data: (deliveries) async {
+        try {
           if (await _deliveriesListRepository.deleteDelivery(deliveryId)) {
-            deliveries.remove(
-                deliveries.firstWhere((element) => element.id == deliveryId));
+            deliveries.removeWhere((e) => e.id == deliveryId);
             state = AsyncValue.data(deliveries);
+            return true;
           } else {
             state = AsyncValue.error(Exception("Failed to delete delivery"));
+            return false;
           }
-        },
-        error: (error, stackTrace) {
-          state = AsyncValue.error(error);
-        },
-        loading: () {
-          state =
-              const AsyncValue.error("Cannot delete delivery while loading");
-        },
-      );
-    } catch (e) {
-      state = AsyncValue.error(e);
-    }
+        } catch (e) {
+          state = AsyncValue.error(e);
+          return false;
+        }
+      },
+      error: (error, stackTrace) {
+        state = AsyncValue.error(error);
+        return false;
+      },
+      loading: () {
+        state = const AsyncValue.error("Cannot delete delivery while loading");
+        return false;
+      },
+    );
   }
 }
 
-
-final deliveryListProvider = StateNotifierProvider<DeliveryListNotifier,
-    AsyncValue<List<Delivery>>>((ref) {
+final deliveryListProvider =
+    StateNotifierProvider<DeliveryListNotifier, AsyncValue<List<Delivery>>>(
+        (ref) {
   DeliveryListNotifier _orderListNotifier = DeliveryListNotifier();
   _orderListNotifier.loadDeliveriesList();
   return _orderListNotifier;
 });
-
 
 final deliveryList = Provider((ref) {
   final deliveryProvider = ref.watch(deliveryListProvider);

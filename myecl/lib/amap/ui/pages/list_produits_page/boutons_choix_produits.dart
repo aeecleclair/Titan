@@ -5,10 +5,10 @@ import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
+import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
@@ -21,7 +21,7 @@ class Boutons extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryId = ref.watch(deliveryIdProvider);
-    final productsList = ref.watch(productListProvider(deliveryId));
+    final productsList = ref.watch(deliveryProductListProvider(deliveryId));
     final cmdsNotifier = ref.watch(orderListProvider(deliveryId).notifier);
     final indexCmd = ref.watch(orderIndexProvider);
     final pageNotifier = ref.read(amapPageProvider.notifier);
@@ -54,10 +54,18 @@ class Boutons extends HookConsumerWidget {
                         id: const Uuid().v4(),
                         amount: price,
                         deliveryId: deliveryId,
-                        productsIds: prod.map((e) => e.id).toList());
+                        productsIds: prod.map((e) => e.id).toList(),
+                        collectionSlot: 'midi');
                     cmdsNotifier.addOrder(newOrder);
                   } else {
-                    cmdsNotifier.setProducts(indexCmd, prod);
+                    cmdsNotifier.setProducts(indexCmd, prod).then((value) {
+                      if (value) {
+                        displayToast(context, TypeMsg.msg, "Commande modifiée");
+                      } else {
+                        displayToast(
+                            context, TypeMsg.error, "Echec de la modification");
+                      }
+                    });
                   }
                   pageNotifier.setAmapPage(0);
                   clearCmd(ref);

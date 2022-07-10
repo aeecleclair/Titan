@@ -15,15 +15,16 @@ class DeliveryListRepository {
   Future<List<Delivery>> getDeliveryList() async {
     final response = await http.get(Uri.parse(host + ext), headers: headers);
     if (response.statusCode == 200) {
+      String resp = utf8.decode(response.body.runes.toList());
       return List<Delivery>.from(
-          json.decode(response.body).map((x) => Delivery.fromJson(x)));
+          json.decode(resp).map((x) => Delivery.fromJson(x)));
     } else {
       throw Exception("Failed to load delivery list");
     }
   }
 
   Future<bool> createDelivery(Delivery delivery) async {
-    final response = await http.post(Uri.parse(host),
+    final response = await http.post(Uri.parse(host + ext),
         headers: headers, body: json.encode(delivery.toJson()));
     if (response.statusCode == 201) {
       return true;
@@ -62,8 +63,11 @@ class DeliveryListRepository {
     }
   }
 
-  Future<List<Product>> getAllProductsFromOrder(String deliveryId, String orderId) async {
-    final response = await http.get(Uri.parse(host + ext + deliveryId + "/orders/" + orderId + "/products"), headers: headers);
+  Future<List<Product>> getAllProductsFromOrder(
+      String deliveryId, String orderId) async {
+    final response = await http.get(
+        Uri.parse(host + ext + deliveryId + "/orders/" + orderId + "/products"),
+        headers: headers);
     if (response.statusCode == 200) {
       return List<Product>.from(
           json.decode(response.body).map((x) => Product.fromJson(x)));

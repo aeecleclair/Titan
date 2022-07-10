@@ -3,14 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/repositories/delivery_list_repository.dart';
-import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
 
 class AmapUserRepository {
   final host = "http://10.0.2.2:8000/";
   final ext = "amap/users/";
-  final productRepository = DeliveryProductListRepository();
-  final deliveryRepository = DeliveryListRepository();
   final List<Product> loadedProducts = <Product>[];
   final Map<String, String> headers = {
     "Content-Type": "application/json",
@@ -23,13 +19,9 @@ class AmapUserRepository {
         headers: headers);
     if (response.statusCode == 200) {
       try {
-        List<Order> orders = List<Order>.from(
-            json.decode(response.body).map((x) => Order.fromJson(x)));
-        for (Order order in orders) {
-          List<Product> products = await deliveryRepository
-              .getAllProductsFromOrder(order.deliveryId, order.id);
-          order.products = products;
-        }
+        String resp = utf8.decode(response.body.runes.toList());
+        List<Order> orders =
+            List<Order>.from(json.decode(resp).map((x) => Order.fromJson(x)));
         return orders;
       } catch (e) {
         return [];

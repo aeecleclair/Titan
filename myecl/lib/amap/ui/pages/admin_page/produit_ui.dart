@@ -4,8 +4,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
+import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/modified_product_index_provider.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
@@ -114,7 +114,7 @@ class ProductUi extends ConsumerWidget {
                             title: "Suppression",
                             onYes: () {
                               ref
-                                  .watch(productListProvider(deliveryId).notifier)
+                                  .watch(deliveryProductListProvider(deliveryId).notifier)
                                   .deleteProduct(p.id);
                               displayToast(
                                   context, TypeMsg.msg, "Product supprimé");

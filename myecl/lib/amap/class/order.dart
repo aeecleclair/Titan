@@ -1,4 +1,5 @@
 import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/amap/tools/functions.dart';
 
 class Order {
   Order(
@@ -7,9 +8,11 @@ class Order {
       required this.deliveryDate,
       required this.productsIds,
       required this.amount,
+      required this.collectionSlot,
       this.productsQuantity = const <int>[],
       this.products = const [],
       this.expanded = false});
+  late final String collectionSlot;
   late final String id;
   late final DateTime deliveryDate;
   late final String deliveryId;
@@ -24,33 +27,42 @@ class Order {
     deliveryDate = DateTime.parse(json['delivery_date']);
     deliveryId = json['delivery_id'];
     amount = json['amount'];
-    products = [];
+    products =
+        List<Product>.from(json['products'].map((x) => Product.fromJson(x)));
     expanded = false;
-    productsIds = [];
-    productsQuantity = [];
+    productsIds =
+        List<String>.from(products.map((element) => element.id).toList());
+    productsQuantity =
+        List<int>.from(products.map((element) => element.quantity).toList());
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['order_id'] = id;
     _data['delivery_id'] = deliveryId;
-    _data['delivery_date'] = deliveryDate.toIso8601String();
+    _data['delivery_date'] = processDate(deliveryDate);
     _data['products_ids'] = productsIds;
+    _data['collection_slot'] = collectionSlot;
     _data['products_quantity'] = products.map((e) => e.quantity).toList();
     return _data;
   }
 
-  Order copyWith({id, deliveryDate, products, expanded, deliveryId, amount}) {
+  Order copyWith({id, deliveryDate, products, expanded, deliveryId, amount, collectionSlot}) {
     return Order(
-          id: id ?? this.id,
-          deliveryDate: deliveryDate ?? this.deliveryDate,
-          productsIds:
-              products != null ? List<String>.from(products.map((element) => element.id).toList()) : productsIds,
-          productsQuantity: products != null ? List<int>.from(products.map((element) => element.quantity).toList()) : productsQuantity,
-          deliveryId: deliveryId ?? this.deliveryId,
-          products: products ?? this.products,
-          amount: amount ?? this.amount,
-          expanded: expanded ?? this.expanded);
+        id: id ?? this.id,
+        deliveryDate: deliveryDate ?? this.deliveryDate,
+        productsIds: products != null
+            ? List<String>.from(products.map((element) => element.id).toList())
+            : productsIds,
+        productsQuantity: products != null
+            ? List<int>.from(
+                products.map((element) => element.quantity).toList())
+            : productsQuantity,
+        deliveryId: deliveryId ?? this.deliveryId,
+        products: products ?? this.products,
+        amount: amount ?? this.amount,
+        collectionSlot: collectionSlot ?? this.collectionSlot,
+        expanded: expanded ?? this.expanded);
   }
 
   void setProducts(List<Product> products) {

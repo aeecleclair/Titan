@@ -11,17 +11,11 @@ class OrderListRepository {
     "Accept": "application/json",
   };
 
-  String processDate(DateTime date) {
-    return date.toIso8601String().split('T')[0];
-  }
-
   Future<bool> createOrder(
       String deliveryId, Order order, String userId) async {
     Map<String, dynamic> orderJson = order.toJson();
     orderJson.addAll({
       "user_id": userId,
-      "collection_slot": "midi",
-      "delivery_date": processDate(order.deliveryDate),
     });
     final response = await http.post(
         Uri.parse(host + ext + deliveryId + "/orders"),
@@ -34,15 +28,16 @@ class OrderListRepository {
     }
   }
 
-  Future<bool> updateOrder(String deliveryId, Order order) async {
+  Future<bool> updateOrder(
+      String deliveryId, Order order, String userId) async {
+    Map<String, dynamic> orderJson = order.toJson();
+    orderJson.addAll({
+      "user_id": userId,
+    });
     final response = await http.patch(
-        Uri.parse(host +
-            ext +
-            deliveryId +
-            "/orders/" +
-            order.id.toString()),
+        Uri.parse(host + ext + deliveryId + "/orders"),
         headers: headers,
-        body: json.encode(order.toJson()));
+        body: json.encode(orderJson));
     if (response.statusCode == 200) {
       return true;
     } else {
@@ -54,7 +49,7 @@ class OrderListRepository {
     final response = await http.delete(
         Uri.parse(host + ext + deliveryId + "/orders/" + orderId),
         headers: headers);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 204) {
       return true;
     } else {
       throw Exception("Failed to delete order");

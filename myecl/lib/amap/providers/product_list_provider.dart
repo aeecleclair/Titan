@@ -7,10 +7,6 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
   late String deliveryId;
   ProductListNotifier() : super(const AsyncValue.loading());
 
-  void setId(String id) {
-    deliveryId = id;
-  }
-
   Future<AsyncValue<List<Product>>> loadProductList() async {
     try {
       final productList = await _productListRepository.getProductList();
@@ -106,10 +102,10 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
   }
 }
 
-final productListProvider = StateNotifierProvider.family<ProductListNotifier,
-    AsyncValue<List<Product>>, String>((ref, deliveryId) {
+final productListProvider =
+    StateNotifierProvider<ProductListNotifier, AsyncValue<List<Product>>>(
+        (ref) {
   ProductListNotifier _productListNotifier = ProductListNotifier();
-  _productListNotifier.setId(deliveryId);
   _productListNotifier.loadProductList();
   return _productListNotifier;
 });

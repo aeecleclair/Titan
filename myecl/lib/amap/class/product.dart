@@ -16,7 +16,8 @@ class Product {
     id = json['id'];
     name = json['name'];
     price = json['price'];
-    quantity = 0;
+    quantity =
+        json.containsKey("quantity") ? json["quantity"] : 0;
     category = json['category'];
   }
 
