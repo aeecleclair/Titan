@@ -3,8 +3,11 @@ import 'package:myecl/amap/providers/delivery_list_provider.dart';
 
 final deliveryIdProvider = StateNotifierProvider<DeliveryIdProvider, String>((ref) {
   final deliveries = ref.watch(deliveryList);
-  return DeliveryIdProvider(deliveries[0].id,
-  );
+  if (deliveries.isEmpty) {
+    return DeliveryIdProvider("");
+  } else {
+    return DeliveryIdProvider(deliveries.first.id);
+  }
 });
 
 class DeliveryIdProvider extends StateNotifier<String> {

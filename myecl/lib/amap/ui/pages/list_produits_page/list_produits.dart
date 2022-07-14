@@ -39,8 +39,7 @@ class ListProducts extends HookConsumerWidget {
     };
 
     for (Product p in products) {
-      dictCateListWidget[p.category]!
-          .add(ProductUiInList(p: p));
+      dictCateListWidget[p.category]!.add(ProductUiInList(p: p));
     }
 
     return SizedBox(
@@ -218,7 +217,10 @@ class ListProducts extends HookConsumerWidget {
               },
               loading: () => [
                 const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        ColorConstants.gradient2),
+                  ),
                 ),
               ],
             )));

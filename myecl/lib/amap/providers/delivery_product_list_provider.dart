@@ -26,16 +26,12 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
     return state.when(
       data: (products) async {
         try {
-          if (await _productListRepository.createProduct(deliveryId, product)) {
-            products.add(product);
-            state = AsyncValue.data(products);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to add product"));
-            return false;
-          }
+          await _productListRepository.createProduct(deliveryId, product);
+          products.add(product);
+          state = AsyncValue.data(products);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(products);
           return false;
         }
       },
@@ -54,19 +50,16 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
     return state.when(
       data: (products) async {
         try {
-          if (await _productListRepository.updateProduct(deliveryId, product)) {
-            var index = products.indexWhere((p) => p.id == product.id);
-            products.remove(products.firstWhere((e) => e.id == product.id));
-            products.insert(index, product);
-            state = AsyncValue.data(products);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to update product"));
-          }
+          await _productListRepository.updateProduct(deliveryId, product);
+          var index = products.indexWhere((p) => p.id == product.id);
+          products.remove(products.firstWhere((e) => e.id == product.id));
+          products.insert(index, product);
+          state = AsyncValue.data(products);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(products);
+          return false;
         }
-        return false;
       },
       error: (error, s) {
         state = AsyncValue.error(error);
@@ -83,18 +76,14 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
     return state.when(
       data: (products) async {
         try {
-          if (await _productListRepository.deleteProduct(
-              deliveryId, productId)) {
-            products.removeWhere((element) => element.id == productId);
-            state = AsyncData(products);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to delete product"));
-          }
+          await _productListRepository.deleteProduct(deliveryId, productId);
+          products.removeWhere((element) => element.id == productId);
+          state = AsyncData(products);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncData(products);
+          return false;
         }
-        return false;
       },
       error: (error, s) {
         state = AsyncValue.error(error);
@@ -118,9 +107,9 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
           state = AsyncValue.data(products);
           return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(products);
+          return false;
         }
-        return false;
       },
       error: (error, s) {
         state = AsyncValue.error(error);
@@ -137,10 +126,17 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
     return state.when(
       data: (products) async {
         try {
-          state = AsyncValue.data(products.map((e) => Product(id: e.id, name: e.name, price: e.price, quantity: 0, category: e.category)).toList());
+          state = AsyncValue.data(products
+              .map((e) => Product(
+                  id: e.id,
+                  name: e.name,
+                  price: e.price,
+                  quantity: 0,
+                  category: e.category))
+              .toList());
           return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(products);
           return false;
         }
       },

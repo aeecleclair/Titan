@@ -21,16 +21,14 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
     return state.when(
       data: (deliveries) async {
         try {
-          if (await _deliveriesListRepository.createDelivery(delivery)) {
-            deliveries.add(delivery);
-            state = AsyncValue.data(deliveries);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to add delivery"));
-            return false;
-          }
+          Delivery newDelivery = await _deliveriesListRepository.createDelivery(
+            delivery,
+          );
+          deliveries.add(newDelivery);
+          state = AsyncValue.data(deliveries);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(deliveries);
           return false;
         }
       },
@@ -49,19 +47,14 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
     return state.when(
       data: (deliveries) async {
         try {
-          if (await _deliveriesListRepository.updateDelivery(
-              deliveryId, delivery)) {
-            var index = deliveries.indexWhere((p) => p.id == deliveryId);
-            deliveries.remove(deliveries.firstWhere((e) => e.id == deliveryId));
-            deliveries.insert(index, delivery);
-            state = AsyncValue.data(deliveries);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to update delivery"));
-            return false;
-          }
+          await _deliveriesListRepository.updateDelivery(deliveryId, delivery);
+          var index = deliveries.indexWhere((p) => p.id == deliveryId);
+          deliveries.remove(deliveries.firstWhere((e) => e.id == deliveryId));
+          deliveries.insert(index, delivery);
+          state = AsyncValue.data(deliveries);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(deliveries);
           return false;
         }
       },
@@ -80,16 +73,12 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
     return state.when(
       data: (deliveries) async {
         try {
-          if (await _deliveriesListRepository.deleteDelivery(deliveryId)) {
-            deliveries.removeWhere((e) => e.id == deliveryId);
-            state = AsyncValue.data(deliveries);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to delete delivery"));
-            return false;
-          }
+          await _deliveriesListRepository.deleteDelivery(deliveryId);
+          deliveries.removeWhere((e) => e.id == deliveryId);
+          state = AsyncValue.data(deliveries);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(deliveries);
           return false;
         }
       },
@@ -100,6 +89,23 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
       loading: () {
         state = const AsyncValue.error("Cannot delete delivery while loading");
         return false;
+      },
+    );
+  }
+
+  void toggleExpanded(String deliveryId) {
+    state.when(
+      data: (deliveries) {
+        var index = deliveries.indexWhere((p) => p.id == deliveryId);
+        deliveries[index] =
+            deliveries[index].copyWith(expanded: !deliveries[index].expanded);
+        state = AsyncValue.data(deliveries);
+      },
+      error: (error, stackTrace) {
+        state = AsyncValue.error(error);
+      },
+      loading: () {
+        state = const AsyncValue.error("Cannot toggle expanded while loading");
       },
     );
   }

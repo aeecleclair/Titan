@@ -15,9 +15,9 @@ class UserListRepository {
   }
 
   Future<List<SimpleUser>> getAllUsers() async {
-    if (!headers.containsKey("Authorization")) {
-      throw Exception("No token");
-    }
+    // if (!headers.containsKey("Authorization")) {
+    //   throw Exception("No token");
+    // }
     final response =
         await http.get(Uri.parse(host + "users/"), headers: headers);
     if (response.statusCode == 200) {

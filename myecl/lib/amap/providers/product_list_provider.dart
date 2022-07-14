@@ -21,16 +21,12 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
     return state.when(
       data: (products) async {
         try {
-          if (await _productListRepository.createProduct(product)) {
-            products.add(product);
-            state = AsyncValue.data(products);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to add product"));
-            return false;
-          }
+          await _productListRepository.createProduct(product);
+          products.add(product);
+          state = AsyncValue.data(products);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(products);
           return false;
         }
       },
@@ -49,17 +45,14 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
     return state.when(
       data: (products) async {
         try {
-          if (await _productListRepository.updateProduct(product)) {
-            var index = products.indexWhere((p) => p.id == product.id);
-            products.remove(products.firstWhere((e) => e.id == product.id));
-            products.insert(index, product);
-            state = AsyncValue.data(products);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to update product"));
-          }
+          await _productListRepository.updateProduct(product);
+          var index = products.indexWhere((p) => p.id == product.id);
+          products.remove(products.firstWhere((e) => e.id == product.id));
+          products.insert(index, product);
+          state = AsyncValue.data(products);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(products);
         }
         return false;
       },
@@ -78,15 +71,12 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
     return state.when(
       data: (products) async {
         try {
-          if (await _productListRepository.deleteProduct(productId)) {
-            products.removeWhere((element) => element.id == productId);
-            state = AsyncData(products);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to delete product"));
-          }
+          await _productListRepository.deleteProduct(productId);
+          products.removeWhere((element) => element.id == productId);
+          state = AsyncValue.data(products);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(products);
         }
         return false;
       },

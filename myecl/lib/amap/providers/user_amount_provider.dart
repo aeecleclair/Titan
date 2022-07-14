@@ -1,13 +1,26 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/amap/repositories/amap_user_repository.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 
-final userAmountProvider = StateNotifierProvider<UserAmountNotifier, double>((ref) {
-  return UserAmountNotifier();
-});
+class UserCashNotifier extends StateNotifier<AsyncValue<double>> {
+  final AmapUserRepository _amapUserRepository = AmapUserRepository();
+  UserCashNotifier() : super(const AsyncValue.loading());
 
-class UserAmountNotifier extends StateNotifier<double> {
-  UserAmountNotifier() : super(105.43);
-
-  void setUserAmount(double i) {
-    state = i;
+  Future<AsyncValue<double>> loadCashByUser(String userId) async {
+    try {
+      final deliveriesList = await _amapUserRepository.getCashByUser(userId);
+      state = AsyncValue.data(deliveriesList);
+    } catch (e) {
+      state = AsyncValue.error(e);
+    }
+    return state;
   }
 }
+
+final userAmountProvider =
+    StateNotifierProvider<UserCashNotifier, AsyncValue<double>>((ref) {
+  UserCashNotifier _orderListNotifier = UserCashNotifier();
+  final userId = ref.read(idProvider);
+  _orderListNotifier.loadCashByUser(userId);
+  return _orderListNotifier;
+});

@@ -34,6 +34,7 @@ class Order {
         List<String>.from(products.map((element) => element.id).toList());
     productsQuantity =
         List<int>.from(products.map((element) => element.quantity).toList());
+    collectionSlot = json['collection_slot'];
   }
 
   Map<String, dynamic> toJson() {

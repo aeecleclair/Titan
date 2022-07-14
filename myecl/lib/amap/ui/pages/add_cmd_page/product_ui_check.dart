@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class ProductUi extends ConsumerWidget {
   final Product p;
@@ -51,6 +52,8 @@ class ProductUi extends ConsumerWidget {
                 ),
                 Checkbox(
                   value: isModif,
+                  checkColor: ColorConstants.background,
+                  activeColor: ColorConstants.l2,
                   onChanged: (value) {
                     onclick(i);
                   },

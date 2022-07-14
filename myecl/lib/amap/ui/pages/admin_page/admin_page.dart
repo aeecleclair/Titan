@@ -84,6 +84,15 @@ class AdminPage extends HookConsumerWidget {
                     height: 40,
                   ),
                   GestureDetector(
+                      child: const GreenBtn(text: "Gérer les comptes"),
+                      onTap: () {
+                        productModif.setModifiedProduct(-1);
+                        pageNotifier.setAmapPage(7);
+                      }),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  GestureDetector(
                       child: const GreenBtn(text: "Ajouter un produit"),
                       onTap: () {
                         productModif.setModifiedProduct(-1);

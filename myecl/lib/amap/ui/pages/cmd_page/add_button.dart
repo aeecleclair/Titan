@@ -52,7 +52,12 @@ class AddButton extends ConsumerWidget {
                                 fontSize: 35,
                                 fontWeight: FontWeight.w900,
                                 color: ColorConstants.textLight)),
-                        Text("Solde (" + solde.toStringAsFixed(2) + "€)",
+                        Text(
+                            solde.when(
+                                data: (s) =>
+                                    "Solde (" + s.toStringAsFixed(2) + "€)",
+                                error: (e, s) => "0€",
+                                loading: () => "0€"),
                             style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -73,7 +78,7 @@ class AddButton extends ConsumerWidget {
             ),
           )),
       onTap: () {
-        pageNotifier.setAmapPage(2);
+        pageNotifier.setAmapPage(6);
         indexCmdNotifier.setIndex(-1);
         clearCmd(ref);
       },

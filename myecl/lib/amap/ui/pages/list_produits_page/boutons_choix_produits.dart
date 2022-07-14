@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/providers/collection_slot_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
+import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
@@ -26,6 +28,8 @@ class Boutons extends HookConsumerWidget {
     final indexCmd = ref.watch(orderIndexProvider);
     final pageNotifier = ref.read(amapPageProvider.notifier);
     final price = ref.watch(priceProvider);
+    final delList = ref.watch(deliveryList);
+    final collectionSlotNotifier = ref.watch(collectionSlotProvider.notifier);
 
     final products = [];
     productsList.when(
@@ -50,12 +54,13 @@ class Boutons extends HookConsumerWidget {
                   if (indexCmd == -1) {
                     Order newOrder = Order(
                         products: prod,
-                        deliveryDate: DateTime.now(),
+                        deliveryDate: delList.firstWhere(
+                            (d) => d.id == deliveryId).deliveryDate,
                         id: const Uuid().v4(),
                         amount: price,
                         deliveryId: deliveryId,
                         productsIds: prod.map((e) => e.id).toList(),
-                        collectionSlot: 'midi');
+                        collectionSlot: collectionSlotNotifier.getText());
                     cmdsNotifier.addOrder(newOrder);
                   } else {
                     cmdsNotifier.setProducts(indexCmd, prod).then((value) {
@@ -102,7 +107,7 @@ class Boutons extends HookConsumerWidget {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) => CustomDialogBox(
-                        descriptions: "Supprimer la Order ?",
+                        descriptions: "Supprimer la commande ?",
                         title: "Suppression",
                         onYes: () {
                           cancelCmd(ref);

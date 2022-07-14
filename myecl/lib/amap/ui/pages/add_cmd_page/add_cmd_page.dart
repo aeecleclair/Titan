@@ -112,8 +112,7 @@ class AddCmdPage extends HookConsumerWidget {
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400,
-                                          color: Color.fromARGB(
-                                              255, 158, 158, 158),
+                                          color: Color.fromARGB(255, 85, 85, 85),
                                         ),
                                       ),
                                     ),
@@ -124,7 +123,6 @@ class AddCmdPage extends HookConsumerWidget {
                                         child: AbsorbPointer(
                                           child: TextFormField(
                                             controller: dateController,
-                                            // initialValue: dateController.value.text,
                                             decoration: const InputDecoration(
                                               contentPadding:
                                                   EdgeInsets.all(10),
@@ -132,7 +130,11 @@ class AddCmdPage extends HookConsumerWidget {
                                               enabledBorder:
                                                   UnderlineInputBorder(
                                                       borderSide: BorderSide(
-                                                          color: Colors.grey)),
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              85,
+                                                              85,
+                                                              85))),
                                               focusedBorder:
                                                   UnderlineInputBorder(
                                                       borderSide: BorderSide(
@@ -193,7 +195,7 @@ class AddCmdPage extends HookConsumerWidget {
                                           .where((element) => selected[
                                               products.indexOf(element)])
                                           .toList(),
-                                      deliveryDate: date);
+                                      deliveryDate: DateTime.parse(date));
                                   deliveryNotifier
                                       .addDelivery(del)
                                       .then((value) {
@@ -204,7 +206,6 @@ class AddCmdPage extends HookConsumerWidget {
                                       displayToast(context, TypeMsg.error,
                                           "Erreur lors de la modification du produit");
                                     }
-                                    pageNotifier.setAmapPage(3);
                                     selectedNotifier.clear();
                                   });
                                 }

@@ -40,7 +40,6 @@ class DeliveryProductListRepository {
     final response = await http.patch(
         Uri.parse(host +
             ext +
-            "deliveries/" +
             deliveryId +
             "/products/" +
             product.id.toString()),

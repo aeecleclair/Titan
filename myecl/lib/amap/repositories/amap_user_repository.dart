@@ -31,33 +31,13 @@ class AmapUserRepository {
     }
   }
 
-  Future<List<double>> getAllCash() async {
-    final response =
-        await http.get(Uri.parse(host + ext + "cash"), headers: headers);
-    if (response.statusCode == 200) {
-      return List<double>.from(json.decode(response.body));
-    } else {
-      throw Exception("Failed to load cash");
-    }
-  }
-
-  Future<double> getAllCashByUser(String userId) async {
+  Future<double> getCashByUser(String userId) async {
     final response = await http.get(Uri.parse(host + ext + userId + "/cash"),
         headers: headers);
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
       throw Exception("Failed to load cash");
-    }
-  }
-
-  Future<bool> addCash(String userId, double cash) async {
-    final response = await http.post(Uri.parse(host + ext + userId + "/cash"),
-        headers: headers, body: json.encode(cash));
-    if (response.statusCode == 201) {
-      return true;
-    } else {
-      throw Exception("Failed to add cash");
     }
   }
 }

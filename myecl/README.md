@@ -23,10 +23,5 @@ AMAP / Réserva° / Calendrier
 
 AMAP : 
 
-    - collection
-    - voir != dél
-    - pb add cmd (307)
-    - pd add order (522 : pydantic.error_wrappers.ValidationError: 1 validation error for OrderReturn
-response -> products -> 0 -> quantity)
-
-    - progress load cmd
+    - modif del (admin)
+    - solde

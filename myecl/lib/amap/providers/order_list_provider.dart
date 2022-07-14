@@ -35,16 +35,12 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
     return state.when(
       data: (orders) async {
         try {
-          if (await _repository.createOrder(deliveryId, order, userId)) {
-            orders.add(order);
-            state = AsyncValue.data(orders);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to add order"));
-            return false;
-          }
+          await _repository.createOrder(deliveryId, order, userId);
+          orders.add(order);
+          state = AsyncValue.data(orders);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(orders);
           return false;
         }
       },
@@ -63,19 +59,14 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
     return state.when(
       data: (orders) async {
         try {
-          if (await _repository.updateOrder(deliveryId, order, userId)) {
-            var index = orders.indexWhere((element) => element.id == order.id);
-            orders
-                .remove(orders.firstWhere((element) => element.id == order.id));
-            orders.insert(index, order);
-            state = AsyncValue.data(orders);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to update order"));
-            return false;
-          }
+          await _repository.updateOrder(deliveryId, order, userId);
+          var index = orders.indexWhere((element) => element.id == order.id);
+          orders.remove(orders.firstWhere((element) => element.id == order.id));
+          orders.insert(index, order);
+          state = AsyncValue.data(orders);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(orders);
           return false;
         }
       },
@@ -94,17 +85,13 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
     return state.when(
       data: (orders) async {
         try {
-          if (await _repository.deleteOrder(
-              deliveryId, orders[indexOrder].id)) {
-            orders.removeAt(indexOrder);
-            state = AsyncValue.data(orders);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to delete order"));
-            return false;
-          }
+          await _repository.deleteOrder(
+              orders[indexOrder].deliveryId, orders[indexOrder].id);
+          orders.removeAt(indexOrder);
+          state = AsyncValue.data(orders);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(orders);
           return false;
         }
       },
@@ -125,16 +112,12 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
         try {
           var newOrder = orders[indexOrder]
               .copyWith(products: orders[indexOrder].products..add(product));
-          if (await _repository.updateOrder(deliveryId, newOrder, userId)) {
-            orders[indexOrder] = newOrder;
-            state = AsyncValue.data(orders);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to add product"));
-            return false;
-          }
+          await _repository.updateOrder(deliveryId, newOrder, userId);
+          orders[indexOrder] = newOrder;
+          state = AsyncValue.data(orders);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(orders);
           return false;
         }
       },
@@ -155,16 +138,12 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
         try {
           var newOrder = orders[indexOrder]
               .copyWith(products: orders[indexOrder].products..remove(product));
-          if (await _repository.updateOrder(deliveryId, newOrder, userId)) {
-            orders[indexOrder] = newOrder;
-            state = AsyncValue.data(orders);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to delete product"));
-            return false;
-          }
+          await _repository.updateOrder(deliveryId, newOrder, userId);
+          orders[indexOrder] = newOrder;
+          state = AsyncValue.data(orders);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(orders);
           return false;
         }
       },
@@ -187,16 +166,12 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
               products: orders[indexOrder].products
                 ..replaceRange(orders[indexOrder].products.indexOf(product), 1,
                     [product]));
-          if (await _repository.updateOrder(deliveryId, newOrder, userId)) {
-            orders[indexOrder] = newOrder;
-            state = AsyncValue.data(orders);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to update product"));
-            return false;
-          }
+          await _repository.updateOrder(deliveryId, newOrder, userId);
+          orders[indexOrder] = newOrder;
+          state = AsyncValue.data(orders);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(orders);
           return false;
         }
       },
@@ -251,16 +226,12 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       data: (orders) async {
         try {
           var newOrder = orders[indexOrder].copyWith(products: newListProduct);
-          if (await _repository.updateOrder(deliveryId, newOrder, userId)) {
-            orders[indexOrder] = newOrder;
-            state = AsyncValue.data(orders);
-            return true;
-          } else {
-            state = AsyncValue.error(Exception("Failed to update product"));
-            return false;
-          }
+          await _repository.updateOrder(deliveryId, newOrder, userId);
+          orders[indexOrder] = newOrder;
+          state = AsyncValue.data(orders);
+          return true;
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.data(orders);
           return false;
         }
       },

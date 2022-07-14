@@ -1,32 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/class/product.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/providers/collection_slot_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
-import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
-import 'package:myecl/amap/providers/order_index_provider.dart';
-import 'package:myecl/amap/providers/order_list_provider.dart';
-import 'package:myecl/amap/providers/order_price_provider.dart';
-import 'package:myecl/amap/tools/dialog.dart';
+import 'package:myecl/amap/providers/delivery_list_provider.dart';
+import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
+import 'package:myecl/amap/tools/collection_dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/functions.dart';
 
-class OrderUi extends ConsumerWidget {
-  final Order c;
-  final int i;
-  const OrderUi({Key? key, required this.c, required this.i}) : super(key: key);
+class DeliveryUi extends ConsumerWidget {
+  final Delivery c;
+  final String i;
+  const DeliveryUi({Key? key, required this.c, required this.i})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deliveryId = ref.watch(deliveryIdProvider);
-    final cmdsNotifier = ref.watch(orderListProvider(deliveryId).notifier);
-    final productsNotifier =
-        ref.watch(deliveryProductListProvider(deliveryId).notifier);
-    final indexCmdNotifier = ref.watch(orderIndexProvider.notifier);
+    final isAdmin = ref.watch(isAmapAdminProvider);
+    final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
+    final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
-    final priceNotofier = ref.watch(priceProvider.notifier);
+    final collectionSlotNotifier = ref.watch(collectionSlotProvider.notifier);
     return Container(
       margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
       alignment: Alignment.center,
@@ -53,13 +51,12 @@ class OrderUi extends ConsumerWidget {
               ),
               Expanded(
                 child: Text(
-                  "Le " +
+                  "Livraison le " +
                       c.deliveryDate.day.toString().padLeft(2, "0") +
                       "/" +
                       c.deliveryDate.month.toString().padLeft(2, "0") +
                       "/" +
-                      c.deliveryDate.year.toString()
-                      + " (" + c.collectionSlot + ")",
+                      c.deliveryDate.year.toString(),
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -72,14 +69,12 @@ class OrderUi extends ConsumerWidget {
                   height: 25,
                   alignment: Alignment.topCenter,
                   child: HeroIcon(
-                    c.expanded
-                        ? HeroIcons.chevronUp
-                        : HeroIcons.chevronDown,
+                    c.expanded ? HeroIcons.chevronUp : HeroIcons.chevronDown,
                     color: ColorConstants.textDark,
                   ),
                 ),
                 onTap: () {
-                  cmdsNotifier.toggleExpanded(i);
+                  deliveryListNotifier.toggleExpanded(i);
                 },
               )
             ],
@@ -99,10 +94,7 @@ class OrderUi extends ConsumerWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  p.name +
-                                      " (quantité : " +
-                                      p.quantity.toString() +
-                                      ")",
+                                  p.name,
                                   style: const TextStyle(
                                     fontSize: 13,
                                     color: ColorConstants.textDark,
@@ -120,9 +112,7 @@ class OrderUi extends ConsumerWidget {
                                     width: 40,
                                     alignment: Alignment.centerRight,
                                     child: Text(
-                                      (p.quantity * p.price)
-                                              .toStringAsFixed(2) +
-                                          "€",
+                                      p.price.toStringAsFixed(2) + "€",
                                       style: const TextStyle(
                                         fontSize: 13,
                                         color: ColorConstants.textDark,
@@ -161,25 +151,50 @@ class OrderUi extends ConsumerWidget {
                 ),
               ),
               Container(
-                  width: 140,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "price : " +
-                        (c.products.map((p) => p.quantity * p.price))
-                            .reduce((value, element) => value + element)
-                            .toStringAsFixed(2) +
-                        "€",
-                    style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: ColorConstants.textLight),
-                  ))
+                alignment: Alignment.center,
+                width: 140,
+                child: GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      gradient: const LinearGradient(
+                        colors: [
+                          ColorConstants.textLight,
+                          ColorConstants.textDark,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                    child: Text(
+                      "Commander",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: ColorConstants.background2),
+                    ),
+                  ),
+                  onTap: () {
+                    deliveryIdNotifier.setId(i);
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => CollectionDialogBox(
+                            descriptions: "Choisissez un moment de livraison",
+                            title: "Livraison",
+                            onClick: (s) {
+                              collectionSlotNotifier.setSlot(s);
+                              pageNotifier.setAmapPage(2);
+                            }));
+                  },
+                ),
+              ),
             ],
           ),
           Container(
             height: 20,
           ),
-          c.expanded
+          c.expanded && isAdmin
               ? Row(
                   children: [
                     GestureDetector(
@@ -199,14 +214,7 @@ class OrderUi extends ConsumerWidget {
                                 color: ColorConstants.enabled)),
                       ),
                       onTap: () {
-                        indexCmdNotifier.setIndex(i);
-                        for (Product p
-                            in c.products.where((e) => e.quantity != 0)) {
-                          productsNotifier.setQuantity(p.id, p.quantity);
-                        }
-                        cmdsNotifier.getprice(i).then((value) {
-                          priceNotofier.setOrderPrice(value);
-                        });
+                        deliveryIdNotifier.setId(i);
                         pageNotifier.setAmapPage(2);
                       },
                     ),
@@ -230,12 +238,20 @@ class OrderUi extends ConsumerWidget {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) => CustomDialogBox(
-                                descriptions: "Supprimer la commande ?",
+                                descriptions: "Supprimer la livraison ?",
                                 title: "Suppression",
                                 onYes: () {
-                                  deleteCmd(ref, i);
-                                  displayToast(context, TypeMsg.msg,
-                                      "Commande supprimée");
+                                  deliveryListNotifier
+                                      .deleteDelivery(i)
+                                      .then((value) {
+                                    if (value) {
+                                      displayToast(context, TypeMsg.msg,
+                                          "livraison supprimée");
+                                    } else {
+                                      displayToast(context, TypeMsg.error,
+                                          "Erreur lors de la suppression");
+                                    }
+                                  });
                                 }));
                       },
                     )
