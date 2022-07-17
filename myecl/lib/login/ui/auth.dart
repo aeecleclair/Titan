@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:animations/animations.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/login/ui/background_painter.dart';
 import 'package:myecl/login/ui/reigster.dart';
 import 'package:myecl/login/ui/sign_in.dart';
 
-class AuthScreen extends HookWidget {
+class AuthScreen extends HookConsumerWidget {
   const AuthScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final ValueNotifier<bool> _showSignInPage = useValueNotifier(true);
     AnimationController _controller =
         useAnimationController(duration: const Duration(seconds: 2));

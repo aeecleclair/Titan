@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
+import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
@@ -12,6 +13,7 @@ class SoldePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cashList = ref.watch(cashProvider);
+    final pageNotifier = ref.read(amapPageProvider.notifier);
     var listWidgetCash = [];
     cashList.when(
       data: (cash) {
@@ -109,6 +111,9 @@ class SoldePage extends HookConsumerWidget {
           ),
           GestureDetector(
             child: const GreenBtn(text: "Ajouter un utilisateur"),
+            onTap: () {
+              pageNotifier.setAmapPage(8);
+            },
           )
         ],
       ),

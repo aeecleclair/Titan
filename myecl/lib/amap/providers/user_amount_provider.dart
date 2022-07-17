@@ -19,8 +19,19 @@ class UserCashNotifier extends StateNotifier<AsyncValue<double>> {
 
 final userAmountProvider =
     StateNotifierProvider<UserCashNotifier, AsyncValue<double>>((ref) {
-  UserCashNotifier _orderListNotifier = UserCashNotifier();
+  UserCashNotifier _userCashNotifier = UserCashNotifier();
   final userId = ref.read(idProvider);
-  _orderListNotifier.loadCashByUser(userId);
-  return _orderListNotifier;
+  _userCashNotifier.loadCashByUser(userId);
+  return _userCashNotifier;
+});
+
+final userCashProvider = Provider((ref) {
+  final userAmount = ref.watch(userAmountProvider);
+  return userAmount.when(data: (amount) {
+    return amount;
+  }, error: (error, stackTrace) {
+    return 0;
+  }, loading: () {
+    return 0;
+  });
 });

@@ -11,6 +11,7 @@ import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
+import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
@@ -30,6 +31,7 @@ class Boutons extends HookConsumerWidget {
     final price = ref.watch(priceProvider);
     final delList = ref.watch(deliveryList);
     final collectionSlotNotifier = ref.watch(collectionSlotProvider.notifier);
+    final userAmount = ref.watch(userCashProvider);
 
     final products = [];
     productsList.when(
@@ -44,7 +46,9 @@ class Boutons extends HookConsumerWidget {
               child: GreenBtn(
                   text: "Confirmer (" + price.toStringAsFixed(2) + "€)"),
               onTap: () {
-                if (price != 0.0) {
+                if (price == 0.0) {
+                  displayToast(context, TypeMsg.error, "Pas de produit");
+                } else if (price < userAmount) {
                   List<Product> prod = [];
                   for (var p in products) {
                     if (p.quantity != 0) {
@@ -54,14 +58,22 @@ class Boutons extends HookConsumerWidget {
                   if (indexCmd == -1) {
                     Order newOrder = Order(
                         products: prod,
-                        deliveryDate: delList.firstWhere(
-                            (d) => d.id == deliveryId).deliveryDate,
+                        deliveryDate: delList
+                            .firstWhere((d) => d.id == deliveryId)
+                            .deliveryDate,
                         id: const Uuid().v4(),
                         amount: price,
                         deliveryId: deliveryId,
                         productsIds: prod.map((e) => e.id).toList(),
                         collectionSlot: collectionSlotNotifier.getText());
-                    cmdsNotifier.addOrder(newOrder);
+                    cmdsNotifier.addOrder(newOrder).then((value) {
+                      if (value) {
+                        displayToast(context, TypeMsg.msg, "Commande ajoutée");
+                      } else {
+                        displayToast(
+                            context, TypeMsg.error, "Echec de l'ajout");
+                      }
+                    });
                   } else {
                     cmdsNotifier.setProducts(indexCmd, prod).then((value) {
                       if (value) {
@@ -75,7 +87,7 @@ class Boutons extends HookConsumerWidget {
                   pageNotifier.setAmapPage(0);
                   clearCmd(ref);
                 } else {
-                  displayToast(context, TypeMsg.error, "Pas de produit");
+                  displayToast(context, TypeMsg.error, "Pas assez d'argent");
                 }
               }),
           GestureDetector(

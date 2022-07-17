@@ -11,6 +11,12 @@ final authTokenProvider =
   return _oauth2TokenRepository;
 });
 
+final authProvider = StateNotifierProvider<OAuth2TokenProvider, AsyncValue<Map<String, String>>>(
+    (ref) {
+  OAuth2TokenProvider _oauth2Provider = OAuth2TokenProvider();
+  return _oauth2Provider;
+});
+
 final isLoggedInProvider = Provider((ref) {
   return true;
   // return ref.watch(authTokenProvider).when(
@@ -66,6 +72,10 @@ class OAuth2TokenProvider
   String tokenName = "my_ecl_auth_token";
   OAuth2TokenProvider() : super(const AsyncValue.loading());
 
+  Future<String> getAuthPageUrl() async {
+    return await _authTokenRepository.getLogInPage();
+  }
+
   void getTokenFromRequest(String username, String password) async {
     state = const AsyncValue.loading();
     try {
@@ -73,6 +83,7 @@ class OAuth2TokenProvider
           await _authTokenRepository.authorizationFlow(username, password);
       final tokens = await _authTokenRepository.getTokens(authorizationCode);
       state = AsyncValue.data(tokens);
+      storeToken();
     } catch (e) {
       state = AsyncValue.error(e);
     }
@@ -82,12 +93,34 @@ class OAuth2TokenProvider
     state = const AsyncValue.loading();
     _secureStorage.read(key: tokenName).then((token) async {
       if (token != null) {
-        final tokens = await _authTokenRepository.refreshTokens(token);
-        state = AsyncValue.data(tokens);
+        try {
+          final tokens = await _authTokenRepository.refreshTokens(token);
+          state = AsyncValue.data(tokens);
+          storeToken();
+        } catch (e) {
+          state = AsyncValue.error(e);
+        }
       } else {
-        state = const AsyncValue.data({"token": "", "refreshToken": ""});
+        deleteToken();
+        state = const AsyncValue.error("No token found");
       }
     });
+  }
+
+  void refreshToken() async {
+    state = const AsyncValue.loading();
+    state.when(
+      data: (token) async {
+        final tokens = await _authTokenRepository
+            .refreshTokens(token["refreshToken"] as String);
+        state = AsyncValue.data(tokens);
+        storeToken();
+      },
+      error: (error, stackTrace) {
+        state = AsyncValue.error(error);
+      },
+      loading: () {},
+    );
   }
 
   void storeToken() {

@@ -4,7 +4,6 @@ import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'dart:math';
 
-
 String generateRandomString(int len) {
   var r = Random();
   const _chars =
@@ -23,11 +22,30 @@ class OAuth2TokenRepository {
     "Accept": "application/json",
   };
 
-  final clientId = "application";
+  final clientId = "client_id";
   final responseType = "code";
   final state = generateRandomString(128);
   final codeVerifier = generateRandomString(128);
 
+  Future<String> getLogInPage() async {
+    final response = await http.post(
+      Uri.parse(host + "auth/authorize"),
+      headers: headers,
+      body: {
+        "client_id": clientId,
+        "response_type": responseType,
+        "state": state,
+        "code_challenge": hash(codeVerifier),
+        "code_challenge_method": "S256",
+        "redirect_uri": "http://127.0.0.1:8000/",
+      },
+    );
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception("Failed to get login page");
+    }
+  }
 
   Future<String> authorizationFlow(String username, String password) async {
     var body = {
@@ -38,12 +56,15 @@ class OAuth2TokenRepository {
       "state": state,
       "code_challenge": hash(codeVerifier),
       "code_challenge_method": "S256",
-      "redirect_uri": "http://localhost:8080/auth",
+      "redirect_uri": "http://127.0.0.1:8000/",
     };
     try {
-      final response = await http.post(Uri.parse(host + "auth/authorization-flow/authorize-validation"),
-          headers: headers,
-          body: body).timeout(const Duration(seconds: 5));
+      final response = await http
+          .post(
+              Uri.parse(host + "auth/authorization-flow/authorize-validation"),
+              headers: headers,
+              body: body)
+          .timeout(const Duration(seconds: 5));
       if (response.statusCode != 302) {
         throw Exception('Wrong credentials');
       }
@@ -72,24 +93,21 @@ class OAuth2TokenRepository {
     var body = {
       "client_id": clientId,
       "code": authorizationCode,
-      "redirect_uri": "http://localhost:8080/auth",
+      "redirect_uri": "",
       "code_verifier": codeVerifier,
       "grant_type": "authorization_code",
     };
     try {
       final response = await http.post(Uri.parse(host + "auth/token"),
-          headers: headers,
-          body: body).timeout(const Duration(seconds: 5));
+          headers: headers, body: body);
       if (response.statusCode == 200) {
         final token = jsonDecode(response.body)["access_token"];
-        // final refreshToken = jsonDecode(response.body)["refresh_token"];
-        final refreshToken = "";
+        final refreshToken = jsonDecode(response.body)["refresh_token"];
+        // final refreshToken = "";
         return {"token": token, "refreshToken": refreshToken};
       } else {
         throw Exception('Wrong credentials');
       }
-    } on TimeoutException catch (_) {
-      throw Exception('No response from server');
     } catch (e) {
       rethrow;
     }
@@ -102,9 +120,8 @@ class OAuth2TokenRepository {
       "grant_type": "refresh_token",
     };
     try {
-      final response = await http.post(Uri.parse(host + "auth/token"),
-          headers: headers,
-          body: body).timeout(const Duration(seconds: 5));
+      final response = await http
+          .post(Uri.parse(host + "auth/token"), headers: headers, body: body);
       if (response.statusCode == 200) {
         final token = jsonDecode(response.body)["access_token"];
         final refreshToken = jsonDecode(response.body)["refresh_token"];
@@ -112,8 +129,6 @@ class OAuth2TokenRepository {
       } else {
         throw Exception('Wrong credentials');
       }
-    } on TimeoutException catch (_) {
-      throw Exception('No response from server');
     } catch (e) {
       rethrow;
     }

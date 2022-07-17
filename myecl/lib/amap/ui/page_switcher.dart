@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/ui/pages/add_cmd_page/add_cmd_page.dart';
+import 'package:myecl/amap/ui/pages/add_solde_page/add_solde_page.dart';
 import 'package:myecl/amap/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/amap/ui/pages/cmd_page/affichage_commandes.dart';
 import 'package:myecl/amap/ui/pages/delivery_page/delivery_page.dart';
@@ -34,6 +35,8 @@ class PageSwitcher extends ConsumerWidget {
         return const DeliveryPage();
       case 7:
         return const SoldePage();
+      case 8:
+        return const AddSoldePage();
       default:
         return const PageScheme(subPage: ListeOrders());
     }

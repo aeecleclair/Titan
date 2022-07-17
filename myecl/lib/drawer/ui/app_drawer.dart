@@ -7,6 +7,7 @@ import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
 import 'package:myecl/home/ui/home.dart';
+import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/settings/ui/settings.dart';
 
 class AppDrawer extends HookConsumerWidget {
@@ -27,7 +28,7 @@ class AppDrawer extends HookConsumerWidget {
       case 2:
         return BookingPage(controllerNotifier: _controllerNotifier);
       case 3:
-      // return AmapPage(controllerNotifier: _controllerNotifier);
+        return LoanPage(controllerNotifier: _controllerNotifier);
       case 4:
         return AmapPage(controllerNotifier: _controllerNotifier);
       default:

@@ -19,9 +19,11 @@ samples, guidance on mobile development, and a full API reference.
 TODO : 
 
 Oauth (pas page ms html)
-AMAP / Réserva° / Calendrier
+Réserva° / Calendrier
+PageProvider -> enum
 
 AMAP : 
 
     - modif del (admin)
     - solde
+    - (Doeff : ne renvoyer que les deliveries après aujourd'hui)

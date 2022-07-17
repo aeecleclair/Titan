@@ -61,8 +61,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
         try {
           await _repository.updateOrder(deliveryId, order, userId);
           var index = orders.indexWhere((element) => element.id == order.id);
-          orders.remove(orders.firstWhere((element) => element.id == order.id));
-          orders.insert(index, order);
+          orders[index] = order;
           state = AsyncValue.data(orders);
           return true;
         } catch (e) {

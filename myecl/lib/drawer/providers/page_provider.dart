@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PageNotifier extends StateNotifier<int> {
-  PageNotifier() : super(4);
+  PageNotifier() : super(3);
 
   void setPage(int i) {
     state = i;
