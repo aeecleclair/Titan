@@ -15,37 +15,37 @@ class AddLoanPage extends HookConsumerWidget {
     final _currentStep = useState(0);
     final key = GlobalKey<FormState>();
     final asso = useState('Asso 1');
-    final fake_asso = [
+    final fakeAsso = [
       "Asso 1",
       "Asso 2",
       "Asso 3",
     ];
-    final fake_items = [
+    final fakeItems = [
       Item(
         name: "Item 1",
         caution: 20,
-        expiration: DateTime.now().add(Duration(days: 1)),
+        expiration: DateTime.now().add(const Duration(days: 1)),
         groupId: '',
         id: '1',
       ),
       Item(
         name: "Item 2",
         caution: 20,
-        expiration: DateTime.now().add(Duration(days: 1)),
+        expiration: DateTime.now().add(const Duration(days: 1)),
         groupId: '',
         id: '1',
       ),
       Item(
         name: "Item 3",
         caution: 20,
-        expiration: DateTime.now().add(Duration(days: 1)),
+        expiration: DateTime.now().add(const Duration(days: 1)),
         groupId: '',
         id: '2',
       ),
       Item(
         name: "Item 4",
         caution: 20,
-        expiration: DateTime.now().add(Duration(days: 1)),
+        expiration: DateTime.now().add(const Duration(days: 1)),
         groupId: '',
         id: '3',
       ),
@@ -63,7 +63,7 @@ class AddLoanPage extends HookConsumerWidget {
             unselectedWidgetColor: ColorConstant.lightGrey,
           ),
           child: Column(
-              children: fake_asso
+              children: fakeAsso
                   .map(
                     (e) => RadioListTile(
                         title: Text(e,
@@ -75,7 +75,6 @@ class AddLoanPage extends HookConsumerWidget {
                         groupValue: asso.value,
                         onChanged: (s) {
                           asso.value = s.toString();
-                          print(asso.value);
                         }),
                   )
                   .toList()),
@@ -87,15 +86,15 @@ class AddLoanPage extends HookConsumerWidget {
       Step(
         title: const Text('Objets'),
         content: Column(
-          children: fake_items
+          children: fakeItems
               .map(
                 (e) => CheckboxListTile(
                   title: Text(e.name,
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w500)),
-                  value: selectedItems[fake_items.indexOf(e)],
+                  value: selectedItems[fakeItems.indexOf(e)],
                   onChanged: (s) {
-                    selectedItemsNotifier.toggle(fake_items.indexOf(e));
+                    selectedItemsNotifier.toggle(fakeItems.indexOf(e));
                   },
                 ),
               )
@@ -125,16 +124,16 @@ class AddLoanPage extends HookConsumerWidget {
           children: <Widget>[
             Row(
               children: [
-                Text("Association : "),
+                const Text("Association : "),
                 Text(asso.value),
               ],
             ),
             Column(
               children: [
-                Text("Objets : "),
-                ...fake_items
+                const Text("Objets : "),
+                ...fakeItems
                     .where(
-                        (element) => selectedItems[fake_items.indexOf(element)])
+                        (element) => selectedItems[fakeItems.indexOf(element)])
                     .map(
                       (e) => Text(
                         e.name,
@@ -147,7 +146,7 @@ class AddLoanPage extends HookConsumerWidget {
             ),
             Row(
               children: [
-                Text("Emprunteur : "),
+                const Text("Emprunteur : "),
                 Text(number.text),
               ],
             ),
@@ -190,7 +189,6 @@ class AddLoanPage extends HookConsumerWidget {
                               return;
                             }
                             if (key.currentState!.validate()) {
-                              print("validated");
                               pageNotifier.setLoanPage(LoanPage.main);
                               _currentStep.value = 0;
                             }

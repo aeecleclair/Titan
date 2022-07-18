@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/providers/selected_items_provider.dart';
-import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 
@@ -15,7 +13,7 @@ class AddItemPage extends HookConsumerWidget {
     final _currentStep = useState(0);
     final key = GlobalKey<FormState>();
     final asso = useState('Asso 1');
-    final fake_asso = [
+    final fakeAsso = [
       "Asso 1",
       "Asso 2",
       "Asso 3",
@@ -32,7 +30,7 @@ class AddItemPage extends HookConsumerWidget {
             unselectedWidgetColor: ColorConstant.lightGrey,
           ),
           child: Column(
-              children: fake_asso
+              children: fakeAsso
                   .map(
                     (e) => RadioListTile(
                         title: Text(e,
@@ -44,7 +42,6 @@ class AddItemPage extends HookConsumerWidget {
                         groupValue: asso.value,
                         onChanged: (s) {
                           asso.value = s.toString();
-                          print(asso.value);
                         }),
                   )
                   .toList()),
@@ -93,19 +90,19 @@ class AddItemPage extends HookConsumerWidget {
           children: <Widget>[
             Row(
               children: [
-                Text("Association : "),
+                const Text("Association : "),
                 Text(asso.value),
               ],
             ),
             Row(
               children: [
-                Text("Nom : "),
+                const Text("Nom : "),
                 Text(name.text),
               ],
             ),
             Row(
               children: [
-                Text("Caution : "),
+                const Text("Caution : "),
                 Text(caution.text),
               ],
             ),
@@ -148,7 +145,6 @@ class AddItemPage extends HookConsumerWidget {
                               return;
                             }
                             if (key.currentState!.validate()) {
-                              print("validated");
                               pageNotifier.setLoanPage(LoanPage.main);
                               _currentStep.value = 0;
                             }

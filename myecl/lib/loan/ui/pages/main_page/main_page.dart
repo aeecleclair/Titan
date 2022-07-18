@@ -13,7 +13,7 @@ class MainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
-    AsyncValue<List<Loan>> fake_data = AsyncValue.data([
+    AsyncValue<List<Loan>> fakeData = AsyncValue.data([
       Loan(
         id: '1',
         borrowerId: '1',
@@ -167,7 +167,7 @@ class MainPage extends HookConsumerWidget {
           ))
     ];
 
-    fake_data.when(
+    fakeData.when(
       data: (data) {
         List<String> categories =
             data.map((e) => e.association).toSet().toList();
