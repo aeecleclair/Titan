@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/tools/constants.dart';
 
 class AddItemPage extends HookConsumerWidget {
   const AddItemPage({Key? key}) : super(key: key);
@@ -18,94 +20,94 @@ class AddItemPage extends HookConsumerWidget {
       "Asso 2",
       "Asso 3",
     ];
-    final fake_items = [
-      Item(
-        name: "Item 1",
-        caution: 20,
-        expiration: DateTime.now().add(Duration(days: 1)),
-        groupId: '',
-        id: '1',
-      ),
-      Item(
-        name: "Item 2",
-        caution: 20,
-        expiration: DateTime.now().add(Duration(days: 1)),
-        groupId: '',
-        id: '1',
-      ),
-      Item(
-        name: "Item 3",
-        caution: 20,
-        expiration: DateTime.now().add(Duration(days: 1)),
-        groupId: '',
-        id: '2',
-      ),
-      Item(
-        name: "Item 4",
-        caution: 20,
-        expiration: DateTime.now().add(Duration(days: 1)),
-        groupId: '',
-        id: '3',
-      ),
-    ];
+    final name = useTextEditingController();
+    final caution = useTextEditingController();
 
     List<Step> steps = [
       Step(
         title: const Text('Association'),
-        content: Column(
-            children: fake_asso
-                .map((e) => Row(
-                  children: [
-                    Radio(
+        content: Theme(
+          data: Theme.of(context).copyWith(
+            primaryColor: ColorConstant.lightGrey,
+            unselectedWidgetColor: ColorConstant.lightGrey,
+          ),
+          child: Column(
+              children: fake_asso
+                  .map(
+                    (e) => RadioListTile(
+                        title: Text(e,
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w500)),
+                        selected: asso.value == e,
                         value: e,
-                        groupValue: "groupValue",
+                        activeColor: ColorConstant.orange,
+                        groupValue: asso.value,
                         onChanged: (s) {
                           asso.value = s.toString();
                           print(asso.value);
                         }),
-                        Text(e)
-                  ],
-                ))
-                .toList()),
+                  )
+                  .toList()),
+        ),
         isActive: _currentStep.value >= 0,
         state:
             _currentStep.value >= 0 ? StepState.complete : StepState.disabled,
       ),
       Step(
-        title: const Text('Objets'),
-        content: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Home Address'),
+        title: const Text('Objet'),
+        content: Column(children: [
+          TextFormField(
+            controller: name,
+            decoration: const InputDecoration(
+              labelText: 'Nom',
             ),
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Postcode'),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            controller: caution,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: 'Caution',
+              suffix: Text('€'),
             ),
-          ],
-        ),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+        ]),
         isActive: _currentStep.value >= 0,
         state:
             _currentStep.value >= 1 ? StepState.complete : StepState.disabled,
       ),
       Step(
-        title: const Text('Emprunteur'),
-        content: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Mobile Number'),
-            ),
-          ],
-        ),
-        isActive: _currentStep.value >= 0,
-        state:
-            _currentStep.value >= 2 ? StepState.complete : StepState.disabled,
-      ),
-      Step(
         title: const Text('Confirmation'),
         content: Column(
           children: <Widget>[
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Confirm Password'),
+            Row(
+              children: [
+                Text("Association : "),
+                Text(asso.value),
+              ],
+            ),
+            Row(
+              children: [
+                Text("Nom : "),
+                Text(name.text),
+              ],
+            ),
+            Row(
+              children: [
+                Text("Caution : "),
+                Text(caution.text),
+              ],
             ),
           ],
         ),
@@ -122,7 +124,6 @@ class AddItemPage extends HookConsumerWidget {
     void cancel() {
       _currentStep.value > 0 ? _currentStep.value -= 1 : null;
     }
-
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
