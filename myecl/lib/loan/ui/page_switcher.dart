@@ -30,6 +30,8 @@ class PageSwitcher extends ConsumerWidget {
         return const MainPage();
       case LoanPage.option:
         return const OptionPage();
+      case LoanPage.historyDetail:
+        return const DetailPage();
       default:
         return const Text('Unknown page');
     }

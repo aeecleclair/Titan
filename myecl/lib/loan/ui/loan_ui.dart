@@ -3,18 +3,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/loan/providers/loan_history_provider.dart';
+import 'package:myecl/loan/providers/loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/tools/dialog.dart';
 
 class LoanUi extends ConsumerWidget {
   final Loan l;
-  const LoanUi({Key? key, required this.l}) : super(key: key);
+  final bool isHistory;
+  const LoanUi({Key? key, required this.l, required this.isHistory})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final loanNotifier = ref.watch(loanProvider.notifier);
+    final loanListNotifier = ref.watch(loanListProvider.notifier);
+    final loanHistoryNotifier = ref.watch(loanHistoryProvider.notifier);
     return GestureDetector(
       child: Container(
         decoration: BoxDecoration(
@@ -34,22 +41,35 @@ class LoanUi extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                l.borrowerId,
-                style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: ColorConstant.orange),
+              Container(
+                height: 50,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  l.borrowerId,
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstant.orange),
+                ),
               ),
-              IconButton(
-                  onPressed: () {
-                    print('Delete');
-                  },
-                  icon: const HeroIcon(
-                    HeroIcons.x,
-                    color: ColorConstant.veryLightOrange,
-                    size: 20,
-                  )),
+              !isHistory
+                  ? IconButton(
+                      onPressed: () {
+                        showDialog(context: context, builder: (context) {
+                          return CustomDialogBox(
+                            title: "Supprimer", descriptions: 'Supprimer ce prêt', onYes: () {
+                              loanListNotifier.deleteLoan(l);
+                              loanHistoryNotifier.addLoan(l);
+                            },
+                          );
+                        });
+                      },
+                      icon: const HeroIcon(
+                        HeroIcons.x,
+                        color: ColorConstant.veryLightOrange,
+                        size: 20,
+                      ))
+                  : Container()
             ],
           ),
           Row(
@@ -97,7 +117,7 @@ class LoanUi extends ConsumerWidget {
         ]),
       ),
       onTap: () {
-        pageNotifier.setLoanPage(LoanPage.detail);
+        pageNotifier.setLoanPage(isHistory ? LoanPage.historyDetail : LoanPage.detail);
         loanNotifier.setLoan(l);
       },
     );

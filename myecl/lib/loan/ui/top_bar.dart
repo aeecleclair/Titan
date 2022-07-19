@@ -48,6 +48,9 @@ class TopBar extends HookConsumerWidget {
                           case LoanPage.history:
                             pageNotifier.setLoanPage(LoanPage.main);
                             break;
+                          case LoanPage.historyDetail:
+                            pageNotifier.setLoanPage(LoanPage.history);
+                            break;
                         }
                       },
                       icon: FaIcon(

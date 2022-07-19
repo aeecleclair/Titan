@@ -8,7 +8,65 @@ class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
 
   Future<AsyncValue<List<Item>>> loadLoanList() async {
     try {
-      final items = await _repository.getItemList();
+      // final items = await _repository.getItemList();
+      final items = [
+        Item(
+          id: '1',
+          name: 'Item 1',
+          caution: 20,
+          expiration: DateTime(2020, 1, 31),
+          groupId: '',
+        ),
+        Item(
+          id: '2',
+          name: 'Item 2',
+          caution: 80,
+          expiration: DateTime(2020, 1, 31),
+          groupId: '',
+        ),
+        Item(
+          id: '3',
+          name: 'Item 3',
+          caution: 20,
+          expiration: DateTime(2020, 1, 31),
+          groupId: '',
+        ),
+        Item(
+          id: '4',
+          name: 'Item 4',
+          caution: 20,
+          expiration: DateTime(2020, 1, 31),
+          groupId: '',
+        ),
+        Item(
+          id: '5',
+          name: 'Item 5',
+          caution: 80,
+          expiration: DateTime(2020, 1, 31),
+          groupId: '',
+        ),
+        Item(
+          id: '6',
+          name: 'Item 6',
+          caution: 20,
+          expiration: DateTime(2020, 1, 31),
+          groupId: '',
+        ),
+        Item(
+          id: '7',
+          name: 'Item 7',
+          caution: 20,
+          expiration: DateTime(2020, 1, 31),
+          groupId: '',
+        ),
+        Item(
+          id: '8',
+          name: 'Item 8',
+          caution: 80,
+          expiration: DateTime(2020, 1, 31),
+          groupId: '',
+        ),
+      ];
       state = AsyncValue.data(items);
     } catch (e) {
       state = AsyncValue.error(e);
@@ -16,11 +74,11 @@ class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
     return state;
   }
 
-  Future<bool> addLoan(Item item) async {
+  Future<bool> addItem(Item item) async {
     return state.when(
       data: (items) async {
         try {
-          await _repository.createItem(item);
+          // await _repository.createItem(item);
           items.add(item);
           state = AsyncValue.data(items);
           return true;
@@ -40,11 +98,11 @@ class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
     );
   }
 
-  Future<bool> updateLoan(Item item) async {
+  Future<bool> updateItem(Item item) async {
     return state.when(
       data: (items) async {
         try {
-          await _repository.updateItem(item);
+          // await _repository.updateItem(item);
           var index = items.indexWhere((element) => element.id == item.id);
           items[index] = item;
           state = AsyncValue.data(items);
@@ -65,11 +123,11 @@ class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
     );
   }
 
-  Future<bool> deleteLoan(Item item) async {
+  Future<bool> deleteItem(Item item) async {
     return state.when(
       data: (items) async {
         try {
-          await _repository.deleteItem(item);
+          // await _repository.deleteItem(item);
           items.remove(item);
           state = AsyncValue.data(items);
           return true;
