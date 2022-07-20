@@ -15,7 +15,7 @@ class SignIn extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authNotifier = ref.watch(authTokenProvider.notifier);
-    final auth = ref.read(authTokenProvider);
+    final auth = ref.watch(authTokenProvider);
     final username = useTextEditingController();
     final password = useTextEditingController();
     return Form(

@@ -101,7 +101,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                color: ColorConstant.veryLightOrange),
+                                color: ColorConstant.lightOrange),
                           )),
                     ],
                   )),

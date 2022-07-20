@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/association_list_provider.dart';
+import 'package:myecl/loan/providers/association_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_list_provider.dart';
 import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:uuid/uuid.dart';
 
 class AddLoanPage extends HookConsumerWidget {
   const AddLoanPage({Key? key}) : super(key: key);
@@ -19,14 +22,18 @@ class AddLoanPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final _currentStep = useState(0);
     final key = GlobalKey<FormState>();
-    final asso = useState('Asso 1');
+    final asso = ref.watch(associationFromListProvider);
+    final assoNotifier = ref.watch(associationFromListProvider.notifier);
     final associations = ref.watch(associationListProvider);
     final fakeItems = ref.watch(itemListProvider);
     final selectedItems = ref.watch(selectedListProvider);
     final selectedItemsNotifier = ref.watch(selectedListProvider.notifier);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
+    final start = useTextEditingController();
+    final end = useTextEditingController();
     final number = useTextEditingController();
     final note = useTextEditingController();
+    final caution = useState(false);
 
     Widget w = const Center(
       child: CircularProgressIndicator(
@@ -59,12 +66,12 @@ class AddLoanPage extends HookConsumerWidget {
                             title: Text(e,
                                 style: const TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.w500)),
-                            selected: asso.value == e,
+                            selected: asso == e,
                             value: e,
                             activeColor: ColorConstant.orange,
-                            groupValue: asso.value,
+                            groupValue: asso,
                             onChanged: (s) {
-                              asso.value = s.toString();
+                              assoNotifier.update(s.toString());
                             }),
                       )
                       .toList()),
@@ -97,6 +104,141 @@ class AddLoanPage extends HookConsumerWidget {
                 : StepState.disabled,
           ),
           Step(
+            title: const Text('Dates'),
+            content: Column(
+              children: [
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: const EdgeInsets.only(bottom: 3),
+                          padding: const EdgeInsets.only(left: 10),
+                          child: const Text(
+                            "Date de la commande",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: Color.fromARGB(255, 85, 85, 85),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => _selectDate(context, start),
+                          child: SizedBox(
+                            child: AbsorbPointer(
+                              child: TextFormField(
+                                controller: start,
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.all(10),
+                                  isDense: true,
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Color.fromARGB(255, 85, 85, 85))),
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue)),
+                                  errorBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.red)),
+                                  border: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 158, 158, 158),
+                                    ),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Please enter a date for your task";
+                                  }
+                                  return null;
+                                },
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ]),
+                ),
+                Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 30),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            margin: const EdgeInsets.only(bottom: 3),
+                            padding: const EdgeInsets.only(left: 10),
+                            child: const Text(
+                              "Date de la commande",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Color.fromARGB(255, 85, 85, 85),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () => _selectDate(context, end),
+                            child: SizedBox(
+                              child: AbsorbPointer(
+                                child: TextFormField(
+                                  controller: end,
+                                  decoration: const InputDecoration(
+                                    contentPadding: EdgeInsets.all(10),
+                                    isDense: true,
+                                    enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 85, 85, 85))),
+                                    focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.blue)),
+                                    errorBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.red)),
+                                    border: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 158, 158, 158),
+                                      ),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter a date for your task";
+                                    }
+                                    return null;
+                                  },
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ])),
+              ],
+            ),
+            isActive: _currentStep.value >= 0,
+            state: _currentStep.value >= 3
+                ? StepState.complete
+                : StepState.disabled,
+          ),
+          Step(
             title: const Text('Emprunteur'),
             content: Column(
               children: <Widget>[
@@ -116,7 +258,7 @@ class AddLoanPage extends HookConsumerWidget {
               ],
             ),
             isActive: _currentStep.value >= 0,
-            state: _currentStep.value >= 2
+            state: _currentStep.value >= 4
                 ? StepState.complete
                 : StepState.disabled,
           ),
@@ -137,7 +279,21 @@ class AddLoanPage extends HookConsumerWidget {
               ],
             ),
             isActive: _currentStep.value >= 0,
-            state: _currentStep.value >= 3
+            state: _currentStep.value >= 5
+                ? StepState.complete
+                : StepState.disabled,
+          ),
+          Step(
+            title: const Text('Caution'),
+            content: CheckboxListTile(
+              value: caution.value,
+              title: const Text('La caution est payée'),
+              onChanged: (value) {
+                caution.value = !caution.value;
+              },
+            ),
+            isActive: _currentStep.value >= 0,
+            state: _currentStep.value >= 6
                 ? StepState.complete
                 : StepState.disabled,
           ),
@@ -148,7 +304,13 @@ class AddLoanPage extends HookConsumerWidget {
                 Row(
                   children: [
                     const Text("Association : "),
-                    Text(asso.value),
+                    Text(asso),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text("Emprunteur : "),
+                    Text(number.text),
                   ],
                 ),
                 Column(
@@ -169,8 +331,14 @@ class AddLoanPage extends HookConsumerWidget {
                 ),
                 Row(
                   children: [
-                    const Text("Emprunteur : "),
-                    Text(number.text),
+                    const Text("Date de début : "),
+                    Text(start.text),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text("Date de fin : "),
+                    Text(end.text),
                   ],
                 ),
                 Row(
@@ -179,10 +347,16 @@ class AddLoanPage extends HookConsumerWidget {
                     Text(note.text),
                   ],
                 ),
+                Row(
+                  children: [
+                    const Text("Caution payée : "),
+                    Text(caution.value ? "Oui" : "Non"),
+                  ],
+                ),
               ],
             ),
             isActive: _currentStep.value >= 0,
-            state: _currentStep.value >= 4
+            state: _currentStep.value >= 7
                 ? StepState.complete
                 : StepState.disabled,
           ),
@@ -221,19 +395,17 @@ class AddLoanPage extends HookConsumerWidget {
                                 loanListNotifier
                                     .addLoan(
                                   Loan(
-                                    association: asso.value,
+                                    association: asso,
                                     items: items
                                         .where((element) => selectedItems[
                                             items.indexOf(element)])
                                         .toList() as List<Item>,
                                     borrowerId: number.text,
-                                    caution: false,
-                                    end: DateTime.now().add(
-                                      const Duration(days: 7),
-                                    ),
-                                    id: '',
+                                    caution: caution.value,
+                                    end: DateTime.parse(end.text),
+                                    id: const Uuid().v4(),
                                     notes: note.text,
-                                    start: DateTime.now(),
+                                    start: DateTime.parse(start.text),
                                   ),
                                 )
                                     .then((value) {
@@ -284,5 +456,16 @@ class AddLoanPage extends HookConsumerWidget {
 
     return SingleChildScrollView(
         physics: const BouncingScrollPhysics(), child: w);
+  }
+
+  _selectDate(
+      BuildContext context, TextEditingController dateController) async {
+    final DateTime now = DateTime.now();
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: now,
+        firstDate: now,
+        lastDate: DateTime(now.year + 1, now.month, now.day));
+    dateController.text = DateFormat('yyyy-MM-dd').format(picked ?? now);
   }
 }

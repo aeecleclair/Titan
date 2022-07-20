@@ -11,8 +11,9 @@ final authTokenProvider =
   return _oauth2TokenRepository;
 });
 
-final authProvider = StateNotifierProvider<OAuth2TokenProvider, AsyncValue<Map<String, String>>>(
-    (ref) {
+final authProvider =
+    StateNotifierProvider<OAuth2TokenProvider, AsyncValue<Map<String, String>>>(
+        (ref) {
   OAuth2TokenProvider _oauth2Provider = OAuth2TokenProvider();
   return _oauth2Provider;
 });

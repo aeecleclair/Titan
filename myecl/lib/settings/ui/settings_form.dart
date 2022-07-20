@@ -12,9 +12,9 @@ class SettingsForm extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncUserNotifier = ref.read(asyncUserProvider.notifier);
+    final asyncUserNotifier = ref.watch(asyncUserProvider.notifier);
     final user = ref.watch(userProvider);
-    final asyncUser = ref.read(asyncUserProvider);
+    final asyncUser = ref.watch(asyncUserProvider);
     final dateController = useTextEditingController();
     dateController.text = user.birthday;
     final idController = useTextEditingController();

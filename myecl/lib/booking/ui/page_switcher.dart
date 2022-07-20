@@ -13,7 +13,7 @@ class PageSwitcher extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(bookingPageProvider);
-    final isAdmin = ref.read(isBookingAdminProvider);
+    final isAdmin = ref.watch(isBookingAdminProvider);
     switch (page) {
       case 0:
         return Expanded(

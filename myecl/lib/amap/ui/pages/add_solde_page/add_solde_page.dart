@@ -14,17 +14,16 @@ class AddSoldePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
     final cashListNotifier = ref.watch(cashProvider.notifier);
-    final userId = ref.read(idProvider);
-    final pageNotifier = ref.read(amapPageProvider.notifier);
+    final userId = ref.watch(idProvider);
+    final pageNotifier = ref.watch(amapPageProvider.notifier);
     return users.when(data: (u) {
       return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              ...u
+          child: Column(children: [
+            const SizedBox(
+              height: 20,
+            ),
+            ...u
                 .map((e) => Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -68,8 +67,8 @@ class AddSoldePage extends HookConsumerWidget {
                         ),
                       ],
                     ))
-                .toList(),]
-          ));
+                .toList(),
+          ]));
     }, error: (e, s) {
       return const Text("Aucun utilisateur trouvé");
     }, loading: () {

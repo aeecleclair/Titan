@@ -27,7 +27,7 @@ class Boutons extends HookConsumerWidget {
     final productsList = ref.watch(deliveryProductListProvider(deliveryId));
     final cmdsNotifier = ref.watch(orderListProvider(deliveryId).notifier);
     final indexCmd = ref.watch(orderIndexProvider);
-    final pageNotifier = ref.read(amapPageProvider.notifier);
+    final pageNotifier = ref.watch(amapPageProvider.notifier);
     final price = ref.watch(priceProvider);
     final delList = ref.watch(deliveryList);
     final collectionSlotNotifier = ref.watch(collectionSlotProvider.notifier);

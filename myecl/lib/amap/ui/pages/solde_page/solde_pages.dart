@@ -13,7 +13,7 @@ class SoldePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cashList = ref.watch(cashProvider);
-    final pageNotifier = ref.read(amapPageProvider.notifier);
+    final pageNotifier = ref.watch(amapPageProvider.notifier);
     var listWidgetCash = [];
     cashList.when(
       data: (cash) {

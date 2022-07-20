@@ -271,7 +271,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
 
 final orderListProvider = StateNotifierProvider.family<OrderListNotifier,
     AsyncValue<List<Order>>, String>((ref, deliveryId) {
-  final userId = ref.read(idProvider);
+  final userId = ref.watch(idProvider);
   OrderListNotifier _orderListNotifier = OrderListNotifier();
   _orderListNotifier.setId(deliveryId);
   _orderListNotifier.setUserId(userId);

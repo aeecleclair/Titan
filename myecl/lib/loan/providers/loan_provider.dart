@@ -44,8 +44,22 @@ class LoanNotifier extends StateNotifier<AsyncValue<Loan>> {
 
   void setLoan(Loan loan) {
     state = AsyncValue.data(loan);
+    print(loan.association);
+  }
+
+  void toggleCaution() {
+    state.when(
+      data: (l) {
+        state = AsyncValue.data(l.copyWith(caution: !l.caution));
+      },
+      error: (e, s) => state = AsyncValue.error(e),
+      loading: () => state = const AsyncValue.loading(),
+    );
   }
 }
 
-final loanProvider = StateNotifierProvider<LoanNotifier, AsyncValue<Loan>>(
-    (ref) => LoanNotifier());
+final loanProvider =
+    StateNotifierProvider<LoanNotifier, AsyncValue<Loan>>((ref) {
+  print("LoanProvider");
+  return LoanNotifier();
+});

@@ -15,7 +15,7 @@ class AdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final productsList = ref.watch(productListProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
-    final productModif = ref.read(modifiedProductProvider.notifier);
+    final productModif = ref.watch(modifiedProductProvider.notifier);
     final products = [];
     final categories = [];
     productsList.when(

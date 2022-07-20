@@ -13,7 +13,7 @@ import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/add_cmd_page/product_ui_check.dart';
 
-//TODO: ne pas modif si pas de changement
+//TODO: date de la commande
 
 class AddCmdPage extends HookConsumerWidget {
   const AddCmdPage({Key? key}) : super(key: key);

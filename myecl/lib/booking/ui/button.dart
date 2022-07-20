@@ -12,7 +12,7 @@ class Button extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: (() {
-        ref.read(bookingPageProvider.notifier).setBookingPage(index);
+        ref.watch(bookingPageProvider.notifier).setBookingPage(index);
       }),
       child: SizedBox(
           height: 50,
