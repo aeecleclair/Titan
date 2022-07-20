@@ -29,29 +29,39 @@ class TopBar extends HookConsumerWidget {
                 builder: (BuildContext appBarContext) {
                   return IconButton(
                       onPressed: () {
-                        if (page == 0) {
-                          controllerNotifier.toggle();
-                        } else {
-                          if (page == 3) {
-                            pageNotifier.setAmapPage(0);
-                          } else {
-                            if (page == 2) {
-                              clearCmd(ref);
-                              pageNotifier.setAmapPage(0);
-                            } else if (page == 5) {
-                              pageNotifier.setAmapPage(3);
-                            } else if (page == 6) {
-                              pageNotifier.setAmapPage(0);
-                            } else if (page == 7) {
-                              pageNotifier.setAmapPage(3);
-                            } else {
-                              pageNotifier.setAmapPage(max(page - 1, 0));
-                            }
-                          }
+                        switch (page) {
+                          case AmapPage.main:
+                            controllerNotifier.toggle();
+                            break;
+                          case AmapPage.pres:
+                            pageNotifier.setAmapPage(AmapPage.main);
+                            break;
+                          case AmapPage.products:
+                            clearCmd(ref);
+                            pageNotifier.setAmapPage(AmapPage.main);
+                            break;
+                          case AmapPage.admin:
+                            pageNotifier.setAmapPage(AmapPage.main);
+                            break;
+                          case AmapPage.modif:
+                            pageNotifier.setAmapPage(AmapPage.admin);
+                            break;
+                          case AmapPage.addCmd:
+                            pageNotifier.setAmapPage(AmapPage.admin);
+                            break;
+                          case AmapPage.delivery:
+                            pageNotifier.setAmapPage(AmapPage.main);
+                            break;
+                          case AmapPage.solde:
+                            pageNotifier.setAmapPage(AmapPage.admin);
+                            break;
+                          case AmapPage.addSolde:
+                            pageNotifier.setAmapPage(AmapPage.solde);
+                            break;
                         }
                       },
                       icon: FaIcon(
-                        page == 0
+                        page == AmapPage.main
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
                         color: const Color.fromARGB(255, 0, 0, 0),

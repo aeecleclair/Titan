@@ -266,7 +266,7 @@ class ModifProduct extends HookConsumerWidget {
                                             displayToast(context, TypeMsg.error,
                                                 "Erreur lors de la modification du produit");
                                           }
-                                          pageNotifier.setAmapPage(3);
+                                          pageNotifier.setAmapPage(AmapPage.admin);
 
                                           nameController.clear();
                                           priceController.clear();
@@ -294,7 +294,7 @@ class ModifProduct extends HookConsumerWidget {
                                             displayToast(context, TypeMsg.error,
                                                 "Erreur lors de la modification du produit");
                                           }
-                                          pageNotifier.setAmapPage(3);
+                                          pageNotifier.setAmapPage(AmapPage.admin);
 
                                           nameController.clear();
                                           priceController.clear();

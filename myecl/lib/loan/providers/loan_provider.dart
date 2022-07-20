@@ -44,7 +44,6 @@ class LoanNotifier extends StateNotifier<AsyncValue<Loan>> {
 
   void setLoan(Loan loan) {
     state = AsyncValue.data(loan);
-    print(loan.association);
   }
 
   void toggleCaution() {
@@ -60,6 +59,5 @@ class LoanNotifier extends StateNotifier<AsyncValue<Loan>> {
 
 final loanProvider =
     StateNotifierProvider<LoanNotifier, AsyncValue<Loan>>((ref) {
-  print("LoanProvider");
   return LoanNotifier();
 });

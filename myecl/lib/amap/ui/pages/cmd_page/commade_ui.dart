@@ -207,7 +207,7 @@ class OrderUi extends ConsumerWidget {
                         cmdsNotifier.getprice(i).then((value) {
                           priceNotofier.setOrderPrice(value);
                         });
-                        pageNotifier.setAmapPage(2);
+                        pageNotifier.setAmapPage(AmapPage.products);
                       },
                     ),
                     GestureDetector(

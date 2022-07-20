@@ -21,7 +21,7 @@ void clearCmd(WidgetRef ref) {
 void cancelCmd(WidgetRef ref) {
   final indexCmd = ref.watch(orderIndexProvider);
   final pageNotifier = ref.watch(amapPageProvider.notifier);
-  pageNotifier.setAmapPage(1);
+  pageNotifier.setAmapPage(AmapPage.main);
   clearCmd(ref);
   if (indexCmd != -1) {
     deleteCmd(ref, indexCmd);

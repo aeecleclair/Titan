@@ -112,7 +112,7 @@ class SoldePage extends HookConsumerWidget {
           GestureDetector(
             child: const GreenBtn(text: "Ajouter un utilisateur"),
             onTap: () {
-              pageNotifier.setAmapPage(8);
+              pageNotifier.setAmapPage(AmapPage.addSolde);
             },
           )
         ],

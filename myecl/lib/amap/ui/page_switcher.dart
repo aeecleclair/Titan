@@ -19,23 +19,23 @@ class PageSwitcher extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(amapPageProvider);
     switch (page) {
-      case 0:
+      case AmapPage.main:
         return const PageScheme(subPage: ListeOrders());
-      case 1:
+      case AmapPage.pres:
         return const PageScheme(subPage: TextPresentation());
-      case 2:
+      case AmapPage.products:
         return const ListProductPage();
-      case 3:
+      case AmapPage.admin:
         return const AdminPage();
-      case 4:
+      case AmapPage.modif:
         return const ModifProduct();
-      case 5:
+      case AmapPage.addCmd:
         return const AddCmdPage();
-      case 6:
+      case AmapPage.delivery:
         return const DeliveryPage();
-      case 7:
+      case AmapPage.solde:
         return const SoldePage();
-      case 8:
+      case AmapPage.addSolde:
         return const AddSoldePage();
       default:
         return const PageScheme(subPage: ListeOrders());

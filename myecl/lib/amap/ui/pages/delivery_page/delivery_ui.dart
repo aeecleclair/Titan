@@ -184,7 +184,7 @@ class DeliveryUi extends ConsumerWidget {
                             title: "Livraison",
                             onClick: (s) {
                               collectionSlotNotifier.setSlot(s);
-                              pageNotifier.setAmapPage(2);
+                              pageNotifier.setAmapPage(AmapPage.products);
                             }));
                   },
                 ),
@@ -215,7 +215,7 @@ class DeliveryUi extends ConsumerWidget {
                       ),
                       onTap: () {
                         deliveryIdNotifier.setId(i);
-                        pageNotifier.setAmapPage(2);
+                        pageNotifier.setAmapPage(AmapPage.products);
                       },
                     ),
                     GestureDetector(

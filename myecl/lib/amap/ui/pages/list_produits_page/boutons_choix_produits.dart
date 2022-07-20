@@ -84,7 +84,7 @@ class Boutons extends HookConsumerWidget {
                       }
                     });
                   }
-                  pageNotifier.setAmapPage(0);
+                  pageNotifier.setAmapPage(AmapPage.main);
                   clearCmd(ref);
                 } else {
                   displayToast(context, TypeMsg.error, "Pas assez d'argent");
@@ -125,7 +125,7 @@ class Boutons extends HookConsumerWidget {
                           cancelCmd(ref);
                         }));
               } else {
-                pageNotifier.setAmapPage(0);
+                pageNotifier.setAmapPage(AmapPage.main);
                 ref.watch(orderIndexProvider.notifier).setIndex(-1);
               }
             },

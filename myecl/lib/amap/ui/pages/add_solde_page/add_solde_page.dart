@@ -56,7 +56,7 @@ class AddSoldePage extends HookConsumerWidget {
                                       displayToast(context, TypeMsg.error,
                                           "Erreur lors de l'ajout");
                                     }
-                                    pageNotifier.setAmapPage(7);
+                                    pageNotifier.setAmapPage(AmapPage.solde);
                                   });
                                 },
                                 icon: const Icon(Icons.add))

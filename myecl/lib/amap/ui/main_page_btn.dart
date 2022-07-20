@@ -15,24 +15,24 @@ class MainPageBtn extends HookConsumerWidget {
     List<Widget> btns = [
       TopButton(
           text: "Mes Commandes",
-          selected: page == 0,
+          selected: page == AmapPage.main,
           onclick: () {
-            pageNotifier.setAmapPage(0);
+            pageNotifier.setAmapPage(AmapPage.main);
           }),
       TopButton(
           text: "Présentation",
-          selected: page == 1,
+          selected: page == AmapPage.pres,
           onclick: () {
-            pageNotifier.setAmapPage(1);
+            pageNotifier.setAmapPage(AmapPage.pres);
           }),
     ];
 
     if (isAdmin) {
       btns.add(TopButton(
           text: "Administrateur",
-          selected: page == 3,
+          selected: page == AmapPage.admin,
           onclick: () {
-            pageNotifier.setAmapPage(3);
+            pageNotifier.setAmapPage(AmapPage.admin);
           }));
     }
     return Container(

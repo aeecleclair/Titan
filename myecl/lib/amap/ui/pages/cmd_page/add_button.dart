@@ -78,7 +78,7 @@ class AddButton extends ConsumerWidget {
             ),
           )),
       onTap: () {
-        pageNotifier.setAmapPage(6);
+        pageNotifier.setAmapPage(AmapPage.delivery);
         indexCmdNotifier.setIndex(-1);
         clearCmd(ref);
       },

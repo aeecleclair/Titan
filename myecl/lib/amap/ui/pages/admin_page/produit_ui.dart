@@ -78,7 +78,7 @@ class ProductUi extends ConsumerWidget {
                         ref.watch(modifiedProductProvider.notifier);
                     final pageNotifier = ref.watch(amapPageProvider.notifier);
                     productModif.setModifiedProduct(i);
-                    pageNotifier.setAmapPage(4);
+                    pageNotifier.setAmapPage(AmapPage.modif);
                   },
                 ),
                 Container(

@@ -209,7 +209,7 @@ class AddCmdPage extends HookConsumerWidget {
                                     selectedNotifier.clear();
                                   });
                                 }
-                                pageNotifier.setAmapPage(3);
+                                pageNotifier.setAmapPage(AmapPage.admin);
                               }),
                           const SizedBox(
                             height: 40,

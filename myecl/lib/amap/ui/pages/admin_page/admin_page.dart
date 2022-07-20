@@ -78,7 +78,7 @@ class AdminPage extends HookConsumerWidget {
                       child: const GreenBtn(text: "Ajouter une commande"),
                       onTap: () {
                         productModif.setModifiedProduct(-1);
-                        pageNotifier.setAmapPage(5);
+                        pageNotifier.setAmapPage(AmapPage.addCmd);
                       }),
                   const SizedBox(
                     height: 40,
@@ -87,7 +87,7 @@ class AdminPage extends HookConsumerWidget {
                       child: const GreenBtn(text: "Gérer les comptes"),
                       onTap: () {
                         productModif.setModifiedProduct(-1);
-                        pageNotifier.setAmapPage(7);
+                        pageNotifier.setAmapPage(AmapPage.solde);
                       }),
                   const SizedBox(
                     height: 40,
@@ -96,7 +96,7 @@ class AdminPage extends HookConsumerWidget {
                       child: const GreenBtn(text: "Ajouter un produit"),
                       onTap: () {
                         productModif.setModifiedProduct(-1);
-                        pageNotifier.setAmapPage(4);
+                        pageNotifier.setAmapPage(AmapPage.modif);
                       }),
                   const SizedBox(
                     height: 40,
