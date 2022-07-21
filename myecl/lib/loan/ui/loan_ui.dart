@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/loan_history_provider.dart';
 import 'package:myecl/loan/providers/loan_list_provider.dart';

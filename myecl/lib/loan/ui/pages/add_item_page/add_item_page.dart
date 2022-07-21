@@ -62,44 +62,49 @@ class AddItemPage extends HookConsumerWidget {
           ),
           Step(
             title: const Text('Objet'),
-            content: Column(children: [
-              TextFormField(
-                controller: name,
-                decoration: const InputDecoration(
-                  labelText: 'Nom',
-                ),
-                validator: (value) {
-                  if (value == null) {
-                    return 'Please enter some text';
-                  } else if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
+            content: TextFormField(
+              controller: name,
+              decoration: const InputDecoration(
+                labelText: 'Nom',
               ),
-              TextFormField(
-                controller: caution,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Caution',
-                  suffix: Text('€'),
-                ),
-                validator: (value) {
-                  if (value == null) {
-                    return 'Please enter some text';
-                  } else if (value.isEmpty) {
-                    return 'Please enter some text';
-                  } else if (int.tryParse(value) == null) {
-                    return 'Please enter a valid number';
-                  } else if (int.parse(value) < 0) {
-                    return 'Please enter a positive number';
-                  }
-                  return null;
-                },
-              ),
-            ]),
+              validator: (value) {
+                if (value == null) {
+                  return 'Please enter some text';
+                } else if (value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
+            ),
             isActive: _currentStep.value >= 0,
             state: _currentStep.value >= 1
+                ? StepState.complete
+                : StepState.disabled,
+          ),
+          Step(
+            title: const Text('Objet'),
+            content: TextFormField(
+              controller: caution,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Caution',
+                suffix: Text('€'),
+              ),
+              validator: (value) {
+                if (value == null) {
+                  return 'Please enter some text';
+                } else if (value.isEmpty) {
+                  return 'Please enter some text';
+                } else if (int.tryParse(value) == null) {
+                  return 'Please enter a valid number';
+                } else if (int.parse(value) < 0) {
+                  return 'Please enter a positive number';
+                }
+                return null;
+              },
+            ),
+            isActive: _currentStep.value >= 0,
+            state: _currentStep.value >= 2
                 ? StepState.complete
                 : StepState.disabled,
           ),
@@ -128,7 +133,7 @@ class AddItemPage extends HookConsumerWidget {
               ],
             ),
             isActive: _currentStep.value >= 0,
-            state: _currentStep.value >= 2
+            state: _currentStep.value >= 3
                 ? StepState.complete
                 : StepState.disabled,
           ),
@@ -164,7 +169,8 @@ class AddItemPage extends HookConsumerWidget {
                               }
                               if (key.currentState!.validate()) {
                                 pageNotifier.setLoanPage(LoanPage.main);
-                                itemListNotifier.addItem(
+                                itemListNotifier
+                                    .addItem(
                                   Item(
                                     name: name.text,
                                     caution: int.parse(caution.text),
@@ -174,16 +180,20 @@ class AddItemPage extends HookConsumerWidget {
                                     groupId: '',
                                     id: '',
                                   ),
-                                ).then((value) {
+                                )
+                                    .then((value) {
                                   if (value) {
                                     displayToast(
                                         context, TypeMsg.msg, "Objet ajouté");
                                   } else {
-                                    displayToast(
-                                        context, TypeMsg.error, "Erreur lors de l'ajout");
+                                    displayToast(context, TypeMsg.error,
+                                        "Erreur lors de l'ajout");
                                   }
                                 });
                                 _currentStep.value = 0;
+                              } else {
+                                displayToast(context, TypeMsg.error,
+                                    "Des champs sont manquants ou incorrects");
                               }
                             },
                       child: (isLastStep)

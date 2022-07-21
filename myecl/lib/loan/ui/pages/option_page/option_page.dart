@@ -18,6 +18,13 @@ class OptionPage extends HookConsumerWidget {
             decoration: BoxDecoration(
               color: ColorConstant.darkGrey,
               borderRadius: BorderRadius.circular(20),
+              boxShadow: const [
+                BoxShadow(
+                  color: ColorConstant.darkGrey,
+                  blurRadius: 10,
+                  offset: Offset(0, 5),
+                ),
+              ]
             ),
             child: const Text(
               "Ajouter un prêt",
@@ -38,6 +45,13 @@ class OptionPage extends HookConsumerWidget {
             decoration: BoxDecoration(
               color: ColorConstant.darkGrey,
               borderRadius: BorderRadius.circular(20),
+              boxShadow: const [
+                BoxShadow(
+                  color: ColorConstant.darkGrey,
+                  blurRadius: 10,
+                  offset: Offset(0, 5),
+                ),
+              ]
             ),
             child: const Text(
               "Ajouter un objet",

@@ -119,7 +119,7 @@ class AddLoanPage extends HookConsumerWidget {
                           margin: const EdgeInsets.only(bottom: 3),
                           padding: const EdgeInsets.only(left: 10),
                           child: const Text(
-                            "Date de la commande",
+                            "Date du début de la commande",
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -181,7 +181,7 @@ class AddLoanPage extends HookConsumerWidget {
                             margin: const EdgeInsets.only(bottom: 3),
                             padding: const EdgeInsets.only(left: 10),
                             child: const Text(
-                              "Date de la commande",
+                              "Date de fin de la commande",
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -391,33 +391,41 @@ class AddLoanPage extends HookConsumerWidget {
                                 return;
                               }
                               if (key.currentState!.validate()) {
-                                pageNotifier.setLoanPage(LoanPage.main);
-                                loanListNotifier
-                                    .addLoan(
-                                  Loan(
-                                    association: asso,
-                                    items: items
-                                        .where((element) => selectedItems[
-                                            items.indexOf(element)])
-                                        .toList() as List<Item>,
-                                    borrowerId: number.text,
-                                    caution: caution.value,
-                                    end: DateTime.parse(end.text),
-                                    id: const Uuid().v4(),
-                                    notes: note.text,
-                                    start: DateTime.parse(start.text),
-                                  ),
-                                )
-                                    .then((value) {
-                                  if (value) {
-                                    displayToast(
-                                        context, TypeMsg.msg, 'Prêt ajouté');
-                                  } else {
-                                    displayToast(context, TypeMsg.error,
-                                        'Erreur lors de l\'ajout du prêt');
-                                  }
-                                });
-                                _currentStep.value = 0;
+                                if (start.text.compareTo(end.text) >= 0) {
+                                  displayToast(context, TypeMsg.error,
+                                      "Les dates ne sont pas valides");
+                                } else {
+                                  pageNotifier.setLoanPage(LoanPage.main);
+                                  loanListNotifier
+                                      .addLoan(
+                                    Loan(
+                                      association: asso,
+                                      items: items
+                                          .where((element) => selectedItems[
+                                              items.indexOf(element)])
+                                          .toList() as List<Item>,
+                                      borrowerId: number.text,
+                                      caution: caution.value,
+                                      end: DateTime.parse(end.text),
+                                      id: const Uuid().v4(),
+                                      notes: note.text,
+                                      start: DateTime.parse(start.text),
+                                    ),
+                                  )
+                                      .then((value) {
+                                    if (value) {
+                                      displayToast(
+                                          context, TypeMsg.msg, 'Prêt ajouté');
+                                    } else {
+                                      displayToast(context, TypeMsg.error,
+                                          'Erreur lors de l\'ajout du prêt');
+                                    }
+                                  });
+                                  _currentStep.value = 0;
+                                }
+                              } else {
+                                displayToast(context, TypeMsg.error,
+                                    "Des champs sont manquants ou incorrects");
                               }
                             },
                       child: (isLastStep)
