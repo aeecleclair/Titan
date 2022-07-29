@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 
@@ -31,11 +32,11 @@ class AmapUserRepository {
     }
   }
 
-  Future<double> getCashByUser(String userId) async {
+  Future<Cash> getCashByUser(String userId) async {
     final response = await http.get(Uri.parse(host + ext + userId + "/cash"),
         headers: headers);
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      return Cash.fromJson(json.decode(response.body));
     } else {
       throw Exception("Failed to load cash");
     }

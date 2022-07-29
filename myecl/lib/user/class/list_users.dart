@@ -25,4 +25,10 @@ class SimpleUser {
     _users['id'] = id;
     return _users;
   }
+
+  SimpleUser.empty()
+      : name = '',
+        firstname = '',
+        nickname = '',
+        id = '';
 }

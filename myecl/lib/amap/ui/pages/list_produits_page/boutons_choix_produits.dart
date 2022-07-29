@@ -1,9 +1,11 @@
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/providers/collection_slot_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
@@ -16,6 +18,7 @@ import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class Boutons extends HookConsumerWidget {
@@ -31,7 +34,9 @@ class Boutons extends HookConsumerWidget {
     final price = ref.watch(priceProvider);
     final delList = ref.watch(deliveryList);
     final collectionSlotNotifier = ref.watch(collectionSlotProvider.notifier);
-    final userAmount = ref.watch(userCashProvider);
+    final userAmount = ref.watch(userAmountProvider);
+    final cashNotifier = ref.watch(cashProvider.notifier);
+    final userAmountNotifier = ref.watch(userAmountProvider.notifier);
 
     final products = [];
     productsList.when(
@@ -39,6 +44,15 @@ class Boutons extends HookConsumerWidget {
       error: (e, s) {},
       loading: () {},
     );
+
+    double b = 0;
+    userAmount.when(
+        data: (u) {
+          b = u.balance;
+        },
+        error: (e, s) {},
+        loading: () {});
+
     return SizedBox(
         height: 90,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -48,7 +62,7 @@ class Boutons extends HookConsumerWidget {
               onTap: () {
                 if (price == 0.0) {
                   displayToast(context, TypeMsg.error, "Pas de produit");
-                } else if (price < userAmount) {
+                } else if (price < b) {
                   List<Product> prod = [];
                   for (var p in products) {
                     if (p.quantity != 0) {
@@ -68,8 +82,18 @@ class Boutons extends HookConsumerWidget {
                         collectionSlot: collectionSlotNotifier.getText());
                     cmdsNotifier.addOrder(newOrder).then((value) {
                       if (value) {
+                        userAmountNotifier.updateCash(-price);
+                        userAmount.when(
+                            data: (u) {
+                              cashNotifier.updateCash(
+                                  u.copyWith(balance: u.balance - price));
+                            },
+                            error: (e, s) {},
+                            loading: () {});
+                        pageNotifier.setAmapPage(AmapPage.main);
                         displayToast(context, TypeMsg.msg, "Commande ajoutée");
                       } else {
+                        pageNotifier.setAmapPage(AmapPage.main);
                         displayToast(
                             context, TypeMsg.error, "Echec de l'ajout");
                       }
@@ -77,14 +101,23 @@ class Boutons extends HookConsumerWidget {
                   } else {
                     cmdsNotifier.setProducts(indexCmd, prod).then((value) {
                       if (value) {
+                        userAmountNotifier.updateCash(-price);
+                        userAmount.when(
+                            data: (u) {
+                              cashNotifier.updateCash(
+                                  u.copyWith(balance: u.balance - price));
+                            },
+                            error: (e, s) {},
+                            loading: () {});
+                        pageNotifier.setAmapPage(AmapPage.main);
                         displayToast(context, TypeMsg.msg, "Commande modifiée");
                       } else {
+                        pageNotifier.setAmapPage(AmapPage.main);
                         displayToast(
                             context, TypeMsg.error, "Echec de la modification");
                       }
                     });
                   }
-                  pageNotifier.setAmapPage(AmapPage.main);
                   clearCmd(ref);
                 } else {
                   displayToast(context, TypeMsg.error, "Pas assez d'argent");

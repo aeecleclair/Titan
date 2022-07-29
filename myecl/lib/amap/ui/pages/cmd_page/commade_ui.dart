@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
+import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
@@ -27,6 +30,9 @@ class OrderUi extends ConsumerWidget {
     final indexCmdNotifier = ref.watch(orderIndexProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final priceNotofier = ref.watch(priceProvider.notifier);
+    final userAmount = ref.watch(userAmountProvider);
+    final userAmountNotifier = ref.watch(userAmountProvider.notifier);
+    final cashNotifier = ref.watch(cashProvider.notifier);
     return Container(
       margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
       alignment: Alignment.center,
@@ -58,8 +64,10 @@ class OrderUi extends ConsumerWidget {
                       "/" +
                       c.deliveryDate.month.toString().padLeft(2, "0") +
                       "/" +
-                      c.deliveryDate.year.toString()
-                      + " (" + c.collectionSlot + ")",
+                      c.deliveryDate.year.toString() +
+                      " (" +
+                      c.collectionSlot +
+                      ")",
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -72,9 +80,7 @@ class OrderUi extends ConsumerWidget {
                   height: 25,
                   alignment: Alignment.topCenter,
                   child: HeroIcon(
-                    c.expanded
-                        ? HeroIcons.chevronUp
-                        : HeroIcons.chevronDown,
+                    c.expanded ? HeroIcons.chevronUp : HeroIcons.chevronDown,
                     color: ColorConstants.textDark,
                   ),
                 ),
@@ -234,6 +240,19 @@ class OrderUi extends ConsumerWidget {
                                 title: "Suppression",
                                 onYes: () {
                                   deleteCmd(ref, i);
+                                  final price = c.products
+                                      .map((p) => p.quantity * p.price)
+                                      .reduce(
+                                          (value, element) => value + element);
+                                  userAmountNotifier.updateCash(price);
+                                  userAmount.when(
+                                      data: (u) {
+                                        cashNotifier.updateCash(u.copyWith(
+                                            balance: u.balance + price));
+                                      },
+                                      error: (e, s) {},
+                                      loading: () {});
+
                                   displayToast(context, TypeMsg.msg,
                                       "Commande supprimée");
                                 }));

@@ -48,7 +48,7 @@ class CashRepository {
 
   Future<bool> updateCash(Cash cash, String userId) async {
     final response = await http.patch(Uri.parse(host + ext + userId + "/cash"),
-        headers: headers, body: json.encode(cash));
+        headers: headers, body: json.encode(cash.toJson()));
     if (response.statusCode == 200) {
       return true;
     } else {
