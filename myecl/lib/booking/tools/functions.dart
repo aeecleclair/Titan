@@ -1,14 +1,20 @@
-String getPageTitle(int i) {
+import 'package:myecl/booking/providers/booking_page_provider.dart';
+
+String getPageTitle(BookingPage i) {
   switch (i) {
-    case 0:
+    case BookingPage.main:
       return 'Réservation';
-    case 1:
+    case BookingPage.addBooking:
       return 'Demande';
-    case 2:
+    case BookingPage.history:
       return 'Historique';
-    case 3:
+    case BookingPage.admin:
       return 'Administrateur';
     default:
       return 'Booking';
   }
+}
+
+String processDate(DateTime date) {
+  return date.toIso8601String().split('T')[0];
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/booking/providers/booking_history_provider.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/ui/booking_ui.dart';
 
@@ -9,18 +10,28 @@ class ListBooking extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final res = ref.watch(bookingListProvider);
-    return Expanded(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: res
-              .map((r) => BookingUi(
-                    r: r,
-                    isAdmin: isAdmin,
-                  ))
-              .toList(),
-        ),
+    final bookings = isAdmin ? ref.watch(bookingListProvider) : ref.watch(bookingHistoryProvider);
+    return bookings.when(
+      data: (listBooking) {
+        return Expanded(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: listBooking
+                  .map((r) => BookingUi(
+                        booking: r,
+                        isAdmin: isAdmin,
+                      ))
+                  .toList(),
+            ),
+          ),
+        );
+      },
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
+      error: (e, s) => const Center(
+        child: Text("Pas de réservation en cours"),
       ),
     );
   }

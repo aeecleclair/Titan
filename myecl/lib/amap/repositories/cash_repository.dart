@@ -16,7 +16,7 @@ class CashRepository {
         await http.get(Uri.parse(host + ext + "cash"), headers: headers);
     if (response.statusCode == 200) {
       String resp = utf8.decode(response.body.runes.toList());
-      return List<Cash>.from(json.decode(resp));
+      return List<Cash>.from(json.decode(resp).map((x) => Cash.fromJson(x)));
     } else {
       throw Exception("Failed to load cash list");
     }
@@ -38,7 +38,7 @@ class CashRepository {
 
   Future<bool> createCash(Cash cash, String userId) async {
     final response = await http.post(Uri.parse(host + ext + userId + "/cash"),
-        headers: headers, body: json.encode(cash));
+        headers: headers, body: json.encode(cash.toJson()));
     if (response.statusCode == 201) {
       return true;
     } else {

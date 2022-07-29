@@ -4,15 +4,16 @@ import 'package:myecl/booking/providers/booking_page_provider.dart';
 
 class Button extends ConsumerWidget {
   final String text;
-  final int index;
-  const Button({Key? key, required this.text, required this.index})
+  final BookingPage page;
+  const Button({Key? key, required this.text, required this.page})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final pageNotifier = ref.watch(bookingPageProvider.notifier);
     return GestureDetector(
       onTap: (() {
-        ref.watch(bookingPageProvider.notifier).setBookingPage(index);
+        pageNotifier.setBookingPage(page);
       }),
       child: SizedBox(
           height: 50,

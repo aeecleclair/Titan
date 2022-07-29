@@ -1,13 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class BookingPage extends StateNotifier<int> {
-  BookingPage() : super(0);
+enum BookingPage { main, admin, history, addBooking }
 
-  void setBookingPage(int i) {
+class BookingPageProvider extends StateNotifier<BookingPage> {
+  BookingPageProvider() : super(BookingPage.main);
+
+  void setBookingPage(BookingPage i) {
     state = i;
   }
 }
 
-final bookingPageProvider = StateNotifierProvider<BookingPage, int>((ref) {
-  return BookingPage();
+final bookingPageProvider = StateNotifierProvider<BookingPageProvider, BookingPage>((ref) {
+  return BookingPageProvider();
 });

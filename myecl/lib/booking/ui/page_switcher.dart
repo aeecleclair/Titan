@@ -15,7 +15,7 @@ class PageSwitcher extends ConsumerWidget {
     final page = ref.watch(bookingPageProvider);
     final isAdmin = ref.watch(isBookingAdminProvider);
     switch (page) {
-      case 0:
+      case BookingPage.main:
         return Expanded(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -23,26 +23,26 @@ class PageSwitcher extends ConsumerWidget {
                 const Calendar(),
                 const Button(
                   text: "Demande",
-                  index: 1,
+                  page: BookingPage.addBooking,
                 ),
                 const Button(
                   text: "Historique",
-                  index: 2,
+                  page: BookingPage.history,
                 ),
                 isAdmin
                     ? const Button(
                         text: "Administration",
-                        index: 3,
+                        page: BookingPage.admin,
                       )
                     : Container(),
                 const SizedBox()
               ]),
         );
-      case 1:
+      case BookingPage.addBooking:
         return const FormPage();
-      case 2:
+      case BookingPage.history:
         return const ListBooking(isAdmin: false);
-      case 3:
+      case BookingPage.admin:
         return const ListBooking(isAdmin: true);
       default:
         return Container();

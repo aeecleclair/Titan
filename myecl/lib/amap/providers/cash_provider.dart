@@ -17,11 +17,11 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
     return state;
   }
 
-  Future<bool> addCash(Cash cash, String userId) async {
+  Future<bool> addCash(Cash cash) async {
     return state.when(
       data: (cashList) async {
         try {
-          await _cashRepository.createCash(cash, userId);
+          await _cashRepository.createCash(cash, cash.user.id);
           cashList.add(cash);
           state = AsyncValue.data(cashList);
           return true;
@@ -41,14 +41,13 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
     );
   }
 
-  Future<bool> updateCash(String userId, Cash cash) async {
+  Future<bool> updateCash(Cash cash) async {
     return state.when(
       data: (cashList) async {
         try {
-          await _cashRepository.updateCash(cash, userId);
-          // var index = cashList.indexWhere((p) => p.id == cashId);
-          // cashList.remove(cashList.firstWhere((e) => e.id == cashId));
-          // cashList.insert(index, cash);
+          await _cashRepository.updateCash(cash, cash.user.id);
+          var index = cashList.indexWhere((p) => p.user.id == cash.user.id);
+          cashList[index] = cash;
           state = AsyncValue.data(cashList);
           return true;
         } catch (e) {

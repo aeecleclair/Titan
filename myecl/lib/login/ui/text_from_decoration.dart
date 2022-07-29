@@ -28,10 +28,10 @@ InputDecoration signInInputDecoration({required String hintText}) {
     hintStyle: const TextStyle(fontSize: 18),
     hintText: hintText,
     focusedBorder: const UnderlineInputBorder(
-      borderSide: BorderSide(width: 2, color: ColorConstants.darkBlue),
+      borderSide: BorderSide(color: Color.fromARGB(255, 124, 124, 124)),
     ),
     enabledBorder: const UnderlineInputBorder(
-      borderSide: BorderSide(color: ColorConstants.darkBlue),
+      borderSide: BorderSide(color: Color.fromARGB(255, 124, 124, 124)),
     ),
     errorBorder: const UnderlineInputBorder(
       borderSide: BorderSide(color: ColorConstants.darkOrange),

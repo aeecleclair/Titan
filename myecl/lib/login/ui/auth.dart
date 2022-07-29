@@ -47,7 +47,7 @@ class AuthScreen extends HookConsumerWidget {
                               },
                               child: value
                                   ? SignIn(
-                                    key: const ValueKey("SignIn"),
+                                      key: const ValueKey("SignIn"),
                                       onRegisterPressed: () {
                                         _showSignInPage.value = false;
                                         _controller.forward();

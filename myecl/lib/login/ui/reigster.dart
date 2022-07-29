@@ -31,7 +31,7 @@ class Register extends StatelessWidget {
             ),
             Expanded(
               flex: 4,
-              child: ListView(
+              child: Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -58,6 +58,7 @@ class Register extends StatelessWidget {
                     onPressed: () {
                     },
                   ),
+                  const Spacer(),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
@@ -69,8 +70,9 @@ class Register extends StatelessWidget {
                         'Se connecter',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
                           decoration: TextDecoration.underline,
+                          fontSize: 14,
                         ),
                       ),
                     ),

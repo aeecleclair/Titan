@@ -5,7 +5,6 @@ import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AddSoldePage extends HookConsumerWidget {
@@ -14,7 +13,6 @@ class AddSoldePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
     final cashListNotifier = ref.watch(cashProvider.notifier);
-    final userId = ref.watch(idProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     return users.when(data: (u) {
       return SingleChildScrollView(
@@ -47,7 +45,7 @@ class AddSoldePage extends HookConsumerWidget {
                             IconButton(
                                 onPressed: () {
                                   cashListNotifier
-                                      .addCash(Cash(balance: 0.0), userId)
+                                      .addCash(Cash(balance: 0.0, user: e))
                                       .then((value) {
                                     if (value) {
                                       displayToast(context, TypeMsg.msg,

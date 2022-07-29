@@ -26,62 +26,134 @@ class SpringCurve extends Curve {
   }
 }
 
-
 class BackgroundPainter extends CustomPainter {
   BackgroundPainter({
     required Animation<double> animation,
-  })  : bluePaint = Paint()
-          ..color = ColorConstants.lightBlue
-          ..style = PaintingStyle.fill,
-        greyPaint = Paint()
-          ..color = ColorConstants.darkBlue
-          ..style = PaintingStyle.fill,
-        orangePaint = Paint()
-          ..color = ColorConstants.orange
-          ..style = PaintingStyle.fill,
-        linePaint = Paint()
-          ..color = const Color.fromRGBO(255, 183, 77, 1)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 4,
-        liquidAnim = CurvedAnimation(
-          curve: Curves.elasticOut,
-          reverseCurve: Curves.easeInBack,
-          parent: animation,
-        ),
-        orangeAnim = CurvedAnimation(
-          parent: animation,
-          curve: const Interval(
-            0,
-            0.7,
-            curve: Interval(0, 0.8, curve: SpringCurve()),
-          ),
-          reverseCurve: Curves.easeInCirc,
-        ),
-        greyAnim = CurvedAnimation(
+  })  : blueAnim = CurvedAnimation(
           parent: animation,
           curve: const Interval(
             0,
             0.8,
             curve: Interval(0, 0.9, curve: SpringCurve()),
           ),
-          reverseCurve: Curves.easeInCirc,
+          reverseCurve: const Interval(
+            0.5,
+            1,
+            curve: Curves.easeIn,
+          ),
         ),
-        blueAnim = CurvedAnimation(
+        blueAnim2 = CurvedAnimation(
           parent: animation,
-          curve: const SpringCurve(),
-          reverseCurve: Curves.easeInCirc,
+          curve: const Interval(
+            0,
+            0.5,
+            curve: Curves.easeOutSine,
+          ),
+          reverseCurve: const Interval(
+            0.5,
+            1,
+            curve: Curves.easeInSine,
+          ),
         ),
         super(repaint: animation);
 
-  final Animation<double> liquidAnim;
   final Animation<double> blueAnim;
-  final Animation<double> greyAnim;
-  final Animation<double> orangeAnim;
+  final Animation<double> blueAnim2;
 
-  final Paint linePaint;
-  final Paint bluePaint;
-  final Paint greyPaint;
-  final Paint orangePaint;
+  @override
+  void paint(Canvas canvas, Size size) {
+    var path = Path();
+    var paint = Paint();
+
+    var path2 = Path();
+    var paint2 = Paint();
+
+    var path3 = Path();
+    var paint3 = Paint();
+
+    var w = size.width;
+    var h = size.height;
+
+    path.moveTo(w, h / 2);
+    path.lineTo(w, 0);
+    path.lineTo(0, 0);
+    path.lineTo(0, h * 4.2 / 11);
+    _addPointsToPath(
+      path,
+      [
+        Point(
+          lerpDouble(w * 1.25 / 5, w * 2 / 7, blueAnim.value)!,
+          lerpDouble(h * 12 / 25, h * 13 / 25, blueAnim.value)!,
+        ),
+        Point(
+          lerpDouble(w * 5 / 7, w * 4.5 / 7, blueAnim.value)!,
+          lerpDouble(h / 13, h / 6.5, blueAnim.value)!,
+        ),
+        Point(
+          w,
+          lerpDouble(h / 4, h / 7, blueAnim.value)!,
+        ),
+      ],
+    );
+
+    path2.lineTo(w, 0);
+    path2.lineTo(0, 0);
+    path2.lineTo(0, h / 12);
+    _addPointsToPath(
+      path2,
+      [
+        Point(w / 11, h / 20),
+        Point(w * 2 / 9, h / 10),
+        Point(w / 3.5, 0),
+        Point(w * 5.5 / 9, h / 12),
+        Point(w * 2 / 3, 0)
+      ],
+    );
+
+    path3.moveTo(w, lerpDouble(h * 5 / 6, 0, blueAnim2.value)!);
+    path3.lineTo(w, h);
+    path3.lineTo(0, h);
+    path3.lineTo(0, lerpDouble(h * 5 / 6, 0, blueAnim2.value)!);
+    _addPointsToPath(
+      path3,
+      [
+        Point(
+          w / 5,
+          lerpDouble(h * 7 / 8, 0, blueAnim2.value)!,
+        ),
+        Point(
+          w * 4 / 5,
+          lerpDouble(h * 7.5 / 10, 0, blueAnim2.value)!,
+        ),
+        Point(
+          w,
+          lerpDouble(h * 4 / 5, 0, blueAnim2.value)!,
+        ),
+      ],
+    );
+
+    var colors = [ColorConstants.gradient1, ColorConstants.gradient2];
+
+    Rect rectShape = Rect.fromLTWH(0, 0, w, h);
+    final Gradient gradient = LinearGradient(
+        colors: colors, begin: Alignment.topLeft, end: Alignment.topRight);
+
+    paint = Paint()..color = ColorConstants.background;
+
+    paint2 = Paint()..shader = gradient.createShader(rectShape);
+    paint3 = Paint()..shader = gradient.createShader(rectShape);
+
+    canvas.drawShadow(
+        path, ColorConstants.background.withAlpha(125), 10.0, false);
+    canvas.drawPath(path3, paint3);
+    canvas.drawPath(path, paint);
+    canvas.drawPath(path2, paint2);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
+  }
 
   void _addPointsToPath(Path path, List<Point> points) {
     if (points.length < 3) {
@@ -101,117 +173,4 @@ class BackgroundPainter extends CustomPainter {
         points[points.length - 1].x,
         points[points.length - 1].y);
   }
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    paintBlue(size, canvas);
-
-    paintGrey(size, canvas);
-
-    paintOrange(size, canvas);
-  }
-
-  void paintBlue(Size size, Canvas canvas) {
-    final path = Path();
-    path.moveTo(size.width, size.height / 2);
-    path.lineTo(size.width, 0);
-    path.lineTo(0, 0);
-    path.lineTo(
-      0,
-      lerpDouble(0, size.height, blueAnim.value)!,
-    );
-    _addPointsToPath(path, [
-      Point(
-        lerpDouble(0, size.width / 3, blueAnim.value)!,
-        lerpDouble(0, size.height, blueAnim.value)!,
-      ),
-      Point(
-        lerpDouble(size.width / 2, size.width / 4 * 3, liquidAnim.value)!,
-        lerpDouble(size.height / 2, size.height / 4 * 3, liquidAnim.value)!,
-      ),
-      Point(
-        size.width,
-        lerpDouble(size.height / 2, size.height * 3 / 4, liquidAnim.value)!,
-      ),
-    ]);
-    canvas.drawPath(path, bluePaint);
-  }
-
-  void paintGrey(Size size, Canvas canvas) {
-    final path = Path();
-    path.moveTo(size.width, 300);
-    path.lineTo(size.width, 0);
-    path.lineTo(0, 0);
-    path.lineTo(
-      0,
-      lerpDouble(
-        size.height / 4,
-        size.height / 2,
-        greyAnim.value,
-      )!,
-    );
-    _addPointsToPath(
-      path,
-      [
-        Point(
-          size.width / 4,
-          lerpDouble(size.height / 2, size.height * 3 / 4, liquidAnim.value)!,
-        ),
-        Point(
-          size.width * 3 / 5,
-          lerpDouble(size.height / 4, size.height / 2, liquidAnim.value)!,
-        ),
-        Point(
-          size.width * 4 / 5,
-          lerpDouble(size.height / 6, size.height / 3, greyAnim.value)!,
-        ),
-        Point(
-          size.width,
-          lerpDouble(size.height / 5, size.height / 4, greyAnim.value)!,
-        ),
-      ],
-    );
-
-    canvas.drawPath(path, greyPaint);
-  }
-
-  void paintOrange(Size size, Canvas canvas) {
-    if (orangeAnim.value > 0) {
-      final path = Path();
-
-      path.moveTo(size.width * 3 / 4, 0);
-      path.lineTo(0, 0);
-      path.lineTo(
-        0,
-        lerpDouble(0, size.height / 12, orangeAnim.value)!,
-      );
-
-      _addPointsToPath(path, [
-        Point(
-          size.width / 7,
-          lerpDouble(0, size.height / 6, liquidAnim.value)!,
-        ),
-        Point(
-          size.width / 3,
-          lerpDouble(0, size.height / 10, liquidAnim.value)!,
-        ),
-        Point(
-          size.width / 3 * 2,
-          lerpDouble(0, size.height / 8, liquidAnim.value)!,
-        ),
-        Point(
-          size.width * 3 / 4,
-          0,
-        ),
-      ]);
-
-      canvas.drawPath(path, orangePaint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
 }
-

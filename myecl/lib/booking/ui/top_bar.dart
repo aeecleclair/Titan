@@ -12,6 +12,7 @@ class TopBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(bookingPageProvider);
+    final pageNotifier = ref.watch(bookingPageProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -26,16 +27,23 @@ class TopBar extends HookConsumerWidget {
                 builder: (BuildContext appBarContext) {
                   return IconButton(
                       onPressed: () {
-                        if (page == 0) {
-                          controllerNotifier.toggle();
-                        } else {
-                          ref
-                              .watch(bookingPageProvider.notifier)
-                              .setBookingPage(0);
+                        switch (page) {
+                          case BookingPage.main:
+                              controllerNotifier.toggle();
+                            break;
+                          case BookingPage.admin:
+                            pageNotifier.setBookingPage(BookingPage.main);
+                            break;
+                          case BookingPage.history:
+                            pageNotifier.setBookingPage(BookingPage.main);
+                            break;
+                          case BookingPage.addBooking:
+                            pageNotifier.setBookingPage(BookingPage.main);
+                            break;
                         }
                       },
                       icon: FaIcon(
-                        page == 0
+                        page == BookingPage.main
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
                         color: Colors.grey.shade100,

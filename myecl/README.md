@@ -18,9 +18,7 @@ samples, guidance on mobile development, and a full API reference.
 
 TODO : 
 
-Oauth (pas page ms html)
-Réserva° / Calendrier
-PageProvider -> enum
+Réserva° / Calendrier (API)
 
 AMAP : 
 

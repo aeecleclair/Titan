@@ -14,7 +14,7 @@ class BookingButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool checked = res.state == state;
+    bool checked = res.confirmed;
     final listResNotifier = ref.watch(bookingListProvider.notifier);
     return Container(
       decoration: BoxDecoration(
@@ -29,7 +29,7 @@ class BookingButton extends ConsumerWidget {
       ),
       child: IconButton(
         onPressed: () {
-          listResNotifier.changeState(res, state);
+          listResNotifier.toggleConfirmed(res.id);
         },
         icon: FaIcon(
           state == 1 ? FontAwesomeIcons.check : FontAwesomeIcons.xmark,
