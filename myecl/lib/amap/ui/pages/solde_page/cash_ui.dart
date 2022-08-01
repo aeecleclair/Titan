@@ -35,7 +35,7 @@ class CashUi extends HookConsumerWidget {
                       : c.user.firstname + " " + c.user.name,
                   style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
               Text(
-                "Solde : " + c.balance.toString() + "€",
+                "Solde : " + c.balance.toStringAsFixed(2) + "€",
                 style: TextStyle(color: Colors.grey.shade600),
               ),
             ],

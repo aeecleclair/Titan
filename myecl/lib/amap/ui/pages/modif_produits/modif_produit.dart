@@ -12,8 +12,6 @@ import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/modif_produits/text_entry.dart';
 import 'package:uuid/uuid.dart';
 
-//TODO: ne pas modif si pas de changement
-
 class ModifProduct extends HookConsumerWidget {
   const ModifProduct({Key? key}) : super(key: key);
 

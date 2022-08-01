@@ -4,6 +4,7 @@ import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/delivery_page/delivery_ui.dart';
+import 'package:myecl/amap/ui/refresh_indicator.dart';
 
 class DeliveryPage extends HookConsumerWidget {
   const DeliveryPage({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class DeliveryPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryList = ref.watch(deliveryListProvider);
+    final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
     List<Widget> listWidgetOrder = [];
     deliveryList.when(
       data: (orders) {
@@ -101,9 +103,14 @@ class DeliveryPage extends HookConsumerWidget {
       },
     );
 
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(children: listWidgetOrder),
-    );
+    return Refresh(
+        keyRefresh: GlobalKey<RefreshIndicatorState>(),
+        onRefresh: () async {
+          deliveryListNotifier.loadDeliveriesList();
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(children: listWidgetOrder),
+        ));
   }
 }

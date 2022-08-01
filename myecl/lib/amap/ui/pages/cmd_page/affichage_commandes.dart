@@ -3,9 +3,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
+import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/cmd_page/add_button.dart';
 import 'package:myecl/amap/ui/pages/cmd_page/commade_ui.dart';
+import 'package:myecl/amap/ui/refresh_indicator.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 
 class ListeOrders extends HookConsumerWidget {
   const ListeOrders({Key? key}) : super(key: key);
@@ -14,6 +17,9 @@ class ListeOrders extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryId = ref.watch(deliveryIdProvider);
     final orderList = ref.watch(orderListProvider(deliveryId));
+    final orderListNotifier = ref.watch(orderListProvider(deliveryId).notifier);
+    final soldeNotifier = ref.watch(userAmountProvider.notifier);
+    final userId = ref.watch(idProvider);
     List<Widget> listWidgetOrder = [];
     orderList.when(data: (orders) {
       if (orders.isNotEmpty) {
@@ -76,9 +82,16 @@ class ListeOrders extends HookConsumerWidget {
     });
 
     listWidgetOrder.add(const AddButton());
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(children: listWidgetOrder),
+    return Refresh(
+      keyRefresh: GlobalKey<RefreshIndicatorState>(),
+      onRefresh: () async {
+        orderListNotifier.loadOrderList();
+        soldeNotifier.loadCashByUser(userId);
+      },
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Column(children: listWidgetOrder),
+      ),
     );
   }
 }

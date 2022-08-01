@@ -6,6 +6,7 @@ import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/solde_page/cash_ui.dart';
+import 'package:myecl/amap/ui/refresh_indicator.dart';
 
 class SoldePage extends HookConsumerWidget {
   const SoldePage({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class SoldePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cashList = ref.watch(cashProvider);
+    final cashListNotifier = ref.watch(cashProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     var listWidgetCash = [];
     cashList.when(
@@ -101,21 +103,27 @@ class SoldePage extends HookConsumerWidget {
       },
     );
 
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          ...listWidgetCash,
-          const SizedBox(
-            height: 20,
-          ),
-          GestureDetector(
-            child: const GreenBtn(text: "Ajouter un utilisateur"),
-            onTap: () {
-              pageNotifier.setAmapPage(AmapPage.addSolde);
-            },
-          )
-        ],
+    return Refresh(
+      keyRefresh: GlobalKey<RefreshIndicatorState>(),
+      onRefresh: () async {
+        cashListNotifier.loadCashList();
+      },
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            ...listWidgetCash,
+            const SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              child: const GreenBtn(text: "Ajouter un utilisateur"),
+              onTap: () {
+                pageNotifier.setAmapPage(AmapPage.addSolde);
+              },
+            )
+          ],
+        ),
       ),
     );
   }

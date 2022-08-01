@@ -152,7 +152,7 @@ class AddCmdPage extends HookConsumerWidget {
                                             ),
                                             validator: (value) {
                                               if (value!.isEmpty) {
-                                                return "Please enter a date for your task";
+                                                return "La date est requise";
                                               }
                                               return null;
                                             },
@@ -201,6 +201,7 @@ class AddCmdPage extends HookConsumerWidget {
                                       .addDelivery(del)
                                       .then((value) {
                                     if (value) {
+                                      pageNotifier.setAmapPage(AmapPage.admin);
                                       displayToast(context, TypeMsg.msg,
                                           "Commande ajoutée");
                                     } else {
@@ -209,8 +210,10 @@ class AddCmdPage extends HookConsumerWidget {
                                     }
                                     selectedNotifier.clear();
                                   });
+                                } else {
+                                  displayToast(context, TypeMsg.error,
+                                      "Erreur lors de l'ajout de la commande");
                                 }
-                                pageNotifier.setAmapPage(AmapPage.admin);
                               }),
                           const SizedBox(
                             height: 40,
