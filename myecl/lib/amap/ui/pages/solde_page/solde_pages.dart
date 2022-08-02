@@ -109,7 +109,7 @@ class SoldePage extends HookConsumerWidget {
         cashListNotifier.loadCashList();
       },
       child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [
             ...listWidgetCash,

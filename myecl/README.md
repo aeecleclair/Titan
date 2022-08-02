@@ -15,13 +15,12 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-
-TODO : 
+TODO :
 
 Réserva° / Calendrier (API)
 
-AMAP : 
+AMAP :
 
-    - modif del (admin)
-    - solde
-    - (Doeff : ne renvoyer que les deliveries après aujourd'hui)
+    - modif delivery (admin)
+    - pb list produit
+    - pb securité (add / del / modif cmd -> solde + verouillage delivery)

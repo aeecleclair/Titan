@@ -28,6 +28,7 @@ class Boutons extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryId = ref.watch(deliveryIdProvider);
     final productsList = ref.watch(deliveryProductListProvider(deliveryId));
+    final cmds = ref.watch(orderListProvider(deliveryId));
     final cmdsNotifier = ref.watch(orderListProvider(deliveryId).notifier);
     final indexCmd = ref.watch(orderIndexProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
@@ -62,50 +63,66 @@ class Boutons extends HookConsumerWidget {
               onTap: () {
                 if (price == 0.0) {
                   displayToast(context, TypeMsg.error, "Pas de produit");
-                } else if (price < b) {
+                } else if (indexCmd == -1 && price < b) {
                   List<Product> prod = [];
                   for (var p in products) {
                     if (p.quantity != 0) {
                       prod.add(p.copyWith());
                     }
                   }
-                  if (indexCmd == -1) {
-                    Order newOrder = Order(
-                        products: prod,
-                        deliveryDate: delList
-                            .firstWhere((d) => d.id == deliveryId)
-                            .deliveryDate,
-                        id: const Uuid().v4(),
-                        amount: price,
-                        deliveryId: deliveryId,
-                        productsIds: prod.map((e) => e.id).toList(),
-                        collectionSlot: collectionSlotNotifier.getText());
-                    cmdsNotifier.addOrder(newOrder).then((value) {
-                      if (value) {
-                        userAmountNotifier.updateCash(-price);
-                        userAmount.when(
-                            data: (u) {
-                              cashNotifier.updateCash(
-                                  u.copyWith(balance: u.balance - price));
-                            },
-                            error: (e, s) {},
-                            loading: () {});
-                        pageNotifier.setAmapPage(AmapPage.main);
-                        displayToast(context, TypeMsg.msg, "Commande ajoutée");
-                      } else {
-                        pageNotifier.setAmapPage(AmapPage.main);
-                        displayToast(
-                            context, TypeMsg.error, "Echec de l'ajout");
+                  Order newOrder = Order(
+                      products: prod,
+                      deliveryDate: delList
+                          .firstWhere((d) => d.id == deliveryId)
+                          .deliveryDate,
+                      id: const Uuid().v4(),
+                      amount: price,
+                      deliveryId: deliveryId,
+                      productsIds: prod.map((e) => e.id).toList(),
+                      collectionSlot: collectionSlotNotifier.getText());
+                  cmdsNotifier.addOrder(newOrder).then((value) {
+                    if (value) {
+                      userAmountNotifier.updateCash(-price);
+                      userAmount.when(
+                          data: (u) {
+                            cashNotifier.updateCash(
+                                u.copyWith(balance: u.balance - price));
+                          },
+                          error: (e, s) {},
+                          loading: () {});
+                      pageNotifier.setAmapPage(AmapPage.main);
+                      displayToast(context, TypeMsg.msg, "Commande ajoutée");
+                      clearCmd(ref);
+                    } else {
+                      pageNotifier.setAmapPage(AmapPage.main);
+                      displayToast(context, TypeMsg.error, "Echec de l'ajout");
+                    }
+                  });
+                } else {
+                  var lastPrice = 0.0;
+                  cmds.when(
+                    data: (c) {
+                      for (var p in c[indexCmd].products) {
+                        lastPrice += p.price * p.quantity;
                       }
-                    });
-                  } else {
+                    },
+                    error: (Object error, StackTrace? stackTrace) {},
+                    loading: () {},
+                  );
+                  if (price < b + lastPrice) {
+                    List<Product> prod = [];
+                    for (var p in products) {
+                      if (p.quantity != 0) {
+                        prod.add(p.copyWith());
+                      }
+                    }
                     cmdsNotifier.setProducts(indexCmd, prod).then((value) {
                       if (value) {
-                        userAmountNotifier.updateCash(-price);
+                        userAmountNotifier.updateCash(lastPrice - price);
                         userAmount.when(
                             data: (u) {
-                              cashNotifier.updateCash(
-                                  u.copyWith(balance: u.balance - price));
+                              cashNotifier.updateCash(u.copyWith(
+                                  balance: u.balance + lastPrice - price));
                             },
                             error: (e, s) {},
                             loading: () {});
@@ -117,10 +134,10 @@ class Boutons extends HookConsumerWidget {
                             context, TypeMsg.error, "Echec de la modification");
                       }
                     });
+                    clearCmd(ref);
+                  } else {
+                    displayToast(context, TypeMsg.error, "Pas assez d'argent");
                   }
-                  clearCmd(ref);
-                } else {
-                  displayToast(context, TypeMsg.error, "Pas assez d'argent");
                 }
               }),
           GestureDetector(
