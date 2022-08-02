@@ -35,8 +35,8 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
     return state.when(
       data: (orders) async {
         try {
-          await _repository.createOrder(deliveryId, order, userId);
-          orders.add(order);
+          Order newOrder = await _repository.createOrder(deliveryId, order, userId);
+          orders.add(newOrder);
           state = AsyncValue.data(orders);
           return true;
         } catch (e) {

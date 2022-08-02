@@ -22,5 +22,3 @@ Réserva° / Calendrier (API)
 AMAP :
 
     - modif delivery (admin)
-    - pb list produit
-    - pb securité (add / del / modif cmd -> solde + verouillage delivery)

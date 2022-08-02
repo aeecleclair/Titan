@@ -36,11 +36,12 @@ class CashRepository {
     }
   }
 
-  Future<bool> createCash(Cash cash, String userId) async {
+  Future<Cash> createCash(Cash cash, String userId) async {
     final response = await http.post(Uri.parse(host + ext + userId + "/cash"),
         headers: headers, body: json.encode(cash.toJson()));
     if (response.statusCode == 201) {
-      return true;
+      String resp = utf8.decode(response.body.runes.toList());
+      return Cash.fromJson(json.decode(resp));
     } else {
       throw Exception("Failed to create cash");
     }

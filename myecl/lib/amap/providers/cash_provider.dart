@@ -21,8 +21,8 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
     return state.when(
       data: (cashList) async {
         try {
-          await _cashRepository.createCash(cash, cash.user.id);
-          cashList.add(cash);
+          Cash newCash = await _cashRepository.createCash(cash, cash.user.id);
+          cashList.add(newCash);
           state = AsyncValue.data(cashList);
           return true;
         } catch (e) {

@@ -1,11 +1,9 @@
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/providers/collection_slot_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
@@ -18,7 +16,6 @@ import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class Boutons extends HookConsumerWidget {
@@ -36,7 +33,6 @@ class Boutons extends HookConsumerWidget {
     final delList = ref.watch(deliveryList);
     final collectionSlotNotifier = ref.watch(collectionSlotProvider.notifier);
     final userAmount = ref.watch(userAmountProvider);
-    final cashNotifier = ref.watch(cashProvider.notifier);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
 
     final products = [];
@@ -82,15 +78,8 @@ class Boutons extends HookConsumerWidget {
                       collectionSlot: collectionSlotNotifier.getText());
                   cmdsNotifier.addOrder(newOrder).then((value) {
                     if (value) {
-                      userAmountNotifier.updateCash(-price);
-                      userAmount.when(
-                          data: (u) {
-                            cashNotifier.updateCash(
-                                u.copyWith(balance: u.balance - price));
-                          },
-                          error: (e, s) {},
-                          loading: () {});
                       pageNotifier.setAmapPage(AmapPage.main);
+                      userAmountNotifier.updateCash(-price);
                       displayToast(context, TypeMsg.msg, "Commande ajoutée");
                       clearCmd(ref);
                     } else {
@@ -118,15 +107,8 @@ class Boutons extends HookConsumerWidget {
                     }
                     cmdsNotifier.setProducts(indexCmd, prod).then((value) {
                       if (value) {
-                        userAmountNotifier.updateCash(lastPrice - price);
-                        userAmount.when(
-                            data: (u) {
-                              cashNotifier.updateCash(u.copyWith(
-                                  balance: u.balance + lastPrice - price));
-                            },
-                            error: (e, s) {},
-                            loading: () {});
                         pageNotifier.setAmapPage(AmapPage.main);
+                        userAmountNotifier.updateCash(lastPrice - price);
                         displayToast(context, TypeMsg.msg, "Commande modifiée");
                       } else {
                         pageNotifier.setAmapPage(AmapPage.main);

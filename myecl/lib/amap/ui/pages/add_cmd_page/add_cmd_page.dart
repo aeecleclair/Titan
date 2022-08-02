@@ -8,12 +8,10 @@ import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
-import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/add_cmd_page/product_ui_check.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
 
 class AddCmdPage extends HookConsumerWidget {
   const AddCmdPage({Key? key}) : super(key: key);
@@ -196,7 +194,7 @@ class AddCmdPage extends HookConsumerWidget {
                                           .where((element) => selected[
                                               products.indexOf(element)])
                                           .toList(),
-                                      deliveryDate: DateTime.parse(date));
+                                      deliveryDate: DateTime.parse(date), locked: false);
                                   deliveryNotifier
                                       .addDelivery(del)
                                       .then((value) {
@@ -206,7 +204,7 @@ class AddCmdPage extends HookConsumerWidget {
                                           "Commande ajoutée");
                                     } else {
                                       displayToast(context, TypeMsg.error,
-                                          "Erreur lors de l'ajout de la commande");
+                                          "Il existe déjà une commande à cette date");
                                     }
                                     selectedNotifier.clear();
                                   });

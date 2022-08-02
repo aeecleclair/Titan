@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/amap/class/cash.dart';
+import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
+import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
@@ -23,6 +23,7 @@ class OrderUi extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final deliveryList = ref.watch(deliveryListProvider);
     final deliveryId = ref.watch(deliveryIdProvider);
     final cmdsNotifier = ref.watch(orderListProvider(deliveryId).notifier);
     final productsNotifier =
@@ -30,9 +31,20 @@ class OrderUi extends ConsumerWidget {
     final indexCmdNotifier = ref.watch(orderIndexProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final priceNotofier = ref.watch(priceProvider.notifier);
-    final userAmount = ref.watch(userAmountProvider);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
-    final cashNotifier = ref.watch(cashProvider.notifier);
+    var locked = false;
+    deliveryList.when(
+        data: (deliveries) {
+          if (deliveries.isNotEmpty) {
+            for (Delivery d in deliveries) {
+              if (d.id == c.deliveryId) {
+                locked = d.locked;
+              }
+            }
+          }
+        },
+        error: (error, s) {},
+        loading: () {});
     return Container(
       margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
       alignment: Alignment.center,
@@ -185,7 +197,7 @@ class OrderUi extends ConsumerWidget {
           Container(
             height: 20,
           ),
-          c.expanded
+          c.expanded && !locked
               ? Row(
                   children: [
                     GestureDetector(
@@ -245,14 +257,6 @@ class OrderUi extends ConsumerWidget {
                                       .reduce(
                                           (value, element) => value + element);
                                   userAmountNotifier.updateCash(price);
-                                  userAmount.when(
-                                      data: (u) {
-                                        cashNotifier.updateCash(u.copyWith(
-                                            balance: u.balance + price));
-                                      },
-                                      error: (e, s) {},
-                                      loading: () {});
-
                                   displayToast(context, TypeMsg.msg,
                                       "Commande supprimée");
                                 }));

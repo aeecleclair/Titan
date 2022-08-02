@@ -36,7 +36,8 @@ class AmapUserRepository {
     final response = await http.get(Uri.parse(host + ext + userId + "/cash"),
         headers: headers);
     if (response.statusCode == 200) {
-      return Cash.fromJson(json.decode(response.body));
+      String resp = utf8.decode(response.body.runes.toList());
+      return Cash.fromJson(json.decode(resp));
     } else {
       throw Exception("Failed to load cash");
     }

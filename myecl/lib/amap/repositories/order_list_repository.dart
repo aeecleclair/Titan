@@ -11,7 +11,7 @@ class OrderListRepository {
     "Accept": "application/json",
   };
 
-  Future<bool> createOrder(
+  Future<Order> createOrder(
       String deliveryId, Order order, String userId) async {
     Map<String, dynamic> orderJson = order.toJson();
     orderJson.addAll({
@@ -21,9 +21,9 @@ class OrderListRepository {
         Uri.parse(host + ext + deliveryId + "/orders"),
         headers: headers,
         body: json.encode(orderJson));
-    print(response.body);
     if (response.statusCode == 201) {
-      return true;
+      String resp = utf8.decode(response.body.runes.toList());
+      return Order.fromJson(json.decode(resp));
     } else {
       throw Exception("Failed to create order");
     }

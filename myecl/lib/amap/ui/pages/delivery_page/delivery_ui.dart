@@ -131,66 +131,105 @@ class DeliveryUi extends ConsumerWidget {
           Container(
             height: 10,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                width: 25,
-              ),
-              Container(
-                width: 140,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  c.products.length.toString() +
-                      " produit" +
-                      (c.products.length != 1 ? "s" : ""),
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: ColorConstants.textLight),
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                width: 140,
-                child: GestureDetector(
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      gradient: const LinearGradient(
-                        colors: [
-                          ColorConstants.textLight,
-                          ColorConstants.textDark,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+          !c.locked
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: 25,
+                    ),
+                    Container(
+                      width: 140,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        c.products.length.toString() +
+                            " produit" +
+                            (c.products.length != 1 ? "s" : ""),
+                        style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: ColorConstants.textLight),
                       ),
                     ),
-                    child: Text(
-                      "Commander",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: ColorConstants.background2),
+                    Container(
+                      alignment: Alignment.center,
+                      width: 140,
+                      child: GestureDetector(
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            gradient: const LinearGradient(
+                              colors: [
+                                ColorConstants.textLight,
+                                ColorConstants.textDark,
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                          ),
+                          child: Text(
+                            "Commander",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: ColorConstants.background2),
+                          ),
+                        ),
+                        onTap: () {
+                          deliveryIdNotifier.setId(i);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  CollectionDialogBox(
+                                      descriptions:
+                                          "Choisissez un moment de livraison",
+                                      title: "Livraison",
+                                      onClick: (s) {
+                                        collectionSlotNotifier.setSlot(s);
+                                        pageNotifier
+                                            .setAmapPage(AmapPage.products);
+                                      }));
+                        },
+                      ),
+                    ),
+                  ],
+                )
+              : Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    gradient: const LinearGradient(
+                      colors: [
+                        ColorConstants.redGradient1,
+                        ColorConstants.redGradient2,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
                   ),
-                  onTap: () {
-                    deliveryIdNotifier.setId(i);
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) => CollectionDialogBox(
-                            descriptions: "Choisissez un moment de livraison",
-                            title: "Livraison",
-                            onClick: (s) {
-                              collectionSlotNotifier.setSlot(s);
-                              pageNotifier.setAmapPage(AmapPage.products);
-                            }));
-                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(
+                        Icons.lock,
+                        color: ColorConstants.background2,
+                        size: 20,
+                      ),
+                      Container(
+                        width: 20,
+                      ),
+                      Text(
+                        "Commandé vérouillée",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: ColorConstants.background2),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
           Container(
             height: 20,
           ),
@@ -207,15 +246,32 @@ class DeliveryUi extends ConsumerWidget {
                                 topLeft: Radius.circular(23)),
                             color: ColorConstants.background3),
                         alignment: Alignment.center,
-                        child: const Text("Modifier",
+                        child: const Text("Vérouiller",
                             style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
                                 color: ColorConstants.enabled)),
                       ),
                       onTap: () {
-                        deliveryIdNotifier.setId(i);
-                        pageNotifier.setAmapPage(AmapPage.products);
+                        final lastState = c.locked;
+                        deliveryListNotifier
+                            .updateDelivery(c.copyWith(
+                          locked: !c.locked,
+                        ))
+                            .then((value) {
+                          if (value) {
+                            if (lastState) {
+                              displayToast(context, TypeMsg.msg,
+                                  "Livraison vérrouillée");
+                            } else {
+                              displayToast(context, TypeMsg.msg,
+                                  "Livraison dévérrouillée");
+                            }
+                          } else {
+                            displayToast(context, TypeMsg.error,
+                                "Erreur lors de la mise à jour");
+                          }
+                        });
                       },
                     ),
                     GestureDetector(

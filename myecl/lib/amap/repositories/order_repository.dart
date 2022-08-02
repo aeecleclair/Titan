@@ -40,11 +40,12 @@ class OrderRepository {
     }
   }
 
-  Future<bool> createOrder(Order order) async {
+  Future<Order> createOrder(Order order) async {
     final response = await http.post(Uri.parse(host + "orders/"),
         headers: headers, body: json.encode(order.toJson()));
     if (response.statusCode == 201) {
-      return true;
+      String resp = utf8.decode(response.body.runes.toList());
+      return Order.fromJson(json.decode(resp));
     } else {
       throw Exception("Failed to create orders");
     }

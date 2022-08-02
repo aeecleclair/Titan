@@ -43,14 +43,13 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
     );
   }
 
-  Future<bool> updateDelivery(String deliveryId, Delivery delivery) async {
+  Future<bool> updateDelivery(Delivery delivery) async {
     return state.when(
       data: (deliveries) async {
         try {
-          await _deliveriesListRepository.updateDelivery(deliveryId, delivery);
-          var index = deliveries.indexWhere((p) => p.id == deliveryId);
-          deliveries.remove(deliveries.firstWhere((e) => e.id == deliveryId));
-          deliveries.insert(index, delivery);
+          await _deliveriesListRepository.updateDelivery(delivery);
+          var index = deliveries.indexWhere((p) => p.id == delivery.id);
+          deliveries[index] = delivery;
           state = AsyncValue.data(deliveries);
           return true;
         } catch (e) {

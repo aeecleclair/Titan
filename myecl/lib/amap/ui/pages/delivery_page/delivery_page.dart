@@ -35,7 +35,9 @@ class DeliveryPage extends HookConsumerWidget {
             ),
           ]);
           for (Delivery c in orders) {
-            listWidgetOrder.add(DeliveryUi(c: c, i: c.id));
+            if (!c.locked) {
+              listWidgetOrder.add(DeliveryUi(c: c, i: c.id));
+            }
           }
         } else {
           listWidgetOrder.add(Column(

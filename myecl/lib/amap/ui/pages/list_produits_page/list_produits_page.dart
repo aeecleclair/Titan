@@ -10,8 +10,7 @@ class ListProductPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Expanded(
-        child: Column(
+    return Column(
       children: [
         const SizedBox(
           height: 35,
@@ -26,6 +25,6 @@ class ListProductPage extends HookConsumerWidget {
                   children: const [ListProducts(), Dots(), Boutons()],
                 ))),
       ],
-    ));
+    );
   }
 }

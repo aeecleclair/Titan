@@ -22,11 +22,12 @@ class ProductListRepository {
     }
   }
 
-  Future<bool> createProduct(Product product) async {
+  Future<Product> createProduct(Product product) async {
     final response = await http.post(Uri.parse(host + ext),
         headers: headers, body: json.encode(product.toJson()));
     if (response.statusCode == 201) {
-      return true;
+      String resp = utf8.decode(response.body.runes.toList());
+      return Product.fromJson(json.decode(resp));
     } else {
       throw Exception("Failed to create product");
     }

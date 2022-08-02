@@ -3,7 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/cash_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/loan/tools/constants.dart';
 
 class CashUi extends HookConsumerWidget {
   final Cash c;
@@ -33,7 +35,8 @@ class CashUi extends HookConsumerWidget {
                           c.user.name +
                           ")"
                       : c.user.firstname + " " + c.user.name,
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.bold)),
               Text(
                 "Solde : " + c.balance.toStringAsFixed(2) + "€",
                 style: TextStyle(color: Colors.grey.shade600),
@@ -44,65 +47,60 @@ class CashUi extends HookConsumerWidget {
             key: key,
             child: Row(
               children: [
-                IconButton(
-                    onPressed: () {
-                      if (key.currentState!.validate()) {
-                        ref
-                            .read(cashProvider.notifier)
-                            .updateCash(
-                              Cash(
-                                user: c.user,
-                                balance: c.balance + int.parse(amount.text),
-                              ),
-                            )
-                            .then((value) {
-                          if (value) {
-                            key.currentState!.reset();
-                            displayToast(
-                                context, TypeMsg.msg, "Solde mis à jour");
-                          } else {
-                            displayToast(context, TypeMsg.error,
-                                "Erreur lors de la mise à jour du solde");
-                          }
-                        });
-                      }
-                    },
-                    icon: const Icon(Icons.add)),
                 SizedBox(
                   width: 50,
                   child: TextFormField(
                     controller: amount,
                     keyboardType: TextInputType.number,
                     onSaved: (value) {},
-                    validator: (value) => value!.isEmpty
-                        ? "Veuillez entrer un montant à ajouter"
-                        : null,
+                    validator: (value) => value!.isEmpty ? "Montant" : null,
                   ),
                 ),
-                IconButton(
-                    onPressed: () {
-                      if (key.currentState!.validate()) {
-                        ref
-                            .read(cashProvider.notifier)
-                            .updateCash(
-                              Cash(
-                                user: c.user,
-                                balance: c.balance - int.parse(amount.text),
-                              ),
-                            )
-                            .then((value) {
-                          if (value) {
-                            key.currentState!.reset();
-                            displayToast(
-                                context, TypeMsg.msg, "Solde mis à jour");
-                          } else {
-                            displayToast(context, TypeMsg.error,
-                                "Erreur lors de la mise à jour du solde");
-                          }
-                        });
-                      }
-                    },
-                    icon: const Icon(Icons.remove)),
+                const SizedBox(
+                  width: 20,
+                ),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      color: ColorConstants.gradient2,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorConstants.gradient2.withOpacity(0.5),
+                          blurRadius: 5,
+                          offset: const Offset(2, 2),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                  ),
+                  onTap: () {
+                    if (key.currentState!.validate()) {
+                      ref
+                          .read(cashProvider.notifier)
+                          .updateCash(
+                            Cash(
+                              user: c.user,
+                              balance: c.balance + int.parse(amount.text),
+                            ),
+                          )
+                          .then((value) {
+                        if (value) {
+                          key.currentState!.reset();
+                          displayToast(
+                              context, TypeMsg.msg, "Solde mis à jour");
+                        } else {
+                          displayToast(context, TypeMsg.error,
+                              "Erreur lors de la mise à jour du solde");
+                        }
+                      });
+                    }
+                  },
+                ),
               ],
             ),
           ),

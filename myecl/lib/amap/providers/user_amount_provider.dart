@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/repositories/amap_user_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
-import 'package:myecl/user/class/list_users.dart';
 
 class UserCashNotifier extends StateNotifier<AsyncValue<Cash>> {
   final AmapUserRepository _amapUserRepository = AmapUserRepository();

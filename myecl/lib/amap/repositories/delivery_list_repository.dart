@@ -35,8 +35,8 @@ class DeliveryListRepository {
     }
   }
 
-  Future<bool> updateDelivery(String deliveryId, Delivery delivery) async {
-    final response = await http.patch(Uri.parse(host + ext + deliveryId),
+  Future<bool> updateDelivery(Delivery delivery) async {
+    final response = await http.patch(Uri.parse(host + ext + "/" + delivery.id),
         headers: headers, body: json.encode(delivery.toJson()));
     if (response.statusCode == 200) {
       return true;
@@ -59,7 +59,8 @@ class DeliveryListRepository {
     final response = await http.get(Uri.parse(host + ext + "/" + deliveryId),
         headers: headers);
     if (response.statusCode == 200) {
-      return Delivery.fromJson(json.decode(response.body));
+      String resp = utf8.decode(response.body.runes.toList());
+      return Delivery.fromJson(json.decode(resp));
     } else {
       throw Exception("Failed to load delivery");
     }
@@ -72,8 +73,9 @@ class DeliveryListRepository {
             host + ext + "/" + deliveryId + "/orders/" + orderId + "/products"),
         headers: headers);
     if (response.statusCode == 200) {
+      String resp = utf8.decode(response.body.runes.toList());
       return List<Product>.from(
-          json.decode(response.body).map((x) => Product.fromJson(x)));
+          json.decode(resp).map((x) => Product.fromJson(x)));
     } else {
       throw Exception("Failed to load products");
     }

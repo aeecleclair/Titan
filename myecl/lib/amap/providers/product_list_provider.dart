@@ -21,8 +21,8 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
     return state.when(
       data: (products) async {
         try {
-          await _productListRepository.createProduct(product);
-          products.add(product);
+          Product newProduct = await _productListRepository.createProduct(product);
+          products.add(newProduct);
           state = AsyncValue.data(products);
           return true;
         } catch (e) {

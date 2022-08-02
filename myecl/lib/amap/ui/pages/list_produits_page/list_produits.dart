@@ -14,7 +14,6 @@ import 'package:myecl/amap/providers/scroll_controller_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/pages/list_produits_page/produit_ui_list.dart';
-import 'package:myecl/amap/ui/refresh_indicator.dart';
 
 class ListProducts extends HookConsumerWidget {
   const ListProducts({Key? key}) : super(key: key);
@@ -27,8 +26,6 @@ class ListProducts extends HookConsumerWidget {
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
     final deliveryId = ref.watch(deliveryIdProvider);
     final productsList = ref.watch(deliveryProductListProvider(deliveryId));
-    final productsListNotifier =
-        ref.watch(deliveryProductListProvider(deliveryId).notifier);
     final pageController = ref.watch(amapPageControllerProvider);
     final categories = ref.watch(categoryListProvider);
     final products = [];
