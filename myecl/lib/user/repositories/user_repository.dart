@@ -6,6 +6,7 @@ import 'package:myecl/user/class/user.dart';
 
 class UserRepository {
   final host = "http://10.0.2.2:8000/";
+  final ext = "users/";
   final Map<String, String> headers = {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -14,7 +15,7 @@ class UserRepository {
 
   Future<List<SimpleUser>> getAllUsers() async {
     final response =
-        await http.get(Uri.parse(host + "users/"), headers: headers);
+        await http.get(Uri.parse(host + ext), headers: headers);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return data.map<SimpleUser>((json) => SimpleUser.fromJson(json)).toList();
@@ -25,7 +26,7 @@ class UserRepository {
 
   Future<User> getUser(String userId) async {
     final response =
-        await http.get(Uri.parse(host + "users/" + userId), headers: headers);
+        await http.get(Uri.parse(host + ext + userId), headers: headers);
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body));
     } else {
@@ -44,7 +45,7 @@ class UserRepository {
   }
 
   Future<bool> updateUser(String userId, User user) async {
-    final response = await http.patch(Uri.parse(host + "users/" + userId),
+    final response = await http.patch(Uri.parse(host + ext + userId),
         headers: headers, body: json.encode(user.toJson()));
     if (response.statusCode == 200) {
       return true;
@@ -54,7 +55,7 @@ class UserRepository {
   }
 
   Future<bool> createUser(User user) async {
-    final response = await http.post(Uri.parse(host + "users/"),
+    final response = await http.post(Uri.parse(host + ext),
         headers: headers, body: json.encode(user.toJson()));
     if (response.statusCode == 201) {
       return true;

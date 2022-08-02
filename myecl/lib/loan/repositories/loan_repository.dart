@@ -11,9 +11,20 @@ class LoanRepository {
     "Accept": "application/json",
   };
 
-  Future<List<Loan>> getLoanList() async {
+  Future<List<Loan>> getLoanListByGroupId(String groupId) async {
     final response =
-        await http.get(Uri.parse(host + ext), headers: headers);
+        await http.get(Uri.parse(host + ext + groupId), headers: headers);
+    if (response.statusCode == 200) {
+      String resp = utf8.decode(response.body.runes.toList());
+      return List<Loan>.from(json.decode(resp));
+    } else {
+      throw Exception("Failed to load loan list");
+    }
+  }
+
+  Future<List<Loan>> getLoanListByBorrowerId(String borrowerId) async {
+    final response =
+        await http.get(Uri.parse(host + ext + borrowerId), headers: headers);
     if (response.statusCode == 200) {
       String resp = utf8.decode(response.body.runes.toList());
       return List<Loan>.from(json.decode(resp));

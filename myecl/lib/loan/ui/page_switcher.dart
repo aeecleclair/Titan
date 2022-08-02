@@ -21,7 +21,7 @@ class PageSwitcher extends ConsumerWidget {
       case LoanPage.addLoan:
         return const AddLoanPage();
       case LoanPage.detail:
-        return const DetailPage();
+        return const DetailPage(isAdmin: false);
       case LoanPage.edit:
         return const EditPage();
       case LoanPage.history:
@@ -31,7 +31,9 @@ class PageSwitcher extends ConsumerWidget {
       case LoanPage.option:
         return const OptionPage();
       case LoanPage.historyDetail:
-        return const DetailPage();
+        return const DetailPage(isAdmin: false);
+      case LoanPage.groupLoan:
+        return const DetailPage(isAdmin: true);
       default:
         return const Text('Unknown page');
     }

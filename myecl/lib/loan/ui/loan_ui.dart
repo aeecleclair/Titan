@@ -13,7 +13,12 @@ import 'package:myecl/loan/tools/dialog.dart';
 class LoanUi extends ConsumerWidget {
   final Loan l;
   final bool isHistory;
-  const LoanUi({Key? key, required this.l, required this.isHistory})
+  final bool isAdmin;
+  const LoanUi(
+      {Key? key,
+      required this.l,
+      required this.isHistory,
+      required this.isAdmin})
       : super(key: key);
 
   @override
@@ -37,7 +42,8 @@ class LoanUi extends ConsumerWidget {
         ),
         margin: const EdgeInsets.all(15.0),
         padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-        child: Column(children: [
+        child:
+            Column(children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -52,17 +58,21 @@ class LoanUi extends ConsumerWidget {
                       color: ColorConstant.orange),
                 ),
               ),
-              !isHistory
+              !isAdmin
                   ? IconButton(
                       onPressed: () {
-                        showDialog(context: context, builder: (context) {
-                          return CustomDialogBox(
-                            title: "Supprimer", descriptions: 'Supprimer ce prêt', onYes: () {
-                              loanListNotifier.deleteLoan(l);
-                              loanHistoryNotifier.addLoan(l);
-                            },
-                          );
-                        });
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CustomDialogBox(
+                                title: "Supprimer",
+                                descriptions: 'Supprimer ce prêt',
+                                onYes: () {
+                                  loanListNotifier.deleteLoan(l);
+                                  loanHistoryNotifier.addLoan(l);
+                                },
+                              );
+                            });
                       },
                       icon: const HeroIcon(
                         HeroIcons.x,
@@ -117,7 +127,11 @@ class LoanUi extends ConsumerWidget {
         ]),
       ),
       onTap: () {
-        pageNotifier.setLoanPage(isHistory ? LoanPage.historyDetail : LoanPage.detail);
+        pageNotifier.setLoanPage(isAdmin
+            ? LoanPage.groupLoan
+            : isHistory
+                ? LoanPage.historyDetail
+                : LoanPage.detail);
         loanNotifier.setLoan(l);
       },
     );

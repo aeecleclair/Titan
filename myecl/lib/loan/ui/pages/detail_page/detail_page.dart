@@ -6,7 +6,8 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 
 class DetailPage extends HookConsumerWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  final bool isAdmin;
+  const DetailPage({Key? key, required this.isAdmin}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -155,7 +156,7 @@ class DetailPage extends HookConsumerWidget {
                     const SizedBox(
                       height: 70,
                     ),
-                    GestureDetector(
+                    isAdmin ? GestureDetector(
                       onTap: () {
                         pageNotifier.setLoanPage(LoanPage.edit);
                       },
@@ -183,7 +184,8 @@ class DetailPage extends HookConsumerWidget {
                               color: ColorConstant.lightGrey),
                         ),
                       ),
-                    ),
+                    )
+                    : Container(),
                     const SizedBox(
                       height: 30,
                     ),

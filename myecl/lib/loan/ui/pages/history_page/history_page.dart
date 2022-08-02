@@ -10,7 +10,7 @@ class HistoryPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final fakeData = ref.watch(loanHistoryProvider);
+    final loanHistory = ref.watch(loanHistoryProvider);
     List<Widget> listWidget = [
       Container(
         margin: const EdgeInsets.only(right: 10, left: 20),
@@ -26,7 +26,7 @@ class HistoryPage extends HookConsumerWidget {
       )
     ];
 
-    fakeData.when(
+    loanHistory.when(
       data: (data) {
         List<String> categories =
             data.map((e) => e.association).toSet().toList();
@@ -35,7 +35,7 @@ class HistoryPage extends HookConsumerWidget {
         };
 
         for (Loan l in data) {
-          dictCateListWidget[l.association]!.add(LoanUi(l: l, isHistory: true));
+          dictCateListWidget[l.association]!.add(LoanUi(l: l, isHistory: true, isAdmin: false));
         }
 
         for (String c in categories) {

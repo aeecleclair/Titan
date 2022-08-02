@@ -64,7 +64,7 @@ class MainPage extends HookConsumerWidget {
         };
 
         for (Loan l in data) {
-          dictCateListWidget[l.association]!.add(LoanUi(l: l, isHistory: false));
+          dictCateListWidget[l.association]!.add(LoanUi(l: l, isHistory: false, isAdmin: false));
         }
 
         for (String c in categories) {
