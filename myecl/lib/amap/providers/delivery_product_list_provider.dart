@@ -12,6 +12,10 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
   }
 
   Future<AsyncValue<List<Product>>> loadProductList() async {
+    if (deliveryId.isEmpty) {
+      return const AsyncValue.error(
+          'deliveryId is null, please set deliveryId before load product list');
+    }
     try {
       final productList =
           await _productListRepository.getProductList(deliveryId);

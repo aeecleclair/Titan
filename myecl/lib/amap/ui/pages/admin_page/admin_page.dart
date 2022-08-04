@@ -2,6 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/providers/modified_product_index_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -18,6 +19,7 @@ class AdminPage extends HookConsumerWidget {
     final productsListNotifier = ref.watch(productListProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final productModif = ref.watch(modifiedProductProvider.notifier);
+    ref.watch(cashProvider);
     final products = [];
     final categories = [];
     productsList.when(

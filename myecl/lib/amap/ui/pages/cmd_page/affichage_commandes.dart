@@ -89,7 +89,9 @@ class ListeOrders extends HookConsumerWidget {
         soldeNotifier.loadCashByUser(userId);
       },
       child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
           child: Column(children: listWidgetOrder)),
     );
   }

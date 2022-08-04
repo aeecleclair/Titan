@@ -65,14 +65,33 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
       },
     );
   }
+
+  Future<AsyncValue<List<Cash>>> filterCashList(String filter) async {
+    return state.when(
+      data: (cashList) async {
+        final lowerQuery = filter.toLowerCase();
+        return AsyncValue.data(cashList
+            .where((cash) =>
+                cash.user.name.toLowerCase().contains(lowerQuery) ||
+                cash.user.firstname.toLowerCase().contains(lowerQuery) ||
+                cash.user.nickname.toLowerCase().contains(lowerQuery))
+            .toList());
+      },
+      error: (error, stackTrace) {
+        return AsyncValue.error(error);
+      },
+      loading: () {
+        return const AsyncValue.error("Cannot filter cash while loading");
+      },
+    );
+  }
 }
 
-
-final cashProvider = StateNotifierProvider<CashProvider, AsyncValue<List<Cash>>>(
+final cashProvider =
+    StateNotifierProvider<CashProvider, AsyncValue<List<Cash>>>(
   (ref) {
     CashProvider _cashProvider = CashProvider();
     _cashProvider.loadCashList();
     return _cashProvider;
   },
 );
-

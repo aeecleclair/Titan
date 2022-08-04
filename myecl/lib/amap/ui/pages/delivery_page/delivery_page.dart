@@ -111,7 +111,9 @@ class DeliveryPage extends HookConsumerWidget {
           deliveryListNotifier.loadDeliveriesList();
         },
         child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
           child: Column(children: listWidgetOrder),
         ));
   }
