@@ -406,7 +406,7 @@ class EditPage extends HookConsumerWidget {
                                     return;
                                   }
                                   if (key.currentState!.validate()) {
-                                    pageNotifier.setLoanPage(LoanPage.main);
+                                    pageNotifier.setLoanPage(LoanPage.option);
                                     loanListNotifier
                                         .updateLoan(
                                       Loan(

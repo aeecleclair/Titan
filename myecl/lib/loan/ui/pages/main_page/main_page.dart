@@ -6,6 +6,7 @@ import 'package:myecl/loan/providers/loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_ui.dart';
+import 'package:myecl/loan/ui/refresh_indicator.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -13,7 +14,8 @@ class MainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
-    final fakeData = ref.watch(loanListProvider);
+    final loanList = ref.watch(loanListProvider);
+    final loanListNotifier = ref.watch(loanListProvider.notifier);
     List<Widget> listWidget = [
       Container(
           margin: const EdgeInsets.only(right: 10, left: 20),
@@ -55,7 +57,7 @@ class MainPage extends HookConsumerWidget {
           ))
     ];
 
-    fakeData.when(
+    loanList.when(
       data: (data) {
         List<String> categories =
             data.map((e) => e.association).toSet().toList();
@@ -64,7 +66,8 @@ class MainPage extends HookConsumerWidget {
         };
 
         for (Loan l in data) {
-          dictCateListWidget[l.association]!.add(LoanUi(l: l, isHistory: false, isAdmin: false));
+          dictCateListWidget[l.association]!
+              .add(LoanUi(l: l, isHistory: false, isAdmin: false));
         }
 
         for (String c in categories) {
@@ -98,18 +101,24 @@ class MainPage extends HookConsumerWidget {
       },
     );
 
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          ...listWidget,
-          const SizedBox(
-            height: 20,
-          ),
-        ],
+    return Refresh(
+      keyRefresh: GlobalKey<RefreshIndicatorState>(),
+      onRefresh: () async {
+        loanListNotifier.loadLoanList();
+      },
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            ...listWidget,
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }

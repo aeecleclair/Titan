@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/loan/ui/refresh_indicator.dart';
 import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/loan_history_provider.dart';
+import 'package:myecl/loan/providers/loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_ui.dart';
@@ -12,7 +13,8 @@ class OptionPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
-    final loanHistory = ref.watch(loanHistoryProvider);
+    final loanList = ref.watch(loanListProvider);
+    final loanListNotifier = ref.watch(loanListProvider.notifier);
     List<Widget> listWidget = [
       Container(
         margin: const EdgeInsets.only(right: 10, left: 20),
@@ -28,7 +30,7 @@ class OptionPage extends HookConsumerWidget {
       )
     ];
 
-    loanHistory.when(
+    loanList.when(
       data: (data) {
         List<String> categories =
             data.map((e) => e.association).toSet().toList();
@@ -37,7 +39,8 @@ class OptionPage extends HookConsumerWidget {
         };
 
         for (Loan l in data) {
-          dictCateListWidget[l.association]!.add(LoanUi(l: l, isHistory: true, isAdmin: true));
+          dictCateListWidget[l.association]!
+              .add(LoanUi(l: l, isHistory: true, isAdmin: true));
         }
 
         for (String c in categories) {
@@ -71,80 +74,90 @@ class OptionPage extends HookConsumerWidget {
       },
     );
 
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Column(
-            children: [
-              GestureDetector(
-                child: Container(
-                  padding: const EdgeInsets.all(40),
-                  decoration: BoxDecoration(
-                      color: ColorConstant.darkGrey,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: ColorConstant.darkGrey,
-                          blurRadius: 10,
-                          offset: Offset(0, 5),
-                        ),
-                      ]),
-                  child: const Text(
-                    "Ajouter un prêt",
-                    style: TextStyle(
-                      color: ColorConstant.veryLightOrange,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
+    return Refresh(
+      keyRefresh: GlobalKey<RefreshIndicatorState>(),
+      onRefresh: () async {
+        loanListNotifier.loadLoanList();
+      },
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics()),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Column(
+              children: [
+                GestureDetector(
+                  child: Container(
+                    margin:
+                        const EdgeInsets.only(left: 40, right: 40, bottom: 30),
+                    padding: const EdgeInsets.all(30),
+                    decoration: BoxDecoration(
+                        color: ColorConstant.darkGrey,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: ColorConstant.darkGrey,
+                            blurRadius: 10,
+                            offset: Offset(0, 5),
+                          ),
+                        ]),
+                    child: const Text(
+                      "Ajouter un prêt",
+                      style: TextStyle(
+                        color: ColorConstant.veryLightOrange,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
+                  onTap: () {
+                    pageNotifier.setLoanPage(LoanPage.addLoan);
+                  },
                 ),
-                onTap: () {
-                  pageNotifier.setLoanPage(LoanPage.addLoan);
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                child: Container(
-                  padding: const EdgeInsets.all(40),
-                  decoration: BoxDecoration(
-                      color: ColorConstant.darkGrey,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: ColorConstant.darkGrey,
-                          blurRadius: 10,
-                          offset: Offset(0, 5),
-                        ),
-                      ]),
-                  child: const Text(
-                    "Ajouter un objet",
-                    style: TextStyle(
-                      color: ColorConstant.veryLightOrange,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 40),
+                    padding: const EdgeInsets.all(30),
+                    decoration: BoxDecoration(
+                        color: ColorConstant.darkGrey,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: ColorConstant.darkGrey,
+                            blurRadius: 10,
+                            offset: Offset(0, 5),
+                          ),
+                        ]),
+                    child: const Text(
+                      "Ajouter un objet",
+                      style: TextStyle(
+                        color: ColorConstant.veryLightOrange,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
+                  onTap: () {
+                    pageNotifier.setLoanPage(LoanPage.addItem);
+                  },
                 ),
-                onTap: () {
-                  pageNotifier.setLoanPage(LoanPage.groupLoan);
-                },
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          ...listWidget,
-          const SizedBox(
-            height: 20,
-          ),
-        ],
+              ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            ...listWidget,
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }

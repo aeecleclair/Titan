@@ -16,7 +16,7 @@ class TextPresentation extends StatelessWidget {
             child: Column(
               children: [
                 const Text(
-                  "L'AMAP (association pour le maintien d'une agriculture paysanne) est un service proposé par l'association Planet&Co de l'ECL. Vous pouvez ainsi recevoir des Products (paniers de fruits et légumes, jus, confitures...) directement sur le campus !",
+                  "L'AMAP (association pour le maintien d'une agriculture paysanne) est un service proposé par l'association Planet&Co de l'ECL. Vous pouvez ainsi recevoir des produits (paniers de fruits et légumes, jus, confitures...) directement sur le campus !",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
                 Container(
@@ -30,7 +30,7 @@ class TextPresentation extends StatelessWidget {
                   height: 15,
                 ),
                 const Text(
-                  "Vous ne pouvez Orderr que si votre solde le permet. Vous pouvez recharger votre solde via la collecte Lydia ou bien avec un chèque que vous pouvez nous transmettre lors des permanences.",
+                  "Vous ne pouvez commander que si votre solde le permet. Vous pouvez recharger votre solde via la collecte Lydia ou bien avec un chèque que vous pouvez nous transmettre lors des permanences.",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
                 Container(
@@ -51,7 +51,7 @@ class TextPresentation extends StatelessWidget {
                   height: 15,
                 ),
                 const Text(
-                  "Contact asso : Marion Cornic - marion.cornic@ecl20.ec-lyon.fr",
+                  "Contact asso : Hector Bonnet-Bidaud Cornic - marion.cornic@ecl20.ec-lyon.fr",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
               ],

@@ -4,6 +4,7 @@ import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/loan_history_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_ui.dart';
+import 'package:myecl/loan/ui/refresh_indicator.dart';
 
 class HistoryPage extends HookConsumerWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class HistoryPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loanHistory = ref.watch(loanHistoryProvider);
+    final loanHistoryNotifier = ref.watch(loanHistoryProvider.notifier);
     List<Widget> listWidget = [
       Container(
         margin: const EdgeInsets.only(right: 10, left: 20),
@@ -35,7 +37,8 @@ class HistoryPage extends HookConsumerWidget {
         };
 
         for (Loan l in data) {
-          dictCateListWidget[l.association]!.add(LoanUi(l: l, isHistory: true, isAdmin: false));
+          dictCateListWidget[l.association]!
+              .add(LoanUi(l: l, isHistory: true, isAdmin: false));
         }
 
         for (String c in categories) {
@@ -69,18 +72,26 @@ class HistoryPage extends HookConsumerWidget {
       },
     );
 
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          ...listWidget,
-          const SizedBox(
-            height: 20,
-          ),
-        ],
+    return Refresh(
+      keyRefresh: GlobalKey<RefreshIndicatorState>(),
+      onRefresh: () async {
+        loanHistoryNotifier.loadHistory();
+      },
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics()
+        ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            ...listWidget,
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }

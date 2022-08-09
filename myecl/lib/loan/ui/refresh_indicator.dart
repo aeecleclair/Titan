@@ -1,11 +1,10 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/loan/tools/constants.dart';
 
 class Refresh extends HookConsumerWidget {
   final Widget child;
@@ -21,20 +20,19 @@ class Refresh extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (kIsWeb) {
-          return Container(
+      return Container(
         child: child,
       );
     } else {
       return Platform.isAndroid ? buildAndroidList() : buildIOSList();
     }
-
   }
 
   Widget buildAndroidList() => RefreshIndicator(
       key: keyRefresh,
       onRefresh: onRefresh,
       child: child,
-      color: ColorConstants.gradient1);
+      color: ColorConstant.darkGrey);
 
   Widget buildIOSList() => CustomScrollView(
         physics: const BouncingScrollPhysics(),
