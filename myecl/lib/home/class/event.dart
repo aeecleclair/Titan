@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class Event {
   String title;
   Color color;
-  double h;
-  double l;
+  DateTime startTime;
+  DateTime endTime;
   Event(
       {required this.title,
-      required this.h,
-      required this.l,
-      required this.color});
+      required this.color,
+      required this.startTime,
+      required this.endTime});
 }

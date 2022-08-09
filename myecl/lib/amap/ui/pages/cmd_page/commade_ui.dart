@@ -53,7 +53,7 @@ class OrderUi extends ConsumerWidget {
         color: Colors.grey.shade50,
         boxShadow: [
           BoxShadow(
-            color: ColorConstants.background3.withOpacity(0.4),
+            color: AMAPColorConstants.background3.withOpacity(0.4),
             spreadRadius: 2,
             blurRadius: 10,
             offset: const Offset(2, 5),
@@ -83,7 +83,7 @@ class OrderUi extends ConsumerWidget {
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: ColorConstants.l1),
+                      color: AMAPColorConstants.l1),
                 ),
               ),
               GestureDetector(
@@ -93,7 +93,7 @@ class OrderUi extends ConsumerWidget {
                   alignment: Alignment.topCenter,
                   child: HeroIcon(
                     c.expanded ? HeroIcons.chevronUp : HeroIcons.chevronDown,
-                    color: ColorConstants.textDark,
+                    color: AMAPColorConstants.textDark,
                   ),
                 ),
                 onTap: () {
@@ -123,7 +123,7 @@ class OrderUi extends ConsumerWidget {
                                       ")",
                                   style: const TextStyle(
                                     fontSize: 13,
-                                    color: ColorConstants.textDark,
+                                    color: AMAPColorConstants.textDark,
                                   ),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -143,7 +143,7 @@ class OrderUi extends ConsumerWidget {
                                           "€",
                                       style: const TextStyle(
                                         fontSize: 13,
-                                        color: ColorConstants.textDark,
+                                        color: AMAPColorConstants.textDark,
                                       ),
                                     ),
                                   ),
@@ -175,7 +175,7 @@ class OrderUi extends ConsumerWidget {
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
-                      color: ColorConstants.textLight),
+                      color: AMAPColorConstants.textLight),
                 ),
               ),
               Container(
@@ -190,7 +190,7 @@ class OrderUi extends ConsumerWidget {
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
-                        color: ColorConstants.textLight),
+                        color: AMAPColorConstants.textLight),
                   ))
             ],
           ),
@@ -208,13 +208,13 @@ class OrderUi extends ConsumerWidget {
                             borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(23),
                                 topLeft: Radius.circular(23)),
-                            color: ColorConstants.background3),
+                            color: AMAPColorConstants.background3),
                         alignment: Alignment.center,
                         child: const Text("Modifier",
                             style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
-                                color: ColorConstants.enabled)),
+                                color: AMAPColorConstants.enabled)),
                       ),
                       onTap: () {
                         indexCmdNotifier.setIndex(i);
@@ -236,7 +236,7 @@ class OrderUi extends ConsumerWidget {
                             borderRadius: const BorderRadius.only(
                                 bottomRight: Radius.circular(23),
                                 topRight: Radius.circular(23)),
-                            color: ColorConstants.background3),
+                            color: AMAPColorConstants.background3),
                         alignment: Alignment.center,
                         child: const Text("Supprimer",
                             style: TextStyle(

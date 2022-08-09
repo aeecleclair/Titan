@@ -12,18 +12,26 @@ class ResListNotifier extends StateNotifier<List<Event>> {
       : super([
           Event(
               title: "Réu 1",
-              h: 8,
-              l: 1,
-              color: const Color.fromARGB(255, 35, 146, 72)),
+              color: const Color.fromARGB(255, 35, 146, 72),
+              endTime: DateTime(DateTime.now().year, DateTime.now().month,
+                  DateTime.now().day, 9, 0),
+              startTime: DateTime(DateTime.now().year, DateTime.now().month,
+                  DateTime.now().day, 8, 0)),
           Event(
               title: "Réu 2",
-              h: 9,
-              l: 1.5,
-              color: const Color.fromARGB(255, 112, 182, 54)),
+              color: const Color.fromARGB(255, 112, 182, 54),
+              endTime: DateTime(DateTime.now().year, DateTime.now().month,
+                  DateTime.now().day, 10, 30),
+              startTime: DateTime(DateTime.now().year, DateTime.now().month,
+                DateTime.now().day, 9, 0),
+
+              ),
           Event(
               title: "Réu 3",
-              h: 15,
-              l: .5,
-              color: const Color.fromARGB(255, 37, 140, 149))
+              color: const Color.fromARGB(255, 37, 140, 149),
+              endTime: DateTime(DateTime.now().year, DateTime.now().month,
+                  DateTime.now().day, 15, 30),
+              startTime: DateTime(DateTime.now().year, DateTime.now().month,
+                  DateTime.now().day, 15, 0)),
         ]);
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ColorConstants {
+class AMAPColorConstants {
   static final Color background = Colors.grey.shade100;
   static final Color background2 = Colors.grey.shade200;
   static final Color background3 = Colors.grey.shade300;

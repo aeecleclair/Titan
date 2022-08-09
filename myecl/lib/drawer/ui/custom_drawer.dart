@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/drawer/ui/bottom_bar.dart';
 import 'package:myecl/drawer/ui/fake_page.dart';
 import 'package:myecl/drawer/ui/list_module.dart';
@@ -14,11 +15,11 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [Color(0xFF2F86C1), Color(0xFF1E557A)])),
+                colors: [DrawerColorConstants.lightBlue, DrawerColorConstants.darkBlue])),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

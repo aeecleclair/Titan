@@ -1,7 +1,7 @@
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/settings/tools/constants.dart';
+import 'package:myecl/drawer/tools/constants.dart';
 
 enum TypeMsg { msg, error }
 
@@ -11,17 +11,17 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
 
   switch (type) {
     case TypeMsg.msg:
-      linearGradient = const LinearGradient(
-          colors: [SettingsColorConstants.gradient1, SettingsColorConstants.gradient2],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight);
+      linearGradient = const LinearGradient(colors: [
+        DrawerColorConstants.darkBlue,
+        DrawerColorConstants.lightBlue
+      ], begin: Alignment.topLeft, end: Alignment.bottomRight);
       icon = HeroIcons.check;
       break;
     case TypeMsg.error:
-      linearGradient = const LinearGradient(
-          colors: [SettingsColorConstants.redGradient1, SettingsColorConstants.redGradient2],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight);
+      linearGradient = const LinearGradient(colors: [
+        DrawerColorConstants.fakePageShadow,
+        DrawerColorConstants.fakePageBlue
+      ], begin: Alignment.topLeft, end: Alignment.bottomRight);
       icon = HeroIcons.exclamation;
       break;
   }
@@ -45,7 +45,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
                 Container(
                   width: 40,
                   alignment: Alignment.center,
-                  child: HeroIcon(icon, color: SettingsColorConstants.background),
+                  child: HeroIcon(icon, color: DrawerColorConstants.lightText),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width - 120,
@@ -53,11 +53,12 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
                   child: Text(
                     text,
                     style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: SettingsColorConstants.background),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: DrawerColorConstants.lightText,
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           ),

@@ -61,7 +61,7 @@ class ModifProduct extends HookConsumerWidget {
         Expanded(
           child: Container(
               decoration: BoxDecoration(
-                  color: ColorConstants.background2.withOpacity(0.5)),
+                  color: AMAPColorConstants.background2.withOpacity(0.5)),
               child: Form(
                   key: _formKey,
                   child: Container(
@@ -80,7 +80,7 @@ class ModifProduct extends HookConsumerWidget {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 20,
-                                    color: ColorConstants.gradient2,
+                                    color: AMAPColorConstants.gradient2,
                                   ),
                                 ),
                                 const SizedBox(
@@ -106,7 +106,7 @@ class ModifProduct extends HookConsumerWidget {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 20,
-                                    color: ColorConstants.gradient2,
+                                    color: AMAPColorConstants.gradient2,
                                   ),
                                 ),
                                 const SizedBox(
@@ -135,7 +135,7 @@ class ModifProduct extends HookConsumerWidget {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 20,
-                                    color: ColorConstants.gradient2,
+                                    color: AMAPColorConstants.gradient2,
                                   ),
                                 ),
                                 const SizedBox(
@@ -167,17 +167,17 @@ class ModifProduct extends HookConsumerWidget {
                                           borderRadius:
                                               BorderRadius.circular(16.0),
                                           borderSide: const BorderSide(
-                                              color: ColorConstants.enabled)),
+                                              color: AMAPColorConstants.enabled)),
                                       errorBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(16.0),
                                           borderSide: const BorderSide(
-                                              color: ColorConstants.red)),
+                                              color: AMAPColorConstants.red)),
                                       focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(16.0),
                                           borderSide: const BorderSide(
-                                            color: ColorConstants.gradient2,
+                                            color: AMAPColorConstants.gradient2,
                                           )),
                                     ),
                                     items: [
@@ -204,7 +204,7 @@ class ModifProduct extends HookConsumerWidget {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 20,
-                                    color: ColorConstants.gradient2,
+                                    color: AMAPColorConstants.gradient2,
                                   ),
                                 ),
                                 const SizedBox(

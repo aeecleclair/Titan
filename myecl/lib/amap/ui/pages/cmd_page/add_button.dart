@@ -28,7 +28,7 @@ class AddButton extends ConsumerWidget {
               child: Container(
                 height: 100.0,
                 decoration: BoxDecoration(
-                  color: ColorConstants.background2.withOpacity(0.5),
+                  color: AMAPColorConstants.background2.withOpacity(0.5),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.shade400.withOpacity(0.25),
@@ -51,7 +51,7 @@ class AddButton extends ConsumerWidget {
                             style: TextStyle(
                                 fontSize: 35,
                                 fontWeight: FontWeight.w900,
-                                color: ColorConstants.textLight)),
+                                color: AMAPColorConstants.textLight)),
                         Text(
                             solde.when(
                                 data: (s) =>
@@ -61,7 +61,7 @@ class AddButton extends ConsumerWidget {
                             style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
-                                color: ColorConstants.textDark)),
+                                color: AMAPColorConstants.textDark)),
                         Container(
                           height: 5,
                         ),
@@ -70,7 +70,7 @@ class AddButton extends ConsumerWidget {
                     const FaIcon(
                       FontAwesomeIcons.cartShopping,
                       size: 40,
-                      color: ColorConstants.textLight,
+                      color: AMAPColorConstants.textLight,
                     )
                   ],
                 ),

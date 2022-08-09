@@ -25,7 +25,7 @@ class DetailPage extends HookConsumerWidget {
               ),
               Expanded(
                 child: Container(
-                  color: ColorConstant.darkGrey,
+                  color: LoanColorConstants.darkGrey,
                 ),
               ),
             ]),
@@ -34,7 +34,7 @@ class DetailPage extends HookConsumerWidget {
               child: Container(
                 margin: const EdgeInsets.only(top: 20),
                 decoration: const BoxDecoration(
-                  color: ColorConstant.darkGrey,
+                  color: LoanColorConstants.darkGrey,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50),
@@ -56,14 +56,14 @@ class DetailPage extends HookConsumerWidget {
                                 style: const TextStyle(
                                     fontSize: 40,
                                     fontWeight: FontWeight.bold,
-                                    color: ColorConstant.veryLightOrange),
+                                    color: LoanColorConstants.veryLightOrange),
                               ),
                               Text(
                                 l.borrowerId,
                                 style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
-                                    color: ColorConstant.orange),
+                                    color: LoanColorConstants.orange),
                               )
                             ],
                           ),
@@ -80,7 +80,7 @@ class DetailPage extends HookConsumerWidget {
                               style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                  color: ColorConstant.veryLightOrange),
+                                  color: LoanColorConstants.veryLightOrange),
                             ),
                           ),
                         ),
@@ -96,7 +96,7 @@ class DetailPage extends HookConsumerWidget {
                         style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w400,
-                            color: ColorConstant.veryLightOrange),
+                            color: LoanColorConstants.veryLightOrange),
                       ),
                     ),
                     const SizedBox(
@@ -116,14 +116,15 @@ class DetailPage extends HookConsumerWidget {
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
-                                            color: ColorConstant.lightOrange)),
+                                            color: LoanColorConstants
+                                                .lightOrange)),
                                     const SizedBox(width: 20),
                                     Text(
                                       e.name,
                                       style: const TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.w400,
-                                          color: ColorConstant.lightOrange),
+                                          color: LoanColorConstants.lightOrange),
                                     ),
                                   ],
                                 ),
@@ -132,7 +133,7 @@ class DetailPage extends HookConsumerWidget {
                                   style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400,
-                                      color: ColorConstant.lightOrange),
+                                      color: LoanColorConstants.lightOrange),
                                 ),
                               ],
                             ),
@@ -150,7 +151,7 @@ class DetailPage extends HookConsumerWidget {
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: ColorConstant.veryLightOrange),
+                            color: LoanColorConstants.veryLightOrange),
                       ),
                     ),
                     const SizedBox(
@@ -167,9 +168,9 @@ class DetailPage extends HookConsumerWidget {
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [
-                              ColorConstant.orange,
-                              ColorConstant.lightOrange,
-                              ColorConstant.orange,
+                              LoanColorConstants.orange,
+                              LoanColorConstants.lightOrange,
+                              LoanColorConstants.orange,
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -181,7 +182,7 @@ class DetailPage extends HookConsumerWidget {
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: ColorConstant.lightGrey),
+                              color: LoanColorConstants.lightGrey),
                         ),
                       ),
                     )
@@ -202,7 +203,7 @@ class DetailPage extends HookConsumerWidget {
       loading: () {
         return const Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(ColorConstant.darkGrey),
+            valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
           ),
         );
       },

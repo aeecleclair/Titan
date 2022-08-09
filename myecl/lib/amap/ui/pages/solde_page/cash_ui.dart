@@ -62,11 +62,11 @@ class CashUi extends HookConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: ColorConstants.gradient2,
+                      color: AMAPColorConstants.gradient2,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: ColorConstants.gradient2.withOpacity(0.5),
+                          color: AMAPColorConstants.gradient2.withOpacity(0.5),
                           blurRadius: 5,
                           offset: const Offset(2, 2),
                         ),

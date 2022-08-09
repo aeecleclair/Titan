@@ -83,7 +83,7 @@ class ListProducts extends HookConsumerWidget {
                             c,
                             style: const TextStyle(
                               fontSize: 25,
-                              color: ColorConstants.textDark,
+                              color: AMAPColorConstants.textDark,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -106,7 +106,8 @@ class ListProducts extends HookConsumerWidget {
                                             sigmaX: 10.0, sigmaY: 10.0),
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            color: ColorConstants.background2
+                                            color: AMAPColorConstants
+                                                .background2
                                                 .withOpacity(0.5),
                                           ),
                                           child: Column(
@@ -136,14 +137,14 @@ class ListProducts extends HookConsumerWidget {
                                           decoration: BoxDecoration(
                                             gradient: const LinearGradient(
                                                 colors: [
-                                                  ColorConstants.l1,
-                                                  ColorConstants.l2
+                                                  AMAPColorConstants.l1,
+                                                  AMAPColorConstants.l2
                                                 ],
                                                 begin: Alignment.topLeft,
                                                 end: Alignment.bottomRight),
                                             boxShadow: [
                                               BoxShadow(
-                                                  color: ColorConstants.l2
+                                                  color: AMAPColorConstants.l2
                                                       .withOpacity(0.4),
                                                   offset: const Offset(2, 3),
                                                   blurRadius: 5)
@@ -161,12 +162,12 @@ class ListProducts extends HookConsumerWidget {
                                                 HeroIcons.chevronDoubleDown,
                                                 size: 15,
                                                 color:
-                                                    ColorConstants.background,
+                                                    AMAPColorConstants.background,
                                               ),
                                               Text("Voir Plus",
                                                   style: TextStyle(
                                                     fontSize: 18,
-                                                    color: ColorConstants
+                                                    color: AMAPColorConstants
                                                         .background,
                                                   )),
                                             ],
@@ -185,7 +186,7 @@ class ListProducts extends HookConsumerWidget {
                                     sigmaX: 10.0, sigmaY: 10.0),
                                 child: Container(
                                     decoration: BoxDecoration(
-                                      color: ColorConstants.background2
+                                      color: AMAPColorConstants.background2
                                           .withOpacity(0.5),
                                     ),
                                     child:
@@ -215,7 +216,7 @@ class ListProducts extends HookConsumerWidget {
             const Center(
               child: CircularProgressIndicator(
                 valueColor:
-                    AlwaysStoppedAnimation<Color>(ColorConstants.gradient2),
+                    AlwaysStoppedAnimation<Color>(AMAPColorConstants.gradient2),
               ),
             ),
           ],

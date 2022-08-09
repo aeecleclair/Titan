@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/home/ui/last_info.dart';
 import 'package:myecl/home/ui/todays_events.dart';
 import 'package:myecl/home/ui/top_bar.dart';
@@ -19,8 +20,8 @@ class HomePage extends HookConsumerWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color.fromARGB(255, 1, 49, 68),
-                  Color.fromARGB(255, 2, 84, 104),
+                  HomeColorConstants.darkBlue,
+                  HomeColorConstants.lightBlue,
                 ],
               ),
             ),

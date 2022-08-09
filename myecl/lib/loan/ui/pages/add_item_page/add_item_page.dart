@@ -24,7 +24,7 @@ class AddItemPage extends HookConsumerWidget {
 
     Widget w = const Center(
       child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(ColorConstant.orange),
+        valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
       ),
     );
 
@@ -35,8 +35,8 @@ class AddItemPage extends HookConsumerWidget {
             title: const Text('Association'),
             content: Theme(
               data: Theme.of(context).copyWith(
-                primaryColor: ColorConstant.lightGrey,
-                unselectedWidgetColor: ColorConstant.lightGrey,
+                primaryColor: LoanColorConstants.lightGrey,
+                unselectedWidgetColor: LoanColorConstants.lightGrey,
               ),
               child: Column(
                   children: listAsso
@@ -47,7 +47,7 @@ class AddItemPage extends HookConsumerWidget {
                                     fontSize: 18, fontWeight: FontWeight.w500)),
                             selected: asso.value == e,
                             value: e,
-                            activeColor: ColorConstant.orange,
+                            activeColor: LoanColorConstants.orange,
                             groupValue: asso.value,
                             onChanged: (s) {
                               asso.value = s.toString();

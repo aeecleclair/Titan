@@ -17,8 +17,10 @@ samples, guidance on mobile development, and a full API reference.
 
 TODO :
 
-Réserva° / Calendrier (API)
-Evénements (API) week
+Réserva° (API)
+Prêt (API)
+Evénements (API)
+Admin (API)
 
 AMAP :
 

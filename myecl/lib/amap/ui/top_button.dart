@@ -26,13 +26,13 @@ class TopButton extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: selected
-                ? [ColorConstants.l2, ColorConstants.gradient2]
+                ? [AMAPColorConstants.l2, AMAPColorConstants.gradient2]
                 : [Colors.transparent, Colors.transparent],
           ),
           boxShadow: [
             BoxShadow(
               color: selected
-                  ? ColorConstants.gradient2.withOpacity(0.4)
+                  ? AMAPColorConstants.gradient2.withOpacity(0.4)
                   : Colors.transparent,
               spreadRadius: 2,
               blurRadius: 5,
@@ -46,7 +46,7 @@ class TopButton extends StatelessWidget {
               fontSize: 17,
               fontWeight: FontWeight.w800,
               color: selected
-                  ? ColorConstants.background
+                  ? AMAPColorConstants.background
                   : const Color(0xff387200)),
         ),
       ),

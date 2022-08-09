@@ -27,7 +27,7 @@ class DeliveryPage extends HookConsumerWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
-                color: ColorConstants.textDark,
+                color: AMAPColorConstants.textDark,
               ),
             ),
             const SizedBox(
@@ -92,7 +92,7 @@ class DeliveryPage extends HookConsumerWidget {
                 alignment: Alignment.center,
                 child: const CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    ColorConstants.textDark,
+                    AMAPColorConstants.textDark,
                   ),
                 ),
               ),

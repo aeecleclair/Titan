@@ -21,20 +21,17 @@ class Refresh extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (kIsWeb) {
-          return Container(
-        child: child,
-      );
+      return child;
     } else {
       return Platform.isAndroid ? buildAndroidList() : buildIOSList();
     }
-
   }
 
   Widget buildAndroidList() => RefreshIndicator(
       key: keyRefresh,
       onRefresh: onRefresh,
       child: child,
-      color: ColorConstants.gradient1);
+      color: AMAPColorConstants.gradient1);
 
   Widget buildIOSList() => CustomScrollView(
         physics: const BouncingScrollPhysics(),

@@ -113,7 +113,7 @@ class AddSoldePage extends HookConsumerWidget {
     }, loading: () {
       return const Center(
           child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(ColorConstants.gradient2),
+        valueColor: AlwaysStoppedAnimation<Color>(AMAPColorConstants.gradient2),
       ));
     }));
   }

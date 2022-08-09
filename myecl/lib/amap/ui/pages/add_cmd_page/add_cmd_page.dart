@@ -83,7 +83,7 @@ class AddCmdPage extends HookConsumerWidget {
       Expanded(
           child: Container(
         decoration:
-            BoxDecoration(color: ColorConstants.background2.withOpacity(0.5)),
+            BoxDecoration(color: AMAPColorConstants.background2.withOpacity(0.5)),
         child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Form(

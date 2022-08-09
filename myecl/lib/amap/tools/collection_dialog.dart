@@ -64,7 +64,7 @@ class _CollectionDialogBoxState extends State<CollectionDialogBox> {
                 style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w800,
-                    color: ColorConstants.textDark),
+                    color: AMAPColorConstants.textDark),
               ),
               const SizedBox(
                 height: 15,
@@ -73,7 +73,7 @@ class _CollectionDialogBoxState extends State<CollectionDialogBox> {
                 widget.descriptions,
                 style: const TextStyle(
                   fontSize: 14,
-                  color: ColorConstants.enabled,
+                  color: AMAPColorConstants.enabled,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -95,7 +95,7 @@ class _CollectionDialogBoxState extends State<CollectionDialogBox> {
                             style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                color: ColorConstants.gradient2),
+                                color: AMAPColorConstants.gradient2),
                           )),
                       TextButton(
                           onPressed: () {
@@ -107,7 +107,7 @@ class _CollectionDialogBoxState extends State<CollectionDialogBox> {
                             style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                color: ColorConstants.gradient2),
+                                color: AMAPColorConstants.gradient2),
                           )),
                     ],
                   )),

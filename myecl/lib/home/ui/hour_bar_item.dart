@@ -11,10 +11,12 @@ class HourBarItems extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final res = ref.watch(resListProvider);
     List<Widget> hourBar = [];
-    double dh = 0;
+    int dh = 0;
     double dl = 0;
     for (Event r in res) {
-      double ph = r.h - dh;
+      int h = r.startTime.hour;
+      double l = (r.endTime.hour - r.startTime.hour) + (r.endTime.minute - r.startTime.minute) / 60;
+      int ph = h - dh;
       hourBar.add(SizedBox(
         height: (ph - dl) * 90.0,
       ));
@@ -22,7 +24,7 @@ class HourBarItems extends ConsumerWidget {
         Container(
           margin: const EdgeInsets.only(left: 20, right: 15, top: 2, bottom: 2),
           width: 500,
-          height: r.l * 90.0 - 4,
+          height: l * 90.0 - 4,
           decoration: BoxDecoration(
             color: r.color,
             borderRadius: BorderRadius.circular(30),
@@ -46,8 +48,8 @@ class HourBarItems extends ConsumerWidget {
                   const SizedBox(
                     height: 3,
                   ),
-                  r.l > 0.5
-                      ? Text(doubleToTime(r.l),
+                  l > 0.5
+                      ? Text(doubleToTime(l),
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
@@ -59,8 +61,8 @@ class HourBarItems extends ConsumerWidget {
           ),
         ),
       );
-      dh = r.h;
-      dl = r.l;
+      dh = h;
+      dl = l;
     }
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start, children: hourBar);

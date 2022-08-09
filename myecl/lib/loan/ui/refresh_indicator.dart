@@ -32,7 +32,7 @@ class Refresh extends HookConsumerWidget {
       key: keyRefresh,
       onRefresh: onRefresh,
       child: child,
-      color: ColorConstant.darkGrey);
+      color: LoanColorConstants.darkGrey);
 
   Widget buildIOSList() => CustomScrollView(
         physics: const BouncingScrollPhysics(),

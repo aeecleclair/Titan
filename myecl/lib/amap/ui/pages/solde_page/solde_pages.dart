@@ -76,7 +76,7 @@ List<Widget> buildAll(AsyncValue<List<Cash>> cashList, editingController) {
               alignment: Alignment.center,
               child: const CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(
-                  ColorConstants.textDark,
+                  AMAPColorConstants.textDark,
                 ),
               ),
             ),
@@ -144,7 +144,7 @@ class SoldePage extends HookConsumerWidget {
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                      color: ColorConstants.background2.withOpacity(0.5)),
+                      color: AMAPColorConstants.background2.withOpacity(0.5)),
                   child: Column(
                     children: [
                       ListView.builder(

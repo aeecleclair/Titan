@@ -37,7 +37,7 @@ class MainPage extends HookConsumerWidget {
                     },
                     icon: const HeroIcon(
                       HeroIcons.clipboardList,
-                      color: ColorConstant.lightGrey,
+                      color: LoanColorConstants.lightGrey,
                       size: 25,
                     ),
                   ),
@@ -47,7 +47,7 @@ class MainPage extends HookConsumerWidget {
                     },
                     icon: const HeroIcon(
                       HeroIcons.plus,
-                      color: ColorConstant.lightGrey,
+                      color: LoanColorConstants.lightGrey,
                       size: 25,
                     ),
                   ),
@@ -93,7 +93,7 @@ class MainPage extends HookConsumerWidget {
       loading: () {
         listWidget.add(const Center(
             child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(ColorConstant.darkGrey),
+          valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
         )));
       },
       error: (error, s) {

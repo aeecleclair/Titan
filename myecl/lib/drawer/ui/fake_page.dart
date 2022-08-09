@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/drawer/tools/constants.dart';
 
 class FakePage extends StatelessWidget {
   const FakePage({Key? key}) : super(key: key);
@@ -11,15 +12,15 @@ class FakePage extends StatelessWidget {
       height: 420,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(79, 51, 144, 206),
+            color: DrawerColorConstants.fakePageShadow,
             spreadRadius: 3,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
-        color: const Color.fromARGB(255, 51, 144, 206),
+        color: DrawerColorConstants.fakePageBlue,
       ),
     );
   }

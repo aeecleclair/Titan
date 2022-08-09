@@ -18,7 +18,7 @@ class ListProductPage extends HookConsumerWidget {
         Expanded(
             child: Container(
                 decoration: BoxDecoration(
-                  color: ColorConstants.background2.withOpacity(0.5),
+                  color: AMAPColorConstants.background2.withOpacity(0.5),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

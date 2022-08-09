@@ -59,7 +59,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w800,
-                    color: ColorConstant.orange),
+                    color: LoanColorConstants.orange),
               ),
               const SizedBox(
                 height: 15,
@@ -68,7 +68,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 widget.descriptions,
                 style: const TextStyle(
                   fontSize: 14,
-                  color: ColorConstant.lightGrey,
+                  color: LoanColorConstants.lightGrey,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -89,7 +89,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                color: ColorConstant.lightOrange),
+                                color: LoanColorConstants.lightOrange),
                           )),
                       TextButton(
                           onPressed: () {
@@ -101,7 +101,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                color: ColorConstant.lightOrange),
+                                color: LoanColorConstants.lightOrange),
                           )),
                     ],
                   )),

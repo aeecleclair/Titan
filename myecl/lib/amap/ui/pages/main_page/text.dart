@@ -8,7 +8,7 @@ class TextPresentation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration:
-          BoxDecoration(color: ColorConstants.background2.withOpacity(0.5)),
+          BoxDecoration(color: AMAPColorConstants.background2.withOpacity(0.5)),
       child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Container(

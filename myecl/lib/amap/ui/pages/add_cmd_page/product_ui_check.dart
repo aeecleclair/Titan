@@ -52,8 +52,8 @@ class ProductUi extends ConsumerWidget {
                 ),
                 Checkbox(
                   value: isModif,
-                  checkColor: ColorConstants.background,
-                  activeColor: ColorConstants.l2,
+                  checkColor: AMAPColorConstants.background,
+                  activeColor: AMAPColorConstants.l2,
                   onChanged: (value) {
                     onclick(i);
                   },

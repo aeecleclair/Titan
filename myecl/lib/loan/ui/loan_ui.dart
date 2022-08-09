@@ -31,10 +31,10 @@ class LoanUi extends ConsumerWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          color: ColorConstant.darkGrey,
+          color: LoanColorConstants.darkGrey,
           boxShadow: const [
             BoxShadow(
-              color: ColorConstant.darkGrey,
+              color: LoanColorConstants.darkGrey,
               blurRadius: 10,
               offset: Offset(0, 5),
             ),
@@ -55,7 +55,7 @@ class LoanUi extends ConsumerWidget {
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: ColorConstant.orange),
+                      color: LoanColorConstants.orange),
                 ),
               ),
               !isAdmin
@@ -76,7 +76,7 @@ class LoanUi extends ConsumerWidget {
                       },
                       icon: const HeroIcon(
                         HeroIcons.x,
-                        color: ColorConstant.veryLightOrange,
+                        color: LoanColorConstants.veryLightOrange,
                         size: 20,
                       ))
                   : Container()
@@ -90,7 +90,7 @@ class LoanUi extends ConsumerWidget {
                 style: const TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w400,
-                    color: ColorConstant.lightOrange),
+                    color: LoanColorConstants.lightOrange),
               ),
               Text(
                 l.items.fold(0, (a, b) => (a as int) + b.caution).toString() +
@@ -98,7 +98,7 @@ class LoanUi extends ConsumerWidget {
                 style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
-                    color: ColorConstant.lightOrange),
+                    color: LoanColorConstants.lightOrange),
               ),
             ],
           ),
@@ -110,7 +110,7 @@ class LoanUi extends ConsumerWidget {
                 style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
-                    color: ColorConstant.veryLightOrange),
+                    color: LoanColorConstants.veryLightOrange),
               )),
           const SizedBox(height: 8),
           Container(
@@ -120,7 +120,7 @@ class LoanUi extends ConsumerWidget {
               style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
-                  color: ColorConstant.lightOrange),
+                  color: LoanColorConstants.lightOrange),
             ),
           ),
           const SizedBox(height: 15),

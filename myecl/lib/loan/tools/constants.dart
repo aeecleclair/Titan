@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ColorConstant {
+class LoanColorConstants {
   static const Color lightGrey = Color(0xff393b47);
   static const Color darkGrey = Color(0xff232533);
   static const Color orange = Color(0xffcb8026);

@@ -14,7 +14,7 @@ class SettingsPage extends ConsumerWidget {
     return Scaffold(
         body: Container(
       decoration: const BoxDecoration(
-        color: Color.fromARGB(255, 255, 255, 255),
+        color: Colors.white,
         // gradient: LinearGradient(
         //   begin: Alignment.topCenter,
         //   end: Alignment.bottomCenter,

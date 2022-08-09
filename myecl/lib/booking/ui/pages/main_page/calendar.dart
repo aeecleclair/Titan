@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Calendar extends StatelessWidget {
@@ -16,7 +17,7 @@ class Calendar extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
+              color: BookingColorConstants.softBlack,
               offset: const Offset(2, 3),
               blurRadius: 10,
             ),
@@ -30,12 +31,11 @@ class Calendar extends StatelessWidget {
                 view: CalendarView.week,
                 selectionDecoration: BoxDecoration(
                   color: Colors.transparent,
-                  border: Border.all(
-                      color: const Color.fromARGB(255, 1, 49, 68), width: 2),
+                  border: Border.all(color: BookingColorConstants.darkBlue, width: 2),
                   borderRadius: const BorderRadius.all(Radius.circular(5)),
                   shape: BoxShape.rectangle,
                 ),
-                todayHighlightColor: const Color.fromARGB(255, 2, 84, 104),
+                todayHighlightColor: BookingColorConstants.lightBlue,
                 firstDayOfWeek: 1,
                 timeZone: "fr_FR",
                 timeSlotViewSettings: const TimeSlotViewSettings(
@@ -52,12 +52,12 @@ class Calendar extends StatelessWidget {
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
                     )),
-                headerStyle: const CalendarHeaderStyle(
+                headerStyle: CalendarHeaderStyle(
                   textAlign: TextAlign.center,
                   textStyle: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 1, 49, 68),
+                    color: BookingColorConstants.darkBlue,
                   ),
                 ),
               ),

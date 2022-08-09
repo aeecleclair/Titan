@@ -35,7 +35,7 @@ class TextEntry extends StatelessWidget {
         textInputAction: TextInputAction.next,
         keyboardType: keyboardType,
         controller: textEditingController,
-        cursorColor: ColorConstants.enabled,
+        cursorColor: AMAPColorConstants.enabled,
         style: const TextStyle(fontSize: 18),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),
@@ -44,7 +44,7 @@ class TextEntry extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16.0),
-              borderSide: const BorderSide(color: ColorConstants.enabled)),
+              borderSide: const BorderSide(color: AMAPColorConstants.enabled)),
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16.0),
               borderSide:
@@ -52,7 +52,7 @@ class TextEntry extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16.0),
               borderSide: const BorderSide(
-                color: ColorConstants.gradient2,
+                color: AMAPColorConstants.gradient2,
               )),
         ),
       ),

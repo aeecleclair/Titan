@@ -45,14 +45,14 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
   switch (type) {
     case TypeMsg.msg:
       linearGradient = const LinearGradient(
-          colors: [ColorConstants.gradient1, ColorConstants.gradient2],
+          colors: [AMAPColorConstants.gradient1, AMAPColorConstants.gradient2],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight);
       icon = HeroIcons.check;
       break;
     case TypeMsg.error:
       linearGradient = const LinearGradient(
-          colors: [ColorConstants.redGradient1, ColorConstants.redGradient2],
+          colors: [AMAPColorConstants.redGradient1, AMAPColorConstants.redGradient2],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight);
       icon = HeroIcons.exclamation;
@@ -78,7 +78,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
                 Container(
                   width: 40,
                   alignment: Alignment.center,
-                  child: HeroIcon(icon, color: ColorConstants.background),
+                  child: HeroIcon(icon, color: AMAPColorConstants.background),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width - 120,
@@ -88,7 +88,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
-                        color: ColorConstants.background),
+                        color: AMAPColorConstants.background),
                   ),
                 ),
               ],

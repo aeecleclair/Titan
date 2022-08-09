@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
 
 class ModuleUI extends HookConsumerWidget {
@@ -39,8 +40,8 @@ class ModuleUI extends HookConsumerWidget {
                         child: Icon(
                       m.icon,
                       color: m.pos == page
-                          ? Colors.grey.shade100
-                          : Colors.grey.shade100.withOpacity(0.6),
+                          ? DrawerColorConstants.selectedText
+                          : DrawerColorConstants.lightText,
                     ))),
                 Container(
                   width: 20,
@@ -52,8 +53,8 @@ class ModuleUI extends HookConsumerWidget {
                       m.name,
                       style: TextStyle(
                         color: m.pos == page
-                            ? Colors.grey.shade100
-                            : Colors.grey.shade100.withOpacity(0.6),
+                            ? DrawerColorConstants.selectedText
+                            : DrawerColorConstants.lightText,
                         fontSize: 18,
                       ),
                     ),

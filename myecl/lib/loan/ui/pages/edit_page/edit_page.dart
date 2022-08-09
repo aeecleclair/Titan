@@ -39,7 +39,7 @@ class EditPage extends HookConsumerWidget {
 
     Widget w = const Center(
       child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(ColorConstant.orange),
+        valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
       ),
     );
 
@@ -65,8 +65,8 @@ class EditPage extends HookConsumerWidget {
                 title: const Text('Association'),
                 content: Theme(
                   data: Theme.of(context).copyWith(
-                    primaryColor: ColorConstant.lightGrey,
-                    unselectedWidgetColor: ColorConstant.lightGrey,
+                    primaryColor: LoanColorConstants.lightGrey,
+                    unselectedWidgetColor: LoanColorConstants.lightGrey,
                   ),
                   child: Column(
                       children: listAsso
@@ -78,7 +78,7 @@ class EditPage extends HookConsumerWidget {
                                         fontWeight: FontWeight.w500)),
                                 selected: asso == e,
                                 value: e,
-                                activeColor: ColorConstant.orange,
+                                activeColor: LoanColorConstants.orange,
                                 groupValue: asso,
                                 onChanged: (s) {
                                   assoNotifier.update(s.toString());
@@ -463,7 +463,7 @@ class EditPage extends HookConsumerWidget {
           loading: () {
             w = const Center(
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(ColorConstant.orange),
+                valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
               ),
             );
           },
@@ -475,7 +475,7 @@ class EditPage extends HookConsumerWidget {
       loading: () {
         w = const Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(ColorConstant.orange),
+            valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
           ),
         );
       },

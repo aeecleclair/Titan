@@ -13,10 +13,10 @@ InputDecoration registerInputDecoration({required String hintText}) {
       borderSide: BorderSide(color: Colors.white),
     ),
     errorBorder: const UnderlineInputBorder(
-      borderSide: BorderSide(color: ColorConstants.orange),
+      borderSide: BorderSide(color: ColorConstants.gradient1),
     ),
     focusedErrorBorder: const UnderlineInputBorder(
-      borderSide: BorderSide(width: 2.0, color: ColorConstants.orange),
+      borderSide: BorderSide(width: 2.0, color: ColorConstants.gradient1),
     ),
     errorStyle: const TextStyle(color: Colors.white),
   );
@@ -34,11 +34,11 @@ InputDecoration signInInputDecoration({required String hintText}) {
       borderSide: BorderSide(color: Color.fromARGB(255, 124, 124, 124)),
     ),
     errorBorder: const UnderlineInputBorder(
-      borderSide: BorderSide(color: ColorConstants.darkOrange),
+      borderSide: BorderSide(color: ColorConstants.gradient2),
     ),
     focusedErrorBorder: const UnderlineInputBorder(
-      borderSide: BorderSide(width: 2.0, color: ColorConstants.darkOrange),
+      borderSide: BorderSide(width: 2.0, color: ColorConstants.gradient2),
     ),
-    errorStyle: const TextStyle(color: ColorConstants.darkOrange),
+    errorStyle: const TextStyle(color: ColorConstants.gradient2),
   );
 }

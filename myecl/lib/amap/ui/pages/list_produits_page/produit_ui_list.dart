@@ -55,8 +55,8 @@ class ProductUiInList extends ConsumerWidget {
                       HeroIcons.minusSm,
                       size: 20,
                       color: p.quantity > 0
-                          ? ColorConstants.l2.withOpacity(0.8)
-                          : ColorConstants.background3,
+                          ? AMAPColorConstants.l2.withOpacity(0.8)
+                          : AMAPColorConstants.background3,
                     ),
                   ),
                   onTap: () {
@@ -85,8 +85,8 @@ class ProductUiInList extends ConsumerWidget {
                       HeroIcons.plusSm,
                       size: 20,
                       color: p.quantity < 5
-                          ? ColorConstants.l2.withOpacity(0.8)
-                          : ColorConstants.background3,
+                          ? AMAPColorConstants.l2.withOpacity(0.8)
+                          : AMAPColorConstants.background3,
                     ),
                   ),
                   onTap: () {

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
 
 class BottomBar extends ConsumerWidget {
@@ -36,7 +37,7 @@ class BottomBar extends ConsumerWidget {
               ),
               FaIcon(
                 FontAwesomeIcons.gear,
-                color: Colors.grey.shade100.withOpacity(0.6),
+                color: DrawerColorConstants.lightText,
                 size: 25,
               ),
               Container(
@@ -44,7 +45,7 @@ class BottomBar extends ConsumerWidget {
               ),
               Text("Paramètres",
                   style: TextStyle(
-                    color: Colors.grey.shade100.withOpacity(0.6),
+                    color: DrawerColorConstants.lightText,
                     fontSize: 15,
                   ))
             ],

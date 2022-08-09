@@ -128,12 +128,12 @@ class Boutons extends HookConsumerWidget {
               height: 70,
               decoration: BoxDecoration(
                 gradient: const LinearGradient(colors: [
-                  ColorConstants.redGradient1,
-                  ColorConstants.redGradient2
+                  AMAPColorConstants.redGradient1,
+                  AMAPColorConstants.redGradient2
                 ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                 boxShadow: [
                   BoxShadow(
-                      color: ColorConstants.redGradient2.withOpacity(0.4),
+                      color: AMAPColorConstants.redGradient2.withOpacity(0.4),
                       offset: const Offset(2, 3),
                       blurRadius: 5)
                 ],
@@ -143,7 +143,7 @@ class Boutons extends HookConsumerWidget {
               child: HeroIcon(
                 HeroIcons.x,
                 size: 35,
-                color: ColorConstants.background,
+                color: AMAPColorConstants.background,
               ),
             ),
             onTap: () {

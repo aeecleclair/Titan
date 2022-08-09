@@ -64,7 +64,7 @@ class HistoryPage extends HookConsumerWidget {
       loading: () {
         listWidget.add(const Center(
             child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(ColorConstant.darkGrey),
+          valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
         )));
       },
       error: (error, s) {

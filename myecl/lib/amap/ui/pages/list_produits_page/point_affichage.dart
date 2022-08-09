@@ -17,8 +17,8 @@ class Dots extends HookConsumerWidget {
       controller: pageController,
       count: len,
       effect: WormEffect(
-          dotColor: ColorConstants.background3,
-          activeDotColor: ColorConstants.enabled,
+          dotColor: AMAPColorConstants.background3,
+          activeDotColor: AMAPColorConstants.enabled,
           dotWidth: 7,
           dotHeight: 7),
       onDotClicked: (index) {

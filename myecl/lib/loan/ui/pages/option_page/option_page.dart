@@ -66,7 +66,7 @@ class OptionPage extends HookConsumerWidget {
       loading: () {
         listWidget.add(const Center(
             child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(ColorConstant.darkGrey),
+          valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
         )));
       },
       error: (error, s) {
@@ -95,11 +95,11 @@ class OptionPage extends HookConsumerWidget {
                         const EdgeInsets.only(left: 40, right: 40, bottom: 30),
                     padding: const EdgeInsets.all(30),
                     decoration: BoxDecoration(
-                        color: ColorConstant.darkGrey,
+                        color: LoanColorConstants.darkGrey,
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: const [
                           BoxShadow(
-                            color: ColorConstant.darkGrey,
+                            color: LoanColorConstants.darkGrey,
                             blurRadius: 10,
                             offset: Offset(0, 5),
                           ),
@@ -107,7 +107,7 @@ class OptionPage extends HookConsumerWidget {
                     child: const Text(
                       "Ajouter un prêt",
                       style: TextStyle(
-                        color: ColorConstant.veryLightOrange,
+                        color: LoanColorConstants.veryLightOrange,
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
                       ),
@@ -125,11 +125,11 @@ class OptionPage extends HookConsumerWidget {
                     margin: const EdgeInsets.symmetric(horizontal: 40),
                     padding: const EdgeInsets.all(30),
                     decoration: BoxDecoration(
-                        color: ColorConstant.darkGrey,
+                        color: LoanColorConstants.darkGrey,
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: const [
                           BoxShadow(
-                            color: ColorConstant.darkGrey,
+                            color: LoanColorConstants.darkGrey,
                             blurRadius: 10,
                             offset: Offset(0, 5),
                           ),
@@ -137,7 +137,7 @@ class OptionPage extends HookConsumerWidget {
                     child: const Text(
                       "Ajouter un objet",
                       style: TextStyle(
-                        color: ColorConstant.veryLightOrange,
+                        color: LoanColorConstants.veryLightOrange,
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
                       ),

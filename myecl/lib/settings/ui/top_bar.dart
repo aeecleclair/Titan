@@ -26,7 +26,7 @@ class TopBar extends HookConsumerWidget {
                         controllerNotifier.toggle();
                       },
                       icon: const FaIcon(FontAwesomeIcons.chevronRight,
-                        color: Color.fromARGB(255, 4, 4, 4),
+                        color: Colors.black
                       ));
                 },
               ),
@@ -36,7 +36,7 @@ class TopBar extends HookConsumerWidget {
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w500,
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: Colors.black
               ),
             ),
             const SizedBox(

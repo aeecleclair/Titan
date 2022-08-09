@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/booking/ui/page_switcher.dart';
 import 'package:myecl/booking/ui/top_bar.dart';
@@ -13,13 +14,13 @@ class BookingPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         body: Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color.fromARGB(255, 1, 49, 68),
-            Color.fromARGB(255, 2, 84, 104),
+            BookingColorConstants.darkBlue,
+            BookingColorConstants.lightBlue,
           ],
         ),
       ),

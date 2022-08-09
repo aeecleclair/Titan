@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:myecl/drawer/tools/dialog.dart';
+import 'package:myecl/drawer/tools/function.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 
@@ -54,7 +56,15 @@ class TopBar extends ConsumerWidget {
             ),
             GestureDetector(
               onTap: () {
-                auth.deleteToken();
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => CustomDialogBox(
+                        descriptions: "Voulez-vous vous déconnecter ?",
+                        title: "Déconnexion",
+                        onYes: () {
+                          auth.deleteToken();
+                          displayToast(context, TypeMsg.msg, "Déconnexion");
+                        }));
               },
               child: Column(
                 children: [

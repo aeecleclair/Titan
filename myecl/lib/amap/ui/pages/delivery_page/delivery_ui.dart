@@ -33,7 +33,7 @@ class DeliveryUi extends ConsumerWidget {
         color: Colors.grey.shade50,
         boxShadow: [
           BoxShadow(
-            color: ColorConstants.background3.withOpacity(0.4),
+            color: AMAPColorConstants.background3.withOpacity(0.4),
             spreadRadius: 2,
             blurRadius: 10,
             offset: const Offset(2, 5),
@@ -60,7 +60,7 @@ class DeliveryUi extends ConsumerWidget {
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: ColorConstants.l1),
+                      color: AMAPColorConstants.l1),
                 ),
               ),
               GestureDetector(
@@ -70,7 +70,7 @@ class DeliveryUi extends ConsumerWidget {
                   alignment: Alignment.topCenter,
                   child: HeroIcon(
                     c.expanded ? HeroIcons.chevronUp : HeroIcons.chevronDown,
-                    color: ColorConstants.textDark,
+                    color: AMAPColorConstants.textDark,
                   ),
                 ),
                 onTap: () {
@@ -97,7 +97,7 @@ class DeliveryUi extends ConsumerWidget {
                                   p.name,
                                   style: const TextStyle(
                                     fontSize: 13,
-                                    color: ColorConstants.textDark,
+                                    color: AMAPColorConstants.textDark,
                                   ),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -115,7 +115,7 @@ class DeliveryUi extends ConsumerWidget {
                                       p.price.toStringAsFixed(2) + "€",
                                       style: const TextStyle(
                                         fontSize: 13,
-                                        color: ColorConstants.textDark,
+                                        color: AMAPColorConstants.textDark,
                                       ),
                                     ),
                                   ),
@@ -148,7 +148,7 @@ class DeliveryUi extends ConsumerWidget {
                         style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
-                            color: ColorConstants.textLight),
+                            color: AMAPColorConstants.textLight),
                       ),
                     ),
                     Container(
@@ -161,8 +161,8 @@ class DeliveryUi extends ConsumerWidget {
                             borderRadius: BorderRadius.circular(25),
                             gradient: const LinearGradient(
                               colors: [
-                                ColorConstants.textLight,
-                                ColorConstants.textDark,
+                                AMAPColorConstants.textLight,
+                                AMAPColorConstants.textDark,
                               ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
@@ -173,7 +173,7 @@ class DeliveryUi extends ConsumerWidget {
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
-                                color: ColorConstants.background2),
+                                color: AMAPColorConstants.background2),
                           ),
                         ),
                         onTap: () {
@@ -202,8 +202,8 @@ class DeliveryUi extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(25),
                     gradient: const LinearGradient(
                       colors: [
-                        ColorConstants.redGradient1,
-                        ColorConstants.redGradient2,
+                        AMAPColorConstants.redGradient1,
+                        AMAPColorConstants.redGradient2,
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -214,7 +214,7 @@ class DeliveryUi extends ConsumerWidget {
                     children: [
                       Icon(
                         Icons.lock,
-                        color: ColorConstants.background2,
+                        color: AMAPColorConstants.background2,
                         size: 20,
                       ),
                       Container(
@@ -225,7 +225,7 @@ class DeliveryUi extends ConsumerWidget {
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
-                            color: ColorConstants.background2),
+                            color: AMAPColorConstants.background2),
                       ),
                     ],
                   ),
@@ -244,13 +244,13 @@ class DeliveryUi extends ConsumerWidget {
                             borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(23),
                                 topLeft: Radius.circular(23)),
-                            color: ColorConstants.background3),
+                            color: AMAPColorConstants.background3),
                         alignment: Alignment.center,
                         child: const Text("Vérouiller",
                             style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
-                                color: ColorConstants.enabled)),
+                                color: AMAPColorConstants.enabled)),
                       ),
                       onTap: () {
                         final lastState = c.locked;
@@ -282,7 +282,7 @@ class DeliveryUi extends ConsumerWidget {
                             borderRadius: const BorderRadius.only(
                                 bottomRight: Radius.circular(23),
                                 topRight: Radius.circular(23)),
-                            color: ColorConstants.background3),
+                            color: AMAPColorConstants.background3),
                         alignment: Alignment.center,
                         child: const Text("Supprimer",
                             style: TextStyle(

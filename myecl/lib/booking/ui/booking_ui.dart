@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/booking/class/res.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_button.dart';
 
 class BookingUi extends ConsumerWidget {
@@ -21,7 +22,7 @@ class BookingUi extends ConsumerWidget {
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
+              color: BookingColorConstants.softBlack,
               offset: const Offset(2, 3),
               blurRadius: 10,
             ),
@@ -41,10 +42,10 @@ class BookingUi extends ConsumerWidget {
                   ),
                   Text(
                     booking.room,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
-                      color: Color.fromARGB(255, 1, 49, 68),
+                      color: BookingColorConstants.darkBlue,
                     ),
                   ),
                   const SizedBox(
@@ -54,10 +55,10 @@ class BookingUi extends ConsumerWidget {
                     booking.start.toString() +
                         " - " +
                         booking.end.toString(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
-                      color: Color.fromARGB(255, 2, 84, 104),
+                      color: BookingColorConstants.lightBlue,
                     ),
                   ),
                 ],
@@ -70,14 +71,14 @@ class BookingUi extends ConsumerWidget {
                       children: [
                         BookingButton(
                             res: booking,
-                            color: const Color.fromARGB(255, 1, 49, 68),
+                            color: BookingColorConstants.darkBlue,
                             state: 2),
                         const SizedBox(
                           width: 5,
                         ),
                         BookingButton(
                             res: booking,
-                            color: const Color.fromARGB(255, 9, 106, 130),
+                            color: BookingColorConstants.blue2,
                             state: 1)
                       ],
                     ),

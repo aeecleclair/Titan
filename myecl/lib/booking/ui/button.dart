@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/booking/tools/constants.dart';
 
 class Button extends ConsumerWidget {
   final String text;
@@ -22,11 +23,11 @@ class Button extends ConsumerWidget {
             alignment: Alignment.center,
             margin: const EdgeInsets.symmetric(horizontal: 30),
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 1, 49, 68),
+              color: BookingColorConstants.darkBlue,
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
+                  color: BookingColorConstants.softBlack,
                   offset: const Offset(2, 3),
                   blurRadius: 10,
                 ),
