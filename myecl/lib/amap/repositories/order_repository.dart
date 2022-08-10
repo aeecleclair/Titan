@@ -2,20 +2,13 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:myecl/amap/class/order.dart';
+import 'package:myecl/tools/repository.dart';
 
-class OrderRepository {
-  final host = "http://10.0.2.2:8000/";
-  final Map<String, String> headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-  };
-
-  void setToken(String token) {
-    headers["Authorization"] = 'Bearer $token';
-  }
+class OrderRepository extends Repository {
+  final ext = "orders/";
 
   Future<bool> updateOrder(String orderId, Order order) async {
-    final response = await http.patch(Uri.parse(host + "orders/" + orderId),
+    final response = await http.patch(Uri.parse(host + ext + orderId),
         headers: headers, body: json.encode(order.toJson()));
     if (response.statusCode == 200) {
       return true;
@@ -26,7 +19,7 @@ class OrderRepository {
 
   Future<bool> deleteOrder(String orderId) async {
     final response = await http
-        .delete(Uri.parse(host + "orders/" + orderId), headers: headers);
+        .delete(Uri.parse(host + ext + orderId), headers: headers);
     if (response.statusCode == 200) {
       return true;
     } else {
@@ -35,7 +28,7 @@ class OrderRepository {
   }
 
   Future<Order> getOrder(String orderId) async {
-    final response = await http.get(Uri.parse(host + "orders/" + orderId),
+    final response = await http.get(Uri.parse(host + ext + orderId),
         headers: headers);
     if (response.statusCode == 200) {
       return Order.fromJson(json.decode(response.body));
@@ -45,7 +38,7 @@ class OrderRepository {
   }
 
   Future<Order> createOrder(Order order) async {
-    final response = await http.post(Uri.parse(host + "orders/"),
+    final response = await http.post(Uri.parse(host + ext),
         headers: headers, body: json.encode(order.toJson()));
     if (response.statusCode == 201) {
       String resp = utf8.decode(response.body.runes.toList());

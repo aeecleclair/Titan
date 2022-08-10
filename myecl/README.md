@@ -20,7 +20,8 @@ TODO :
 Réserva° (API)
 Prêt (API)
 Evénements (API)
-Admin (API)
+handle None response
+handle token expiration
 
 AMAP :
 

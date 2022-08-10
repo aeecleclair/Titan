@@ -2,14 +2,10 @@ import 'dart:convert';
 
 import 'package:myecl/loan/class/item.dart';
 import 'package:http/http.dart' as http;
+import 'package:myecl/tools/repository.dart';
 
-class ItemRepository {
-  final host = "http://10.0.2.2:8000/";
+class ItemRepository extends Repository {
   final ext = "loans/item/";
-  final Map<String, String> headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-  };
 
   Future<List<Item>> getItemList() async {
     final response = await http.get(Uri.parse(host + ext), headers: headers);

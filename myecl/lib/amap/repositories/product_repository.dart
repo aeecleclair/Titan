@@ -2,18 +2,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/tools/repository.dart';
 
-class ProductListRepository {
-  final host = "http://10.0.2.2:8000/";
+class ProductListRepository extends Repository {
   final ext = "amap/products";
-  final Map<String, String> headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-  };
-
-  void setToken(String token) {
-    headers["Authorization"] = 'Bearer $token';
-  }
 
   Future<List<Product>> getProductList() async {
     final response = await http.get(Uri.parse(host + ext), headers: headers);

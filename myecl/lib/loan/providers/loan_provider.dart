@@ -1,15 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/repositories/loan_repository.dart';
 
 class LoanNotifier extends StateNotifier<AsyncValue<Loan>> {
-  final LoanRepository _repository = LoanRepository();
-  LoanNotifier() : super(const AsyncValue.loading());
+  final LoanRepository _loanrepository = LoanRepository();
+  LoanNotifier({required String token}) : super(const AsyncValue.loading()) {
+    _loanrepository.setToken(token);
+  }
 
   Future<AsyncValue<Loan>> loadLoan(String id) async {
     try {
-      // final loan = await _repository.getLoan(id);
+      // final loan = await _loanrepository.getLoan(id);
       final loan = Loan(
         id: '1',
         borrowerId: '1',
@@ -59,5 +62,6 @@ class LoanNotifier extends StateNotifier<AsyncValue<Loan>> {
 
 final loanProvider =
     StateNotifierProvider<LoanNotifier, AsyncValue<Loan>>((ref) {
-  return LoanNotifier();
+  final token = ref.watch(tokenProvider);
+  return LoanNotifier(token: token);
 });

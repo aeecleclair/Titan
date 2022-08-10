@@ -125,6 +125,7 @@ class OAuth2TokenProvider
         final tokens = await _authTokenRepository
             .refreshTokens(token["refreshToken"] as String);
         state = AsyncValue.data(tokens);
+        print(tokens["token"]);
         storeToken();
       },
       error: (error, stackTrace) {

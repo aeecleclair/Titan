@@ -1,17 +1,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:myecl/tools/repository.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/class/user.dart';
 
-class UserRepository {
-  final host = "http://10.0.2.2:8000/";
+class UserRepository extends Repository {
   final ext = "users/";
-  final Map<String, String> headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-  };
-
 
   Future<List<SimpleUser>> getAllUsers() async {
     final response =
@@ -36,7 +31,7 @@ class UserRepository {
   }
 
   Future<bool> deleteUser(String userId) async {
-    final response = await http.delete(Uri.parse(host + "users/" + userId),
+    final response = await http.delete(Uri.parse(host + ext + userId),
         headers: headers);
     if (response.statusCode == 200) {
       return true;

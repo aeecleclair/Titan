@@ -2,14 +2,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:myecl/groups/class/group.dart';
+import 'package:myecl/tools/repository.dart';
 
-class GroupRepository {
-  final host = "http://10.0.2.2:8000/";
+class GroupRepository extends Repository {
   final ext = "groups/";
-  final Map<String, String> headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-  };
 
   Future<List<Group>> getAllGroups() async {
     final response =

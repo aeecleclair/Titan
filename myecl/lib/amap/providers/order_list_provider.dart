@@ -5,13 +5,15 @@ import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/repositories/amap_user_repository.dart';
 import 'package:myecl/amap/repositories/order_list_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/tools/exception.dart';
 
 class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
   final OrderListRepository _repository = OrderListRepository();
   final AmapUserRepository _userRepository = AmapUserRepository();
   late String deliveryId;
   late String userId;
-  OrderListNotifier({required String token}) : super(const AsyncValue.loading()) {
+  OrderListNotifier({required String token})
+      : super(const AsyncValue.loading()) {
     _repository.setToken(token);
   }
 
@@ -27,7 +29,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
     try {
       final orders = await _userRepository.getOrderList(userId);
       state = AsyncValue.data(orders);
-    } catch (e) {
+    } on AppException catch (e) {
       state = AsyncValue.error(e);
     }
     return state;
@@ -37,7 +39,8 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
     return state.when(
       data: (orders) async {
         try {
-          Order newOrder = await _repository.createOrder(deliveryId, order, userId);
+          Order newOrder =
+              await _repository.createOrder(deliveryId, order, userId);
           orders.add(newOrder);
           state = AsyncValue.data(orders);
           return true;

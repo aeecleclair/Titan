@@ -1,10 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/groups/class/group.dart';
 import 'package:myecl/groups/repositories/group_repository.dart';
 
 class GroupListProvider extends StateNotifier<AsyncValue<List<Group>>> {
   final GroupRepository _groupRepository = GroupRepository();
-  GroupListProvider() : super(const AsyncValue.loading());
+  GroupListProvider({required String token})
+      : super(const AsyncValue.loading()) {
+    _groupRepository.setToken(token);
+  }
 
   Future<AsyncValue<List<Group>>> loadGroups() async {
     try {
@@ -46,7 +50,7 @@ class GroupListProvider extends StateNotifier<AsyncValue<List<Group>>> {
         try {
           await _groupRepository.updateGroup(group);
           var index = groups.indexWhere((p) => p.id == group.id);
-          groups [index] = group;
+          groups[index] = group;
           state = AsyncValue.data(groups);
           return true;
         } catch (e) {
@@ -91,7 +95,8 @@ class GroupListProvider extends StateNotifier<AsyncValue<List<Group>>> {
 }
 
 final groupListProvider = StateNotifierProvider((ref) {
-  GroupListProvider provider = GroupListProvider();
+  final token = ref.watch(tokenProvider);
+  GroupListProvider provider = GroupListProvider(token: token);
   provider.loadGroups();
   return provider;
 });

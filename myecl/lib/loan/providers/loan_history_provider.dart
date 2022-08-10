@@ -1,15 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/repositories/loan_repository.dart';
 
 class LoanHistoryNotifier extends StateNotifier<AsyncValue<List<Loan>>> {
-  final LoanRepository _repository = LoanRepository();
-  LoanHistoryNotifier() : super(const AsyncValue.loading());
+  final LoanRepository _loanrepository = LoanRepository();
+  LoanHistoryNotifier({required String token}) : super(const AsyncValue.loading()) {
+    _loanrepository.setToken(token);
+  }
 
   Future<AsyncValue<List<Loan>>> loadHistory() async {
     try {
-      // final loans = await _repository.getHistory();
+      // final loans = await _loanrepository.getHistory();
       final loans = [
         Loan(
           id: '1',
@@ -76,7 +79,8 @@ class LoanHistoryNotifier extends StateNotifier<AsyncValue<List<Loan>>> {
 
 final loanHistoryProvider =
     StateNotifierProvider<LoanHistoryNotifier, AsyncValue<List<Loan>>>((ref) {
-  LoanHistoryNotifier _loanHistoryNotifier = LoanHistoryNotifier();
+  final token = ref.watch(tokenProvider);
+  LoanHistoryNotifier _loanHistoryNotifier = LoanHistoryNotifier(token: token);
   _loanHistoryNotifier.loadHistory();
   return _loanHistoryNotifier;
 });

@@ -3,18 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/tools/repository.dart';
 
-class DeliveryListRepository {
-  final host = "http://10.0.2.2:8000/";
+class DeliveryListRepository extends Repository {
   final ext = "amap/deliveries";
-  final Map<String, String> headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-  };
-
-  void setToken(String token) {
-    headers["Authorization"] = 'Bearer $token';
-  }
 
   Future<List<Delivery>> getDeliveryList() async {
     final response =

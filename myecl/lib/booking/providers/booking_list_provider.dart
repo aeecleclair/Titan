@@ -1,10 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/repositories/booking_repository.dart';
 
 class BookingListProvider extends StateNotifier<AsyncValue<List<Booking>>> {
   final BookingRepository _repository = BookingRepository();
-  BookingListProvider() : super(const AsyncValue.loading());
+  BookingListProvider({required String token}) : super(const AsyncValue.loading()) {
+    _repository.setToken(token);
+  }
 
   Future<AsyncValue<List<Booking>>> loadBookings() async {
     try {
@@ -118,7 +121,8 @@ class BookingListProvider extends StateNotifier<AsyncValue<List<Booking>>> {
 
 final bookingListProvider =
     StateNotifierProvider<BookingListProvider, AsyncValue<List<Booking>>>((ref) {
-  final provider = BookingListProvider();
+  final token = ref.watch(tokenProvider);
+  final provider = BookingListProvider(token: token);
   provider.loadBookings();
   return provider;
 });

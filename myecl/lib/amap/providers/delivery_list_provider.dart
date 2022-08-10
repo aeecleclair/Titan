@@ -116,7 +116,7 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
 final deliveryListProvider =
     StateNotifierProvider<DeliveryListNotifier, AsyncValue<List<Delivery>>>(
         (ref) {
-  final token = ref.read(tokenProvider);
+  final token = ref.watch(tokenProvider);
   DeliveryListNotifier _orderListNotifier = DeliveryListNotifier(token: token);
   _orderListNotifier.loadDeliveriesList();
   return _orderListNotifier;

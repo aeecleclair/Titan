@@ -4,6 +4,8 @@ import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'dart:math';
 
+import 'package:myecl/tools/repository.dart';
+
 String generateRandomString(int len) {
   var r = Random.secure();
   const _chars =
@@ -15,8 +17,9 @@ String hash(String data) {
   return sha256.convert(utf8.encode(data)).toString();
 }
 
-class OAuth2TokenRepository {
-  final host = "http://10.0.2.2:8000/";
+class OAuth2TokenRepository extends Repository {
+  final ext = "auth/";
+  @override
   final Map<String, String> headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
     "Accept": "application/json",
@@ -30,7 +33,7 @@ class OAuth2TokenRepository {
 
   Future<String> getLogInPage() async {
     final response = await http.post(
-      Uri.parse(host + "auth/authorize"),
+      Uri.parse(host + ext + "authorize"),
       headers: headers,
       body: {
         "client_id": clientId,
@@ -64,7 +67,7 @@ class OAuth2TokenRepository {
     try {
       final response = await http
           .post(
-              Uri.parse(host + "auth/authorization-flow/authorize-validation"),
+              Uri.parse(host + ext + "authorization-flow/authorize-validation"),
               headers: headers,
               body: body)
           .timeout(const Duration(seconds: 5));
@@ -102,7 +105,7 @@ class OAuth2TokenRepository {
       "grant_type": "authorization_code",
     };
     try {
-      final response = await http.post(Uri.parse(host + "auth/token"),
+      final response = await http.post(Uri.parse(host + ext + "token"),
           headers: headers, body: body);
       if (response.statusCode == 200) {
         final token = jsonDecode(response.body)["access_token"];
@@ -125,7 +128,7 @@ class OAuth2TokenRepository {
       "grant_type": "refresh_token",
     };
     try {
-      final response = await http.post(Uri.parse(host + "auth/token"),
+      final response = await http.post(Uri.parse(host + ext + "token"),
           headers: headers, body: body);
       if (response.statusCode == 200) {
         final token = jsonDecode(response.body)["access_token"];

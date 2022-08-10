@@ -2,14 +2,10 @@ import 'dart:convert';
 
 import 'package:myecl/booking/class/booking.dart';
 import 'package:http/http.dart' as http;
+import 'package:myecl/tools/repository.dart';
 
-class BookingRepository {
-  final host = 'http://10.0.2.2:8000/';
+class BookingRepository extends Repository {
   final ext = 'bdebooking/bookings';
-  final Map<String, String> headers = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-  };
 
   Future<List<Booking>> getBookingList() async {
     final response = await http.get(Uri.parse(host + ext), headers: headers);

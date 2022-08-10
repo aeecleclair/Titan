@@ -98,7 +98,7 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
 final productListProvider =
     StateNotifierProvider<ProductListNotifier, AsyncValue<List<Product>>>(
         (ref) {
-  final token = ref.read(tokenProvider);
+  final token = ref.watch(tokenProvider);
   ProductListNotifier _productListNotifier = ProductListNotifier(token: token);
   _productListNotifier.loadProductList();
   return _productListNotifier;

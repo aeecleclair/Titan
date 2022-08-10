@@ -4,36 +4,29 @@ import 'package:http/http.dart' as http;
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/repository.dart';
 
-class AmapUserRepository {
-  final host = "http://10.0.2.2:8000/";
+class AmapUserRepository extends Repository {
   final ext = "amap/users/";
   final List<Product> loadedProducts = <Product>[];
-  final Map<String, String> headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-  };
-
-  void setToken(String token) {
-    headers["Authorization"] = 'Bearer $token';
-  }
 
   Future<List<Order>> getOrderList(String userId) async {
     final response = await http.get(
         Uri.parse(host + "amap/users/" + userId + "/orders"),
         headers: headers);
-    print(response.body);
     if (response.statusCode == 200) {
       try {
         String resp = utf8.decode(response.body.runes.toList());
-        List<Order> orders =
-            List<Order>.from(json.decode(resp).map((x) => Order.fromJson(x)));
-        return orders;
+        return List<Order>.from(
+            json.decode(resp).map((x) => Order.fromJson(x)));
       } catch (e) {
         return [];
       }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to load order list");
+      throw AppException(ErrorType.notFound, "Failed to load orders");
     }
   }
 

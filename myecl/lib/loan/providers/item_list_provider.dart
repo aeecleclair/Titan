@@ -1,14 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/repositories/item_repository.dart';
 
 class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
-  final ItemRepository _repository = ItemRepository();
-  ItemListNotifier() : super(const AsyncValue.loading());
+  final ItemRepository _itemrepository = ItemRepository();
+  ItemListNotifier({required String token}) : super(const AsyncValue.loading()) {
+    _itemrepository.setToken(token);
+  }
 
   Future<AsyncValue<List<Item>>> loadLoanList() async {
     try {
-      // final items = await _repository.getItemList();
+      // final items = await _itemrepository.getItemList();
       final items = [
         Item(
           id: '1',
@@ -78,7 +81,7 @@ class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
     return state.when(
       data: (items) async {
         try {
-          // await _repository.createItem(item);
+          // await _itemrepository.createItem(item);
           items.add(item);
           state = AsyncValue.data(items);
           return true;
@@ -102,7 +105,7 @@ class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
     return state.when(
       data: (items) async {
         try {
-          // await _repository.updateItem(item);
+          // await _itemrepository.updateItem(item);
           var index = items.indexWhere((element) => element.id == item.id);
           items[index] = item;
           state = AsyncValue.data(items);
@@ -127,7 +130,7 @@ class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
     return state.when(
       data: (items) async {
         try {
-          // await _repository.deleteItem(item);
+          // await _itemrepository.deleteItem(item);
           items.remove(item);
           state = AsyncValue.data(items);
           return true;
@@ -150,7 +153,8 @@ class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
 
 final itemListProvider =
     StateNotifierProvider<ItemListNotifier, AsyncValue<List<Item>>>((ref) {
-  ItemListNotifier _itemListNotifier = ItemListNotifier();
+      final token = ref.watch(tokenProvider);
+  ItemListNotifier _itemListNotifier = ItemListNotifier(token: token);
   _itemListNotifier.loadLoanList();
   return _itemListNotifier;
 });

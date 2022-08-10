@@ -6,7 +6,9 @@ import 'package:myecl/user/repositories/user_repository.dart';
 
 class UserNotifier extends StateNotifier<AsyncValue<User>> {
   final UserRepository _userRepository = UserRepository();
-  UserNotifier() : super(const AsyncValue.loading());
+  UserNotifier({required String token}) : super(const AsyncValue.loading()) {
+    _userRepository.setToken(token);
+  }
 
   void setUser(User user) {
     try {
@@ -42,12 +44,13 @@ final asyncUserProvider =
     StateNotifierProvider<UserNotifier, AsyncValue<User>>((ref) {
   final isLoggedIn = ref.watch(isLoggedInProvider);
   final id = ref.watch(idProvider);
+  final token = ref.watch(tokenProvider);
+  UserNotifier userNotifier = UserNotifier(token: token);
   if (isLoggedIn && id != null) {
-    return UserNotifier()..loadUser(id);
+    return userNotifier..loadUser(id);
   }
-  return UserNotifier();
+  return userNotifier;
 });
-
 
 final userProvider = Provider((ref) {
   return ref.watch(asyncUserProvider).when(
