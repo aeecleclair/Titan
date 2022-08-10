@@ -83,20 +83,20 @@ class FormPage extends HookConsumerWidget {
         content: Column(
           children: <Widget>[
             Row(
-              children: [
-                const Text("Association : "),
+              children: const [
+                Text("Association : "),
                 // Text(asso.value),
               ],
             ),
             Row(
-              children: [
-                const Text("Nom : "),
+              children: const [
+                Text("Nom : "),
                 // Text(name.text),
               ],
             ),
             Row(
-              children: [
-                const Text("Caution : "),
+              children: const [
+                Text("Caution : "),
                 // Text(caution.text),
               ],
             ),
@@ -116,7 +116,7 @@ class FormPage extends HookConsumerWidget {
       _currentStep.value > 0 ? _currentStep.value -= 1 : null;
     }
     return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Theme(
         data: ThemeData(
             colorScheme: const ColorScheme.light(

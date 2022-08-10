@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/booking/class/res.dart';
+import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_button.dart';
 
@@ -42,7 +42,7 @@ class BookingUi extends ConsumerWidget {
                   ),
                   Text(
                     booking.room,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
                       color: BookingColorConstants.darkBlue,
@@ -55,7 +55,7 @@ class BookingUi extends ConsumerWidget {
                     booking.start.toString() +
                         " - " +
                         booking.end.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       color: BookingColorConstants.lightBlue,

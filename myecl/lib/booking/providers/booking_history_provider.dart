@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/booking/class/res.dart';
+import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/repositories/booking_repository.dart';
 
 class BookingHistoryProvider extends StateNotifier<AsyncValue<List<Booking>>> {

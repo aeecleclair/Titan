@@ -12,12 +12,12 @@ class FakePage extends StatelessWidget {
       height: 420,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: DrawerColorConstants.fakePageShadow,
             spreadRadius: 3,
             blurRadius: 5,
-            offset: const Offset(0, 3),
+            offset: Offset(0, 3),
           ),
         ],
         color: DrawerColorConstants.fakePageBlue,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/booking/providers/booking_history_provider.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/ui/booking_ui.dart';
+import 'package:myecl/booking/ui/refresh_indicator.dart';
 
 class ListBooking extends ConsumerWidget {
   final bool isAdmin;
@@ -10,29 +11,51 @@ class ListBooking extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookings = isAdmin ? ref.watch(bookingListProvider) : ref.watch(bookingHistoryProvider);
-    return bookings.when(
-      data: (listBooking) {
-        return Expanded(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: listBooking
-                  .map((r) => BookingUi(
-                        booking: r,
-                        isAdmin: isAdmin,
-                      ))
-                  .toList(),
-            ),
-          ),
-        );
+    final bookings = isAdmin
+        ? ref.watch(bookingListProvider)
+        : ref.watch(bookingHistoryProvider);
+    return Expanded(
+        child: Refresh(
+      keyRefresh: GlobalKey<RefreshIndicatorState>(),
+      onRefresh: () async {
+        isAdmin
+            ? ref.watch(bookingListProvider.notifier).loadBookings()
+            : ref.watch(bookingHistoryProvider.notifier).loadBookings();
       },
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: bookings.when(
+            data: (listBooking) {
+              if (listBooking.isEmpty) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height - 150,
+                  child: const Center(
+                    child: Text("Pas de réservation en cours"),
+                  ),
+                );
+              }
+              return Column(
+                children: listBooking
+                    .map((r) => BookingUi(
+                          booking: r,
+                          isAdmin: isAdmin,
+                        ))
+                    .toList(),
+              );
+            },
+            loading: () => SizedBox(
+                  height: MediaQuery.of(context).size.height - 150,
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+            error: (e, s) => SizedBox(
+                  height: MediaQuery.of(context).size.height - 150,
+                  child: const Center(
+                    child: Text("Pas de réservation en cours"),
+                  ),
+                )),
       ),
-      error: (e, s) => const Center(
-        child: Text("Pas de réservation en cours"),
-      ),
-    );
+    ));
   }
 }

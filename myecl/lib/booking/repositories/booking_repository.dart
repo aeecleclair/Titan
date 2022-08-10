@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:myecl/booking/class/res.dart';
+import 'package:myecl/booking/class/booking.dart';
 import 'package:http/http.dart' as http;
 
 class BookingRepository {
@@ -15,7 +15,7 @@ class BookingRepository {
     final response = await http.get(Uri.parse(host + ext), headers: headers);
     if (response.statusCode == 200) {
       String resp = utf8.decode(response.body.runes.toList());
-      return List<Booking>.from(json.decode(resp));
+      return List<Booking>.from(json.decode(resp).map((x) => Booking.fromJson(x)));
     } else {
       throw Exception("Failed to load booking list");
     }
@@ -56,7 +56,7 @@ class BookingRepository {
         headers: headers);
     if (response.statusCode == 200) {
       String resp = utf8.decode(response.body.runes.toList());
-      return List<Booking>.from(json.decode(resp));
+      return List<Booking>.from(json.decode(resp).map((x) => Booking.fromJson(x)));
     } else {
       throw Exception("Failed to load booking list");
     }

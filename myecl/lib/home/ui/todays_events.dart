@@ -40,7 +40,7 @@ class TodaysEvents extends HookConsumerWidget {
     final _scrollController = ref.watch(scrollControllerProvider);
     final _hasScrolled = ref.watch(hasScrolledProvider);
     final _hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
-    final displayCalendar = useState(false);
+    final displayToday = useState(true);
     final res = ref.watch(resListProvider);
     center(_hasScrolled, _scrollController, today, _hasScrolledNotifier);
     return SizedBox(
@@ -54,7 +54,7 @@ class TodaysEvents extends HookConsumerWidget {
             Radius.circular(30),
           ),
         ),
-        child: displayCalendar.value
+        child: displayToday.value
             ? Column(
                 children: [
                   Container(
@@ -74,41 +74,41 @@ class TodaysEvents extends HookConsumerWidget {
                         IconButton(
                           icon: const HeroIcon(HeroIcons.calendar),
                           onPressed: () {
-                            displayCalendar.value = false;
+                            displayToday.value = false;
                           },
                         )
                       ],
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Expanded(
-                    child: SingleChildScrollView(
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
+                      child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       controller: _scrollController,
                       scrollDirection: Axis.vertical,
                       child: Row(
-                        children: [
-                          const SizedBox(
-                            width: 80,
-                            height: 24 * 90.0 + 3,
-                            child: HourBar(),
-                          ),
-                          Expanded(
-                            child: SizedBox(
+                          children: [
+                            const SizedBox(
+                              width: 80,
                               height: 24 * 90.0 + 3,
-                              child: Stack(
-                                children: const [HourBarItems(), CurrentTime()],
+                              child: HourBar(),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                height: 24 * 90.0 + 3,
+                                child: Stack(
+                                  children: const [HourBarItems(), CurrentTime()],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 35,
                   ),
                 ],
               )
@@ -159,7 +159,7 @@ class TodaysEvents extends HookConsumerWidget {
                     child: IconButton(
                       icon: const HeroIcon(HeroIcons.calendar),
                       onPressed: () {
-                        displayCalendar.value = true;
+                        displayToday.value = true;
                         _hasScrolledNotifier.setHasScrolled(false);
                         center(_hasScrolled, _scrollController, today,
                             _hasScrolledNotifier);
