@@ -68,7 +68,7 @@ class HistoryPage extends HookConsumerWidget {
         )));
       },
       error: (error, s) {
-        listWidget.add(const Center(child: Text('Error')));
+        listWidget.add(Center(child: Text(error.toString())));
       },
     );
 

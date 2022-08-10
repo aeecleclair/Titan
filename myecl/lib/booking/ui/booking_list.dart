@@ -51,8 +51,8 @@ class ListBooking extends ConsumerWidget {
                 ),
             error: (e, s) => SizedBox(
                   height: MediaQuery.of(context).size.height - 150,
-                  child: const Center(
-                    child: Text("Pas de réservation en cours"),
+                  child: Center(
+                    child: Text(e.toString())
                   ),
                 )),
       ),

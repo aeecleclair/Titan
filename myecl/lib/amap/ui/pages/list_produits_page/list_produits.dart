@@ -196,14 +196,10 @@ class ListProducts extends HookConsumerWidget {
                   );
                 }).toList(),
           error: (err, s) {
-            Timer.periodic(const Duration(milliseconds: 1), (timer) {
-              displayToast(context, TypeMsg.error, "Erreur de chargement");
-              timer.cancel();
-            });
             return [
-              const Center(
+              Center(
                 child: Text(
-                  'Aucun produit',
+                  err.toString(),
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

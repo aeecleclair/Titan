@@ -22,9 +22,12 @@ class AdminPage extends HookConsumerWidget {
     ref.watch(cashProvider);
     final products = [];
     final categories = [];
+    String error = "";
     productsList.when(
       data: (list) => products.addAll(list),
-      error: (e, s) {},
+      error: (Object e, StackTrace? s) {
+        error = e.toString();
+      },
       loading: () {},
     );
 
@@ -62,7 +65,25 @@ class AdminPage extends HookConsumerWidget {
             ),
           )));
 
-      listWidget += dictCateListWidget[c] ?? [];
+      listWidget += dictCateListWidget[c] ??
+          [
+            Container(
+              height: 70,
+              alignment: Alignment.centerLeft,
+              child: Container(
+                height: 50,
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 20, top: 10),
+                child: Text(
+                  error.isEmpty ? "Chargement..." : error,
+                  style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ];
     }
 
     return Column(

@@ -56,7 +56,7 @@ class AddButton extends ConsumerWidget {
                             solde.when(
                                 data: (s) =>
                                     "Solde (" + s.balance.toStringAsFixed(2) + "€)",
-                                error: (e, s) => "Erreur",
+                                error: (e, s) => e.toString(),
                                 loading: () => "En chargement..."),
                             style: const TextStyle(
                                 fontSize: 15,

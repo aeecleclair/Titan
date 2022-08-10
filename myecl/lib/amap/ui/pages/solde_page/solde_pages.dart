@@ -53,7 +53,7 @@ List<Widget> buildAll(AsyncValue<List<Cash>> cashList, editingController) {
               height: 70,
               alignment: Alignment.center,
               child: Text(
-                "Pas d'utilisateur actuellement",
+                error.toString(),
                 style: TextStyle(color: Colors.grey.shade600),
               ),
             ),

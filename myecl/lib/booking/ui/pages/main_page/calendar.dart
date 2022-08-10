@@ -83,7 +83,7 @@ class Calendar extends HookConsumerWidget {
           );
         }, error: (Object error, StackTrace? stackTrace) {
           return Center(
-            child: Text("Error $error"),
+            child: Text(error.toString()),
           );
         }, loading: () {
           return const Center(
