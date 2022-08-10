@@ -11,6 +11,10 @@ class DeliveryProductListRepository {
     "Accept": "application/json",
   };
 
+  void setToken(String token) {
+    headers["Authorization"] = 'Bearer $token';
+  }
+
   Future<List<Product>> getProductList(String deliveryId) async {
     final response = await http.get(
         Uri.parse(host + ext + deliveryId + "/products"),

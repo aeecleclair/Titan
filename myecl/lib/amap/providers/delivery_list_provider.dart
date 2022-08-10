@@ -1,11 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/repositories/delivery_list_repository.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 
 class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
   final DeliveryListRepository _deliveriesListRepository =
       DeliveryListRepository();
-  DeliveryListNotifier() : super(const AsyncValue.loading());
+  DeliveryListNotifier({required String token}) : super(const AsyncValue.loading()) {
+    _deliveriesListRepository.setToken(token);
+  }
 
   Future<AsyncValue<List<Delivery>>> loadDeliveriesList() async {
     try {
@@ -113,7 +116,8 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
 final deliveryListProvider =
     StateNotifierProvider<DeliveryListNotifier, AsyncValue<List<Delivery>>>(
         (ref) {
-  DeliveryListNotifier _orderListNotifier = DeliveryListNotifier();
+  final token = ref.read(tokenProvider);
+  DeliveryListNotifier _orderListNotifier = DeliveryListNotifier(token: token);
   _orderListNotifier.loadDeliveriesList();
   return _orderListNotifier;
 });

@@ -11,6 +11,10 @@ class ProductListRepository {
     "Accept": "application/json",
   };
 
+  void setToken(String token) {
+    headers["Authorization"] = 'Bearer $token';
+  }
+
   Future<List<Product>> getProductList() async {
     final response = await http.get(Uri.parse(host + ext), headers: headers);
     if (response.statusCode == 200) {

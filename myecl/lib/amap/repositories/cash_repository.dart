@@ -11,6 +11,10 @@ class CashRepository {
     "Accept": "application/json",
   };
 
+  void setToken(String token) {
+    headers["Authorization"] = 'Bearer $token';
+  }
+
   Future<List<Cash>> getCashList() async {
     final response =
         await http.get(Uri.parse(host + ext + "cash"), headers: headers);

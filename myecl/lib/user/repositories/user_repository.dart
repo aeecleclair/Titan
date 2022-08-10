@@ -17,8 +17,8 @@ class UserRepository {
     final response =
         await http.get(Uri.parse(host + ext), headers: headers);
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return data.map<SimpleUser>((json) => SimpleUser.fromJson(json)).toList();
+      String resp = utf8.decode(response.body.runes.toList());
+      return List<SimpleUser>.from(json.decode(resp).map((x) => SimpleUser.fromJson(x)));
     } else {
       throw Exception('Failed to load users');
     }
@@ -28,7 +28,8 @@ class UserRepository {
     final response =
         await http.get(Uri.parse(host + ext + userId), headers: headers);
     if (response.statusCode == 200) {
-      return User.fromJson(json.decode(response.body));
+      String resp = utf8.decode(response.body.runes.toList());
+      return User.fromJson(json.decode(resp));
     } else {
       throw Exception("Failed to load user");
     }

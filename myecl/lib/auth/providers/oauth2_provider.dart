@@ -11,13 +11,6 @@ final authTokenProvider =
   return _oauth2TokenRepository;
 });
 
-final authProvider =
-    StateNotifierProvider<OAuth2TokenProvider, AsyncValue<Map<String, String>>>(
-        (ref) {
-  OAuth2TokenProvider _oauth2Provider = OAuth2TokenProvider();
-  return _oauth2Provider;
-});
-
 final isLoggedInProvider = Provider((ref) {
   // return true;
   return ref.watch(authTokenProvider).when(
@@ -66,6 +59,21 @@ final idProvider = Provider((ref) {
   );
 });
 
+final tokenProvider = Provider((ref) {
+  print('Provider');
+  return ref.watch(authTokenProvider).when(
+    data: (tokens) {
+      return tokens["token"] as String;
+    },
+    error: (e, s) {
+      return "";
+    },
+    loading: () {
+      return "";
+    },
+  );
+});
+
 class OAuth2TokenProvider
     extends StateNotifier<AsyncValue<Map<String, String>>> {
   final _authTokenRepository = OAuth2TokenRepository();
@@ -84,6 +92,7 @@ class OAuth2TokenProvider
           await _authTokenRepository.authorizationFlow(username, password);
       final tokens = await _authTokenRepository.getTokens(authorizationCode);
       state = AsyncValue.data(tokens);
+      print(tokens["token"]);
       storeToken();
     } catch (e) {
       state = AsyncValue.error(e);
@@ -97,6 +106,7 @@ class OAuth2TokenProvider
         try {
           final tokens = await _authTokenRepository.refreshTokens(token);
           state = AsyncValue.data(tokens);
+          print(tokens["token"]);
           storeToken();
         } catch (e) {
           state = AsyncValue.error(e);

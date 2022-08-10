@@ -1,11 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/repositories/cash_repository.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 
 class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
   final CashRepository _cashRepository = CashRepository();
 
-  CashProvider() : super(const AsyncValue.loading());
+  CashProvider({required String token}) : super(const AsyncLoading()) {
+    _cashRepository.setToken(token);
+  }
 
   Future<AsyncValue<List<Cash>>> loadCashList() async {
     try {
@@ -90,7 +93,8 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
 final cashProvider =
     StateNotifierProvider<CashProvider, AsyncValue<List<Cash>>>(
   (ref) {
-    CashProvider _cashProvider = CashProvider();
+    final token = ref.watch(tokenProvider);
+    CashProvider _cashProvider = CashProvider(token: token);
     _cashProvider.loadCashList();
     return _cashProvider;
   },

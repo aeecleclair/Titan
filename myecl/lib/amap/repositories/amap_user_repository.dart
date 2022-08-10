@@ -14,10 +14,15 @@ class AmapUserRepository {
     "Accept": "application/json",
   };
 
+  void setToken(String token) {
+    headers["Authorization"] = 'Bearer $token';
+  }
+
   Future<List<Order>> getOrderList(String userId) async {
     final response = await http.get(
         Uri.parse(host + "amap/users/" + userId + "/orders"),
         headers: headers);
+    print(response.body);
     if (response.statusCode == 200) {
       try {
         String resp = utf8.decode(response.body.runes.toList());

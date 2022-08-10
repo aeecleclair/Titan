@@ -10,6 +10,10 @@ class OrderRepository {
     "Accept": "application/json",
   };
 
+  void setToken(String token) {
+    headers["Authorization"] = 'Bearer $token';
+  }
+
   Future<bool> updateOrder(String orderId, Order order) async {
     final response = await http.patch(Uri.parse(host + "orders/" + orderId),
         headers: headers, body: json.encode(order.toJson()));

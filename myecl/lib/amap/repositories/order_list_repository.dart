@@ -11,6 +11,10 @@ class OrderListRepository {
     "Accept": "application/json",
   };
 
+  void setToken(String token) {
+    headers["Authorization"] = 'Bearer $token';
+  }
+
   Future<Order> createOrder(
       String deliveryId, Order order, String userId) async {
     Map<String, dynamic> orderJson = order.toJson();

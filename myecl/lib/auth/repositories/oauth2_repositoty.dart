@@ -24,6 +24,7 @@ class OAuth2TokenRepository {
 
   final clientId = "client_id";
   final responseType = "code";
+  final scope = "API";
   final state = generateRandomString(128);
   final codeVerifier = generateRandomString(128);
 
@@ -35,6 +36,7 @@ class OAuth2TokenRepository {
         "client_id": clientId,
         "response_type": responseType,
         "state": state,
+        "scope": scope,
         "code_challenge": hash(codeVerifier),
         "code_challenge_method": "S256",
         "redirect_uri": "http://127.0.0.1:8000/",
@@ -54,6 +56,7 @@ class OAuth2TokenRepository {
       "client_id": clientId,
       "response_type": responseType,
       "state": state,
+      "scope": scope,
       "code_challenge": hash(codeVerifier),
       "code_challenge_method": "S256",
       "redirect_uri": "http://127.0.0.1:8000/",
@@ -94,6 +97,7 @@ class OAuth2TokenRepository {
       "client_id": clientId,
       "code": authorizationCode,
       "redirect_uri": "",
+      "scope": scope,
       "code_verifier": codeVerifier,
       "grant_type": "authorization_code",
     };
@@ -116,12 +120,13 @@ class OAuth2TokenRepository {
   Future<Map<String, String>> refreshTokens(String refreshToken) async {
     var body = {
       "client_id": clientId,
+      "scope": scope,
       "refresh_token": refreshToken,
       "grant_type": "refresh_token",
     };
     try {
-      final response = await http
-          .post(Uri.parse(host + "auth/token"), headers: headers, body: body);
+      final response = await http.post(Uri.parse(host + "auth/token"),
+          headers: headers, body: body);
       if (response.statusCode == 200) {
         final token = jsonDecode(response.body)["access_token"];
         final refreshToken = jsonDecode(response.body)["refresh_token"];

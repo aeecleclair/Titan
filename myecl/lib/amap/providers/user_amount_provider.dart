@@ -5,9 +5,13 @@ import 'package:myecl/auth/providers/oauth2_provider.dart';
 
 class UserCashNotifier extends StateNotifier<AsyncValue<Cash>> {
   final AmapUserRepository _amapUserRepository = AmapUserRepository();
-  UserCashNotifier() : super(const AsyncValue.loading());
+  UserCashNotifier({required String token})
+      : super(const AsyncValue.loading()) {
+    _amapUserRepository.setToken(token);
+  }
 
   Future<AsyncValue<Cash>> loadCashByUser(String userId) async {
+    print("loadCashByUser");
     try {
       final amount = await _amapUserRepository.getCashByUser(userId);
       state = AsyncValue.data(amount);
@@ -31,9 +35,9 @@ class UserCashNotifier extends StateNotifier<AsyncValue<Cash>> {
 
 final userAmountProvider =
     StateNotifierProvider<UserCashNotifier, AsyncValue<Cash>>((ref) {
-  UserCashNotifier _userCashNotifier = UserCashNotifier();
+  final token = ref.watch(tokenProvider);
+  UserCashNotifier _userCashNotifier = UserCashNotifier(token: token);
   final userId = ref.watch(idProvider);
   _userCashNotifier.loadCashByUser(userId);
   return _userCashNotifier;
 });
-

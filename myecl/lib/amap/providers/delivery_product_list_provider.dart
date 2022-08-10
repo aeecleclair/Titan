@@ -1,11 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 
 class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
   final _productListRepository = DeliveryProductListRepository();
   late String deliveryId;
-  ProductListNotifier() : super(const AsyncValue.loading());
+  ProductListNotifier({required String token}) : super(const AsyncValue.loading()) {
+    _productListRepository.setToken(token);
+  }
 
   void setId(String id) {
     deliveryId = id;
@@ -158,7 +161,8 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
 
 final deliveryProductListProvider = StateNotifierProvider.family<
     ProductListNotifier, AsyncValue<List<Product>>, String>((ref, deliveryId) {
-  ProductListNotifier _productListNotifier = ProductListNotifier();
+  final token = ref.read(tokenProvider);
+  ProductListNotifier _productListNotifier = ProductListNotifier(token: token);
   _productListNotifier.setId(deliveryId);
   _productListNotifier.loadProductList();
   return _productListNotifier;

@@ -11,7 +11,9 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
   final AmapUserRepository _userRepository = AmapUserRepository();
   late String deliveryId;
   late String userId;
-  OrderListNotifier() : super(const AsyncValue.loading());
+  OrderListNotifier({required String token}) : super(const AsyncValue.loading()) {
+    _repository.setToken(token);
+  }
 
   void setId(String id) {
     deliveryId = id;
@@ -272,7 +274,8 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
 final orderListProvider = StateNotifierProvider.family<OrderListNotifier,
     AsyncValue<List<Order>>, String>((ref, deliveryId) {
   final userId = ref.watch(idProvider);
-  OrderListNotifier _orderListNotifier = OrderListNotifier();
+  final token = ref.watch(tokenProvider);
+  OrderListNotifier _orderListNotifier = OrderListNotifier(token: token);
   _orderListNotifier.setId(deliveryId);
   _orderListNotifier.setUserId(userId);
   _orderListNotifier.loadOrderList();

@@ -15,14 +15,12 @@ class UserListRepository {
   }
 
   Future<List<SimpleUser>> getAllUsers() async {
-    // if (!headers.containsKey("Authorization")) {
-    //   throw Exception("No token");
-    // }
     final response =
         await http.get(Uri.parse(host + "users/"), headers: headers);
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return data.map<SimpleUser>((json) => SimpleUser.fromJson(json)).toList();
+      String resp = utf8.decode(response.body.runes.toList());
+      return List<SimpleUser>.from(
+          json.decode(resp).map((x) => SimpleUser.fromJson(x)));
     } else {
       throw Exception('Failed to load users');
     }
