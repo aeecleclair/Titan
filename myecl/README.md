@@ -21,7 +21,11 @@ Réserva° (API)
 Prêt (API)
 Evénements (API)
 handle None response
+handle deconnexion on headers
 handle token expiration
+search users
+extraire dialog / refresher
+text constants
 
 AMAP :
 

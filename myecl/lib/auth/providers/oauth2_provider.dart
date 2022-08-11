@@ -118,20 +118,24 @@ class OAuth2TokenProvider
     });
   }
 
-  void refreshToken() async {
+  Future<bool> refreshToken() async {
     state = const AsyncValue.loading();
-    state.when(
+    return state.when(
       data: (token) async {
         final tokens = await _authTokenRepository
             .refreshTokens(token["refreshToken"] as String);
         state = AsyncValue.data(tokens);
         print(tokens["token"]);
         storeToken();
+        return true;
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
+        return false;
       },
-      loading: () {},
+      loading: () {
+        return false;
+      },
     );
   }
 

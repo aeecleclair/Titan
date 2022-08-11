@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/repository.dart';
 
 class DeliveryListRepository extends Repository {
@@ -12,11 +13,17 @@ class DeliveryListRepository extends Repository {
     final response =
         await http.get(Uri.parse(host + ext + "/"), headers: headers);
     if (response.statusCode == 200) {
-      String resp = utf8.decode(response.body.runes.toList());
-      return List<Delivery>.from(
-          json.decode(resp).map((x) => Delivery.fromJson(x)));
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return List<Delivery>.from(
+            json.decode(resp).map((x) => Delivery.fromJson(x)));
+      } catch (e) {
+        return [];
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to load delivery list");
+      throw AppException(ErrorType.notFound, "Failed to load deliveries");
     }
   }
 
@@ -24,10 +31,16 @@ class DeliveryListRepository extends Repository {
     final response = await http.post(Uri.parse(host + ext),
         headers: headers, body: json.encode(delivery.toJson()));
     if (response.statusCode == 201) {
-      String resp = utf8.decode(response.body.runes.toList());
-      return Delivery.fromJson(json.decode(resp));
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return Delivery.fromJson(json.decode(resp));
+      } catch (e) {
+        throw AppException(ErrorType.invalidData, "Failed to create delivery");
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to create delivery");
+      throw AppException(ErrorType.notFound, "Failed to create delivery");
     }
   }
 
@@ -36,8 +49,10 @@ class DeliveryListRepository extends Repository {
         headers: headers, body: json.encode(delivery.toJson()));
     if (response.statusCode == 200) {
       return true;
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to update delivery");
+      throw AppException(ErrorType.notFound, "Failed to update delivery");
     }
   }
 
@@ -46,8 +61,10 @@ class DeliveryListRepository extends Repository {
         headers: headers);
     if (response.statusCode == 204) {
       return true;
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to delete delivery");
+      throw AppException(ErrorType.notFound, "Failed to delete delivery");
     }
   }
 
@@ -55,10 +72,16 @@ class DeliveryListRepository extends Repository {
     final response = await http.get(Uri.parse(host + ext + "/" + deliveryId),
         headers: headers);
     if (response.statusCode == 200) {
-      String resp = utf8.decode(response.body.runes.toList());
-      return Delivery.fromJson(json.decode(resp));
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return Delivery.fromJson(json.decode(resp));
+      } catch (e) {
+        throw AppException(ErrorType.invalidData, "Failed to load delivery");
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to load delivery");
+      throw AppException(ErrorType.notFound, "Failed to load delivery");
     }
   }
 
@@ -69,11 +92,17 @@ class DeliveryListRepository extends Repository {
             host + ext + "/" + deliveryId + "/orders/" + orderId + "/products"),
         headers: headers);
     if (response.statusCode == 200) {
-      String resp = utf8.decode(response.body.runes.toList());
-      return List<Product>.from(
-          json.decode(resp).map((x) => Product.fromJson(x)));
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return List<Product>.from(
+            json.decode(resp).map((x) => Product.fromJson(x)));
+      } catch (e) {
+        throw AppException(ErrorType.invalidData, "Failed to load products");
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to load products");
+      throw AppException(ErrorType.notFound, "Failed to load products");
     }
   }
 }

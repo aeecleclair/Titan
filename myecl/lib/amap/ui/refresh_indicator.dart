@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class Refresh extends HookConsumerWidget {
   final Widget child;
@@ -23,20 +23,25 @@ class Refresh extends HookConsumerWidget {
     if (kIsWeb) {
       return child;
     } else {
-      return Platform.isAndroid ? buildAndroidList() : buildIOSList();
+      return Platform.isAndroid ? buildAndroidList(ref) : buildIOSList(ref);
     }
   }
 
-  Widget buildAndroidList() => RefreshIndicator(
+  Widget buildAndroidList(WidgetRef ref) => RefreshIndicator(
       key: keyRefresh,
-      onRefresh: onRefresh,
+      onRefresh: () async {
+        tokenExpireWrapper(ref, onRefresh);
+      },
       child: child,
       color: AMAPColorConstants.gradient1);
 
-  Widget buildIOSList() => CustomScrollView(
+  Widget buildIOSList(WidgetRef ref) => CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-          CupertinoSliverRefreshControl(onRefresh: onRefresh),
+          CupertinoSliverRefreshControl(onRefresh: () async {
+              tokenExpireWrapper(ref, onRefresh);
+            },
+          ),
           SliverToBoxAdapter(child: child),
         ],
       );

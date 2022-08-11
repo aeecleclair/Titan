@@ -2,19 +2,26 @@ import 'dart:convert';
 
 import 'package:myecl/loan/class/loan.dart';
 import 'package:http/http.dart' as http;
+import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/repository.dart';
 
-class LoanRepository extends Repository{
+class LoanRepository extends Repository {
   final ext = "loans/";
 
   Future<List<Loan>> getLoanListByGroupId(String groupId) async {
     final response =
         await http.get(Uri.parse(host + ext + groupId), headers: headers);
     if (response.statusCode == 200) {
-      String resp = utf8.decode(response.body.runes.toList());
-      return List<Loan>.from(json.decode(resp));
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return List<Loan>.from(json.decode(resp));
+      } catch (e) {
+        return [];
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to load loan list");
+      throw AppException(ErrorType.notFound, "Failed to load loans");
     }
   }
 
@@ -22,10 +29,16 @@ class LoanRepository extends Repository{
     final response =
         await http.get(Uri.parse(host + ext + borrowerId), headers: headers);
     if (response.statusCode == 200) {
-      String resp = utf8.decode(response.body.runes.toList());
-      return List<Loan>.from(json.decode(resp));
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return List<Loan>.from(json.decode(resp));
+      } catch (e) {
+        return [];
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to load loan list");
+      throw AppException(ErrorType.notFound, "Failed to load loans");
     }
   }
 
@@ -35,20 +48,33 @@ class LoanRepository extends Repository{
       headers: headers,
     );
     if (response.statusCode == 200) {
-      String resp = utf8.decode(response.body.runes.toList());
-      return Loan.fromJson(json.decode(resp));
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return Loan.fromJson(json.decode(resp));
+      } catch (e) {
+        throw AppException(ErrorType.invalidData, "Failed to load loan");
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to load loan");
+      throw AppException(ErrorType.notFound, "Failed to load loan");
     }
   }
 
-  Future<bool> createLoan(Loan loan) async {
+  Future<Loan> createLoan(Loan loan) async {
     final response = await http.post(Uri.parse(host + ext),
         headers: headers, body: json.encode(loan));
     if (response.statusCode == 201) {
-      return true;
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return Loan.fromJson(json.decode(resp));
+      } catch (e) {
+        throw AppException(ErrorType.invalidData, "Failed to create loan");
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to create loan");
+      throw AppException(ErrorType.notFound, "Failed to create loan");
     }
   }
 
@@ -57,29 +83,39 @@ class LoanRepository extends Repository{
         headers: headers, body: json.encode(loan));
     if (response.statusCode == 200) {
       return true;
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to update loan");
+      throw AppException(ErrorType.notFound, "Failed to update loan");
     }
   }
 
   Future<bool> deleteLoan(Loan loan) async {
-    final response = await http.delete(Uri.parse(host + ext + loan.id),
-        headers: headers);
+    final response =
+        await http.delete(Uri.parse(host + ext + loan.id), headers: headers);
     if (response.statusCode == 200) {
       return true;
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to delete loan");
+      throw AppException(ErrorType.notFound, "Failed to delete loan");
     }
   }
 
   Future<List<Loan>> getHistory() async {
-    final response = await http.get(Uri.parse(host + ext + "history"),
-        headers: headers);
+    final response =
+        await http.get(Uri.parse(host + ext + "history"), headers: headers);
     if (response.statusCode == 200) {
-      String resp = utf8.decode(response.body.runes.toList());
-      return List<Loan>.from(json.decode(resp));
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return List<Loan>.from(json.decode(resp));
+      } catch (e) {
+        return [];
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to load loan history");
+      throw AppException(ErrorType.notFound, "Failed to load loans");
     }
   }
 }

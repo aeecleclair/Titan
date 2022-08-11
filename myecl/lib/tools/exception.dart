@@ -1,6 +1,7 @@
 enum ErrorType {
   tokenExpire,
   notFound,
+  invalidData
 }
 
 class AppException implements Exception {

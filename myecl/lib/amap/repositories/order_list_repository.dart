@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:myecl/amap/class/order.dart';
+import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/repository.dart';
 
 class OrderListRepository extends Repository {
@@ -18,10 +19,16 @@ class OrderListRepository extends Repository {
         headers: headers,
         body: json.encode(orderJson));
     if (response.statusCode == 201) {
-      String resp = utf8.decode(response.body.runes.toList());
-      return Order.fromJson(json.decode(resp));
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return Order.fromJson(json.decode(resp));
+      } catch (e) {
+        throw AppException(ErrorType.invalidData, "Failed to create order");
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to create order");
+      throw AppException(ErrorType.notFound, "Failed to create order");
     }
   }
 
@@ -37,8 +44,10 @@ class OrderListRepository extends Repository {
         body: json.encode(orderJson));
     if (response.statusCode == 200) {
       return true;
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to update order");
+      throw AppException(ErrorType.notFound, "Failed to update order");
     }
   }
 
@@ -48,8 +57,10 @@ class OrderListRepository extends Repository {
         headers: headers);
     if (response.statusCode == 204) {
       return true;
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to delete order");
+      throw AppException(ErrorType.notFound, "Failed to delete order");
     }
   }
 
@@ -58,9 +69,15 @@ class OrderListRepository extends Repository {
         Uri.parse(host + ext + deliveryId + "/orders/" + orderId),
         headers: headers);
     if (response.statusCode == 200) {
-      return Order.fromJson(json.decode(response.body));
+      try {
+        return Order.fromJson(json.decode(response.body));
+      } catch (e) {
+        throw AppException(ErrorType.invalidData, "Failed to get order");
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to load order");
+      throw AppException(ErrorType.notFound, "Failed to get order");
     }
   }
 }

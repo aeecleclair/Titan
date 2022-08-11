@@ -2,19 +2,25 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:myecl/groups/class/group.dart';
+import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/repository.dart';
 
 class GroupRepository extends Repository {
   final ext = "groups/";
 
   Future<List<Group>> getAllGroups() async {
-    final response =
-        await http.get(Uri.parse(host + ext), headers: headers);
+    final response = await http.get(Uri.parse(host + ext), headers: headers);
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return data.map<Group>((json) => Group.fromJson(json)).toList();
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return List<Group>.from(json.decode(resp));
+      } catch (e) {
+        return [];
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception('Failed to load groups');
+      throw AppException(ErrorType.notFound, "Failed to load groups");
     }
   }
 
@@ -22,19 +28,28 @@ class GroupRepository extends Repository {
     final response =
         await http.get(Uri.parse(host + ext + groupId), headers: headers);
     if (response.statusCode == 200) {
-      return Group.fromJson(json.decode(response.body));
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return Group.fromJson(json.decode(resp));
+      } catch (e) {
+        throw AppException(ErrorType.invalidData, "Failed to load group");
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to load group");
+      throw AppException(ErrorType.notFound, "Failed to load group");
     }
   }
 
   Future<bool> deleteGroup(String groupId) async {
-    final response = await http.delete(Uri.parse(host + ext + groupId),
-        headers: headers);
+    final response =
+        await http.delete(Uri.parse(host + ext + groupId), headers: headers);
     if (response.statusCode == 204) {
       return true;
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to delete groups");
+      throw AppException(ErrorType.notFound, "Failed to delete group");
     }
   }
 
@@ -43,18 +58,27 @@ class GroupRepository extends Repository {
         headers: headers, body: json.encode(group.toJson()));
     if (response.statusCode == 200) {
       return true;
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to update groups");
+      throw AppException(ErrorType.notFound, "Failed to update group");
     }
   }
 
-  Future<bool> createGroup(Group group) async {
+  Future<Group> createGroup(Group group) async {
     final response = await http.post(Uri.parse(host + ext),
         headers: headers, body: json.encode(group.toJson()));
     if (response.statusCode == 201) {
-      return true;
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return Group.fromJson(json.decode(resp));
+      } catch (e) {
+        throw AppException(ErrorType.invalidData, "Failed to create group");
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to create groups");
+      throw AppException(ErrorType.notFound, "Failed to create group");
     }
   }
   // TODO: POST /groups/membership

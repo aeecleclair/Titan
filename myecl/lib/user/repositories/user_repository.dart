@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/repository.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/class/user.dart';
@@ -12,10 +13,16 @@ class UserRepository extends Repository {
     final response =
         await http.get(Uri.parse(host + ext), headers: headers);
     if (response.statusCode == 200) {
-      String resp = utf8.decode(response.body.runes.toList());
-      return List<SimpleUser>.from(json.decode(resp).map((x) => SimpleUser.fromJson(x)));
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return List<SimpleUser>.from(json.decode(resp));
+      } catch (e) {
+        return [];
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception('Failed to load users');
+      throw AppException(ErrorType.notFound, "Failed to load users");
     }
   }
 
@@ -23,10 +30,16 @@ class UserRepository extends Repository {
     final response =
         await http.get(Uri.parse(host + ext + userId), headers: headers);
     if (response.statusCode == 200) {
-      String resp = utf8.decode(response.body.runes.toList());
-      return User.fromJson(json.decode(resp));
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return User.fromJson(json.decode(resp));
+      } catch (e) {
+        throw AppException(ErrorType.invalidData, "Failed to load user");
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to load user");
+      throw AppException(ErrorType.notFound, "Failed to load user");
     }
   }
 
@@ -35,8 +48,10 @@ class UserRepository extends Repository {
         headers: headers);
     if (response.statusCode == 200) {
       return true;
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to delete users");
+      throw AppException(ErrorType.notFound, "Failed to delete user");
     }
   }
 
@@ -45,18 +60,27 @@ class UserRepository extends Repository {
         headers: headers, body: json.encode(user.toJson()));
     if (response.statusCode == 200) {
       return true;
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to update users");
+      throw AppException(ErrorType.notFound, "Failed to update user");
     }
   }
 
-  Future<bool> createUser(User user) async {
+  Future<User> createUser(User user) async {
     final response = await http.post(Uri.parse(host + ext),
         headers: headers, body: json.encode(user.toJson()));
     if (response.statusCode == 201) {
-      return true;
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return User.fromJson(json.decode(resp));
+      } catch (e) {
+        throw AppException(ErrorType.invalidData, "Failed to create user");
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, "");
     } else {
-      throw Exception("Failed to create users");
+      throw AppException(ErrorType.notFound, "Failed to create user");
     }
   }
 }
