@@ -18,7 +18,7 @@ class ItemRepository extends Repository {
         return [];
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load items");
     }
@@ -35,7 +35,7 @@ class ItemRepository extends Repository {
         throw AppException(ErrorType.invalidData, "Failed to create item");
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to create item");
     }
@@ -47,7 +47,7 @@ class ItemRepository extends Repository {
     if (response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to update item");
     }
@@ -59,7 +59,7 @@ class ItemRepository extends Repository {
     if (response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to delete item");
     }

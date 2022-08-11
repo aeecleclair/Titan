@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/ui/refresh_indicator.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Calendar extends HookConsumerWidget {

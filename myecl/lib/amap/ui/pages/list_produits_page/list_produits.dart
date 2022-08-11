@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/page_controller_provider.dart';
 import 'package:myecl/amap/providers/scroll_controller_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/pages/list_produits_page/produit_ui_list.dart';
 
 class ListProducts extends HookConsumerWidget {
@@ -200,7 +198,7 @@ class ListProducts extends HookConsumerWidget {
               Center(
                 child: Text(
                   err.toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),

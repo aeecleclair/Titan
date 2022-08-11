@@ -24,7 +24,7 @@ class AmapUserRepository extends Repository {
         return [];
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load orders");
     }
@@ -35,14 +35,13 @@ class AmapUserRepository extends Repository {
         headers: headers);
     if (response.statusCode == 200) {
       try {
-
-      String resp = utf8.decode(response.body.runes.toList());
-      return Cash.fromJson(json.decode(resp));
+        String resp = utf8.decode(response.body.runes.toList());
+        return Cash.fromJson(json.decode(resp));
       } catch (e) {
         throw AppException(ErrorType.invalidData, "Failed to load cash");
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load cash");
     }

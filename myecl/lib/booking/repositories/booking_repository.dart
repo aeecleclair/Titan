@@ -19,7 +19,7 @@ class BookingRepository extends Repository {
         return [];
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load bookings");
     }
@@ -36,7 +36,7 @@ class BookingRepository extends Repository {
         throw AppException(ErrorType.invalidData, "Failed to create booking");
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to create booking");
     }
@@ -48,7 +48,7 @@ class BookingRepository extends Repository {
     if (response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to update booking");
     }
@@ -60,7 +60,7 @@ class BookingRepository extends Repository {
     if (response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to delete booking");
     }
@@ -78,7 +78,7 @@ class BookingRepository extends Repository {
         return [];
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load bookings");
     }

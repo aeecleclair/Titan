@@ -10,8 +10,7 @@ class UserRepository extends Repository {
   final ext = "users/";
 
   Future<List<SimpleUser>> getAllUsers() async {
-    final response =
-        await http.get(Uri.parse(host + ext), headers: headers);
+    final response = await http.get(Uri.parse(host + ext), headers: headers);
     if (response.statusCode == 200) {
       try {
         String resp = utf8.decode(response.body.runes.toList());
@@ -20,7 +19,7 @@ class UserRepository extends Repository {
         return [];
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load users");
     }
@@ -37,19 +36,19 @@ class UserRepository extends Repository {
         throw AppException(ErrorType.invalidData, "Failed to load user");
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load user");
     }
   }
 
   Future<bool> deleteUser(String userId) async {
-    final response = await http.delete(Uri.parse(host + ext + userId),
-        headers: headers);
+    final response =
+        await http.delete(Uri.parse(host + ext + userId), headers: headers);
     if (response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to delete user");
     }
@@ -61,7 +60,7 @@ class UserRepository extends Repository {
     if (response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to update user");
     }
@@ -78,7 +77,7 @@ class UserRepository extends Repository {
         throw AppException(ErrorType.invalidData, "Failed to create user");
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to create user");
     }

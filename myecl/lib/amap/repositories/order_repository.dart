@@ -14,7 +14,7 @@ class OrderRepository extends Repository {
     if (response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to update order");
     }
@@ -26,7 +26,7 @@ class OrderRepository extends Repository {
     if (response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to delete order");
     }
@@ -43,7 +43,7 @@ class OrderRepository extends Repository {
         throw AppException(ErrorType.invalidData, "Failed to load order");
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to get order");
     }
@@ -60,7 +60,7 @@ class OrderRepository extends Repository {
         throw AppException(ErrorType.invalidData, "Failed to create order");
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to create order");
     }

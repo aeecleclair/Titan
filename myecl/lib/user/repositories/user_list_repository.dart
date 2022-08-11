@@ -9,8 +9,7 @@ class UserListRepository extends Repository {
   final ext = "users/";
 
   Future<List<SimpleUser>> getAllUsers() async {
-    final response =
-        await http.get(Uri.parse(host + ext), headers: headers);
+    final response = await http.get(Uri.parse(host + ext), headers: headers);
     if (response.statusCode == 200) {
       try {
         String resp = utf8.decode(response.body.runes.toList());
@@ -19,7 +18,7 @@ class UserListRepository extends Repository {
         return [];
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load users");
     }

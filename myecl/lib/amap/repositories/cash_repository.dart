@@ -13,13 +13,13 @@ class CashRepository extends Repository {
         await http.get(Uri.parse(host + ext + "cash"), headers: headers);
     if (response.statusCode == 200) {
       try {
-      String resp = utf8.decode(response.body.runes.toList());
-      return List<Cash>.from(json.decode(resp).map((x) => Cash.fromJson(x)));
+        String resp = utf8.decode(response.body.runes.toList());
+        return List<Cash>.from(json.decode(resp).map((x) => Cash.fromJson(x)));
       } catch (e) {
         return [];
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load cash");
     }
@@ -32,14 +32,14 @@ class CashRepository extends Repository {
     );
     if (response.statusCode == 200) {
       try {
-      String resp = utf8.decode(response.body.runes.toList());
-      cash = Cash.fromJson(json.decode(resp));
-      return true;
+        String resp = utf8.decode(response.body.runes.toList());
+        cash = Cash.fromJson(json.decode(resp));
+        return true;
       } catch (e) {
         return false;
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load cash");
     }
@@ -56,7 +56,7 @@ class CashRepository extends Repository {
         throw AppException(ErrorType.invalidData, "Failed to create cash");
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to create cash");
     }
@@ -68,7 +68,7 @@ class CashRepository extends Repository {
     if (response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to update cash");
     }

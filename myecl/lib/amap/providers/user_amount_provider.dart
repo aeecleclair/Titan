@@ -11,7 +11,6 @@ class UserCashNotifier extends StateNotifier<AsyncValue<Cash>> {
   }
 
   Future<AsyncValue<Cash>> loadCashByUser(String userId) async {
-    print("loadCashByUser");
     try {
       final amount = await _amapUserRepository.getCashByUser(userId);
       state = AsyncValue.data(amount);

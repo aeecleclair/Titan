@@ -21,7 +21,7 @@ class DeliveryListRepository extends Repository {
         return [];
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load deliveries");
     }
@@ -38,7 +38,7 @@ class DeliveryListRepository extends Repository {
         throw AppException(ErrorType.invalidData, "Failed to create delivery");
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to create delivery");
     }
@@ -50,7 +50,7 @@ class DeliveryListRepository extends Repository {
     if (response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to update delivery");
     }
@@ -62,7 +62,7 @@ class DeliveryListRepository extends Repository {
     if (response.statusCode == 204) {
       return true;
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to delete delivery");
     }
@@ -79,7 +79,7 @@ class DeliveryListRepository extends Repository {
         throw AppException(ErrorType.invalidData, "Failed to load delivery");
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load delivery");
     }
@@ -100,7 +100,7 @@ class DeliveryListRepository extends Repository {
         throw AppException(ErrorType.invalidData, "Failed to load products");
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load products");
     }

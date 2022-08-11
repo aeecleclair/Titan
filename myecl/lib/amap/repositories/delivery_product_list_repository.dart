@@ -21,7 +21,7 @@ class DeliveryProductListRepository extends Repository {
         throw AppException(ErrorType.invalidData, "Failed to load products");
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load products");
     }
@@ -40,7 +40,7 @@ class DeliveryProductListRepository extends Repository {
         throw AppException(ErrorType.invalidData, "Failed to load products");
       }
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load products");
     }
@@ -55,7 +55,7 @@ class DeliveryProductListRepository extends Repository {
     if (response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load products");
     }
@@ -68,7 +68,7 @@ class DeliveryProductListRepository extends Repository {
     if (response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, "");
+      throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load products");
     }
