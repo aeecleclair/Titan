@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/repositories/cash_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/tools/exception.dart';
 
 class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
   final CashRepository _cashRepository = CashRepository();
@@ -14,10 +15,11 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
     try {
       final cashList = await _cashRepository.getCashList();
       state = AsyncValue.data(cashList);
+      return state;
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
-    return state;
   }
 
   Future<bool> addCash(Cash cash) async {
@@ -35,7 +37,7 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot add cash while loading");
@@ -60,7 +62,7 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot update cash while loading");
@@ -81,7 +83,7 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
             .toList());
       },
       error: (error, stackTrace) {
-        return AsyncValue.error(error);
+        throw error as AppException;
       },
       loading: () {
         return const AsyncValue.error("Cannot filter cash while loading");

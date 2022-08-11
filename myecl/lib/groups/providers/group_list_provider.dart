@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/groups/class/group.dart';
 import 'package:myecl/groups/repositories/group_repository.dart';
+import 'package:myecl/tools/exception.dart';
 
 class GroupListProvider extends StateNotifier<AsyncValue<List<Group>>> {
   final GroupRepository _groupRepository = GroupRepository();
@@ -14,10 +15,11 @@ class GroupListProvider extends StateNotifier<AsyncValue<List<Group>>> {
     try {
       final groups = await _groupRepository.getAllGroups();
       state = AsyncValue.data(groups);
+      return state;
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
-    return state;
   }
 
   Future<bool> createGroup(Group group) async {
@@ -35,7 +37,7 @@ class GroupListProvider extends StateNotifier<AsyncValue<List<Group>>> {
       },
       error: (e, s) {
         state = AsyncValue.error(e);
-        return false;
+        throw e as AppException;
       },
       loading: () {
         state = const AsyncValue.loading();
@@ -60,7 +62,7 @@ class GroupListProvider extends StateNotifier<AsyncValue<List<Group>>> {
       },
       error: (e, s) {
         state = AsyncValue.error(e);
-        return false;
+        throw e as AppException;
       },
       loading: () {
         state = const AsyncValue.loading();
@@ -84,7 +86,7 @@ class GroupListProvider extends StateNotifier<AsyncValue<List<Group>>> {
       },
       error: (e, s) {
         state = AsyncValue.error(e);
-        return false;
+        throw e as AppException;
       },
       loading: () {
         state = const AsyncValue.loading();

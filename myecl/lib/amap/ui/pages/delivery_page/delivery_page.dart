@@ -108,7 +108,7 @@ class DeliveryPage extends HookConsumerWidget {
     return AmapRefresher(
         keyRefresh: GlobalKey<RefreshIndicatorState>(),
         onRefresh: () async {
-          deliveryListNotifier.loadDeliveriesList();
+          await deliveryListNotifier.loadDeliveriesList();
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(

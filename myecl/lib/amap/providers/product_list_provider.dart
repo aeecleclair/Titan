@@ -2,11 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/repositories/product_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/tools/exception.dart';
 
 class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
   final _productListRepository = ProductListRepository();
   late String deliveryId;
-  ProductListNotifier({required String token}) : super(const AsyncValue.loading()) {
+  ProductListNotifier({required String token})
+      : super(const AsyncValue.loading()) {
     _productListRepository.setToken(token);
   }
 
@@ -14,17 +16,19 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
     try {
       final productList = await _productListRepository.getProductList();
       state = AsyncValue.data(productList);
+      return state;
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
-    return state;
   }
 
   Future<bool> addProduct(Product product) async {
     return state.when(
       data: (products) async {
         try {
-          Product newProduct = await _productListRepository.createProduct(product);
+          Product newProduct =
+              await _productListRepository.createProduct(product);
           products.add(newProduct);
           state = AsyncValue.data(products);
           return true;
@@ -35,7 +39,7 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot add product while loading");
@@ -61,7 +65,7 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot update product while loading");
@@ -85,7 +89,7 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot delete product while loading");

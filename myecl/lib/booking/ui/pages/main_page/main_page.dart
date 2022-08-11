@@ -18,7 +18,7 @@ class MainPage extends HookConsumerWidget {
       child: BookingRefresher(
           keyRefresh: GlobalKey<RefreshIndicatorState>(),
           onRefresh: () async {
-            bookingsNotifier.loadBookings();
+            await bookingsNotifier.loadBookings();
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(

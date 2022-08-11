@@ -119,7 +119,7 @@ class OAuth2TokenProvider
   }
 
   Future<bool> refreshToken() async {
-    state = const AsyncValue.loading();
+    print("refresh");
     return state.when(
       data: (token) async {
         final tokens = await _authTokenRepository

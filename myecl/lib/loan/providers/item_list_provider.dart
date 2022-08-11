@@ -2,10 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/repositories/item_repository.dart';
+import 'package:myecl/tools/exception.dart';
 
 class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
   final ItemRepository _itemrepository = ItemRepository();
-  ItemListNotifier({required String token}) : super(const AsyncValue.loading()) {
+  ItemListNotifier({required String token})
+      : super(const AsyncValue.loading()) {
     _itemrepository.setToken(token);
   }
 
@@ -71,10 +73,11 @@ class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
         ),
       ];
       state = AsyncValue.data(items);
+      return state;
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
-    return state;
   }
 
   Future<bool> addItem(Item item) async {
@@ -92,7 +95,7 @@ class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot add loan while loading");
@@ -117,7 +120,7 @@ class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot update loan while loading");
@@ -141,7 +144,7 @@ class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot delete loan while loading");
@@ -153,7 +156,7 @@ class ItemListNotifier extends StateNotifier<AsyncValue<List<Item>>> {
 
 final itemListProvider =
     StateNotifierProvider<ItemListNotifier, AsyncValue<List<Item>>>((ref) {
-      final token = ref.watch(tokenProvider);
+  final token = ref.watch(tokenProvider);
   ItemListNotifier _itemListNotifier = ItemListNotifier(token: token);
   _itemListNotifier.loadLoanList();
   return _itemListNotifier;

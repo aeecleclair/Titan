@@ -23,7 +23,7 @@ Evénements (API)
 diff != Unauthorised
 handle deconnexion on headers
 search users
-extraire dialog / refresher
+extraire dialog
 text constants
 search/amap
 

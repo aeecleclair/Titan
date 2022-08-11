@@ -19,8 +19,8 @@ class ListBooking extends ConsumerWidget {
       keyRefresh: GlobalKey<RefreshIndicatorState>(),
       onRefresh: () async {
         isAdmin
-            ? ref.watch(bookingListProvider.notifier).loadBookings()
-            : ref.watch(bookingHistoryProvider.notifier).loadBookings();
+            ? await ref.watch(bookingListProvider.notifier).loadBookings()
+            : await ref.watch(bookingHistoryProvider.notifier).loadBookings();
       },
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

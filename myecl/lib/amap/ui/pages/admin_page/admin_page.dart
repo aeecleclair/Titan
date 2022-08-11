@@ -98,7 +98,7 @@ class AdminPage extends HookConsumerWidget {
             child: AmapRefresher(
               keyRefresh: GlobalKey<RefreshIndicatorState>(),
               onRefresh: () async {
-                productsListNotifier.loadProductList();
+                await productsListNotifier.loadProductList();
               },
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),

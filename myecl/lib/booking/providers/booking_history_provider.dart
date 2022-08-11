@@ -2,10 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/repositories/booking_repository.dart';
+import 'package:myecl/tools/exception.dart';
 
 class BookingHistoryProvider extends StateNotifier<AsyncValue<List<Booking>>> {
   final BookingRepository _repository = BookingRepository();
-  BookingHistoryProvider({required String token}) : super(const AsyncValue.loading()) {
+  BookingHistoryProvider({required String token})
+      : super(const AsyncValue.loading()) {
     _repository.setToken(token);
   }
 
@@ -13,10 +15,11 @@ class BookingHistoryProvider extends StateNotifier<AsyncValue<List<Booking>>> {
     try {
       final bookings = await _repository.getBookingList();
       state = AsyncValue.data(bookings);
+      return state;
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
-    return state;
   }
 
   Future<bool> addBooking(Booking booking) async {
@@ -34,7 +37,7 @@ class BookingHistoryProvider extends StateNotifier<AsyncValue<List<Booking>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot add booking while loading");
@@ -45,7 +48,8 @@ class BookingHistoryProvider extends StateNotifier<AsyncValue<List<Booking>>> {
 }
 
 final bookingHistoryProvider =
-    StateNotifierProvider<BookingHistoryProvider, AsyncValue<List<Booking>>>((ref) {
+    StateNotifierProvider<BookingHistoryProvider, AsyncValue<List<Booking>>>(
+        (ref) {
   final token = ref.watch(tokenProvider);
   return BookingHistoryProvider(token: token);
 });

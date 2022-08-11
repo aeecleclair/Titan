@@ -15,6 +15,7 @@ class UserNotifier extends StateNotifier<AsyncValue<User>> {
       state = AsyncValue.data(user);
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
   }
 
@@ -24,6 +25,7 @@ class UserNotifier extends StateNotifier<AsyncValue<User>> {
       state = AsyncValue.data(user);
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
   }
 
@@ -36,6 +38,7 @@ class UserNotifier extends StateNotifier<AsyncValue<User>> {
       }
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
   }
 }

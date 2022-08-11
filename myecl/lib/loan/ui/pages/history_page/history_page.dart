@@ -75,7 +75,7 @@ class HistoryPage extends HookConsumerWidget {
     return LoanRefresher(
       keyRefresh: GlobalKey<RefreshIndicatorState>(),
       onRefresh: () async {
-        loanHistoryNotifier.loadHistory();
+        await loanHistoryNotifier.loadHistory();
       },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(

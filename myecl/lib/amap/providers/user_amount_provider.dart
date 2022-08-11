@@ -14,10 +14,11 @@ class UserCashNotifier extends StateNotifier<AsyncValue<Cash>> {
     try {
       final amount = await _amapUserRepository.getCashByUser(userId);
       state = AsyncValue.data(amount);
+      return state;
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
-    return state;
   }
 
   Future updateCash(double amount) async {

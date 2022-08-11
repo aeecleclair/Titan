@@ -6,7 +6,8 @@ import 'package:myecl/loan/repositories/loan_repository.dart';
 
 class LoanHistoryNotifier extends StateNotifier<AsyncValue<List<Loan>>> {
   final LoanRepository _loanrepository = LoanRepository();
-  LoanHistoryNotifier({required String token}) : super(const AsyncValue.loading()) {
+  LoanHistoryNotifier({required String token})
+      : super(const AsyncValue.loading()) {
     _loanrepository.setToken(token);
   }
 
@@ -59,10 +60,11 @@ class LoanHistoryNotifier extends StateNotifier<AsyncValue<List<Loan>>> {
         ),
       ];
       state = AsyncValue.data(loans);
+      return state;
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
-    return state;
   }
 
   void addLoan(Loan loan) {

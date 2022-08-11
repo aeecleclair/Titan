@@ -33,14 +33,17 @@ class AmapUserRepository extends Repository {
   Future<Cash> getCashByUser(String userId) async {
     final response = await http.get(Uri.parse(host + ext + userId + "/cash"),
         headers: headers);
+    print(response.body);
     if (response.statusCode == 200) {
       try {
         String resp = utf8.decode(response.body.runes.toList());
         return Cash.fromJson(json.decode(resp));
       } catch (e) {
+        print('throwing');
         throw AppException(ErrorType.invalidData, "Failed to load cash");
       }
     } else if (response.statusCode == 403) {
+        print('throwing');
       throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       throw AppException(ErrorType.notFound, "Failed to load cash");

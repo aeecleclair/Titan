@@ -14,10 +14,11 @@ class UserListNotifier extends StateNotifier<AsyncValue<List<SimpleUser>>> {
     try {
       final userList = await _userListRepository.getAllUsers();
       state = AsyncValue.data(userList);
+      return state;
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
-    return state;
   }
 
   Future<AsyncValue<List<SimpleUser>>> filterUsers(String filter) async {

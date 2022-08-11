@@ -85,8 +85,8 @@ class ListeOrders extends HookConsumerWidget {
     return AmapRefresher(
       keyRefresh: GlobalKey<RefreshIndicatorState>(),
       onRefresh: () async {
-        orderListNotifier.loadOrderList();
-        soldeNotifier.loadCashByUser(userId);
+        await orderListNotifier.loadOrderList();
+        await soldeNotifier.loadCashByUser(userId);
       },
       child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(

@@ -29,10 +29,11 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
     try {
       final orders = await _userRepository.getOrderList(userId);
       state = AsyncValue.data(orders);
+      return state;
     } on AppException catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
-    return state;
   }
 
   Future<bool> addOrder(Order order) async {
@@ -51,7 +52,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot add order while loading");
@@ -76,7 +77,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot update order while loading");
@@ -101,7 +102,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot delete order while loading");
@@ -127,7 +128,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot add product while loading");
@@ -153,7 +154,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot delete product while loading");
@@ -181,7 +182,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot update product while loading");
@@ -241,7 +242,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot update product while loading");

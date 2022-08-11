@@ -39,10 +39,11 @@ class LoanNotifier extends StateNotifier<AsyncValue<Loan>> {
         ],
       );
       state = AsyncValue.data(loan);
+      return state;
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
-    return state;
   }
 
   void setLoan(Loan loan) {

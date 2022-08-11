@@ -104,7 +104,7 @@ class MainPage extends HookConsumerWidget {
     return LoanRefresher(
       keyRefresh: GlobalKey<RefreshIndicatorState>(),
       onRefresh: () async {
-        loanListNotifier.loadLoanList();
+        await loanListNotifier.loadLoanList();
       },
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

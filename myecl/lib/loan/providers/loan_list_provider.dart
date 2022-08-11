@@ -3,6 +3,7 @@ import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/repositories/loan_repository.dart';
+import 'package:myecl/tools/exception.dart';
 
 class LoanListNotifier extends StateNotifier<AsyncValue<List<Loan>>> {
   final LoanRepository _loanrepository = LoanRepository();
@@ -128,10 +129,11 @@ class LoanListNotifier extends StateNotifier<AsyncValue<List<Loan>>> {
         )
       ];
       state = AsyncValue.data(loans);
+      return state;
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
-    return state;
   }
 
   Future<bool> addLoan(Loan loan) async {
@@ -149,7 +151,7 @@ class LoanListNotifier extends StateNotifier<AsyncValue<List<Loan>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot add loan while loading");
@@ -174,7 +176,7 @@ class LoanListNotifier extends StateNotifier<AsyncValue<List<Loan>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot update loan while loading");
@@ -198,7 +200,7 @@ class LoanListNotifier extends StateNotifier<AsyncValue<List<Loan>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot delete loan while loading");

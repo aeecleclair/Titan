@@ -2,11 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/repositories/delivery_list_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/tools/exception.dart';
 
 class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
   final DeliveryListRepository _deliveriesListRepository =
       DeliveryListRepository();
-  DeliveryListNotifier({required String token}) : super(const AsyncValue.loading()) {
+  DeliveryListNotifier({required String token})
+      : super(const AsyncValue.loading()) {
     _deliveriesListRepository.setToken(token);
   }
 
@@ -14,10 +16,11 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
     try {
       final deliveriesList = await _deliveriesListRepository.getDeliveryList();
       state = AsyncValue.data(deliveriesList);
+      return state;
     } catch (e) {
       state = AsyncValue.error(e);
+      rethrow;
     }
-    return state;
   }
 
   Future<bool> addDelivery(Delivery delivery) async {
@@ -37,7 +40,7 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot add delivery while loading");
@@ -62,7 +65,7 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot update delivery while loading");
@@ -86,7 +89,7 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        return false;
+        throw error as AppException;
       },
       loading: () {
         state = const AsyncValue.error("Cannot delete delivery while loading");
