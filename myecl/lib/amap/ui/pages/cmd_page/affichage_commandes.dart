@@ -82,7 +82,7 @@ class ListeOrders extends HookConsumerWidget {
     });
 
     listWidgetOrder.add(const AddButton());
-    return Refresh(
+    return AmapRefresher(
       keyRefresh: GlobalKey<RefreshIndicatorState>(),
       onRefresh: () async {
         orderListNotifier.loadOrderList();

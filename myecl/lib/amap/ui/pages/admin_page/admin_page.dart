@@ -95,7 +95,7 @@ class AdminPage extends HookConsumerWidget {
           child: Container(
             decoration: BoxDecoration(
                 color: AMAPColorConstants.background2.withOpacity(0.5)),
-            child: Refresh(
+            child: AmapRefresher(
               keyRefresh: GlobalKey<RefreshIndicatorState>(),
               onRefresh: () async {
                 productsListNotifier.loadProductList();

@@ -15,7 +15,7 @@ class ListBooking extends ConsumerWidget {
         ? ref.watch(bookingListProvider)
         : ref.watch(bookingHistoryProvider);
     return Expanded(
-        child: Refresh(
+        child: BookingRefresher(
       keyRefresh: GlobalKey<RefreshIndicatorState>(),
       onRefresh: () async {
         isAdmin

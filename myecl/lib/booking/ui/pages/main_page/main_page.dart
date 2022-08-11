@@ -15,7 +15,7 @@ class MainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isBookingAdminProvider);
     final bookingsNotifier = ref.watch(bookingListProvider.notifier);
     return Expanded(
-      child: Refresh(
+      child: BookingRefresher(
           keyRefresh: GlobalKey<RefreshIndicatorState>(),
           onRefresh: () async {
             bookingsNotifier.loadBookings();

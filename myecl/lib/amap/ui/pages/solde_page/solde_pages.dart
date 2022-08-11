@@ -103,10 +103,10 @@ class SoldePage extends HookConsumerWidget {
     ref.watch(userList);
     List<Widget> listWidgetCash = buildAll(cash.value, editingController);
 
-    return Refresh(
+    return AmapRefresher(
       keyRefresh: GlobalKey<RefreshIndicatorState>(),
       onRefresh: () async {
-        cashListNotifier.loadCashList();
+        cash.value = await cashListNotifier.loadCashList();
       },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(

@@ -105,7 +105,7 @@ class DeliveryPage extends HookConsumerWidget {
       },
     );
 
-    return Refresh(
+    return AmapRefresher(
         keyRefresh: GlobalKey<RefreshIndicatorState>(),
         onRefresh: () async {
           deliveryListNotifier.loadDeliveriesList();

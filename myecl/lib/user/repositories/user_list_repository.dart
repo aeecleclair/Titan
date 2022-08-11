@@ -13,7 +13,8 @@ class UserListRepository extends Repository {
     if (response.statusCode == 200) {
       try {
         String resp = utf8.decode(response.body.runes.toList());
-        return List<SimpleUser>.from(json.decode(resp));
+        return List<SimpleUser>.from(
+            json.decode(resp).map((x) => SimpleUser.fromJson(x)));
       } catch (e) {
         return [];
       }

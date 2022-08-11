@@ -74,7 +74,7 @@ class OptionPage extends HookConsumerWidget {
       },
     );
 
-    return Refresh(
+    return LoanRefresher(
       keyRefresh: GlobalKey<RefreshIndicatorState>(),
       onRefresh: () async {
         loanListNotifier.loadLoanList();

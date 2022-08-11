@@ -20,12 +20,12 @@ TODO :
 Réserva° (API)
 Prêt (API)
 Evénements (API)
-handle None response
+diff != Unauthorised
 handle deconnexion on headers
-handle token expiration
 search users
 extraire dialog / refresher
 text constants
+search/amap
 
 AMAP :
 

@@ -20,10 +20,10 @@ class AddSoldePage extends HookConsumerWidget {
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final editingController = useTextEditingController();
     final focus = useState(false);
-    return Refresh(
+    return AmapRefresher(
         keyRefresh: GlobalKey<RefreshIndicatorState>(),
         onRefresh: () async {
-          usersNotifier.loadUserList();
+          users.value = await usersNotifier.loadUserList();
         },
         child: users.value.when(data: (u) {
           return SingleChildScrollView(
