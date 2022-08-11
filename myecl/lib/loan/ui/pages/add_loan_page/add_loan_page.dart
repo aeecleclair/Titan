@@ -12,6 +12,7 @@ import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:uuid/uuid.dart';
 
 class AddLoanPage extends HookConsumerWidget {
@@ -396,30 +397,32 @@ class AddLoanPage extends HookConsumerWidget {
                                       "Les dates ne sont pas valides");
                                 } else {
                                   pageNotifier.setLoanPage(LoanPage.main);
-                                  loanListNotifier
-                                      .addLoan(
-                                    Loan(
-                                      association: asso,
-                                      items: items
-                                          .where((element) => selectedItems[
-                                              items.indexOf(element)])
-                                          .toList() as List<Item>,
-                                      borrowerId: number.text,
-                                      caution: caution.value,
-                                      end: DateTime.parse(end.text),
-                                      id: const Uuid().v4(),
-                                      notes: note.text,
-                                      start: DateTime.parse(start.text),
-                                    ),
-                                  )
-                                      .then((value) {
-                                    if (value) {
-                                      displayToast(
-                                          context, TypeMsg.msg, 'Prêt ajouté');
-                                    } else {
-                                      displayToast(context, TypeMsg.error,
-                                          'Erreur lors de l\'ajout du prêt');
-                                    }
+                                  tokenExpireWrapper(ref, () {
+                                    loanListNotifier
+                                        .addLoan(
+                                      Loan(
+                                        association: asso,
+                                        items: items
+                                            .where((element) => selectedItems[
+                                                items.indexOf(element)])
+                                            .toList() as List<Item>,
+                                        borrowerId: number.text,
+                                        caution: caution.value,
+                                        end: DateTime.parse(end.text),
+                                        id: const Uuid().v4(),
+                                        notes: note.text,
+                                        start: DateTime.parse(start.text),
+                                      ),
+                                    )
+                                        .then((value) {
+                                      if (value) {
+                                        displayToast(context, TypeMsg.msg,
+                                            'Prêt ajouté');
+                                      } else {
+                                        displayToast(context, TypeMsg.error,
+                                            'Erreur lors de l\'ajout du prêt');
+                                      }
+                                    });
                                   });
                                   _currentStep.value = 0;
                                 }
@@ -456,7 +459,8 @@ class AddLoanPage extends HookConsumerWidget {
       loading: () {
         w = const Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
+            valueColor:
+                AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
           ),
         );
       },

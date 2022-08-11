@@ -10,6 +10,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/modif_produits/text_entry.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:uuid/uuid.dart';
 
 class ModifProduct extends HookConsumerWidget {
@@ -18,8 +19,7 @@ class ModifProduct extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _formKey = GlobalKey<FormState>();
-    final productsNotifier =
-        ref.watch(productListProvider.notifier);
+    final productsNotifier = ref.watch(productListProvider.notifier);
     final productsList = ref.watch(productListProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final productModif = ref.watch(modifiedProductProvider);
@@ -167,7 +167,8 @@ class ModifProduct extends HookConsumerWidget {
                                           borderRadius:
                                               BorderRadius.circular(16.0),
                                           borderSide: const BorderSide(
-                                              color: AMAPColorConstants.enabled)),
+                                              color:
+                                                  AMAPColorConstants.enabled)),
                                       errorBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(16.0),
@@ -254,23 +255,28 @@ class ModifProduct extends HookConsumerWidget {
                                           category: cate,
                                           quantity: 0,
                                         );
-                                        productsNotifier
-                                            .updateProduct(newProduct)
-                                            .then((value) {
-                                          if (value) {
-                                            displayToast(context, TypeMsg.msg,
-                                                "Produit modifié");
-                                          } else {
-                                            displayToast(context, TypeMsg.error,
-                                                "Erreur lors de la modification du produit");
-                                          }
-                                          pageNotifier.setAmapPage(AmapPage.admin);
+                                        tokenExpireWrapper(ref, () {
+                                          productsNotifier
+                                              .updateProduct(newProduct)
+                                              .then((value) {
+                                            if (value) {
+                                              displayToast(context, TypeMsg.msg,
+                                                  "Produit modifié");
+                                            } else {
+                                              displayToast(
+                                                  context,
+                                                  TypeMsg.error,
+                                                  "Erreur lors de la modification du produit");
+                                            }
+                                            pageNotifier
+                                                .setAmapPage(AmapPage.admin);
 
-                                          nameController.clear();
-                                          priceController.clear();
-                                          categoryNotifier.setText(
-                                              TextConstants.creercategory);
-                                          nouvellecategory.clear();
+                                            nameController.clear();
+                                            priceController.clear();
+                                            categoryNotifier.setText(
+                                                TextConstants.creercategory);
+                                            nouvellecategory.clear();
+                                          });
                                         });
                                       } else {
                                         Product newProduct = Product(
@@ -282,23 +288,28 @@ class ModifProduct extends HookConsumerWidget {
                                           category: cate,
                                           quantity: 0,
                                         );
-                                        productsNotifier
-                                            .addProduct(newProduct)
-                                            .then((value) {
-                                          if (value) {
-                                            displayToast(context, TypeMsg.msg,
-                                                "Produit ajouté");
-                                          } else {
-                                            displayToast(context, TypeMsg.error,
-                                                "Erreur lors de la modification du produit");
-                                          }
-                                          pageNotifier.setAmapPage(AmapPage.admin);
+                                        tokenExpireWrapper(ref, () {
+                                          productsNotifier
+                                              .addProduct(newProduct)
+                                              .then((value) {
+                                            if (value) {
+                                              displayToast(context, TypeMsg.msg,
+                                                  "Produit ajouté");
+                                            } else {
+                                              displayToast(
+                                                  context,
+                                                  TypeMsg.error,
+                                                  "Erreur lors de la modification du produit");
+                                            }
+                                            pageNotifier
+                                                .setAmapPage(AmapPage.admin);
 
-                                          nameController.clear();
-                                          priceController.clear();
-                                          categoryNotifier.setText(
-                                              TextConstants.creercategory);
-                                          nouvellecategory.clear();
+                                            nameController.clear();
+                                            priceController.clear();
+                                            categoryNotifier.setText(
+                                                TextConstants.creercategory);
+                                            nouvellecategory.clear();
+                                          });
                                         });
                                       }
                                     }

@@ -7,6 +7,7 @@ import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/refresh_indicator.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AddSoldePage extends HookConsumerWidget {
@@ -20,12 +21,12 @@ class AddSoldePage extends HookConsumerWidget {
     final editingController = useTextEditingController();
     final focus = useState(false);
     return Refresh(
-          keyRefresh: GlobalKey<RefreshIndicatorState>(),
-          onRefresh: () async {
-            usersNotifier.loadUserList();
-          },
-          child: users.value.when(data: (u) {
-      return SingleChildScrollView(
+        keyRefresh: GlobalKey<RefreshIndicatorState>(),
+        onRefresh: () async {
+          usersNotifier.loadUserList();
+        },
+        child: users.value.when(data: (u) {
+          return SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(
                 parent: BouncingScrollPhysics(),
               ),
@@ -83,18 +84,23 @@ class AddSoldePage extends HookConsumerWidget {
                                 children: [
                                   IconButton(
                                       onPressed: () {
-                                        cashListNotifier
-                                            .addCash(Cash(balance: 0.0, user: e))
-                                            .then((value) {
-                                          if (value) {
-                                            displayToast(context, TypeMsg.msg,
-                                                "Utilisateur ajouté");
-                                          } else {
-                                            displayToast(context, TypeMsg.error,
-                                                "Erreur lors de l'ajout");
-                                          }
-                                          pageNotifier
-                                              .setAmapPage(AmapPage.solde);
+                                        tokenExpireWrapper(ref, () {
+                                          cashListNotifier
+                                              .addCash(
+                                                  Cash(balance: 0.0, user: e))
+                                              .then((value) {
+                                            if (value) {
+                                              displayToast(context, TypeMsg.msg,
+                                                  "Utilisateur ajouté");
+                                            } else {
+                                              displayToast(
+                                                  context,
+                                                  TypeMsg.error,
+                                                  "Erreur lors de l'ajout");
+                                            }
+                                            pageNotifier
+                                                .setAmapPage(AmapPage.solde);
+                                          });
                                         });
                                       },
                                       icon: const Icon(Icons.add))
@@ -108,13 +114,14 @@ class AddSoldePage extends HookConsumerWidget {
                       .toList(),
                 ]),
               ));
-    }, error: (e, s) {
-      return const Text("Aucun utilisateur trouvé");
-    }, loading: () {
-      return const Center(
-          child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(AMAPColorConstants.gradient2),
-      ));
-    }));
+        }, error: (e, s) {
+          return const Text("Aucun utilisateur trouvé");
+        }, loading: () {
+          return const Center(
+              child: CircularProgressIndicator(
+            valueColor:
+                AlwaysStoppedAnimation<Color>(AMAPColorConstants.gradient2),
+          ));
+        }));
   }
 }

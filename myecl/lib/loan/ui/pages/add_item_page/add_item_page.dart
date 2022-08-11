@@ -7,6 +7,7 @@ import 'package:myecl/loan/providers/association_list_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class AddItemPage extends HookConsumerWidget {
   const AddItemPage({Key? key}) : super(key: key);
@@ -169,26 +170,28 @@ class AddItemPage extends HookConsumerWidget {
                               }
                               if (key.currentState!.validate()) {
                                 pageNotifier.setLoanPage(LoanPage.main);
-                                itemListNotifier
-                                    .addItem(
-                                  Item(
-                                    name: name.text,
-                                    caution: int.parse(caution.text),
-                                    expiration: DateTime.now().add(
-                                      const Duration(days: 30),
+                                tokenExpireWrapper(ref, () {
+                                  itemListNotifier
+                                      .addItem(
+                                    Item(
+                                      name: name.text,
+                                      caution: int.parse(caution.text),
+                                      expiration: DateTime.now().add(
+                                        const Duration(days: 30),
+                                      ),
+                                      groupId: '',
+                                      id: '',
                                     ),
-                                    groupId: '',
-                                    id: '',
-                                  ),
-                                )
-                                    .then((value) {
-                                  if (value) {
-                                    displayToast(
-                                        context, TypeMsg.msg, "Objet ajouté");
-                                  } else {
-                                    displayToast(context, TypeMsg.error,
-                                        "Erreur lors de l'ajout");
-                                  }
+                                  )
+                                      .then((value) {
+                                    if (value) {
+                                      displayToast(
+                                          context, TypeMsg.msg, "Objet ajouté");
+                                    } else {
+                                      displayToast(context, TypeMsg.error,
+                                          "Erreur lors de l'ajout");
+                                    }
+                                  });
                                 });
                                 _currentStep.value = 0;
                               } else {

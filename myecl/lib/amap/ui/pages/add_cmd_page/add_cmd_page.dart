@@ -12,6 +12,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/add_cmd_page/product_ui_check.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class AddCmdPage extends HookConsumerWidget {
   const AddCmdPage({Key? key}) : super(key: key);
@@ -82,8 +83,8 @@ class AddCmdPage extends HookConsumerWidget {
       ),
       Expanded(
           child: Container(
-        decoration:
-            BoxDecoration(color: AMAPColorConstants.background2.withOpacity(0.5)),
+        decoration: BoxDecoration(
+            color: AMAPColorConstants.background2.withOpacity(0.5)),
         child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Form(
@@ -194,19 +195,23 @@ class AddCmdPage extends HookConsumerWidget {
                                           .where((element) => selected[
                                               products.indexOf(element)])
                                           .toList(),
-                                      deliveryDate: DateTime.parse(date), locked: false);
-                                  deliveryNotifier
-                                      .addDelivery(del)
-                                      .then((value) {
-                                    if (value) {
-                                      pageNotifier.setAmapPage(AmapPage.admin);
-                                      displayToast(context, TypeMsg.msg,
-                                          "Commande ajoutée");
-                                    } else {
-                                      displayToast(context, TypeMsg.error,
-                                          "Il existe déjà une commande à cette date");
-                                    }
-                                    selectedNotifier.clear();
+                                      deliveryDate: DateTime.parse(date),
+                                      locked: false);
+                                  tokenExpireWrapper(ref, () {
+                                    deliveryNotifier
+                                        .addDelivery(del)
+                                        .then((value) {
+                                      if (value) {
+                                        pageNotifier
+                                            .setAmapPage(AmapPage.admin);
+                                        displayToast(context, TypeMsg.msg,
+                                            "Commande ajoutée");
+                                      } else {
+                                        displayToast(context, TypeMsg.error,
+                                            "Il existe déjà une commande à cette date");
+                                      }
+                                      selectedNotifier.clear();
+                                    });
                                   });
                                 } else {
                                   displayToast(context, TypeMsg.error,

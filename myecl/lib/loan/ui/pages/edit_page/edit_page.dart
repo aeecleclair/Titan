@@ -13,6 +13,7 @@ import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class EditPage extends HookConsumerWidget {
   const EditPage({Key? key}) : super(key: key);
@@ -407,30 +408,32 @@ class EditPage extends HookConsumerWidget {
                                   }
                                   if (key.currentState!.validate()) {
                                     pageNotifier.setLoanPage(LoanPage.option);
-                                    loanListNotifier
-                                        .updateLoan(
-                                      Loan(
-                                        association: asso,
-                                        items: items
-                                            .where((element) => selectedItems[
-                                                items.indexOf(element)])
-                                            .toList() as List<Item>,
-                                        borrowerId: number.text,
-                                        caution: caution.value,
-                                        end: DateTime.parse(end.text),
-                                        id: l.id,
-                                        notes: note.text,
-                                        start: DateTime.parse(start.text),
-                                      ),
-                                    )
-                                        .then((value) {
-                                      if (value) {
-                                        displayToast(context, TypeMsg.msg,
-                                            'Prêt modifié');
-                                      } else {
-                                        displayToast(context, TypeMsg.error,
-                                            'Erreur lors de la modification du prêt');
-                                      }
+                                    tokenExpireWrapper(ref, () {
+                                      loanListNotifier
+                                          .updateLoan(
+                                        Loan(
+                                          association: asso,
+                                          items: items
+                                              .where((element) => selectedItems[
+                                                  items.indexOf(element)])
+                                              .toList() as List<Item>,
+                                          borrowerId: number.text,
+                                          caution: caution.value,
+                                          end: DateTime.parse(end.text),
+                                          id: l.id,
+                                          notes: note.text,
+                                          start: DateTime.parse(start.text),
+                                        ),
+                                      )
+                                          .then((value) {
+                                        if (value) {
+                                          displayToast(context, TypeMsg.msg,
+                                              'Prêt modifié');
+                                        } else {
+                                          displayToast(context, TypeMsg.error,
+                                              'Erreur lors de la modification du prêt');
+                                        }
+                                      });
                                     });
                                     _currentStep.value = 0;
                                   }
@@ -463,7 +466,8 @@ class EditPage extends HookConsumerWidget {
           loading: () {
             w = const Center(
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
+                valueColor:
+                    AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
               ),
             );
           },
@@ -475,7 +479,8 @@ class EditPage extends HookConsumerWidget {
       loading: () {
         w = const Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
+            valueColor:
+                AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
           ),
         );
       },

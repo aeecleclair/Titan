@@ -16,6 +16,7 @@ import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:uuid/uuid.dart';
 
 class Boutons extends HookConsumerWidget {
@@ -76,16 +77,19 @@ class Boutons extends HookConsumerWidget {
                       deliveryId: deliveryId,
                       productsIds: prod.map((e) => e.id).toList(),
                       collectionSlot: collectionSlotNotifier.getText());
-                  cmdsNotifier.addOrder(newOrder).then((value) {
-                    if (value) {
-                      pageNotifier.setAmapPage(AmapPage.main);
-                      userAmountNotifier.updateCash(-price);
-                      displayToast(context, TypeMsg.msg, "Commande ajoutée");
-                      clearCmd(ref);
-                    } else {
-                      pageNotifier.setAmapPage(AmapPage.main);
-                      displayToast(context, TypeMsg.error, "Echec de l'ajout");
-                    }
+                  tokenExpireWrapper(ref, () {
+                    cmdsNotifier.addOrder(newOrder).then((value) {
+                      if (value) {
+                        pageNotifier.setAmapPage(AmapPage.main);
+                        userAmountNotifier.updateCash(-price);
+                        displayToast(context, TypeMsg.msg, "Commande ajoutée");
+                        clearCmd(ref);
+                      } else {
+                        pageNotifier.setAmapPage(AmapPage.main);
+                        displayToast(
+                            context, TypeMsg.error, "Echec de l'ajout");
+                      }
+                    });
                   });
                 } else {
                   var lastPrice = 0.0;
@@ -105,16 +109,19 @@ class Boutons extends HookConsumerWidget {
                         prod.add(p.copyWith());
                       }
                     }
-                    cmdsNotifier.setProducts(indexCmd, prod).then((value) {
-                      if (value) {
-                        pageNotifier.setAmapPage(AmapPage.main);
-                        userAmountNotifier.updateCash(lastPrice - price);
-                        displayToast(context, TypeMsg.msg, "Commande modifiée");
-                      } else {
-                        pageNotifier.setAmapPage(AmapPage.main);
-                        displayToast(
-                            context, TypeMsg.error, "Echec de la modification");
-                      }
+                    tokenExpireWrapper(ref, () {
+                      cmdsNotifier.setProducts(indexCmd, prod).then((value) {
+                        if (value) {
+                          pageNotifier.setAmapPage(AmapPage.main);
+                          userAmountNotifier.updateCash(lastPrice - price);
+                          displayToast(
+                              context, TypeMsg.msg, "Commande modifiée");
+                        } else {
+                          pageNotifier.setAmapPage(AmapPage.main);
+                          displayToast(context, TypeMsg.error,
+                              "Echec de la modification");
+                        }
+                      });
                     });
                     clearCmd(ref);
                   } else {
