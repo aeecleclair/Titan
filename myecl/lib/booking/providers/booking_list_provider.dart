@@ -18,7 +18,11 @@ class BookingListProvider extends StateNotifier<AsyncValue<List<Booking>>> {
       return state;
     } catch (e) {
       state = AsyncValue.error(e);
-      rethrow;
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        return state;
+      }
     }
   }
 
@@ -37,7 +41,11 @@ class BookingListProvider extends StateNotifier<AsyncValue<List<Booking>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot add booking while loading");
@@ -63,7 +71,11 @@ class BookingListProvider extends StateNotifier<AsyncValue<List<Booking>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot update booking while loading");
@@ -87,7 +99,11 @@ class BookingListProvider extends StateNotifier<AsyncValue<List<Booking>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot delete booking while loading");
@@ -114,7 +130,11 @@ class BookingListProvider extends StateNotifier<AsyncValue<List<Booking>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot update booking while loading");

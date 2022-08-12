@@ -19,7 +19,11 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
       return state;
     } catch (e) {
       state = AsyncValue.error(e);
-      rethrow;
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        return state;
+      }
     }
   }
 
@@ -39,7 +43,12 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot add product while loading");
@@ -65,7 +74,12 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot update product while loading");
@@ -89,7 +103,12 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot delete product while loading");

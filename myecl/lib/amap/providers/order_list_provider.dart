@@ -30,9 +30,13 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       final orders = await _userRepository.getOrderList(userId);
       state = AsyncValue.data(orders);
       return state;
-    } on AppException catch (e) {
+    } catch (e) {
       state = AsyncValue.error(e);
-      rethrow;
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        return state;
+      }
     }
   }
 
@@ -52,7 +56,12 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot add order while loading");
@@ -77,7 +86,12 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot update order while loading");
@@ -102,7 +116,12 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot delete order while loading");
@@ -128,7 +147,12 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot add product while loading");
@@ -154,7 +178,12 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot delete product while loading");
@@ -182,7 +211,12 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot update product while loading");
@@ -242,7 +276,12 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot update product while loading");

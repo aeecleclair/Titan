@@ -132,7 +132,11 @@ class LoanListNotifier extends StateNotifier<AsyncValue<List<Loan>>> {
       return state;
     } catch (e) {
       state = AsyncValue.error(e);
-      rethrow;
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        return state;
+      }
     }
   }
 
@@ -151,7 +155,12 @@ class LoanListNotifier extends StateNotifier<AsyncValue<List<Loan>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot add loan while loading");
@@ -176,7 +185,12 @@ class LoanListNotifier extends StateNotifier<AsyncValue<List<Loan>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot update loan while loading");
@@ -200,7 +214,12 @@ class LoanListNotifier extends StateNotifier<AsyncValue<List<Loan>>> {
       },
       error: (error, s) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot delete loan while loading");

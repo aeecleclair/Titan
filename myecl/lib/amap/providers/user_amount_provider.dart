@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/repositories/amap_user_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/tools/exception.dart';
 
 class UserCashNotifier extends StateNotifier<AsyncValue<Cash>> {
   final AmapUserRepository _amapUserRepository = AmapUserRepository();
@@ -17,7 +18,11 @@ class UserCashNotifier extends StateNotifier<AsyncValue<Cash>> {
       return state;
     } catch (e) {
       state = AsyncValue.error(e);
-      rethrow;
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        return state;
+      }
     }
   }
 

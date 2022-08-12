@@ -3,6 +3,7 @@ import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/repositories/loan_repository.dart';
+import 'package:myecl/tools/exception.dart';
 
 class LoanNotifier extends StateNotifier<AsyncValue<Loan>> {
   final LoanRepository _loanrepository = LoanRepository();
@@ -42,7 +43,11 @@ class LoanNotifier extends StateNotifier<AsyncValue<Loan>> {
       return state;
     } catch (e) {
       state = AsyncValue.error(e);
-      rethrow;
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        return state;
+      }
     }
   }
 

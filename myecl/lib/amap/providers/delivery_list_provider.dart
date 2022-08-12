@@ -19,7 +19,11 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
       return state;
     } catch (e) {
       state = AsyncValue.error(e);
-      rethrow;
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        return state;
+      }
     }
   }
 
@@ -40,7 +44,12 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot add delivery while loading");
@@ -65,7 +74,12 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot update delivery while loading");
@@ -89,7 +103,12 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot delete delivery while loading");

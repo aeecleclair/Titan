@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/tools/exception.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/repositories/user_list_repository.dart';
 
@@ -17,7 +20,12 @@ class UserListNotifier extends StateNotifier<AsyncValue<List<SimpleUser>>> {
       return state;
     } catch (e) {
       state = AsyncValue.error(e);
-      rethrow;
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        state = AsyncValue.error(e);
+        return state;
+      }
     }
   }
 
@@ -33,7 +41,12 @@ class UserListNotifier extends StateNotifier<AsyncValue<List<SimpleUser>>> {
             .toList());
       },
       error: (e, s) {
-        return AsyncValue.error(e);
+        if (e is AppException && e.type == ErrorType.tokenExpire) {
+          throw e;
+        } else {
+          state = AsyncValue.error(e);
+          return state;
+        }
       },
       loading: () {
         return const AsyncValue.loading();

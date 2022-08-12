@@ -18,7 +18,11 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
       return state;
     } catch (e) {
       state = AsyncValue.error(e);
-      rethrow;
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        return state;
+      }
     }
   }
 
@@ -37,7 +41,12 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot add cash while loading");
@@ -62,7 +71,12 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error);
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error);
+          return false;
+        }
       },
       loading: () {
         state = const AsyncValue.error("Cannot update cash while loading");
@@ -83,7 +97,11 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
             .toList());
       },
       error: (error, stackTrace) {
-        throw error as AppException;
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          return AsyncValue.error(error);
+        }
       },
       loading: () {
         return const AsyncValue.error("Cannot filter cash while loading");

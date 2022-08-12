@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/tools/exception.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
 
@@ -10,35 +11,50 @@ class UserNotifier extends StateNotifier<AsyncValue<User>> {
     _userRepository.setToken(token);
   }
 
-  void setUser(User user) {
+  Future<bool> setUser(User user) async {
     try {
       state = AsyncValue.data(user);
+      return true;
     } catch (e) {
       state = AsyncValue.error(e);
-      rethrow;
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        state = AsyncValue.error(e);
+        return false;
+      }
     }
   }
 
-  void loadUser(String id) async {
+  Future<bool> loadUser(String id) async {
     try {
       final user = await _userRepository.getUser(id);
       state = AsyncValue.data(user);
+      return true;
     } catch (e) {
       state = AsyncValue.error(e);
-      rethrow;
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        state = AsyncValue.error(e);
+        return false;
+      }
     }
   }
 
-  void updateUser(User user) async {
+  Future<bool> updateUser(User user) async {
     try {
-      if (await _userRepository.updateUser(user.id, user)) {
-        state = AsyncValue.data(user);
-      } else {
-        state = AsyncValue.error(Exception("Failed to update user"));
-      }
+      await _userRepository.updateUser(user.id, user);
+      state = AsyncValue.data(user);
+      return true;
     } catch (e) {
       state = AsyncValue.error(e);
-      rethrow;
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        state = AsyncValue.error(e);
+        return false;
+      }
     }
   }
 }
