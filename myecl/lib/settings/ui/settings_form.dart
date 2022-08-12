@@ -121,7 +121,7 @@ class SettingsForm extends HookConsumerWidget {
                     ])),
             GestureDetector(
               onTap: () {
-                asyncUserNotifier.updateUser(user.copyWith(
+                asyncUserNotifier.updateMe(user.copyWith(
                   birthday: dateController.value.text,
                   id: idController.value.text,
                   firstname: firstNameController.value.text,

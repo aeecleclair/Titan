@@ -42,6 +42,23 @@ class UserRepository extends Repository {
     }
   }
 
+  Future<User> getMe() async {
+    final response =
+        await http.get(Uri.parse(host + ext + "me"), headers: headers);
+    if (response.statusCode == 200) {
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        return User.fromJson(json.decode(resp));
+      } catch (e) {
+        throw AppException(ErrorType.invalidData, "Failed to load user");
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, response.body);
+    } else {
+      throw AppException(ErrorType.notFound, "Failed to load user");
+    }
+  }
+
   Future<bool> deleteUser(String userId) async {
     final response =
         await http.delete(Uri.parse(host + ext + userId), headers: headers);
@@ -56,6 +73,18 @@ class UserRepository extends Repository {
 
   Future<bool> updateUser(String userId, User user) async {
     final response = await http.patch(Uri.parse(host + ext + userId),
+        headers: headers, body: json.encode(user.toJson()));
+    if (response.statusCode == 200) {
+      return true;
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, response.body);
+    } else {
+      throw AppException(ErrorType.notFound, "Failed to update user");
+    }
+  }
+
+  Future<bool> updateMe(User user) async {
+    final response = await http.patch(Uri.parse(host + ext + "me"),
         headers: headers, body: json.encode(user.toJson()));
     if (response.statusCode == 200) {
       return true;

@@ -24,4 +24,23 @@ class UserListRepository extends Repository {
       throw AppException(ErrorType.notFound, "Failed to load users");
     }
   }
+
+  Future<List<SimpleUser>> searchUser(String query) async {
+    final response = await http
+        .get(Uri.parse(host + ext + "search?query=" + query), headers: headers);
+    if (response.statusCode == 200) {
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        print(resp);
+        return List<SimpleUser>.from(
+            json.decode(resp).map((x) => SimpleUser.fromJson(x)));
+      } catch (e) {
+        return [];
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, response.body);
+    } else {
+      throw AppException(ErrorType.notFound, "Failed to load users");
+    }
+  }
 }

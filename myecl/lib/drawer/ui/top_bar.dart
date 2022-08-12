@@ -58,7 +58,7 @@ class TopBar extends ConsumerWidget {
               onTap: () {
                 showDialog(
                     context: context,
-                    builder: (BuildContext context) => CustomDialogBox(
+                    builder: (BuildContext context) => BookingDialog(
                         descriptions: "Voulez-vous vous déconnecter ?",
                         title: "Déconnexion",
                         onYes: () {

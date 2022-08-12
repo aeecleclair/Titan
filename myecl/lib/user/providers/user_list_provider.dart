@@ -29,29 +29,17 @@ class UserListNotifier extends StateNotifier<AsyncValue<List<SimpleUser>>> {
     }
   }
 
-  Future<AsyncValue<List<SimpleUser>>> filterUsers(String filter) async {
-    return state.when(
-      data: (userList) {
-        final lowerQuery = filter.toLowerCase();
-        return AsyncValue.data(userList
-            .where((user) =>
-                user.name.toLowerCase().contains(lowerQuery) ||
-                user.firstname.toLowerCase().contains(lowerQuery) ||
-                user.nickname.toLowerCase().contains(lowerQuery))
-            .toList());
-      },
-      error: (e, s) {
-        if (e is AppException && e.type == ErrorType.tokenExpire) {
-          throw e;
-        } else {
-          state = AsyncValue.error(e);
-          return state;
-        }
-      },
-      loading: () {
-        return const AsyncValue.loading();
-      },
-    );
+  Future<AsyncValue<List<SimpleUser>>> filterUsers(String query) async {
+    try {
+      final userList = await _userListRepository.searchUser(query);
+      return AsyncValue.data(userList);
+    } catch (e) {
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        return AsyncValue.error(e);
+      }
+    }
   }
 }
 

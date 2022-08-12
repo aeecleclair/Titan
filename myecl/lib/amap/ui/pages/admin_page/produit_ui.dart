@@ -110,7 +110,7 @@ class ProductUi extends ConsumerWidget {
                   onTap: () {
                     showDialog(
                         context: context,
-                        builder: (BuildContext context) => CustomDialogBox(
+                        builder: (BuildContext context) => AMAPDialog(
                             descriptions: "Supprimer le Product ?",
                             title: "Suppression",
                             onYes: () {

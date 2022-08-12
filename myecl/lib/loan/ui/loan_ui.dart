@@ -64,7 +64,7 @@ class LoanUi extends ConsumerWidget {
                         showDialog(
                             context: context,
                             builder: (context) {
-                              return CustomDialogBox(
+                              return LoanDialog(
                                 title: "Supprimer",
                                 descriptions: 'Supprimer ce prêt',
                                 onYes: () {

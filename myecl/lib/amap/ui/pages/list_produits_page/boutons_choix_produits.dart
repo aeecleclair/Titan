@@ -157,7 +157,7 @@ class Boutons extends HookConsumerWidget {
               if (price != 0.0 || indexCmd != -1) {
                 showDialog(
                     context: context,
-                    builder: (BuildContext context) => CustomDialogBox(
+                    builder: (BuildContext context) => AMAPDialog(
                         descriptions: "Supprimer la commande ?",
                         title: "Suppression",
                         onYes: () {

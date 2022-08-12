@@ -247,7 +247,7 @@ class OrderUi extends ConsumerWidget {
                       onTap: () {
                         showDialog(
                             context: context,
-                            builder: (BuildContext context) => CustomDialogBox(
+                            builder: (BuildContext context) => AMAPDialog(
                                 descriptions: "Supprimer la commande ?",
                                 title: "Suppression",
                                 onYes: () {

@@ -42,9 +42,41 @@ class UserNotifier extends StateNotifier<AsyncValue<User>> {
     }
   }
 
+  Future<bool> loadMe() async {
+    try {
+      final user = await _userRepository.getMe();
+      state = AsyncValue.data(user);
+      return true;
+    } catch (e) {
+      state = AsyncValue.error(e);
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        state = AsyncValue.error(e);
+        return false;
+      }
+    }
+  }
+
   Future<bool> updateUser(User user) async {
     try {
       await _userRepository.updateUser(user.id, user);
+      state = AsyncValue.data(user);
+      return true;
+    } catch (e) {
+      state = AsyncValue.error(e);
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        state = AsyncValue.error(e);
+        return false;
+      }
+    }
+  }
+
+  Future<bool> updateMe(User user) async {
+    try {
+      await _userRepository.updateMe(user);
       state = AsyncValue.data(user);
       return true;
     } catch (e) {
@@ -66,7 +98,7 @@ final asyncUserProvider =
   final token = ref.watch(tokenProvider);
   UserNotifier userNotifier = UserNotifier(token: token);
   if (isLoggedIn && id != null) {
-    return userNotifier..loadUser(id);
+    return userNotifier..loadMe();
   }
   return userNotifier;
 });

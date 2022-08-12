@@ -41,10 +41,12 @@ class AddSoldePage extends HookConsumerWidget {
                     child: TextField(
                       onChanged: (value) {
                         focus.value = true;
-                        usersNotifier
-                            .filterUsers(editingController.text)
-                            .then((value) {
-                          users.value = value;
+                        tokenExpireWrapper(ref, () {
+                          usersNotifier
+                              .filterUsers(editingController.text)
+                              .then((value) {
+                            users.value = value;
+                          });
                         });
                       },
                       controller: editingController,
