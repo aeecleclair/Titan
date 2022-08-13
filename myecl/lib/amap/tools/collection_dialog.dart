@@ -95,7 +95,7 @@ class _CollectionDialogBoxState extends State<CollectionDialogBox> {
                             style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                color: AMAPColorConstants.gradient2),
+                                color: AMAPColorConstants.greenGradient2),
                           )),
                       TextButton(
                           onPressed: () {
@@ -107,7 +107,7 @@ class _CollectionDialogBoxState extends State<CollectionDialogBox> {
                             style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                color: AMAPColorConstants.gradient2),
+                                color: AMAPColorConstants.greenGradient2),
                           )),
                     ],
                   )),

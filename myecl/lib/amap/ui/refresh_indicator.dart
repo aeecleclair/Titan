@@ -12,5 +12,5 @@ class AmapRefresher extends Refresher {
             keyRefresh: keyRefresh,
             onRefresh: onRefresh,
             child: child,
-            col: AMAPColorConstants.gradient1);
+            col: AMAPColorConstants.greenGradient1);
 }

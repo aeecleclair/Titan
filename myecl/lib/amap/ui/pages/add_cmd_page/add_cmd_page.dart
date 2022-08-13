@@ -107,7 +107,7 @@ class AddCmdPage extends HookConsumerWidget {
                                       margin: const EdgeInsets.only(bottom: 3),
                                       padding: const EdgeInsets.only(left: 10),
                                       child: const Text(
-                                        "Date de la commande",
+                                        AMAPTextConstants.commandDate,
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400,
@@ -151,7 +151,7 @@ class AddCmdPage extends HookConsumerWidget {
                                             ),
                                             validator: (value) {
                                               if (value!.isEmpty) {
-                                                return "La date est requise";
+                                                return AMAPTextConstants.requiredDate;
                                               }
                                               return null;
                                             },
@@ -170,7 +170,7 @@ class AddCmdPage extends HookConsumerWidget {
                             height: 30,
                           ),
                           const Text(
-                            "Produits de la commande",
+                            AMAPTextConstants.commandProducts,
                             style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w800,
@@ -185,7 +185,7 @@ class AddCmdPage extends HookConsumerWidget {
                           ),
                           GestureDetector(
                               child:
-                                  const GreenBtn(text: "Ajouter la commande"),
+                                  const GreenBtn(text: AMAPTextConstants.addingCommand),
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
                                   final date = dateController.value.text;
@@ -205,17 +205,17 @@ class AddCmdPage extends HookConsumerWidget {
                                         pageNotifier
                                             .setAmapPage(AmapPage.admin);
                                         displayToast(context, TypeMsg.msg,
-                                            "Commande ajoutée");
+                                            AMAPTextConstants.addedCommand);
                                       } else {
                                         displayToast(context, TypeMsg.error,
-                                            "Il existe déjà une commande à cette date");
+                                            AMAPTextConstants.alreadyExistCommand);
                                       }
                                       selectedNotifier.clear();
                                     });
                                   });
                                 } else {
                                   displayToast(context, TypeMsg.error,
-                                      "Erreur lors de l'ajout de la commande");
+                                      AMAPTextConstants.addingError);
                                 }
                               }),
                           const SizedBox(

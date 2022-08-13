@@ -57,7 +57,7 @@ class ProductUi extends ConsumerWidget {
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
                           colors: [
-                        AMAPColorConstants.l1, AMAPColorConstants.textLight],
+                        AMAPColorConstants.green1, AMAPColorConstants.textLight],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight),
                       boxShadow: [

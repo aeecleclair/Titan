@@ -78,7 +78,7 @@ class BookingUi extends ConsumerWidget {
                         ),
                         BookingButton(
                             res: booking,
-                            color: BookingColorConstants.blue2,
+                            color: BookingColorConstants.veryLightBlue,
                             state: 1)
                       ],
                     ),

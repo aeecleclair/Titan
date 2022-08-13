@@ -56,10 +56,14 @@ class Boutons extends HookConsumerWidget {
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           GestureDetector(
               child: GreenBtn(
-                  text: "Confirmer (" + price.toStringAsFixed(2) + "€)"),
+                  text: AMAPTextConstants.confirm +
+                      " (" +
+                      price.toStringAsFixed(2) +
+                      "€)"),
               onTap: () {
                 if (price == 0.0) {
-                  displayToast(context, TypeMsg.error, "Pas de produit");
+                  displayToast(
+                      context, TypeMsg.error, AMAPTextConstants.noProduct);
                 } else if (indexCmd == -1 && price < b) {
                   List<Product> prod = [];
                   for (var p in products) {
@@ -82,12 +86,13 @@ class Boutons extends HookConsumerWidget {
                       if (value) {
                         pageNotifier.setAmapPage(AmapPage.main);
                         userAmountNotifier.updateCash(-price);
-                        displayToast(context, TypeMsg.msg, "Commande ajoutée");
+                        displayToast(
+                            context, TypeMsg.msg, AMAPTextConstants.addedOrder);
                         clearCmd(ref);
                       } else {
                         pageNotifier.setAmapPage(AmapPage.main);
-                        displayToast(
-                            context, TypeMsg.error, "Echec de l'ajout");
+                        displayToast(context, TypeMsg.error,
+                            AMAPTextConstants.addingError);
                       }
                     });
                   });
@@ -115,17 +120,17 @@ class Boutons extends HookConsumerWidget {
                           pageNotifier.setAmapPage(AmapPage.main);
                           userAmountNotifier.updateCash(lastPrice - price);
                           displayToast(
-                              context, TypeMsg.msg, "Commande modifiée");
+                              context, TypeMsg.msg, AMAPTextConstants.updatedOrder);
                         } else {
                           pageNotifier.setAmapPage(AmapPage.main);
                           displayToast(context, TypeMsg.error,
-                              "Echec de la modification");
+                              AMAPTextConstants.updatingError);
                         }
                       });
                     });
                     clearCmd(ref);
                   } else {
-                    displayToast(context, TypeMsg.error, "Pas assez d'argent");
+                    displayToast(context, TypeMsg.error, AMAPTextConstants.notEnoughMoney);
                   }
                 }
               }),
@@ -158,8 +163,8 @@ class Boutons extends HookConsumerWidget {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) => AMAPDialog(
-                        descriptions: "Supprimer la commande ?",
-                        title: "Suppression",
+                        descriptions: AMAPTextConstants.deletingOrder,
+                        title: AMAPTextConstants.deleting,
                         onYes: () {
                           cancelCmd(ref);
                         }));

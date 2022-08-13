@@ -51,7 +51,8 @@ class DeliveryUi extends ConsumerWidget {
               ),
               Expanded(
                 child: Text(
-                  "Livraison le " +
+                  AMAPTextConstants.deliveryOn +
+                      " " +
                       c.deliveryDate.day.toString().padLeft(2, "0") +
                       "/" +
                       c.deliveryDate.month.toString().padLeft(2, "0") +
@@ -60,7 +61,7 @@ class DeliveryUi extends ConsumerWidget {
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: AMAPColorConstants.l1),
+                      color: AMAPColorConstants.green1),
                 ),
               ),
               GestureDetector(
@@ -143,7 +144,8 @@ class DeliveryUi extends ConsumerWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         c.products.length.toString() +
-                            " produit" +
+                            " " +
+                            AMAPTextConstants.product +
                             (c.products.length != 1 ? "s" : ""),
                         style: const TextStyle(
                             fontSize: 18,
@@ -169,7 +171,7 @@ class DeliveryUi extends ConsumerWidget {
                             ),
                           ),
                           child: Text(
-                            "Commander",
+                            AMAPTextConstants.order,
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
@@ -183,8 +185,8 @@ class DeliveryUi extends ConsumerWidget {
                               builder: (BuildContext context) =>
                                   CollectionDialogBox(
                                       descriptions:
-                                          "Choisissez un moment de livraison",
-                                      title: "Livraison",
+                                          AMAPTextConstants.pickDeliveryMoment,
+                                      title: AMAPTextConstants.delivery,
                                       onClick: (s) {
                                         collectionSlotNotifier.setSlot(s);
                                         pageNotifier
@@ -196,7 +198,8 @@ class DeliveryUi extends ConsumerWidget {
                   ],
                 )
               : Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
@@ -221,7 +224,7 @@ class DeliveryUi extends ConsumerWidget {
                         width: 20,
                       ),
                       Text(
-                        "Commandé vérouillée",
+                        AMAPTextConstants.lockedOrder,
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -246,7 +249,7 @@ class DeliveryUi extends ConsumerWidget {
                                 topLeft: Radius.circular(23)),
                             color: AMAPColorConstants.background3),
                         alignment: Alignment.center,
-                        child: const Text("Vérouiller",
+                        child: const Text(AMAPTextConstants.lock,
                             style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
@@ -262,14 +265,14 @@ class DeliveryUi extends ConsumerWidget {
                           if (value) {
                             if (lastState) {
                               displayToast(context, TypeMsg.msg,
-                                  "Livraison vérrouillée");
+                                  AMAPTextConstants.lockedDelivery);
                             } else {
                               displayToast(context, TypeMsg.msg,
-                                  "Livraison dévérrouillée");
+                                  AMAPTextConstants.unlockedDelivery);
                             }
                           } else {
                             displayToast(context, TypeMsg.error,
-                                "Erreur lors de la mise à jour");
+                                AMAPTextConstants.updatingError);
                           }
                         });
                       },
@@ -284,7 +287,7 @@ class DeliveryUi extends ConsumerWidget {
                                 topRight: Radius.circular(23)),
                             color: AMAPColorConstants.background3),
                         alignment: Alignment.center,
-                        child: const Text("Supprimer",
+                        child: const Text(AMAPTextConstants.delete,
                             style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
@@ -294,18 +297,18 @@ class DeliveryUi extends ConsumerWidget {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) => AMAPDialog(
-                                descriptions: "Supprimer la livraison ?",
-                                title: "Suppression",
+                                descriptions: AMAPTextConstants.deletingDelivery,
+                                title: AMAPTextConstants.deleting,
                                 onYes: () {
                                   deliveryListNotifier
                                       .deleteDelivery(i)
                                       .then((value) {
                                     if (value) {
                                       displayToast(context, TypeMsg.msg,
-                                          "livraison supprimée");
+                                          AMAPTextConstants.deletedDelivery);
                                     } else {
                                       displayToast(context, TypeMsg.error,
-                                          "Erreur lors de la suppression");
+                                          AMAPTextConstants.deletingError);
                                     }
                                   });
                                 }));

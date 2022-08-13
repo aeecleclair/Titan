@@ -63,7 +63,7 @@ class EditPage extends HookConsumerWidget {
 
             List<Step> steps = [
               Step(
-                title: const Text('Association'),
+                title: const Text(LoanTextConstants.association),
                 content: Theme(
                   data: Theme.of(context).copyWith(
                     primaryColor: LoanColorConstants.lightGrey,
@@ -93,7 +93,7 @@ class EditPage extends HookConsumerWidget {
                     : StepState.disabled,
               ),
               Step(
-                title: const Text('Objets'),
+                title: const Text(LoanTextConstants.objects),
                 content: Column(
                   children: items
                       .map(
@@ -115,7 +115,7 @@ class EditPage extends HookConsumerWidget {
                     : StepState.disabled,
               ),
               Step(
-                title: const Text('Dates'),
+                title: const Text(LoanTextConstants.dates),
                 content: Column(
                   children: [
                     Container(
@@ -130,7 +130,7 @@ class EditPage extends HookConsumerWidget {
                               margin: const EdgeInsets.only(bottom: 3),
                               padding: const EdgeInsets.only(left: 10),
                               child: const Text(
-                                "Date de la commande",
+                                LoanTextConstants.beginDate,
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
@@ -166,7 +166,7 @@ class EditPage extends HookConsumerWidget {
                                     ),
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        return "Please enter a date for your task";
+                                        return LoanTextConstants.enterDate;
                                       }
                                       return null;
                                     },
@@ -193,7 +193,7 @@ class EditPage extends HookConsumerWidget {
                                 margin: const EdgeInsets.only(bottom: 3),
                                 padding: const EdgeInsets.only(left: 10),
                                 child: const Text(
-                                  "Date de la commande",
+                                  LoanTextConstants.endDate,
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
@@ -229,7 +229,7 @@ class EditPage extends HookConsumerWidget {
                                       ),
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          return "Please enter a date for your task";
+                                          return LoanTextConstants.enterDate;
                                         }
                                         return null;
                                       },
@@ -250,8 +250,8 @@ class EditPage extends HookConsumerWidget {
                     ? StepState.complete
                     : StepState.disabled,
               ),
-              Step(
-                title: const Text('Emprunteur'),
+              Step( // TODO:
+                title: const Text(LoanTextConstants.borrower),
                 content: Column(
                   children: <Widget>[
                     TextFormField(
@@ -261,9 +261,9 @@ class EditPage extends HookConsumerWidget {
                       keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value == null) {
-                          return 'Please enter some text';
+                          return LoanTextConstants.noValue;
                         } else if (int.tryParse(value) == null) {
-                          return 'Please enter a valid number';
+                          return LoanTextConstants.invalidNumber;
                         }
                         return null;
                       },
@@ -276,15 +276,15 @@ class EditPage extends HookConsumerWidget {
                     : StepState.disabled,
               ),
               Step(
-                title: const Text('Note'),
+                title: const Text(LoanTextConstants.note),
                 content: Column(
                   children: <Widget>[
                     TextFormField(
-                      decoration: const InputDecoration(labelText: 'Note'),
+                      decoration: const InputDecoration(labelText: LoanTextConstants.note),
                       controller: note,
                       validator: (value) {
                         if (value == null) {
-                          return 'Please enter some text';
+                          return LoanTextConstants.noValue;
                         }
                         return null;
                       },
@@ -297,10 +297,10 @@ class EditPage extends HookConsumerWidget {
                     : StepState.disabled,
               ),
               Step(
-                title: const Text('Caution'),
+                title: const Text(LoanTextConstants.caution),
                 content: CheckboxListTile(
                   value: caution.value,
-                  title: const Text('La caution est payée'),
+                  title: const Text(LoanTextConstants.paidCaution),
                   onChanged: (value) {
                     loanNotifier.toggleCaution();
                     caution.value = !caution.value;
@@ -312,24 +312,24 @@ class EditPage extends HookConsumerWidget {
                     : StepState.disabled,
               ),
               Step(
-                title: const Text('Confirmation'),
+                title: const Text(LoanTextConstants.confirmation),
                 content: Column(
                   children: <Widget>[
                     Row(
                       children: [
-                        const Text("Association : "),
+                        const Text(LoanTextConstants.association + " : "),
                         Text(l.association),
                       ],
                     ),
                     Row(
                       children: [
-                        const Text("Emprunteur : "),
+                        const Text(LoanTextConstants.borrower + " : "),
                         Text(number.text),
                       ],
                     ),
                     Column(
                       children: [
-                        const Text("Objets : "),
+                        const Text(LoanTextConstants.objects + " : "),
                         ...items
                             .where((element) =>
                                 selectedItems[items.indexOf(element)])
@@ -345,26 +345,26 @@ class EditPage extends HookConsumerWidget {
                     ),
                     Row(
                       children: [
-                        const Text("Date de début : "),
+                        const Text(LoanTextConstants.beginDate + " : "),
                         Text(start.text),
                       ],
                     ),
                     Row(
                       children: [
-                        const Text("Date de fin : "),
+                        const Text(LoanTextConstants.endDate + " : "),
                         Text(end.text),
                       ],
                     ),
                     Row(
                       children: [
-                        const Text("Note : "),
+                        const Text(LoanTextConstants.note + " : "),
                         Text(note.text),
                       ],
                     ),
                     Row(
                       children: [
-                        const Text("Caution payée : "),
-                        Text(caution.value ? "Oui" : "Non"),
+                        const Text(LoanTextConstants.paidCaution + " : "),
+                        Text(caution.value ? LoanTextConstants.yes : LoanTextConstants.no),
                       ],
                     ),
                   ],
@@ -428,10 +428,10 @@ class EditPage extends HookConsumerWidget {
                                           .then((value) {
                                         if (value) {
                                           displayToast(context, TypeMsg.msg,
-                                              'Prêt modifié');
+                                              LoanTextConstants.updatedLoan);
                                         } else {
                                           displayToast(context, TypeMsg.error,
-                                              'Erreur lors de la modification du prêt');
+                                              LoanTextConstants.updatingError);
                                         }
                                       });
                                     });
@@ -439,8 +439,8 @@ class EditPage extends HookConsumerWidget {
                                   }
                                 },
                           child: (isLastStep)
-                              ? const Text('Modifier')
-                              : const Text('Suivant'),
+                              ? const Text(LoanTextConstants.update)
+                              : const Text(LoanTextConstants.next),
                         ),
                       ),
                       const SizedBox(
@@ -450,7 +450,7 @@ class EditPage extends HookConsumerWidget {
                         Expanded(
                           child: ElevatedButton(
                             onPressed: controls.onStepCancel,
-                            child: const Text('Précédent'),
+                            child: const Text(LoanTextConstants.previous),
                           ),
                         )
                     ],

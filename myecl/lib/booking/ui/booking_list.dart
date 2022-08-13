@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/booking/providers/booking_history_provider.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_ui.dart';
 import 'package:myecl/booking/ui/refresh_indicator.dart';
 
@@ -30,7 +31,7 @@ class ListBooking extends ConsumerWidget {
                 return SizedBox(
                   height: MediaQuery.of(context).size.height - 150,
                   child: const Center(
-                    child: Text("Pas de réservation en cours"),
+                    child: Text(BookingTextConstants.noCurrentBooking),
                   ),
                 );
               }

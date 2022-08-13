@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/tools/constants.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -66,7 +67,7 @@ class TopBar extends HookConsumerWidget {
               ),
             ),
             const Text(
-              "Prêt",
+              LoanTextConstants.loan,
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w500,

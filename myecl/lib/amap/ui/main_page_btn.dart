@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/top_button.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
 
@@ -14,13 +15,13 @@ class MainPageBtn extends HookConsumerWidget {
     final isAdmin = ref.watch(isAmapAdminProvider);
     List<Widget> btns = [
       TopButton(
-          text: "Mes Commandes",
+          text: AMAPTextConstants.myOrders,
           selected: page == AmapPage.main,
           onclick: () {
             pageNotifier.setAmapPage(AmapPage.main);
           }),
       TopButton(
-          text: "Présentation",
+          text: AMAPTextConstants.presentation,
           selected: page == AmapPage.pres,
           onclick: () {
             pageNotifier.setAmapPage(AmapPage.pres);
@@ -29,7 +30,7 @@ class MainPageBtn extends HookConsumerWidget {
 
     if (isAdmin) {
       btns.add(TopButton(
-          text: "Administrateur",
+          text: AMAPTextConstants.admin,
           selected: page == AmapPage.admin,
           onclick: () {
             pageNotifier.setAmapPage(AmapPage.admin);

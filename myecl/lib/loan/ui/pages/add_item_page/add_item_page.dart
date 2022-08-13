@@ -33,7 +33,7 @@ class AddItemPage extends HookConsumerWidget {
       data: (listAsso) {
         List<Step> steps = [
           Step(
-            title: const Text('Association'),
+            title: const Text(LoanTextConstants.association),
             content: Theme(
               data: Theme.of(context).copyWith(
                 primaryColor: LoanColorConstants.lightGrey,
@@ -62,17 +62,17 @@ class AddItemPage extends HookConsumerWidget {
                 : StepState.disabled,
           ),
           Step(
-            title: const Text('Objet'),
+            title: const Text(LoanTextConstants.objects),
             content: TextFormField(
               controller: name,
               decoration: const InputDecoration(
-                labelText: 'Nom',
+                labelText: LoanTextConstants.name,
               ),
               validator: (value) {
                 if (value == null) {
-                  return 'Please enter some text';
+                  return LoanTextConstants.noValue;
                 } else if (value.isEmpty) {
-                  return 'Please enter some text';
+                  return LoanTextConstants.noValue;
                 }
                 return null;
               },
@@ -83,23 +83,23 @@ class AddItemPage extends HookConsumerWidget {
                 : StepState.disabled,
           ),
           Step(
-            title: const Text('Objet'),
+            title: const Text(LoanTextConstants.caution),
             content: TextFormField(
               controller: caution,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: 'Caution',
+                labelText: LoanTextConstants.caution,
                 suffix: Text('€'),
               ),
               validator: (value) {
                 if (value == null) {
-                  return 'Please enter some text';
+                  return LoanTextConstants.noValue;
                 } else if (value.isEmpty) {
-                  return 'Please enter some text';
+                  return LoanTextConstants.noValue;
                 } else if (int.tryParse(value) == null) {
-                  return 'Please enter a valid number';
+                  return LoanTextConstants.invalidNumber;
                 } else if (int.parse(value) < 0) {
-                  return 'Please enter a positive number';
+                  return LoanTextConstants.positiveNumber;
                 }
                 return null;
               },
@@ -110,24 +110,24 @@ class AddItemPage extends HookConsumerWidget {
                 : StepState.disabled,
           ),
           Step(
-            title: const Text('Confirmation'),
+            title: const Text(LoanTextConstants.confirmation),
             content: Column(
               children: <Widget>[
                 Row(
                   children: [
-                    const Text("Association : "),
+                    const Text(LoanTextConstants.association + " : "),
                     Text(asso.value),
                   ],
                 ),
                 Row(
                   children: [
-                    const Text("Nom : "),
+                    const Text(LoanTextConstants.name + " : "),
                     Text(name.text),
                   ],
                 ),
                 Row(
                   children: [
-                    const Text("Caution : "),
+                    const Text(LoanTextConstants.caution + " : "),
                     Text(caution.text),
                   ],
                 ),
@@ -186,22 +186,22 @@ class AddItemPage extends HookConsumerWidget {
                                       .then((value) {
                                     if (value) {
                                       displayToast(
-                                          context, TypeMsg.msg, "Objet ajouté");
+                                          context, TypeMsg.msg, LoanTextConstants.addedObject);
                                     } else {
                                       displayToast(context, TypeMsg.error,
-                                          "Erreur lors de l'ajout");
+                                          LoanTextConstants.addingError);
                                     }
                                   });
                                 });
                                 _currentStep.value = 0;
                               } else {
                                 displayToast(context, TypeMsg.error,
-                                    "Des champs sont manquants ou incorrects");
+                                    LoanTextConstants.incorrectOrMissingFields);
                               }
                             },
                       child: (isLastStep)
-                          ? const Text('Ajouter')
-                          : const Text('Suivant'),
+                          ? const Text(LoanTextConstants.add)
+                          : const Text(LoanTextConstants.next),
                     ),
                   ),
                   const SizedBox(
@@ -211,7 +211,7 @@ class AddItemPage extends HookConsumerWidget {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: controls.onStepCancel,
-                        child: const Text('Précédent'),
+                        child: const Text(LoanTextConstants.previous),
                       ),
                     )
                 ],
@@ -223,7 +223,7 @@ class AddItemPage extends HookConsumerWidget {
       },
       error: (e, s) {
         w = const Center(
-          child: Text('Aucune associations trouvée'),
+          child: Text(LoanTextConstants.noAssociationsFounded),
         );
       },
       loading: () {},

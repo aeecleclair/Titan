@@ -65,8 +65,8 @@ class LoanUi extends ConsumerWidget {
                             context: context,
                             builder: (context) {
                               return LoanDialog(
-                                title: "Supprimer",
-                                descriptions: 'Supprimer ce prêt',
+                                title: LoanTextConstants.delete,
+                                descriptions: LoanTextConstants.deleteLoan,
                                 onYes: () {
                                   loanListNotifier.deleteLoan(l);
                                   loanHistoryNotifier.addLoan(l);
@@ -106,7 +106,7 @@ class LoanUi extends ConsumerWidget {
           Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                l.items.length.toString() + " objets",
+                l.items.length.toString() + " " + LoanTextConstants.objects.toLowerCase(),
                 style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,

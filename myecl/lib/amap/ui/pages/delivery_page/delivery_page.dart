@@ -23,7 +23,7 @@ class DeliveryPage extends HookConsumerWidget {
               height: 30,
             ),
             const Text(
-              "Liste des livraisons",
+              AMAPTextConstants.deliveryList,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
@@ -49,7 +49,7 @@ class DeliveryPage extends HookConsumerWidget {
                 height: 70,
                 alignment: Alignment.center,
                 child: Text(
-                  "Pas de livraision programmée",
+                  AMAPTextConstants.notPlannedDelivery,
                   style: TextStyle(color: Colors.grey.shade600),
                 ),
               ),

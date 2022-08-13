@@ -21,7 +21,7 @@ class OptionPage extends HookConsumerWidget {
         height: 48,
         alignment: Alignment.centerLeft,
         child: const Text(
-          "Prêt en cours",
+          LoanTextConstants.onGoingLoan,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -105,7 +105,7 @@ class OptionPage extends HookConsumerWidget {
                           ),
                         ]),
                     child: const Text(
-                      "Ajouter un prêt",
+                      LoanTextConstants.addLoan,
                       style: TextStyle(
                         color: LoanColorConstants.veryLightOrange,
                         fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class OptionPage extends HookConsumerWidget {
                           ),
                         ]),
                     child: const Text(
-                      "Ajouter un objet",
+                      LoanTextConstants.addObject,
                       style: TextStyle(
                         color: LoanColorConstants.veryLightOrange,
                         fontWeight: FontWeight.bold,

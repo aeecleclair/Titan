@@ -1,17 +1,18 @@
 import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/booking/tools/constants.dart';
 
 String getPageTitle(BookingPage i) {
   switch (i) {
     case BookingPage.main:
-      return 'Réservation';
+      return BookingTextConstants.booking;
     case BookingPage.addBooking:
-      return 'Demande';
+      return BookingTextConstants.addBookingPage;
     case BookingPage.history:
-      return 'Historique';
+      return BookingTextConstants.historyPage;
     case BookingPage.admin:
-      return 'Administrateur';
+      return BookingTextConstants.adminPage;
     default:
-      return 'Booking';
+      return BookingTextConstants.bookingPage;
   }
 }
 

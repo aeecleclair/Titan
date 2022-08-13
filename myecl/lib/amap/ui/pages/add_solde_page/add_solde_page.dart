@@ -52,8 +52,8 @@ class AddSoldePage extends HookConsumerWidget {
                       controller: editingController,
                       autofocus: focus.value,
                       decoration: const InputDecoration(
-                          labelText: "Rechercher",
-                          hintText: "Rechercher",
+                          labelText: AMAPTextConstants.looking,
+                          hintText: AMAPTextConstants.looking,
                           prefixIcon: Icon(Icons.search),
                           border: OutlineInputBorder(
                               borderRadius:
@@ -93,12 +93,12 @@ class AddSoldePage extends HookConsumerWidget {
                                               .then((value) {
                                             if (value) {
                                               displayToast(context, TypeMsg.msg,
-                                                  "Utilisateur ajouté");
+                                                  AMAPTextConstants.addedUser);
                                             } else {
                                               displayToast(
                                                   context,
                                                   TypeMsg.error,
-                                                  "Erreur lors de l'ajout");
+                                                  AMAPTextConstants.addingError);
                                             }
                                             pageNotifier
                                                 .setAmapPage(AmapPage.solde);
@@ -117,12 +117,12 @@ class AddSoldePage extends HookConsumerWidget {
                 ]),
               ));
         }, error: (e, s) {
-          return const Text("Aucun utilisateur trouvé");
+          return const Text(AMAPTextConstants.usersNotFound);
         }, loading: () {
           return const Center(
               child: CircularProgressIndicator(
             valueColor:
-                AlwaysStoppedAnimation<Color>(AMAPColorConstants.gradient2),
+                AlwaysStoppedAnimation<Color>(AMAPColorConstants.greenGradient2),
           ));
         }));
   }

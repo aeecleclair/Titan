@@ -14,6 +14,6 @@ class AMAPDialog extends CustomDialogBox {
             onYes: onYes,
             titleColor: AMAPColorConstants.textDark,
             descriptionColor: AMAPColorConstants.enabled,
-            yesColor: AMAPColorConstants.gradient2,
+            yesColor: AMAPColorConstants.greenGradient2,
             noColor: AMAPColorConstants.redGradient1);
 }

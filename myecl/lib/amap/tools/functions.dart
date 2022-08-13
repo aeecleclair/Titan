@@ -45,7 +45,8 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
   switch (type) {
     case TypeMsg.msg:
       linearGradient = const LinearGradient(
-          colors: [AMAPColorConstants.gradient1, AMAPColorConstants.gradient2],
+          colors: [AMAPColorConstants.greenGradient1, AMAPColorConstants.greenGradient2
+      ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight);
       icon = HeroIcons.check;

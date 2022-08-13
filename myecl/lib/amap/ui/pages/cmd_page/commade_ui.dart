@@ -83,7 +83,7 @@ class OrderUi extends ConsumerWidget {
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: AMAPColorConstants.l1),
+                      color: AMAPColorConstants.green1),
                 ),
               ),
               GestureDetector(

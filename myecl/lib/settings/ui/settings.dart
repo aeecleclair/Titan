@@ -15,14 +15,6 @@ class SettingsPage extends ConsumerWidget {
         body: Container(
       decoration: const BoxDecoration(
         color: Colors.white,
-        // gradient: LinearGradient(
-        //   begin: Alignment.topCenter,
-        //   end: Alignment.bottomCenter,
-        //   colors: [
-        //     Color.fromARGB(255, 1, 49, 68),
-        //     Color.fromARGB(255, 2, 84, 104),
-        //   ],
-        // ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

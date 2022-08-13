@@ -58,7 +58,7 @@ class ListProducts extends HookConsumerWidget {
               ? [
                   const Center(
                     child: Text(
-                      'Aucun produit',
+                    AMAPTextConstants.noProduct,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -135,14 +135,14 @@ class ListProducts extends HookConsumerWidget {
                                           decoration: BoxDecoration(
                                             gradient: const LinearGradient(
                                                 colors: [
-                                                  AMAPColorConstants.l1,
-                                                  AMAPColorConstants.l2
+                                                  AMAPColorConstants.green1,
+                                                  AMAPColorConstants.green2
                                                 ],
                                                 begin: Alignment.topLeft,
                                                 end: Alignment.bottomRight),
                                             boxShadow: [
                                               BoxShadow(
-                                                  color: AMAPColorConstants.l2
+                                                  color: AMAPColorConstants.green2
                                                       .withOpacity(0.4),
                                                   offset: const Offset(2, 3),
                                                   blurRadius: 5)
@@ -162,7 +162,7 @@ class ListProducts extends HookConsumerWidget {
                                                 color:
                                                     AMAPColorConstants.background,
                                               ),
-                                              Text("Voir Plus",
+                                              Text(AMAPTextConstants.seeMore,
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     color: AMAPColorConstants
@@ -210,7 +210,7 @@ class ListProducts extends HookConsumerWidget {
             const Center(
               child: CircularProgressIndicator(
                 valueColor:
-                    AlwaysStoppedAnimation<Color>(AMAPColorConstants.gradient2),
+                    AlwaysStoppedAnimation<Color>(AMAPColorConstants.greenGradient2),
               ),
             ),
           ],

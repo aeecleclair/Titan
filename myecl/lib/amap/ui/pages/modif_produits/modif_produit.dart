@@ -40,7 +40,7 @@ class ModifProduct extends HookConsumerWidget {
 
     final beginState = modifProduct
         ? products[productModif].category
-        : TextConstants.creercategory;
+        : AMAPTextConstants.createCategory;
     final categoryController = ref.watch(selectedCategoryProvider(beginState));
     final categoryNotifier =
         ref.watch(selectedCategoryProvider(beginState).notifier);
@@ -76,11 +76,11 @@ class ModifProduct extends HookConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  "Nom",
+                                  AMAPTextConstants.name,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 20,
-                                    color: AMAPColorConstants.gradient2,
+                                    color: AMAPColorConstants.greenGradient2,
                                   ),
                                 ),
                                 const SizedBox(
@@ -89,7 +89,7 @@ class ModifProduct extends HookConsumerWidget {
                                 TextEntry(
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Veuillez remplir ce champ';
+                                      return AMAPTextConstants.fillField;
                                     }
                                     return null;
                                   },
@@ -102,11 +102,11 @@ class ModifProduct extends HookConsumerWidget {
                                   height: 30,
                                 ),
                                 const Text(
-                                  "Prix",
+                                  AMAPTextConstants.price,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 20,
-                                    color: AMAPColorConstants.gradient2,
+                                    color: AMAPColorConstants.greenGradient2,
                                   ),
                                 ),
                                 const SizedBox(
@@ -115,11 +115,12 @@ class ModifProduct extends HookConsumerWidget {
                                 TextEntry(
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Veuillez remplir ce champ';
+                                        return AMAPTextConstants.fillField;
                                       } else if (double.tryParse(
                                               value.replaceAll(',', '.')) ==
                                           null) {
-                                        return 'Un namebre est attendu';
+                                        return AMAPTextConstants
+                                            .expectingNumber;
                                       }
                                       return null;
                                     },
@@ -131,11 +132,11 @@ class ModifProduct extends HookConsumerWidget {
                                   height: 30,
                                 ),
                                 const Text(
-                                  "Catégorie",
+                                  AMAPTextConstants.category,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 20,
-                                    color: AMAPColorConstants.gradient2,
+                                    color: AMAPColorConstants.greenGradient2,
                                   ),
                                 ),
                                 const SizedBox(
@@ -148,10 +149,11 @@ class ModifProduct extends HookConsumerWidget {
                                     validator: ((value) {
                                       if ((value == null ||
                                               value ==
-                                                  TextConstants
-                                                      .creercategory) &&
+                                                  AMAPTextConstants
+                                                      .createCategory) &&
                                           nouvellecategory.text.isEmpty) {
-                                        return 'Veuillez créer une catégorie ou en choisir une';
+                                        return AMAPTextConstants
+                                            .pickChooseCategory;
                                       }
                                       return null;
                                     }),
@@ -178,11 +180,11 @@ class ModifProduct extends HookConsumerWidget {
                                           borderRadius:
                                               BorderRadius.circular(16.0),
                                           borderSide: const BorderSide(
-                                            color: AMAPColorConstants.gradient2,
+                                            color: AMAPColorConstants.greenGradient2,
                                           )),
                                     ),
                                     items: [
-                                      TextConstants.creercategory,
+                                      AMAPTextConstants.createCategory,
                                       ...categories
                                     ].map((String value) {
                                       return DropdownMenuItem<String>(
@@ -191,8 +193,8 @@ class ModifProduct extends HookConsumerWidget {
                                       );
                                     }).toList(),
                                     onChanged: (value) {
-                                      categoryNotifier.setText(
-                                          value ?? TextConstants.creercategory);
+                                      categoryNotifier.setText(value ??
+                                          AMAPTextConstants.createCategory);
                                       nouvellecategory.text = "";
                                     },
                                   ),
@@ -201,11 +203,11 @@ class ModifProduct extends HookConsumerWidget {
                                   height: 30,
                                 ),
                                 const Text(
-                                  "Créer une catégorie",
+                                  AMAPTextConstants.createCategory,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 20,
-                                    color: AMAPColorConstants.gradient2,
+                                    color: AMAPColorConstants.greenGradient2,
                                   ),
                                 ),
                                 const SizedBox(
@@ -215,13 +217,14 @@ class ModifProduct extends HookConsumerWidget {
                                   validator: ((value) {
                                     if ((value == null || value.isEmpty) &&
                                         categoryController ==
-                                            TextConstants.creercategory) {
-                                      return 'Veuillez choisir une catégorie ou en créer une';
+                                            AMAPTextConstants.createCategory) {
+                                      return AMAPTextConstants
+                                          .pickChooseCategory;
                                     }
                                     return null;
                                   }),
                                   enabled: categoryController ==
-                                      TextConstants.creercategory,
+                                      AMAPTextConstants.createCategory,
                                   onChanged: (value) {
                                     nouvellecategory.text = value ?? "";
                                     nouvellecategory.selection =
@@ -237,12 +240,12 @@ class ModifProduct extends HookConsumerWidget {
                                 ),
                                 GestureDetector(
                                   child: GreenBtn(
-                                    text: modifProduct ? "Modifier" : "Ajouter",
+                                    text: modifProduct ? AMAPTextConstants.update : AMAPTextConstants.add,
                                   ),
                                   onTap: () {
                                     if (_formKey.currentState!.validate()) {
                                       String cate = categoryController ==
-                                              TextConstants.creercategory
+                                              AMAPTextConstants.createCategory
                                           ? nouvellecategory.text
                                           : categoryController;
                                       if (modifProduct) {
@@ -261,12 +264,12 @@ class ModifProduct extends HookConsumerWidget {
                                               .then((value) {
                                             if (value) {
                                               displayToast(context, TypeMsg.msg,
-                                                  "Produit modifié");
+                                                  AMAPTextConstants.updatedProduct);
                                             } else {
                                               displayToast(
                                                   context,
                                                   TypeMsg.error,
-                                                  "Erreur lors de la modification du produit");
+                                                  AMAPTextConstants.updatingError);
                                             }
                                             pageNotifier
                                                 .setAmapPage(AmapPage.admin);
@@ -274,7 +277,8 @@ class ModifProduct extends HookConsumerWidget {
                                             nameController.clear();
                                             priceController.clear();
                                             categoryNotifier.setText(
-                                                TextConstants.creercategory);
+                                                AMAPTextConstants
+                                                    .createCategory);
                                             nouvellecategory.clear();
                                           });
                                         });
@@ -294,12 +298,12 @@ class ModifProduct extends HookConsumerWidget {
                                               .then((value) {
                                             if (value) {
                                               displayToast(context, TypeMsg.msg,
-                                                  "Produit ajouté");
+                                                  AMAPTextConstants.addedProduct);
                                             } else {
                                               displayToast(
                                                   context,
                                                   TypeMsg.error,
-                                                  "Erreur lors de la modification du produit");
+                                                  AMAPTextConstants.addingError);
                                             }
                                             pageNotifier
                                                 .setAmapPage(AmapPage.admin);
@@ -307,7 +311,8 @@ class ModifProduct extends HookConsumerWidget {
                                             nameController.clear();
                                             priceController.clear();
                                             categoryNotifier.setText(
-                                                TextConstants.creercategory);
+                                                AMAPTextConstants
+                                                    .createCategory);
                                             nouvellecategory.clear();
                                           });
                                         });

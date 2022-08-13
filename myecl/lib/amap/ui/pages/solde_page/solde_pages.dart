@@ -31,7 +31,7 @@ List<Widget> buildAll(AsyncValue<List<Cash>> cashList, editingController) {
                 height: 70,
                 alignment: Alignment.center,
                 child: Text(
-                  "Aucun utilisateur trouvé",
+                  AMAPTextConstants.usersNotFound,
                   style: TextStyle(color: Colors.grey.shade600),
                 ),
               ),
@@ -136,8 +136,8 @@ class SoldePage extends HookConsumerWidget {
                   controller: editingController,
                   autofocus: focus.value,
                   decoration: const InputDecoration(
-                      labelText: "Rechercher",
-                      hintText: "Rechercher",
+                      labelText: AMAPTextConstants.looking,
+                      hintText: AMAPTextConstants.looking,
                       prefixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(
                           borderRadius:
@@ -161,7 +161,7 @@ class SoldePage extends HookConsumerWidget {
                         height: 30,
                       ),
                       GestureDetector(
-                        child: const GreenBtn(text: "Ajouter un utilisateur"),
+                        child: const GreenBtn(text: AMAPTextConstants.addUser),
                         onTap: () {
                           pageNotifier.setAmapPage(AmapPage.addSolde);
                         },

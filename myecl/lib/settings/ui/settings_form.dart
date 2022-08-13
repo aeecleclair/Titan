@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/user_field_modifier.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -37,28 +38,28 @@ class SettingsForm extends HookConsumerWidget {
         child: Column(
           children: [
             UserFieldModifier(
-              label: "Prénom",
+              label: SettingsTextConstants.firstname,
               controller: firstNameController,
               keyboardType: TextInputType.text,
             ),
             UserFieldModifier(
-                label: "Nom",
+                label: SettingsTextConstants.name,
                 controller: nameController,
                 keyboardType: TextInputType.text),
             UserFieldModifier(
-                label: "Surnom",
+                label: SettingsTextConstants.nickname,
                 controller: nickNameController,
                 keyboardType: TextInputType.text),
             UserFieldModifier(
-                label: "Email",
+                label: SettingsTextConstants.email,
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress),
             UserFieldModifier(
-                label: "Promotion",
+                label: SettingsTextConstants.promo,
                 controller: promoController,
                 keyboardType: TextInputType.number), //! Surement pas modifiable
             UserFieldModifier(
-                label: "Étage",
+                label: SettingsTextConstants.floor,
                 controller: floorController,
                 keyboardType: TextInputType.text),
             Container(
@@ -73,7 +74,7 @@ class SettingsForm extends HookConsumerWidget {
                         margin: const EdgeInsets.only(bottom: 3),
                         padding: const EdgeInsets.only(left: 10),
                         child: const Text(
-                          "Date de naissance",
+                          SettingsTextConstants.birthday,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -105,7 +106,7 @@ class SettingsForm extends HookConsumerWidget {
                               ),
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Please enter a date for your task";
+                                  return SettingsTextConstants.expectingDate;
                                 }
                                 return null;
                               },
@@ -133,9 +134,9 @@ class SettingsForm extends HookConsumerWidget {
                 ));
                 asyncUser.when(
                   data: (d) =>
-                      displayToast(context, TypeMsg.msg, "Profil modifié"),
+                      displayToast(context, TypeMsg.msg, SettingsTextConstants.updatedProfile),
                   error: (e, s) => displayToast(context, TypeMsg.error,
-                      "Erreur lors de la modification du profil"),
+                      SettingsTextConstants.updatingError),
                   loading: () {},
                 );
               },
@@ -156,7 +157,7 @@ class SettingsForm extends HookConsumerWidget {
                   borderRadius: BorderRadius.circular(23),
                 ),
                 child: const Text(
-                  "Enregistrer",
+                  SettingsTextConstants.save,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,

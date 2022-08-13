@@ -62,11 +62,12 @@ class CashUi extends HookConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: AMAPColorConstants.gradient2,
+                      color: AMAPColorConstants.greenGradient2,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: AMAPColorConstants.gradient2.withOpacity(0.5),
+                          color: AMAPColorConstants.greenGradient2
+                              .withOpacity(0.5),
                           blurRadius: 5,
                           offset: const Offset(2, 2),
                         ),
@@ -90,11 +91,11 @@ class CashUi extends HookConsumerWidget {
                           .then((value) {
                         if (value) {
                           key.currentState!.reset();
-                          displayToast(
-                              context, TypeMsg.msg, "Solde mis à jour");
+                          displayToast(context, TypeMsg.msg,
+                              AMAPTextConstants.updatedAmount);
                         } else {
                           displayToast(context, TypeMsg.error,
-                              "Erreur lors de la mise à jour du solde");
+                              AMAPTextConstants.updatingError);
                         }
                       });
                     }

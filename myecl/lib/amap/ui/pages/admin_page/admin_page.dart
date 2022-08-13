@@ -75,7 +75,7 @@ class AdminPage extends HookConsumerWidget {
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.only(left: 20, top: 10),
                 child: Text(
-                  error.isEmpty ? "Chargement..." : error,
+                  error.isEmpty ? AMAPTextConstants.loading : error,
                   style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
@@ -105,7 +105,7 @@ class AdminPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     GestureDetector(
-                        child: const GreenBtn(text: "Ajouter une commande"),
+                        child: const GreenBtn(text: AMAPTextConstants.addingACommand),
                         onTap: () {
                           productModif.setModifiedProduct(-1);
                           pageNotifier.setAmapPage(AmapPage.addCmd);
@@ -114,7 +114,7 @@ class AdminPage extends HookConsumerWidget {
                       height: 40,
                     ),
                     GestureDetector(
-                        child: const GreenBtn(text: "Gérer les comptes"),
+                        child: const GreenBtn(text: AMAPTextConstants.handlingAccount),
                         onTap: () {
                           productModif.setModifiedProduct(-1);
                           pageNotifier.setAmapPage(AmapPage.solde);
@@ -123,7 +123,7 @@ class AdminPage extends HookConsumerWidget {
                       height: 40,
                     ),
                     GestureDetector(
-                        child: const GreenBtn(text: "Ajouter un produit"),
+                        child: const GreenBtn(text: AMAPTextConstants.addingProduct),
                         onTap: () {
                           productModif.setModifiedProduct(-1);
                           pageNotifier.setAmapPage(AmapPage.modif);

@@ -47,7 +47,7 @@ class AddButton extends ConsumerWidget {
                         Container(
                           height: 10,
                         ),
-                        const Text("Ajouter",
+                        const Text(AMAPTextConstants.add,
                             style: TextStyle(
                                 fontSize: 35,
                                 fontWeight: FontWeight.w900,
@@ -55,9 +55,9 @@ class AddButton extends ConsumerWidget {
                         Text(
                             solde.when(
                                 data: (s) =>
-                                    "Solde (" + s.balance.toStringAsFixed(2) + "€)",
+                                    AMAPTextConstants.amount + " (" + s.balance.toStringAsFixed(2) + "€)",
                                 error: (e, s) => e.toString(),
-                                loading: () => "En chargement..."),
+                                loading: () => AMAPTextConstants.loading),
                             style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,

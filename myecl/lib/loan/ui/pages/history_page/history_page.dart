@@ -19,7 +19,7 @@ class HistoryPage extends HookConsumerWidget {
         height: 48,
         alignment: Alignment.centerLeft,
         child: const Text(
-          "Historique",
+          LoanTextConstants.history,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,

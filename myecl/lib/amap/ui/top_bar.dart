@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 
@@ -68,7 +69,7 @@ class TopBar extends HookConsumerWidget {
               ),
             ),
             const Text(
-              "Amap",
+              AMAPTextConstants.amap,
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w500,

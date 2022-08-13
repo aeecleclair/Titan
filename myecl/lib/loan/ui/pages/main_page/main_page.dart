@@ -23,7 +23,7 @@ class MainPage extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                "En cours",
+                LoanTextConstants.onGoingLoan,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,

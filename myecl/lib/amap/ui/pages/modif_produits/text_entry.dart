@@ -52,7 +52,7 @@ class TextEntry extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16.0),
               borderSide: const BorderSide(
-                color: AMAPColorConstants.gradient2,
+                color: AMAPColorConstants.greenGradient2,
               )),
         ),
       ),
