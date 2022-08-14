@@ -81,7 +81,7 @@ class Boutons extends HookConsumerWidget {
                       deliveryId: deliveryId,
                       productsIds: prod.map((e) => e.id).toList(),
                       collectionSlot: collectionSlotNotifier.getText());
-                  tokenExpireWrapper(ref, () {
+                  tokenExpireWrapper(ref, () async {
                     cmdsNotifier.addOrder(newOrder).then((value) {
                       if (value) {
                         pageNotifier.setAmapPage(AmapPage.main);
@@ -114,13 +114,13 @@ class Boutons extends HookConsumerWidget {
                         prod.add(p.copyWith());
                       }
                     }
-                    tokenExpireWrapper(ref, () {
+                    tokenExpireWrapper(ref, () async {
                       cmdsNotifier.setProducts(indexCmd, prod).then((value) {
                         if (value) {
                           pageNotifier.setAmapPage(AmapPage.main);
                           userAmountNotifier.updateCash(lastPrice - price);
-                          displayToast(
-                              context, TypeMsg.msg, AMAPTextConstants.updatedOrder);
+                          displayToast(context, TypeMsg.msg,
+                              AMAPTextConstants.updatedOrder);
                         } else {
                           pageNotifier.setAmapPage(AmapPage.main);
                           displayToast(context, TypeMsg.error,
@@ -130,7 +130,8 @@ class Boutons extends HookConsumerWidget {
                     });
                     clearCmd(ref);
                   } else {
-                    displayToast(context, TypeMsg.error, AMAPTextConstants.notEnoughMoney);
+                    displayToast(context, TypeMsg.error,
+                        AMAPTextConstants.notEnoughMoney);
                   }
                 }
               }),

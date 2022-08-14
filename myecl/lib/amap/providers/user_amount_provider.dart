@@ -2,9 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/repositories/amap_user_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
-import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/providers/single_provider.dart';
 
-class UserCashNotifier extends StateNotifier<AsyncValue<Cash>> {
+class UserCashNotifier extends SingleProvider<Cash> {
   final AmapUserRepository _amapUserRepository = AmapUserRepository();
   UserCashNotifier({required String token})
       : super(const AsyncValue.loading()) {
@@ -12,18 +12,9 @@ class UserCashNotifier extends StateNotifier<AsyncValue<Cash>> {
   }
 
   Future<AsyncValue<Cash>> loadCashByUser(String userId) async {
-    try {
-      final amount = await _amapUserRepository.getCashByUser(userId);
-      state = AsyncValue.data(amount);
-      return state;
-    } catch (e) {
-      state = AsyncValue.error(e);
-      if (e is AppException && e.type == ErrorType.tokenExpire) {
-        rethrow;
-      } else {
-        return state;
-      }
-    }
+    return await load(() async {
+      return await _amapUserRepository.getCashByUser(userId);
+    });
   }
 
   Future updateCash(double amount) async {

@@ -1,67 +1,24 @@
-import 'dart:convert';
-
 import 'package:myecl/loan/class/item.dart';
-import 'package:http/http.dart' as http;
-import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/repository.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
 class ItemRepository extends Repository {
+  @override
   final ext = "loans/item/";
 
   Future<List<Item>> getItemList() async {
-    final response = await http.get(Uri.parse(host + ext), headers: headers);
-    if (response.statusCode == 200) {
-      try {
-        String resp = utf8.decode(response.body.runes.toList());
-        return List<Item>.from(json.decode(resp));
-      } catch (e) {
-        return [];
-      }
-    } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, response.body);
-    } else {
-      throw AppException(ErrorType.notFound, "Failed to load items");
-    }
+    return List<Item>.from((await getList()).map((x) => Item.fromJson(x)));
   }
 
   Future<Item> createItem(Item item) async {
-    final response = await http.post(Uri.parse(host + ext),
-        headers: headers, body: json.encode(item));
-    if (response.statusCode == 201) {
-      try {
-        String resp = utf8.decode(response.body.runes.toList());
-        return Item.fromJson(json.decode(resp));
-      } catch (e) {
-        throw AppException(ErrorType.invalidData, "Failed to create item");
-      }
-    } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, response.body);
-    } else {
-      throw AppException(ErrorType.notFound, "Failed to create item");
-    }
+    final json = item.toJson();
+    return Item.fromJson(await create(json));
   }
 
   Future<bool> updateItem(Item item) async {
-    final response = await http.patch(Uri.parse(host + ext + item.id),
-        headers: headers, body: json.encode(item));
-    if (response.statusCode == 200) {
-      return true;
-    } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, response.body);
-    } else {
-      throw AppException(ErrorType.notFound, "Failed to update item");
-    }
+    return await update(item.toJson(), item.id);
   }
 
   Future<bool> deleteItem(Item item) async {
-    final response =
-        await http.delete(Uri.parse(host + ext + item.id), headers: headers);
-    if (response.statusCode == 200) {
-      return true;
-    } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, response.body);
-    } else {
-      throw AppException(ErrorType.notFound, "Failed to delete item");
-    }
+    return await delete(item.id);
   }
 }

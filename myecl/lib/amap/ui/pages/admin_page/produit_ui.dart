@@ -116,7 +116,7 @@ class ProductUi extends ConsumerWidget {
                             onYes: () {
                               ref
                                   .watch(deliveryProductListProvider(deliveryId).notifier)
-                                  .deleteProduct(p.id);
+                                  .deleteProduct(p);
                               displayToast(
                                   context, TypeMsg.msg, "Product supprimé");
                             }));

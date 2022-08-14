@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class AssociationListNotifier extends StateNotifier<AsyncValue<List<String>>> {
   AssociationListNotifier() : super(const AsyncValue.loading());
 
+  //TODO: tous les faire
+
   Future<AsyncValue<List<String>>> loadHistory() async {
     try {
       // final loans = await _repository.getHistory();

@@ -151,7 +151,8 @@ class AddCmdPage extends HookConsumerWidget {
                                             ),
                                             validator: (value) {
                                               if (value!.isEmpty) {
-                                                return AMAPTextConstants.requiredDate;
+                                                return AMAPTextConstants
+                                                    .requiredDate;
                                               }
                                               return null;
                                             },
@@ -184,8 +185,8 @@ class AddCmdPage extends HookConsumerWidget {
                             height: 30,
                           ),
                           GestureDetector(
-                              child:
-                                  const GreenBtn(text: AMAPTextConstants.addingCommand),
+                              child: const GreenBtn(
+                                  text: AMAPTextConstants.addingCommand),
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
                                   final date = dateController.value.text;
@@ -197,7 +198,7 @@ class AddCmdPage extends HookConsumerWidget {
                                           .toList(),
                                       deliveryDate: DateTime.parse(date),
                                       locked: false);
-                                  tokenExpireWrapper(ref, () {
+                                  tokenExpireWrapper(ref, () async {
                                     deliveryNotifier
                                         .addDelivery(del)
                                         .then((value) {
@@ -207,8 +208,11 @@ class AddCmdPage extends HookConsumerWidget {
                                         displayToast(context, TypeMsg.msg,
                                             AMAPTextConstants.addedCommand);
                                       } else {
-                                        displayToast(context, TypeMsg.error,
-                                            AMAPTextConstants.alreadyExistCommand);
+                                        displayToast(
+                                            context,
+                                            TypeMsg.error,
+                                            AMAPTextConstants
+                                                .alreadyExistCommand);
                                       }
                                       selectedNotifier.clear();
                                     });

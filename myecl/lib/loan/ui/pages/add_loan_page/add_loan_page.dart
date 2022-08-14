@@ -401,7 +401,7 @@ class AddLoanPage extends HookConsumerWidget {
                                       LoanTextConstants.invalidDates);
                                 } else {
                                   pageNotifier.setLoanPage(LoanPage.main);
-                                  tokenExpireWrapper(ref, () {
+                                  tokenExpireWrapper(ref, () async {
                                     loanListNotifier
                                         .addLoan(
                                       Loan(

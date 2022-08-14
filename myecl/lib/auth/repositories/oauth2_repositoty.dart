@@ -4,7 +4,7 @@ import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'dart:math';
 
-import 'package:myecl/tools/repository.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
 String generateRandomString(int len) {
   var r = Random.secure();
@@ -18,6 +18,7 @@ String hash(String data) {
 }
 
 class OAuth2TokenRepository extends Repository {
+  @override
   final ext = "auth/";
   @override
   final Map<String, String> headers = {

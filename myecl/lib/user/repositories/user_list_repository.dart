@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/repository.dart';
+import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:http/http.dart' as http;
 
 class UserListRepository extends Repository {
+  @override  // TODO:
   final ext = "users/";
 
   Future<List<SimpleUser>> getAllUsers() async {
@@ -31,7 +32,6 @@ class UserListRepository extends Repository {
     if (response.statusCode == 200) {
       try {
         String resp = utf8.decode(response.body.runes.toList());
-        print(resp);
         return List<SimpleUser>.from(
             json.decode(resp).map((x) => SimpleUser.fromJson(x)));
       } catch (e) {

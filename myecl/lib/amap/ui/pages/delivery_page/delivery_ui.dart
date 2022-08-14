@@ -297,11 +297,12 @@ class DeliveryUi extends ConsumerWidget {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) => AMAPDialog(
-                                descriptions: AMAPTextConstants.deletingDelivery,
+                                descriptions:
+                                    AMAPTextConstants.deletingDelivery,
                                 title: AMAPTextConstants.deleting,
                                 onYes: () {
                                   deliveryListNotifier
-                                      .deleteDelivery(i)
+                                      .deleteDelivery(c)
                                       .then((value) {
                                     if (value) {
                                       displayToast(context, TypeMsg.msg,

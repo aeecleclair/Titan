@@ -3,8 +3,9 @@ import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/repositories/cash_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/providers/list_provider.dart';
 
-class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
+class CashProvider extends ListProvider<Cash> {
   final CashRepository _cashRepository = CashRepository();
 
   CashProvider({required String token}) : super(const AsyncLoading()) {
@@ -12,77 +13,15 @@ class CashProvider extends StateNotifier<AsyncValue<List<Cash>>> {
   }
 
   Future<AsyncValue<List<Cash>>> loadCashList() async {
-    try {
-      final cashList = await _cashRepository.getCashList();
-      state = AsyncValue.data(cashList);
-      return state;
-    } catch (e) {
-      state = AsyncValue.error(e);
-      if (e is AppException && e.type == ErrorType.tokenExpire) {
-        rethrow;
-      } else {
-        return state;
-      }
-    }
+    return await loadList(_cashRepository.getCashList);
   }
 
   Future<bool> addCash(Cash cash) async {
-    return state.when(
-      data: (cashList) async {
-        try {
-          Cash newCash = await _cashRepository.createCash(cash, cash.user.id);
-          cashList.add(newCash);
-          state = AsyncValue.data(cashList);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(cashList);
-          return false;
-        }
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot add cash while loading");
-        return false;
-      },
-    );
+    return await add(_cashRepository.createCash, cash);
   }
 
   Future<bool> updateCash(Cash cash) async {
-    return state.when(
-      data: (cashList) async {
-        try {
-          await _cashRepository.updateCash(cash, cash.user.id);
-          var index = cashList.indexWhere((p) => p.user.id == cash.user.id);
-          cashList[index] = cash;
-          state = AsyncValue.data(cashList);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(cashList);
-          return false;
-        }
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot update cash while loading");
-        return false;
-      },
-    );
+    return await update(_cashRepository.updateCash, cash);
   }
 
   Future<AsyncValue<List<Cash>>> filterCashList(String filter) async {

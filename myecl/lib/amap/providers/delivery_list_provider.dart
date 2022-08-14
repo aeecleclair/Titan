@@ -2,9 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/repositories/delivery_list_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
-import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/providers/list_provider.dart';
 
-class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
+class DeliveryListNotifier extends ListProvider<Delivery> {
   final DeliveryListRepository _deliveriesListRepository =
       DeliveryListRepository();
   DeliveryListNotifier({required String token})
@@ -13,108 +13,20 @@ class DeliveryListNotifier extends StateNotifier<AsyncValue<List<Delivery>>> {
   }
 
   Future<AsyncValue<List<Delivery>>> loadDeliveriesList() async {
-    try {
-      final deliveriesList = await _deliveriesListRepository.getDeliveryList();
-      state = AsyncValue.data(deliveriesList);
-      return state;
-    } catch (e) {
-      state = AsyncValue.error(e);
-      if (e is AppException && e.type == ErrorType.tokenExpire) {
-        rethrow;
-      } else {
-        return state;
-      }
-    }
+    return await loadList(_deliveriesListRepository.getDeliveryList);
   }
 
   Future<bool> addDelivery(Delivery delivery) async {
-    return state.when(
-      data: (deliveries) async {
-        try {
-          Delivery newDelivery = await _deliveriesListRepository.createDelivery(
-            delivery,
-          );
-          deliveries.add(newDelivery);
-          state = AsyncValue.data(deliveries);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(deliveries);
-          return false;
-        }
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot add delivery while loading");
-        return false;
-      },
-    );
+    return await add(_deliveriesListRepository.createDelivery, delivery);
   }
 
   Future<bool> updateDelivery(Delivery delivery) async {
-    return state.when(
-      data: (deliveries) async {
-        try {
-          await _deliveriesListRepository.updateDelivery(delivery);
-          var index = deliveries.indexWhere((p) => p.id == delivery.id);
-          deliveries[index] = delivery;
-          state = AsyncValue.data(deliveries);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(deliveries);
-          return false;
-        }
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot update delivery while loading");
-        return false;
-      },
-    );
+    return await update(_deliveriesListRepository.updateDelivery, delivery);
   }
 
-  Future<bool> deleteDelivery(String deliveryId) async {
-    return state.when(
-      data: (deliveries) async {
-        try {
-          await _deliveriesListRepository.deleteDelivery(deliveryId);
-          deliveries.removeWhere((e) => e.id == deliveryId);
-          state = AsyncValue.data(deliveries);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(deliveries);
-          return false;
-        }
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot delete delivery while loading");
-        return false;
-      },
-    );
+  Future<bool> deleteDelivery(Delivery delivery) async {
+    return await delete(
+        _deliveriesListRepository.deleteDelivery, delivery.id, delivery);
   }
 
   void toggleExpanded(String deliveryId) {

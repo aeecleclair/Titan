@@ -6,15 +6,16 @@ import 'package:myecl/amap/repositories/amap_user_repository.dart';
 import 'package:myecl/amap/repositories/order_list_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/providers/list_provider.dart';
 
-class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
-  final OrderListRepository _repository = OrderListRepository();
+class OrderListNotifier extends ListProvider<Order> {
+  final OrderListRepository _orderListRepository = OrderListRepository();
   final AmapUserRepository _userRepository = AmapUserRepository();
   late String deliveryId;
   late String userId;
   OrderListNotifier({required String token})
       : super(const AsyncValue.loading()) {
-    _repository.setToken(token);
+    _orderListRepository.setToken(token);
   }
 
   void setId(String id) {
@@ -26,108 +27,27 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
   }
 
   Future<AsyncValue<List<Order>>> loadOrderList() async {
-    try {
-      final orders = await _userRepository.getOrderList(userId);
-      state = AsyncValue.data(orders);
-      return state;
-    } catch (e) {
-      state = AsyncValue.error(e);
-      if (e is AppException && e.type == ErrorType.tokenExpire) {
-        rethrow;
-      } else {
-        return state;
-      }
-    }
+    return await loadList(() async {
+      return await _userRepository.getOrderList(userId);
+    });
   }
 
   Future<bool> addOrder(Order order) async {
-    return state.when(
-      data: (orders) async {
-        try {
-          Order newOrder =
-              await _repository.createOrder(deliveryId, order, userId);
-          orders.add(newOrder);
-          state = AsyncValue.data(orders);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(orders);
-          return false;
-        }
-      },
-      error: (error, s) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot add order while loading");
-        return false;
-      },
-    );
+    return await add((o) async {
+      return await _orderListRepository.createOrder(deliveryId, o, userId);
+    }, order);
   }
 
   Future<bool> updateOrder(Order order) async {
-    return state.when(
-      data: (orders) async {
-        try {
-          await _repository.updateOrder(deliveryId, order, userId);
-          var index = orders.indexWhere((element) => element.id == order.id);
-          orders[index] = order;
-          state = AsyncValue.data(orders);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(orders);
-          return false;
-        }
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot update order while loading");
-        return false;
-      },
-    );
+    return await update((o) async {
+      return await _orderListRepository.updateOrder(deliveryId, order, userId);
+    }, order);
   }
 
-  Future<bool> deleteOrder(int indexOrder) async {
-    return state.when(
-      data: (orders) async {
-        try {
-          await _repository.deleteOrder(
-              orders[indexOrder].deliveryId, orders[indexOrder].id);
-          orders.removeAt(indexOrder);
-          state = AsyncValue.data(orders);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(orders);
-          return false;
-        }
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot delete order while loading");
-        return false;
-      },
-    );
+  Future<bool> deleteOrder(Order order) async {
+    return await delete((id) async {
+      return await _orderListRepository.deleteOrder(order.deliveryId, id);
+    }, order.id, order);
   }
 
   Future<bool> addProduct(int indexOrder, Product product) async {
@@ -136,7 +56,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
         try {
           var newOrder = orders[indexOrder]
               .copyWith(products: orders[indexOrder].products..add(product));
-          await _repository.updateOrder(deliveryId, newOrder, userId);
+          await _orderListRepository.updateOrder(deliveryId, newOrder, userId);
           orders[indexOrder] = newOrder;
           state = AsyncValue.data(orders);
           return true;
@@ -167,7 +87,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
         try {
           var newOrder = orders[indexOrder]
               .copyWith(products: orders[indexOrder].products..remove(product));
-          await _repository.updateOrder(deliveryId, newOrder, userId);
+          await _orderListRepository.updateOrder(deliveryId, newOrder, userId);
           orders[indexOrder] = newOrder;
           state = AsyncValue.data(orders);
           return true;
@@ -200,7 +120,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
               products: orders[indexOrder].products
                 ..replaceRange(orders[indexOrder].products.indexOf(product), 1,
                     [product]));
-          await _repository.updateOrder(deliveryId, newOrder, userId);
+          await _orderListRepository.updateOrder(deliveryId, newOrder, userId);
           orders[indexOrder] = newOrder;
           state = AsyncValue.data(orders);
           return true;
@@ -265,7 +185,7 @@ class OrderListNotifier extends StateNotifier<AsyncValue<List<Order>>> {
       data: (orders) async {
         try {
           var newOrder = orders[indexOrder].copyWith(products: newListProduct);
-          await _repository.updateOrder(deliveryId, newOrder, userId);
+          await _orderListRepository.updateOrder(deliveryId, newOrder, userId);
           orders[indexOrder] = newOrder;
           state = AsyncValue.data(orders);
           return true;

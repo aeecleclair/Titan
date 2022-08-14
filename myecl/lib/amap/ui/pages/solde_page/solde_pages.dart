@@ -125,7 +125,7 @@ class SoldePage extends HookConsumerWidget {
                 child: TextField(
                   onChanged: (value) {
                     focus.value = true;
-                    tokenExpireWrapper(ref, () {
+                    tokenExpireWrapper(ref, () async {
                       cashListNotifier
                           .filterCashList(editingController.text)
                           .then((value) {

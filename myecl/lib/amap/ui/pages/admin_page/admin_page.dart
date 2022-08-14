@@ -86,7 +86,12 @@ class AdminPage extends HookConsumerWidget {
           ];
     }
 
-    return Column(
+    return AmapRefresher(
+              keyRefresh: GlobalKey<RefreshIndicatorState>(),
+              onRefresh: () async {
+                await productsListNotifier.loadProductList();
+              },
+              child: Column(
       children: [
         const SizedBox(
           height: 60,
@@ -95,12 +100,7 @@ class AdminPage extends HookConsumerWidget {
           child: Container(
             decoration: BoxDecoration(
                 color: AMAPColorConstants.background2.withOpacity(0.5)),
-            child: AmapRefresher(
-              keyRefresh: GlobalKey<RefreshIndicatorState>(),
-              onRefresh: () async {
-                await productsListNotifier.loadProductList();
-              },
-              child: SingleChildScrollView(
+            child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
@@ -137,8 +137,8 @@ class AdminPage extends HookConsumerWidget {
               ),
             ),
           ),
-        ),
       ],
+        ),
     );
   }
 }

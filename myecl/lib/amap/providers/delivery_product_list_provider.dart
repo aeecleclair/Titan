@@ -3,8 +3,9 @@ import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/providers/list_provider.dart';
 
-class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
+class ProductListNotifier extends ListProvider<Product> {
   final _productListRepository = DeliveryProductListRepository();
   late String deliveryId;
   ProductListNotifier({required String token})
@@ -17,112 +18,27 @@ class ProductListNotifier extends StateNotifier<AsyncValue<List<Product>>> {
   }
 
   Future<AsyncValue<List<Product>>> loadProductList() async {
-    if (deliveryId.isEmpty) {
-      return const AsyncValue.error(
-          'deliveryId is null, please set deliveryId before load product list');
-    }
-    try {
-      final productList =
-          await _productListRepository.getProductList(deliveryId);
-      state = AsyncValue.data(productList);
-      return state;
-    } catch (e) {
-      state = AsyncValue.error(e);
-      if (e is AppException && e.type == ErrorType.tokenExpire) {
-        rethrow;
-      } else {
-        return state;
-      }
-    }
+    return await loadList(() async {
+      return await _productListRepository.getProductList(deliveryId);
+    });
   }
 
   Future<bool> addProduct(Product product) async {
-    return state.when(
-      data: (products) async {
-        try {
-          await _productListRepository.createProduct(deliveryId, product);
-          products.add(product);
-          state = AsyncValue.data(products);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(products);
-          return false;
-        }
-      },
-      error: (error, s) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot add product while loading");
-        return false;
-      },
-    );
+    return await add((p) {
+      return _productListRepository.createProduct(deliveryId, p);
+    }, product);
   }
 
   Future<bool> updateProduct(Product product) async {
-    return state.when(
-      data: (products) async {
-        try {
-          await _productListRepository.updateProduct(deliveryId, product);
-          var index = products.indexWhere((p) => p.id == product.id);
-          products.remove(products.firstWhere((e) => e.id == product.id));
-          products.insert(index, product);
-          state = AsyncValue.data(products);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(products);
-          return false;
-        }
-      },
-      error: (error, s) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot update product while loading");
-        return false;
-      },
-    );
+    return await update((p) {
+      return _productListRepository.updateProduct(deliveryId, p);
+    }, product);
   }
 
-  Future<bool> deleteProduct(String productId) async {
-    return state.when(
-      data: (products) async {
-        try {
-          await _productListRepository.deleteProduct(deliveryId, productId);
-          products.removeWhere((element) => element.id == productId);
-          state = AsyncData(products);
-          return true;
-        } catch (e) {
-          state = AsyncData(products);
-          return false;
-        }
-      },
-      error: (error, s) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot delete product while loading");
-        return false;
-      },
-    );
+  Future<bool> deleteProduct(Product product) async {
+    return await delete((id) {
+      return _productListRepository.deleteProduct(deliveryId, id);
+    }, product.id, product);
   }
 
   Future<bool> setQuantity(String productId, int i) async {

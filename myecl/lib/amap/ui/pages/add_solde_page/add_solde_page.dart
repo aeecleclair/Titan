@@ -41,7 +41,7 @@ class AddSoldePage extends HookConsumerWidget {
                     child: TextField(
                       onChanged: (value) {
                         focus.value = true;
-                        tokenExpireWrapper(ref, () {
+                        tokenExpireWrapper(ref, () async {
                           usersNotifier
                               .filterUsers(editingController.text)
                               .then((value) {
@@ -86,7 +86,7 @@ class AddSoldePage extends HookConsumerWidget {
                                 children: [
                                   IconButton(
                                       onPressed: () {
-                                        tokenExpireWrapper(ref, () {
+                                        tokenExpireWrapper(ref, () async {
                                           cashListNotifier
                                               .addCash(
                                                   Cash(balance: 0.0, user: e))

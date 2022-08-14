@@ -2,11 +2,12 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/repository.dart';
+import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/class/user.dart';
 
 class UserRepository extends Repository {
+  @override
   final ext = "users/";
 
   Future<List<SimpleUser>> getAllUsers() async {

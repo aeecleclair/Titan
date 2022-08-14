@@ -32,8 +32,9 @@ void deleteCmd(WidgetRef ref, int i) {
   final deliveryId = ref.watch(deliveryIdProvider);
   final indexCmdNotifier = ref.watch(orderIndexProvider.notifier);
   final cmdsNotifier = ref.watch(orderListProvider(deliveryId).notifier);
+  final cmds = ref.watch(orderListProvider(deliveryId));
   indexCmdNotifier.setIndex(-1);
-  cmdsNotifier.deleteOrder(i);
+  cmdsNotifier.deleteOrder(cmds.value![i]);
 }
 
 enum TypeMsg { msg, error }

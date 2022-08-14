@@ -258,7 +258,7 @@ class ModifProduct extends HookConsumerWidget {
                                           category: cate,
                                           quantity: 0,
                                         );
-                                        tokenExpireWrapper(ref, () {
+                                        tokenExpireWrapper(ref, () async {
                                           productsNotifier
                                               .updateProduct(newProduct)
                                               .then((value) {
@@ -292,7 +292,7 @@ class ModifProduct extends HookConsumerWidget {
                                           category: cate,
                                           quantity: 0,
                                         );
-                                        tokenExpireWrapper(ref, () {
+                                        tokenExpireWrapper(ref, () async {
                                           productsNotifier
                                               .addProduct(newProduct)
                                               .then((value) {

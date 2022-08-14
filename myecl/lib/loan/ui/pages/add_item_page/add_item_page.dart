@@ -170,7 +170,7 @@ class AddItemPage extends HookConsumerWidget {
                               }
                               if (key.currentState!.validate()) {
                                 pageNotifier.setLoanPage(LoanPage.main);
-                                tokenExpireWrapper(ref, () {
+                                tokenExpireWrapper(ref, () async {
                                   itemListNotifier
                                       .addItem(
                                     Item(
