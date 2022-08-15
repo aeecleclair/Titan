@@ -21,7 +21,12 @@ class CashProvider extends ListProvider<Cash> {
   }
 
   Future<bool> updateCash(Cash cash) async {
-    return await update(_cashRepository.updateCash, cash);
+    return await update(_cashRepository.updateCash, (cashs, cash) {
+      final cashsId = cashs.map((c) => c.user.id).toList();
+      final index = cashsId.indexOf(cash.user.id);
+      cashs[index] = cash;
+      return cashs;
+    }, cash);
   }
 
   Future<AsyncValue<List<Cash>>> filterCashList(String filter) async {

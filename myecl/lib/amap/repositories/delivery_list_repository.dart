@@ -8,7 +8,8 @@ class DeliveryListRepository extends Repository {
   final ext = "amap/deliveries";
 
   Future<List<Delivery>> getDeliveryList() async {
-    return List<Delivery>.from((await getList()).map((x) => Delivery.fromJson(x)));
+    return List<Delivery>.from(
+        (await getList()).map((x) => Delivery.fromJson(x)));
   }
 
   Future<Delivery> createDelivery(Delivery delivery) async {
@@ -29,8 +30,8 @@ class DeliveryListRepository extends Repository {
 
   Future<List<Product>> getAllProductsFromOrder(
       String deliveryId, String orderId) async {
-    return List<Product>.from(
-        (await getList(suffix: "/" + deliveryId + "/orders/" + orderId + "/products"))
-            .map((x) => Product.fromJson(x)));
+    return List<Product>.from((await getList(
+            suffix: "/" + deliveryId + "/orders/" + orderId + "/products"))
+        .map((x) => Product.fromJson(x)));
   }
 }

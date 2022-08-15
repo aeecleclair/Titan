@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
+import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/delivery_page/delivery_ui.dart';
 import 'package:myecl/amap/ui/refresh_indicator.dart';
@@ -13,10 +14,15 @@ class DeliveryPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryList = ref.watch(deliveryListProvider);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
+    final isAmapAdmin = ref.watch(isAmapAdminProvider);
+    print(deliveryList);
     List<Widget> listWidgetOrder = [];
     deliveryList.when(
       data: (orders) {
         orders.sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
+        if (!isAmapAdmin) {
+          orders = orders.where((element) => !element.locked).toList();
+        }
         if (orders.isNotEmpty) {
           listWidgetOrder.addAll([
             const SizedBox(
@@ -35,9 +41,7 @@ class DeliveryPage extends HookConsumerWidget {
             ),
           ]);
           for (Delivery c in orders) {
-            if (!c.locked) {
-              listWidgetOrder.add(DeliveryUi(c: c, i: c.id));
-            }
+            listWidgetOrder.add(DeliveryUi(c: c, i: c.id));
           }
         } else {
           listWidgetOrder.add(Column(

@@ -32,6 +32,11 @@ class ItemListNotifier extends ListProvider<Item> {
   Future<bool> updateItem(Item item) async {
     return await update((i) async {
       return await _itemrepository.updateItem(loanerId, i);
+    }, (items, item) {
+      final loanersId = items.map((e) => e.id).toList();
+      final index = loanersId.indexOf(item.id);
+      items[index] = item;
+      return items;
     }, item);
   }
 

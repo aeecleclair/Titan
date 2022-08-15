@@ -48,11 +48,12 @@ abstract class ListProvider<T> extends StateNotifier<AsyncValue<List<T>>> {
     });
   }
 
-  Future<bool> update(Future<bool> Function(T t) f, T t) async {
+  Future<bool> update(Future<bool> Function(T t) f,
+      List<T> Function(List<T> listT, T t) replace, T t) async {
     return state.when(data: (d) async {
       try {
         await f(t);
-        d[d.indexOf(t)] = t;
+        d = replace(d, t);
         state = AsyncValue.data(d);
         return true;
       } catch (error) {

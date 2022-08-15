@@ -21,7 +21,13 @@ class DeliveryListNotifier extends ListProvider<Delivery> {
   }
 
   Future<bool> updateDelivery(Delivery delivery) async {
-    return await update(_deliveriesListRepository.updateDelivery, delivery);
+    return await update(_deliveriesListRepository.updateDelivery,
+        (deliveries, delivery) {
+      final productsId = deliveries.map((p) => p.id).toList();
+      final index = productsId.indexOf(delivery.id);
+      deliveries[index] = delivery;
+      return deliveries;
+    }, delivery);
   }
 
   Future<bool> deleteDelivery(Delivery delivery) async {

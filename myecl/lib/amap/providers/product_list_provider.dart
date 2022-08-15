@@ -21,11 +21,18 @@ class ProductListNotifier extends ListProvider<Product> {
   }
 
   Future<bool> updateProduct(Product product) async {
-    return await update(_productListRepository.updateProduct, product);
+    return await update(_productListRepository.updateProduct,
+        (products, product) {
+      final productsId = products.map((p) => p.id).toList();
+      final index = productsId.indexOf(product.id);
+      products[index] = product;
+      return products;
+    }, product);
   }
 
   Future<bool> deleteProduct(Product product) async {
-    return await delete(_productListRepository.deleteProduct, product.id, product);
+    return await delete(
+        _productListRepository.deleteProduct, product.id, product);
   }
 }
 

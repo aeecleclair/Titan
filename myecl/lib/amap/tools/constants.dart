@@ -68,6 +68,7 @@ class AMAPTextConstants {
   static const String product = "produit";
   static const String requiredDate = "La date est requise";
   static const String seeMore = "Voir plus";
+  static const String unlock = "Dévérouiller";
   static const String unlockedDelivery = "Livraison dévérouillée";
   static const String update = "Modifier";
   static const String updatedAmount = "Solde modifié";

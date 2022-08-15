@@ -6,9 +6,9 @@ import 'package:myecl/tools/providers/list_provider.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
-class GroupListProvider extends ListProvider<Group> {
+class GroupListNotifier extends ListProvider<Group> {
   final GroupRepository _groupRepository = GroupRepository();
-  GroupListProvider({required String token})
+  GroupListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _groupRepository.setToken(token);
   }
@@ -28,7 +28,12 @@ class GroupListProvider extends ListProvider<Group> {
   }
 
   Future<bool> updateGroup(Group group) async {
-    return await update(_groupRepository.updateGroup, group);
+    return await update(_groupRepository.updateGroup, (groups, group) {
+      final groupsId = groups.map((e) => e.id).toList();
+      final index = groupsId.indexOf(group.id);
+      groups[index] = group;
+      return groups;
+    }, group);
   }
 
   Future<bool> deleteGroup(Group group) async {
@@ -36,18 +41,18 @@ class GroupListProvider extends ListProvider<Group> {
   }
 }
 
-final allGroupListProvider =
-    StateNotifierProvider<GroupListProvider, AsyncValue<List<Group>>>((ref) {
+final allGroupListNotifier =
+    StateNotifierProvider<GroupListNotifier, AsyncValue<List<Group>>>((ref) {
   final token = ref.watch(tokenProvider);
-  GroupListProvider provider = GroupListProvider(token: token);
+  GroupListNotifier provider = GroupListNotifier(token: token);
   provider.loadGroups();
   return provider;
 });
 
-final userGroupListProvider =
-    StateNotifierProvider<GroupListProvider, AsyncValue<List<Group>>>((ref) {
+final userGroupListNotifier =
+    StateNotifierProvider<GroupListNotifier, AsyncValue<List<Group>>>((ref) {
   final token = ref.watch(tokenProvider);
-  GroupListProvider provider = GroupListProvider(token: token);
+  GroupListNotifier provider = GroupListNotifier(token: token);
   provider.loadGroupsFromUser(ref.watch(userProvider));
   return provider;
 });

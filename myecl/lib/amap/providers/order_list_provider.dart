@@ -42,6 +42,11 @@ class OrderListNotifier extends ListProvider<Order> {
   Future<bool> updateOrder(Order order) async {
     return await update((o) async {
       return await _orderListRepository.updateOrder(deliveryId, order, userId);
+    }, (orders, order) {
+      final ordersId = orders.map((o) => o.id).toList();
+      final index = ordersId.indexOf(order.id);
+      orders[index] = order;
+      return orders;
     }, order);
   }
 

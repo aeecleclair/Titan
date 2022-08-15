@@ -21,7 +21,12 @@ class BookingListProvider extends ListProvider<Booking> {
   }
 
   Future<bool> updateBooking(Booking booking) async {
-    return await update(_repository.updateBooking, booking);
+    return await update(_repository.updateBooking, (bookings, booking) {
+      final bookingsId = bookings.map((e) => e.id).toList();
+      final index = bookingsId.indexOf(booking.id);
+      bookings[index] = booking;
+      return bookings;
+    }, booking);
   }
 
   Future<bool> deleteBooking(Booking booking) async {

@@ -249,7 +249,7 @@ class DeliveryUi extends ConsumerWidget {
                                 topLeft: Radius.circular(23)),
                             color: AMAPColorConstants.background3),
                         alignment: Alignment.center,
-                        child: const Text(AMAPTextConstants.lock,
+                        child: Text(c.locked ? AMAPTextConstants.unlock : AMAPTextConstants.lock,
                             style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
@@ -265,10 +265,10 @@ class DeliveryUi extends ConsumerWidget {
                           if (value) {
                             if (lastState) {
                               displayToast(context, TypeMsg.msg,
-                                  AMAPTextConstants.lockedDelivery);
+                                  AMAPTextConstants.unlockedDelivery);
                             } else {
                               displayToast(context, TypeMsg.msg,
-                                  AMAPTextConstants.unlockedDelivery);
+                                  AMAPTextConstants.lockedDelivery);
                             }
                           } else {
                             displayToast(context, TypeMsg.error,

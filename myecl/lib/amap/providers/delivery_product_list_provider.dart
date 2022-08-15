@@ -32,6 +32,11 @@ class ProductListNotifier extends ListProvider<Product> {
   Future<bool> updateProduct(Product product) async {
     return await update((p) {
       return _productListRepository.updateProduct(deliveryId, p);
+    }, (products, product) {
+      final productsId = products.map((p) => p.id).toList();
+      final index = productsId.indexOf(product.id);
+      products[index] = product;
+      return products;
     }, product);
   }
 

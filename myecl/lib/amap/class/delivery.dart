@@ -29,6 +29,7 @@ class Delivery {
     _data['delivery_date'] = processDate(deliveryDate);
     _data['products_ids'] = products.map((e) => e.id).toList();
     _data['locked'] = locked;
+    _data['id'] = id;
     return _data;
   }
 

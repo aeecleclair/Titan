@@ -72,7 +72,9 @@ abstract class Repository {
   Future<bool> update(dynamic t, String tId, {String suffix = ""}) async {
     final response = await http.patch(Uri.parse(host + ext + tId + suffix),
         headers: headers, body: json.encode(t));
+    print(response.body);
     if (response.statusCode == 200) {
+      print(true);
       return true;
     } else if (response.statusCode == 403) {
       throw AppException(ErrorType.tokenExpire, response.body);

@@ -20,7 +20,13 @@ class LoanerListNotifier extends ListProvider<Loaner> {
   }
 
   Future<bool> updateLoaner(Loaner loaner) async {
-    return await update(_loanerRepository.updateLoaner, loaner);
+    return await update(_loanerRepository.updateLoaner,
+    (loaners, loaner) {
+      final loanersId = loaners.map((e) => e.id).toList();
+      final index = loanersId.indexOf(loaner.id);
+      loaners[index] = loaner;
+      return loaners;
+    }, loaner);
   }
 
   Future<bool> deleteLoaner(Loaner loaner) async {
@@ -28,11 +34,11 @@ class LoanerListNotifier extends ListProvider<Loaner> {
   }
 }
 
-final loanerListProvider = StateNotifierProvider<LoanerListNotifier, AsyncValue<List<Loaner>>>(
+final loanerListProvider =
+    StateNotifierProvider<LoanerListNotifier, AsyncValue<List<Loaner>>>(
   (ref) {
     final token = ref.watch(tokenProvider);
-    LoanerListNotifier _orderListNotifier =
-        LoanerListNotifier(token: token);
+    LoanerListNotifier _orderListNotifier = LoanerListNotifier(token: token);
     _orderListNotifier.loadLoanerList();
     return _orderListNotifier;
   },

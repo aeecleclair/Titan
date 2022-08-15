@@ -20,7 +20,7 @@ class AddItemPage extends HookConsumerWidget {
     final _currentStep = useState(0);
     final key = GlobalKey<FormState>();
     final asso = useState(ref.watch(loanerName));
-    final associations = ref.watch(userGroupListProvider);
+    final associations = ref.watch(userGroupListNotifier);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final name = useTextEditingController();
     final caution = useTextEditingController();
