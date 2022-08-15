@@ -16,6 +16,7 @@ class OrderListNotifier extends ListProvider<Order> {
   OrderListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _orderListRepository.setToken(token);
+    _userRepository.setToken(token);
   }
 
   void setId(String id) {

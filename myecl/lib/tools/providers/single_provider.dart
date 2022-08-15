@@ -47,10 +47,10 @@ abstract class SingleProvider<T> extends StateNotifier<AsyncValue<T>> {
     });
   }
 
-  Future<bool> update(Future<T> Function() f, T t) async {
+  Future<bool> update(Future<bool> Function(T t) f, T t) async {
     return state.when(data: (d) async {
       try {
-        await f();
+        await f(t);
         state = AsyncValue.data(t);
         return true;
       } catch (error) {

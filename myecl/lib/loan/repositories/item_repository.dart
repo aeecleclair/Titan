@@ -10,15 +10,14 @@ class ItemRepository extends Repository {
   }
 
   Future<Item> createItem(Item item) async {
-    final json = item.toJson();
-    return Item.fromJson(await create(json));
+    return Item.fromJson(await create(item.toJson()));
   }
 
   Future<bool> updateItem(Item item) async {
     return await update(item.toJson(), item.id);
   }
 
-  Future<bool> deleteItem(Item item) async {
-    return await delete(item.id);
+  Future<bool> deleteItem(String itemId) async {
+    return await delete(itemId);
   }
 }

@@ -1,93 +1,40 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
-import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/providers/single_provider.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
 
-class UserNotifier extends StateNotifier<AsyncValue<User>> {
+class UserNotifier extends SingleProvider<User> {
   final UserRepository _userRepository = UserRepository();
   UserNotifier({required String token}) : super(const AsyncValue.loading()) {
     _userRepository.setToken(token);
   }
 
   Future<bool> setUser(User user) async {
-    try {
-      state = AsyncValue.data(user);
-      return true;
-    } catch (e) {
-      state = AsyncValue.error(e);
-      if (e is AppException && e.type == ErrorType.tokenExpire) {
-        rethrow;
-      } else {
-        state = AsyncValue.error(e);
-        return false;
-      }
-    }
+    return await add((user) async {
+      return user;
+    }, user);
   }
 
-  Future<bool> loadUser(String id) async {
-    try {
-      final user = await _userRepository.getUser(id);
-      state = AsyncValue.data(user);
-      return true;
-    } catch (e) {
-      state = AsyncValue.error(e);
-      if (e is AppException && e.type == ErrorType.tokenExpire) {
-        rethrow;
-      } else {
-        state = AsyncValue.error(e);
-        return false;
-      }
-    }
+  Future<AsyncValue<User>> loadUser(String id) async {
+    return await load(() async {
+      return await _userRepository.getUser(id);
+    });
   }
 
-  Future<bool> loadMe() async {
-    try {
-      final user = await _userRepository.getMe();
-      state = AsyncValue.data(user);
-      return true;
-    } catch (e) {
-      state = AsyncValue.error(e);
-      if (e is AppException && e.type == ErrorType.tokenExpire) {
-        rethrow;
-      } else {
-        state = AsyncValue.error(e);
-        return false;
-      }
-    }
+  Future<AsyncValue<User>> loadMe() async {
+    return await load(() async {
+      return await _userRepository.getMe();
+    });
   }
 
   Future<bool> updateUser(User user) async {
-    try {
-      await _userRepository.updateUser(user.id, user);
-      state = AsyncValue.data(user);
-      return true;
-    } catch (e) {
-      state = AsyncValue.error(e);
-      if (e is AppException && e.type == ErrorType.tokenExpire) {
-        rethrow;
-      } else {
-        state = AsyncValue.error(e);
-        return false;
-      }
-    }
+    return await update(_userRepository.updateUser, user);
   }
 
   Future<bool> updateMe(User user) async {
-    try {
-      await _userRepository.updateMe(user);
-      state = AsyncValue.data(user);
-      return true;
-    } catch (e) {
-      state = AsyncValue.error(e);
-      if (e is AppException && e.type == ErrorType.tokenExpire) {
-        rethrow;
-      } else {
-        state = AsyncValue.error(e);
-        return false;
-      }
-    }
+    return await update(_userRepository.updateMe, user);
   }
 }
 

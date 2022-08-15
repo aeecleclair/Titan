@@ -23,7 +23,7 @@ class AddSoldePage extends HookConsumerWidget {
     return AmapRefresher(
         keyRefresh: GlobalKey<RefreshIndicatorState>(),
         onRefresh: () async {
-          users.value = await usersNotifier.loadUserList();
+          users.value = await usersNotifier.filterUsers("");
         },
         child: users.value.when(data: (u) {
           return SingleChildScrollView(
