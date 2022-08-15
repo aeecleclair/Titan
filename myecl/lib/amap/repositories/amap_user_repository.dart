@@ -5,6 +5,7 @@ import 'package:myecl/tools/repository/repository.dart';
 
 class AmapUserRepository extends Repository {
   @override
+  // ignore: overridden_fields
   final ext = "amap/users/";
   final List<Product> loadedProducts = <Product>[];
 

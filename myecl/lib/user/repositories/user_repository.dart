@@ -4,6 +4,7 @@ import 'package:myecl/user/class/user.dart';
 
 class UserRepository extends Repository {
   @override
+  // ignore: overridden_fields
   final ext = "users/";
 
   Future<List<SimpleUser>> getAllUsers() async {

@@ -3,6 +3,7 @@ import 'package:myecl/tools/repository/repository.dart';
 
 class CashRepository extends Repository {
   @override
+  // ignore: overridden_fields
   final ext = "amap/users/";
 
   Future<List<Cash>> getCashList() async {

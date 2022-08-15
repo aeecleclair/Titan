@@ -3,6 +3,7 @@ import 'package:myecl/tools/repository/repository.dart';
 
 class OrderRepository extends Repository {
   @override
+  // ignore: overridden_fields
   final ext = "orders/";
 
   Future<bool> updateOrder(String orderId, Order order) async {

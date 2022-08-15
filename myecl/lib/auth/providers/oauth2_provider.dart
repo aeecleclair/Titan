@@ -12,7 +12,6 @@ final authTokenProvider =
 });
 
 final isLoggedInProvider = Provider((ref) {
-  // return true;
   return ref.watch(authTokenProvider).when(
     data: (tokens) {
       return tokens["token"] == ""
@@ -43,7 +42,6 @@ final loadingrovider = Provider((ref) {
 });
 
 final idProvider = Provider((ref) {
-  // return "08864e36-9f4c-463e-b0d7-78852b1bc088";
   return ref.watch(authTokenProvider).when(
     data: (tokens) {
       return tokens["token"] == ""
@@ -60,7 +58,6 @@ final idProvider = Provider((ref) {
 });
 
 final tokenProvider = Provider((ref) {
-  print('Provider');
   return ref.watch(authTokenProvider).when(
     data: (tokens) {
       return tokens["token"] as String;
@@ -88,7 +85,7 @@ class OAuth2TokenProvider
   void getTokenFromRequest(String username, String password) async {
     state = const AsyncValue.loading();
     try {
-      var authorizationCode =
+      final authorizationCode =
           await _authTokenRepository.authorizationFlow(username, password);
       final tokens = await _authTokenRepository.getTokens(authorizationCode);
       state = AsyncValue.data(tokens);
@@ -119,7 +116,6 @@ class OAuth2TokenProvider
   }
 
   Future<bool> refreshToken() async {
-    print("refresh");
     return state.when(
       data: (token) async {
         final tokens = await _authTokenRepository

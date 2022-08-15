@@ -3,6 +3,7 @@ import 'package:myecl/tools/repository/repository.dart';
 
 class ProductListRepository extends Repository {
   @override
+  // ignore: overridden_fields
   final ext = "amap/products";
 
   Future<List<Product>> getProductList() async {

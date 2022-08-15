@@ -20,7 +20,6 @@ TODO :
 Réserva° (API)
 Prêt (API)
 Evénements (API)
-text constants
 search/amap
 
 AMAP :

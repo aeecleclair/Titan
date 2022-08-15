@@ -3,6 +3,7 @@ import 'package:myecl/tools/repository/repository.dart';
 
 class LoanRepository extends Repository {
   @override
+  // ignore: overridden_fields
   final ext = "loans/";
 
   Future<List<Loan>> getLoanListByGroupId(String groupId) async {

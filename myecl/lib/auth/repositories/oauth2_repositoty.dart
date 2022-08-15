@@ -19,8 +19,10 @@ String hash(String data) {
 
 class OAuth2TokenRepository extends Repository {
   @override
+  // ignore: overridden_fields
   final ext = "auth/";
   @override
+  // ignore: overridden_fields
   final Map<String, String> headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
     "Accept": "application/json",
@@ -111,7 +113,6 @@ class OAuth2TokenRepository extends Repository {
       if (response.statusCode == 200) {
         final token = jsonDecode(response.body)["access_token"];
         final refreshToken = jsonDecode(response.body)["refresh_token"];
-        // final refreshToken = "";
         return {"token": token, "refreshToken": refreshToken};
       } else {
         throw Exception('Wrong credentials');

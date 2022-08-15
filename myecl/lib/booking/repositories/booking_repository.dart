@@ -3,6 +3,7 @@ import 'package:myecl/tools/repository/repository.dart';
 
 class BookingRepository extends Repository {
   @override
+  // ignore: overridden_fields
   final ext = 'bdebooking/bookings';
 
   Future<List<Booking>> getBookingList() async {
