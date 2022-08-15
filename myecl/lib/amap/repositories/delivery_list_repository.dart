@@ -16,7 +16,7 @@ class DeliveryListRepository extends Repository {
   }
 
   Future<bool> updateDelivery(Delivery delivery) async {
-    return await update(delivery.toJson(), delivery.id);
+    return await update(delivery.toJson(), "/" + delivery.id);
   }
 
   Future<bool> deleteDelivery(String deliveryId) async {

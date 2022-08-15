@@ -3,6 +3,8 @@ import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/groups/class/group.dart';
 import 'package:myecl/groups/repositories/group_repository.dart';
 import 'package:myecl/tools/providers/list_provider.dart';
+import 'package:myecl/user/class/user.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
 class GroupListProvider extends ListProvider<Group> {
   final GroupRepository _groupRepository = GroupRepository();
@@ -13,6 +15,12 @@ class GroupListProvider extends ListProvider<Group> {
 
   Future<AsyncValue<List<Group>>> loadGroups() async {
     return await loadList(_groupRepository.getGroupList);
+  }
+
+  Future<AsyncValue<List<Group>>> loadGroupsFromUser(User user) async {
+    return await loadList(() async {
+      return user.groups;
+    });
   }
 
   Future<bool> createGroup(Group group) async {
@@ -28,9 +36,18 @@ class GroupListProvider extends ListProvider<Group> {
   }
 }
 
-final groupListProvider = StateNotifierProvider((ref) {
+final allGroupListProvider =
+    StateNotifierProvider<GroupListProvider, AsyncValue<List<Group>>>((ref) {
   final token = ref.watch(tokenProvider);
   GroupListProvider provider = GroupListProvider(token: token);
   provider.loadGroups();
+  return provider;
+});
+
+final userGroupListProvider =
+    StateNotifierProvider<GroupListProvider, AsyncValue<List<Group>>>((ref) {
+  final token = ref.watch(tokenProvider);
+  GroupListProvider provider = GroupListProvider(token: token);
+  provider.loadGroupsFromUser(ref.watch(userProvider));
   return provider;
 });

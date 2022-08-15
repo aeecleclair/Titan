@@ -93,7 +93,8 @@ class MainPage extends HookConsumerWidget {
       loading: () {
         listWidget.add(const Center(
             child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
+          valueColor:
+              AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
         )));
       },
       error: (error, s) {

@@ -6,13 +6,15 @@ class LoanRepository extends Repository {
   // ignore: overridden_fields
   final ext = "loans/";
 
-  Future<List<Loan>> getLoanListByGroupId(String groupId) async {
-    return List<Loan>.from((await getList(suffix: groupId)).map((x) => Loan.fromJson(x)));
+  Future<List<Loan>> getLoanListByLoanerId(String loanerId) async {
+    return List<Loan>.from(
+        (await getList(suffix: "loaner/" + loanerId + "/loans"))
+            .map((x) => Loan.fromJson(x)));
   }
 
-  Future<List<Loan>> getLoanListByBorrowerId(String borrowerId) async {
-     return List<Loan>.from(
-        (await getList(suffix: borrowerId)).map((x) => Loan.fromJson(x)));
+  Future<List<Loan>> getMyLoanList() async {
+    return List<Loan>.from(
+        (await getList(suffix: "users/me")).map((x) => Loan.fromJson(x)));
   }
 
   Future<Loan> getLoan(String id) async {
@@ -31,7 +33,18 @@ class LoanRepository extends Repository {
     return await delete(loan.id);
   }
 
+  Future<bool> extendLoan(Loan loan) async {
+    await create(loan.toJson(), suffix: loan.id + "/extend");
+    return true;
+  }
+
+  Future<bool> returnLoan(Loan loan) async {
+    await create(loan.toJson(), suffix: loan.id + "/return");
+    return true;
+  }
+
   Future<List<Loan>> getHistory() async {
-    return List<Loan>.from((await getList(suffix: "history")).map((x) => Loan.fromJson(x)));
+    return List<Loan>.from(
+        (await getList(suffix: "history")).map((x) => Loan.fromJson(x)));
   }
 }

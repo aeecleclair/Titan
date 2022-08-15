@@ -1,0 +1,50 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/loan/class/loaner.dart';
+import 'package:myecl/loan/repositories/loaner_repository.dart';
+import 'package:myecl/tools/providers/list_provider.dart';
+
+class LoanerListNotifier extends ListProvider<Loaner> {
+  final LoanerRepository _loanerRepository = LoanerRepository();
+  LoanerListNotifier({required String token})
+      : super(const AsyncValue.loading()) {
+    _loanerRepository.setToken(token);
+  }
+
+  Future<AsyncValue<List<Loaner>>> loadLoanerList() async {
+    return await loadList(_loanerRepository.getLoanerList);
+  }
+
+  Future<bool> addLoaner(Loaner loaner) async {
+    return await add(_loanerRepository.createLoaner, loaner);
+  }
+
+  Future<bool> updateLoaner(Loaner loaner) async {
+    return await update(_loanerRepository.updateLoaner, loaner);
+  }
+
+  Future<bool> deleteLoaner(Loaner loaner) async {
+    return await delete(_loanerRepository.deleteLoaner, loaner.id, loaner);
+  }
+}
+
+final loanerListProvider = StateNotifierProvider<LoanerListNotifier, AsyncValue<List<Loaner>>>(
+  (ref) {
+    final token = ref.watch(tokenProvider);
+    LoanerListNotifier _orderListNotifier =
+        LoanerListNotifier(token: token);
+    _orderListNotifier.loadLoanerList();
+    return _orderListNotifier;
+  },
+);
+
+final loanerList = Provider((ref) {
+  final deliveryProvider = ref.watch(loanerListProvider);
+  return deliveryProvider.when(data: (loans) {
+    return loans;
+  }, error: (error, stackTrace) {
+    return [];
+  }, loading: () {
+    return [];
+  });
+});

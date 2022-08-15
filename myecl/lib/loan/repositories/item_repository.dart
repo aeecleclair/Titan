@@ -4,21 +4,21 @@ import 'package:myecl/tools/repository/repository.dart';
 class ItemRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "loans/item/";
+  final ext = "loans/loaners/";
 
-  Future<List<Item>> getItemList() async {
-    return List<Item>.from((await getList()).map((x) => Item.fromJson(x)));
+  Future<List<Item>> getItemList(String loanerId) async {
+    return List<Item>.from((await getList(suffix: loanerId + "/items")).map((x) => Item.fromJson(x)));
   }
 
-  Future<Item> createItem(Item item) async {
-    return Item.fromJson(await create(item.toJson()));
+  Future<Item> createItem(String loanerId, Item item) async {
+    return Item.fromJson(await create(item.toJson(), suffix: loanerId + "/items"));
   }
 
-  Future<bool> updateItem(Item item) async {
-    return await update(item.toJson(), item.id);
+  Future<bool> updateItem(String loanerId, Item item) async {
+    return await update(item.toJson(), loanerId + "/items/" + item.id);
   }
 
-  Future<bool> deleteItem(String itemId) async {
-    return await delete(itemId);
+  Future<bool> deleteItem(String loanerId, String itemId) async {
+    return await delete(loanerId + "/items/" + itemId);
   }
 }

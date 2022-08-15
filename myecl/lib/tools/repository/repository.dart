@@ -14,6 +14,7 @@ abstract class Repository {
     headers["Authorization"] = 'Bearer $token';
   }
 
+  /// GET ext/suffix
   Future<List> getList({String suffix = ""}) async {
     final response =
         await http.get(Uri.parse(host + ext + suffix), headers: headers);
@@ -31,6 +32,7 @@ abstract class Repository {
     }
   }
 
+  /// Get ext/id/suffix
   Future<dynamic> getOne(String id, {String suffix = ""}) async {
     final response =
         await http.get(Uri.parse(host + ext + id + suffix), headers: headers);
@@ -48,6 +50,7 @@ abstract class Repository {
     }
   }
 
+  /// POST ext/suffix
   Future<dynamic> create(dynamic t, {String suffix = ""}) async {
     final response = await http.post(Uri.parse(host + ext + suffix),
         headers: headers, body: json.encode(t));
@@ -65,6 +68,7 @@ abstract class Repository {
     }
   }
 
+  /// PATCH ext/id/suffix
   Future<bool> update(dynamic t, String tId, {String suffix = ""}) async {
     final response = await http.patch(Uri.parse(host + ext + tId + suffix),
         headers: headers, body: json.encode(t));
@@ -77,6 +81,7 @@ abstract class Repository {
     }
   }
 
+  /// DELETE ext/id/suffix
   Future<bool> delete(String tId, {String suffix = ""}) async {
     final response = await http.delete(Uri.parse(host + ext + tId + suffix),
         headers: headers);

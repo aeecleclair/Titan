@@ -18,7 +18,7 @@ samples, guidance on mobile development, and a full API reference.
 TODO :
 
 Réserva° (API)
-Prêt (API)
+Prêt (API) / clean asso (/admin)
 Evénements (API)
 search/amap
 

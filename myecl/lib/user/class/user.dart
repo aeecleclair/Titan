@@ -1,4 +1,4 @@
-import 'package:myecl/user/class/group.dart';
+import 'package:myecl/groups/class/group.dart';
 
 class User {
   User({
@@ -22,7 +22,7 @@ class User {
   late final int promo;
   late final String floor;
   late final String createdOn;
-  late final List<Groups> groups;
+  late final List<Group> groups;
 
   User.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -34,7 +34,7 @@ class User {
     promo = json['promo'];
     floor = json['floor'];
     createdOn = json['created_on'];
-    groups = List.from(json['groups']).map((e) => Groups.fromJson(e)).toList();
+    groups = List.from(json['groups']).map((e) => Group.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -75,7 +75,7 @@ class User {
     int? promo,
     String? floor,
     String? createdOn,
-    List<Groups>? groups,
+    List<Group>? groups,
   }) {
     return User(
       name: name ?? this.name,

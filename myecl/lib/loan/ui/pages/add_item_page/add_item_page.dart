@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/groups/providers/group_list_provider.dart';
 import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/providers/association_list_provider.dart';
+import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class AddItemPage extends HookConsumerWidget {
@@ -17,8 +19,8 @@ class AddItemPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final _currentStep = useState(0);
     final key = GlobalKey<FormState>();
-    final asso = useState('Asso 1');
-    final associations = ref.watch(associationListProvider);
+    final asso = useState(ref.watch(loanerName));
+    final associations = ref.watch(userGroupListProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final name = useTextEditingController();
     final caution = useTextEditingController();
@@ -43,11 +45,11 @@ class AddItemPage extends HookConsumerWidget {
                   children: listAsso
                       .map(
                         (e) => RadioListTile(
-                            title: Text(e,
+                            title: Text(capitalize(e.name),
                                 style: const TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.w500)),
-                            selected: asso.value == e,
-                            value: e,
+                            selected: asso.value == e.name,
+                            value: e.name,
                             activeColor: LoanColorConstants.orange,
                             groupValue: asso.value,
                             onChanged: (s) {
@@ -185,8 +187,8 @@ class AddItemPage extends HookConsumerWidget {
                                   )
                                       .then((value) {
                                     if (value) {
-                                      displayToast(
-                                          context, TypeMsg.msg, LoanTextConstants.addedObject);
+                                      displayToast(context, TypeMsg.msg,
+                                          LoanTextConstants.addedObject);
                                     } else {
                                       displayToast(context, TypeMsg.error,
                                           LoanTextConstants.addingError);

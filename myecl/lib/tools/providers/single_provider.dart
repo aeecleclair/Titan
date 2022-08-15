@@ -75,7 +75,7 @@ abstract class SingleProvider<T> extends StateNotifier<AsyncValue<T>> {
     });
   }
 
-  Future<bool> delete(Future<T> Function() f, T t) async {
+  Future<bool> delete(Future<bool> Function() f, T t) async {
     return state.when(data: (d) async {
       try {
         await f();

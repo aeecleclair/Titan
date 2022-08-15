@@ -1,11 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/groups/providers/group_list_provider.dart';
 import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/association_list_provider.dart';
-import 'package:myecl/loan/providers/association_provider.dart';
+import 'package:myecl/loan/providers/loaner_list_provider.dart';
+import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
@@ -13,6 +16,7 @@ import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class EditPage extends HookConsumerWidget {
@@ -22,10 +26,10 @@ class EditPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final _currentStep = useState(0);
-    final asso = ref.watch(associationFromLoanProvider);
-    final assoNotifier = ref.watch(associationFromLoanProvider.notifier);
+    final asso = useState(ref.watch(loanerProvider));
+    final assoNotifier = ref.watch(loanerProvider.notifier);
     final key = GlobalKey<FormState>();
-    final associations = ref.watch(associationListProvider);
+    final associations = ref.watch(loanerListProvider);
     final fakeItems = ref.watch(itemListProvider);
     final selectedItems = ref.watch(editSelectedListProvider);
     final selectedItemsNotifier = ref.watch(editSelectedListProvider.notifier);
@@ -73,16 +77,16 @@ class EditPage extends HookConsumerWidget {
                       children: listAsso
                           .map(
                             (e) => RadioListTile(
-                                title: Text(e,
+                                title: Text(capitalize(e.name),
                                     style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500)),
-                                selected: asso == e,
-                                value: e,
+                                selected: asso.value.value?.name == e.name,
+                                value: e.name,
                                 activeColor: LoanColorConstants.orange,
                                 groupValue: asso,
                                 onChanged: (s) {
-                                  assoNotifier.update(s.toString());
+                                  asso.value = AsyncData(e);
                                 }),
                           )
                           .toList()),
@@ -250,7 +254,8 @@ class EditPage extends HookConsumerWidget {
                     ? StepState.complete
                     : StepState.disabled,
               ),
-              Step( // TODO:
+              Step(
+                // TODO:
                 title: const Text(LoanTextConstants.borrower),
                 content: Column(
                   children: <Widget>[
@@ -280,7 +285,8 @@ class EditPage extends HookConsumerWidget {
                 content: Column(
                   children: <Widget>[
                     TextFormField(
-                      decoration: const InputDecoration(labelText: LoanTextConstants.note),
+                      decoration: const InputDecoration(
+                          labelText: LoanTextConstants.note),
                       controller: note,
                       validator: (value) {
                         if (value == null) {
@@ -364,7 +370,9 @@ class EditPage extends HookConsumerWidget {
                     Row(
                       children: [
                         const Text(LoanTextConstants.paidCaution + " : "),
-                        Text(caution.value ? LoanTextConstants.yes : LoanTextConstants.no),
+                        Text(caution.value
+                            ? LoanTextConstants.yes
+                            : LoanTextConstants.no),
                       ],
                     ),
                   ],
@@ -408,33 +416,51 @@ class EditPage extends HookConsumerWidget {
                                   }
                                   if (key.currentState!.validate()) {
                                     pageNotifier.setLoanPage(LoanPage.option);
-                                    tokenExpireWrapper(ref, () async {
-                                      loanListNotifier
-                                          .updateLoan(
-                                        Loan(
-                                          association: asso,
-                                          items: items
-                                              .where((element) => selectedItems[
-                                                  items.indexOf(element)])
-                                              .toList() as List<Item>,
-                                          borrowerId: number.text,
-                                          caution: caution.value,
-                                          end: DateTime.parse(end.text),
-                                          id: l.id,
-                                          notes: note.text,
-                                          start: DateTime.parse(start.text),
-                                        ),
-                                      )
-                                          .then((value) {
-                                        if (value) {
-                                          displayToast(context, TypeMsg.msg,
-                                              LoanTextConstants.updatedLoan);
-                                        } else {
-                                          displayToast(context, TypeMsg.error,
-                                              LoanTextConstants.updatingError);
-                                        }
+                                    asso.value.when(data: (a) {
+                                      tokenExpireWrapper(ref, () async {
+                                        loanListNotifier
+                                            .updateLoan(
+                                          Loan(
+                                            association: a.id,
+                                            items: items
+                                                .where((element) =>
+                                                    selectedItems[
+                                                        items.indexOf(element)])
+                                                .toList() as List<Item>,
+                                            borrowerId: number.text,
+                                            caution: caution.value,
+                                            end: DateTime.parse(end.text),
+                                            id: l.id,
+                                            notes: note.text,
+                                            start: DateTime.parse(start.text),
+                                          ),
+                                        )
+                                            .then((value) {
+                                          if (value) {
+                                            displayToast(context, TypeMsg.msg,
+                                                LoanTextConstants.updatedLoan);
+                                          } else {
+                                            displayToast(
+                                                context,
+                                                TypeMsg.error,
+                                                LoanTextConstants
+                                                    .updatingError);
+                                          }
+                                        });
                                       });
+                                    }, error:
+                                        (Object error, StackTrace? stackTrace) {
+                                      displayToast(context, TypeMsg.error,
+                                          LoanTextConstants.addingError);
+                                    }, loading: () {
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          valueColor: AlwaysStoppedAnimation(
+                                              LoanColorConstants.orange),
+                                        ),
+                                      );
                                     });
+
                                     _currentStep.value = 0;
                                   }
                                 },

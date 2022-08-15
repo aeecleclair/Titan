@@ -6,3 +6,7 @@ String processDate(DateTime date) {
       "/" +
       d[0].toString();
 }
+
+String capitalize(String s) {
+  return s[0].toUpperCase() + s.substring(1);
+}
