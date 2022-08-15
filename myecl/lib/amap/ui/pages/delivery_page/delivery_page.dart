@@ -15,7 +15,6 @@ class DeliveryPage extends HookConsumerWidget {
     final deliveryList = ref.watch(deliveryListProvider);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
     final isAmapAdmin = ref.watch(isAmapAdminProvider);
-    print(deliveryList);
     List<Widget> listWidgetOrder = [];
     deliveryList.when(
       data: (orders) {

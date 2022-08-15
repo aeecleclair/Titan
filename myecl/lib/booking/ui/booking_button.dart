@@ -29,7 +29,7 @@ class BookingButton extends ConsumerWidget {
       ),
       child: IconButton(
         onPressed: () {
-          listResNotifier.toggleConfirmed(res.id);
+          listResNotifier.toggleConfirmed(res);
         },
         icon: FaIcon(
           state == 1 ? FontAwesomeIcons.check : FontAwesomeIcons.xmark,

@@ -17,11 +17,9 @@ samples, guidance on mobile development, and a full API reference.
 
 TODO :
 
-Réserva° (API)
-Prêt (API) / clean asso (/admin)
-Evénements (API)
-search/amap
+ne pas afficher si date de fin est dépassée
 
-AMAP :
-
-    - modif delivery (admin)
+Réserva° : (API)
+Prêt : (API) + endpoint loaner from userID
+Evénements : (API)
+Amap : search/amap + cash list search

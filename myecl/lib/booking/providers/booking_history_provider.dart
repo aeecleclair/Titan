@@ -2,9 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/repositories/booking_repository.dart';
-import 'package:myecl/tools/providers/list_provider.dart';
+import 'package:myecl/tools/providers/list_notifier.dart';
 
-class BookingHistoryProvider extends ListProvider<Booking> {
+class BookingHistoryProvider extends ListNotifier<Booking> {
   final BookingRepository _repository = BookingRepository();
   BookingHistoryProvider({required String token})
       : super(const AsyncValue.loading()) {
@@ -16,10 +16,7 @@ class BookingHistoryProvider extends ListProvider<Booking> {
   }
 
   Future<bool> addBooking(Booking booking) async {
-    // Fonction identité, uniquement utile pour l'affichage
-    return await add((b) async {
-      return b;
-    }, booking);
+    return await add((b) async => b, booking);
   }
 }
 

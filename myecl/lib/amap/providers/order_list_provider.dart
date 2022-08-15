@@ -6,9 +6,9 @@ import 'package:myecl/amap/repositories/amap_user_repository.dart';
 import 'package:myecl/amap/repositories/order_list_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/providers/list_provider.dart';
+import 'package:myecl/tools/providers/list_notifier.dart';
 
-class OrderListNotifier extends ListProvider<Order> {
+class OrderListNotifier extends ListNotifier<Order> {
   final OrderListRepository _orderListRepository = OrderListRepository();
   final AmapUserRepository _userRepository = AmapUserRepository();
   late String deliveryId;
@@ -28,127 +28,29 @@ class OrderListNotifier extends ListProvider<Order> {
   }
 
   Future<AsyncValue<List<Order>>> loadOrderList() async {
-    return await loadList(() async {
-      return await _userRepository.getOrderList(userId);
-    });
+    return await loadList(() async => _userRepository.getOrderList(userId));
   }
 
   Future<bool> addOrder(Order order) async {
-    return await add((o) async {
-      return await _orderListRepository.createOrder(deliveryId, o, userId);
-    }, order);
+    return await add(
+        (o) async => _orderListRepository.createOrder(deliveryId, o, userId),
+        order);
   }
 
   Future<bool> updateOrder(Order order) async {
-    return await update((o) async {
-      return await _orderListRepository.updateOrder(deliveryId, order, userId);
-    }, (orders, order) {
-      final ordersId = orders.map((o) => o.id).toList();
-      final index = ordersId.indexOf(order.id);
-      orders[index] = order;
-      return orders;
-    }, order);
+    return await update(
+        (o) async =>
+            _orderListRepository.updateOrder(deliveryId, order, userId),
+        (orders, order) =>
+            orders..[orders.indexWhere((o) => o.id == order.id)] = order,
+        order);
   }
 
   Future<bool> deleteOrder(Order order) async {
-    return await delete((id) async {
-      return await _orderListRepository.deleteOrder(order.deliveryId, id);
-    }, order.id, order);
-  }
-
-  Future<bool> addProduct(int indexOrder, Product product) async {
-    return state.when(
-      data: (orders) async {
-        try {
-          var newOrder = orders[indexOrder]
-              .copyWith(products: orders[indexOrder].products..add(product));
-          await _orderListRepository.updateOrder(deliveryId, newOrder, userId);
-          orders[indexOrder] = newOrder;
-          state = AsyncValue.data(orders);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(orders);
-          return false;
-        }
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot add product while loading");
-        return false;
-      },
-    );
-  }
-
-  Future<bool> deleteProduct(int indexOrder, Product product) async {
-    return state.when(
-      data: (orders) async {
-        try {
-          var newOrder = orders[indexOrder]
-              .copyWith(products: orders[indexOrder].products..remove(product));
-          await _orderListRepository.updateOrder(deliveryId, newOrder, userId);
-          orders[indexOrder] = newOrder;
-          state = AsyncValue.data(orders);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(orders);
-          return false;
-        }
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot delete product while loading");
-        return false;
-      },
-    );
-  }
-
-  Future<bool> updateProduct(int indexOrder, Product product) async {
-    return state.when(
-      data: (orders) async {
-        try {
-          var newOrder = orders[indexOrder].copyWith(
-              products: orders[indexOrder].products
-                ..replaceRange(orders[indexOrder].products.indexOf(product), 1,
-                    [product]));
-          await _orderListRepository.updateOrder(deliveryId, newOrder, userId);
-          orders[indexOrder] = newOrder;
-          state = AsyncValue.data(orders);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(orders);
-          return false;
-        }
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot update product while loading");
-        return false;
-      },
-    );
+    return await delete(
+        (id) async => _orderListRepository.deleteOrder(order.deliveryId, id),
+        order.id,
+        order);
   }
 
   void setProductQuantity(

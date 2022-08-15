@@ -25,16 +25,16 @@ class Booking {
       required this.recurring});
 
   Booking.fromJson(Map<String, dynamic> json) {
-        id = json["id"];
-        reason = json["reason"];
-        start = DateTime.parse(json["start"]);
-        end = DateTime.parse(json["end"]);
-        note = json["note"];
-        room = json["room"];
-        key = json["key"];
-        confirmed = json["confirmed"];
-        multipleDay = json["multipleDay"];
-        recurring = json["recurring"];
+    id = json["id"];
+    reason = json["reason"];
+    start = DateTime.parse(json["start"]);
+    end = DateTime.parse(json["end"]);
+    note = json["note"];
+    room = json["room"];
+    key = json["key"];
+    confirmed = json["confirmed"];
+    multipleDay = json["multipleDay"];
+    recurring = json["recurring"];
   }
 
   Map<String, dynamic> toJson() {

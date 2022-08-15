@@ -1,11 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/amap/tools/functions.dart';
-import 'package:myecl/groups/providers/group_list_provider.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
@@ -27,7 +24,6 @@ class EditPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final _currentStep = useState(0);
     final asso = useState(ref.watch(loanerProvider));
-    final assoNotifier = ref.watch(loanerProvider.notifier);
     final key = GlobalKey<FormState>();
     final associations = ref.watch(loanerListProvider);
     final fakeItems = ref.watch(itemListProvider);

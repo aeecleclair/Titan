@@ -3,9 +3,9 @@ import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/repositories/item_repository.dart';
-import 'package:myecl/tools/providers/list_provider.dart';
+import 'package:myecl/tools/providers/list_notifier.dart';
 
-class ItemListNotifier extends ListProvider<Item> {
+class ItemListNotifier extends ListNotifier<Item> {
   final ItemRepository _itemrepository = ItemRepository();
   late final String loanerId;
   ItemListNotifier({required String token})
@@ -18,32 +18,25 @@ class ItemListNotifier extends ListProvider<Item> {
   }
 
   Future<AsyncValue<List<Item>>> loadLoanList() async {
-    return await loadList(() async {
-      return await _itemrepository.getItemList(loanerId);
-    });
+    return await loadList(() async => _itemrepository.getItemList(loanerId));
   }
 
   Future<bool> addItem(Item item) async {
-    return await add((i) async {
-      return await _itemrepository.createItem(loanerId, i);
-    }, item);
+    return await add(
+        (i) async => _itemrepository.createItem(loanerId, i), item);
   }
 
   Future<bool> updateItem(Item item) async {
-    return await update((i) async {
-      return await _itemrepository.updateItem(loanerId, i);
-    }, (items, item) {
-      final loanersId = items.map((e) => e.id).toList();
-      final index = loanersId.indexOf(item.id);
-      items[index] = item;
-      return items;
-    }, item);
+    return await update(
+        (i) async => _itemrepository.updateItem(loanerId, i),
+        (items, item) =>
+            items..[items.indexWhere((i) => i.id == item.id)] = item,
+        item);
   }
 
   Future<bool> deleteItem(Item item) async {
-    return await delete((id) async {
-      return await _itemrepository.deleteItem(loanerId, id);
-    }, item.id, item);
+    return await delete(
+        (id) async => _itemrepository.deleteItem(loanerId, id), item.id, item);
   }
 }
 

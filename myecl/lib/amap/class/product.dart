@@ -38,4 +38,14 @@ class Product {
     _data['category'] = category;
     return _data;
   }
+
+  static Product empty() {
+    return Product(
+      id: "",
+      name: "",
+      price: 0,
+      quantity: 0,
+      category: "",
+    );
+  }
 }

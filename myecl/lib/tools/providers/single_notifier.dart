@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/exception.dart';
 
-abstract class SingleProvider<T> extends StateNotifier<AsyncValue<T>> {
-  SingleProvider(AsyncValue state) : super(const AsyncLoading());
+abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
+  SingleNotifier(AsyncValue state) : super(const AsyncLoading());
 
   Future<AsyncValue<T>> load(Future<T> Function() f) async {
     try {
@@ -75,10 +75,10 @@ abstract class SingleProvider<T> extends StateNotifier<AsyncValue<T>> {
     });
   }
 
-  Future<bool> delete(Future<bool> Function() f, T t) async {
+  Future<bool> delete(Future<bool> Function(String id) f, T t, String id) async {
     return state.when(data: (d) async {
       try {
-        await f();
+        await f(id);
         state = const AsyncValue.loading();
         return true;
       } catch (error) {

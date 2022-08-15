@@ -2,11 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/groups/class/group.dart';
 import 'package:myecl/groups/repositories/group_repository.dart';
-import 'package:myecl/tools/providers/list_provider.dart';
+import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
-class GroupListNotifier extends ListProvider<Group> {
+class GroupListNotifier extends ListNotifier<Group> {
   final GroupRepository _groupRepository = GroupRepository();
   GroupListNotifier({required String token})
       : super(const AsyncValue.loading()) {
@@ -28,12 +28,11 @@ class GroupListNotifier extends ListProvider<Group> {
   }
 
   Future<bool> updateGroup(Group group) async {
-    return await update(_groupRepository.updateGroup, (groups, group) {
-      final groupsId = groups.map((e) => e.id).toList();
-      final index = groupsId.indexOf(group.id);
-      groups[index] = group;
-      return groups;
-    }, group);
+    return await update(
+        _groupRepository.updateGroup,
+        (groups, group) =>
+            groups..[groups.indexWhere((g) => g.id == group.id)] = group,
+        group);
   }
 
   Future<bool> deleteGroup(Group group) async {

@@ -61,7 +61,7 @@ class ProductUiInList extends ConsumerWidget {
                   ),
                   onTap: () {
                     if (p.quantity > 0) {
-                      productsNotifier.setQuantity(p.id, p.quantity - 1);
+                      productsNotifier.setQuantity(p, p.quantity - 1);
                       priceNotifier.setOrderPrice(
                           double.parse((price - p.price).toStringAsFixed(2)));
                     }
@@ -91,7 +91,7 @@ class ProductUiInList extends ConsumerWidget {
                   ),
                   onTap: () {
                     if (p.quantity < 5) {
-                      productsNotifier.setQuantity(p.id, p.quantity + 1);
+                      productsNotifier.setQuantity(p, p.quantity + 1);
                       priceNotifier.setOrderPrice(
                           double.parse((price + p.price).toStringAsFixed(2)));
                     }

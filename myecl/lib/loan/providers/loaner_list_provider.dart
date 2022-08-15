@@ -2,9 +2,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/repositories/loaner_repository.dart';
-import 'package:myecl/tools/providers/list_provider.dart';
+import 'package:myecl/tools/providers/list_notifier.dart';
 
-class LoanerListNotifier extends ListProvider<Loaner> {
+class LoanerListNotifier extends ListNotifier<Loaner> {
   final LoanerRepository _loanerRepository = LoanerRepository();
   LoanerListNotifier({required String token})
       : super(const AsyncValue.loading()) {
@@ -20,13 +20,11 @@ class LoanerListNotifier extends ListProvider<Loaner> {
   }
 
   Future<bool> updateLoaner(Loaner loaner) async {
-    return await update(_loanerRepository.updateLoaner,
-    (loaners, loaner) {
-      final loanersId = loaners.map((e) => e.id).toList();
-      final index = loanersId.indexOf(loaner.id);
-      loaners[index] = loaner;
-      return loaners;
-    }, loaner);
+    return await update(
+        _loanerRepository.updateLoaner,
+        (loaners, loaner) =>
+            loaners..[loaners.indexWhere((i) => i.id == loaner.id)] = loaner,
+        loaner);
   }
 
   Future<bool> deleteLoaner(Loaner loaner) async {

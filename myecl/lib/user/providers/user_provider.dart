@@ -1,32 +1,26 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
-import 'package:myecl/tools/providers/single_provider.dart';
+import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
 
-class UserNotifier extends SingleProvider<User> {
+class UserNotifier extends SingleNotifier<User> {
   final UserRepository _userRepository = UserRepository();
   UserNotifier({required String token}) : super(const AsyncValue.loading()) {
     _userRepository.setToken(token);
   }
 
   Future<bool> setUser(User user) async {
-    return await add((user) async {
-      return user;
-    }, user);
+    return await add((u) async => u, user);
   }
 
-  Future<AsyncValue<User>> loadUser(String id) async {
-    return await load(() async {
-      return await _userRepository.getUser(id);
-    });
+  Future<AsyncValue<User>> loadUser(String userId) async {
+    return await load(() async => _userRepository.getUser(userId));
   }
 
   Future<AsyncValue<User>> loadMe() async {
-    return await load(() async {
-      return await _userRepository.getMe();
-    });
+    return await load(() async =>_userRepository.getMe());
   }
 
   Future<bool> updateUser(User user) async {

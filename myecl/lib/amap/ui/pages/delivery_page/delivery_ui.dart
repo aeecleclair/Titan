@@ -250,7 +250,7 @@ class DeliveryUi extends ConsumerWidget {
                             color: AMAPColorConstants.background3),
                         alignment: Alignment.center,
                         child: Text(c.locked ? AMAPTextConstants.unlock : AMAPTextConstants.lock,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
                                 color: AMAPColorConstants.enabled)),

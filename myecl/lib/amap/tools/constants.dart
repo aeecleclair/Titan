@@ -52,7 +52,7 @@ class AMAPTextConstants {
   static const String loading = "Chargement...";
   static const String lock = "Vérouiller";
   static const String lockedDelivery = "Livraison vérrouillée";
-  static const String lockedOrder = "Commandé vérouillée";
+  static const String lockedOrder = "Commande vérouillée";
   static const String looking = "Rechercher";
   static const String myOrders = "Mes commandes";
   static const String name = "Nom";

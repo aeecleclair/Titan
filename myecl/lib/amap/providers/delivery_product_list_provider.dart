@@ -2,10 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
-import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/providers/list_provider.dart';
+import 'package:myecl/tools/providers/list_notifier.dart';
 
-class ProductListNotifier extends ListProvider<Product> {
+class ProductListNotifier extends ListNotifier<Product> {
   final _productListRepository = DeliveryProductListRepository();
   late String deliveryId;
   ProductListNotifier({required String token})
@@ -18,97 +17,44 @@ class ProductListNotifier extends ListProvider<Product> {
   }
 
   Future<AsyncValue<List<Product>>> loadProductList() async {
-    return await loadList(() async {
-      return await _productListRepository.getProductList(deliveryId);
-    });
+    return await loadList(
+        () async => _productListRepository.getProductList(deliveryId));
   }
 
   Future<bool> addProduct(Product product) async {
-    return await add((p) {
-      return _productListRepository.createProduct(deliveryId, p);
-    }, product);
+    return await add(
+        (p) async => _productListRepository.createProduct(deliveryId, p),
+        product);
   }
 
   Future<bool> updateProduct(Product product) async {
-    return await update((p) {
-      return _productListRepository.updateProduct(deliveryId, p);
-    }, (products, product) {
-      final productsId = products.map((p) => p.id).toList();
-      final index = productsId.indexOf(product.id);
-      products[index] = product;
-      return products;
-    }, product);
+    return await update(
+        (p) async => _productListRepository.updateProduct(deliveryId, p),
+        (products, product) => products
+          ..[products.indexWhere((p) => p.id == product.id)] = product,
+        product);
   }
 
   Future<bool> deleteProduct(Product product) async {
-    return await delete((id) {
-      return _productListRepository.deleteProduct(deliveryId, id);
-    }, product.id, product);
+    return await delete(
+        (id) async => _productListRepository.deleteProduct(deliveryId, id),
+        product.id,
+        product);
   }
 
-  Future<bool> setQuantity(String productId, int i) async {
-    return state.when(
-      data: (products) async {
-        try {
-          var index = products.indexWhere((p) => p.id == productId);
-          Product product = products[index].copyWith(quantity: i);
-          products.remove(products.firstWhere((e) => e.id == productId));
-          products.insert(index, product);
-          state = AsyncValue.data(products);
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(products);
-          return false;
-        }
-      },
-      error: (error, s) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot update product while loading");
-        return false;
-      },
-    );
+  Future<bool> setQuantity(Product product, int i) async {
+    return await update(
+        (p) async => true,
+        (products, product) => products
+          ..[products.indexWhere((p) => p.id == product.id)] = product,
+        product.copyWith(quantity: i));
   }
 
   Future<bool> resetQuantity() async {
-    return state.when(
-      data: (products) async {
-        try {
-          state = AsyncValue.data(products
-              .map((e) => Product(
-                  id: e.id,
-                  name: e.name,
-                  price: e.price,
-                  quantity: 0,
-                  category: e.category))
-              .toList());
-          return true;
-        } catch (e) {
-          state = AsyncValue.data(products);
-          return false;
-        }
-      },
-      error: (error, s) {
-        state = AsyncValue.error(error);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      },
-      loading: () {
-        state = const AsyncValue.error("Cannot reset quantity while loading");
-        return false;
-      },
-    );
+    return await update(
+        (p) async => true,
+        (products, p) => products.map((e) => e.copyWith(quantity: 0)).toList(),
+        Product.empty());
   }
 }
 

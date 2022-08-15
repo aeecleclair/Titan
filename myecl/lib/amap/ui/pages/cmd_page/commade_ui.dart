@@ -220,7 +220,7 @@ class OrderUi extends ConsumerWidget {
                         indexCmdNotifier.setIndex(i);
                         for (Product p
                             in c.products.where((e) => e.quantity != 0)) {
-                          productsNotifier.setQuantity(p.id, p.quantity);
+                          productsNotifier.setQuantity(p, p.quantity);
                         }
                         cmdsNotifier.getprice(i).then((value) {
                           priceNotofier.setOrderPrice(value);

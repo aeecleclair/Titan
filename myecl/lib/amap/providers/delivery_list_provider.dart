@@ -2,9 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/repositories/delivery_list_repository.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
-import 'package:myecl/tools/providers/list_provider.dart';
+import 'package:myecl/tools/providers/list_notifier.dart';
 
-class DeliveryListNotifier extends ListProvider<Delivery> {
+class DeliveryListNotifier extends ListNotifier<Delivery> {
   final DeliveryListRepository _deliveriesListRepository =
       DeliveryListRepository();
   DeliveryListNotifier({required String token})
@@ -21,13 +21,11 @@ class DeliveryListNotifier extends ListProvider<Delivery> {
   }
 
   Future<bool> updateDelivery(Delivery delivery) async {
-    return await update(_deliveriesListRepository.updateDelivery,
-        (deliveries, delivery) {
-      final productsId = deliveries.map((p) => p.id).toList();
-      final index = productsId.indexOf(delivery.id);
-      deliveries[index] = delivery;
-      return deliveries;
-    }, delivery);
+    return await update(
+        _deliveriesListRepository.updateDelivery,
+        (deliveries, delivery) => deliveries
+          ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
+        delivery);
   }
 
   Future<bool> deleteDelivery(Delivery delivery) async {

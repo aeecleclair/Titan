@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/exception.dart';
 
-abstract class ListProvider<T> extends StateNotifier<AsyncValue<List<T>>> {
-  ListProvider(AsyncValue state) : super(const AsyncLoading());
+abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
+  ListNotifier(AsyncValue state) : super(const AsyncLoading());
 
   Future<AsyncValue<List<T>>> loadList(Future<List<T>> Function() f) async {
     try {
