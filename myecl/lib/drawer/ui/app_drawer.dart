@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
@@ -19,24 +20,20 @@ class AppDrawer extends HookConsumerWidget {
 
   const AppDrawer({Key? key}) : super(key: key);
 
-  Widget getPage(int page, SwipeControllerNotifier _controllerNotifier) {
+  Widget getPage(ModuleType page, SwipeControllerNotifier _controllerNotifier) {
     switch (page) {
-      case 0:
+      case ModuleType.settings:
         return SettingsPage(controllerNotifier: _controllerNotifier);
-      case 1:
+      case ModuleType.home:
         return HomePage(controllerNotifier: _controllerNotifier);
-      case 2:
+      case ModuleType.booking:
         return BookingPage(controllerNotifier: _controllerNotifier);
-      case 3:
+      case ModuleType.loan:
         return LoanPage(controllerNotifier: _controllerNotifier);
-      case 4:
+      case ModuleType.amap:
         return AmapPage(controllerNotifier: _controllerNotifier);
-      default:
-        return Scaffold(
-          body: Center(
-            child: Text(page.toString()),
-          ),
-        );
+      case ModuleType.admin:
+        return AdminPage(controllerNotifier: _controllerNotifier);
     }
   }
 

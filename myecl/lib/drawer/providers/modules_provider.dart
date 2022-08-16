@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/drawer/providers/page_provider.dart';
 
 class ModuleListNotifier extends StateNotifier<List<Module>> {
   ModuleListNotifier([List<Module>? listModule]) : super(listModule ?? []);
@@ -23,10 +24,10 @@ class ModuleListNotifier extends StateNotifier<List<Module>> {
 final listModuleProvider =
     StateNotifierProvider<ModuleListNotifier, List<Module>>((ref) {
   return ModuleListNotifier([
-    Module(name: "Accueil", icon: Icons.access_alarm, pos: 1, selected: true),
+    Module(name: "Accueil", icon: HeroIcons.home, page: ModuleType.home, selected: true),
     Module(
-        name: "Réservation", icon: Icons.access_alarm, pos: 2, selected: false),
-    Module(name: "Prêt", icon: Icons.access_alarm, pos: 3, selected: false),
-    Module(name: "Amap", icon: Icons.access_alarm, pos: 4, selected: false),
+        name: "Réservation", icon: HeroIcons.table, page: ModuleType.booking, selected: false),
+    Module(name: "Prêt", icon: HeroIcons.library, page: ModuleType.loan, selected: false),
+    Module(name: "Amap", icon: HeroIcons.shoppingCart, page: ModuleType.amap, selected: false),
   ]);
 });

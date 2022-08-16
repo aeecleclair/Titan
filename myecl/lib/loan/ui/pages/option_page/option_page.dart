@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/loan/providers/loaner_id_provider.dart';
+import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
 import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_ui.dart';
@@ -13,8 +14,9 @@ class OptionPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
-    final loanList = ref.watch(loanListProvider);
-    final loanListNotifier = ref.watch(loanListProvider.notifier);
+    final loanList = ref.watch(loanerLoanListProvider);
+    final loanerId = ref.watch(loanerIdProvider);
+    final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     List<Widget> listWidget = [
       Container(
         margin: const EdgeInsets.only(right: 10, left: 20),
@@ -66,7 +68,8 @@ class OptionPage extends HookConsumerWidget {
       loading: () {
         listWidget.add(const Center(
             child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
+          valueColor:
+              AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
         )));
       },
       error: (error, s) {
@@ -75,9 +78,8 @@ class OptionPage extends HookConsumerWidget {
     );
 
     return LoanRefresher(
-      keyRefresh: GlobalKey<RefreshIndicatorState>(),
       onRefresh: () async {
-        await loanListNotifier.loadLoanList();
+        await loanListNotifier.loadLoan(loanerId);
       },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(

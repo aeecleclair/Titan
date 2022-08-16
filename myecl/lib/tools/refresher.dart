@@ -8,12 +8,10 @@ import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class Refresher extends HookConsumerWidget {
   final Widget child;
-  final GlobalKey<RefreshIndicatorState> keyRefresh;
   final Future Function() onRefresh;
   final Color col;
   const Refresher({
     Key? key,
-    required this.keyRefresh,
     required this.onRefresh,
     required this.child,
     required this.col,
@@ -29,7 +27,7 @@ class Refresher extends HookConsumerWidget {
   }
 
   Widget buildAndroidList(WidgetRef ref) => RefreshIndicator(
-      key: keyRefresh,
+      key: GlobalKey<RefreshIndicatorState>(),
       onRefresh: () async {
         tokenExpireWrapper(ref, onRefresh);
       },

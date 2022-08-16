@@ -1,13 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PageNotifier extends StateNotifier<int> {
-  PageNotifier() : super(1);
+enum ModuleType { home, settings, amap, loan, booking, admin }
 
-  void setPage(int i) {
+class PageNotifier extends StateNotifier<ModuleType> {
+  PageNotifier() : super(ModuleType.home);
+
+  void setPage(ModuleType i) {
     state = i;
   }
 }
 
-final pageProvider = StateNotifierProvider<PageNotifier, int>((ref) {
+final pageProvider = StateNotifierProvider<PageNotifier, ModuleType>((ref) {
   return PageNotifier();
 });

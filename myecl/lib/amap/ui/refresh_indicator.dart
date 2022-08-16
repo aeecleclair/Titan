@@ -4,12 +4,9 @@ import 'package:myecl/tools/refresher.dart';
 
 class AmapRefresher extends Refresher {
   const AmapRefresher(
-      {Key? key, required GlobalKey<RefreshIndicatorState> keyRefresh,
-      required Future Function() onRefresh,
-      required Widget child})
+      {Key? key, required Future Function() onRefresh, required Widget child})
       : super(
-        key: key,
-            keyRefresh: keyRefresh,
+            key: key,
             onRefresh: onRefresh,
             child: child,
             col: AMAPColorConstants.greenGradient1);

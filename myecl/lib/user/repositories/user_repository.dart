@@ -1,16 +1,10 @@
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/class/user.dart';
 
 class UserRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "users/";
-
-  Future<List<SimpleUser>> getAllUsers() async {
-    return List<SimpleUser>.from(
-        (await getList()).map((x) => SimpleUser.fromJson(x)));
-  }
 
   Future<User> getUser(String userId) async {
     return User.fromJson(await getOne(userId));

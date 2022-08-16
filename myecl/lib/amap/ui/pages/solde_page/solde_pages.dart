@@ -105,7 +105,6 @@ class SoldePage extends HookConsumerWidget {
     List<Widget> listWidgetCash = buildAll(cash.value, editingController);
 
     return AmapRefresher(
-      keyRefresh: GlobalKey<RefreshIndicatorState>(),
       onRefresh: () async {
         cash.value = await cashListNotifier.loadCashList();
       },

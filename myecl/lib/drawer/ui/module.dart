@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
@@ -22,7 +23,7 @@ class ModuleUI extends HookConsumerWidget {
     final hasScrolled = ref.watch(hasScrolledProvider.notifier);
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      key: ValueKey(m.pos),
+      key: ValueKey(m.page),
       child: Container(
         margin: const EdgeInsets.only(top: 8, bottom: 8),
         width: 220,
@@ -37,9 +38,9 @@ class ModuleUI extends HookConsumerWidget {
                 SizedBox(
                     height: 50,
                     child: Center(
-                        child: Icon(
+                        child: HeroIcon(
                       m.icon,
-                      color: m.pos == page
+                      color: m.page == page
                           ? DrawerColorConstants.selectedText
                           : DrawerColorConstants.lightText,
                     ))),
@@ -52,7 +53,7 @@ class ModuleUI extends HookConsumerWidget {
                     child: Text(
                       m.name,
                       style: TextStyle(
-                        color: m.pos == page
+                        color: m.page == page
                             ? DrawerColorConstants.selectedText
                             : DrawerColorConstants.lightText,
                         fontSize: 18,
@@ -66,15 +67,15 @@ class ModuleUI extends HookConsumerWidget {
         ),
       ),
       onTap: () {
-        pageNotifier.setPage(m.pos);
-        if (m.pos != 1) {
+        pageNotifier.setPage(m.page);
+        if (m.page != ModuleType.home) {
           hasScrolled.setHasScrolled(false);
         }
       },
       onDoubleTap: () {
-        pageNotifier.setPage(m.pos);
+        pageNotifier.setPage(m.page);
         controllerNotifier.toggle();
-        if (m.pos != 1) {
+        if (m.page != ModuleType.home) {
           hasScrolled.setHasScrolled(false);
         }
       },

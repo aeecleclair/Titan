@@ -37,6 +37,7 @@ class LoanTextConstants {
   static const String noAssociationsFounded = "Aucune association trouvée";
   static const String note = "Note";
   static const String noValue = "Veuillez entrer une valeur";
+  static const String noLoan = "Aucun prêt";
   static const String objects = "Objects";
   static const String onGoingLoan = "Prêt en cours";
   static const String paidCaution = "Caution payée";

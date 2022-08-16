@@ -29,8 +29,8 @@ class LoanRepository extends Repository {
     return await update(loan.toJson(), loan.id);
   }
 
-  Future<bool> deleteLoan(Loan loan) async {
-    return await delete(loan.id);
+  Future<bool> deleteLoan(String loanId) async {
+    return await delete(loanId);
   }
 
   Future<bool> extendLoan(Loan loan) async {

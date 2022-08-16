@@ -30,41 +30,51 @@ class HistoryPage extends HookConsumerWidget {
 
     loanHistory.when(
       data: (data) {
-        List<String> categories =
-            data.map((e) => e.association).toSet().toList();
-        Map<String, List<Widget>> dictCateListWidget = {
-          for (var item in categories) item: []
-        };
+        if (data.isNotEmpty) {
+          List<String> categories =
+              data.map((e) => e.association).toSet().toList();
+          Map<String, List<Widget>> dictCateListWidget = {
+            for (var item in categories) item: []
+          };
 
-        for (Loan l in data) {
-          dictCateListWidget[l.association]!
-              .add(LoanUi(l: l, isHistory: true, isAdmin: false));
-        }
+          for (Loan l in data) {
+            dictCateListWidget[l.association]!
+                .add(LoanUi(l: l, isHistory: true, isAdmin: false));
+          }
 
-        for (String c in categories) {
-          listWidget.add(Container(
-              height: 50,
-              alignment: Alignment.centerLeft,
-              child: Container(
-                height: 40,
+          for (String c in categories) {
+            listWidget.add(Container(
+                height: 50,
                 alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  c,
-                  style: const TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
+                child: Container(
+                  height: 40,
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Text(
+                    c,
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-              )));
+                )));
 
-          listWidget += dictCateListWidget[c] ?? [];
+            listWidget += dictCateListWidget[c] ?? [];
+          }
+        } else {
+          listWidget.add(Container(
+            alignment: Alignment.center,
+            child: const Text(
+              LoanTextConstants.noLoan,
+            ),
+          ));
         }
       },
       loading: () {
         listWidget.add(const Center(
             child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
+          valueColor:
+              AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
         )));
       },
       error: (error, s) {
@@ -73,14 +83,12 @@ class HistoryPage extends HookConsumerWidget {
     );
 
     return LoanRefresher(
-      keyRefresh: GlobalKey<RefreshIndicatorState>(),
       onRefresh: () async {
         await loanHistoryNotifier.loadHistory();
       },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics()
-        ),
+            parent: BouncingScrollPhysics()),
         child: Column(
           children: [
             const SizedBox(

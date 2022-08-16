@@ -8,13 +8,13 @@ class Loaner {
 
   Loaner.fromJson(Map<String, dynamic> json) {
     name = json['name'];
-    id = json['id'];
+    id = json['group_manager_id'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['name'] = name;
-    _data['id'] = id;
+    _data['group_manager_id'] = id;
     return _data;
   }
 

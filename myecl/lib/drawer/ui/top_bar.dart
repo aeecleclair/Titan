@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/tools/dialog.dart';
 import 'package:myecl/drawer/tools/function.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -69,15 +69,15 @@ class TopBar extends ConsumerWidget {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
                   SizedBox(
-                    width: 50,
+                    width: 60,
                     height: 40,
-                    child: FaIcon(
-                      FontAwesomeIcons.rightFromBracket,
+                    child: HeroIcon(
+                      HeroIcons.logout,
                       color: Colors.grey.shade100,
-                      size: 30,
+                      size: 25,
                     ),
                   ),
                 ],

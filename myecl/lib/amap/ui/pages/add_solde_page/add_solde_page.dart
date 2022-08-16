@@ -21,7 +21,6 @@ class AddSoldePage extends HookConsumerWidget {
     final editingController = useTextEditingController();
     final focus = useState(false);
     return AmapRefresher(
-        keyRefresh: GlobalKey<RefreshIndicatorState>(),
         onRefresh: () async {
           users.value = await usersNotifier.filterUsers("");
         },

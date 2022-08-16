@@ -23,3 +23,4 @@ Réserva° : (API)
 Prêt : (API) + endpoint loaner from userID
 Evénements : (API)
 Amap : search/amap + cash list search
+extracting function tools

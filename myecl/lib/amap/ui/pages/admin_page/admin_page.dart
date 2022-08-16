@@ -87,25 +87,26 @@ class AdminPage extends HookConsumerWidget {
     }
 
     return AmapRefresher(
-              keyRefresh: GlobalKey<RefreshIndicatorState>(),
-              onRefresh: () async {
-                await productsListNotifier.loadProductList();
-              },
-              child: Column(
-      children: [
-        const SizedBox(
-          height: 60,
-        ),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-                color: AMAPColorConstants.background2.withOpacity(0.5)),
-            child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+      onRefresh: () async {
+        await productsListNotifier.loadProductList();
+      },
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 60,
+          ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: AMAPColorConstants.background2.withOpacity(0.5)),
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics()),
                 child: Column(
                   children: [
                     GestureDetector(
-                        child: const GreenBtn(text: AMAPTextConstants.addingACommand),
+                        child: const GreenBtn(
+                            text: AMAPTextConstants.addingACommand),
                         onTap: () {
                           productModif.setModifiedProduct(-1);
                           pageNotifier.setAmapPage(AmapPage.addCmd);
@@ -114,7 +115,8 @@ class AdminPage extends HookConsumerWidget {
                       height: 40,
                     ),
                     GestureDetector(
-                        child: const GreenBtn(text: AMAPTextConstants.handlingAccount),
+                        child: const GreenBtn(
+                            text: AMAPTextConstants.handlingAccount),
                         onTap: () {
                           productModif.setModifiedProduct(-1);
                           pageNotifier.setAmapPage(AmapPage.solde);
@@ -123,7 +125,8 @@ class AdminPage extends HookConsumerWidget {
                       height: 40,
                     ),
                     GestureDetector(
-                        child: const GreenBtn(text: AMAPTextConstants.addingProduct),
+                        child: const GreenBtn(
+                            text: AMAPTextConstants.addingProduct),
                         onTap: () {
                           productModif.setModifiedProduct(-1);
                           pageNotifier.setAmapPage(AmapPage.modif);
@@ -137,8 +140,8 @@ class AdminPage extends HookConsumerWidget {
               ),
             ),
           ),
-      ],
-        ),
+        ],
+      ),
     );
   }
 }

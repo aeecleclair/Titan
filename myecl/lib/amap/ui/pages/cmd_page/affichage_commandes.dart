@@ -83,7 +83,6 @@ class ListeOrders extends HookConsumerWidget {
 
     listWidgetOrder.add(const AddButton());
     return AmapRefresher(
-      keyRefresh: GlobalKey<RefreshIndicatorState>(),
       onRefresh: () async {
         await orderListNotifier.loadOrderList();
         await soldeNotifier.loadCashByUser(userId);
