@@ -44,6 +44,9 @@ final loadingrovider = Provider((ref) {
 final idProvider = Provider((ref) {
   return ref.watch(authTokenProvider).when(
     data: (tokens) {
+      print(tokens["token"] == ""
+          ? null
+          : JwtDecoder.decode(tokens["token"] as String)["sub"]);
       return tokens["token"] == ""
           ? null
           : JwtDecoder.decode(tokens["token"] as String)["sub"];

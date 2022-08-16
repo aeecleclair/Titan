@@ -7,11 +7,14 @@ class ItemRepository extends Repository {
   final ext = "loans/loaners/";
 
   Future<List<Item>> getItemList(String loanerId) async {
-    return List<Item>.from((await getList(suffix: loanerId + "/items")).map((x) => Item.fromJson(x)));
+    print((await getList(suffix: loanerId + "/items")));
+    return List<Item>.from((await getList(suffix: loanerId + "/items"))
+        .map((x) => Item.fromJson(x)));
   }
 
   Future<Item> createItem(String loanerId, Item item) async {
-    return Item.fromJson(await create(item.toJson(), suffix: loanerId + "/items"));
+    return Item.fromJson(
+        await create(item.toJson(), suffix: loanerId + "/items"));
   }
 
   Future<bool> updateItem(String loanerId, Item item) async {

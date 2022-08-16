@@ -93,7 +93,7 @@ class LoanUi extends ConsumerWidget {
                     color: LoanColorConstants.lightOrange),
               ),
               Text(
-                l.items.fold(0, (a, b) => (a as int) + b.caution).toString() +
+                l.items.fold(0, (a, b) => (a as int) + int.parse(b.caution)).toString() +
                     '€',
                 style: const TextStyle(
                     fontSize: 15,

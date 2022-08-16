@@ -77,12 +77,12 @@ class EditPage extends HookConsumerWidget {
                                     style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500)),
-                                selected: asso.value.value?.name == e.name,
+                                selected: asso.value.name == e.name,
                                 value: e.name,
                                 activeColor: LoanColorConstants.orange,
-                                groupValue: asso,
+                                groupValue: asso.value.name,
                                 onChanged: (s) {
-                                  asso.value = AsyncData(e);
+                                  asso.value = e;
                                 }),
                           )
                           .toList()),
@@ -320,7 +320,7 @@ class EditPage extends HookConsumerWidget {
                     Row(
                       children: [
                         const Text(LoanTextConstants.association + " : "),
-                        Text(l.association),
+                        Text(l.loanerId), //TODO:
                       ],
                     ),
                     Row(
@@ -412,51 +412,33 @@ class EditPage extends HookConsumerWidget {
                                   }
                                   if (key.currentState!.validate()) {
                                     pageNotifier.setLoanPage(LoanPage.option);
-                                    asso.value.when(data: (a) {
-                                      tokenExpireWrapper(ref, () async {
-                                        loanListNotifier
-                                            .updateLoan(
-                                          Loan(
-                                            association: a.id,
-                                            items: items
-                                                .where((element) =>
-                                                    selectedItems[
-                                                        items.indexOf(element)])
-                                                .toList() as List<Item>,
-                                            borrowerId: number.text,
-                                            caution: caution.value,
-                                            end: DateTime.parse(end.text),
-                                            id: l.id,
-                                            notes: note.text,
-                                            start: DateTime.parse(start.text),
-                                          ),
-                                        )
-                                            .then((value) {
-                                          if (value) {
-                                            displayToast(context, TypeMsg.msg,
-                                                LoanTextConstants.updatedLoan);
-                                          } else {
-                                            displayToast(
-                                                context,
-                                                TypeMsg.error,
-                                                LoanTextConstants
-                                                    .updatingError);
-                                          }
-                                        });
-                                      });
-                                    }, error:
-                                        (Object error, StackTrace? stackTrace) {
-                                      displayToast(context, TypeMsg.error,
-                                          LoanTextConstants.addingError);
-                                    }, loading: () {
-                                      return const Center(
-                                        child: CircularProgressIndicator(
-                                          valueColor: AlwaysStoppedAnimation(
-                                              LoanColorConstants.orange),
+                                    tokenExpireWrapper(ref, () async {
+                                      loanListNotifier
+                                          .updateLoan(
+                                        Loan(
+                                          loanerId: l.loanerId,
+                                          items: items
+                                              .where((element) => selectedItems[
+                                                  items.indexOf(element)])
+                                              .toList() as List<Item>,
+                                          borrowerId: number.text,
+                                          caution: caution.value,
+                                          end: DateTime.parse(end.text),
+                                          id: l.id,
+                                          notes: note.text,
+                                          start: DateTime.parse(start.text),
                                         ),
-                                      );
+                                      )
+                                          .then((value) {
+                                        if (value) {
+                                          displayToast(context, TypeMsg.msg,
+                                              LoanTextConstants.updatedLoan);
+                                        } else {
+                                          displayToast(context, TypeMsg.error,
+                                              LoanTextConstants.updatingError);
+                                        }
+                                      });
                                     });
-
                                     _currentStep.value = 0;
                                   }
                                 },

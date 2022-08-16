@@ -8,7 +8,7 @@ class LoanRepository extends Repository {
 
   Future<List<Loan>> getLoanListByLoanerId(String loanerId) async {
     return List<Loan>.from(
-        (await getList(suffix: "loaner/" + loanerId + "/loans"))
+        (await getList(suffix: "loaners/" + loanerId + "/loans"))
             .map((x) => Loan.fromJson(x)));
   }
 

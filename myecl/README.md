@@ -20,7 +20,11 @@ TODO :
 ne pas afficher si date de fin est dépassée
 
 Réserva° : (API)
-Prêt : (API) + endpoint loaner from userID
+Prêt : (API) + searchbar + loanerById (loanerProvider)
 Evénements : (API)
 Amap : search/amap + cash list search
 extracting function tools
+
+829b1ab2-4669-41cf-87d9-cbf24ac31f9e
+
+45c01628-9b10-40d2-a6eb-3f3bb00682d4

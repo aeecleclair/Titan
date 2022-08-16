@@ -4,20 +4,20 @@ import 'package:myecl/loan/tools/functions.dart';
 class Loan {
   Loan({
     required this.id,
+    required this.loanerId,
     required this.borrowerId,
     required this.notes,
     required this.start,
     required this.end,
-    required this.association,
     required this.caution,
-    required this.items
+    required this.items,
   });
   late final String id;
+  late final String loanerId;
   late final String borrowerId;
   late final String notes;
   late final DateTime start;
   late final DateTime end;
-  late final String association;
   late final bool caution;
   late final List<Item> items;
 
@@ -27,7 +27,6 @@ class Loan {
     notes = json['notes'];
     start = DateTime.parse(json['start']);
     end = DateTime.parse(json['end']);
-    association = json['association'];
     caution = json['caution'];
     items = List<Item>.from(json['items'].map((x) => Item.fromJson(x)));
   }
@@ -39,20 +38,19 @@ class Loan {
     _data['notes'] = notes;
     _data['start'] = processDate(start);
     _data['end'] = processDate(end);
-    _data['association'] = association;
     _data['caution'] = caution;
-    _data['items'] = items.map((x) => x.toJson()).toList();
+    _data['item_ids'] = items.map((x) => x.id).toList();
     return _data;
   }
 
-  Loan copyWith({id, borrowerId, notes, start, end, association, caution, items}) {
+  Loan copyWith({id, loanerId, borrowerId, notes, start, end, caution, items}) {
     return Loan(
         id: id ?? this.id,
+        loanerId: loanerId ?? this.loanerId,
         borrowerId: borrowerId ?? this.borrowerId,
         notes: notes ?? this.notes,
         start: start ?? this.start,
         end: end ?? this.end,
-        association: association ?? this.association,
         caution: caution ?? this.caution,
         items: items ?? this.items);
   }

@@ -30,6 +30,7 @@ class LoanTextConstants {
       "Des champs sont manquants ou incorrects";
   static const String invalidNumber = "Veuillez entrer un nombre";
   static const String invalidDates = "Les dates ne sont pas valides";
+  static const String lendingDuration = "Durée possible du prêt";
   static const String loan = "Prêt";
   static const String name = "Nom";
   static const String next = "Suivant";

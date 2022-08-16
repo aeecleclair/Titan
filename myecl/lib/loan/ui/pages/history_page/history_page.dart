@@ -32,13 +32,13 @@ class HistoryPage extends HookConsumerWidget {
       data: (data) {
         if (data.isNotEmpty) {
           List<String> categories =
-              data.map((e) => e.association).toSet().toList();
+              data.map((e) => e.loanerId).toSet().toList();
           Map<String, List<Widget>> dictCateListWidget = {
             for (var item in categories) item: []
           };
 
           for (Loan l in data) {
-            dictCateListWidget[l.association]!
+            dictCateListWidget[l.loanerId]!
                 .add(LoanUi(l: l, isHistory: true, isAdmin: false));
           }
 
@@ -51,7 +51,7 @@ class HistoryPage extends HookConsumerWidget {
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.only(left: 20),
                   child: Text(
-                    c,
+                    c, //TODO:
                     style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w600,

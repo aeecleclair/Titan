@@ -19,11 +19,12 @@ class AddItemPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final _currentStep = useState(0);
     final key = GlobalKey<FormState>();
-    final asso = useState(ref.watch(loanerName));
+    final asso = useState(ref.watch(loanerProvider));
     final associations = ref.watch(loanerListProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final name = useTextEditingController();
     final caution = useTextEditingController();
+    final lendingDuration = useTextEditingController();
 
     Widget w = const Center(
       child: CircularProgressIndicator(
@@ -50,12 +51,12 @@ class AddItemPage extends HookConsumerWidget {
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500)),
-                              selected: asso.value == e.name,
+                              selected: asso.value.name == e.name,
                               value: e.name,
                               activeColor: LoanColorConstants.orange,
-                              groupValue: asso.value,
+                              groupValue: asso.value.name,
                               onChanged: (s) {
-                                asso.value = s.toString();
+                                asso.value = e;
                               }),
                         )
                         .toList()),
@@ -114,13 +115,40 @@ class AddItemPage extends HookConsumerWidget {
                   : StepState.disabled,
             ),
             Step(
+              title: const Text(LoanTextConstants.lendingDuration),
+              content: TextFormField(
+                controller: lendingDuration,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: LoanTextConstants.caution,
+                  suffix: Text('Jours'),
+                ),
+                validator: (value) {
+                  if (value == null) {
+                    return LoanTextConstants.noValue;
+                  } else if (value.isEmpty) {
+                    return LoanTextConstants.noValue;
+                  } else if (int.tryParse(value) == null) {
+                    return LoanTextConstants.invalidNumber;
+                  } else if (int.parse(value) < 0) {
+                    return LoanTextConstants.positiveNumber;
+                  }
+                  return null;
+                },
+              ),
+              isActive: _currentStep.value >= 0,
+              state: _currentStep.value >= 3
+                  ? StepState.complete
+                  : StepState.disabled,
+            ),
+            Step(
               title: const Text(LoanTextConstants.confirmation),
               content: Column(
                 children: <Widget>[
                   Row(
                     children: [
                       const Text(LoanTextConstants.association + " : "),
-                      Text(asso.value),
+                      Text(asso.value.name),
                     ],
                   ),
                   Row(
@@ -135,10 +163,16 @@ class AddItemPage extends HookConsumerWidget {
                       Text(caution.text),
                     ],
                   ),
+                  Row(
+                    children: [
+                      const Text(LoanTextConstants.lendingDuration + " : "),
+                      Text(lendingDuration.text),
+                    ],
+                  ),
                 ],
               ),
               isActive: _currentStep.value >= 0,
-              state: _currentStep.value >= 3
+              state: _currentStep.value >= 4
                   ? StepState.complete
                   : StepState.disabled,
             ),
@@ -173,18 +207,18 @@ class AddItemPage extends HookConsumerWidget {
                                   return;
                                 }
                                 if (key.currentState!.validate()) {
-                                  pageNotifier.setLoanPage(LoanPage.main);
                                   tokenExpireWrapper(ref, () async {
                                     itemListNotifier
                                         .addItem(
                                       Item(
                                         name: name.text,
-                                        caution: int.parse(caution.text),
-                                        expiration: DateTime.now().add(
-                                          const Duration(days: 30),
-                                        ),
-                                        groupId: '',
+                                        caution: caution.text,
                                         id: '',
+                                        suggestedLendingDuration:
+                                            int.parse(lendingDuration.text) *
+                                                24 *
+                                                60 *
+                                                60,
                                       ),
                                     )
                                         .then((value) {
@@ -195,6 +229,7 @@ class AddItemPage extends HookConsumerWidget {
                                         displayToast(context, TypeMsg.error,
                                             LoanTextConstants.addingError);
                                       }
+                                      pageNotifier.setLoanPage(LoanPage.main);
                                     });
                                   });
                                   _currentStep.value = 0;

@@ -52,7 +52,7 @@ class DetailPage extends HookConsumerWidget {
                           child: Column(
                             children: [
                               Text(
-                                l.association,
+                                l.loanerId, //TODO:
                                 style: const TextStyle(
                                     fontSize: 40,
                                     fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class DetailPage extends HookConsumerWidget {
                             alignment: Alignment.topCenter,
                             child: Text(
                               l.items
-                                      .fold(0, (a, b) => (a as int) + b.caution)
+                                      .fold(0, (a, b) => (a as int) + int.parse(b.caution))
                                       .toString() +
                                   '€',
                               style: const TextStyle(

@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
@@ -29,6 +30,7 @@ class AddLoanPage extends HookConsumerWidget {
     final selectedItems = ref.watch(selectedListProvider);
     final selectedItemsNotifier = ref.watch(selectedListProvider.notifier);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
+    final loanerId = ref.watch(loanerIdProvider);
     final start = useTextEditingController();
     final end = useTextEditingController();
     final number = useTextEditingController();
@@ -44,6 +46,7 @@ class AddLoanPage extends HookConsumerWidget {
     associations.when(
       data: (listAsso) {
         if (listAsso.isNotEmpty) {
+          print(listAsso);
           List<Step> steps = [
             Step(
               title: const Text(LoanTextConstants.association),
@@ -60,15 +63,17 @@ class AddLoanPage extends HookConsumerWidget {
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500)),
-                              selected: asso.value.value?.name == e.name,
+                              selected: asso.value.name == e.name,
                               value: e.name,
                               activeColor: LoanColorConstants.orange,
-                              groupValue: asso,
+                              groupValue: asso.value.name,
                               onChanged: (s) async {
-                                asso.value = AsyncData(e);
+                                print('onChanged');
+                                asso.value = e;
                                 itemListNotifier.setId(e.id);
                                 items.value =
                                     await itemListNotifier.loadLoanList();
+                                print('items ${items.value}');
                               }),
                         )
                         .toList()),
@@ -320,7 +325,7 @@ class AddLoanPage extends HookConsumerWidget {
                   Row(
                     children: [
                       const Text(LoanTextConstants.association + " : "),
-                      Text(asso.value.value?.name as String),
+                      Text(asso.value.name),
                     ],
                   ),
                   Row(
@@ -433,60 +438,37 @@ class AddLoanPage extends HookConsumerWidget {
                                     pageNotifier.setLoanPage(LoanPage.main);
                                     items.value.when(
                                       data: (itemList) {
-                                        asso.value.when(
-                                          data: (a) {
-                                            tokenExpireWrapper(ref, () async {
-                                              loanListNotifier
-                                                  .addLoan(
-                                                Loan(
-                                                  association: a.id,
-                                                  items: itemList
-                                                      .where((element) =>
-                                                          selectedItems[
-                                                              itemList.indexOf(
-                                                                  element)])
-                                                      .toList(),
-                                                  borrowerId: number.text,
-                                                  caution: caution.value,
-                                                  end: DateTime.parse(end.text),
-                                                  id: "",
-                                                  notes: note.text,
-                                                  start: DateTime.parse(
-                                                      start.text),
-                                                ),
-                                              )
-                                                  .then((value) {
-                                                if (value) {
-                                                  displayToast(
-                                                      context,
-                                                      TypeMsg.msg,
-                                                      LoanTextConstants
-                                                          .addedLoan);
-                                                } else {
-                                                  displayToast(
-                                                      context,
-                                                      TypeMsg.error,
-                                                      LoanTextConstants
-                                                          .addingError);
-                                                }
-                                              });
-                                            });
-                                          },
-                                          error: (error, s) {
-                                            displayToast(context, TypeMsg.error,
-                                                LoanTextConstants.addingError);
-                                          },
-                                          loading: () {
-                                            return const Center(
-                                              child: CircularProgressIndicator(
-                                                valueColor:
-                                                    AlwaysStoppedAnimation(
-                                                        LoanColorConstants
-                                                            .orange),
-                                              ),
-                                            );
-                                          },
-                                        );
+                                        tokenExpireWrapper(ref, () async {
+                                          loanListNotifier
+                                              .addLoan(
+                                            Loan(
+                                              loanerId: loanerId,
+                                              items: itemList
+                                                  .where((element) =>
+                                                      selectedItems[itemList
+                                                          .indexOf(element)])
+                                                  .toList(),
+                                              borrowerId: number.text,
+                                              caution: caution.value,
+                                              end: DateTime.parse(end.text),
+                                              id: "",
+                                              notes: note.text,
+                                              start: DateTime.parse(start.text),
+                                            ),
+                                          )
+                                              .then((value) {
+                                            if (value) {
+                                              displayToast(context, TypeMsg.msg,
+                                                  LoanTextConstants.addedLoan);
+                                            } else {
+                                              displayToast(
+                                                  context,
+                                                  TypeMsg.error,
+                                                  LoanTextConstants
+                                                      .addingError);
+                                            }
+                                          });
+                                        });
                                       },
                                       error: (error, s) {
                                         displayToast(context, TypeMsg.error,

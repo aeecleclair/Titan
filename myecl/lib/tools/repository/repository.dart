@@ -18,7 +18,6 @@ abstract class Repository {
   Future<List> getList({String suffix = ""}) async {
     final response =
         await http.get(Uri.parse(host + ext + suffix), headers: headers);
-    print(response.body);
     if (response.statusCode == 200) {
       try {
         String resp = utf8.decode(response.body.runes.toList());
