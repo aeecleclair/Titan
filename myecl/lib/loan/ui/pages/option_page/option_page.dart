@@ -9,18 +9,20 @@ import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_ui.dart';
+import 'package:myecl/user/providers/user_list_provider.dart';
 
 class OptionPage extends HookConsumerWidget {
   const OptionPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final loanerId = ref.watch(loanerIdProvider);
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final loanList = ref.watch(loanerLoanListProvider);
-    final loanerId = ref.watch(loanerIdProvider);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     ref.watch(itemListProvider);
     ref.watch(loanerProvider);
+    ref.watch(userList);
     List<Widget> listWidget = [
       Container(
         margin: const EdgeInsets.only(right: 10, left: 20),

@@ -16,6 +16,7 @@ import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:uuid/uuid.dart';
 
@@ -62,7 +63,7 @@ class Boutons extends HookConsumerWidget {
                       "€)"),
               onTap: () {
                 if (price == 0.0) {
-                  displayToast(
+                  displayAMAPToast(
                       context, TypeMsg.error, AMAPTextConstants.noProduct);
                 } else if (indexCmd == -1 && price < b) {
                   List<Product> prod = [];
@@ -86,12 +87,12 @@ class Boutons extends HookConsumerWidget {
                       if (value) {
                         pageNotifier.setAmapPage(AmapPage.main);
                         userAmountNotifier.updateCash(-price);
-                        displayToast(
+                        displayAMAPToast(
                             context, TypeMsg.msg, AMAPTextConstants.addedOrder);
                         clearCmd(ref);
                       } else {
                         pageNotifier.setAmapPage(AmapPage.main);
-                        displayToast(context, TypeMsg.error,
+                        displayAMAPToast(context, TypeMsg.error,
                             AMAPTextConstants.addingError);
                       }
                     });
@@ -119,18 +120,18 @@ class Boutons extends HookConsumerWidget {
                         if (value) {
                           pageNotifier.setAmapPage(AmapPage.main);
                           userAmountNotifier.updateCash(lastPrice - price);
-                          displayToast(context, TypeMsg.msg,
+                          displayAMAPToast(context, TypeMsg.msg,
                               AMAPTextConstants.updatedOrder);
                         } else {
                           pageNotifier.setAmapPage(AmapPage.main);
-                          displayToast(context, TypeMsg.error,
+                          displayAMAPToast(context, TypeMsg.error,
                               AMAPTextConstants.updatingError);
                         }
                       });
                     });
                     clearCmd(ref);
                   } else {
-                    displayToast(context, TypeMsg.error,
+                    displayAMAPToast(context, TypeMsg.error,
                         AMAPTextConstants.notEnoughMoney);
                   }
                 }

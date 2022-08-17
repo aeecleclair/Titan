@@ -1,5 +1,6 @@
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class Loan {
   Loan({
@@ -24,6 +25,7 @@ class Loan {
   Loan.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     borrowerId = json['borrower_id'];
+    loanerId = json['loaner_id'];
     notes = json['notes'];
     start = DateTime.parse(json['start']);
     end = DateTime.parse(json['end']);
@@ -35,9 +37,10 @@ class Loan {
     final _data = <String, dynamic>{};
     _data['id'] = id;
     _data['borrower_id'] = borrowerId;
+    _data['loaner_id'] = loanerId;
     _data['notes'] = notes;
-    _data['start'] = processDate(start);
-    _data['end'] = processDate(end);
+    _data['start'] = processDateToAPI(start);
+    _data['end'] = processDateToAPI(end);
     _data['caution'] = caution;
     _data['item_ids'] = items.map((x) => x.id).toList();
     return _data;

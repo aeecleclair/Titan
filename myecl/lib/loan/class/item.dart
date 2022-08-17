@@ -7,7 +7,7 @@ class Item {
   });
   late final String id;
   late final String name;
-  late final String caution;
+  late final int caution;
   late final double suggestedLendingDuration;
 
   Item.fromJson(Map<String, dynamic> json) {

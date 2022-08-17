@@ -32,6 +32,7 @@ class LoanTextConstants {
   static const String invalidDates = "Les dates ne sont pas valides";
   static const String lendingDuration = "Durée possible du prêt";
   static const String loan = "Prêt";
+  static const String looking = "Rechercher";
   static const String name = "Nom";
   static const String next = "Suivant";
   static const String no = "Non";

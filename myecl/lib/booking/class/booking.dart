@@ -1,4 +1,5 @@
 import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class Booking {
   late final String id;
@@ -41,8 +42,8 @@ class Booking {
     final _data = <String, dynamic>{};
     _data["id"] = id;
     _data["reason"] = reason;
-    _data["start"] = processDate(start);
-    _data["end"] = processDate(end);
+    _data["start"] = processDateToAPI(start);
+    _data["end"] = processDateToAPI(end);
     _data["note"] = note;
     _data["room"] = room;
     _data["key"] = key;

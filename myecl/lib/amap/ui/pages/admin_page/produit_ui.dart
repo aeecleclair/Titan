@@ -9,6 +9,7 @@ import 'package:myecl/amap/providers/modified_product_index_provider.dart';
 import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class ProductUi extends ConsumerWidget {
   final Product p;
@@ -117,7 +118,7 @@ class ProductUi extends ConsumerWidget {
                               ref
                                   .watch(deliveryProductListProvider(deliveryId).notifier)
                                   .deleteProduct(p);
-                              displayToast(
+                              displayAMAPToast(
                                   context, TypeMsg.msg, "Product supprimé");
                             }));
                   },

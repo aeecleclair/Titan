@@ -9,6 +9,7 @@ import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/dialog.dart';
+import 'package:myecl/tools/functions.dart';
 
 class LoanUi extends ConsumerWidget {
   final Loan l;
@@ -93,7 +94,7 @@ class LoanUi extends ConsumerWidget {
                     color: LoanColorConstants.lightOrange),
               ),
               Text(
-                l.items.fold(0, (a, b) => (a as int) + int.parse(b.caution)).toString() +
+                l.items.fold(0, (a, b) => (a as int) + b.caution).toString() +
                     '€',
                 style: const TextStyle(
                     fontSize: 15,

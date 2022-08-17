@@ -12,6 +12,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/add_cmd_page/product_ui_check.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class AddCmdPage extends HookConsumerWidget {
@@ -205,10 +206,10 @@ class AddCmdPage extends HookConsumerWidget {
                                       if (value) {
                                         pageNotifier
                                             .setAmapPage(AmapPage.admin);
-                                        displayToast(context, TypeMsg.msg,
+                                        displayAMAPToast(context, TypeMsg.msg,
                                             AMAPTextConstants.addedCommand);
                                       } else {
-                                        displayToast(
+                                        displayAMAPToast(
                                             context,
                                             TypeMsg.error,
                                             AMAPTextConstants
@@ -218,7 +219,7 @@ class AddCmdPage extends HookConsumerWidget {
                                     });
                                   });
                                 } else {
-                                  displayToast(context, TypeMsg.error,
+                                  displayAMAPToast(context, TypeMsg.error,
                                       AMAPTextConstants.addingError);
                                 }
                               }),

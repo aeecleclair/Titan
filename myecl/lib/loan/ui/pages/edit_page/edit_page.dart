@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
@@ -14,6 +13,7 @@ import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class EditPage extends HookConsumerWidget {
@@ -431,10 +431,10 @@ class EditPage extends HookConsumerWidget {
                                       )
                                           .then((value) {
                                         if (value) {
-                                          displayToast(context, TypeMsg.msg,
+                                          displayLoanToast(context, TypeMsg.msg,
                                               LoanTextConstants.updatedLoan);
                                         } else {
-                                          displayToast(context, TypeMsg.error,
+                                          displayLoanToast(context, TypeMsg.error,
                                               LoanTextConstants.updatingError);
                                         }
                                       });

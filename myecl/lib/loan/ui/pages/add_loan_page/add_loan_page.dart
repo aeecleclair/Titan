@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
@@ -13,7 +12,10 @@ import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AddLoanPage extends HookConsumerWidget {
   const AddLoanPage({Key? key}) : super(key: key);
@@ -27,15 +29,19 @@ class AddLoanPage extends HookConsumerWidget {
     final associations = ref.watch(loanerListProvider);
     final items = useState(ref.watch(itemListProvider));
     final itemListNotifier = ref.watch(itemListProvider.notifier);
+    final users = useState(ref.watch(userList));
+    final usersNotifier = ref.watch(userList.notifier);
     final selectedItems = ref.watch(selectedListProvider);
     final selectedItemsNotifier = ref.watch(selectedListProvider.notifier);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
     final loanerId = ref.watch(loanerIdProvider);
     final start = useTextEditingController();
     final end = useTextEditingController();
-    final number = useTextEditingController();
     final note = useTextEditingController();
+    final queryController = useTextEditingController();
     final caution = useState(false);
+    final focus = useState(false);
+    final borrower = useState(SimpleUser.empty());
 
     Widget w = const Center(
       child: CircularProgressIndicator(
@@ -68,12 +74,10 @@ class AddLoanPage extends HookConsumerWidget {
                               activeColor: LoanColorConstants.orange,
                               groupValue: asso.value.name,
                               onChanged: (s) async {
-                                print('onChanged');
                                 asso.value = e;
                                 itemListNotifier.setId(e.id);
                                 items.value =
                                     await itemListNotifier.loadLoanList();
-                                print('items ${items.value}');
                               }),
                         )
                         .toList()),
@@ -259,24 +263,73 @@ class AddLoanPage extends HookConsumerWidget {
             Step(
               // TODO:
               title: const Text(LoanTextConstants.borrower),
-              content: Column(
-                children: <Widget>[
-                  TextFormField(
-                    controller: number,
-                    decoration:
-                        const InputDecoration(labelText: 'Mobile Number'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null) {
-                        return LoanTextConstants.noValue;
-                      } else if (int.tryParse(value) == null) {
-                        return LoanTextConstants.invalidNumber;
-                      }
-                      return null;
+              content: users.value.when(data: (u) {
+                return Column(children: <Widget>[
+                  TextField(
+                    onChanged: (value) {
+                      focus.value = true;
+                      tokenExpireWrapper(ref, () async {
+                        usersNotifier
+                            .filterUsers(queryController.text)
+                            .then((value) {
+                          users.value = value;
+                        });
+                      });
                     },
+                    controller: queryController,
+                    autofocus: focus.value,
+                    decoration: const InputDecoration(
+                        labelText: LoanTextConstants.looking,
+                        hintText: LoanTextConstants.looking,
+                        prefixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)))),
                   ),
-                ],
-              ),
+                  ...u.map(
+                    (e) => GestureDetector(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 20,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    e.firstname +
+                                        " " +
+                                        e.name +
+                                        (e.nickname.isNotEmpty
+                                            ? " (" + e.nickname + ")"
+                                            : ""),
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: (borrower.value == e)
+                                          ? FontWeight.bold
+                                          : FontWeight.w400,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ]),
+                        ),
+                        onTap: () {
+                          borrower.value = e;
+                        }),
+                  )
+                ]);
+              }, error: (error, s) {
+                return Text(error.toString(),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w500));
+              }, loading: () {
+                return const CircularProgressIndicator(
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
+                );
+              }),
               isActive: _currentStep.value >= 0,
               state: _currentStep.value >= 4
                   ? StepState.complete
@@ -331,7 +384,12 @@ class AddLoanPage extends HookConsumerWidget {
                   Row(
                     children: [
                       const Text(LoanTextConstants.borrower + " : "),
-                      Text(number.text),
+                      Text(borrower.value.nickname +
+                          "(" +
+                          borrower.value.firstname +
+                          " " +
+                          borrower.value.name +
+                          ")"),
                     ],
                   ),
                   Column(
@@ -430,12 +488,12 @@ class AddLoanPage extends HookConsumerWidget {
                                 if (key.currentState == null) {
                                   return;
                                 }
-                                if (key.currentState!.validate()) {
+                                if (key.currentState!.validate() &&
+                                    borrower.value.id.isNotEmpty) {
                                   if (start.text.compareTo(end.text) >= 0) {
-                                    displayToast(context, TypeMsg.error,
+                                    displayLoanToast(context, TypeMsg.error,
                                         LoanTextConstants.invalidDates);
                                   } else {
-                                    pageNotifier.setLoanPage(LoanPage.main);
                                     items.value.when(
                                       data: (itemList) {
                                         tokenExpireWrapper(ref, () async {
@@ -448,7 +506,7 @@ class AddLoanPage extends HookConsumerWidget {
                                                       selectedItems[itemList
                                                           .indexOf(element)])
                                                   .toList(),
-                                              borrowerId: number.text,
+                                              borrowerId: borrower.value.id,
                                               caution: caution.value,
                                               end: DateTime.parse(end.text),
                                               id: "",
@@ -458,10 +516,12 @@ class AddLoanPage extends HookConsumerWidget {
                                           )
                                               .then((value) {
                                             if (value) {
-                                              displayToast(context, TypeMsg.msg,
+                                              displayLoanToast(context, TypeMsg.msg,
                                                   LoanTextConstants.addedLoan);
+                                              pageNotifier
+                                                  .setLoanPage(LoanPage.main);
                                             } else {
-                                              displayToast(
+                                              displayLoanToast(
                                                   context,
                                                   TypeMsg.error,
                                                   LoanTextConstants
@@ -471,18 +531,18 @@ class AddLoanPage extends HookConsumerWidget {
                                         });
                                       },
                                       error: (error, s) {
-                                        displayToast(context, TypeMsg.error,
+                                        displayLoanToast(context, TypeMsg.error,
                                             error.toString());
                                       },
                                       loading: () {
-                                        displayToast(context, TypeMsg.error,
+                                        displayLoanToast(context, TypeMsg.error,
                                             LoanTextConstants.addingError);
                                       },
                                     );
                                     _currentStep.value = 0;
                                   }
                                 } else {
-                                  displayToast(
+                                  displayLoanToast(
                                       context,
                                       TypeMsg.error,
                                       LoanTextConstants

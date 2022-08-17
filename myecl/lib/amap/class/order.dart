@@ -1,5 +1,6 @@
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class Order {
   Order(
@@ -41,7 +42,7 @@ class Order {
     final _data = <String, dynamic>{};
     _data['order_id'] = id;
     _data['delivery_id'] = deliveryId;
-    _data['delivery_date'] = processDate(deliveryDate);
+    _data['delivery_date'] = processDateToAPI(deliveryDate);
     _data['products_ids'] = productsIds;
     _data['collection_slot'] = collectionSlot;
     _data['products_quantity'] = products.map((e) => e.quantity).toList();

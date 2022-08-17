@@ -1,5 +1,6 @@
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class Delivery {
   Delivery({
@@ -26,7 +27,7 @@ class Delivery {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['delivery_date'] = processDate(deliveryDate);
+    _data['delivery_date'] = processDateToAPI(deliveryDate);
     _data['products_ids'] = products.map((e) => e.id).toList();
     _data['locked'] = locked;
     _data['id'] = id;

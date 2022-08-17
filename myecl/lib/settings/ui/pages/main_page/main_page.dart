@@ -6,6 +6,7 @@ import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/tools/functions.dart';
 import 'package:myecl/settings/ui/refresh_indicator.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/providers/is_admin_provider.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
@@ -16,7 +17,6 @@ class MainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final me = ref.watch(userProvider);
     final meNotifier = ref.watch(asyncUserProvider.notifier);
-    final isAdmin = ref.watch(isAdminProvider);
     final pageNotifier = ref.watch(settingsPageProvider.notifier);
     return SettingsRefresher(
       onRefresh: () async {
@@ -174,7 +174,7 @@ class MainPage extends HookConsumerWidget {
                   ),
                 ),
                 Text(
-                  me.birthday.toString(),
+                  processDatePrint(me.birthday),
                   style: const TextStyle(
                     fontSize: 18,
                   ),

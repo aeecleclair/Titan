@@ -4,6 +4,7 @@ import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class DetailPage extends HookConsumerWidget {
   final bool isAdmin;
@@ -74,7 +75,7 @@ class DetailPage extends HookConsumerWidget {
                             alignment: Alignment.topCenter,
                             child: Text(
                               l.items
-                                      .fold(0, (a, b) => (a as int) + int.parse(b.caution))
+                                      .fold(0, (a, b) => (a as int) + b.caution)
                                       .toString() +
                                   '€',
                               style: const TextStyle(

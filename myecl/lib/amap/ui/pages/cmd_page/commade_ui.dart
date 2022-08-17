@@ -15,6 +15,7 @@ import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class OrderUi extends ConsumerWidget {
   final Order c;
@@ -257,7 +258,7 @@ class OrderUi extends ConsumerWidget {
                                       .reduce(
                                           (value, element) => value + element);
                                   userAmountNotifier.updateCash(price);
-                                  displayToast(context, TypeMsg.msg,
+                                  displayAMAPToast(context, TypeMsg.msg,
                                       "Commande supprimée");
                                 }));
                       },

@@ -7,6 +7,7 @@ import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/refresh_indicator.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
@@ -91,10 +92,10 @@ class AddSoldePage extends HookConsumerWidget {
                                                   Cash(balance: 0.0, user: e))
                                               .then((value) {
                                             if (value) {
-                                              displayToast(context, TypeMsg.msg,
+                                              displayAMAPToast(context, TypeMsg.msg,
                                                   AMAPTextConstants.addedUser);
                                             } else {
-                                              displayToast(
+                                              displayAMAPToast(
                                                   context,
                                                   TypeMsg.error,
                                                   AMAPTextConstants.addingError);

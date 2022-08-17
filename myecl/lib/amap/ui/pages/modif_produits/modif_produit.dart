@@ -10,6 +10,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/modif_produits/text_entry.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:uuid/uuid.dart';
 
@@ -263,10 +264,10 @@ class ModifProduct extends HookConsumerWidget {
                                               .updateProduct(newProduct)
                                               .then((value) {
                                             if (value) {
-                                              displayToast(context, TypeMsg.msg,
+                                              displayAMAPToast(context, TypeMsg.msg,
                                                   AMAPTextConstants.updatedProduct);
                                             } else {
-                                              displayToast(
+                                              displayAMAPToast(
                                                   context,
                                                   TypeMsg.error,
                                                   AMAPTextConstants.updatingError);
@@ -297,10 +298,10 @@ class ModifProduct extends HookConsumerWidget {
                                               .addProduct(newProduct)
                                               .then((value) {
                                             if (value) {
-                                              displayToast(context, TypeMsg.msg,
+                                              displayAMAPToast(context, TypeMsg.msg,
                                                   AMAPTextConstants.addedProduct);
                                             } else {
-                                              displayToast(
+                                              displayAMAPToast(
                                                   context,
                                                   TypeMsg.error,
                                                   AMAPTextConstants.addingError);

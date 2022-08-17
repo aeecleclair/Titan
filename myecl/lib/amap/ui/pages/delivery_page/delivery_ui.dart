@@ -11,6 +11,7 @@ import 'package:myecl/amap/tools/collection_dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class DeliveryUi extends ConsumerWidget {
   final Delivery c;
@@ -264,14 +265,14 @@ class DeliveryUi extends ConsumerWidget {
                             .then((value) {
                           if (value) {
                             if (lastState) {
-                              displayToast(context, TypeMsg.msg,
+                              displayAMAPToast(context, TypeMsg.msg,
                                   AMAPTextConstants.unlockedDelivery);
                             } else {
-                              displayToast(context, TypeMsg.msg,
+                              displayAMAPToast(context, TypeMsg.msg,
                                   AMAPTextConstants.lockedDelivery);
                             }
                           } else {
-                            displayToast(context, TypeMsg.error,
+                            displayAMAPToast(context, TypeMsg.error,
                                 AMAPTextConstants.updatingError);
                           }
                         });
@@ -305,10 +306,10 @@ class DeliveryUi extends ConsumerWidget {
                                       .deleteDelivery(c)
                                       .then((value) {
                                     if (value) {
-                                      displayToast(context, TypeMsg.msg,
+                                      displayAMAPToast(context, TypeMsg.msg,
                                           AMAPTextConstants.deletedDelivery);
                                     } else {
-                                      displayToast(context, TypeMsg.error,
+                                      displayAMAPToast(context, TypeMsg.error,
                                           AMAPTextConstants.deletingError);
                                     }
                                   });

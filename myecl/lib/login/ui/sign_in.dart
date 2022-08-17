@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/login/ui/text_from_decoration.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/tools/functions.dart';
 
 class SignIn extends HookConsumerWidget {
   const SignIn({Key? key, required this.onRegisterPressed}) : super(key: key);
@@ -68,7 +69,7 @@ class SignIn extends HookConsumerWidget {
                             data: (token) {
                             },
                             error: (e, s) {
-                              displayToast(
+                              displayLoginToast(
                                   context, TypeMsg.error, e.toString());
                             },
                             loading: () {});

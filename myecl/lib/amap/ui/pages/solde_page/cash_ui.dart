@@ -5,6 +5,7 @@ import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class CashUi extends HookConsumerWidget {
   final Cash c;
@@ -91,10 +92,10 @@ class CashUi extends HookConsumerWidget {
                           .then((value) {
                         if (value) {
                           key.currentState!.reset();
-                          displayToast(context, TypeMsg.msg,
+                          displayAMAPToast(context, TypeMsg.msg,
                               AMAPTextConstants.updatedAmount);
                         } else {
-                          displayToast(context, TypeMsg.error,
+                          displayAMAPToast(context, TypeMsg.error,
                               AMAPTextConstants.updatingError);
                         }
                       });

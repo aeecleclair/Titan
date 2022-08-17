@@ -1,12 +1,15 @@
-String processDate(DateTime date) {
-  final d = date.toIso8601String().split('T')[0].split('-');
-  return d[2].toString().padLeft(2, "0") +
-      "/" +
-      d[1].toString().padLeft(2, "0") +
-      "/" +
-      d[0].toString();
-}
+import 'package:flutter/material.dart';
+import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/tools/functions.dart';
 
-String capitalize(String s) {
-  return s[0].toUpperCase() + s.substring(1);
+void displayLoanToast(BuildContext context, TypeMsg type, String text) {
+  return displayToast(
+      context,
+      type,
+      text,
+      LoanColorConstants.lightGrey,
+      LoanColorConstants.darkGrey,
+      LoanColorConstants.lightOrange,
+      LoanColorConstants.orange,
+      Colors.white);
 }

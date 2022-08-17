@@ -4,7 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/settings/tools/constants.dart';
+import 'package:myecl/settings/tools/functions.dart';
 import 'package:myecl/settings/ui/user_field_modifier.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -116,9 +118,9 @@ class InfoPage extends HookConsumerWidget {
                   floor: floorController.value.text,
                 ));
                 asyncUser.when(
-                  data: (d) => displayToast(context, TypeMsg.msg,
+                  data: (d) => displaySettingsToast(context, TypeMsg.msg,
                       SettingsTextConstants.updatedProfile),
-                  error: (e, s) => displayToast(context, TypeMsg.error,
+                  error: (e, s) => displaySettingsToast(context, TypeMsg.error,
                       SettingsTextConstants.updatingError),
                   loading: () {},
                 );

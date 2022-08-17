@@ -7,7 +7,7 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 
 class ItemListNotifier extends ListNotifier<Item> {
   final ItemRepository _itemrepository = ItemRepository();
-  late final String loanerId;
+  String loanerId = "";
   ItemListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _itemrepository.setToken(token);

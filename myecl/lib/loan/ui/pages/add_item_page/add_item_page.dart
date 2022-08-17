@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
@@ -9,6 +8,7 @@ import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class AddItemPage extends HookConsumerWidget {
@@ -212,7 +212,7 @@ class AddItemPage extends HookConsumerWidget {
                                         .addItem(
                                       Item(
                                         name: name.text,
-                                        caution: caution.text,
+                                        caution: int.parse(caution.text),
                                         id: '',
                                         suggestedLendingDuration:
                                             int.parse(lendingDuration.text) *
@@ -223,18 +223,18 @@ class AddItemPage extends HookConsumerWidget {
                                     )
                                         .then((value) {
                                       if (value) {
-                                        displayToast(context, TypeMsg.msg,
+                                        displayLoanToast(context, TypeMsg.msg,
                                             LoanTextConstants.addedObject);
+                                        pageNotifier.setLoanPage(LoanPage.main);
                                       } else {
-                                        displayToast(context, TypeMsg.error,
+                                        displayLoanToast(context, TypeMsg.error,
                                             LoanTextConstants.addingError);
                                       }
-                                      pageNotifier.setLoanPage(LoanPage.main);
                                     });
                                   });
                                   _currentStep.value = 0;
                                 } else {
-                                  displayToast(
+                                  displayLoanToast(
                                       context,
                                       TypeMsg.error,
                                       LoanTextConstants

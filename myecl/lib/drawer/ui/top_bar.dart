@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/tools/dialog.dart';
-import 'package:myecl/drawer/tools/function.dart';
+import 'package:myecl/drawer/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 
@@ -63,7 +64,7 @@ class TopBar extends ConsumerWidget {
                         title: "Déconnexion",
                         onYes: () {
                           auth.deleteToken();
-                          displayToast(context, TypeMsg.msg, "Déconnexion");
+                          displayDrawerToast(context, TypeMsg.msg, "Déconnexion");
                         }));
               },
               child: Column(
