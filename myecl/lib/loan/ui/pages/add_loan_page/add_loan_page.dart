@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
@@ -34,12 +33,12 @@ class AddLoanPage extends HookConsumerWidget {
     final selectedItems = ref.watch(selectedListProvider);
     final selectedItemsNotifier = ref.watch(selectedListProvider.notifier);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
-    final loanerId = ref.watch(loanerIdProvider);
+    final loaner = ref.watch(loanerProvider);
     final start = useTextEditingController();
     final end = useTextEditingController();
     final note = useTextEditingController();
     final queryController = useTextEditingController();
-    final caution = useState(false);
+    final caution = useTextEditingController();
     final focus = useState(false);
     final borrower = useState(SimpleUser.empty());
 
@@ -52,7 +51,6 @@ class AddLoanPage extends HookConsumerWidget {
     associations.when(
       data: (listAsso) {
         if (listAsso.isNotEmpty) {
-          print(listAsso);
           List<Step> steps = [
             Step(
               title: const Text(LoanTextConstants.association),
@@ -77,7 +75,7 @@ class AddLoanPage extends HookConsumerWidget {
                                 asso.value = e;
                                 itemListNotifier.setId(e.id);
                                 items.value =
-                                    await itemListNotifier.loadLoanList();
+                                    await itemListNotifier.loadItemList();
                               }),
                         )
                         .toList()),
@@ -261,7 +259,6 @@ class AddLoanPage extends HookConsumerWidget {
                   : StepState.disabled,
             ),
             Step(
-              // TODO:
               title: const Text(LoanTextConstants.borrower),
               content: users.value.when(data: (u) {
                 return Column(children: <Widget>[
@@ -286,6 +283,7 @@ class AddLoanPage extends HookConsumerWidget {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(25.0)))),
                   ),
+                  const SizedBox(height: 10,),
                   ...u.map(
                     (e) => GestureDetector(
                         child: Padding(
@@ -298,15 +296,10 @@ class AddLoanPage extends HookConsumerWidget {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    e.firstname +
-                                        " " +
-                                        e.name +
-                                        (e.nickname.isNotEmpty
-                                            ? " (" + e.nickname + ")"
-                                            : ""),
+                                    e.getName(),
                                     style: TextStyle(
                                       fontSize: 13,
-                                      fontWeight: (borrower.value == e)
+                                      fontWeight: (borrower.value.id == e.id)
                                           ? FontWeight.bold
                                           : FontWeight.w400,
                                     ),
@@ -359,11 +352,15 @@ class AddLoanPage extends HookConsumerWidget {
             ),
             Step(
               title: const Text(LoanTextConstants.caution),
-              content: CheckboxListTile(
-                value: caution.value,
-                title: const Text(LoanTextConstants.paidCaution),
-                onChanged: (value) {
-                  caution.value = !caution.value;
+              content: TextFormField(
+                decoration:
+                    const InputDecoration(labelText: LoanTextConstants.note),
+                controller: caution,
+                validator: (value) {
+                  if (value == null) {
+                    return LoanTextConstants.noValue;
+                  }
+                  return null;
                 },
               ),
               isActive: _currentStep.value >= 0,
@@ -384,12 +381,7 @@ class AddLoanPage extends HookConsumerWidget {
                   Row(
                     children: [
                       const Text(LoanTextConstants.borrower + " : "),
-                      Text(borrower.value.nickname +
-                          "(" +
-                          borrower.value.firstname +
-                          " " +
-                          borrower.value.name +
-                          ")"),
+                      Text(borrower.value.getName()),
                     ],
                   ),
                   Column(
@@ -446,9 +438,7 @@ class AddLoanPage extends HookConsumerWidget {
                   Row(
                     children: [
                       const Text(LoanTextConstants.paidCaution + " : "),
-                      Text(caution.value
-                          ? LoanTextConstants.yes
-                          : LoanTextConstants.no),
+                      Text(caution.text),
                     ],
                   ),
                 ],
@@ -500,14 +490,14 @@ class AddLoanPage extends HookConsumerWidget {
                                           loanListNotifier
                                               .addLoan(
                                             Loan(
-                                              loanerId: loanerId,
+                                              loaner: loaner,
                                               items: itemList
                                                   .where((element) =>
                                                       selectedItems[itemList
                                                           .indexOf(element)])
                                                   .toList(),
-                                              borrowerId: borrower.value.id,
-                                              caution: caution.value,
+                                              borrower: borrower.value,
+                                              caution: caution.text,
                                               end: DateTime.parse(end.text),
                                               id: "",
                                               notes: note.text,

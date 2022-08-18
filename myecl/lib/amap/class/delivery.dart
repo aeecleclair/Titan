@@ -1,5 +1,4 @@
 import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 
 class Delivery {

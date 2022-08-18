@@ -31,8 +31,8 @@ class TopBar extends HookConsumerWidget {
                           case LoanPage.detail:
                             pageNotifier.setLoanPage(LoanPage.main);
                             break;
-                          case LoanPage.edit:
-                            pageNotifier.setLoanPage(LoanPage.groupLoan);
+                          case LoanPage.editLoan:
+                            pageNotifier.setLoanPage(LoanPage.adminLoan);
                             break;
                           case LoanPage.main:
                             controllerNotifier.toggle();
@@ -41,10 +41,10 @@ class TopBar extends HookConsumerWidget {
                             pageNotifier.setLoanPage(LoanPage.main);
                             break;
                           case LoanPage.addLoan:
-                            pageNotifier.setLoanPage(LoanPage.option);
+                            pageNotifier.setLoanPage(LoanPage.adminLoan);
                             break;
                           case LoanPage.addItem:
-                            pageNotifier.setLoanPage(LoanPage.option);
+                            pageNotifier.setLoanPage(LoanPage.adminItem);
                             break;
                           case LoanPage.history:
                             pageNotifier.setLoanPage(LoanPage.main);
@@ -53,6 +53,15 @@ class TopBar extends HookConsumerWidget {
                             pageNotifier.setLoanPage(LoanPage.history);
                             break;
                           case LoanPage.groupLoan:
+                            pageNotifier.setLoanPage(LoanPage.option);
+                            break;
+                          case LoanPage.editItem:
+                            pageNotifier.setLoanPage(LoanPage.adminItem);
+                            break;
+                          case LoanPage.adminItem:
+                            pageNotifier.setLoanPage(LoanPage.option);
+                            break;
+                          case LoanPage.adminLoan:
                             pageNotifier.setLoanPage(LoanPage.option);
                             break;
                         }

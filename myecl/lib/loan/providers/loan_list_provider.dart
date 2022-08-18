@@ -28,7 +28,9 @@ class LoanListNotifier extends ListNotifier<Loan> {
   }
 
   Future<bool> deleteLoan(Loan loan) async {
-    return await delete(_loanrepository.deleteLoan, loan.id, loan);
+    return await delete(_loanrepository.deleteLoan, 
+        (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
+        loan.id, loan);
   }
 }
 

@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
-import 'package:myecl/settings/tools/functions.dart';
 import 'package:myecl/settings/ui/refresh_indicator.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/providers/is_admin_provider.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class MainPage extends HookConsumerWidget {

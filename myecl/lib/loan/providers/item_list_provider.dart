@@ -17,7 +17,7 @@ class ItemListNotifier extends ListNotifier<Item> {
     loanerId = id;
   }
 
-  Future<AsyncValue<List<Item>>> loadLoanList() async {
+  Future<AsyncValue<List<Item>>> loadItemList() async {
     return await loadList(() async => _itemrepository.getItemList(loanerId));
   }
 
@@ -36,7 +36,17 @@ class ItemListNotifier extends ListNotifier<Item> {
 
   Future<bool> deleteItem(Item item) async {
     return await delete(
-        (id) async => _itemrepository.deleteItem(loanerId, id), item.id, item);
+        (id) async => _itemrepository.deleteItem(loanerId, id),
+        (items, item) => items..removeWhere((i) => i.id == item.id),
+        item.id,
+        item);
+  }
+
+  Future<AsyncValue<List<Item>>> copy() {
+    return state.when(
+        data: (d) async => AsyncValue.data(d.sublist(0)),
+        error: (e, s) async => AsyncValue.error(e),
+        loading: () async => const AsyncValue.loading());
   }
 }
 
@@ -46,6 +56,6 @@ final itemListProvider =
   final loanerId = ref.watch(loanerIdProvider);
   ItemListNotifier _itemListNotifier = ItemListNotifier(token: token);
   _itemListNotifier.setId(loanerId);
-  _itemListNotifier.loadLoanList();
+  _itemListNotifier.loadItemList();
   return _itemListNotifier;
 });

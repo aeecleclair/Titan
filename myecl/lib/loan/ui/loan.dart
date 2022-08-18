@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/loan/ui/page_switcher.dart';
 import 'package:myecl/loan/ui/top_bar.dart';
-
-//TODO: expiration ??? / Users ???
 class LoanPage extends StatelessWidget {
   final SwipeControllerNotifier controllerNotifier;
   const LoanPage({Key? key, required this.controllerNotifier})

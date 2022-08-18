@@ -7,7 +7,6 @@ class ItemRepository extends Repository {
   final ext = "loans/loaners/";
 
   Future<List<Item>> getItemList(String loanerId) async {
-    print((await getList(suffix: loanerId + "/items")));
     return List<Item>.from((await getList(suffix: loanerId + "/items"))
         .map((x) => Item.fromJson(x)));
   }

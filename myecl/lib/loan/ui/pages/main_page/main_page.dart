@@ -65,13 +65,13 @@ class MainPage extends HookConsumerWidget {
       data: (data) {
         if (data.isNotEmpty) {
           List<String> categories =
-              data.map((e) => e.loanerId).toSet().toList();
+              data.map((e) => e.loaner.name).toSet().toList();
           Map<String, List<Widget>> dictCateListWidget = {
             for (var item in categories) item: []
           };
 
           for (Loan l in data) {
-            dictCateListWidget[l.loanerId]!
+            dictCateListWidget[l.loaner.name]!
                 .add(LoanUi(l: l, isHistory: false, isAdmin: false));
           }
 
@@ -84,7 +84,7 @@ class MainPage extends HookConsumerWidget {
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.only(left: 20),
                   child: Text(
-                    c, // TODO:
+                    c,
                     style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w600,

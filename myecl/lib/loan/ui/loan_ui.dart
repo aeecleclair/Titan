@@ -52,7 +52,7 @@ class LoanUi extends ConsumerWidget {
                 height: 50,
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  l.borrowerId,
+                  l.borrower.getName(),
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -107,7 +107,7 @@ class LoanUi extends ConsumerWidget {
           Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                l.items.length.toString() + " " + LoanTextConstants.objects.toLowerCase(),
+                formatItems(l.items),
                 style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,

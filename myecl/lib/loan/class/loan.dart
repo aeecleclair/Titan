@@ -1,12 +1,13 @@
 import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class Loan {
   Loan({
     required this.id,
-    required this.loanerId,
-    required this.borrowerId,
+    required this.loaner,
+    required this.borrower,
     required this.notes,
     required this.start,
     required this.end,
@@ -14,18 +15,18 @@ class Loan {
     required this.items,
   });
   late final String id;
-  late final String loanerId;
-  late final String borrowerId;
+  late final Loaner loaner;
+  late final SimpleUser borrower;
   late final String notes;
   late final DateTime start;
   late final DateTime end;
-  late final bool caution;
+  late final String caution;
   late final List<Item> items;
 
   Loan.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    borrowerId = json['borrower_id'];
-    loanerId = json['loaner_id'];
+    borrower = SimpleUser.fromJson(json['borrower']);
+    loaner = Loaner.fromJson(json['loaner']);
     notes = json['notes'];
     start = DateTime.parse(json['start']);
     end = DateTime.parse(json['end']);
@@ -36,8 +37,8 @@ class Loan {
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['id'] = id;
-    _data['borrower_id'] = borrowerId;
-    _data['loaner_id'] = loanerId;
+    _data['borrower_id'] = borrower.id;
+    _data['loaner_id'] = loaner.id;
     _data['notes'] = notes;
     _data['start'] = processDateToAPI(start);
     _data['end'] = processDateToAPI(end);
@@ -46,11 +47,11 @@ class Loan {
     return _data;
   }
 
-  Loan copyWith({id, loanerId, borrowerId, notes, start, end, caution, items}) {
+  Loan copyWith({id, loaner, borrower, notes, start, end, caution, items}) {
     return Loan(
         id: id ?? this.id,
-        loanerId: loanerId ?? this.loanerId,
-        borrowerId: borrowerId ?? this.borrowerId,
+        loaner: loaner ?? this.loaner,
+        borrower: borrower ?? this.borrower,
         notes: notes ?? this.notes,
         start: start ?? this.start,
         end: end ?? this.end,

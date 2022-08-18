@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/loan_history_provider.dart';
+import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/providers/loaner_id_provider.dart';
+import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
+import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_ui.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
+import 'package:myecl/user/providers/user_list_provider.dart';
 
-class HistoryPage extends HookConsumerWidget {
-  const HistoryPage({Key? key}) : super(key: key);
+class AdminLoanPage extends HookConsumerWidget {
+  const AdminLoanPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loanHistory = ref.watch(loanHistoryProvider);
-    final loanHistoryNotifier = ref.watch(loanHistoryProvider.notifier);
+    final loanerId = ref.watch(loanerIdProvider);
+    final pageNotifier = ref.watch(loanPageProvider.notifier);
+    final loanList = ref.watch(loanerLoanListProvider);
+    final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
+    ref.watch(loanerProvider);
+    ref.watch(userList);
     List<Widget> listWidget = [
       Container(
         margin: const EdgeInsets.only(right: 10, left: 20),
         height: 48,
         alignment: Alignment.centerLeft,
         child: const Text(
-          LoanTextConstants.history,
+          LoanTextConstants.onGoingLoan,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -28,7 +36,7 @@ class HistoryPage extends HookConsumerWidget {
       )
     ];
 
-    loanHistory.when(
+    loanList.when(
       data: (data) {
         if (data.isNotEmpty) {
           List<String> categories =
@@ -39,7 +47,7 @@ class HistoryPage extends HookConsumerWidget {
 
           for (Loan l in data) {
             dictCateListWidget[l.loaner.name]!
-                .add(LoanUi(l: l, isHistory: true, isAdmin: false));
+                .add(LoanUi(l: l, isHistory: true, isAdmin: true));
           }
 
           for (String c in categories) {
@@ -63,9 +71,15 @@ class HistoryPage extends HookConsumerWidget {
           }
         } else {
           listWidget.add(Container(
-            alignment: Alignment.center,
-            child: const Text(
-              LoanTextConstants.noLoan,
+            height: 50,
+            alignment: Alignment.centerLeft,
+            child: Container(
+              height: 40,
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(left: 20),
+              child: const Text(
+                LoanTextConstants.noLoan,
+              ),
             ),
           ));
         }
@@ -84,7 +98,7 @@ class HistoryPage extends HookConsumerWidget {
 
     return LoanRefresher(
       onRefresh: () async {
-        await loanHistoryNotifier.loadHistory();
+        await loanListNotifier.loadLoan(loanerId);
       },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(
@@ -93,6 +107,36 @@ class HistoryPage extends HookConsumerWidget {
           children: [
             const SizedBox(
               height: 20,
+            ),
+            GestureDetector(
+              child: Container(
+                margin: const EdgeInsets.only(left: 40, right: 40, bottom: 30),
+                padding: const EdgeInsets.all(30),
+                decoration: BoxDecoration(
+                    color: LoanColorConstants.darkGrey,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: LoanColorConstants.darkGrey,
+                        blurRadius: 10,
+                        offset: Offset(0, 5),
+                      ),
+                    ]),
+                child: const Text(
+                  LoanTextConstants.addLoan,
+                  style: TextStyle(
+                    color: LoanColorConstants.veryLightOrange,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+              ),
+              onTap: () {
+                pageNotifier.setLoanPage(LoanPage.addLoan);
+              },
+            ),
+            const SizedBox(
+              height: 30,
             ),
             ...listWidget,
             const SizedBox(

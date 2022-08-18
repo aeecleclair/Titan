@@ -28,7 +28,11 @@ class LoanerListNotifier extends ListNotifier<Loaner> {
   }
 
   Future<bool> deleteLoaner(Loaner loaner) async {
-    return await delete(_loanerRepository.deleteLoaner, loaner.id, loaner);
+    return await delete(
+        _loanerRepository.deleteLoaner,
+        (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
+        loaner.id,
+        loaner);
   }
 }
 
@@ -42,7 +46,7 @@ final loanerListProvider =
   },
 );
 
-final loanerList = Provider((ref) {
+final loanerList = Provider<List<Loaner>>((ref) {
   final deliveryProvider = ref.watch(loanerListProvider);
   return deliveryProvider.when(data: (loans) {
     return loans;

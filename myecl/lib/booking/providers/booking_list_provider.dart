@@ -28,7 +28,8 @@ class BookingListProvider extends ListNotifier<Booking> {
   }
 
   Future<bool> deleteBooking(Booking booking) async {
-    return await delete(_repository.deleteBooking, booking.id, booking);
+    return await delete(_repository.deleteBooking,
+        (bookings, booking) => bookings..removeWhere((i) => i.id == booking.id), booking.id, booking);
   }
 
   Future<bool> toggleConfirmed(Booking booking) async {

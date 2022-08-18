@@ -15,9 +15,11 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/providers/user_list_provider.dart';
 
-class EditPage extends HookConsumerWidget {
-  const EditPage({Key? key}) : super(key: key);
+class EditLoanPage extends HookConsumerWidget {
+  const EditLoanPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,12 +33,15 @@ class EditPage extends HookConsumerWidget {
     final selectedItemsNotifier = ref.watch(editSelectedListProvider.notifier);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
     final loan = ref.watch(loanProvider);
-    final loanNotifier = ref.watch(loanProvider.notifier);
-    final number = useTextEditingController();
+    final borrower = useState(SimpleUser.empty());
     final note = useTextEditingController();
     final start = useTextEditingController();
     final end = useTextEditingController();
-    final caution = useState(false);
+    final caution = useTextEditingController();
+    final users = useState(ref.watch(userList));
+    final usersNotifier = ref.watch(userList.notifier);
+    final queryController = useTextEditingController();
+    final focus = useState(false);
 
     Widget w = const Center(
       child: CircularProgressIndicator(
@@ -46,11 +51,11 @@ class EditPage extends HookConsumerWidget {
 
     loan.when(
       data: (l) {
-        number.text = l.borrowerId.toString();
+        borrower.value = l.borrower;
         note.text = l.notes;
         start.text = l.start.toString().split(" ")[0];
         end.text = l.end.toString().split(" ")[0];
-        caution.value = l.caution;
+        caution.text = l.caution;
         associations.when(
           data: (listAsso) {
             var items = [];
@@ -251,26 +256,70 @@ class EditPage extends HookConsumerWidget {
                     : StepState.disabled,
               ),
               Step(
-                // TODO:
                 title: const Text(LoanTextConstants.borrower),
-                content: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      controller: number,
-                      decoration:
-                          const InputDecoration(labelText: 'Mobile Number'),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value == null) {
-                          return LoanTextConstants.noValue;
-                        } else if (int.tryParse(value) == null) {
-                          return LoanTextConstants.invalidNumber;
-                        }
-                        return null;
-                      },
-                    ),
-                  ],
-                ),
+                content: users.value.when(data: (u) {
+                return Column(children: <Widget>[
+                  TextField(
+                    onChanged: (value) {
+                      focus.value = true;
+                      tokenExpireWrapper(ref, () async {
+                        usersNotifier
+                            .filterUsers(queryController.text)
+                            .then((value) {
+                          users.value = value;
+                        });
+                      });
+                    },
+                    controller: queryController,
+                    autofocus: focus.value,
+                    decoration: const InputDecoration(
+                        labelText: LoanTextConstants.looking,
+                        hintText: LoanTextConstants.looking,
+                        prefixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)))),
+                  ),
+                  const SizedBox(height: 10,),
+                  ...u.map(
+                    (e) => GestureDetector(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 20,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    e.getName(),
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: (borrower.value.id == e.id)
+                                          ? FontWeight.bold
+                                          : FontWeight.w400,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ]),
+                        ),
+                        onTap: () {
+                          borrower.value = e;
+                        }),
+                  )
+                ]);
+                }, error: (error, s) {
+                  return Text(error.toString(),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w500));
+                }, loading: () {
+                  return const CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        LoanColorConstants.orange),
+                  );
+                }),
                 isActive: _currentStep.value >= 0,
                 state: _currentStep.value >= 3
                     ? StepState.complete
@@ -300,12 +349,15 @@ class EditPage extends HookConsumerWidget {
               ),
               Step(
                 title: const Text(LoanTextConstants.caution),
-                content: CheckboxListTile(
-                  value: caution.value,
-                  title: const Text(LoanTextConstants.paidCaution),
-                  onChanged: (value) {
-                    loanNotifier.toggleCaution();
-                    caution.value = !caution.value;
+                content: TextFormField(
+                  decoration:
+                      const InputDecoration(labelText: LoanTextConstants.note),
+                  controller: caution,
+                  validator: (value) {
+                    if (value == null) {
+                      return LoanTextConstants.noValue;
+                    }
+                    return null;
                   },
                 ),
                 isActive: _currentStep.value >= 0,
@@ -320,13 +372,13 @@ class EditPage extends HookConsumerWidget {
                     Row(
                       children: [
                         const Text(LoanTextConstants.association + " : "),
-                        Text(l.loanerId), //TODO:
+                        Text(l.loaner.name),
                       ],
                     ),
                     Row(
                       children: [
                         const Text(LoanTextConstants.borrower + " : "),
-                        Text(number.text),
+                        Text(borrower.value.getName()),
                       ],
                     ),
                     Column(
@@ -366,9 +418,7 @@ class EditPage extends HookConsumerWidget {
                     Row(
                       children: [
                         const Text(LoanTextConstants.paidCaution + " : "),
-                        Text(caution.value
-                            ? LoanTextConstants.yes
-                            : LoanTextConstants.no),
+                        Text(caution.text),
                       ],
                     ),
                   ],
@@ -416,13 +466,13 @@ class EditPage extends HookConsumerWidget {
                                       loanListNotifier
                                           .updateLoan(
                                         Loan(
-                                          loanerId: l.loanerId,
+                                          loaner: l.loaner,
                                           items: items
                                               .where((element) => selectedItems[
                                                   items.indexOf(element)])
                                               .toList() as List<Item>,
-                                          borrowerId: number.text,
-                                          caution: caution.value,
+                                          borrower: borrower.value,
+                                          caution: caution.text,
                                           end: DateTime.parse(end.text),
                                           id: l.id,
                                           notes: note.text,

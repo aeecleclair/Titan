@@ -30,7 +30,11 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
 
   Future<bool> deleteDelivery(Delivery delivery) async {
     return await delete(
-        _deliveriesListRepository.deleteDelivery, delivery.id, delivery);
+        _deliveriesListRepository.deleteDelivery,
+        (deliveries, delivery) =>
+            deliveries..removeWhere((i) => i.id == delivery.id),
+        delivery.id,
+        delivery);
   }
 
   void toggleExpanded(String deliveryId) {

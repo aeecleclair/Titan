@@ -1,4 +1,3 @@
-import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 
 class Booking {

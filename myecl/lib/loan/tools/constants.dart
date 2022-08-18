@@ -16,14 +16,14 @@ class LoanTextConstants {
   static const String addedObject = "Objet ajouté";
   static const String addingError = "Erreur lors de l'ajout";
   static const String association = "Association";
-  static const String beginDate = "Date du début de la prêt";
+  static const String beginDate = "Date du début du prêt";
   static const String borrower = "Borrower";
   static const String caution = "Caution";
   static const String confirmation = "Confirmation";
   static const String dates = "Dates";
   static const String delete = "Supprimer";
   static const String deleteLoan = "Supprimer le prêt";
-  static const String endDate = "Date de fin de la prêt";
+  static const String endDate = "Date de fin du prêt";
   static const String enterDate = "Veuillez entrer une date";
   static const String history = "Historique";
   static const String incorrectOrMissingFields =

@@ -30,7 +30,10 @@ class ProductListNotifier extends ListNotifier<Product> {
 
   Future<bool> deleteProduct(Product product) async {
     return await delete(
-        _productListRepository.deleteProduct, product.id, product);
+        _productListRepository.deleteProduct,
+        (products, product) => products..removeWhere((i) => i.id == product.id),
+        product.id,
+        product);
   }
 }
 

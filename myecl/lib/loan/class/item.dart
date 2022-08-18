@@ -14,7 +14,8 @@ class Item {
     id = json['id'];
     name = json['name'];
     caution = json['suggested_caution'];
-    suggestedLendingDuration = json['suggested_lending_duration'] / (60 * 60 * 24);
+    suggestedLendingDuration =
+        json['suggested_lending_duration'] / (60 * 60 * 24);
   }
 
   Map<String, dynamic> toJson() {

@@ -4,23 +4,31 @@ import 'package:heroicons/heroicons.dart';
 
 enum TypeMsg { msg, error }
 
-void displayToast(BuildContext context, TypeMsg type, String text, Color msgGradient1, Color msgGradient2, Color errorGradient1, Color errorGradient2, Color textColor) {
+void displayToast(
+    BuildContext context,
+    TypeMsg type,
+    String text,
+    Color msgGradient1,
+    Color msgGradient2,
+    Color errorGradient1,
+    Color errorGradient2,
+    Color textColor) {
   LinearGradient linearGradient;
   HeroIcons icon;
 
   switch (type) {
     case TypeMsg.msg:
-      linearGradient = LinearGradient(colors: [
-        msgGradient1,
-        msgGradient2
-      ], begin: Alignment.topLeft, end: Alignment.bottomRight);
+      linearGradient = LinearGradient(
+          colors: [msgGradient1, msgGradient2],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight);
       icon = HeroIcons.check;
       break;
     case TypeMsg.error:
-      linearGradient = LinearGradient(colors: [
-        errorGradient1,
-        errorGradient2
-      ], begin: Alignment.topLeft, end: Alignment.bottomRight);
+      linearGradient = LinearGradient(
+          colors: [errorGradient1, errorGradient2],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight);
       icon = HeroIcons.exclamation;
       break;
   }
@@ -44,8 +52,7 @@ void displayToast(BuildContext context, TypeMsg type, String text, Color msgGrad
                 Container(
                   width: 40,
                   alignment: Alignment.center,
-                  child:
-                      HeroIcon(icon, color: textColor),
+                  child: HeroIcon(icon, color: textColor),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width - 120,
@@ -73,7 +80,11 @@ String capitalize(String s) {
 }
 
 String processDate(DateTime date) {
-  return date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
+  return date.day.toString().padLeft(2, "0") +
+      "/" +
+      date.month.toString().padLeft(2, "0") +
+      "/" +
+      date.year.toString();
 }
 
 String processDatePrint(String d) {
@@ -88,3 +99,5 @@ String processDatePrint(String d) {
 String processDateToAPI(DateTime date) {
   return date.toIso8601String().split('T')[0];
 }
+
+

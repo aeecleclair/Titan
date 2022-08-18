@@ -36,7 +36,9 @@ class GroupListNotifier extends ListNotifier<Group> {
   }
 
   Future<bool> deleteGroup(Group group) async {
-    return await delete(_groupRepository.deleteGroup, group.id, group);
+    return await delete(_groupRepository.deleteGroup, 
+        (groups, group) => groups..removeWhere((i) => i.id == group.id),
+        group.id, group);
   }
 }
 

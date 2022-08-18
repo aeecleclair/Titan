@@ -6,6 +6,7 @@ import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
@@ -19,9 +20,10 @@ class AddItemPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final _currentStep = useState(0);
     final key = GlobalKey<FormState>();
-    final asso = useState(ref.watch(loanerProvider));
-    final associations = ref.watch(loanerListProvider);
+    final loaner = useState(ref.watch(loanerProvider));
+    final loaners = ref.watch(loanerListProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
+    final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final name = useTextEditingController();
     final caution = useTextEditingController();
     final lendingDuration = useTextEditingController();
@@ -32,7 +34,7 @@ class AddItemPage extends HookConsumerWidget {
       ),
     );
 
-    associations.when(
+    loaners.when(
       data: (listAsso) {
         if (listAsso.isNotEmpty) {
           List<Step> steps = [
@@ -51,12 +53,12 @@ class AddItemPage extends HookConsumerWidget {
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500)),
-                              selected: asso.value.name == e.name,
+                              selected: loaner.value.name == e.name,
                               value: e.name,
                               activeColor: LoanColorConstants.orange,
-                              groupValue: asso.value.name,
+                              groupValue: loaner.value.name,
                               onChanged: (s) {
-                                asso.value = e;
+                                loaner.value = e;
                               }),
                         )
                         .toList()),
@@ -120,7 +122,7 @@ class AddItemPage extends HookConsumerWidget {
                 controller: lendingDuration,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: LoanTextConstants.caution,
+                  labelText: LoanTextConstants.lendingDuration,
                   suffix: Text('Jours'),
                 ),
                 validator: (value) {
@@ -148,7 +150,7 @@ class AddItemPage extends HookConsumerWidget {
                   Row(
                     children: [
                       const Text(LoanTextConstants.association + " : "),
-                      Text(asso.value.name),
+                      Text(loaner.value.name),
                     ],
                   ),
                   Row(
@@ -207,6 +209,7 @@ class AddItemPage extends HookConsumerWidget {
                                   return;
                                 }
                                 if (key.currentState!.validate()) {
+                                  pageNotifier.setLoanPage(LoanPage.adminItem);
                                   tokenExpireWrapper(ref, () async {
                                     itemListNotifier
                                         .addItem(
@@ -221,14 +224,16 @@ class AddItemPage extends HookConsumerWidget {
                                                 60,
                                       ),
                                     )
-                                        .then((value) {
+                                        .then((value) async {
                                       if (value) {
-                                        displayLoanToast(context, TypeMsg.msg,
-                                            LoanTextConstants.addedObject);
-                                        pageNotifier.setLoanPage(LoanPage.main);
+                                        // displayLoanToast(context, TypeMsg.msg,
+                                        //     LoanTextConstants.addedObject);
+                                        loanersitemsNotifier.setLoanerItems(
+                                            loaner.value,
+                                            await itemListNotifier.copy());
                                       } else {
-                                        displayLoanToast(context, TypeMsg.error,
-                                            LoanTextConstants.addingError);
+                                        // displayLoanToast(context, TypeMsg.error,
+                                        //     LoanTextConstants.addingError);
                                       }
                                     });
                                   });

@@ -18,16 +18,6 @@ class LoanNotifier extends SingleNotifier<Loan> {
   void setLoan(Loan loan) {
     state = AsyncValue.data(loan);
   }
-
-  void toggleCaution() {
-    state.when(
-      data: (l) {
-        state = AsyncValue.data(l.copyWith(caution: !l.caution));
-      },
-      error: (e, s) => state = AsyncValue.error(e),
-      loading: () => state = const AsyncValue.loading(),
-    );
-  }
 }
 
 final loanProvider =

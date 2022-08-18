@@ -31,4 +31,12 @@ class SimpleUser {
         firstname = '',
         nickname = '',
         id = '';
+
+  String getName() {
+    if (nickname.isNotEmpty) {
+      return nickname + ' (' + firstname + ' ' + name + ')';
+    } else {
+      return firstname + ' ' + name;
+    }
+  }
 }

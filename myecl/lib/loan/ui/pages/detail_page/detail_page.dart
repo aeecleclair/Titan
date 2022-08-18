@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/loan/ui/pages/detail_page/button.dart';
 import 'package:myecl/tools/functions.dart';
 
 class DetailPage extends HookConsumerWidget {
@@ -53,14 +54,14 @@ class DetailPage extends HookConsumerWidget {
                           child: Column(
                             children: [
                               Text(
-                                l.loanerId, //TODO:
+                                l.loaner.name,
                                 style: const TextStyle(
                                     fontSize: 40,
                                     fontWeight: FontWeight.bold,
                                     color: LoanColorConstants.veryLightOrange),
                               ),
                               Text(
-                                l.borrowerId,
+                                l.borrower.getName(),
                                 style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -88,7 +89,7 @@ class DetailPage extends HookConsumerWidget {
                       ],
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -123,16 +124,17 @@ class DetailPage extends HookConsumerWidget {
                                     Text(
                                       e.name,
                                       style: const TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.w400,
-                                          color: LoanColorConstants.lightOrange),
+                                          color:
+                                              LoanColorConstants.lightOrange),
                                     ),
                                   ],
                                 ),
                                 Text(
                                   e.caution.toString() + '€',
                                   style: const TextStyle(
-                                      fontSize: 15,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.w400,
                                       color: LoanColorConstants.lightOrange),
                                 ),
@@ -158,36 +160,30 @@ class DetailPage extends HookConsumerWidget {
                     const SizedBox(
                       height: 70,
                     ),
-                    isAdmin ? GestureDetector(
-                      onTap: () {
-                        pageNotifier.setLoanPage(LoanPage.edit);
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.only(left: 50, right: 50),
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              LoanColorConstants.orange,
-                              LoanColorConstants.lightOrange,
-                              LoanColorConstants.orange,
+                    isAdmin
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              LoanButton(
+                                  onPressed: () {
+                                    pageNotifier.setLoanPage(LoanPage.editLoan);
+                                  },
+                                  icon: HeroIcons.clock),
+                              LoanButton(
+                                onPressed: () {
+                                  pageNotifier.setLoanPage(LoanPage.editLoan);
+                                },
+                                icon: HeroIcons.pencilAlt,
+                              ),
+                              LoanButton(
+                                onPressed: () {
+                                  pageNotifier.setLoanPage(LoanPage.editLoan);
+                                },
+                                icon: HeroIcons.x,
+                              ),
                             ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Text(
-                          'Modifier',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: LoanColorConstants.lightGrey),
-                        ),
-                      ),
-                    )
-                    : Container(),
+                          )
+                        : Container(),
                     const SizedBox(
                       height: 30,
                     ),
@@ -204,7 +200,8 @@ class DetailPage extends HookConsumerWidget {
       loading: () {
         return const Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
+            valueColor:
+                AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
           ),
         );
       },
