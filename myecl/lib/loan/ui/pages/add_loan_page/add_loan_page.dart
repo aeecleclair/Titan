@@ -93,11 +93,21 @@ class AddLoanPage extends HookConsumerWidget {
                       .map(
                         (e) => CheckboxListTile(
                           title: Text(e.name,
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w500)),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: e.available
+                                    ? LoanColorConstants.darkGrey
+                                    : Colors.grey.shade700,
+                                decoration: e.available
+                                    ? null
+                                    : TextDecoration.lineThrough,
+                              )),
                           value: selectedItems[itemList.indexOf(e)],
                           onChanged: (s) {
-                            selectedItemsNotifier.toggle(itemList.indexOf(e));
+                            if (e.available) {
+                              selectedItemsNotifier.toggle(itemList.indexOf(e));
+                            }
                           },
                         ),
                       )
@@ -283,7 +293,9 @@ class AddLoanPage extends HookConsumerWidget {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(25.0)))),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   ...u.map(
                     (e) => GestureDetector(
                         child: Padding(
@@ -507,7 +519,9 @@ class AddLoanPage extends HookConsumerWidget {
                                           )
                                               .then((value) {
                                             if (value) {
-                                              displayLoanToast(context, TypeMsg.msg,
+                                              displayLoanToast(
+                                                  context,
+                                                  TypeMsg.msg,
                                                   LoanTextConstants.addedLoan);
                                               pageNotifier
                                                   .setLoanPage(LoanPage.main);

@@ -218,6 +218,7 @@ class AddItemPage extends HookConsumerWidget {
                                         name: name.text,
                                         caution: int.parse(caution.text),
                                         id: '',
+                                        available: true,
                                         suggestedLendingDuration:
                                             int.parse(lendingDuration.text) *
                                                 24 *

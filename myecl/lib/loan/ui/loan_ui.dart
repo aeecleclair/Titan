@@ -43,45 +43,17 @@ class LoanUi extends ConsumerWidget {
         ),
         margin: const EdgeInsets.all(15.0),
         padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-        child:
-            Column(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                height: 50,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  l.borrower.getName(),
-                  style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: LoanColorConstants.orange),
-                ),
-              ),
-              !isAdmin
-                  ? IconButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return LoanDialog(
-                                title: LoanTextConstants.delete,
-                                descriptions: LoanTextConstants.deleteLoan,
-                                onYes: () {
-                                  loanListNotifier.deleteLoan(l);
-                                  loanHistoryNotifier.addLoan(l);
-                                },
-                              );
-                            });
-                      },
-                      icon: const HeroIcon(
-                        HeroIcons.x,
-                        color: LoanColorConstants.veryLightOrange,
-                        size: 20,
-                      ))
-                  : Container()
-            ],
+        child: Column(children: [
+          Container(
+            height: 50,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              l.borrower.getName(),
+              style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: LoanColorConstants.orange),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

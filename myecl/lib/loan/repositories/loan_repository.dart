@@ -1,5 +1,7 @@
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/tools/repository/repository.dart';
+import 'package:http/http.dart' as http;
+import 'package:myecl/tools/exception.dart';
 
 class LoanRepository extends Repository {
   @override
@@ -39,8 +41,15 @@ class LoanRepository extends Repository {
   }
 
   Future<bool> returnLoan(String loanId) async {
-    await delete(loanId, suffix: "/return");
-    return true;
+    final response = await http
+        .patch(Uri.parse(host + ext + loanId + "/return"), headers: headers);
+    if (response.statusCode == 204) {
+      return true;
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, response.body);
+    } else {
+      throw AppException(ErrorType.notFound, "Failed to update item");
+    }
   }
 
   Future<List<Loan>> getHistory() async {
