@@ -30,8 +30,11 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
   }
 
   Future<bool> deleteLoan(Loan loan) async {
-    return await delete(_loanrepository.deleteLoan,
-        (loans, loan) => loans..removeWhere((i) => i.id == loan.id), loan.id, loan);
+    return await delete(
+        _loanrepository.deleteLoan,
+        (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
+        loan.id,
+        loan);
   }
 
   Future<bool> returnLoan(Loan loan) async {
@@ -39,6 +42,15 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
         _loanrepository.returnLoan,
         (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
         loan.id,
+        loan);
+  }
+
+  Future<bool> extendLoan(Loan loan, int delay) async {
+    return await update((l) async {
+      return _loanrepository.extendLoan(l, delay);
+    },
+        (loans, loan) => loans
+          ..[loans.indexWhere((l) => l.id == loan.id)] = loan,
         loan);
   }
 }

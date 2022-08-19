@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_history_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
@@ -9,6 +11,7 @@ import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/dialog.dart';
 import 'package:myecl/loan/ui/pages/detail_page/button.dart';
+import 'package:myecl/loan/ui/pages/detail_page/delay_dialog.dart';
 import 'package:myecl/tools/functions.dart';
 
 class DetailPage extends HookConsumerWidget {
@@ -169,7 +172,17 @@ class DetailPage extends HookConsumerWidget {
                         children: [
                           LoanButton(
                               onPressed: () {
-                                pageNotifier.setLoanPage(LoanPage.editLoan);
+                                showDialog<int>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return DelayDialog(onYes: (i) {
+                                      Loan newLoan = loan.copyWith(
+                                          end: loan.end.add(Duration(days: i)));
+                                      loanNotifier.setLoan(newLoan);
+                                      loanListNotifier.extendLoan(newLoan, i);
+                                    });
+                                  },
+                                );
                               },
                               icon: HeroIcons.clock),
                           LoanButton(

@@ -24,6 +24,7 @@ dependencies:
   http: ^0.13.4
   intl: ^0.17.0
   jwt_decoder: ^2.0.1
+  numberpicker: ^2.1.1
   smooth_page_indicator: ^1.0.0+2
   syncfusion_flutter_calendar: ^20.1.50
   tuple: ^2.0.0

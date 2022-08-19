@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:http/http.dart' as http;
@@ -35,9 +37,22 @@ class LoanRepository extends Repository {
     return await delete(loanId);
   }
 
-  Future<bool> extendLoan(Loan loan) async {
-    await create(loan.toJson(), suffix: loan.id + "/extend");
-    return true;
+  Future<bool> extendLoan(Loan loan, int newDate) async {
+    final response = await http.post(
+        Uri.parse(host + ext + loan.id + "/extend"),
+        headers: headers,
+        body: json.encode({"duration": newDate * 24 * 60 * 60}));
+    if (response.statusCode == 204) {
+      try {
+        return true;
+      } catch (e) {
+        throw AppException(ErrorType.invalidData, "Failed to create item");
+      }
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, response.body);
+    } else {
+      throw AppException(ErrorType.notFound, "Failed to create item");
+    }
   }
 
   Future<bool> returnLoan(String loanId) async {
