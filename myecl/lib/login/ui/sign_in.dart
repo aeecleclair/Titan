@@ -19,6 +19,7 @@ class SignIn extends HookConsumerWidget {
     final username = useTextEditingController();
     final password = useTextEditingController();
     return Form(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
         padding: const EdgeInsets.all(32.0),
         child: Column(

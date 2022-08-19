@@ -64,6 +64,7 @@ class ModifProduct extends HookConsumerWidget {
               decoration: BoxDecoration(
                   color: AMAPColorConstants.background2.withOpacity(0.5)),
               child: Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   key: _formKey,
                   child: Container(
                     alignment: Alignment.center,
@@ -181,7 +182,8 @@ class ModifProduct extends HookConsumerWidget {
                                           borderRadius:
                                               BorderRadius.circular(16.0),
                                           borderSide: const BorderSide(
-                                            color: AMAPColorConstants.greenGradient2,
+                                            color: AMAPColorConstants
+                                                .greenGradient2,
                                           )),
                                     ),
                                     items: [
@@ -241,7 +243,9 @@ class ModifProduct extends HookConsumerWidget {
                                 ),
                                 GestureDetector(
                                   child: GreenBtn(
-                                    text: modifProduct ? AMAPTextConstants.update : AMAPTextConstants.add,
+                                    text: modifProduct
+                                        ? AMAPTextConstants.update
+                                        : AMAPTextConstants.add,
                                   ),
                                   onTap: () {
                                     if (_formKey.currentState!.validate()) {
@@ -264,13 +268,17 @@ class ModifProduct extends HookConsumerWidget {
                                               .updateProduct(newProduct)
                                               .then((value) {
                                             if (value) {
-                                              displayAMAPToast(context, TypeMsg.msg,
-                                                  AMAPTextConstants.updatedProduct);
+                                              displayAMAPToast(
+                                                  context,
+                                                  TypeMsg.msg,
+                                                  AMAPTextConstants
+                                                      .updatedProduct);
                                             } else {
                                               displayAMAPToast(
                                                   context,
                                                   TypeMsg.error,
-                                                  AMAPTextConstants.updatingError);
+                                                  AMAPTextConstants
+                                                      .updatingError);
                                             }
                                             pageNotifier
                                                 .setAmapPage(AmapPage.admin);
@@ -298,13 +306,17 @@ class ModifProduct extends HookConsumerWidget {
                                               .addProduct(newProduct)
                                               .then((value) {
                                             if (value) {
-                                              displayAMAPToast(context, TypeMsg.msg,
-                                                  AMAPTextConstants.addedProduct);
+                                              displayAMAPToast(
+                                                  context,
+                                                  TypeMsg.msg,
+                                                  AMAPTextConstants
+                                                      .addedProduct);
                                             } else {
                                               displayAMAPToast(
                                                   context,
                                                   TypeMsg.error,
-                                                  AMAPTextConstants.addingError);
+                                                  AMAPTextConstants
+                                                      .addingError);
                                             }
                                             pageNotifier
                                                 .setAmapPage(AmapPage.admin);

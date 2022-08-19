@@ -45,6 +45,7 @@ class CashUi extends HookConsumerWidget {
           ),
           Form(
             key: key,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Row(
               children: [
                 SizedBox(

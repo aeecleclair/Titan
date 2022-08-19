@@ -23,7 +23,7 @@ class Item {
     _data['id'] = id;
     _data['name'] = name;
     _data['suggested_caution'] = caution;
-    _data['suggested_lending_duration'] = suggestedLendingDuration;
+    _data['suggested_lending_duration'] = suggestedLendingDuration * (60 * 60 * 24);
     return _data;
   }
 
@@ -34,5 +34,12 @@ class Item {
         caution: caution ?? this.caution,
         suggestedLendingDuration:
             suggestedLendingDuration ?? this.suggestedLendingDuration);
+  }
+
+  Item.empty() {
+    id = '';
+    name = '';
+    caution = 0;
+    suggestedLendingDuration = 0;
   }
 }

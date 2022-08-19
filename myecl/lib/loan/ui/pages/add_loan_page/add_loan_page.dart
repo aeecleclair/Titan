@@ -459,6 +459,7 @@ class AddLoanPage extends HookConsumerWidget {
           }
 
           w = Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             key: key,
             child: Stepper(
               physics: const BouncingScrollPhysics(),

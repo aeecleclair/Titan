@@ -441,6 +441,7 @@ class EditLoanPage extends HookConsumerWidget {
             }
 
             w = Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               key: key,
               child: Stepper(
                 physics: const BouncingScrollPhysics(),

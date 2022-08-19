@@ -4,6 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
+import 'package:myecl/loan/providers/item_provider.dart';
+import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/dialog.dart';
@@ -17,6 +19,9 @@ class ItemUi extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
+    final pageNotifier = ref.watch(loanPageProvider.notifier);
+    final itemList = ref.watch(itemListProvider.notifier);
+    final itemNotifier = ref.watch(itemProvider.notifier);
     return Container(
         height: 55,
         alignment: Alignment.centerLeft,
@@ -71,7 +76,11 @@ class ItemUi extends HookConsumerWidget {
                       color: Colors.white,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    itemList.setId(loaner.id);
+                    itemNotifier.setItem(l);
+                    pageNotifier.setLoanPage(LoanPage.editItem);
+                  },
                 ),
                 Container(
                   width: 15,

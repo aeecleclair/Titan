@@ -90,6 +90,7 @@ class AddCmdPage extends HookConsumerWidget {
             physics: const BouncingScrollPhysics(),
             child: Form(
                 key: _formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Container(
                     alignment: Alignment.center,
                     child: SingleChildScrollView(

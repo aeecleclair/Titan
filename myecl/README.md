@@ -20,9 +20,8 @@ TODO :
 ne pas afficher si date de fin est dépassée
 
 Réserva° : (API)
-Prêt : (API) + searchbar + loanerById (loanerProvider)
+Prêt : modif objet / modif + del + extend loan / PB Toast
 Evénements : (API)
-Amap : search/amap + cash list search
+Amap : (API) search/amap + cash list search
 Settings : ProcessDate info
-
-extracting function tools
+Admin : créer asso / asso prêt / gérer membre

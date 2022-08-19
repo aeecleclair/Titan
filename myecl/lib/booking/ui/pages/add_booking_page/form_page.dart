@@ -124,6 +124,7 @@ class FormPage extends HookConsumerWidget {
           primary: Color.fromARGB(255, 9, 147, 39),
         )),
         child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
           key: key,
           child: Stepper(
             physics: const BouncingScrollPhysics(),
