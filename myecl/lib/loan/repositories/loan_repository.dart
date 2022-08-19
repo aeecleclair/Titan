@@ -38,8 +38,8 @@ class LoanRepository extends Repository {
     return true;
   }
 
-  Future<bool> returnLoan(Loan loan) async {
-    await create(loan.toJson(), suffix: loan.id + "/return");
+  Future<bool> returnLoan(String loanId) async {
+    await delete(loanId, suffix: "/return");
     return true;
   }
 

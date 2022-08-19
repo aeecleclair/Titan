@@ -20,17 +20,27 @@ class LoanListNotifier extends ListNotifier<Loan> {
   }
 
   Future<bool> updateLoan(Loan loan) async {
-    return await update(
-        _loanrepository.updateLoan,
-        (loans, loan) =>
-            loans..[loans.indexWhere((l) => l.id == loan.id)] = loan,
-        loan);
+    return await update(_loanrepository.updateLoan, (loans, loan) {
+      final index = loans.indexWhere((l) => l.id == loan.id);
+      loans[index] = loan;
+      return loans;
+    }, loan);
   }
 
   Future<bool> deleteLoan(Loan loan) async {
-    return await delete(_loanrepository.deleteLoan, 
+    return await delete(
+        _loanrepository.deleteLoan,
         (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
-        loan.id, loan);
+        loan.id,
+        loan);
+  }
+
+  Future<bool> returnLoan(Loan loan) async {
+    return await delete(
+        _loanrepository.returnLoan,
+        (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
+        loan.id,
+        loan);
   }
 }
 

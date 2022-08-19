@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/loan_history_provider.dart';
-import 'package:myecl/loan/providers/loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
@@ -26,7 +26,7 @@ class LoanUi extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final loanNotifier = ref.watch(loanProvider.notifier);
-    final loanListNotifier = ref.watch(loanListProvider.notifier);
+    final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loanHistoryNotifier = ref.watch(loanHistoryProvider.notifier);
     return GestureDetector(
       child: Container(
@@ -94,8 +94,7 @@ class LoanUi extends ConsumerWidget {
                     color: LoanColorConstants.lightOrange),
               ),
               Text(
-                l.items.fold(0, (a, b) => (a as int) + b.caution).toString() +
-                    '€',
+                l.caution,
                 style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,

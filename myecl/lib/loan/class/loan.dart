@@ -58,4 +58,15 @@ class Loan {
         caution: caution ?? this.caution,
         items: items ?? this.items);
   }
+
+  Loan.empty() {
+    id = '';
+    borrower = SimpleUser.empty();
+    loaner = Loaner.empty();
+    notes = '';
+    start = DateTime.now();
+    end = DateTime.now();
+    caution = '';
+    items = [];
+  }
 }

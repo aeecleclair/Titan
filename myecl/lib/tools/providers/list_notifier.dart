@@ -78,8 +78,8 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
     });
   }
 
-  Future<bool> delete(
-      Future<bool> Function(String id) f, List<T> Function(List<T> listT, T t) replace, String id, T t) async {
+  Future<bool> delete(Future<bool> Function(String id) f,
+      List<T> Function(List<T> listT, T t) replace, String id, T t) async {
     return state.when(data: (d) async {
       try {
         await f(id);

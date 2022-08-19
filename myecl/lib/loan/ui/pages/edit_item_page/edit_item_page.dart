@@ -140,7 +140,6 @@ class EditItemPage extends HookConsumerWidget {
               title: const Text(LoanTextConstants.lendingDuration),
               content: TextFormField(
                 onChanged: (d) {
-                  print(d);
                   itemNotifier.setItem(
                       item.copyWith(suggestedLendingDuration: double.parse(d)));
                   cautionFocus.value = false;
