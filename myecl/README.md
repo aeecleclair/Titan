@@ -20,7 +20,7 @@ TODO :
 ne pas afficher si date de fin est dépassée
 
 Réserva° : (API)
-Prêt : extend loan / PB Toast / pb history (API)
+Prêt : PB Toast / pb history (API)
 Evénements : (API)
 Amap : (API) search/amap + cash list search
 Settings : ProcessDate info
