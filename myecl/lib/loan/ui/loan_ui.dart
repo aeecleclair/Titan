@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
-import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/loan_history_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 
 class LoanUi extends ConsumerWidget {
@@ -26,78 +22,67 @@ class LoanUi extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final loanNotifier = ref.watch(loanProvider.notifier);
-    final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
-    final loanHistoryNotifier = ref.watch(loanHistoryProvider.notifier);
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          color: LoanColorConstants.darkGrey,
-          boxShadow: const [
-            BoxShadow(
-              color: LoanColorConstants.darkGrey,
-              blurRadius: 10,
-              offset: Offset(0, 5),
-            ),
-          ],
-        ),
-        margin: const EdgeInsets.all(15.0),
-        padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-        child: Column(children: [
-          Container(
-            height: 50,
-            alignment: Alignment.centerLeft,
-            child: Text(
-              l.borrower.getName(),
-              style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: LoanColorConstants.orange),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                processDate(l.start) + ' - ' + processDate(l.end),
-                style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w400,
-                    color: LoanColorConstants.lightOrange),
-              ),
-              Text(
-                l.caution,
-                style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    color: LoanColorConstants.lightOrange),
+          decoration: BoxDecoration(
+            color: LoanColorConstants.veryLightOrange,
+            boxShadow: [
+              BoxShadow(
+                color: LoanColorConstants.veryLightOrange.withOpacity(0.4),
+                offset: const Offset(1, 2),
+                blurRadius: 10,
+                spreadRadius: 5,
               ),
             ],
+            borderRadius: BorderRadius.circular(10),
           ),
-          const SizedBox(height: 10),
-          Container(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                formatItems(l.items),
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    color: LoanColorConstants.veryLightOrange),
-              )),
-          const SizedBox(height: 8),
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              l.notes,
-              style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  color: LoanColorConstants.lightOrange),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Container(
+              margin: const EdgeInsets.only(right: 20),
+              height: isAdmin ? 80 : 65,
+              width: 10,
+              decoration: BoxDecoration(
+                color: LoanColorConstants.lightOrange,
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
-          ),
-          const SizedBox(height: 15),
-        ]),
-      ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(formatItems(l.items),
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
+                          color: LoanColorConstants.darkGrey)),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(processDate(l.start) + " - " + processDate(l.end),
+                      style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Color.fromARGB(255, 145, 145, 145))),
+                  isAdmin
+                      ? Column(children: [
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(l.borrower.getName(),
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: LoanColorConstants.orange)),
+                        ])
+                      : Container()
+                ],
+              ),
+            ),
+          ])),
       onTap: () {
         pageNotifier.setLoanPage(isAdmin
             ? LoanPage.groupLoan

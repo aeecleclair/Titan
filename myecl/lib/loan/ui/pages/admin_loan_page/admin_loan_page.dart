@@ -6,6 +6,7 @@ import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/ui/loan_button.dart';
 import 'package:myecl/loan/ui/loan_ui.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -106,37 +107,16 @@ class AdminLoanPage extends HookConsumerWidget {
         child: Column(
           children: [
             const SizedBox(
-              height: 20,
+              height: 30,
             ),
             GestureDetector(
-              child: Container(
-                margin: const EdgeInsets.only(left: 40, right: 40, bottom: 30),
-                padding: const EdgeInsets.all(30),
-                decoration: BoxDecoration(
-                    color: LoanColorConstants.darkGrey,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: LoanColorConstants.darkGrey,
-                        blurRadius: 10,
-                        offset: Offset(0, 5),
-                      ),
-                    ]),
-                child: const Text(
-                  LoanTextConstants.addLoan,
-                  style: TextStyle(
-                    color: LoanColorConstants.veryLightOrange,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                  ),
-                ),
-              ),
+              child: const LoanCommonButton(text: LoanTextConstants.addLoan),
               onTap: () {
                 pageNotifier.setLoanPage(LoanPage.addLoan);
               },
             ),
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
             ...listWidget,
             const SizedBox(

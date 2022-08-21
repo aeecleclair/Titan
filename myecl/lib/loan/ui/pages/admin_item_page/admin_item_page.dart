@@ -8,6 +8,7 @@ import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/ui/loan_button.dart';
 import 'package:myecl/loan/ui/pages/admin_item_page/item_ui.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
 
@@ -51,10 +52,7 @@ class AdminItemPage extends HookConsumerWidget {
                       if (items.isNotEmpty) {
                         for (Item i in items) {
                           dictCateListWidget[l.name]!.add(
-                            ItemUi(
-                              l: i,
-                              loaner: l
-                            ),
+                            ItemUi(l: i, loaner: l),
                           );
                         }
                       } else {
@@ -183,37 +181,16 @@ class AdminItemPage extends HookConsumerWidget {
         child: Column(
           children: [
             const SizedBox(
-              height: 20,
+              height: 30,
             ),
             GestureDetector(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 40),
-                padding: const EdgeInsets.all(30),
-                decoration: BoxDecoration(
-                    color: LoanColorConstants.darkGrey,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: LoanColorConstants.darkGrey,
-                        blurRadius: 10,
-                        offset: Offset(0, 5),
-                      ),
-                    ]),
-                child: const Text(
-                  LoanTextConstants.addObject,
-                  style: TextStyle(
-                    color: LoanColorConstants.veryLightOrange,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                  ),
-                ),
-              ),
+              child: const LoanCommonButton(text: LoanTextConstants.addObject),
               onTap: () {
                 pageNotifier.setLoanPage(LoanPage.addItem);
               },
             ),
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
             ...listWidget,
             const SizedBox(
