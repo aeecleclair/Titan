@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/tools/functions.dart';
-import 'package:myecl/settings/ui/user_field_modifier.dart';
+import 'package:myecl/settings/ui/pages/info_page/user_field_modifier.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:myecl/user/class/user.dart';
@@ -74,7 +74,6 @@ class InfoPage extends HookConsumerWidget {
                         child: AbsorbPointer(
                           child: TextFormField(
                             controller: dateController,
-                            // initialValue: dateController.value.text,
                             decoration: const InputDecoration(
                               contentPadding: EdgeInsets.all(10),
                               isDense: true,

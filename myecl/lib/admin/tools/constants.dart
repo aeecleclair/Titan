@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SettingsColorConstants {
+class AdminColorConstants {
   static final Color background = Colors.grey.shade100;
   static const Color gradient1 = Color(0xFF32a3f3);
   static const Color gradient2 = Color(0xFF3284ee);
@@ -8,7 +8,7 @@ class SettingsColorConstants {
   static const Color redGradient2 = Color(0xFF590512);
 }
 
-class SettingsTextConstants {
+class AdminTextConstants {
   static const String firstname = "Prénom";
   static const String name = "Nom";
   static const String nickname = "Surnom";

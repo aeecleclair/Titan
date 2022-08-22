@@ -75,7 +75,8 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
     });
   }
 
-  Future<bool> delete(Future<bool> Function(String id) f, T t, String id) async {
+  Future<bool> delete(
+      Future<bool> Function(String id) f, T t, String id) async {
     return state.when(data: (d) async {
       try {
         await f(id);

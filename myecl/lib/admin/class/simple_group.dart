@@ -1,5 +1,5 @@
-class Group {
-  Group({
+class SimpleGroup {
+  SimpleGroup({
     required this.name,
     required this.description,
     required this.id,
@@ -8,7 +8,7 @@ class Group {
   late final String description;
   late final String id;
 
-  Group.fromJson(Map<String, dynamic> json) {
+  SimpleGroup.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     description = json['description'];
     id = json['id'];
@@ -20,5 +20,22 @@ class Group {
     _data['description'] = description;
     _data['id'] = id;
     return _data;
+  }
+
+  SimpleGroup copyWith({
+    name,
+    description,
+    id,
+  }) =>
+      SimpleGroup(
+        name: name ?? this.name,
+        description: description ?? this.description,
+        id: id ?? this.id,
+      );
+
+  SimpleGroup.empty() {
+    name = 'Nom';
+    description = 'Description';
+    id = '';
   }
 }

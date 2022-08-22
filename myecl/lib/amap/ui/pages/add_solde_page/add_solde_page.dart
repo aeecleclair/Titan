@@ -72,12 +72,7 @@ class AddSoldePage extends HookConsumerWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  e.firstname +
-                                      " " +
-                                      e.name +
-                                      (e.nickname.isNotEmpty
-                                          ? " (" + e.nickname + ")"
-                                          : ""),
+                                  e.getName(),
                                   style: const TextStyle(fontSize: 13),
                                   overflow: TextOverflow.ellipsis,
                                 ),

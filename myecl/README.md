@@ -20,8 +20,10 @@ TODO :
 ne pas afficher si date de fin est dépassée
 
 Réserva° : (API)
-Prêt : PB Toast / pb history (API)
 Evénements : (API)
-Amap : (API) search/amap + cash list search
+
+Prêt : PB Toast / pb history (API)
 Settings : ProcessDate info
-Admin : créer asso / asso prêt / gérer membre
+Admin : asso prêt / DELETE /membership
+
+Amap : (API) search/amap + cash list search

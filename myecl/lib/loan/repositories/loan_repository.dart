@@ -1,9 +1,5 @@
-import 'dart:convert';
-
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:http/http.dart' as http;
-import 'package:myecl/tools/exception.dart';
 
 class LoanRepository extends Repository {
   @override
@@ -38,33 +34,12 @@ class LoanRepository extends Repository {
   }
 
   Future<bool> extendLoan(Loan loan, int newDate) async {
-    final response = await http.post(
-        Uri.parse(host + ext + loan.id + "/extend"),
-        headers: headers,
-        body: json.encode({"duration": newDate * 24 * 60 * 60}));
-    if (response.statusCode == 204) {
-      try {
-        return true;
-      } catch (e) {
-        throw AppException(ErrorType.invalidData, "Failed to create item");
-      }
-    } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, response.body);
-    } else {
-      throw AppException(ErrorType.notFound, "Failed to create item");
-    }
+    return await create({"duration": newDate * 24 * 60 * 60},
+        suffix: loan.id + "/extend");
   }
 
   Future<bool> returnLoan(String loanId) async {
-    final response = await http
-        .patch(Uri.parse(host + ext + loanId + "/return"), headers: headers);
-    if (response.statusCode == 204) {
-      return true;
-    } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, response.body);
-    } else {
-      throw AppException(ErrorType.notFound, "Failed to update item");
-    }
+    return await update({}, loanId, suffix: "/return/");
   }
 
   Future<List<Loan>> getHistory() async {

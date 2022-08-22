@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/tools/refresher.dart';
 
-class SettingsRefresher extends Refresher {
-  const SettingsRefresher(
+class AdminRefresher extends Refresher {
+  const AdminRefresher(
       {Key? key,
       required Future Function() onRefresh,
       required Widget child})

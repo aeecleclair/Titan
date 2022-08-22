@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
-import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_button.dart';
-import 'package:myecl/loan/ui/pages/detail_page/button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class OptionPage extends HookConsumerWidget {

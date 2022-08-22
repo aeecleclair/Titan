@@ -31,16 +31,16 @@ class TopBar extends HookConsumerWidget {
                             controllerNotifier.toggle();
                             break;
                           case AdminPage.asso:
-                            pageNotifier.setSettingsPage(AdminPage.main);
+                            pageNotifier.setAdminPage(AdminPage.main);
                             break;
                           case AdminPage.addAsso:
-                            pageNotifier.setSettingsPage(AdminPage.main);
+                            pageNotifier.setAdminPage(AdminPage.main);
                             break;
                           case AdminPage.addMember:
-                            pageNotifier.setSettingsPage(AdminPage.edit);
+                            pageNotifier.setAdminPage(AdminPage.edit);
                             break;
                           case AdminPage.edit:
-                            pageNotifier.setSettingsPage(AdminPage.asso);
+                            pageNotifier.setAdminPage(AdminPage.asso);
                             break;
                         }
                       },
