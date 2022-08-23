@@ -42,8 +42,9 @@ class LoanRepository extends Repository {
     return await update({}, loanId, suffix: "/return/");
   }
 
-  Future<List<Loan>> getHistory() async {
+  Future<List<Loan>> getHistory(String loanerId) async {
     return List<Loan>.from(
-        (await getList(suffix: "history")).map((x) => Loan.fromJson(x)));
+        (await getList(suffix: "loaners/" + loanerId + "/loans?returned=true"))
+            .map((x) => Loan.fromJson(x)));
   }
 }

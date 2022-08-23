@@ -6,9 +6,9 @@ import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:tuple/tuple.dart';
 
-class LoanHistoryNotifier extends StateNotifier<
+class AdminLoanListNotifier extends StateNotifier<
     AsyncValue<Map<Loaner, Tuple2<AsyncValue<List<Loan>>, bool>>>> {
-  LoanHistoryNotifier({required String token}) : super(const AsyncLoading());
+  AdminLoanListNotifier({required String token}) : super(const AsyncLoading());
 
   void loadLoanerList(List<Loaner> loaners) async {
     Map<Loaner, Tuple2<AsyncValue<List<Loan>>, bool>> loanersItems = {};
@@ -99,11 +99,12 @@ class LoanHistoryNotifier extends StateNotifier<
   }
 }
 
-final loanHistoryProvider = StateNotifierProvider<LoanHistoryNotifier,
+final adminLoanListProvider = StateNotifierProvider<AdminLoanListNotifier,
     AsyncValue<Map<Loaner, Tuple2<AsyncValue<List<Loan>>, bool>>>>((ref) {
   final token = ref.watch(tokenProvider);
   final loaners = ref.watch(loanerList);
-  LoanHistoryNotifier _loanHistoryNotifier = LoanHistoryNotifier(token: token);
-  _loanHistoryNotifier.loadLoanerList(loaners);
-  return _loanHistoryNotifier;
+  AdminLoanListNotifier _adminloanListNotifier =
+      AdminLoanListNotifier(token: token);
+  _adminloanListNotifier.loadLoanerList(loaners);
+  return _adminloanListNotifier;
 });

@@ -49,9 +49,16 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
     return await update((l) async {
       return _loanrepository.extendLoan(l, delay);
     },
-        (loans, loan) => loans
-          ..[loans.indexWhere((l) => l.id == loan.id)] = loan,
+        (loans, loan) =>
+            loans..[loans.indexWhere((l) => l.id == loan.id)] = loan,
         loan);
+  }
+
+  Future<AsyncValue<List<Loan>>> copy() async {
+    return state.when(
+        loading: () => const AsyncValue.loading(),
+        data: (loans) => AsyncValue.data(loans.sublist(0)),
+        error: (error, s) => AsyncValue.error(error));
   }
 }
 

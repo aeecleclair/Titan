@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/loan_history_provider.dart';
+import 'package:myecl/loan/providers/loaner_list_provider.dart';
+import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_ui.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
@@ -13,6 +17,8 @@ class HistoryPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final loanHistory = ref.watch(loanHistoryProvider);
     final loanHistoryNotifier = ref.watch(loanHistoryProvider.notifier);
+    final loaners = ref.watch(loanerList);
+    final loanerLoanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     List<Widget> listWidget = [
       Container(
         margin: const EdgeInsets.only(right: 10, left: 20),
@@ -29,43 +35,122 @@ class HistoryPage extends HookConsumerWidget {
     ];
 
     loanHistory.when(
-      data: (data) {
-        if (data.isNotEmpty) {
+      data: (loaners) {
+        if (loaners.isNotEmpty) {
           List<String> categories =
-              data.map((e) => e.loaner.name).toSet().toList();
+              (loaners.keys.toList()).map((e) => e.name).toList();
           Map<String, List<Widget>> dictCateListWidget = {
             for (var item in categories) item: []
           };
-
-          for (Loan l in data) {
-            dictCateListWidget[l.loaner.name]!
-                .add(LoanUi(l: l, isHistory: true, isAdmin: false));
+          for (Loaner l in loaners.keys) {
+            if (loaners[l]!.item2) {
+              loaners[l]?.item1.when(
+                    data: (items) {
+                      if (items.isNotEmpty) {
+                        for (Loan i in items) {
+                          dictCateListWidget[l.name]!.add(
+                            LoanUi(l: i, isHistory: true, isAdmin: false),
+                          );
+                        }
+                      } else {
+                        dictCateListWidget[l.name]!.add(
+                          Container(
+                            height: 55,
+                            alignment: Alignment.centerLeft,
+                            child: const Center(
+                              child: Text(
+                                "Aucun objet disponible",
+                                style: TextStyle(fontSize: 13),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    error: (error, stackTrace) {},
+                    loading: () {},
+                  );
+            }
           }
 
-          for (String c in categories) {
-            listWidget.add(Container(
-                height: 50,
-                alignment: Alignment.centerLeft,
+          for (Loaner l in loaners.keys) {
+            listWidget.add(GestureDetector(
                 child: Container(
-                  height: 40,
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    c,
-                    style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                )));
+                    height: 50,
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            l.name,
+                            style: const TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        loaners[l]!.item1.when(
+                          data: (items) {
+                            return Container(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: !loaners[l]!.item2
+                                    ? const HeroIcon(
+                                        HeroIcons.chevronUp,
+                                      )
+                                    : const HeroIcon(
+                                        HeroIcons.chevronDown,
+                                      ));
+                          },
+                          error: (error, stackTrace) {
+                            return Container(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: !loaners[l]!.item2
+                                    ? const HeroIcon(
+                                        HeroIcons.chevronUp,
+                                      )
+                                    : const HeroIcon(
+                                        HeroIcons.chevronDown,
+                                      ));
+                          },
+                          loading: () {
+                            return Container(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: const CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation(
+                                    LoanColorConstants.darkGrey,
+                                  ),
+                                ));
+                          },
+                        ),
+                      ],
+                    )),
+                onTap: () async {
+                  var loaded = await loanHistoryNotifier.toggleExpanded(l);
+                  if (!loaded) {
+                    loanerLoanListNotifier.loadLoan(l.id);
+                    loanHistoryNotifier.setLoanerItems(
+                        l, await loanerLoanListNotifier.copy());
+                  }
+                }));
 
-            listWidget += dictCateListWidget[c] ?? [];
+            listWidget += dictCateListWidget[l.name] ?? [];
           }
         } else {
           listWidget.add(Container(
-            alignment: Alignment.center,
-            child: const Text(
-              LoanTextConstants.noLoan,
+            height: 50,
+            alignment: Alignment.centerLeft,
+            child: Container(
+              height: 40,
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(left: 20),
+              child: const Text(
+                LoanTextConstants.noLoan,
+              ),
             ),
           ));
         }
@@ -84,7 +169,7 @@ class HistoryPage extends HookConsumerWidget {
 
     return LoanRefresher(
       onRefresh: () async {
-        await loanHistoryNotifier.loadHistory();
+        loanHistoryNotifier.loadLoanerList(loaners);
       },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(

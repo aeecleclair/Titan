@@ -3,16 +3,12 @@ import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
-import 'package:myecl/loan/repositories/item_repository.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:tuple/tuple.dart';
 
 class LoanersItems extends StateNotifier<
     AsyncValue<Map<Loaner, Tuple2<AsyncValue<List<Item>>, bool>>>> {
-  final ItemRepository _itemRepository = ItemRepository();
-  LoanersItems({required String token}) : super(const AsyncLoading()) {
-    _itemRepository.setToken(token);
-  }
+  LoanersItems({required String token}) : super(const AsyncLoading());
 
   void loadLoanerList(List<Loaner> loaners) async {
     Map<Loaner, Tuple2<AsyncValue<List<Item>>, bool>> loanersItems = {};

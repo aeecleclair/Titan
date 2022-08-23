@@ -7,6 +7,7 @@ import 'package:myecl/loan/providers/loan_history_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
+import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/dialog.dart';
 import 'package:myecl/loan/ui/pages/detail_page/button.dart';
@@ -20,6 +21,7 @@ class DetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loan = ref.watch(loanProvider);
+    final loaner = ref.watch(loanerProvider);
     final loanNotifier = ref.watch(loanProvider.notifier);
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
@@ -204,7 +206,7 @@ class DetailPage extends HookConsumerWidget {
                                           LoanTextConstants.deleteLoan,
                                       onYes: () {
                                         loanListNotifier.returnLoan(loan);
-                                        loanHistoryNotifier.addLoan(loan);
+                                        loanHistoryNotifier.addLoan(loaner, loan);
                                         pageNotifier
                                             .setLoanPage(LoanPage.adminLoan);
                                       },
