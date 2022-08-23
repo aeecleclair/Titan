@@ -493,6 +493,7 @@ class EditLoanPage extends HookConsumerWidget {
                                       id: loan.id,
                                       notes: note.text,
                                       start: DateTime.parse(start.text),
+                                      returned: loan.returned,
                                     ),
                                   )
                                       .then((value) {

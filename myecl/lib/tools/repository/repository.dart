@@ -61,6 +61,8 @@ abstract class Repository {
       } catch (e) {
         throw AppException(ErrorType.invalidData, "Failed to create item");
       }
+    } else if (response.statusCode == 204) {
+      return true;
     } else if (response.statusCode == 403) {
       throw AppException(ErrorType.tokenExpire, response.body);
     } else {

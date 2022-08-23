@@ -3,6 +3,7 @@ import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/repositories/loan_repository.dart';
+import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 
 class LoanerLoanListNotifier extends ListNotifier<Loan> {
@@ -59,6 +60,20 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
         loading: () => const AsyncValue.loading(),
         data: (loans) => AsyncValue.data(loans.sublist(0)),
         error: (error, s) => AsyncValue.error(error));
+  }
+
+  Future<AsyncValue<List<Loan>>> loadHistory(String loanerId) async {
+    try {
+      final data = await _loanrepository.getHistory(loanerId);
+      return AsyncValue.data(data);
+    } catch (e) {
+      state = AsyncValue.error(e);
+      if (e is AppException && e.type == ErrorType.tokenExpire) {
+        rethrow;
+      } else {
+        return state;
+      }
+    }
   }
 }
 

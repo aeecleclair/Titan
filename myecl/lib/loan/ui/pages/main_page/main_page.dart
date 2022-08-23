@@ -18,6 +18,7 @@ class MainPage extends HookConsumerWidget {
     final loanList = ref.watch(loanListProvider);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
     final isLoanAdmin = ref.watch(isLoanAdminProvider);
+    bool displayHist = false;
     List<Widget> listWidget = [
       Container(
           margin: const EdgeInsets.only(right: 10, left: 20),
@@ -66,13 +67,19 @@ class MainPage extends HookConsumerWidget {
         if (data.isNotEmpty) {
           List<String> categories =
               data.map((e) => e.loaner.name).toSet().toList();
-          Map<String, List<Widget>> dictCateListWidget = {
-            for (var item in categories) item: []
+          Map<String, List<List<Widget>>> dictCateListWidget = {
+            for (var item in categories) item: [[], []]
           };
 
           for (Loan l in data) {
-            dictCateListWidget[l.loaner.name]!
-                .add(LoanUi(l: l, isHistory: false, isAdmin: false));
+            if (l.returned) {
+              displayHist = true;
+              dictCateListWidget[l.loaner.name]![1]
+                  .add(LoanUi(l: l, isHistory: false, isAdmin: false));
+            } else {
+              dictCateListWidget[l.loaner.name]![0]
+                  .add(LoanUi(l: l, isHistory: false, isAdmin: false));
+            }
           }
 
           for (String c in categories) {
@@ -91,8 +98,50 @@ class MainPage extends HookConsumerWidget {
                     ),
                   ),
                 )));
+            listWidget += dictCateListWidget[c]![0];
+          }
+          if (displayHist) {
+            listWidget += [
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                margin: const EdgeInsets.only(right: 10, left: 20),
+                child: Row(
+                  children: const [
+                    Text(
+                      LoanTextConstants.history,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ];
+            for (String c in categories) {
+              listWidget.add(Container(
+                  height: 50,
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    height: 40,
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Text(
+                      c,
+                      style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )));
 
-            listWidget += dictCateListWidget[c] ?? [];
+              listWidget += dictCateListWidget[c]![1];
+            }
           }
         } else {
           listWidget.add(Container(

@@ -13,6 +13,7 @@ class Loan {
     required this.end,
     required this.caution,
     required this.items,
+    required this.returned,
   });
   late final String id;
   late final Loaner loaner;
@@ -22,6 +23,7 @@ class Loan {
   late final DateTime end;
   late final String caution;
   late final List<Item> items;
+  late final bool returned;
 
   Loan.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -32,6 +34,7 @@ class Loan {
     end = DateTime.parse(json['end']);
     caution = json['caution'];
     items = List<Item>.from(json['items'].map((x) => Item.fromJson(x)));
+    returned = json['returned'];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,7 +50,7 @@ class Loan {
     return _data;
   }
 
-  Loan copyWith({id, loaner, borrower, notes, start, end, caution, items}) {
+  Loan copyWith({id, loaner, borrower, notes, start, end, caution, items, returned}) {
     return Loan(
         id: id ?? this.id,
         loaner: loaner ?? this.loaner,
@@ -56,7 +59,8 @@ class Loan {
         start: start ?? this.start,
         end: end ?? this.end,
         caution: caution ?? this.caution,
-        items: items ?? this.items);
+        items: items ?? this.items,
+        returned: returned ?? this.returned);
   }
 
   Loan.empty() {
@@ -68,5 +72,6 @@ class Loan {
     end = DateTime.now();
     caution = '';
     items = [];
+    returned = false;
   }
 }

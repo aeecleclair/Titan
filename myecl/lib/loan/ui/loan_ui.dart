@@ -42,7 +42,7 @@ class LoanUi extends ConsumerWidget {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Container(
               margin: const EdgeInsets.only(right: 20),
-              height: isAdmin ? 80 : 65,
+              height: isAdmin || isHistory ? 80 : 65,
               width: 10,
               decoration: BoxDecoration(
                 color: LoanColorConstants.lightOrange,
@@ -56,18 +56,18 @@ class LoanUi extends ConsumerWidget {
                   Text(formatItems(l.items),
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                          fontSize: 22,
+                          fontSize: 18,
                           fontWeight: FontWeight.w500,
                           color: LoanColorConstants.darkGrey)),
                   const SizedBox(
-                    height: 5,
+                    height: 7,
                   ),
                   Text(processDate(l.start) + " - " + processDate(l.end),
                       style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                           fontWeight: FontWeight.w400,
                           color: Color.fromARGB(255, 145, 145, 145))),
-                  isAdmin
+                  isAdmin || isHistory
                       ? Column(children: [
                           const SizedBox(
                             height: 5,

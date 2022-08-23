@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
@@ -73,9 +74,11 @@ class AddLoanPage extends HookConsumerWidget {
                               groupValue: asso.value.name,
                               onChanged: (s) async {
                                 asso.value = e;
-                                itemListNotifier.setId(e.id);
-                                items.value =
-                                    await itemListNotifier.loadItemList();
+                                tokenExpireWrapper(ref, () async {
+                                  itemListNotifier.setId(e.id);
+                                  items.value =
+                                      await itemListNotifier.loadItemList();
+                                });
                               }),
                         )
                         .toList()),
@@ -449,8 +452,35 @@ class AddLoanPage extends HookConsumerWidget {
                   ),
                   Row(
                     children: [
-                      const Text(LoanTextConstants.paidCaution + " : "),
-                      Text(caution.text),
+                      const Text(LoanTextConstants.caution + " : "),
+                      items.value.when(
+                        data: (itemList) {
+                          return Text(caution.text.isNotEmpty
+                              ? caution.text
+                              : caution.text.isNotEmpty
+                                  ? caution.text
+                                  : itemList
+                                      .where((element) => selectedItems[
+                                          itemList.indexOf(element)])
+                                      .toList()
+                                      .fold<double>(
+                                          0,
+                                          (previousValue, element) =>
+                                              previousValue + element.caution)
+                                      .toString() +
+                                      "€");
+                        },
+                        error: (error, s) {
+                          return Text(error.toString());
+                        },
+                        loading: () {
+                          return const Center(
+                              child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(
+                                LoanColorConstants.orange),
+                          ));
+                        },
+                      )
                     ],
                   ),
                 ],
@@ -500,37 +530,48 @@ class AddLoanPage extends HookConsumerWidget {
                                     items.value.when(
                                       data: (itemList) {
                                         tokenExpireWrapper(ref, () async {
+                                          List<Item> selected = itemList
+                                              .where((element) => selectedItems[
+                                                  itemList.indexOf(element)])
+                                              .toList();
                                           loanListNotifier
                                               .addLoan(
                                             Loan(
                                               loaner: loaner,
-                                              items: itemList
-                                                  .where((element) =>
-                                                      selectedItems[itemList
-                                                          .indexOf(element)])
-                                                  .toList(),
+                                              items: selected,
                                               borrower: borrower.value,
-                                              caution: caution.text,
+                                              caution: caution.text.isNotEmpty
+                                                  ? caution.text
+                                                  : selected
+                                                      .fold<double>(
+                                                          0,
+                                                          (previousValue,
+                                                                  element) =>
+                                                              previousValue +
+                                                              element.caution)
+                                                      .toString() +
+                                                      "€",
                                               end: DateTime.parse(end.text),
                                               id: "",
                                               notes: note.text,
                                               start: DateTime.parse(start.text),
+                                              returned: false,
                                             ),
                                           )
                                               .then((value) {
                                             if (value) {
-                                              displayLoanToast(
-                                                  context,
-                                                  TypeMsg.msg,
-                                                  LoanTextConstants.addedLoan);
+                                              // displayLoanToast(
+                                              //     context,
+                                              //     TypeMsg.msg,
+                                              //     LoanTextConstants.addedLoan);
                                               pageNotifier
                                                   .setLoanPage(LoanPage.main);
                                             } else {
-                                              displayLoanToast(
-                                                  context,
-                                                  TypeMsg.error,
-                                                  LoanTextConstants
-                                                      .addingError);
+                                              // displayLoanToast(
+                                              //     context,
+                                              //     TypeMsg.error,
+                                              //     LoanTextConstants
+                                              //         .addingError);
                                             }
                                           });
                                         });

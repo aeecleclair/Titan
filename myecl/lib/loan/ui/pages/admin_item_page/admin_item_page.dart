@@ -11,6 +11,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_button.dart';
 import 'package:myecl/loan/ui/pages/admin_item_page/item_ui.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class AdminItemPage extends HookConsumerWidget {
   const AdminItemPage({Key? key}) : super(key: key);
@@ -133,13 +134,15 @@ class AdminItemPage extends HookConsumerWidget {
                       ],
                     )),
                 onTap: () async {
-                  var loaded = await loanersitemsNotifier.toggleExpanded(l);
-                  if (!loaded) {
-                    itemListNotifier.setId(l.id);
-                    itemListNotifier.loadItemList();
-                    loanersitemsNotifier.setLoanerItems(
-                        l, await itemListNotifier.copy());
-                  }
+                  tokenExpireWrapper(ref, () async {
+                    var loaded = await loanersitemsNotifier.toggleExpanded(l);
+                    if (!loaded) {
+                      itemListNotifier.setId(l.id);
+                      itemListNotifier.loadItemList();
+                      loanersitemsNotifier.setLoanerItems(
+                          l, await itemListNotifier.copy());
+                    }
+                  });
                 }));
 
             listWidget += dictCateListWidget[l.name] ?? [];

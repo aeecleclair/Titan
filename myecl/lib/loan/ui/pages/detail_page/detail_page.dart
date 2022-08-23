@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_history_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
@@ -13,6 +14,7 @@ import 'package:myecl/loan/tools/dialog.dart';
 import 'package:myecl/loan/ui/pages/detail_page/button.dart';
 import 'package:myecl/loan/ui/pages/detail_page/delay_dialog.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class DetailPage extends HookConsumerWidget {
   final bool isAdmin;
@@ -24,6 +26,7 @@ class DetailPage extends HookConsumerWidget {
     final loaner = ref.watch(loanerProvider);
     final loanNotifier = ref.watch(loanProvider.notifier);
     final pageNotifier = ref.watch(loanPageProvider.notifier);
+    final adminloanListNotifier = ref.watch(adminLoanListProvider.notifier);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loanHistoryNotifier = ref.watch(loanHistoryProvider.notifier);
     return Stack(
@@ -204,9 +207,20 @@ class DetailPage extends HookConsumerWidget {
                                       title: LoanTextConstants.delete,
                                       descriptions:
                                           LoanTextConstants.deleteLoan,
-                                      onYes: () {
-                                        loanListNotifier.returnLoan(loan);
-                                        loanHistoryNotifier.addLoan(loaner, loan);
+                                      onYes: () async {
+                                        tokenExpireWrapper(ref, () async {
+                                          loanListNotifier
+                                              .returnLoan(loan)
+                                              .then((value) async {
+                                            adminloanListNotifier
+                                                .setLoanerItems(
+                                                    loaner,
+                                                    await loanListNotifier
+                                                        .copy());
+                                          });
+                                        });
+                                        loanHistoryNotifier.addLoan(
+                                            loaner, loan);
                                         pageNotifier
                                             .setLoanPage(LoanPage.adminLoan);
                                       },
@@ -224,8 +238,14 @@ class DetailPage extends HookConsumerWidget {
                                       title: LoanTextConstants.delete,
                                       descriptions:
                                           LoanTextConstants.deleteLoan,
-                                      onYes: () {
-                                        loanListNotifier.deleteLoan(loan);
+                                      onYes: () async {
+                                        loanListNotifier
+                                            .deleteLoan(loan)
+                                            .then((value) async {
+                                          adminloanListNotifier.setLoanerItems(
+                                              loaner,
+                                              await loanListNotifier.copy());
+                                        });
                                         pageNotifier
                                             .setLoanPage(LoanPage.adminLoan);
                                       },

@@ -12,6 +12,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_button.dart';
 import 'package:myecl/loan/ui/loan_ui.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AdminLoanPage extends HookConsumerWidget {
@@ -137,12 +138,14 @@ class AdminLoanPage extends HookConsumerWidget {
                       ],
                     )),
                 onTap: () async {
-                  var loaded = await loanListNotifier.toggleExpanded(l);
-                  if (!loaded) {
-                    loanerLoanListNotifier.loadLoan(l.id);
-                    loanListNotifier.setLoanerItems(
-                        l, await loanerLoanListNotifier.copy());
-                  }
+                  tokenExpireWrapper(ref, () async {
+                    var loaded = await loanListNotifier.toggleExpanded(l);
+                    if (!loaded) {
+                      loanerLoanListNotifier.loadLoan(l.id);
+                      loanListNotifier.setLoanerItems(
+                          l, await loanerLoanListNotifier.copy());
+                    }
+                  });
                 }));
 
             listWidget += dictCateListWidget[l.name] ?? [];
