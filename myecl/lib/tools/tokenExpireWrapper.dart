@@ -3,13 +3,18 @@ import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/tools/exception.dart';
 
 void tokenExpireWrapper(WidgetRef ref, Future<dynamic> Function() f) async {
-  f().catchError((error, stackTrace) {
+  f().catchError((error, stackTrace) async {
     if (error is AppException && error.type == ErrorType.tokenExpire) {
-      ref.read(authTokenProvider.notifier).refreshToken().then((value) async {
+      try {
+        final value = await ref.read(authTokenProvider.notifier).refreshToken();
         if (value) {
           f();
+        } else {
+          ref.watch(authTokenProvider.notifier).deleteToken();
         }
-      });
+      } catch (e) {
+        ref.watch(authTokenProvider.notifier).deleteToken();
+      }
     }
   });
 }

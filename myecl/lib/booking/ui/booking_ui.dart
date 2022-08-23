@@ -41,7 +41,7 @@ class BookingUi extends ConsumerWidget {
                     height: 12,
                   ),
                   Text(
-                    booking.room,
+                    booking.room.name,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,

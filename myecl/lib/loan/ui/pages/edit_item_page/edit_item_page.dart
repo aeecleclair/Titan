@@ -240,9 +240,8 @@ class EditItemPage extends HookConsumerWidget {
                                 if (key.currentState!.validate()) {
                                   pageNotifier.setLoanPage(LoanPage.adminItem);
                                   tokenExpireWrapper(ref, () async {
-                                    itemListNotifier
-                                        .updateItem(item)
-                                        .then((value) async {
+                                    final value = await itemListNotifier
+                                        .updateItem(item);
                                       if (value) {
                                         // displayLoanToast(context, TypeMsg.msg,
                                         //     LoanTextConstants.addedObject);
@@ -253,7 +252,6 @@ class EditItemPage extends HookConsumerWidget {
                                         // displayLoanToast(context, TypeMsg.error,
                                         //     LoanTextConstants.addingError);
                                       }
-                                    });
                                   });
                                   _currentStep.value = 0;
                                 } else {

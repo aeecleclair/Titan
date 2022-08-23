@@ -181,7 +181,13 @@ class EditPage extends HookConsumerWidget {
                                   members: g.members
                                       .where((element) => element.id != x.id)
                                       .toList());
-                              groupNotifier.setGroup(newGroup);
+                              groupNotifier
+                                  .deleteMember(newGroup, x)
+                                  .then((value) {
+                                if (value) {
+                                } else {}
+                                pageNotifier.setAdminPage(AdminPage.edit);
+                              });
                               // .then((value) {
                               // if (value) {
                               // displayAdminToast(

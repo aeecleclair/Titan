@@ -201,23 +201,20 @@ class AddCmdPage extends HookConsumerWidget {
                                       deliveryDate: DateTime.parse(date),
                                       locked: false);
                                   tokenExpireWrapper(ref, () async {
-                                    deliveryNotifier
-                                        .addDelivery(del)
-                                        .then((value) {
-                                      if (value) {
-                                        pageNotifier
-                                            .setAmapPage(AmapPage.admin);
-                                        displayAMAPToast(context, TypeMsg.msg,
-                                            AMAPTextConstants.addedCommand);
-                                      } else {
-                                        displayAMAPToast(
-                                            context,
-                                            TypeMsg.error,
-                                            AMAPTextConstants
-                                                .alreadyExistCommand);
-                                      }
-                                      selectedNotifier.clear();
-                                    });
+                                    final value =
+                                        await deliveryNotifier.addDelivery(del);
+                                    if (value) {
+                                      pageNotifier.setAmapPage(AmapPage.admin);
+                                      displayAMAPToast(context, TypeMsg.msg,
+                                          AMAPTextConstants.addedCommand);
+                                    } else {
+                                      displayAMAPToast(
+                                          context,
+                                          TypeMsg.error,
+                                          AMAPTextConstants
+                                              .alreadyExistCommand);
+                                    }
+                                    selectedNotifier.clear();
                                   });
                                 } else {
                                   displayAMAPToast(context, TypeMsg.error,

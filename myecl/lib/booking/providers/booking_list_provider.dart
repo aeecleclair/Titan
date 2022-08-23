@@ -28,16 +28,19 @@ class BookingListProvider extends ListNotifier<Booking> {
   }
 
   Future<bool> deleteBooking(Booking booking) async {
-    return await delete(_repository.deleteBooking,
-        (bookings, booking) => bookings..removeWhere((i) => i.id == booking.id), booking.id, booking);
+    return await delete(
+        _repository.deleteBooking,
+        (bookings, booking) => bookings..removeWhere((i) => i.id == booking.id),
+        booking.id,
+        booking);
   }
 
-  Future<bool> toggleConfirmed(Booking booking) async {
+  Future<bool> toggleConfirmed(Booking booking, value) async {
     return await update(
-        _repository.updateBooking,
+        (booking) => _repository.confirmBooking(booking, value),
         (bookings, booking) => bookings
           ..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
-        booking.copyWith(confirmed: !booking.confirmed));
+        booking.copyWith(confirmed: value));
   }
 }
 

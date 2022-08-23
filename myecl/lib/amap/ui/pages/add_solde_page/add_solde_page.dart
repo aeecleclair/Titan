@@ -42,11 +42,9 @@ class AddSoldePage extends HookConsumerWidget {
                       onChanged: (value) {
                         focus.value = true;
                         tokenExpireWrapper(ref, () async {
-                          usersNotifier
-                              .filterUsers(editingController.text)
-                              .then((value) {
-                            users.value = value;
-                          });
+                          final value = await usersNotifier
+                              .filterUsers(editingController.text);
+                          users.value = value;
                         });
                       },
                       controller: editingController,
@@ -82,22 +80,22 @@ class AddSoldePage extends HookConsumerWidget {
                                   IconButton(
                                       onPressed: () {
                                         tokenExpireWrapper(ref, () async {
-                                          cashListNotifier
-                                              .addCash(
-                                                  Cash(balance: 0.0, user: e))
-                                              .then((value) {
-                                            if (value) {
-                                              displayAMAPToast(context, TypeMsg.msg,
-                                                  AMAPTextConstants.addedUser);
-                                            } else {
-                                              displayAMAPToast(
-                                                  context,
-                                                  TypeMsg.error,
-                                                  AMAPTextConstants.addingError);
-                                            }
-                                            pageNotifier
-                                                .setAmapPage(AmapPage.solde);
-                                          });
+                                          final value =
+                                              await cashListNotifier.addCash(
+                                                  Cash(balance: 0.0, user: e));
+                                          if (value) {
+                                            displayAMAPToast(
+                                                context,
+                                                TypeMsg.msg,
+                                                AMAPTextConstants.addedUser);
+                                          } else {
+                                            displayAMAPToast(
+                                                context,
+                                                TypeMsg.error,
+                                                AMAPTextConstants.addingError);
+                                          }
+                                          pageNotifier
+                                              .setAmapPage(AmapPage.solde);
                                         });
                                       },
                                       icon: const Icon(Icons.add))
@@ -116,8 +114,8 @@ class AddSoldePage extends HookConsumerWidget {
         }, loading: () {
           return const Center(
               child: CircularProgressIndicator(
-            valueColor:
-                AlwaysStoppedAnimation<Color>(AMAPColorConstants.greenGradient2),
+            valueColor: AlwaysStoppedAnimation<Color>(
+                AMAPColorConstants.greenGradient2),
           ));
         }));
   }

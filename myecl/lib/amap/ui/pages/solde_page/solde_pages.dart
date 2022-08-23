@@ -125,11 +125,9 @@ class SoldePage extends HookConsumerWidget {
                   onChanged: (value) {
                     focus.value = true;
                     tokenExpireWrapper(ref, () async {
-                      cashListNotifier
-                          .filterCashList(editingController.text)
-                          .then((value) {
-                        cash.value = value;
-                      });
+                      final value = await cashListNotifier
+                          .filterCashList(editingController.text);
+                      cash.value = value;
                     });
                   },
                   controller: editingController,

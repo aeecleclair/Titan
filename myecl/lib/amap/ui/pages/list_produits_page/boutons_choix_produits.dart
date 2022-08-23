@@ -83,19 +83,18 @@ class Boutons extends HookConsumerWidget {
                       productsIds: prod.map((e) => e.id).toList(),
                       collectionSlot: collectionSlotNotifier.getText());
                   tokenExpireWrapper(ref, () async {
-                    cmdsNotifier.addOrder(newOrder).then((value) {
-                      if (value) {
-                        pageNotifier.setAmapPage(AmapPage.main);
-                        userAmountNotifier.updateCash(-price);
-                        displayAMAPToast(
-                            context, TypeMsg.msg, AMAPTextConstants.addedOrder);
-                        clearCmd(ref);
-                      } else {
-                        pageNotifier.setAmapPage(AmapPage.main);
-                        displayAMAPToast(context, TypeMsg.error,
-                            AMAPTextConstants.addingError);
-                      }
-                    });
+                    final value = await cmdsNotifier.addOrder(newOrder);
+                    if (value) {
+                      pageNotifier.setAmapPage(AmapPage.main);
+                      userAmountNotifier.updateCash(-price);
+                      displayAMAPToast(
+                          context, TypeMsg.msg, AMAPTextConstants.addedOrder);
+                      clearCmd(ref);
+                    } else {
+                      pageNotifier.setAmapPage(AmapPage.main);
+                      displayAMAPToast(context, TypeMsg.error,
+                          AMAPTextConstants.addingError);
+                    }
                   });
                 } else {
                   var lastPrice = 0.0;
@@ -116,18 +115,18 @@ class Boutons extends HookConsumerWidget {
                       }
                     }
                     tokenExpireWrapper(ref, () async {
-                      cmdsNotifier.setProducts(indexCmd, prod).then((value) {
-                        if (value) {
-                          pageNotifier.setAmapPage(AmapPage.main);
-                          userAmountNotifier.updateCash(lastPrice - price);
-                          displayAMAPToast(context, TypeMsg.msg,
-                              AMAPTextConstants.updatedOrder);
-                        } else {
-                          pageNotifier.setAmapPage(AmapPage.main);
-                          displayAMAPToast(context, TypeMsg.error,
-                              AMAPTextConstants.updatingError);
-                        }
-                      });
+                      final value =
+                          await cmdsNotifier.setProducts(indexCmd, prod);
+                      if (value) {
+                        pageNotifier.setAmapPage(AmapPage.main);
+                        userAmountNotifier.updateCash(lastPrice - price);
+                        displayAMAPToast(context, TypeMsg.msg,
+                            AMAPTextConstants.updatedOrder);
+                      } else {
+                        pageNotifier.setAmapPage(AmapPage.main);
+                        displayAMAPToast(context, TypeMsg.error,
+                            AMAPTextConstants.updatingError);
+                      }
                     });
                     clearCmd(ref);
                   } else {

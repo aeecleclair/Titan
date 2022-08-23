@@ -108,7 +108,7 @@ class InfoPage extends HookConsumerWidget {
           GestureDetector(
             onTap: () {
               tokenExpireWrapper(ref, () async {
-                asyncUserNotifier.updateMe(user.copyWith(
+                await asyncUserNotifier.updateMe(user.copyWith(
                   birthday: dateController.value.text,
                   firstname: firstNameController.value.text,
                   name: nameController.value.text,

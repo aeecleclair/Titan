@@ -102,7 +102,7 @@ _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
     appointments.add(Appointment(
       startTime: e.start,
       endTime: e.end,
-      subject: e.room,
+      subject: e.room.name,
       isAllDay: false,
       startTimeZone: "Europe/Paris",
       endTimeZone: "Europe/Paris",

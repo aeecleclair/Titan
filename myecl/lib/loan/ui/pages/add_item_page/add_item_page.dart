@@ -212,8 +212,8 @@ class AddItemPage extends HookConsumerWidget {
                                 if (key.currentState!.validate()) {
                                   pageNotifier.setLoanPage(LoanPage.adminItem);
                                   tokenExpireWrapper(ref, () async {
-                                    itemListNotifier
-                                        .addItem(
+                                    final value =
+                                        await itemListNotifier.addItem(
                                       Item(
                                         name: name.text,
                                         caution: int.parse(caution.text),
@@ -225,19 +225,17 @@ class AddItemPage extends HookConsumerWidget {
                                                 60 *
                                                 60,
                                       ),
-                                    )
-                                        .then((value) async {
-                                      if (value) {
-                                        // displayLoanToast(context, TypeMsg.msg,
-                                        //     LoanTextConstants.addedObject);
-                                        loanersitemsNotifier.setLoanerItems(
-                                            loaner.value,
-                                            await itemListNotifier.copy());
-                                      } else {
-                                        // displayLoanToast(context, TypeMsg.error,
-                                        //     LoanTextConstants.addingError);
-                                      }
-                                    });
+                                    );
+                                    if (value) {
+                                      // displayLoanToast(context, TypeMsg.msg,
+                                      //     LoanTextConstants.addedObject);
+                                      loanersitemsNotifier.setLoanerItems(
+                                          loaner.value,
+                                          await itemListNotifier.copy());
+                                    } else {
+                                      // displayLoanToast(context, TypeMsg.error,
+                                      //     LoanTextConstants.addingError);
+                                    }
                                   });
                                   _currentStep.value = 0;
                                 } else {

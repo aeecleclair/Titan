@@ -44,11 +44,9 @@ class AddMemberPage extends HookConsumerWidget {
                           onChanged: (value) {
                             focus.value = true;
                             tokenExpireWrapper(ref, () async {
-                              usersNotifier
-                                  .filterUsers(editingController.text)
-                                  .then((value) {
+                              final value = await usersNotifier
+                                  .filterUsers(editingController.text);
                                 users.value = value;
-                              });
                             });
                           },
                           controller: editingController,
@@ -91,11 +89,9 @@ class AddMemberPage extends HookConsumerWidget {
                                                       members:
                                                           group.value!.members +
                                                               [e]);
-                                              print(newGroup.members);
                                               groupNotifier
                                                   .addMember(newGroup, e)
                                                   .then((value) {
-                                                print(group.value!.members);
                                                 if (value) {
                                                 } else {}
                                                 pageNotifier.setAdminPage(

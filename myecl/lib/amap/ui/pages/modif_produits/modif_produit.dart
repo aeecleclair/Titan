@@ -264,32 +264,29 @@ class ModifProduct extends HookConsumerWidget {
                                           quantity: 0,
                                         );
                                         tokenExpireWrapper(ref, () async {
-                                          productsNotifier
-                                              .updateProduct(newProduct)
-                                              .then((value) {
-                                            if (value) {
-                                              displayAMAPToast(
-                                                  context,
-                                                  TypeMsg.msg,
-                                                  AMAPTextConstants
-                                                      .updatedProduct);
-                                            } else {
-                                              displayAMAPToast(
-                                                  context,
-                                                  TypeMsg.error,
-                                                  AMAPTextConstants
-                                                      .updatingError);
-                                            }
-                                            pageNotifier
-                                                .setAmapPage(AmapPage.admin);
-
-                                            nameController.clear();
-                                            priceController.clear();
-                                            categoryNotifier.setText(
+                                          final value = await productsNotifier
+                                              .updateProduct(newProduct);
+                                          if (value) {
+                                            displayAMAPToast(
+                                                context,
+                                                TypeMsg.msg,
                                                 AMAPTextConstants
-                                                    .createCategory);
-                                            nouvellecategory.clear();
-                                          });
+                                                    .updatedProduct);
+                                          } else {
+                                            displayAMAPToast(
+                                                context,
+                                                TypeMsg.error,
+                                                AMAPTextConstants
+                                                    .updatingError);
+                                          }
+                                          pageNotifier
+                                              .setAmapPage(AmapPage.admin);
+
+                                          nameController.clear();
+                                          priceController.clear();
+                                          categoryNotifier.setText(
+                                              AMAPTextConstants.createCategory);
+                                          nouvellecategory.clear();
                                         });
                                       } else {
                                         Product newProduct = Product(
@@ -302,9 +299,8 @@ class ModifProduct extends HookConsumerWidget {
                                           quantity: 0,
                                         );
                                         tokenExpireWrapper(ref, () async {
-                                          productsNotifier
-                                              .addProduct(newProduct)
-                                              .then((value) {
+                                          final value = await productsNotifier
+                                              .addProduct(newProduct);
                                             if (value) {
                                               displayAMAPToast(
                                                   context,
@@ -327,7 +323,6 @@ class ModifProduct extends HookConsumerWidget {
                                                 AMAPTextConstants
                                                     .createCategory);
                                             nouvellecategory.clear();
-                                          });
                                         });
                                       }
                                     }

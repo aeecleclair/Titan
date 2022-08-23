@@ -16,9 +16,13 @@ class GroupNotifier extends SingleNotifier<Group> {
   }
 
   Future<bool> addMember(Group group, SimpleUser user) async {
-    var x = await update(
+    return await update(
         (group) async => _groupRepository.addMember(group, user), group);
-    return x;
+  }
+
+  Future<bool> deleteMember(Group group, SimpleUser user) async {
+    return await update(
+        (group) async => _groupRepository.deleteMember(group, user), group);
   }
 
   void setGroup(Group group) {

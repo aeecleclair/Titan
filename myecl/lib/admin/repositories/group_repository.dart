@@ -2,6 +2,9 @@ import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/list_users.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:myecl/tools/exception.dart';
 
 class GroupRepository extends Repository {
   @override
@@ -33,5 +36,17 @@ class GroupRepository extends Repository {
     await create({"user_id": user.id, "group_id": group.id},
         suffix: "membership");
     return true;
+  }
+
+  Future<bool> deleteMember(Group group, SimpleUser user) async {
+    final response = await http.delete(Uri.parse(host + ext + "membership"),
+        headers: headers, body: json.encode({"user_id": user.id, "group_id": group.id}));
+    if (response.statusCode == 204) {
+      return true;
+    } else if (response.statusCode == 403) {
+      throw AppException(ErrorType.tokenExpire, response.body);
+    } else {
+      throw AppException(ErrorType.notFound, "Failed to update item");
+    }
   }
 }

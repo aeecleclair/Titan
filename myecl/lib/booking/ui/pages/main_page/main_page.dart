@@ -38,8 +38,8 @@ class MainPage extends HookConsumerWidget {
                     height: 20,
                   ),
                   const Button(
-                    text: BookingTextConstants.historyPage,
-                    page: BookingPage.history,
+                    text: "Mes réservations",
+                    page: BookingPage.bookings,
                   ),
                   const SizedBox(
                     height: 20,

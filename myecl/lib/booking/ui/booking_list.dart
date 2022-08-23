@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/booking/providers/booking_history_provider.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_ui.dart';
@@ -12,15 +11,11 @@ class ListBooking extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookings = isAdmin
-        ? ref.watch(bookingListProvider)
-        : ref.watch(bookingHistoryProvider);
+    final bookings = ref.watch(bookingListProvider);
     return Expanded(
         child: BookingRefresher(
       onRefresh: () async {
-        isAdmin
-            ? await ref.watch(bookingListProvider.notifier).loadBookings()
-            : await ref.watch(bookingHistoryProvider.notifier).loadBookings();
+        await ref.watch(bookingListProvider.notifier).loadBookings();
       },
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -51,9 +46,7 @@ class ListBooking extends ConsumerWidget {
                 ),
             error: (e, s) => SizedBox(
                   height: MediaQuery.of(context).size.height - 150,
-                  child: Center(
-                    child: Text(e.toString())
-                  ),
+                  child: Center(child: Text(e.toString())),
                 )),
       ),
     ));

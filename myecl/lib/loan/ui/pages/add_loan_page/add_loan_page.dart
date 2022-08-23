@@ -279,11 +279,9 @@ class AddLoanPage extends HookConsumerWidget {
                     onChanged: (value) {
                       focus.value = true;
                       tokenExpireWrapper(ref, () async {
-                        usersNotifier
-                            .filterUsers(queryController.text)
-                            .then((value) {
-                          users.value = value;
-                        });
+                        final value = await usersNotifier
+                            .filterUsers(queryController.text);
+                        users.value = value;
                       });
                     },
                     controller: queryController,
@@ -460,14 +458,15 @@ class AddLoanPage extends HookConsumerWidget {
                               : caution.text.isNotEmpty
                                   ? caution.text
                                   : itemList
-                                      .where((element) => selectedItems[
-                                          itemList.indexOf(element)])
-                                      .toList()
-                                      .fold<double>(
-                                          0,
-                                          (previousValue, element) =>
-                                              previousValue + element.caution)
-                                      .toString() +
+                                          .where((element) => selectedItems[
+                                              itemList.indexOf(element)])
+                                          .toList()
+                                          .fold<double>(
+                                              0,
+                                              (previousValue, element) =>
+                                                  previousValue +
+                                                  element.caution)
+                                          .toString() +
                                       "€");
                         },
                         error: (error, s) {
@@ -534,8 +533,8 @@ class AddLoanPage extends HookConsumerWidget {
                                               .where((element) => selectedItems[
                                                   itemList.indexOf(element)])
                                               .toList();
-                                          loanListNotifier
-                                              .addLoan(
+                                          final value =
+                                              await loanListNotifier.addLoan(
                                             Loan(
                                               loaner: loaner,
                                               items: selected,
@@ -543,13 +542,14 @@ class AddLoanPage extends HookConsumerWidget {
                                               caution: caution.text.isNotEmpty
                                                   ? caution.text
                                                   : selected
-                                                      .fold<double>(
-                                                          0,
-                                                          (previousValue,
-                                                                  element) =>
-                                                              previousValue +
-                                                              element.caution)
-                                                      .toString() +
+                                                          .fold<double>(
+                                                              0,
+                                                              (previousValue,
+                                                                      element) =>
+                                                                  previousValue +
+                                                                  element
+                                                                      .caution)
+                                                          .toString() +
                                                       "€",
                                               end: DateTime.parse(end.text),
                                               id: "",
@@ -557,23 +557,21 @@ class AddLoanPage extends HookConsumerWidget {
                                               start: DateTime.parse(start.text),
                                               returned: false,
                                             ),
-                                          )
-                                              .then((value) {
-                                            if (value) {
-                                              // displayLoanToast(
-                                              //     context,
-                                              //     TypeMsg.msg,
-                                              //     LoanTextConstants.addedLoan);
-                                              pageNotifier
-                                                  .setLoanPage(LoanPage.main);
-                                            } else {
-                                              // displayLoanToast(
-                                              //     context,
-                                              //     TypeMsg.error,
-                                              //     LoanTextConstants
-                                              //         .addingError);
-                                            }
-                                          });
+                                          );
+                                          if (value) {
+                                            // displayLoanToast(
+                                            //     context,
+                                            //     TypeMsg.msg,
+                                            //     LoanTextConstants.addedLoan);
+                                            pageNotifier
+                                                .setLoanPage(LoanPage.main);
+                                          } else {
+                                            // displayLoanToast(
+                                            //     context,
+                                            //     TypeMsg.error,
+                                            //     LoanTextConstants
+                                            //         .addingError);
+                                          }
                                         });
                                       },
                                       error: (error, s) {

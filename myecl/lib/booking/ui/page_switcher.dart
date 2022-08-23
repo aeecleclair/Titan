@@ -2,8 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/ui/pages/add_booking_page/form_page.dart';
-import 'package:myecl/booking/ui/booking_list.dart';
+import 'package:myecl/booking/ui/pages/add_room_page/add_room_page.dart';
+import 'package:myecl/booking/ui/pages/admin_page/admin_page.dart';
+import 'package:myecl/booking/ui/pages/bookings_page/bookings_page.dart';
+import 'package:myecl/booking/ui/pages/edit_bboking_page/edit_booking_page.dart';
+import 'package:myecl/booking/ui/pages/edit_room_page/edit_room_page.dart';
+import 'package:myecl/booking/ui/pages/info_page/info_page.dart';
 import 'package:myecl/booking/ui/pages/main_page/main_page.dart';
+import 'package:myecl/booking/ui/pages/rooms_page/rooms_pages.dart';
 
 class PageSwitcher extends ConsumerWidget {
   const PageSwitcher({Key? key}) : super(key: key);
@@ -15,13 +21,21 @@ class PageSwitcher extends ConsumerWidget {
       case BookingPage.main:
         return const MainPage();
       case BookingPage.addBooking:
-        return const FormPage();
-      case BookingPage.history:
-        return const ListBooking(isAdmin: false);
+        return const AddBookingPage();
       case BookingPage.admin:
-        return const ListBooking(isAdmin: true);
-      default:
-        return Container();
+        return const AdminPage();
+      case BookingPage.info:
+        return const InfoPage();
+      case BookingPage.bookings:
+        return const BookingsPage();
+      case BookingPage.rooms:
+        return const RoomsPage();
+      case BookingPage.addRoom:
+        return const AddRoomPage();
+      case BookingPage.editRoom:
+        return const EditRoomPage();
+      case BookingPage.editBooking:
+        return const EditBookingPage();
     }
   }
 }

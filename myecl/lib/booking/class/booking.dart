@@ -1,3 +1,4 @@
+import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/tools/functions.dart';
 
 class Booking {
@@ -6,7 +7,7 @@ class Booking {
   late final DateTime start;
   late final DateTime end;
   late final String note;
-  late final String room;
+  late final Room room;
   late final bool key;
   late final bool confirmed;
   late final bool multipleDay;
@@ -30,7 +31,7 @@ class Booking {
     start = DateTime.parse(json["start"]);
     end = DateTime.parse(json["end"]);
     note = json["note"];
-    room = json["room"];
+    room = Room.fromJson(json["room"]);
     key = json["key"];
     confirmed = json["confirmed"];
     multipleDay = json["multipleDay"];
@@ -44,7 +45,7 @@ class Booking {
     _data["start"] = processDateToAPI(start);
     _data["end"] = processDateToAPI(end);
     _data["note"] = note;
-    _data["room"] = room;
+    _data["room_id"] = room.id;
     _data["key"] = key;
     _data["confirmed"] = confirmed;
     _data["multipleDay"] = multipleDay;

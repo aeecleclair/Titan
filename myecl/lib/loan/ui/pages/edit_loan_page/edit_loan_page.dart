@@ -259,11 +259,9 @@ class EditLoanPage extends HookConsumerWidget {
                     noteFocus.value = false;
                     cautionFocus.value = false;
                     tokenExpireWrapper(ref, () async {
-                      usersNotifier
-                          .filterUsers(queryController.text)
-                          .then((value) {
-                        users.value = value;
-                      });
+                      final value =
+                          await usersNotifier.filterUsers(queryController.text);
+                      users.value = value;
                     });
                   },
                   controller: queryController,
@@ -423,11 +421,12 @@ class EditLoanPage extends HookConsumerWidget {
                     const Text(LoanTextConstants.paidCaution + " : "),
                     Text(caution.text.isEmpty
                         ? items
-                            .fold<int>(
-                                0,
-                                (previousValue, element) =>
-                                    previousValue + element.caution)
-                            .toString() + "€"
+                                .fold<int>(
+                                    0,
+                                    (previousValue, element) =>
+                                        previousValue + element.caution)
+                                .toString() +
+                            "€"
                         : caution.text),
                   ],
                 ),
@@ -471,7 +470,7 @@ class EditLoanPage extends HookConsumerWidget {
                               }
                               if (key.currentState!.validate()) {
                                 tokenExpireWrapper(ref, () async {
-                                  loanListNotifier
+                                  final value = await loanListNotifier
                                       .updateLoan(
                                     Loan(
                                       loaner: loan.loaner,
@@ -495,8 +494,7 @@ class EditLoanPage extends HookConsumerWidget {
                                       start: DateTime.parse(start.text),
                                       returned: loan.returned,
                                     ),
-                                  )
-                                      .then((value) {
+                                  );
                                     if (value) {
                                       // displayLoanToast(context, TypeMsg.msg,
                                       //     LoanTextConstants.updatedLoan);
@@ -506,7 +504,6 @@ class EditLoanPage extends HookConsumerWidget {
                                     }
                                     pageNotifier
                                         .setLoanPage(LoanPage.adminLoan);
-                                  });
                                 });
                                 _currentStep.value = 0;
                               }
