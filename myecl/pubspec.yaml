@@ -10,7 +10,7 @@ environment:
 dependencies:
   animations: ^2.0.2
   cupertino_icons: ^1.0.2
-  datetime_picker_formfield: ^2.0.0
+  datetime_picker_formfield: ^2.0.1
   flash: ^2.0.3+2
   flutter:
     sdk: flutter

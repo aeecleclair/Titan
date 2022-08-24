@@ -505,7 +505,6 @@ class EditLoanPage extends HookConsumerWidget {
                                     pageNotifier
                                         .setLoanPage(LoanPage.adminLoan);
                                 });
-                                _currentStep.value = 0;
                               }
                             },
                       child: (isLastStep)

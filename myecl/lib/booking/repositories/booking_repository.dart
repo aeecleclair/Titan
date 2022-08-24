@@ -12,6 +12,7 @@ class BookingRepository extends Repository {
   }
 
   Future<Booking> createBooking(Booking booking) async {
+    print(booking.toJson());
     return Booking.fromJson(await create(booking.toJson()));
   }
 

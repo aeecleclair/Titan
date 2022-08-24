@@ -72,35 +72,35 @@ class BookingUi extends ConsumerWidget {
                         BookingButton(
                             res: booking,
                             color: BookingColorConstants.darkBlue,
-                            state: 2),
+                            state: Decision.approved),
                         const SizedBox(
                           width: 5,
                         ),
                         BookingButton(
                             res: booking,
                             color: BookingColorConstants.veryLightBlue,
-                            state: 1)
+                            state: Decision.declined)
                       ],
                     ),
                   )
                 : Container(
-                  //   width: 100,
-                  //   alignment: Alignment.center,
-                  //   child: Text(
-                  //     r.state == 0
-                  //         ? "En attente"
-                  //         : r.state == 1
-                  //             ? "Validée"
-                  //             : "Refusée",
-                  //     style: TextStyle(
-                  //       fontWeight: FontWeight.w600,
-                  //       color: r.state == 2
-                  //           ? const Color.fromARGB(255, 1, 49, 68)
-                  //           : r.state == 1
-                  //               ? const Color.fromARGB(255, 9, 106, 130)
-                  //               : const Color.fromARGB(255, 63, 120, 134),
-                  //     ),
-                  //   ),
+                    width: 100,
+                    alignment: Alignment.center,
+                    child: Text(
+                      booking.decision == Decision.pending
+                          ? "En attente"
+                          : booking.decision == Decision.approved
+                              ? "Validée"
+                              : "Refusée",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: booking.decision == Decision.pending
+                            ? const Color.fromARGB(255, 1, 49, 68)
+                            : booking.decision == Decision.approved
+                                ? const Color.fromARGB(255, 9, 106, 130)
+                                : const Color.fromARGB(255, 63, 120, 134),
+                      ),
+                    ),
                   )
           ],
         ),

@@ -7,14 +7,14 @@ import 'package:myecl/booking/providers/booking_list_provider.dart';
 class BookingButton extends ConsumerWidget {
   final Booking res;
   final Color color;
-  final int state;
+  final Decision state;
   const BookingButton(
       {Key? key, required this.res, required this.color, required this.state})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool checked = res.confirmed;
+    bool checked = res.decision == state;
     final listResNotifier = ref.watch(bookingListProvider.notifier);
     return Container(
       decoration: BoxDecoration(
@@ -32,7 +32,7 @@ class BookingButton extends ConsumerWidget {
           listResNotifier.toggleConfirmed(res, checked);
         },
         icon: FaIcon(
-          state == 1 ? FontAwesomeIcons.check : FontAwesomeIcons.xmark,
+          state == Decision.approved ? FontAwesomeIcons.check : FontAwesomeIcons.xmark,
           color: checked ? Colors.white : color,
         ),
       ),

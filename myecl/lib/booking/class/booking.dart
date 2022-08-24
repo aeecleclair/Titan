@@ -1,5 +1,8 @@
 import 'package:myecl/booking/class/room.dart';
+import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
+
+enum Decision { approved, declined, pending }
 
 class Booking {
   late final String id;
@@ -9,7 +12,7 @@ class Booking {
   late final String note;
   late final Room room;
   late final bool key;
-  late final bool confirmed;
+  late final Decision decision;
   late final bool multipleDay;
   late final bool recurring;
 
@@ -21,7 +24,7 @@ class Booking {
       required this.note,
       required this.room,
       required this.key,
-      required this.confirmed,
+      required this.decision,
       required this.multipleDay,
       required this.recurring});
 
@@ -33,7 +36,7 @@ class Booking {
     note = json["note"];
     room = Room.fromJson(json["room"]);
     key = json["key"];
-    confirmed = json["confirmed"];
+    decision = stringToDecision(json["decision"]);
     multipleDay = json["multipleDay"];
     recurring = json["recurring"];
   }
@@ -47,9 +50,10 @@ class Booking {
     _data["note"] = note;
     _data["room_id"] = room.id;
     _data["key"] = key;
-    _data["confirmed"] = confirmed;
+    _data["decision"] = decision.name;
     _data["multipleDay"] = multipleDay;
     _data["recurring"] = recurring;
+    _data["url"] = "";
     return _data;
   }
 
@@ -61,7 +65,7 @@ class Booking {
       note,
       room,
       key,
-      confirmed,
+      decision,
       multipleDay,
       recurring}) {
     return Booking(
@@ -72,7 +76,7 @@ class Booking {
         note: note ?? this.note,
         room: room ?? this.room,
         key: key ?? this.key,
-        confirmed: confirmed ?? this.confirmed,
+        decision: decision ?? this.decision,
         multipleDay: multipleDay ?? this.multipleDay,
         recurring: recurring ?? this.recurring);
   }

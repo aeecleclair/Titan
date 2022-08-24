@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
-import 'package:myecl/booking/ui/pages/add_booking_page/form_page.dart';
+import 'package:myecl/booking/ui/pages/add_booking_page/add_booking_page.dart';
 import 'package:myecl/booking/ui/pages/add_room_page/add_room_page.dart';
 import 'package:myecl/booking/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/booking/ui/pages/bookings_page/bookings_page.dart';

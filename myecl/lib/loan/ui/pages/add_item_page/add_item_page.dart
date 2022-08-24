@@ -237,7 +237,6 @@ class AddItemPage extends HookConsumerWidget {
                                       //     LoanTextConstants.addingError);
                                     }
                                   });
-                                  _currentStep.value = 0;
                                 } else {
                                   displayLoanToast(
                                       context,
