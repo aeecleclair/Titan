@@ -211,9 +211,13 @@ class DetailPage extends HookConsumerWidget {
                                         tokenExpireWrapper(ref, () async {
                                           final value = await loanListNotifier
                                               .returnLoan(loan);
-                                          adminloanListNotifier.setLoanerItems(
-                                              loaner,
-                                              await loanListNotifier.copy());
+                                          if (value) {
+                                            adminloanListNotifier
+                                                .setLoanerItems(
+                                                    loaner,
+                                                    await loanListNotifier
+                                                        .copy());
+                                          }
                                         });
                                         loanHistoryNotifier.addLoan(
                                             loaner, loan);

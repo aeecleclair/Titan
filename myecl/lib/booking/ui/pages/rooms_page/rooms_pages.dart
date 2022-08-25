@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/pages/rooms_page/room_ui.dart';
 import 'package:myecl/booking/ui/refresh_indicator.dart';
 
@@ -44,7 +45,7 @@ class RoomsPage extends HookConsumerWidget {
                   ),
                   child: const Center(
                     child: Text(
-                      'Ajouter une salle',
+                      BookingTextConstants.addRoom,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -54,13 +55,13 @@ class RoomsPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 40),
-              const Text("Salles enregstrées",
+              const Text(BookingTextConstants.registeredRooms,
                   style: TextStyle(fontSize: 18, color: Colors.white)),
               const SizedBox(height: 20),
               roomList.when(data: (rooms) {
                 if (rooms.isEmpty) {
                   return const Center(
-                    child: Text("Aucune salle enregistrée",
+                    child: Text(BookingTextConstants.noRoomFoundError,
                         style: TextStyle(fontSize: 12, color: Colors.white)),
                   );
                 }

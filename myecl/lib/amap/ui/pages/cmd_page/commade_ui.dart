@@ -72,12 +72,7 @@ class OrderUi extends ConsumerWidget {
               ),
               Expanded(
                 child: Text(
-                  "Le " +
-                      c.deliveryDate.day.toString().padLeft(2, "0") +
-                      "/" +
-                      c.deliveryDate.month.toString().padLeft(2, "0") +
-                      "/" +
-                      c.deliveryDate.year.toString() +
+                  "Le " + processDate(c.deliveryDate) +
                       " (" +
                       c.collectionSlot +
                       ")",
@@ -119,7 +114,7 @@ class OrderUi extends ConsumerWidget {
                               Expanded(
                                 child: Text(
                                   p.name +
-                                      " (quantité : " +
+                                      " (" + AMAPTextConstants.quantity +" : " +
                                       p.quantity.toString() +
                                       ")",
                                   style: const TextStyle(
@@ -171,7 +166,7 @@ class OrderUi extends ConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   c.products.length.toString() +
-                      " produit" +
+                      " " + AMAPTextConstants.product +
                       (c.products.length != 1 ? "s" : ""),
                   style: const TextStyle(
                       fontSize: 18,
@@ -183,7 +178,7 @@ class OrderUi extends ConsumerWidget {
                   width: 140,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "price : " +
+                    AMAPTextConstants.price + " : " +
                         (c.products.map((p) => p.quantity * p.price))
                             .reduce((value, element) => value + element)
                             .toStringAsFixed(2) +

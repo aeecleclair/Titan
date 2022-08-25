@@ -51,7 +51,7 @@ class AssoPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               Container(
                 padding: const EdgeInsets.all(12),
-                child: const Text("Membres :",
+                child: const Text(AdminTextConstants.members + " :",
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ),
@@ -127,8 +127,8 @@ class AssoPage extends HookConsumerWidget {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) => AdminDialog(
-                              descriptions: "Supprimer le Product ?",
-                              title: "Suppression",
+                              descriptions: AdminTextConstants.deleteAssociation,
+                              title: AdminTextConstants.deleting,
                               onYes: () {
                                 groupsNotifier.deleteGroup(g.toSimpleGroup());
                                 // displayAdminToast(
@@ -144,7 +144,12 @@ class AssoPage extends HookConsumerWidget {
         }, error: (e, s) {
           return Text(e.toString());
         }, loading: () {
-          return const Text('Loading');
+          return const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation(
+                  AdminColorConstants.gradient1),
+            ),
+          );
         }),
       ),
     );

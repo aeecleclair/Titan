@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/login/ui/text_from_decoration.dart';
 
@@ -21,7 +22,7 @@ class Register extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Créer\nun compte',
+                  LoginTextConstants.createAccount,
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -41,7 +42,7 @@ class Register extends StatelessWidget {
                           fontSize: 18,
                           color: Colors.white,
                         ),
-                        decoration: registerInputDecoration(hintText: 'Mail')),
+                        decoration: registerInputDecoration(hintText: LoginTextConstants.email))
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -50,11 +51,11 @@ class Register extends StatelessWidget {
                         fontSize: 18,
                         color: Colors.white,
                       ),
-                      decoration: registerInputDecoration(hintText: 'Mot de passe'),
+                      decoration: registerInputDecoration(hintText: LoginTextConstants.password),
                     ),
                   ),
                   SignUpBar(
-                    label: 'Créer',
+                    label: LoginTextConstants.create,
                     isLoading: true,
                     onPressed: () {
                     },
@@ -68,7 +69,7 @@ class Register extends StatelessWidget {
                         onSignInPressed();
                       },
                       child: const Text(
-                        'Se connecter',
+                        LoginTextConstants.signIn,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w800,

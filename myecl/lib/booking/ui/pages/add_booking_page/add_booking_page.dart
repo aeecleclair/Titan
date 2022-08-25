@@ -43,7 +43,7 @@ class AddBookingPage extends HookConsumerWidget {
         if (roomList.isNotEmpty) {
           List<Step> steps = [
             Step(
-              title: const Text("Salle",
+              title: const Text(BookingTextConstants.room,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -77,7 +77,7 @@ class AddBookingPage extends HookConsumerWidget {
                   : StepState.disabled,
             ),
             Step(
-              title: const Text("Dates",
+              title: const Text(BookingTextConstants.dates,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -96,7 +96,7 @@ class AddBookingPage extends HookConsumerWidget {
                             margin: const EdgeInsets.only(bottom: 3),
                             padding: const EdgeInsets.only(left: 10),
                             child: const Text(
-                              "Date de début",
+                              BookingTextConstants.startDate,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -132,7 +132,7 @@ class AddBookingPage extends HookConsumerWidget {
                                   ),
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return "Veuillez entrer une date";
+                                      return BookingTextConstants.noDateError;
                                     }
                                     return null;
                                   },
@@ -159,7 +159,7 @@ class AddBookingPage extends HookConsumerWidget {
                               margin: const EdgeInsets.only(bottom: 3),
                               padding: const EdgeInsets.only(left: 10),
                               child: const Text(
-                                "Date de fin",
+                                BookingTextConstants.endDate,
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
@@ -195,7 +195,7 @@ class AddBookingPage extends HookConsumerWidget {
                                     ),
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        return "Veuillez entrer une date";
+                                        return BookingTextConstants.noDateError;
                                       }
                                       return null;
                                     },
@@ -217,7 +217,7 @@ class AddBookingPage extends HookConsumerWidget {
                   : StepState.disabled,
             ),
             Step(
-              title: const Text("Motif",
+              title: const Text(BookingTextConstants.reason,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -226,12 +226,12 @@ class AddBookingPage extends HookConsumerWidget {
                 children: <Widget>[
                   TextFormField(
                     decoration: const InputDecoration(
-                      labelText: "Motif de la réservation",
+                      labelText: BookingTextConstants.bookingReason,
                     ),
                     controller: motif,
                     validator: (value) {
                       if (value == null) {
-                        return "Veuillez entrer un motif";
+                        return BookingTextConstants.noReasonError;
                       }
                       return null;
                     },
@@ -244,17 +244,18 @@ class AddBookingPage extends HookConsumerWidget {
                   : StepState.disabled,
             ),
             Step(
-              title: const Text("Note",
+              title: const Text(BookingTextConstants.note,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
               content: TextFormField(
-                decoration: const InputDecoration(labelText: "Note"),
+                decoration: const InputDecoration(
+                    labelText: BookingTextConstants.bookingNote),
                 controller: note,
                 validator: (value) {
                   if (value == null) {
-                    return "Veuillez entrer une note";
+                    return BookingTextConstants.noNoteError;
                   }
                   return null;
                 },
@@ -265,14 +266,14 @@ class AddBookingPage extends HookConsumerWidget {
                   : StepState.disabled,
             ),
             Step(
-              title: const Text("Autres",
+              title: const Text(BookingTextConstants.other,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
               content: Column(children: [
                 CheckboxListTile(
-                  title: Text("Clée nécessaire ?"),
+                  title: const Text(BookingTextConstants.necessaryKey),
                   value: keyRequired.value,
                   onChanged: (newValue) {
                     if (newValue != null) {
@@ -281,7 +282,7 @@ class AddBookingPage extends HookConsumerWidget {
                   },
                 ),
                 CheckboxListTile(
-                  title: Text("Récurrent ?"),
+                  title: const Text(BookingTextConstants.recurrent),
                   value: recurring.value,
                   onChanged: (newValue) {
                     if (newValue != null) {
@@ -290,7 +291,7 @@ class AddBookingPage extends HookConsumerWidget {
                   },
                 ),
                 CheckboxListTile(
-                  title: Text("Plusieurs jours ?"),
+                  title: const Text(BookingTextConstants.multipleDay),
                   value: multipleDay.value,
                   onChanged: (newValue) {
                     if (newValue != null) {
@@ -305,7 +306,7 @@ class AddBookingPage extends HookConsumerWidget {
                   : StepState.disabled,
             ),
             Step(
-              title: const Text("Confirmation",
+              title: const Text(BookingTextConstants.confirmation,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -314,13 +315,13 @@ class AddBookingPage extends HookConsumerWidget {
                 children: <Widget>[
                   Row(
                     children: [
-                      const Text("Salle" + " : ",
+                      const Text(BookingTextConstants.room + " : ",
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                       Text(room.value.name,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
@@ -328,13 +329,13 @@ class AddBookingPage extends HookConsumerWidget {
                   ),
                   Row(
                     children: [
-                      const Text("Date de début" + " : ",
+                      const Text(BookingTextConstants.startDate + " : ",
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                       Text(start.value.text,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
@@ -342,13 +343,13 @@ class AddBookingPage extends HookConsumerWidget {
                   ),
                   Row(
                     children: [
-                      const Text("Date de fin" + " : ",
+                      const Text(BookingTextConstants.endDate + " : ",
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                       Text(end.value.text,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
@@ -356,13 +357,13 @@ class AddBookingPage extends HookConsumerWidget {
                   ),
                   Row(
                     children: [
-                      const Text("Motif" + " : ",
+                      const Text(BookingTextConstants.reason + " : ",
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                       Text(motif.text,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
@@ -370,13 +371,13 @@ class AddBookingPage extends HookConsumerWidget {
                   ),
                   Row(
                     children: [
-                      const Text("Note" + " : ",
+                      const Text(BookingTextConstants.note + " : ",
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                       Text(note.text,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
@@ -384,13 +385,13 @@ class AddBookingPage extends HookConsumerWidget {
                   ),
                   Row(
                     children: [
-                      const Text("Clée nécessaire" + " : ",
+                      const Text(BookingTextConstants.necessaryKey + " : ",
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                       Text(keyRequired.value.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
@@ -398,13 +399,13 @@ class AddBookingPage extends HookConsumerWidget {
                   ),
                   Row(
                     children: [
-                      const Text("Réccurent" + " : ",
+                      const Text(BookingTextConstants.recurrent + " : ",
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                       Text(recurring.value.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
@@ -412,13 +413,13 @@ class AddBookingPage extends HookConsumerWidget {
                   ),
                   Row(
                     children: [
-                      const Text("Plusieurs jours" + " : ",
+                      const Text(BookingTextConstants.multipleDay + " : ",
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                       Text(multipleDay.value.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
@@ -511,8 +512,8 @@ class AddBookingPage extends HookConsumerWidget {
                                 }
                               },
                         child: (isLastStep)
-                            ? const Text("Ajouter")
-                            : const Text("Suivant"),
+                            ? const Text(BookingTextConstants.add)
+                            : const Text(BookingTextConstants.next),
                       ),
                     ),
                     const SizedBox(
@@ -522,7 +523,7 @@ class AddBookingPage extends HookConsumerWidget {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: controls.onStepCancel,
-                          child: const Text("Précédent"),
+                          child: const Text(BookingTextConstants.previous),
                         ),
                       )
                   ],
@@ -532,7 +533,7 @@ class AddBookingPage extends HookConsumerWidget {
             ),
           );
         } else {
-          w = const Text("Aucune salle n'a été trouvée");
+          w = const Text(BookingTextConstants.noRoomFound);
         }
       },
       error: (e, s) {

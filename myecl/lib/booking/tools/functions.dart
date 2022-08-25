@@ -9,7 +9,7 @@ String getPageTitle(BookingPage i) {
     case BookingPage.addBooking:
       return BookingTextConstants.addBookingPage;
     case BookingPage.bookings:
-      return "Réservations";
+      return BookingTextConstants.booking;
     case BookingPage.admin:
       return BookingTextConstants.adminPage;
     default:

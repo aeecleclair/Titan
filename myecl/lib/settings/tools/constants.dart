@@ -9,17 +9,18 @@ class SettingsColorConstants {
 }
 
 class SettingsTextConstants {
+  static const String association = "Association";
+  static const String admin = "Administrateur";
+  static const String birthday = "Date de naissance";
+  static const String email = "Email";
+  static const String expectingDate = "Date de naissance attendue";
   static const String firstname = "Prénom";
+  static const String floor = "Etage";
   static const String name = "Nom";
   static const String nickname = "Surnom";
-  static const String email = "Email";
   static const String promo = "Promotion";
-  static const String floor = "Etage";
-  static const String birthday = "Date de naissance";
-  static const String id = "ID";
   static const String save = "Enregistrer";
-  static const String admin = "Administrateur";
-  static const String expectingDate = "Date de naissance attendue";
+  static const String settings = "Paramètres";
   static const String updatedProfile = "Profil modifié";
   static const String updatingError = "Erreur lors de la modification du profil";
 }

@@ -26,19 +26,11 @@ class CashUi extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                  c.user.nickname.isNotEmpty
-                      ? c.user.nickname +
-                          " (" +
-                          c.user.firstname +
-                          " " +
-                          c.user.name +
-                          ")"
-                      : c.user.firstname + " " + c.user.name,
+              Text(c.user.getName(),
                   style: const TextStyle(
                       fontSize: 14, fontWeight: FontWeight.bold)),
               Text(
-                "Solde : " + c.balance.toStringAsFixed(2) + "€",
+                AMAPTextConstants.amount + " : " + c.balance.toStringAsFixed(2) + "€",
                 style: TextStyle(color: Colors.grey.shade600),
               ),
             ],
@@ -53,8 +45,7 @@ class CashUi extends HookConsumerWidget {
                   child: TextFormField(
                     controller: amount,
                     keyboardType: TextInputType.number,
-                    onSaved: (value) {},
-                    validator: (value) => value!.isEmpty ? "Montant" : null,
+                    validator: (value) => value!.isEmpty ? AMAPTextConstants.add : null,
                   ),
                 ),
                 const SizedBox(

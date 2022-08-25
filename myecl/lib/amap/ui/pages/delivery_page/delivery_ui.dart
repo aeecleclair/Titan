@@ -52,13 +52,7 @@ class DeliveryUi extends ConsumerWidget {
               ),
               Expanded(
                 child: Text(
-                  AMAPTextConstants.deliveryOn +
-                      " " +
-                      c.deliveryDate.day.toString().padLeft(2, "0") +
-                      "/" +
-                      c.deliveryDate.month.toString().padLeft(2, "0") +
-                      "/" +
-                      c.deliveryDate.year.toString(),
+                  AMAPTextConstants.deliveryOn + processDate(c.deliveryDate),
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,

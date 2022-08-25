@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:animations/animations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/background_painter.dart';
 import 'package:myecl/login/ui/reigster.dart';
 import 'package:myecl/login/ui/sign_in.dart';
@@ -47,14 +48,14 @@ class AuthScreen extends HookConsumerWidget {
                               },
                               child: value
                                   ? SignIn(
-                                      key: const ValueKey("SignIn"),
+                                      key: const ValueKey(LoginTextConstants.signIn),
                                       onRegisterPressed: () {
                                         _showSignInPage.value = false;
                                         _controller.forward();
                                       },
                                     )
                                   : Register(
-                                      key: const ValueKey("Register"),
+                                      key: const ValueKey(LoginTextConstants.register),
                                       onSignInPressed: () {
                                         _showSignInPage.value = true;
                                         _controller.reverse();

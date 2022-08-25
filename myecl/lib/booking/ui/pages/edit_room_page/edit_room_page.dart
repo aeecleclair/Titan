@@ -5,6 +5,7 @@ import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class EditRoomPage extends HookConsumerWidget {
@@ -64,7 +65,7 @@ class EditRoomPage extends HookConsumerWidget {
               ),
               child: const Center(
                 child: Text(
-                  'Modifier',
+                  BookingTextConstants.edit,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,

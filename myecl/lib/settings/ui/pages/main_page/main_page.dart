@@ -184,7 +184,7 @@ class MainPage extends HookConsumerWidget {
                       Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Association" + (me.groups.length > 1 ? "s" : ""),
+                            SettingsTextConstants.association + (me.groups.length > 1 ? "s" : ""),
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,

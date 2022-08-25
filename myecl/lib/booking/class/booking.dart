@@ -80,4 +80,18 @@ class Booking {
         multipleDay: multipleDay ?? this.multipleDay,
         recurring: recurring ?? this.recurring);
   }
+
+  static Booking empty() {
+    return Booking(
+        id: "",
+        reason: "",
+        start: DateTime.now(),
+        end: DateTime.now(),
+        note: "",
+        room: Room.empty(),
+        key: false,
+        decision: Decision.pending,
+        multipleDay: false,
+        recurring: false);
+  }
 }

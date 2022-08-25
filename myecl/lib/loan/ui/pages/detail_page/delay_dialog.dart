@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/loan/tools/constants.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class DelayDialog extends StatefulWidget {
@@ -42,7 +43,7 @@ class __IntegerExampleState extends State<DelayDialog> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const Text(
-                "Delai",
+                LoanTextConstants.delay,
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w800,
@@ -72,7 +73,7 @@ class __IntegerExampleState extends State<DelayDialog> {
                             Navigator.of(context).pop();
                           },
                           child: const Text(
-                            "Annuler",
+                            LoanTextConstants.cancel,
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
@@ -84,7 +85,7 @@ class __IntegerExampleState extends State<DelayDialog> {
                             widget.onYes(_currentIntValue);
                           },
                           child: const Text(
-                            "Confirmer",
+                            LoanTextConstants.confirm,
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,

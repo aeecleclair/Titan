@@ -88,10 +88,10 @@ class BookingUi extends ConsumerWidget {
                     alignment: Alignment.center,
                     child: Text(
                       booking.decision == Decision.pending
-                          ? "En attente"
+                          ? BookingTextConstants.pending
                           : booking.decision == Decision.approved
-                              ? "Validée"
-                              : "Refusée",
+                              ? BookingTextConstants.confirmed
+                              : BookingTextConstants.declined,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: booking.decision == Decision.pending

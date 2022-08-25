@@ -470,8 +470,8 @@ class EditLoanPage extends HookConsumerWidget {
                               }
                               if (key.currentState!.validate()) {
                                 tokenExpireWrapper(ref, () async {
-                                  final value = await loanListNotifier
-                                      .updateLoan(
+                                  final value =
+                                      await loanListNotifier.updateLoan(
                                     Loan(
                                       loaner: loan.loaner,
                                       items: items
@@ -495,15 +495,14 @@ class EditLoanPage extends HookConsumerWidget {
                                       returned: loan.returned,
                                     ),
                                   );
-                                    if (value) {
-                                      // displayLoanToast(context, TypeMsg.msg,
-                                      //     LoanTextConstants.updatedLoan);
-                                    } else {
-                                      // displayLoanToast(context, TypeMsg.error,
-                                      //     LoanTextConstants.updatingError);
-                                    }
-                                    pageNotifier
-                                        .setLoanPage(LoanPage.adminLoan);
+                                  if (value) {
+                                    // displayLoanToast(context, TypeMsg.msg,
+                                    //     LoanTextConstants.updatedLoan);
+                                  } else {
+                                    // displayLoanToast(context, TypeMsg.error,
+                                    //     LoanTextConstants.updatingError);
+                                  }
+                                  pageNotifier.setLoanPage(LoanPage.adminLoan);
                                 });
                               }
                             },

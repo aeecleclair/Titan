@@ -33,7 +33,7 @@ class ListeOrders extends HookConsumerWidget {
               height: 70,
               alignment: Alignment.center,
               child: Text(
-                "Pas de commandes actuellement",
+                AMAPTextConstants.noCurrentOrder,
                 style: TextStyle(color: Colors.grey.shade600),
               ),
             ),

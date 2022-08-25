@@ -112,14 +112,14 @@ class ProductUi extends ConsumerWidget {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) => AMAPDialog(
-                            descriptions: "Supprimer le Product ?",
-                            title: "Suppression",
+                            descriptions: AMAPTextConstants.deletingProduct,
+                            title: AMAPTextConstants.deleting,
                             onYes: () {
                               ref
                                   .watch(deliveryProductListProvider(deliveryId).notifier)
                                   .deleteProduct(p);
                               displayAMAPToast(
-                                  context, TypeMsg.msg, "Product supprimé");
+                                  context, TypeMsg.msg, AMAPTextConstants.deletedProduct);
                             }));
                   },
                 )

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
+import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 
 class TopBar extends HookConsumerWidget {
@@ -54,7 +55,7 @@ class TopBar extends HookConsumerWidget {
               ),
             ),
             const Text(
-              "Administration",
+              AdminTextConstants.administration,
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w500,

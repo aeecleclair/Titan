@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/group.dart';
-import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
@@ -52,8 +51,8 @@ class AddMemberPage extends HookConsumerWidget {
                           controller: editingController,
                           autofocus: focus.value,
                           decoration: const InputDecoration(
-                              labelText: "Rechercher",
-                              hintText: "Rechercher",
+                              labelText: AdminTextConstants.looking,
+                              hintText: AdminTextConstants.looking,
                               prefixIcon: Icon(Icons.search),
                               border: OutlineInputBorder(
                                   borderRadius:
@@ -135,7 +134,7 @@ class AddMemberPage extends HookConsumerWidget {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: const Text(
-                        "Modifier",
+                    AdminTextConstants.edit,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -150,7 +149,7 @@ class AddMemberPage extends HookConsumerWidget {
                 ],
               ));
         }, error: (Object error, StackTrace? stackTrace) {
-          return const Center(child: Text("Erreur"));
+          return Center(child: Text(error.toString()));
         }, loading: () {
           return const Center(
               child: CircularProgressIndicator(

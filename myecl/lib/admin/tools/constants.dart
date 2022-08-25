@@ -9,17 +9,17 @@ class AdminColorConstants {
 }
 
 class AdminTextConstants {
-  static const String firstname = "Prénom";
+  static const String add = "Ajouter";
+  static const String addAssociation = "Ajouter une association";
+  static const String administration = "Administration";
+  static const String delete = "Supprimer";
+  static const String deleteAssociation = "Supprimer l'association ?";
+  static const String deleting = "Suppression";
+  static const String description = "Description";
+  static const String edit = "Modifier";
+  static const String emptyFieldError = "Le nom ne peut pas être vide";
+  static const String looking = "Recherche";
+  static const String members = "Membres";
   static const String name = "Nom";
-  static const String nickname = "Surnom";
-  static const String email = "Email";
-  static const String promo = "Promotion";
-  static const String floor = "Etage";
-  static const String birthday = "Date de naissance";
-  static const String id = "ID";
-  static const String save = "Enregistrer";
-  static const String admin = "Administrateur";
-  static const String expectingDate = "Date de naissance attendue";
-  static const String updatedProfile = "Profil modifié";
-  static const String updatingError = "Erreur lors de la modification du profil";
+  static const String removeAssociationMember = "Supprimer le membre de l'association ?";
 }

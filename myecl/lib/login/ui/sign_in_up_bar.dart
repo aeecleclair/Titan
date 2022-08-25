@@ -72,13 +72,13 @@ class SignInBar extends StatelessWidget {
                 style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w800,
-                    color: ColorConstants.background),
+                    color: LoginColorConstants.background),
               ),
               Container(
                 margin: const EdgeInsets.only(left: 20),
                 child: isLoading
                     ? const CircularProgressIndicator(
-                        color: ColorConstants.gradient2,
+                        color: LoginColorConstants.gradient2,
                       )
                     : _RoundContinueButton(
                         onPressed: onPressed,

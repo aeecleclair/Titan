@@ -111,8 +111,8 @@ class ItemUi extends HookConsumerWidget {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) => LoanDialog(
-                            descriptions: "Supprimer le Product ?",
-                            title: "Suppression",
+                            descriptions: LoanTextConstants.deletingItem,
+                            title: LoanTextConstants.deleting,
                             onYes: () async {
                               itemListNotifier.setId(loaner.id);
                               itemListNotifier.deleteItem(l).then((value) {

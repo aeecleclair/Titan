@@ -67,7 +67,7 @@ class AdminLoanPage extends HookConsumerWidget {
                             alignment: Alignment.centerLeft,
                             child: const Center(
                               child: Text(
-                                "Aucun objet disponible",
+                                LoanTextConstants.noAvailableItems,
                                 style: TextStyle(fontSize: 13),
                                 overflow: TextOverflow.ellipsis,
                               ),

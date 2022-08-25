@@ -29,7 +29,7 @@ class AddAssoPage extends HookConsumerWidget {
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.only(bottom: 3),
                   child: const Text(
-                    "Nom",
+                    AdminTextConstants.name,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
@@ -42,9 +42,9 @@ class AddAssoPage extends HookConsumerWidget {
                     controller: name,
                     validator: (value) {
                       if (value == null) {
-                        return "Le nom ne peut pas être vide";
+                        return AdminTextConstants.emptyFieldError;
                       } else if (value.isEmpty) {
-                        return "Le nom ne peut pas être vide";
+                        return AdminTextConstants.emptyFieldError;
                       } else {
                         return null;
                       }
@@ -63,7 +63,7 @@ class AddAssoPage extends HookConsumerWidget {
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.only(bottom: 3),
                   child: const Text(
-                    "Description",
+                    AdminTextConstants.description,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
@@ -76,9 +76,9 @@ class AddAssoPage extends HookConsumerWidget {
                     controller: description,
                     validator: (value) {
                       if (value == null) {
-                        return "Le nom ne peut pas être vide";
+                        return AdminTextConstants.emptyFieldError;
                       } else if (value.isEmpty) {
-                        return "Le nom ne peut pas être vide";
+                        return AdminTextConstants.emptyFieldError;
                       } else {
                         return null;
                       }
@@ -111,7 +111,7 @@ class AddAssoPage extends HookConsumerWidget {
               borderRadius: BorderRadius.circular(15),
             ),
             child: const Text(
-              "Ajouter",
+              AdminTextConstants.add,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,

@@ -29,7 +29,7 @@ class AdminItemPage extends HookConsumerWidget {
         height: 48,
         alignment: Alignment.centerLeft,
         child: const Text(
-          "Objets disponibles",
+          LoanTextConstants.availableItems,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -63,7 +63,7 @@ class AdminItemPage extends HookConsumerWidget {
                             alignment: Alignment.centerLeft,
                             child: const Center(
                               child: Text(
-                                "Aucun objet disponible",
+                                LoanTextConstants.noAvailableItems,
                                 style: TextStyle(fontSize: 13),
                                 overflow: TextOverflow.ellipsis,
                               ),

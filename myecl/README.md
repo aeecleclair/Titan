@@ -19,7 +19,7 @@ TODO :
 
 ne pas afficher si date de fin est dépassée
 
-Réserva° : (API)
+Réserva° : add / modif / del booking + display reccuring + multipleday ?
 Evénements : (API)
 
 Prêt : PB Toast

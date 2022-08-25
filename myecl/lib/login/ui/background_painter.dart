@@ -132,19 +132,19 @@ class BackgroundPainter extends CustomPainter {
       ],
     );
 
-    var colors = [ColorConstants.gradient1, ColorConstants.gradient2];
+    var colors = [LoginColorConstants.gradient1, LoginColorConstants.gradient2];
 
     Rect rectShape = Rect.fromLTWH(0, 0, w, h);
     final Gradient gradient = LinearGradient(
         colors: colors, begin: Alignment.topLeft, end: Alignment.topRight);
 
-    paint = Paint()..color = ColorConstants.background;
+    paint = Paint()..color = LoginColorConstants.background;
 
     paint2 = Paint()..shader = gradient.createShader(rectShape);
     paint3 = Paint()..shader = gradient.createShader(rectShape);
 
     canvas.drawShadow(
-        path, ColorConstants.background.withAlpha(125), 10.0, false);
+        path, LoginColorConstants.background.withAlpha(125), 10.0, false);
     canvas.drawPath(path3, paint3);
     canvas.drawPath(path, paint);
     canvas.drawPath(path2, paint2);

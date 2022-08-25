@@ -38,7 +38,7 @@ class MainPage extends HookConsumerWidget {
                     height: 20,
                   ),
                   const Button(
-                    text: "Mes réservations",
+                    text: BookingTextConstants.myBookings,
                     page: BookingPage.bookings,
                   ),
                   const SizedBox(

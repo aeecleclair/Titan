@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class AddRoomPage extends HookConsumerWidget {
@@ -60,7 +61,7 @@ class AddRoomPage extends HookConsumerWidget {
               ),
               child: const Center(
                 child: Text(
-                  'Ajouter',
+                  BookingTextConstants.add,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,

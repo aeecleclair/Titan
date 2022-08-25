@@ -42,7 +42,7 @@ class EditPage extends HookConsumerWidget {
                         alignment: Alignment.centerLeft,
                         margin: const EdgeInsets.only(bottom: 3),
                         child: const Text(
-                          "Nom",
+                          AdminTextConstants.name,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -61,9 +61,9 @@ class EditPage extends HookConsumerWidget {
                           },
                           validator: (value) {
                             if (value == null) {
-                              return "Le nom ne peut pas être vide";
+                              return AdminTextConstants.emptyFieldError;
                             } else if (value.isEmpty) {
-                              return "Le nom ne peut pas être vide";
+                              return AdminTextConstants.emptyFieldError;
                             } else {
                               return null;
                             }
@@ -86,7 +86,7 @@ class EditPage extends HookConsumerWidget {
                         alignment: Alignment.centerLeft,
                         margin: const EdgeInsets.only(bottom: 3),
                         child: const Text(
-                          "Description",
+                          AdminTextConstants.description,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -105,9 +105,9 @@ class EditPage extends HookConsumerWidget {
                           },
                           validator: (value) {
                             if (value == null) {
-                              return "Le nom ne peut pas être vide";
+                              return AdminTextConstants.emptyFieldError;
                             } else if (value.isEmpty) {
-                              return "Le nom ne peut pas être vide";
+                              return AdminTextConstants.emptyFieldError;
                             } else {
                               return null;
                             }
@@ -128,7 +128,7 @@ class EditPage extends HookConsumerWidget {
                       width: 20,
                     ),
                     const Text(
-                      "Membres :",
+                      AdminTextConstants.members + " :",
                       style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                     GestureDetector(
@@ -174,8 +174,8 @@ class EditPage extends HookConsumerWidget {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) => AdminDialog(
-                            descriptions: "Supprimer le Product ?",
-                            title: "Suppression",
+                            descriptions: AdminTextConstants.removeAssociationMember,
+                            title: AdminTextConstants.deleting,
                             onYes: () {
                               Group newGroup = g.copyWith(
                                   members: g.members
@@ -225,7 +225,7 @@ class EditPage extends HookConsumerWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: const Text(
-                    "Modifier",
+                    AdminTextConstants.edit,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

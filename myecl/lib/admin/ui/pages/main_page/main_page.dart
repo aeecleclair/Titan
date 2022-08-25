@@ -70,7 +70,7 @@ class MainPage extends HookConsumerWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: const Text(
-                  "Ajouter une association",
+                  AdminTextConstants.addAssociation,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -86,7 +86,9 @@ class MainPage extends HookConsumerWidget {
         }, error: (e, s) {
           return Text(e.toString());
         }, loading: () {
-          return const Text('Loading');
+          return const Center(child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation(AdminColorConstants.gradient1),
+          ));
         }),
       ),
     );

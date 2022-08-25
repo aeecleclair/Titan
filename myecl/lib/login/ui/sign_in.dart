@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/login/ui/text_from_decoration.dart';
@@ -29,7 +30,7 @@ class SignIn extends HookConsumerWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Bon\nRetour",
+                  LoginTextConstants.welcomeBack,
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -48,7 +49,7 @@ class SignIn extends HookConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: TextFormField(
-                        decoration: signInInputDecoration(hintText: "Email"),
+                        decoration: signInInputDecoration(hintText: LoginTextConstants.email),
                         controller: username,
                       ),
                     ),
@@ -56,13 +57,13 @@ class SignIn extends HookConsumerWidget {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: TextFormField(
                           decoration:
-                              signInInputDecoration(hintText: "Mot de passe"),
+                              signInInputDecoration(hintText: LoginTextConstants.password),
                           controller: password,
                           obscureText: true,
                         )),
                     SignInBar(
                       isLoading: ref.watch(loadingrovider),
-                      label: "Se connecter",
+                      label: LoginTextConstants.signIn,
                       onPressed: () {
                         authNotifier.getTokenFromRequest(
                             username.text, password.text);
@@ -89,7 +90,7 @@ class SignIn extends HookConsumerWidget {
                                 onRegisterPressed();
                               },
                               child: const Text(
-                                "Créer un compte",
+                                LoginTextConstants.createAccount,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w800,
@@ -108,7 +109,7 @@ class SignIn extends HookConsumerWidget {
                                 onRegisterPressed();
                               },
                               child: const Text(
-                                "Mot de passse oublié",
+                                LoginTextConstants.forgotPassword,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w800,

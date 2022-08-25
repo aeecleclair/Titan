@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
@@ -18,7 +19,7 @@ class OptionPage extends HookConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         const Text(
-          "Administrateur",
+          LoanTextConstants.admin,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
@@ -26,14 +27,14 @@ class OptionPage extends HookConsumerWidget {
         ),
         GestureDetector(
           child: const LoanCommonButton(
-            text: "Gestion des prêts",
+            text: LoanTextConstants.loanHandling,
           ),
           onTap: () {
             pageNotifier.setLoanPage(LoanPage.adminLoan);
           },
         ),
         GestureDetector(
-          child: const LoanCommonButton(text: "Gestion des objets"),
+          child: const LoanCommonButton(text: LoanTextConstants.itemHandling),
           onTap: () {
             pageNotifier.setLoanPage(LoanPage.adminItem);
           },

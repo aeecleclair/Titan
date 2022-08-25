@@ -89,8 +89,8 @@ class RoomUi extends HookConsumerWidget {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) => BookingDialog(
-                            descriptions: "Supprimer le Product ?",
-                            title: "Suppression",
+                            descriptions: BookingTextConstants.deletingRoom,
+                            title: BookingTextConstants.deleting,
                             onYes: () async {
                               roomListNotifier.deleteRoom(r).then((value) {});
                             }));

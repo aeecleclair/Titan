@@ -151,7 +151,7 @@ class EditItemPage extends HookConsumerWidget {
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   labelText: LoanTextConstants.lendingDuration,
-                  suffix: Text('Jours'),
+                  suffix: Text(LoanTextConstants.days),
                 ),
                 validator: (value) {
                   if (value == null) {

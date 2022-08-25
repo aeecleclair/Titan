@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_list.dart';
 import 'package:myecl/booking/ui/refresh_indicator.dart';
 
@@ -20,7 +21,7 @@ class AdminPage extends HookConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               GestureDetector(
@@ -38,13 +39,13 @@ class AdminPage extends HookConsumerWidget {
                         color: Colors.white.withOpacity(0.15),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
-                      'Salles',
+                      BookingTextConstants.room,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -53,16 +54,14 @@ class AdminPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20,),
-              Container(
-                child: Text("Demandes de réservation",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
-                    )),
-              ),
-              ListBooking(isAdmin: true,)
+              const SizedBox(height: 20,),
+              const Text(BookingTextConstants.bookingDemand,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white
+                  )),
+              const ListBooking(isAdmin: true,)
             ],
           ),
         ),
