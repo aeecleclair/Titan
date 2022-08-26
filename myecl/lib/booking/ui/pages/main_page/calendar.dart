@@ -44,9 +44,9 @@ class Calendar extends HookConsumerWidget {
                   ),
                   todayHighlightColor: BookingColorConstants.lightBlue,
                   firstDayOfWeek: 1,
-                  timeZone: "fr_FR",
+                  timeZone: 'Europe/Paris',
                   timeSlotViewSettings: const TimeSlotViewSettings(
-                    timeFormat: 'H:mm',
+                    timeFormat: 'HH:mm',
                   ),
                   viewHeaderStyle: const ViewHeaderStyle(
                       dayTextStyle: TextStyle(
@@ -102,7 +102,7 @@ _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
     appointments.add(Appointment(
       startTime: e.start,
       endTime: e.end,
-      subject: e.room.name,
+      subject: e.room.name + ' - ' + e.reason,
       isAllDay: false,
       startTimeZone: "Europe/Paris",
       endTimeZone: "Europe/Paris",

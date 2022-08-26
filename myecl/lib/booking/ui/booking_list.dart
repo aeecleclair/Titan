@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_ui.dart';
@@ -12,10 +13,11 @@ class ListBooking extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookings = ref.watch(bookingListProvider);
+    final userId = ref.watch(idProvider);
     return Expanded(
         child: BookingRefresher(
       onRefresh: () async {
-        await ref.watch(bookingListProvider.notifier).loadBookings();
+        await ref.watch(bookingListProvider.notifier).loadBookings(userId);
       },
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

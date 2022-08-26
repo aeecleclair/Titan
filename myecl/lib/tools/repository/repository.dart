@@ -21,6 +21,7 @@ abstract class Repository {
     if (response.statusCode == 200) {
       try {
         String resp = utf8.decode(response.body.runes.toList());
+        print(resp);
         return json.decode(resp);
       } catch (e) {
         return [];
@@ -57,6 +58,7 @@ abstract class Repository {
     if (response.statusCode == 201) {
       try {
         String resp = utf8.decode(response.body.runes.toList());
+        print(resp);
         return json.decode(resp);
       } catch (e) {
         throw AppException(ErrorType.invalidData, "Failed to create item");
