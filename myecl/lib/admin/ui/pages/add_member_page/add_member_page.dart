@@ -23,7 +23,8 @@ class AddMemberPage extends HookConsumerWidget {
     final groupNotifier = ref.watch(groupProvider.notifier);
     return AdminRefresher(
         onRefresh: () async {
-          users.value = await usersNotifier.filterUsers("");
+          users.value = await usersNotifier
+              .filterUsers("", excludeGroup: [group.value!.toSimpleGroup()]);
         },
         child: users.value.when(data: (u) {
           return SingleChildScrollView(
@@ -43,9 +44,10 @@ class AddMemberPage extends HookConsumerWidget {
                           onChanged: (value) {
                             focus.value = true;
                             tokenExpireWrapper(ref, () async {
-                              final value = await usersNotifier
-                                  .filterUsers(editingController.text);
-                                users.value = value;
+                              final value = await usersNotifier.filterUsers(
+                                  editingController.text,
+                                  excludeGroup: [group.value!.toSimpleGroup()]);
+                              users.value = value;
                             });
                           },
                           controller: editingController,
@@ -134,7 +136,7 @@ class AddMemberPage extends HookConsumerWidget {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: const Text(
-                    AdminTextConstants.edit,
+                        AdminTextConstants.edit,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,

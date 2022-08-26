@@ -11,9 +11,20 @@ class UserListRepository extends Repository {
         (await getList()).map((x) => SimpleUser.fromJson(x)));
   }
 
-  Future<List<SimpleUser>> searchUser(String query) async {
+  Future<List<SimpleUser>> searchUser(String query, {List<String>? includeId, List<String>? excludeId}) async {
+    String suffix = "search?query=" + query;
+    if (includeId != null) {
+      for (final id in includeId) {
+        suffix += "&includedGroups=" + id;
+      }
+    }
+    if (excludeId != null) {
+      for (final id in excludeId) {
+        suffix += "&excludedGroups=" + id;
+      }
+    }
     return List<SimpleUser>.from(
-        (await getList(suffix: "search?query=" + query))
+        (await getList(suffix: suffix))
             .map((x) => SimpleUser.fromJson(x)));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/user/class/list_users.dart';
@@ -11,8 +12,12 @@ class UserListNotifier extends ListNotifier<SimpleUser> {
     _userListRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<SimpleUser>>> filterUsers(String query) async {
-    return await loadList(() async => _userListRepository.searchUser(query));
+  Future<AsyncValue<List<SimpleUser>>> filterUsers(String query,
+      {List<SimpleGroup>? includeGroup,
+      List<SimpleGroup>? excludeGroup}) async {
+    return await loadList(() async => _userListRepository.searchUser(query,
+        includeId: includeGroup?.map((e) => e.id).toList(),
+        excludeId: excludeGroup?.map((e) => e.id).toList()));
   }
 }
 
