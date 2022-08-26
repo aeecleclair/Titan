@@ -24,7 +24,7 @@ Evénements : (API)
 
 Prêt : PB Toast
 Settings : ProcessDate info
-Admin : asso prêt / DELETE /membership
+Admin : DELETE /membership
 
 Amap : (API) search/amap + cash list search
 

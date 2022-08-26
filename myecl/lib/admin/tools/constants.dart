@@ -11,13 +11,16 @@ class AdminColorConstants {
 class AdminTextConstants {
   static const String add = "Ajouter";
   static const String addAssociation = "Ajouter une association";
+  static const String addLoaningAssociation = "Ajouter une association de prêt";
   static const String administration = "Administration";
+  static const String association = "Association";
   static const String delete = "Supprimer";
   static const String deleteAssociation = "Supprimer l'association ?";
   static const String deleting = "Suppression";
   static const String description = "Description";
   static const String edit = "Modifier";
   static const String emptyFieldError = "Le nom ne peut pas être vide";
+  static const String loaningAssociation = "Association de prêt";
   static const String looking = "Recherche";
   static const String members = "Membres";
   static const String name = "Nom";

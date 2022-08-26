@@ -83,22 +83,24 @@ class MainPage extends HookConsumerWidget {
           }
 
           for (String c in categories) {
-            listWidget.add(Container(
-                height: 50,
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  height: 40,
+            if (dictCateListWidget[c]![0].isNotEmpty) {
+              listWidget.add(Container(
+                  height: 50,
                   alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    c,
-                    style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
+                  child: Container(
+                    height: 40,
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Text(
+                      c,
+                      style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                )));
-            listWidget += dictCateListWidget[c]![0];
+                  )));
+              listWidget += dictCateListWidget[c]![0];
+            }
           }
           if (displayHist) {
             listWidget += [
@@ -124,23 +126,24 @@ class MainPage extends HookConsumerWidget {
               ),
             ];
             for (String c in categories) {
-              listWidget.add(Container(
-                  height: 50,
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    height: 40,
+              if (dictCateListWidget[c]![1].isNotEmpty) {
+                listWidget.add(Container(
+                    height: 50,
                     alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Text(
-                      c,
-                      style: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600,
+                    child: Container(
+                      height: 40,
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text(
+                        c,
+                        style: const TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  )));
-
-              listWidget += dictCateListWidget[c]![1];
+                    )));
+                listWidget += dictCateListWidget[c]![1];
+              }
             }
           }
         } else {
