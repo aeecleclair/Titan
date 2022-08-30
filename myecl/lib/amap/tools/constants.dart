@@ -39,6 +39,7 @@ class AMAPTextConstants {
   static const String createCategory = "Créer une catégorie";
   static const String delete = "Supprimer";
   static const String deletedDelivery = "Livraison supprimée";
+  static const String deletedOrder = "Commande supprimée";
   static const String deletedProduct = "Produit supprimé";
   static const String deleting = "Suppression";
   static const String deletingDelivery = "Supprimer la livraison ?";
@@ -46,6 +47,7 @@ class AMAPTextConstants {
   static const String deletingOrder = "Supprimer la commande ?";
   static const String deletingProduct = "Supprimer le produit ?";
   static const String delivery = "Livraison";
+  static const String deliveryHandling = "Gestion des livraisons";
   static const String deliveryList = "Liste des livraisons";
   static const String deliveryOn = "Livraison le";
   static const String expectingNumber = "Veuillez entrer un nombre";
@@ -80,4 +82,5 @@ class AMAPTextConstants {
   static const String updatedProduct = "Produit modifié";
   static const String updatingError = "Echec de la modification";
   static const String usersNotFound = "Aucun utilisateur trouvé";
+
 }

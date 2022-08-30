@@ -6,11 +6,8 @@ import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/collection_slot_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
-import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
 import 'package:myecl/amap/tools/collection_dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/dialog.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 
 class DeliveryUi extends ConsumerWidget {
@@ -21,7 +18,6 @@ class DeliveryUi extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(isAmapAdminProvider);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
     final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
@@ -52,7 +48,7 @@ class DeliveryUi extends ConsumerWidget {
               ),
               Expanded(
                 child: Text(
-                  AMAPTextConstants.deliveryOn + processDate(c.deliveryDate),
+                  AMAPTextConstants.deliveryOn + " " + processDate(c.deliveryDate),
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -231,88 +227,6 @@ class DeliveryUi extends ConsumerWidget {
           Container(
             height: 20,
           ),
-          c.expanded && isAdmin
-              ? Row(
-                  children: [
-                    GestureDetector(
-                      child: Container(
-                        height: 70,
-                        width: (MediaQuery.of(context).size.width - 40) / 2,
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(23),
-                                topLeft: Radius.circular(23)),
-                            color: AMAPColorConstants.background3),
-                        alignment: Alignment.center,
-                        child: Text(c.locked ? AMAPTextConstants.unlock : AMAPTextConstants.lock,
-                            style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w700,
-                                color: AMAPColorConstants.enabled)),
-                      ),
-                      onTap: () {
-                        final lastState = c.locked;
-                        deliveryListNotifier
-                            .updateDelivery(c.copyWith(
-                          locked: !c.locked,
-                        ))
-                            .then((value) {
-                          if (value) {
-                            if (lastState) {
-                              displayAMAPToast(context, TypeMsg.msg,
-                                  AMAPTextConstants.unlockedDelivery);
-                            } else {
-                              displayAMAPToast(context, TypeMsg.msg,
-                                  AMAPTextConstants.lockedDelivery);
-                            }
-                          } else {
-                            displayAMAPToast(context, TypeMsg.error,
-                                AMAPTextConstants.updatingError);
-                          }
-                        });
-                      },
-                    ),
-                    GestureDetector(
-                      child: Container(
-                        height: 70,
-                        width: (MediaQuery.of(context).size.width - 40) / 2,
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
-                                bottomRight: Radius.circular(23),
-                                topRight: Radius.circular(23)),
-                            color: AMAPColorConstants.background3),
-                        alignment: Alignment.center,
-                        child: const Text(AMAPTextConstants.delete,
-                            style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w700,
-                                color: Color.fromARGB(255, 144, 54, 61))),
-                      ),
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) => AMAPDialog(
-                                descriptions:
-                                    AMAPTextConstants.deletingDelivery,
-                                title: AMAPTextConstants.deleting,
-                                onYes: () {
-                                  deliveryListNotifier
-                                      .deleteDelivery(c)
-                                      .then((value) {
-                                    if (value) {
-                                      displayAMAPToast(context, TypeMsg.msg,
-                                          AMAPTextConstants.deletedDelivery);
-                                    } else {
-                                      displayAMAPToast(context, TypeMsg.error,
-                                          AMAPTextConstants.deletingError);
-                                    }
-                                  });
-                                }));
-                      },
-                    )
-                  ],
-                )
-              : Container()
         ],
       ),
     );

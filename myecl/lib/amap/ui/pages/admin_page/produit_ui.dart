@@ -10,6 +10,7 @@ import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class ProductUi extends ConsumerWidget {
   final Product p;
@@ -56,14 +57,14 @@ class ProductUi extends ConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                          colors: [
-                        AMAPColorConstants.green1, AMAPColorConstants.textLight],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight),
+                      gradient: const LinearGradient(colors: [
+                        AMAPColorConstants.green1,
+                        AMAPColorConstants.textLight
+                      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                       boxShadow: [
                         BoxShadow(
-                            color: AMAPColorConstants.textLight.withOpacity(0.4),
+                            color:
+                                AMAPColorConstants.textLight.withOpacity(0.4),
                             offset: const Offset(2, 3),
                             blurRadius: 5)
                       ],
@@ -96,7 +97,8 @@ class ProductUi extends ConsumerWidget {
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                       boxShadow: [
                         BoxShadow(
-                            color: AMAPColorConstants.redGradient2.withOpacity(0.4),
+                            color: AMAPColorConstants.redGradient2
+                                .withOpacity(0.4),
                             offset: const Offset(2, 3),
                             blurRadius: 5)
                       ],
@@ -114,12 +116,16 @@ class ProductUi extends ConsumerWidget {
                         builder: (BuildContext context) => AMAPDialog(
                             descriptions: AMAPTextConstants.deletingProduct,
                             title: AMAPTextConstants.deleting,
-                            onYes: () {
-                              ref
-                                  .watch(deliveryProductListProvider(deliveryId).notifier)
-                                  .deleteProduct(p);
-                              displayAMAPToast(
-                                  context, TypeMsg.msg, AMAPTextConstants.deletedProduct);
+                            onYes: () async {
+                              tokenExpireWrapper(ref, () async {
+                                await ref
+                                    .watch(
+                                        deliveryProductListProvider(deliveryId)
+                                            .notifier)
+                                    .deleteProduct(p);
+                                displayAMAPToast(context, TypeMsg.msg,
+                                    AMAPTextConstants.deletedProduct);
+                              });
                             }));
                   },
                 )

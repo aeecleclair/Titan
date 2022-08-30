@@ -20,7 +20,8 @@ import 'package:myecl/tools/functions.dart';
 class OrderUi extends ConsumerWidget {
   final Order c;
   final int i;
-  const OrderUi({Key? key, required this.c, required this.i}) : super(key: key);
+  final bool isAdmin;
+  const OrderUi({Key? key, required this.c, required this.i, required this.isAdmin}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -72,7 +73,8 @@ class OrderUi extends ConsumerWidget {
               ),
               Expanded(
                 child: Text(
-                  "Le " + processDate(c.deliveryDate) +
+                  "Le " +
+                      processDate(c.deliveryDate) +
                       " (" +
                       c.collectionSlot +
                       ")",
@@ -114,7 +116,9 @@ class OrderUi extends ConsumerWidget {
                               Expanded(
                                 child: Text(
                                   p.name +
-                                      " (" + AMAPTextConstants.quantity +" : " +
+                                      " (" +
+                                      AMAPTextConstants.quantity +
+                                      " : " +
                                       p.quantity.toString() +
                                       ")",
                                   style: const TextStyle(
@@ -166,7 +170,8 @@ class OrderUi extends ConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   c.products.length.toString() +
-                      " " + AMAPTextConstants.product +
+                      " " +
+                      AMAPTextConstants.product +
                       (c.products.length != 1 ? "s" : ""),
                   style: const TextStyle(
                       fontSize: 18,
@@ -178,7 +183,8 @@ class OrderUi extends ConsumerWidget {
                   width: 140,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    AMAPTextConstants.price + " : " +
+                    AMAPTextConstants.price +
+                        " : " +
                         (c.products.map((p) => p.quantity * p.price))
                             .reduce((value, element) => value + element)
                             .toStringAsFixed(2) +
@@ -193,7 +199,7 @@ class OrderUi extends ConsumerWidget {
           Container(
             height: 20,
           ),
-          c.expanded && !locked
+          c.expanded && !locked && !isAdmin
               ? Row(
                   children: [
                     GestureDetector(
@@ -206,7 +212,7 @@ class OrderUi extends ConsumerWidget {
                                 topLeft: Radius.circular(23)),
                             color: AMAPColorConstants.background3),
                         alignment: Alignment.center,
-                        child: const Text("Modifier",
+                        child: const Text(AMAPTextConstants.update,
                             style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
@@ -234,7 +240,7 @@ class OrderUi extends ConsumerWidget {
                                 topRight: Radius.circular(23)),
                             color: AMAPColorConstants.background3),
                         alignment: Alignment.center,
-                        child: const Text("Supprimer",
+                        child: const Text(AMAPTextConstants.delete,
                             style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
@@ -244,8 +250,8 @@ class OrderUi extends ConsumerWidget {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) => AMAPDialog(
-                                descriptions: "Supprimer la commande ?",
-                                title: "Suppression",
+                                descriptions: AMAPTextConstants.deletingOrder,
+                                title: AMAPTextConstants.deleting,
                                 onYes: () {
                                   deleteCmd(ref, i);
                                   final price = c.products
@@ -254,7 +260,7 @@ class OrderUi extends ConsumerWidget {
                                           (value, element) => value + element);
                                   userAmountNotifier.updateCash(price);
                                   displayAMAPToast(context, TypeMsg.msg,
-                                      "Commande supprimée");
+                                      AMAPTextConstants.deletedOrder);
                                 }));
                       },
                     )

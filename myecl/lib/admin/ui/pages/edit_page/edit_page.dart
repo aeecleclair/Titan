@@ -8,6 +8,7 @@ import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/tools/dialog.dart';
 import 'package:myecl/admin/ui/user_ui.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class EditPage extends HookConsumerWidget {
   const EditPage({Key? key}) : super(key: key);
@@ -129,7 +130,8 @@ class EditPage extends HookConsumerWidget {
                     ),
                     const Text(
                       AdminTextConstants.members + " :",
-                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -174,20 +176,22 @@ class EditPage extends HookConsumerWidget {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) => AdminDialog(
-                            descriptions: AdminTextConstants.removeAssociationMember,
+                            descriptions:
+                                AdminTextConstants.removeAssociationMember,
                             title: AdminTextConstants.deleting,
-                            onYes: () {
-                              Group newGroup = g.copyWith(
-                                  members: g.members
-                                      .where((element) => element.id != x.id)
-                                      .toList());
-                              groupNotifier
-                                  .deleteMember(newGroup, x)
-                                  .then((value) {
+                            onYes: () async {
+                              tokenExpireWrapper(ref, () async {
+                                Group newGroup = g.copyWith(
+                                    members: g.members
+                                        .where((element) => element.id != x.id)
+                                        .toList());
+                                final value = await groupNotifier.deleteMember(
+                                    newGroup, x);
                                 if (value) {
                                 } else {}
                                 pageNotifier.setAdminPage(AdminPage.edit);
                               });
+
                               // .then((value) {
                               // if (value) {
                               // displayAdminToast(

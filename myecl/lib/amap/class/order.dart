@@ -41,7 +41,7 @@ class Order {
     final _data = <String, dynamic>{};
     _data['order_id'] = id;
     _data['delivery_id'] = deliveryId;
-    _data['delivery_date'] = processDateToAPI(deliveryDate);
+    _data['delivery_date'] = processDateToAPIWitoutHour(deliveryDate);
     _data['products_ids'] = productsIds;
     _data['collection_slot'] = collectionSlot;
     _data['products_quantity'] = products.map((e) => e.quantity).toList();

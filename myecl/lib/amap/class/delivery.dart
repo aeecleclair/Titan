@@ -26,7 +26,7 @@ class Delivery {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['delivery_date'] = processDateToAPI(deliveryDate);
+    _data['delivery_date'] = processDateToAPIWitoutHour(deliveryDate);
     _data['products_ids'] = products.map((e) => e.id).toList();
     _data['locked'] = locked;
     _data['id'] = id;

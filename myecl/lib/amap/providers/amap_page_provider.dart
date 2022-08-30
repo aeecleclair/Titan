@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum AmapPage {main, pres, products, admin, modif, addCmd, delivery, solde, addSolde}
+enum AmapPage {main, pres, products, admin, modif, addCmd, delivery, solde, addSolde, deliveryAdmin, deliveryOrder}
 
 final amapPageProvider = StateNotifierProvider<AmapPageNotifier, AmapPage>((ref) {
   return AmapPageNotifier();

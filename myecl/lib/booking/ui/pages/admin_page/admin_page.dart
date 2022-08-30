@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_list.dart';
@@ -11,14 +13,17 @@ class AdminPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
-    return BookingRefresher(
-      onRefresh: () async {  },
+    final userId = ref.watch(idProvider);
+    return SizedBox(
+      height: MediaQuery.of(context).size.height - 110,
+      child: BookingRefresher(
+      onRefresh: () async {
+        await ref.watch(bookingListProvider.notifier).loadBookings(userId);
+      },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics()),
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height - 120,
-          child: Column(
+        child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const SizedBox(
@@ -61,6 +66,9 @@ class AdminPage extends HookConsumerWidget {
                     fontWeight: FontWeight.bold,
                     color: Colors.white
                   )),
+              const SizedBox(
+                height: 20,
+              ),
               const ListBooking(isAdmin: true,)
             ],
           ),

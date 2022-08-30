@@ -57,6 +57,12 @@ class TopBar extends HookConsumerWidget {
                           case AmapPage.addSolde:
                             pageNotifier.setAmapPage(AmapPage.solde);
                             break;
+                          case AmapPage.deliveryAdmin:
+                            pageNotifier.setAmapPage(AmapPage.admin);
+                            break;
+                          case AmapPage.deliveryOrder:
+                            pageNotifier.setAmapPage(AmapPage.deliveryAdmin);
+                            break;
                         }
                       },
                       icon: FaIcon(

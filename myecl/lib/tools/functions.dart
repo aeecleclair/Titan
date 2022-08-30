@@ -87,6 +87,11 @@ String processDate(DateTime date) {
       date.year.toString();
 }
 
+String processDateWithHour(DateTime date) {
+  return processDate(date) + " " + date.hour.toString().padLeft(2, "0") + ":" +
+      date.minute.toString().padLeft(2, "0");
+}
+
 String processDatePrint(String d) {
   List<String> e = d.split("-");
   return e[2].toString().padLeft(2, "0") +
@@ -100,4 +105,7 @@ String processDateToAPI(DateTime date) {
   return date.toIso8601String();
 }
 
+String processDateToAPIWitoutHour(DateTime date) {
+  return date.toIso8601String().split('T')[0];
+}
 

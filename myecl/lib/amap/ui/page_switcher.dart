@@ -5,6 +5,8 @@ import 'package:myecl/amap/ui/pages/add_cmd_page/add_cmd_page.dart';
 import 'package:myecl/amap/ui/pages/add_solde_page/add_solde_page.dart';
 import 'package:myecl/amap/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/amap/ui/pages/cmd_page/affichage_commandes.dart';
+import 'package:myecl/amap/ui/pages/delivery_admin/delivery_admin.dart';
+import 'package:myecl/amap/ui/pages/delivery_order/delivery_order.dart';
 import 'package:myecl/amap/ui/pages/delivery_page/delivery_page.dart';
 import 'package:myecl/amap/ui/pages/list_produits_page/list_produits_page.dart';
 import 'package:myecl/amap/ui/pages/main_page/text.dart';
@@ -37,8 +39,10 @@ class PageSwitcher extends ConsumerWidget {
         return const SoldePage();
       case AmapPage.addSolde:
         return const AddSoldePage();
-      default:
-        return const PageScheme(subPage: ListeOrders());
+      case AmapPage.deliveryAdmin:
+        return const DeliveryAdminPage();
+      case AmapPage.deliveryOrder:
+        return const DeliveryOrderPage();
     }
   }
 }

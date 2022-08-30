@@ -38,12 +38,12 @@ class BookingListProvider extends ListNotifier<Booking> {
         booking);
   }
 
-  Future<bool> toggleConfirmed(Booking booking, bool value) async {
+  Future<bool> toggleConfirmed(Booking booking, Decision decision) async {
     return await update(
-        (booking) => _repository.confirmBooking(booking, value),
+        (booking) => _repository.confirmBooking(booking, decision),
         (bookings, booking) => bookings
           ..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
-        booking.copyWith(decision: value ? Decision.approved : Decision.declined));
+        booking.copyWith(decision: decision));
   }
 }
 

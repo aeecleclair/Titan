@@ -9,6 +9,7 @@ import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/tools/dialog.dart';
 import 'package:myecl/admin/ui/refresh_indicator.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class AssoPage extends HookConsumerWidget {
   const AssoPage({Key? key}) : super(key: key);
@@ -127,13 +128,16 @@ class AssoPage extends HookConsumerWidget {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) => AdminDialog(
-                              descriptions: AdminTextConstants.deleteAssociation,
+                              descriptions:
+                                  AdminTextConstants.deleteAssociation,
                               title: AdminTextConstants.deleting,
-                              onYes: () {
-                                groupsNotifier.deleteGroup(g.toSimpleGroup());
-                                // displayAdminToast(
-                                //     context, TypeMsg.msg, "Product supprimé");
-                                pageNotifier.setAdminPage(AdminPage.main);
+                              onYes: () async {
+                                tokenExpireWrapper(ref, () async {
+                                  final value = await groupsNotifier.deleteGroup(g.toSimpleGroup());
+                                  // displayAdminToast(
+                                  //     context, TypeMsg.msg, "Product supprimé");
+                                  pageNotifier.setAdminPage(AdminPage.main);
+                                });
                               }));
                     },
                   ),
@@ -146,8 +150,7 @@ class AssoPage extends HookConsumerWidget {
         }, loading: () {
           return const Center(
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation(
-                  AdminColorConstants.gradient1),
+              valueColor: AlwaysStoppedAnimation(AdminColorConstants.gradient1),
             ),
           );
         }),

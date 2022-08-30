@@ -134,6 +134,16 @@ class AdminPage extends HookConsumerWidget {
                     const SizedBox(
                       height: 40,
                     ),
+                    GestureDetector(
+                        child: const GreenBtn(
+                            text: AMAPTextConstants.deliveryHandling),
+                        onTap: () {
+                          productModif.setModifiedProduct(-1);
+                          pageNotifier.setAmapPage(AmapPage.deliveryAdmin);
+                        }),
+                    const SizedBox(
+                      height: 40,
+                    ),
                     ...listWidget
                   ],
                 ),
