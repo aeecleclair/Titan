@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
+import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
@@ -16,11 +16,11 @@ class MainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isAdmin = ref.watch(isBookingAdminProvider);
     final userId = ref.watch(idProvider);
-    final bookingsNotifier = ref.watch(bookingListProvider.notifier);
+    final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     return Expanded(
       child: BookingRefresher(
           onRefresh: () async {
-            await bookingsNotifier.loadBookings(userId);
+            await bookingsNotifier.loadUserBookings(userId);
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(

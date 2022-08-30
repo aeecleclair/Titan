@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
+import 'package:myecl/booking/ui/booking_list.dart';
 import 'package:myecl/booking/ui/booking_ui.dart';
 import 'package:myecl/booking/ui/refresh_indicator.dart';
 
@@ -38,61 +39,10 @@ class BookingsPage extends HookConsumerWidget {
       height: MediaQuery.of(context).size.height - 110,
       child: BookingRefresher(
         onRefresh: () async {},
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(
+        child: const SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(
               parent: BouncingScrollPhysics()),
-          child: Column(
-            children: [
-              pendingBookings.isEmpty
-                  ? Container()
-                  : Column(children: [
-                      const Text("En attente",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white)),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      ...pendingBookings.map((x) => BookingUi(
-                            booking: x,
-                            isAdmin: false,
-                          ))
-                    ]),
-              confirmedBookings.isEmpty
-                  ? Container()
-                  : Column(children: [
-                      const Text("Confirmés",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white)),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      ...confirmedBookings.map((x) => BookingUi(
-                            booking: x,
-                            isAdmin: false,
-                          ))
-                    ]),
-              canceledBookings.isEmpty
-                  ? Container()
-                  : Column(children: [
-                      const Text("Réfusés",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white)),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      ...canceledBookings.map((x) => BookingUi(
-                            booking: x,
-                            isAdmin: false,
-                          ))
-                    ])
-            ],
-          ),
+          child: ListBooking(isAdmin: false,)
         ),
       ),
     );

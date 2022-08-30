@@ -13,12 +13,11 @@ class AdminPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
-    final userId = ref.watch(idProvider);
     return SizedBox(
       height: MediaQuery.of(context).size.height - 110,
       child: BookingRefresher(
       onRefresh: () async {
-        await ref.watch(bookingListProvider.notifier).loadBookings(userId);
+        await ref.watch(bookingListProvider.notifier).loadBookings();
       },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(
