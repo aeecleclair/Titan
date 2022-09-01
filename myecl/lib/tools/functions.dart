@@ -88,16 +88,34 @@ String processDate(DateTime date) {
 }
 
 String processDateWithHour(DateTime date) {
-  return processDate(date) + " " + date.hour.toString().padLeft(2, "0") + ":" +
+  return processDate(date) +
+      " " +
+      date.hour.toString().padLeft(2, "0") +
+      ":" +
       date.minute.toString().padLeft(2, "0");
 }
 
 String processDatePrint(String d) {
+  if (d == "") {
+    return "";
+  }
   List<String> e = d.split("-");
   return e[2].toString().padLeft(2, "0") +
       "/" +
       e[1].toString().padLeft(2, "0") +
       "/" +
+      e[0].toString();
+}
+
+String processDateBack(String d) {
+  if (d == "") {
+    return "";
+  }
+  List<String> e = d.split("/");
+  return e[2].toString().padLeft(2, "0") +
+      "-" +
+      e[1].toString().padLeft(2, "0") +
+      "-" +
       e[0].toString();
 }
 
@@ -108,4 +126,3 @@ String processDateToAPI(DateTime date) {
 String processDateToAPIWitoutHour(DateTime date) {
   return date.toIso8601String().split('T')[0];
 }
-

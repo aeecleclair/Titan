@@ -16,6 +16,7 @@ class MainPage extends HookConsumerWidget {
     final me = ref.watch(userProvider);
     final meNotifier = ref.watch(asyncUserProvider.notifier);
     final pageNotifier = ref.watch(settingsPageProvider.notifier);
+    print(me);
     return SettingsRefresher(
       onRefresh: () async {
         await meNotifier.loadMe();
@@ -184,7 +185,8 @@ class MainPage extends HookConsumerWidget {
                       Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            SettingsTextConstants.association + (me.groups.length > 1 ? "s" : ""),
+                            SettingsTextConstants.association +
+                                (me.groups.length > 1 ? "s" : ""),
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,

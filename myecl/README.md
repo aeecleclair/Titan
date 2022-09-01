@@ -22,7 +22,6 @@ ne pas afficher si date de fin est dépassée
 Evénements : (API)
 
 Prêt : PB Toast
-Settings : ProcessDate info
 Login : pb toast
 
 Amap : (API) get Amap Id + userSimple on order

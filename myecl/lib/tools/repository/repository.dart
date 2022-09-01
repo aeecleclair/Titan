@@ -76,7 +76,7 @@ abstract class Repository {
     final response = await http.patch(Uri.parse(host + ext + tId + suffix),
         headers: headers, body: json.encode(t));
     print(response.body);
-    if (response.statusCode == 204) {
+    if (response.statusCode == 204 || response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
       throw AppException(ErrorType.tokenExpire, response.body);

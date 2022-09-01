@@ -49,27 +49,27 @@ class SignIn extends HookConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: TextFormField(
-                        decoration: signInInputDecoration(hintText: LoginTextConstants.email),
+                        decoration: signInInputDecoration(
+                            hintText: LoginTextConstants.email),
                         controller: username,
                       ),
                     ),
                     Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: TextFormField(
-                          decoration:
-                              signInInputDecoration(hintText: LoginTextConstants.password),
+                          decoration: signInInputDecoration(
+                              hintText: LoginTextConstants.password),
                           controller: password,
                           obscureText: true,
                         )),
                     SignInBar(
                       isLoading: ref.watch(loadingrovider),
                       label: LoginTextConstants.signIn,
-                      onPressed: () {
-                        authNotifier.getTokenFromRequest(
+                      onPressed: () async {
+                        await authNotifier.getTokenFromRequest(
                             username.text, password.text);
                         auth.when(
-                            data: (token) {
-                            },
+                            data: (token) {},
                             error: (e, s) {
                               displayLoginToast(
                                   context, TypeMsg.error, e.toString());
@@ -82,10 +82,11 @@ class SignIn extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          height: 40,
+                            height: 40,
                             alignment: Alignment.centerLeft,
                             child: InkWell(
-                              splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                              splashColor:
+                                  const Color.fromRGBO(255, 255, 255, 1),
                               onTap: () {
                                 onRegisterPressed();
                               },
@@ -99,7 +100,7 @@ class SignIn extends HookConsumerWidget {
                                 ),
                               ),
                             )),
-                          Container(
+                        Container(
                             height: 40,
                             alignment: Alignment.centerLeft,
                             child: InkWell(

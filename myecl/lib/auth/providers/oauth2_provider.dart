@@ -85,7 +85,7 @@ class OAuth2TokenProvider
     return await _authTokenRepository.getLogInPage();
   }
 
-  void getTokenFromRequest(String username, String password) async {
+  Future getTokenFromRequest(String username, String password) async {
     state = const AsyncValue.loading();
     try {
       final authorizationCode =

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/tools/functions.dart';
 import 'package:myecl/settings/ui/pages/info_page/user_field_modifier.dart';
@@ -15,11 +16,12 @@ class InfoPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final pageNotifier = ref.watch(settingsPageProvider.notifier);
     final asyncUserNotifier = ref.watch(asyncUserProvider.notifier);
     final user = ref.watch(userProvider);
     final asyncUser = ref.watch(asyncUserProvider);
     final dateController = useTextEditingController();
-    dateController.text = user.birthday;
+    dateController.text = processDatePrint(user.birthday);
     final firstNameController = useTextEditingController();
     firstNameController.text = user.firstname;
     final nameController = useTextEditingController();
@@ -109,15 +111,18 @@ class InfoPage extends HookConsumerWidget {
             onTap: () {
               tokenExpireWrapper(ref, () async {
                 await asyncUserNotifier.updateMe(user.copyWith(
-                  birthday: dateController.value.text,
+                  birthday: processDateBack(dateController.value.text),
                   firstname: firstNameController.value.text,
                   name: nameController.value.text,
                   nickname: nickNameController.value.text,
                   floor: floorController.value.text,
                 ));
                 asyncUser.when(
-                  data: (d) => displaySettingsToast(context, TypeMsg.msg,
-                      SettingsTextConstants.updatedProfile),
+                  data: (d) {
+                    displaySettingsToast(context, TypeMsg.msg,
+                        SettingsTextConstants.updatedProfile);
+                    pageNotifier.setSettingsPage(SettingsPage.main);
+                  },
                   error: (e, s) => displaySettingsToast(context, TypeMsg.error,
                       SettingsTextConstants.updatingError),
                   loading: () {},
@@ -168,7 +173,8 @@ class InfoPage extends HookConsumerWidget {
         initialDate: DateTime.parse(me.birthday),
         firstDate: DateTime(1900),
         lastDate: DateTime.now());
-    dateController.text =
-        picked == null ? me.birthday : DateFormat('yyyy-MM-dd').format(picked);
+    dateController.text = picked == null
+        ? me.birthday
+        : processDatePrint(DateFormat('yyyy-MM-dd').format(picked));
   }
 }
