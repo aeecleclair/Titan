@@ -16,7 +16,6 @@ class MainPage extends HookConsumerWidget {
     final me = ref.watch(userProvider);
     final meNotifier = ref.watch(asyncUserProvider.notifier);
     final pageNotifier = ref.watch(settingsPageProvider.notifier);
-    print(me);
     return SettingsRefresher(
       onRefresh: () async {
         await meNotifier.loadMe();

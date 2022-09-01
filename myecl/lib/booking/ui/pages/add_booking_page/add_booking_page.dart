@@ -486,7 +486,6 @@ class AddBookingPage extends HookConsumerWidget {
                                               decision: Decision.pending,
                                               multipleDay: multipleDay.value,
                                               recurring: recurring.value));
-                                      print(value);
                                       if (value) {
                                         // displayLoanToast(
                                         //     context,

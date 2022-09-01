@@ -28,7 +28,7 @@ class MainPage extends HookConsumerWidget {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Calendar(),
+                  const Calendar(),
                   const SizedBox(
                     height: 20,
                   ),

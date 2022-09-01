@@ -31,7 +31,7 @@ class BookingButton extends ConsumerWidget {
       child: IconButton(
         onPressed: () async {
           tokenExpireWrapper(ref, () async {
-            final value = await listResNotifier.toggleConfirmed(res, state);
+            await listResNotifier.toggleConfirmed(res, state);
           });
         },
         icon: FaIcon(

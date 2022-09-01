@@ -180,7 +180,6 @@ class BookingUi extends ConsumerWidget {
                                                 final value =
                                                     await bookingListNotifier
                                                         .deleteBooking(booking);
-                                                print(value);
                                                 if (value) {}
                                               });
                                             }));
