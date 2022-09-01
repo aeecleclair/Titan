@@ -19,7 +19,6 @@ TODO :
 
 ne pas afficher si date de fin est dépassée
 
-Réserva° : display reccuring + info
 Evénements : (API)
 
 Prêt : PB Toast

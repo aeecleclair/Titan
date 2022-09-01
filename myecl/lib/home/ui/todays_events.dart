@@ -67,7 +67,7 @@ class TodaysEvents extends HookConsumerWidget {
                           child: Text(
                               "Évènements du ${today.day} ${getMonth(today.month)}",
                               style: const TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 17,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black)),
                         ),
@@ -131,7 +131,7 @@ class TodaysEvents extends HookConsumerWidget {
                     firstDayOfWeek: 1,
                     // timeZone: "fr_FR",
                     timeSlotViewSettings: const TimeSlotViewSettings(
-                      timeFormat: 'H:mm',
+                      timeFormat: 'HH:mm',
                     ),
                     viewHeaderStyle: const ViewHeaderStyle(
                         dayTextStyle: TextStyle(

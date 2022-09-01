@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class BookingButton extends ConsumerWidget {
   final Booking res;
@@ -28,11 +29,15 @@ class BookingButton extends ConsumerWidget {
         color: checked ? color : Colors.transparent,
       ),
       child: IconButton(
-        onPressed: () {
-          listResNotifier.toggleConfirmed(res, state);
+        onPressed: () async {
+          tokenExpireWrapper(ref, () async {
+            final value = await listResNotifier.toggleConfirmed(res, state);
+          });
         },
         icon: FaIcon(
-          state == Decision.approved ? FontAwesomeIcons.check : FontAwesomeIcons.xmark,
+          state == Decision.approved
+              ? FontAwesomeIcons.check
+              : FontAwesomeIcons.xmark,
           color: checked ? Colors.white : color,
         ),
       ),

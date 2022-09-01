@@ -23,7 +23,7 @@ class LastInfos extends ConsumerWidget {
             alignment: Alignment.centerLeft,
             child: const Text("Dernières annonces",
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 17,
                     fontWeight: FontWeight.w600,
                     color: Colors.black)),
           ),

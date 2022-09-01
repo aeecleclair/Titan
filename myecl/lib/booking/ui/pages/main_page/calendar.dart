@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Calendar extends HookConsumerWidget {
@@ -11,6 +14,49 @@ class Calendar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookings = ref.watch(bookingListProvider);
+    CalendarController _controller = CalendarController();
+
+    void calendarTapped(CalendarTapDetails details, BuildContext context) {
+      if (details.targetElement == CalendarElement.appointment ||
+          details.targetElement == CalendarElement.agenda) {
+        final Appointment appointmentDetails = details.appointments![0];
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                  title: Text(appointmentDetails.subject),
+                  content: SizedBox(
+                    height: 90,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          processDateWithHour(appointmentDetails.startTime),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Text(
+                          processDateWithHour(appointmentDetails.endTime),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(appointmentDetails.notes ?? "",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 15)),
+                      ],
+                    ),
+                  ));
+            });
+      }
+    }
+
     return SizedBox(
       height: 360,
       width: MediaQuery.of(context).size.width,
@@ -33,7 +79,99 @@ class Calendar extends HookConsumerWidget {
             child: Stack(
               children: [
                 SfCalendar(
+                  onTap: (details) => calendarTapped(details, context),
                   dataSource: _getCalendarDataSource(res),
+                  appointmentBuilder: (BuildContext context,
+                      CalendarAppointmentDetails details) {
+                    final Appointment meeting = details.appointments.first;
+                    if (_controller.view != CalendarView.month &&
+                        _controller.view != CalendarView.schedule &&
+                        meeting.startTime.day == meeting.endTime.day) {
+                      return Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(3),
+                            height: 50,
+                            alignment: Alignment.topLeft,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(5),
+                                  topRight: Radius.circular(5)),
+                              color: meeting.color,
+                            ),
+                            child: SingleChildScrollView(
+                                child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  meeting.subject,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  maxLines: 3,
+                                  softWrap: false,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            )),
+                          ),
+                          Container(
+                            height: details.bounds.height - 70,
+                            padding: const EdgeInsets.fromLTRB(3, 5, 3, 2),
+                            color: meeting.color.withOpacity(0.8),
+                            alignment: Alignment.topLeft,
+                            child: SingleChildScrollView(
+                                child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  meeting.notes!,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                  ),
+                                )
+                              ],
+                            )),
+                          ),
+                          Container(
+                            height: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(5),
+                                  bottomRight: Radius.circular(5)),
+                              color: meeting.color,
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                    return Container(
+                      padding: const EdgeInsets.all(3),
+                      height: 50,
+                      alignment: Alignment.topLeft,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
+                        color: meeting.color,
+                      ),
+                      child: Text(
+                            meeting.subject,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                      ),
+                    );
+                  },
                   view: CalendarView.week,
                   selectionDecoration: BoxDecoration(
                     color: Colors.transparent,
@@ -101,10 +239,10 @@ _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
   res.where((e) => e.decision == Decision.approved).map((e) {
     RecurrenceProperties recurrence =
         RecurrenceProperties(startDate: DateTime.now());
-    recurrence.recurrenceType = RecurrenceType.weekly;
+    recurrence.recurrenceType = RecurrenceType.daily;
     recurrence.recurrenceRange = RecurrenceRange.noEndDate;
     recurrence.weekDays = WeekDays.values;
-    recurrence.interval = 2;
+    recurrence.interval = 7;
     appointments.add(Appointment(
         startTime: e.start,
         endTime: e.end,
@@ -112,7 +250,10 @@ _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
         isAllDay: false,
         startTimeZone: "Europe/Paris",
         endTimeZone: "Europe/Paris",
-        recurrenceRule: SfCalendar.generateRRule(recurrence, e.start, e.end)));
+        notes: e.note,
+        recurrenceRule: e.recurring
+            ? SfCalendar.generateRRule(recurrence, e.start, e.end)
+            : ""));
   }).toList();
   return _AppointmentDataSource(appointments);
 }
