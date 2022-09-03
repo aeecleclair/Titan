@@ -1,4 +1,5 @@
 import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class User {
   User({
@@ -88,6 +89,15 @@ class User {
       floor: floor ?? this.floor,
       createdOn: createdOn ?? this.createdOn,
       groups: groups ?? this.groups,
+    );
+  }
+
+  SimpleUser toSimpleUser()  {
+    return SimpleUser(
+      name: name,
+      firstname: firstname,
+      nickname: nickname,
+      id: id
     );
   }
 }

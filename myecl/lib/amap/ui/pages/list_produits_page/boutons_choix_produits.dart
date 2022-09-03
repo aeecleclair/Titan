@@ -18,6 +18,7 @@ import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class Boutons extends HookConsumerWidget {
@@ -36,6 +37,7 @@ class Boutons extends HookConsumerWidget {
     final collectionSlotNotifier = ref.watch(collectionSlotProvider.notifier);
     final userAmount = ref.watch(userAmountProvider);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
+    final me = ref.watch(userProvider);
 
     final products = [];
     productsList.when(
@@ -73,6 +75,7 @@ class Boutons extends HookConsumerWidget {
                     }
                   }
                   Order newOrder = Order(
+                    user: me.toSimpleUser(),
                       products: prod,
                       deliveryDate: delList
                           .firstWhere((d) => d.id == deliveryId)

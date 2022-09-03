@@ -17,12 +17,17 @@ class DeliveryAdminPage extends HookConsumerWidget {
     final isAmapAdmin = ref.watch(isAmapAdminProvider);
     List<Widget> listWidgetOrder = [];
     deliveryList.when(
-      data: (orders) {
-        orders.sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
+      data: (deliveries) {
+        deliveries.sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
         if (!isAmapAdmin) {
-          orders = orders.where((element) => !element.locked).toList();
+          deliveries = deliveries.where((element) => !element.locked).toList();
         }
-        if (orders.isNotEmpty) {
+        if (deliveries.isNotEmpty) {
+          final historyIndex = deliveries.lastIndexWhere(
+              (element) => element.deliveryDate.isBefore(DateTime.now()));
+          final history = deliveries.sublist(0, historyIndex + 1);
+          final current = deliveries.sublist(historyIndex + 1);
+          if (current.isNotEmpty){
           listWidgetOrder.addAll([
             const SizedBox(
               height: 30,
@@ -39,9 +44,29 @@ class DeliveryAdminPage extends HookConsumerWidget {
               height: 20,
             ),
           ]);
-          for (Delivery c in orders) {
+          for (Delivery c in current) {
             listWidgetOrder.add(DeliveryAdminUi(c: c, i: c.id));
-          }
+          }}
+          if (history.isNotEmpty){
+          listWidgetOrder.addAll([
+            const SizedBox(
+              height: 30,
+            ),
+            const Text(
+              AMAPTextConstants.deliveryHistory,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: AMAPColorConstants.textDark,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ]);
+          for (Delivery c in history) {
+            listWidgetOrder.add(DeliveryAdminUi(c: c, i: c.id));
+          }}
         } else {
           listWidgetOrder.add(Column(
             children: [

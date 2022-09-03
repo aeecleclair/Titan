@@ -14,15 +14,12 @@ class DeliveryPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryList = ref.watch(deliveryListProvider);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
-    final isAmapAdmin = ref.watch(isAmapAdminProvider);
     List<Widget> listWidgetOrder = [];
     deliveryList.when(
-      data: (orders) {
-        orders.sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
-        if (!isAmapAdmin) {
-          orders = orders.where((element) => !element.locked).toList();
-        }
-        if (orders.isNotEmpty) {
+      data: (deliveries) {
+        deliveries.sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
+        deliveries = deliveries.where((element) => !element.locked).toList();
+        if (deliveries.isNotEmpty) {
           listWidgetOrder.addAll([
             const SizedBox(
               height: 30,
@@ -39,7 +36,7 @@ class DeliveryPage extends HookConsumerWidget {
               height: 20,
             ),
           ]);
-          for (Delivery c in orders) {
+          for (Delivery c in deliveries) {
             listWidgetOrder.add(DeliveryUi(c: c, i: c.id));
           }
         } else {

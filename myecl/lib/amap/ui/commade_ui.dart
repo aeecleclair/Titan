@@ -73,13 +73,13 @@ class OrderUi extends ConsumerWidget {
               ),
               Expanded(
                 child: Text(
-                  "Le " +
-                      processDate(c.deliveryDate) +
+                  !isAdmin ? "Le " +
+                      processDate(c.deliveryDate) : c.user.getName() +
                       " (" +
                       c.collectionSlot +
                       ")",
-                  style: const TextStyle(
-                      fontSize: 20,
+                  style: TextStyle(
+                      fontSize: !isAdmin ? 20: 16,
                       fontWeight: FontWeight.w700,
                       color: AMAPColorConstants.green1),
                 ),

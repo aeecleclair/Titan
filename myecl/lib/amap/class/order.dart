@@ -1,5 +1,6 @@
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class Order {
   Order(
@@ -9,9 +10,11 @@ class Order {
       required this.productsIds,
       required this.amount,
       required this.collectionSlot,
+      required this.user,
       this.productsQuantity = const <int>[],
       this.products = const [],
       this.expanded = false});
+  late final SimpleUser user;
   late final String collectionSlot;
   late final String id;
   late final DateTime deliveryDate;
@@ -35,6 +38,7 @@ class Order {
     productsQuantity =
         List<int>.from(products.map((element) => element.quantity).toList());
     collectionSlot = json['collection_slot'];
+    user = SimpleUser.fromJson(json['user']);
   }
 
   Map<String, dynamic> toJson() {
@@ -45,10 +49,19 @@ class Order {
     _data['products_ids'] = productsIds;
     _data['collection_slot'] = collectionSlot;
     _data['products_quantity'] = products.map((e) => e.quantity).toList();
+    _data['user_id'] = user.id;
     return _data;
   }
 
-  Order copyWith({id, deliveryDate, products, expanded, deliveryId, amount, collectionSlot}) {
+  Order copyWith(
+      {id,
+      deliveryDate,
+      products,
+      expanded,
+      deliveryId,
+      amount,
+      collectionSlot,
+      user}) {
     return Order(
         id: id ?? this.id,
         deliveryDate: deliveryDate ?? this.deliveryDate,
@@ -63,7 +76,8 @@ class Order {
         products: products ?? this.products,
         amount: amount ?? this.amount,
         collectionSlot: collectionSlot ?? this.collectionSlot,
-        expanded: expanded ?? this.expanded);
+        expanded: expanded ?? this.expanded,
+        user: user ?? this.user);
   }
 
   void setProducts(List<Product> products) {
