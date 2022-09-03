@@ -8,6 +8,7 @@ import 'package:myecl/admin/ui/refresh_indicator.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class MainPage extends HookConsumerWidget {
@@ -38,7 +39,8 @@ class MainPage extends HookConsumerWidget {
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: AdminColorConstants.gradient1)),
-            SizedBox(height: 10,
+            SizedBox(
+              height: 10,
               width: MediaQuery.of(context).size.width,
             ),
             ...g
@@ -51,9 +53,10 @@ class MainPage extends HookConsumerWidget {
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w500),
                         )),
-                    onTap: () {
+                    onTap: () async {
                       groupIdNotifier.setId(x.id);
-                      groupNotifier.loadGroup(x.id).then((value) {
+                      tokenExpireWrapper(ref, () async {
+                        await groupNotifier.loadGroup(x.id);
                         pageNotifier.setAdminPage(AdminPage.asso);
                       });
                     }))
@@ -97,7 +100,9 @@ class MainPage extends HookConsumerWidget {
             loans.isNotEmpty
                 ? Column(
                     children: [
-                      const SizedBox(height: 20,),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       const Text(AdminTextConstants.loaningAssociation,
                           style: TextStyle(
                               fontSize: 25,
@@ -117,7 +122,9 @@ class MainPage extends HookConsumerWidget {
                                   )),
                               onTap: () {
                                 groupIdNotifier.setId(x.groupManagerId);
-                                groupNotifier.loadGroup(x.groupManagerId).then((value) {
+                                groupNotifier
+                                    .loadGroup(x.groupManagerId)
+                                    .then((value) {
                                   pageNotifier.setAdminPage(AdminPage.asso);
                                 });
                               }))

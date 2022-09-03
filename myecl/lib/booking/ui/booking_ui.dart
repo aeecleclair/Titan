@@ -7,6 +7,7 @@ import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/dialog.dart';
+import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/booking/ui/booking_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
@@ -49,12 +50,17 @@ class BookingUi extends ConsumerWidget {
                     const SizedBox(
                       height: 7,
                     ),
-                    Text(
-                      booking.room.name + " - " + booking.reason,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: BookingColorConstants.darkBlue,
+                    Container(
+                      margin: const EdgeInsets.only(right: 15),
+                      child: Text(
+                          booking.room.name + " - " + booking.reason,
+                          overflow: TextOverflow.fade,
+                          softWrap: false,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: BookingColorConstants.darkBlue,
+                          ),
                       ),
                     ),
                     const SizedBox(
@@ -180,7 +186,19 @@ class BookingUi extends ConsumerWidget {
                                                 final value =
                                                     await bookingListNotifier
                                                         .deleteBooking(booking);
-                                                if (value) {}
+                                                if (value) {
+                                                  displayBookingToast(
+                                                      context,
+                                                      TypeMsg.msg,
+                                                      BookingTextConstants
+                                                          .deletedBooking);
+                                                } else {
+                                                  displayBookingToast(
+                                                      context,
+                                                      TypeMsg.error,
+                                                      BookingTextConstants
+                                                          .deletingError);
+                                                }
                                               });
                                             }));
                               })

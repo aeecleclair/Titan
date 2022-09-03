@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
+import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/ui/booking_list.dart';
 import 'package:myecl/booking/ui/refresh_indicator.dart';
 
@@ -11,6 +13,8 @@ class BookingsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userBookings = ref.watch(bookingListProvider);
+    final userId = ref.watch(idProvider);
+    final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final List<Booking> pendingBookings = [],
         confirmedBookings = [],
         canceledBookings = [];
@@ -37,7 +41,9 @@ class BookingsPage extends HookConsumerWidget {
     return SizedBox(
       height: MediaQuery.of(context).size.height - 110,
       child: BookingRefresher(
-        onRefresh: () async {},
+        onRefresh: () async {
+          await bookingsNotifier.loadUserBookings(userId);
+        },
         child: const SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(
               parent: BouncingScrollPhysics()),

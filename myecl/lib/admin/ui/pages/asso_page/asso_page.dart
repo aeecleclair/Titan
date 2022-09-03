@@ -7,6 +7,7 @@ import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/tools/dialog.dart';
+import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/admin/ui/refresh_indicator.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
@@ -134,10 +135,13 @@ class AssoPage extends HookConsumerWidget {
                               onYes: () async {
                                 tokenExpireWrapper(ref, () async {
                                   final value = await groupsNotifier.deleteGroup(g.toSimpleGroup());
-                                  // displayAdminToast(
-                                  //     context, TypeMsg.msg, "Product supprimé");
+                                  if (value){
                                   pageNotifier.setAdminPage(AdminPage.main);
-                                });
+                                  displayAdminToast(context, TypeMsg.msg, AdminTextConstants.deletedAssociation);
+                                  }
+                                  else{
+                                    displayAdminToast(context, TypeMsg.error, AdminTextConstants.deletingError);
+                                  }});
                               }));
                     },
                   ),

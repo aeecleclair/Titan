@@ -8,7 +8,9 @@ import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
+import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 
@@ -22,6 +24,7 @@ class AddBookingPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
     final bookingListNotifier = ref.watch(bookingListProvider.notifier);
+    final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final room = useState(Room.empty());
     final start = useTextEditingController();
     final end = useTextEditingController();
@@ -48,29 +51,24 @@ class AddBookingPage extends HookConsumerWidget {
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              content: Theme(
-                data: Theme.of(context).copyWith(
-                  primaryColor: BookingColorConstants.veryLightBlue,
-                  unselectedWidgetColor: BookingColorConstants.veryLightBlue,
-                ),
-                child: Column(
-                    children: roomList
-                        .map(
-                          (e) => RadioListTile(
-                              title: Text(capitalize(e.name),
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500)),
-                              selected: room.value.name == e.name,
-                              value: e.name,
-                              activeColor: BookingColorConstants.lightBlue,
-                              groupValue: room.value.name,
-                              onChanged: (s) {
-                                room.value = e;
-                              }),
-                        )
-                        .toList()),
-              ),
+              content: Column(
+                  children: roomList
+                      .map(
+                        (e) => RadioListTile(
+                            title: Text(capitalize(e.name),
+                                style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white)),
+                            selected: room.value.name == e.name,
+                            value: e.name,
+                            activeColor: Colors.white,
+                            groupValue: room.value.name,
+                            onChanged: (s) {
+                              room.value = e;
+                            }),
+                      )
+                      .toList()),
               isActive: _currentStep.value >= 0,
               state: _currentStep.value >= 0
                   ? StepState.complete
@@ -100,7 +98,7 @@ class AddBookingPage extends HookConsumerWidget {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
-                                color: Color.fromARGB(255, 85, 85, 85),
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -114,9 +112,8 @@ class AddBookingPage extends HookConsumerWidget {
                                     contentPadding: EdgeInsets.all(10),
                                     isDense: true,
                                     enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 85, 85, 85))),
+                                        borderSide:
+                                            BorderSide(color: Colors.white)),
                                     focusedBorder: UnderlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.blue)),
@@ -139,7 +136,7 @@ class AddBookingPage extends HookConsumerWidget {
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
@@ -163,7 +160,7 @@ class AddBookingPage extends HookConsumerWidget {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
-                                  color: Color.fromARGB(255, 85, 85, 85),
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
@@ -177,9 +174,8 @@ class AddBookingPage extends HookConsumerWidget {
                                       contentPadding: EdgeInsets.all(10),
                                       isDense: true,
                                       enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 85, 85, 85))),
+                                          borderSide:
+                                              BorderSide(color: Colors.white)),
                                       focusedBorder: UnderlineInputBorder(
                                           borderSide:
                                               BorderSide(color: Colors.blue)),
@@ -202,7 +198,7 @@ class AddBookingPage extends HookConsumerWidget {
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
-                                      color: Color.fromARGB(255, 0, 0, 0),
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -227,6 +223,24 @@ class AddBookingPage extends HookConsumerWidget {
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: BookingTextConstants.bookingReason,
+                      labelStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                      ),
+                      contentPadding: EdgeInsets.all(10),
+                      isDense: true,
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue)),
+                      errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red)),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 158, 158, 158),
+                        ),
+                      ),
                     ),
                     controller: motif,
                     validator: (value) {
@@ -235,6 +249,11 @@ class AddBookingPage extends HookConsumerWidget {
                       }
                       return null;
                     },
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),
@@ -251,7 +270,26 @@ class AddBookingPage extends HookConsumerWidget {
                       color: Colors.white)),
               content: TextFormField(
                 decoration: const InputDecoration(
-                    labelText: BookingTextConstants.bookingNote),
+                  labelText: BookingTextConstants.bookingNote,
+                  labelStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
+                  contentPadding: EdgeInsets.all(10),
+                  isDense: true,
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
+                  errorBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red)),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 158, 158, 158),
+                    ),
+                  ),
+                ),
                 controller: note,
                 validator: (value) {
                   if (value == null) {
@@ -259,6 +297,11 @@ class AddBookingPage extends HookConsumerWidget {
                   }
                   return null;
                 },
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
               ),
               isActive: _currentStep.value >= 0,
               state: _currentStep.value >= 3
@@ -273,7 +316,8 @@ class AddBookingPage extends HookConsumerWidget {
                       color: Colors.white)),
               content: Column(children: [
                 CheckboxListTile(
-                  title: const Text(BookingTextConstants.necessaryKey),
+                  title: const Text(BookingTextConstants.necessaryKey,
+                      style: TextStyle(color: Colors.white)),
                   value: keyRequired.value,
                   onChanged: (newValue) {
                     if (newValue != null) {
@@ -282,7 +326,8 @@ class AddBookingPage extends HookConsumerWidget {
                   },
                 ),
                 CheckboxListTile(
-                  title: const Text(BookingTextConstants.recurrent),
+                  title: const Text(BookingTextConstants.recurrent,
+                      style: TextStyle(color: Colors.white)),
                   value: recurring.value,
                   onChanged: (newValue) {
                     if (newValue != null) {
@@ -291,7 +336,8 @@ class AddBookingPage extends HookConsumerWidget {
                   },
                 ),
                 CheckboxListTile(
-                  title: const Text(BookingTextConstants.multipleDay),
+                  title: const Text(BookingTextConstants.multipleDay,
+                      style: TextStyle(color: Colors.white)),
                   value: multipleDay.value,
                   onChanged: (newValue) {
                     if (newValue != null) {
@@ -390,7 +436,10 @@ class AddBookingPage extends HookConsumerWidget {
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
-                      Text(keyRequired.value.toString(),
+                      Text(
+                          keyRequired.value
+                              ? BookingTextConstants.yes
+                              : BookingTextConstants.no,
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -404,7 +453,10 @@ class AddBookingPage extends HookConsumerWidget {
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
-                      Text(recurring.value.toString(),
+                      Text(
+                          recurring.value
+                              ? BookingTextConstants.yes
+                              : BookingTextConstants.no,
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -418,7 +470,10 @@ class AddBookingPage extends HookConsumerWidget {
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
-                      Text(multipleDay.value.toString(),
+                      Text(
+                          multipleDay.value
+                              ? BookingTextConstants.yes
+                              : BookingTextConstants.no,
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -465,49 +520,50 @@ class AddBookingPage extends HookConsumerWidget {
                                 }
                                 if (key.currentState!.validate()) {
                                   if (start.text.compareTo(end.text) >= 0) {
-                                    // displayBookingToast(context, TypeMsg.error,
-                                    //     LoanTextConstants.invalidDates);
+                                    displayBookingToast(context, TypeMsg.error,
+                                        BookingTextConstants.invalidDates);
                                   } else if (room.value.id.isEmpty) {
-                                    // displayBookingToast(context, TypeMsg.error,
-                                    //     LoanTextConstants.invalidRoom);
+                                    displayBookingToast(context, TypeMsg.error,
+                                        BookingTextConstants.invalidRoom);
                                   } else {
                                     tokenExpireWrapper(ref, () async {
+                                      Booking newBooking = Booking(
+                                          id: '',
+                                          reason: motif.text,
+                                          start:
+                                              DateTime.parse(start.value.text),
+                                          end: DateTime.parse(end.value.text),
+                                          note: note.text,
+                                          room: room.value,
+                                          key: keyRequired.value,
+                                          decision: Decision.pending,
+                                          multipleDay: multipleDay.value,
+                                          recurring: recurring.value);
                                       final value = await bookingListNotifier
-                                          .addBooking(Booking(
-                                              id: '',
-                                              reason: motif.text,
-                                              start: DateTime.parse(
-                                                  start.value.text),
-                                              end: DateTime.parse(
-                                                  end.value.text),
-                                              note: note.text,
-                                              room: room.value,
-                                              key: keyRequired.value,
-                                              decision: Decision.pending,
-                                              multipleDay: multipleDay.value,
-                                              recurring: recurring.value));
+                                          .addBooking(newBooking);
                                       if (value) {
-                                        // displayLoanToast(
-                                        //     context,
-                                        //     TypeMsg.msg,
-                                        //     LoanTextConstants.addedLoan);
+                                        await bookingsNotifier
+                                            .addBooking(newBooking);
                                         pageNotifier
                                             .setBookingPage(BookingPage.main);
+                                        displayBookingToast(
+                                            context,
+                                            TypeMsg.msg,
+                                            BookingTextConstants.addedBooking);
                                       } else {
-                                        // displayLoanToast(
-                                        //     context,
-                                        //     TypeMsg.error,
-                                        //     LoanTextConstants
-                                        //         .addingError);
+                                        displayBookingToast(
+                                            context,
+                                            TypeMsg.error,
+                                            BookingTextConstants.addingError);
                                       }
                                     });
                                   }
                                 } else {
-                                  // displayLoanToast(
-                                  //     context,
-                                  //     TypeMsg.error,
-                                  //     LoanTextConstants
-                                  //         .incorrectOrMissingFields);
+                                  displayBookingToast(
+                                      context,
+                                      TypeMsg.error,
+                                      BookingTextConstants
+                                          .incorrectOrMissingFields);
                                 }
                               },
                         child: (isLastStep)
@@ -543,7 +599,13 @@ class AddBookingPage extends HookConsumerWidget {
 
     return Expanded(
       child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(), child: w),
+          physics: const BouncingScrollPhysics(),
+          child: Theme(
+              data: Theme.of(context).copyWith(
+                primaryColor: BookingColorConstants.veryLightBlue,
+                unselectedWidgetColor: BookingColorConstants.veryLightBlue,
+              ),
+              child: w)),
     );
   }
 

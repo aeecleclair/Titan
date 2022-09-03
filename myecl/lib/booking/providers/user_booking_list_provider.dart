@@ -14,6 +14,30 @@ class UserBookingListProvider extends ListNotifier<Booking> {
   Future<AsyncValue<List<Booking>>> loadUserBookings(String userId) async {
     return await loadList(() async => _userRepository.getBookingList(userId));
   }
+
+  Future<bool> addBooking(Booking booking) async {
+    return state.when(
+        data: (bookings) async {
+          bookings.add(booking);
+          return true;
+        },
+        loading: () async => false,
+        error: (e, s) async => false);
+  }
+
+  Future<bool> updateBooking(Booking booking) async {
+    return state.when(
+        data: (bookings) async {
+          final index = bookings.indexWhere((b) => b.id == booking.id);
+          if (index != -1) {
+            bookings[index] = booking;
+            return true;
+          }
+          return false;
+        },
+        loading: () async => false,
+        error: (e, s) async => false);
+  }
 }
 
 final userBookingListProvider =

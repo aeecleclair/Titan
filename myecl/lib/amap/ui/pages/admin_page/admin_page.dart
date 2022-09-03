@@ -106,20 +106,20 @@ class AdminPage extends HookConsumerWidget {
                   children: [
                     GestureDetector(
                         child: const GreenBtn(
-                            text: AMAPTextConstants.addingACommand),
+                            text: AMAPTextConstants.handlingAccount),
                         onTap: () {
                           productModif.setModifiedProduct(-1);
-                          pageNotifier.setAmapPage(AmapPage.addCmd);
+                          pageNotifier.setAmapPage(AmapPage.solde);
                         }),
                     const SizedBox(
                       height: 40,
                     ),
                     GestureDetector(
                         child: const GreenBtn(
-                            text: AMAPTextConstants.handlingAccount),
+                            text: AMAPTextConstants.deliveryHandling),
                         onTap: () {
                           productModif.setModifiedProduct(-1);
-                          pageNotifier.setAmapPage(AmapPage.solde);
+                          pageNotifier.setAmapPage(AmapPage.deliveryAdmin);
                         }),
                     const SizedBox(
                       height: 40,
@@ -136,10 +136,10 @@ class AdminPage extends HookConsumerWidget {
                     ),
                     GestureDetector(
                         child: const GreenBtn(
-                            text: AMAPTextConstants.deliveryHandling),
+                            text: AMAPTextConstants.addingACommand),
                         onTap: () {
                           productModif.setModifiedProduct(-1);
-                          pageNotifier.setAmapPage(AmapPage.deliveryAdmin);
+                          pageNotifier.setAmapPage(AmapPage.addCmd);
                         }),
                     const SizedBox(
                       height: 40,

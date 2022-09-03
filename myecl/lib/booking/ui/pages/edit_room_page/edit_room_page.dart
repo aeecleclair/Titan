@@ -5,6 +5,8 @@ import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class EditRoomPage extends HookConsumerWidget {
@@ -28,20 +30,20 @@ class EditRoomPage extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
-              autofocus: true,
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-              controller: name,
-              onChanged: (value) {
-                roomNotifier.setRoom(room.copyWith(name: value));
-              },
-              decoration: const InputDecoration(
+                autofocus: true,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+                controller: name,
+                onChanged: (value) {
+                  roomNotifier.setRoom(room.copyWith(name: value));
+                },
+                decoration: const InputDecoration(
                   prefixIcon: Icon(
                     Icons.search,
                     color: Colors.white,
-                  ),)
-            ),
+                  ),
+                )),
           ),
           const SizedBox(
             height: 20,
@@ -74,10 +76,14 @@ class EditRoomPage extends HookConsumerWidget {
             ),
             onTap: () {
               tokenExpireWrapper(ref, () async {
-                final value = await roomListNotifier
-                    .updateRoom(room);
+                final value = await roomListNotifier.updateRoom(room);
                 if (value) {
                   pageNotifier.setBookingPage(BookingPage.rooms);
+                  displayBookingToast(
+                      context, TypeMsg.msg, BookingTextConstants.editedRoom);
+                } else {
+                  displayBookingToast(
+                      context, TypeMsg.error, BookingTextConstants.editionError);
                 }
               });
             },

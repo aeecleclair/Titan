@@ -5,8 +5,11 @@ import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/drawer/tools/dialog.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class RoomUi extends HookConsumerWidget {
   final Room r;
@@ -92,7 +95,17 @@ class RoomUi extends HookConsumerWidget {
                             descriptions: BookingTextConstants.deletingRoom,
                             title: BookingTextConstants.deleting,
                             onYes: () async {
-                              roomListNotifier.deleteRoom(r).then((value) {});
+                              tokenExpireWrapper(ref, () async {
+                                final value =
+                                    await roomListNotifier.deleteRoom(r);
+                                if (value) {
+                                  displayBookingToast(context, TypeMsg.msg,
+                                      BookingTextConstants.deletedRoom);
+                                } else {
+                                  displayBookingToast(context, TypeMsg.error,
+                                      BookingTextConstants.deletingError);
+                                }
+                              });
                             }));
                   },
                 )

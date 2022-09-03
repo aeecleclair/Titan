@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
@@ -12,6 +13,7 @@ import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -22,6 +24,7 @@ class EditLoanPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
+    final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
     final _currentStep = useState(0);
     final asso = useState(ref.watch(loanerProvider));
     final key = GlobalKey<FormState>();
@@ -99,8 +102,15 @@ class EditLoanPage extends HookConsumerWidget {
                   .map(
                     (e) => CheckboxListTile(
                       title: Text(e.name,
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500)),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: e.available
+                                ? LoanColorConstants.darkGrey
+                                : Colors.grey.shade700,
+                            decoration:
+                                e.available ? null : TextDecoration.lineThrough,
+                          )),
                       value: selectedItems[items.indexOf(e)],
                       onChanged: (s) {
                         selectedItemsNotifier.toggle(items.indexOf(e));
@@ -496,13 +506,15 @@ class EditLoanPage extends HookConsumerWidget {
                                     ),
                                   );
                                   if (value) {
-                                    // displayLoanToast(context, TypeMsg.msg,
-                                    //     LoanTextConstants.updatedLoan);
+                                    await adminLoanListNotifier.setLoanerItems(
+                                        asso.value, await loanListNotifier.copy());
+                                  pageNotifier.setLoanPage(LoanPage.groupLoan);
+                                    displayLoanToast(context, TypeMsg.msg,
+                                        LoanTextConstants.updatedLoan);
                                   } else {
-                                    // displayLoanToast(context, TypeMsg.error,
-                                    //     LoanTextConstants.updatingError);
+                                    displayLoanToast(context, TypeMsg.error,
+                                        LoanTextConstants.updatingError);
                                   }
-                                  pageNotifier.setLoanPage(LoanPage.adminLoan);
                                 });
                               }
                             },

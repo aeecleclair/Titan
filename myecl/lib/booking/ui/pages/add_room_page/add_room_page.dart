@@ -5,6 +5,8 @@ import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class AddRoomPage extends HookConsumerWidget {
@@ -71,10 +73,16 @@ class AddRoomPage extends HookConsumerWidget {
             ),
             onTap: () {
               tokenExpireWrapper(ref, () async {
-                  final value = await roomListNotifier.addRoom(Room(name: name.text, id: ''));
-                  if (value) {
-                    pageNotifier.setBookingPage(BookingPage.rooms);
-                  }
+                final value = await roomListNotifier
+                    .addRoom(Room(name: name.text, id: ''));
+                if (value) {
+                  pageNotifier.setBookingPage(BookingPage.rooms);
+                  displayBookingToast(
+                      context, TypeMsg.msg, BookingTextConstants.addedRoom);
+                } else {
+                  displayBookingToast(
+                      context, TypeMsg.error, BookingTextConstants.addingError);
+                }
               });
             },
           ),

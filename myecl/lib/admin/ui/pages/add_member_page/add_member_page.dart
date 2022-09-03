@@ -5,7 +5,9 @@ import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/admin/ui/refresh_indicator.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
@@ -82,7 +84,7 @@ class AddMemberPage extends HookConsumerWidget {
                                   Row(
                                     children: [
                                       IconButton(
-                                          onPressed: () {
+                                          onPressed: () async {
                                             if (!group.value!.members
                                                 .contains(e)) {
                                               Group newGroup = group.value!
@@ -90,13 +92,26 @@ class AddMemberPage extends HookConsumerWidget {
                                                       members:
                                                           group.value!.members +
                                                               [e]);
-                                              groupNotifier
-                                                  .addMember(newGroup, e)
-                                                  .then((value) {
-                                                if (value) {
-                                                } else {}
-                                                pageNotifier.setAdminPage(
-                                                    AdminPage.edit);
+                                              tokenExpireWrapper(ref, () async {
+                                                groupNotifier
+                                                    .addMember(newGroup, e)
+                                                    .then((value) {
+                                                  if (value) {
+                                                    pageNotifier.setAdminPage(
+                                                        AdminPage.edit);
+                                                    displayAdminToast(
+                                                        context,
+                                                        TypeMsg.msg,
+                                                        AdminTextConstants
+                                                            .addedMember);
+                                                  } else {
+                                                    displayAdminToast(
+                                                        context,
+                                                        TypeMsg.error,
+                                                        AdminTextConstants
+                                                            .addingError);
+                                                  }
+                                                });
                                               });
                                             }
                                           },

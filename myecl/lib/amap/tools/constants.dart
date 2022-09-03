@@ -47,7 +47,7 @@ class AMAPTextConstants {
   static const String deletingOrder = "Supprimer la commande ?";
   static const String deletingProduct = "Supprimer le produit ?";
   static const String delivery = "Livraison";
-  static const String deliveryHandling = "Gestion des livraisons";
+  static const String deliveryHandling = "Gérer les livraisons";
   static const String deliveryHistory = "Historique des livraisons";
   static const String deliveryList = "Liste des livraisons";
   static const String deliveryOn = "Livraison le";

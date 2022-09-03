@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
-import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/delivery_page/delivery_ui.dart';
 import 'package:myecl/amap/ui/refresh_indicator.dart';

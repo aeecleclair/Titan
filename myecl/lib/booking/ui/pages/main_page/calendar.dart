@@ -12,7 +12,6 @@ class Calendar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookings = ref.watch(bookingListProvider);
-    CalendarController _controller = CalendarController();
 
     void calendarTapped(CalendarTapDetails details, BuildContext context) {
       if (details.targetElement == CalendarElement.appointment ||
@@ -79,97 +78,97 @@ class Calendar extends HookConsumerWidget {
                 SfCalendar(
                   onTap: (details) => calendarTapped(details, context),
                   dataSource: _getCalendarDataSource(res),
-                  appointmentBuilder: (BuildContext context,
-                      CalendarAppointmentDetails details) {
-                    final Appointment meeting = details.appointments.first;
-                    if (_controller.view != CalendarView.month &&
-                        _controller.view != CalendarView.schedule &&
-                        meeting.startTime.day == meeting.endTime.day) {
-                      return Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(3),
-                            height: 50,
-                            alignment: Alignment.topLeft,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(5),
-                                  topRight: Radius.circular(5)),
-                              color: meeting.color,
-                            ),
-                            child: SingleChildScrollView(
-                                child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  meeting.subject,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  maxLines: 3,
-                                  softWrap: false,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            )),
-                          ),
-                          Container(
-                            height: details.bounds.height - 70,
-                            padding: const EdgeInsets.fromLTRB(3, 5, 3, 2),
-                            color: meeting.color.withOpacity(0.8),
-                            alignment: Alignment.topLeft,
-                            child: SingleChildScrollView(
-                                child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  meeting.notes!,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                  ),
-                                )
-                              ],
-                            )),
-                          ),
-                          Container(
-                            height: 20,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(5),
-                                  bottomRight: Radius.circular(5)),
-                              color: meeting.color,
-                            ),
-                          ),
-                        ],
-                      );
-                    }
-                    return Container(
-                      padding: const EdgeInsets.all(3),
-                      height: 50,
-                      alignment: Alignment.topLeft,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
-                        color: meeting.color,
-                      ),
-                      child: Text(
-                            meeting.subject,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                      ),
-                    );
-                  },
+                  // appointmentBuilder: (BuildContext context,
+                  //     CalendarAppointmentDetails details) {
+                  //   final Appointment meeting = details.appointments.first;
+                  //   if (_controller.view != CalendarView.month &&
+                  //       _controller.view != CalendarView.schedule &&
+                  //       meeting.startTime.day == meeting.endTime.day) {
+                  //     return Column(
+                  //       children: [
+                  //         Container(
+                  //           padding: const EdgeInsets.all(3),
+                  //           height: 50,
+                  //           alignment: Alignment.topLeft,
+                  //           decoration: BoxDecoration(
+                  //             shape: BoxShape.rectangle,
+                  //             borderRadius: const BorderRadius.only(
+                  //                 topLeft: Radius.circular(5),
+                  //                 topRight: Radius.circular(5)),
+                  //             color: meeting.color,
+                  //           ),
+                  //           child: SingleChildScrollView(
+                  //               child: Column(
+                  //             mainAxisAlignment: MainAxisAlignment.start,
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: [
+                  //               Text(
+                  //                 meeting.subject,
+                  //                 style: const TextStyle(
+                  //                   color: Colors.white,
+                  //                   fontSize: 12,
+                  //                   fontWeight: FontWeight.w500,
+                  //                 ),
+                  //                 maxLines: 3,
+                  //                 softWrap: false,
+                  //                 overflow: TextOverflow.ellipsis,
+                  //               ),
+                  //             ],
+                  //           )),
+                  //         ),
+                  //         Container(
+                  //           height: details.bounds.height - 70,
+                  //           padding: const EdgeInsets.fromLTRB(3, 5, 3, 2),
+                  //           color: meeting.color.withOpacity(0.8),
+                  //           alignment: Alignment.topLeft,
+                  //           child: SingleChildScrollView(
+                  //               child: Column(
+                  //             mainAxisAlignment: MainAxisAlignment.start,
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: [
+                  //               Text(
+                  //                 meeting.notes!,
+                  //                 style: const TextStyle(
+                  //                   color: Colors.white,
+                  //                   fontSize: 10,
+                  //                 ),
+                  //               )
+                  //             ],
+                  //           )),
+                  //         ),
+                  //         Container(
+                  //           height: 20,
+                  //           decoration: BoxDecoration(
+                  //             shape: BoxShape.rectangle,
+                  //             borderRadius: const BorderRadius.only(
+                  //                 bottomLeft: Radius.circular(5),
+                  //                 bottomRight: Radius.circular(5)),
+                  //             color: meeting.color,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     );
+                  //   }
+                  //   return Container(
+                  //     padding: const EdgeInsets.all(3),
+                  //     height: 50,
+                  //     alignment: Alignment.topLeft,
+                  //     decoration: BoxDecoration(
+                  //       shape: BoxShape.rectangle,
+                  //       borderRadius:
+                  //           const BorderRadius.all(Radius.circular(5)),
+                  //       color: meeting.color,
+                  //     ),
+                  //     child: Text(
+                  //           meeting.subject,
+                  //           style: const TextStyle(
+                  //             color: Colors.white,
+                  //             fontSize: 12,
+                  //             fontWeight: FontWeight.w500,
+                  //           ),
+                  //     ),
+                  //   );
+                  // },
                   view: CalendarView.week,
                   selectionDecoration: BoxDecoration(
                     color: Colors.transparent,

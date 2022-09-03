@@ -96,9 +96,9 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                 color: widget.noColor),
                           )),
                       TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             Navigator.of(context).pop();
-                            widget.onYes();
+                            await widget.onYes();
                           },
                           child: Text(
                             "Oui",

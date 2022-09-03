@@ -9,6 +9,9 @@ import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/dialog.dart';
+import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class ItemUi extends HookConsumerWidget {
   final Item l;
@@ -114,13 +117,19 @@ class ItemUi extends HookConsumerWidget {
                             descriptions: LoanTextConstants.deletingItem,
                             title: LoanTextConstants.deleting,
                             onYes: () async {
-                              itemListNotifier.setId(loaner.id);
-                              itemListNotifier.deleteItem(l).then((value) {
+                              tokenExpireWrapper(ref, () async {
+                                itemListNotifier.setId(loaner.id);
+                                final value =
+                                    await itemListNotifier.deleteItem(l);
                                 if (value) {
-                                  itemListNotifier.copy().then((value) {
-                                    loanersitemsNotifier.setLoanerItems(
-                                        loaner, value);
-                                  });
+                                  final value = await itemListNotifier.copy();
+                                  await loanersitemsNotifier.setLoanerItems(
+                                      loaner, value);
+                                  displayLoanToast(context, TypeMsg.msg,
+                                      LoanTextConstants.deletedItem);
+                                } else {
+                                  displayLoanToast(context, TypeMsg.error,
+                                      LoanTextConstants.deletingError);
                                 }
                               });
                             }));

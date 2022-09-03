@@ -7,7 +7,6 @@ import 'package:myecl/booking/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/booking/ui/pages/bookings_page/bookings_page.dart';
 import 'package:myecl/booking/ui/pages/edit_booking_page/edit_booking_page.dart';
 import 'package:myecl/booking/ui/pages/edit_room_page/edit_room_page.dart';
-import 'package:myecl/booking/ui/pages/info_page/info_page.dart';
 import 'package:myecl/booking/ui/pages/main_page/main_page.dart';
 import 'package:myecl/booking/ui/pages/rooms_page/rooms_pages.dart';
 
@@ -24,8 +23,6 @@ class PageSwitcher extends ConsumerWidget {
         return const AddBookingPage();
       case BookingPage.admin:
         return const AdminPage();
-      case BookingPage.info:
-        return const InfoPage();
       case BookingPage.bookings:
         return const BookingsPage();
       case BookingPage.rooms:

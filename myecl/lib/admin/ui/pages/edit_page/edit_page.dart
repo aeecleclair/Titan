@@ -7,7 +7,9 @@ import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/tools/dialog.dart';
+import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/admin/ui/user_ui.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class EditPage extends HookConsumerWidget {
@@ -188,18 +190,14 @@ class EditPage extends HookConsumerWidget {
                                 final value = await groupNotifier.deleteMember(
                                     newGroup, x);
                                 if (value) {
-                                } else {}
-                                pageNotifier.setAdminPage(AdminPage.edit);
+                                  pageNotifier.setAdminPage(AdminPage.edit);
+                                  displayAdminToast(context, TypeMsg.msg,
+                                      AdminTextConstants.updatedAssociation);
+                                } else {
+                                  displayAdminToast(context, TypeMsg.msg,
+                                      AdminTextConstants.updatingError);
+                                }
                               });
-
-                              // .then((value) {
-                              // if (value) {
-                              // displayAdminToast(
-                              //     context, TypeMsg.msg, "Product supprimé");
-                              // } else {
-                              // displayAdminToast(
-                              //     context, TypeMsg.msg, "Erreur");
-                              // }
                             }));
                   })),
               const SizedBox(

@@ -11,6 +11,7 @@ import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/dialog.dart';
+import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/pages/detail_page/button.dart';
 import 'package:myecl/loan/ui/pages/detail_page/delay_dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -87,10 +88,7 @@ class DetailPage extends HookConsumerWidget {
                       child: Container(
                         alignment: Alignment.topCenter,
                         child: Text(
-                          loan.items
-                                  .fold(0, (a, b) => (a as int) + b.caution)
-                                  .toString() +
-                              '€',
+                          loan.caution,
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -179,11 +177,23 @@ class DetailPage extends HookConsumerWidget {
                                 showDialog<int>(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return DelayDialog(onYes: (i) {
+                                    return DelayDialog(onYes: (i) async {
                                       Loan newLoan = loan.copyWith(
                                           end: loan.end.add(Duration(days: i)));
-                                      loanNotifier.setLoan(newLoan);
-                                      loanListNotifier.extendLoan(newLoan, i);
+                                      await loanNotifier.setLoan(newLoan);
+                                      tokenExpireWrapper(ref, () async {
+                                        final value = await loanListNotifier
+                                            .extendLoan(newLoan, i);
+                                        if (value) {
+                                          displayLoanToast(context, TypeMsg.msg,
+                                              LoanTextConstants.extendedLoan);
+                                        } else {
+                                          displayLoanToast(
+                                              context,
+                                              TypeMsg.error,
+                                              LoanTextConstants.extendingError);
+                                        }
+                                      });
                                     });
                                   },
                                 );
@@ -204,25 +214,35 @@ class DetailPage extends HookConsumerWidget {
                                   context: context,
                                   builder: (context) {
                                     return LoanDialog(
-                                      title: LoanTextConstants.delete,
+                                      title: LoanTextConstants.returningLoan,
                                       descriptions:
-                                          LoanTextConstants.deleteLoan,
+                                          LoanTextConstants.returnLoan,
                                       onYes: () async {
                                         tokenExpireWrapper(ref, () async {
                                           final value = await loanListNotifier
                                               .returnLoan(loan);
                                           if (value) {
-                                            adminloanListNotifier
+                                            pageNotifier.setLoanPage(
+                                                LoanPage.adminLoan);
+                                            await adminloanListNotifier
                                                 .setLoanerItems(
                                                     loaner,
                                                     await loanListNotifier
                                                         .copy());
+                                            displayLoanToast(
+                                                context,
+                                                TypeMsg.msg,
+                                                LoanTextConstants.returnedLoan);
+                                          } else {
+                                            displayLoanToast(
+                                                context,
+                                                TypeMsg.msg,
+                                                LoanTextConstants
+                                                    .returningError);
                                           }
                                         });
                                         loanHistoryNotifier.addLoan(
                                             loaner, loan);
-                                        pageNotifier
-                                            .setLoanPage(LoanPage.adminLoan);
                                       },
                                     );
                                   });
@@ -232,25 +252,39 @@ class DetailPage extends HookConsumerWidget {
                           LoanButton(
                             onPressed: () {
                               showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return LoanDialog(
+                                context: context,
+                                builder: (context) {
+                                  return LoanDialog(
                                       title: LoanTextConstants.delete,
                                       descriptions:
-                                          LoanTextConstants.deleteLoan,
+                                          LoanTextConstants.deletingLoan,
                                       onYes: () async {
-                                        loanListNotifier
-                                            .deleteLoan(loan)
-                                            .then((value) async {
-                                          adminloanListNotifier.setLoanerItems(
-                                              loaner,
-                                              await loanListNotifier.copy());
+                                        tokenExpireWrapper(ref, () async {
+                                          final value = await loanListNotifier
+                                              .deleteLoan(loan);
+                                          if (value) {
+                                            await adminloanListNotifier
+                                                .setLoanerItems(
+                                                    loaner,
+                                                    await loanListNotifier
+                                                        .copy());
+                                            pageNotifier.setLoanPage(
+                                                LoanPage.adminLoan);
+                                            displayLoanToast(
+                                                context,
+                                                TypeMsg.msg,
+                                                LoanTextConstants.deletedLoan);
+                                          } else {
+                                            displayLoanToast(
+                                                context,
+                                                TypeMsg.msg,
+                                                LoanTextConstants
+                                                    .deletingError);
+                                          }
                                         });
-                                        pageNotifier
-                                            .setLoanPage(LoanPage.adminLoan);
-                                      },
-                                    );
-                                  });
+                                      });
+                                },
+                              );
                             },
                             icon: HeroIcons.x,
                           ),

@@ -31,7 +31,8 @@ class EditItemPage extends HookConsumerWidget {
     final caution = useTextEditingController(text: item.caution.toString());
     final cautionFocus = useState(false);
     final lendingDuration = useTextEditingController(
-        text: item.suggestedLendingDuration.toInt().toString());
+        text: (item.suggestedLendingDuration ~/ (24 * 60 * 60))
+            .toString());
     final lendingDurationFocus = useState(false);
 
     Widget w = const Center(
@@ -196,7 +197,7 @@ class EditItemPage extends HookConsumerWidget {
                   Row(
                     children: [
                       const Text(LoanTextConstants.lendingDuration + " : "),
-                      Text(item.suggestedLendingDuration.toInt().toString()),
+                      Text((item.suggestedLendingDuration~/(24 * 60 * 60)).toString()),
                     ],
                   ),
                 ],
@@ -238,19 +239,20 @@ class EditItemPage extends HookConsumerWidget {
                                   return;
                                 }
                                 if (key.currentState!.validate()) {
-                                  pageNotifier.setLoanPage(LoanPage.adminItem);
                                   tokenExpireWrapper(ref, () async {
                                     final value = await itemListNotifier
                                         .updateItem(item);
                                       if (value) {
-                                        // displayLoanToast(context, TypeMsg.msg,
-                                        //     LoanTextConstants.addedObject);
+                                      pageNotifier
+                                          .setLoanPage(LoanPage.adminItem);
+                                        displayLoanToast(context, TypeMsg.msg,
+                                            LoanTextConstants.updatedItem);
                                         loanersitemsNotifier.setLoanerItems(
                                             loaner.value,
                                             await itemListNotifier.copy());
                                       } else {
-                                        // displayLoanToast(context, TypeMsg.error,
-                                        //     LoanTextConstants.addingError);
+                                        displayLoanToast(context, TypeMsg.error,
+                                            LoanTextConstants.updatingError);
                                       }
                                   });
                                 } else {
@@ -262,7 +264,7 @@ class EditItemPage extends HookConsumerWidget {
                                 }
                               },
                         child: (isLastStep)
-                            ? const Text(LoanTextConstants.add)
+                            ? const Text(LoanTextConstants.edit)
                             : const Text(LoanTextConstants.next),
                       ),
                     ),

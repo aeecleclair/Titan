@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
@@ -23,6 +24,7 @@ class AddLoanPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
+    final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
     final _currentStep = useState(0);
     final key = GlobalKey<FormState>();
     final asso = useState(ref.watch(loanerProvider));
@@ -559,18 +561,22 @@ class AddLoanPage extends HookConsumerWidget {
                                             ),
                                           );
                                           if (value) {
-                                            // displayLoanToast(
-                                            //     context,
-                                            //     TypeMsg.msg,
-                                            //     LoanTextConstants.addedLoan);
-                                            pageNotifier
-                                                .setLoanPage(LoanPage.main);
+                                            await adminLoanListNotifier
+                                                .setLoanerItems(
+                                                    loaner,
+                                                    await loanListNotifier
+                                                        .copy());
+                                            pageNotifier.setLoanPage(
+                                                LoanPage.adminLoan);
+                                            displayLoanToast(
+                                                context,
+                                                TypeMsg.msg,
+                                                LoanTextConstants.addedLoan);
                                           } else {
-                                            // displayLoanToast(
-                                            //     context,
-                                            //     TypeMsg.error,
-                                            //     LoanTextConstants
-                                            //         .addingError);
+                                            displayLoanToast(
+                                                context,
+                                                TypeMsg.error,
+                                                LoanTextConstants.addingError);
                                           }
                                         });
                                       },

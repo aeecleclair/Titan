@@ -3,6 +3,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
+import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/tools/functions.dart';
@@ -33,6 +35,11 @@ class AddLoanerPage extends HookConsumerWidget {
                                 await loanerListNotifier.addLoaner(newLoaner);
                             if (value) {
                               pageNotifier.setAdminPage(AdminPage.main);
+                              displayAdminToast(context, TypeMsg.msg,
+                                  AdminTextConstants.addedLoaner);
+                            } else {
+                              displayAdminToast(context, TypeMsg.error,
+                                  AdminTextConstants.addingError);
                             }
                           });
                         },

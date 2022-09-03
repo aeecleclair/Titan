@@ -14,6 +14,7 @@ class LoanTextConstants {
   static const String addObject = "Ajouter un objet";
   static const String addedLoan = "Prêt ajouté";
   static const String addedObject = "Objet ajouté";
+  static const String addedRoom = "Salle ajoutée";
   static const String addingError = "Erreur lors de l'ajout";
   static const String admin = "Administrateur";
   static const String and = "et";
@@ -29,11 +30,18 @@ class LoanTextConstants {
   static const String days = "Jours";
   static const String delay = "Délai";
   static const String delete = "Supprimer";
-  static const String deleteLoan = "Supprimer le prêt";
+  static const String deletingLoan = "Supprimer le prêt ?";
+  static const String deletedItem = "Objet supprimé";
+  static const String deletedLoan = "Prêt supprimé";
   static const String deleting = "Suppression";
+  static const String deletingError = "Erreur lors de la suppression";
   static const String deletingItem = "Supprimer l'objet ?";
+  static const String edit = "Modifier";
+  static const String editedRoom = "Salle modifiée";
   static const String endDate = "Date de fin du prêt";
   static const String enterDate = "Veuillez entrer une date";
+  static const String extendedLoan = "Prêt prolongé";
+  static const String extendingError = "Erreur lors de la prolongation";
   static const String history = "Historique";
   static const String incorrectOrMissingFields =
       "Des champs sont manquants ou incorrects";
@@ -58,7 +66,12 @@ class LoanTextConstants {
   static const String paidCaution = "Caution payée";
   static const String positiveNumber = "Veuillez entrer un nombre positif";
   static const String previous = "Précédent";
+  static const String returnedLoan = "Prêt rendu";
+  static const String returningError = "Erreur lors du retour";
+  static const String returningLoan = "Retour";
+  static const String returnLoan = "Rendre le prêt ?";
   static const String update = "Modifier";
+  static const String updatedItem = "Objet modifié";
   static const String updatedLoan = "Prêt modifié";
   static const String updatingError = "Erreur lors de la modification";
   static const String yes = "Oui";

@@ -19,8 +19,7 @@ TODO :
 
 Evénements : (API)
 
-Prêt : PB Toast
-Login : pb toast
+loan : available / multiple -> quantity (pb available avec pret)
 
 0a25cb76-4b63-4fd3-b939-da6d9feabf28
 08864e36-9f4c-463e-b0d7-78852b1bc088

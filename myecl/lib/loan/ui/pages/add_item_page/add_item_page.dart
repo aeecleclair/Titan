@@ -210,7 +210,6 @@ class AddItemPage extends HookConsumerWidget {
                                   return;
                                 }
                                 if (key.currentState!.validate()) {
-                                  pageNotifier.setLoanPage(LoanPage.adminItem);
                                   tokenExpireWrapper(ref, () async {
                                     final value =
                                         await itemListNotifier.addItem(
@@ -227,14 +226,16 @@ class AddItemPage extends HookConsumerWidget {
                                       ),
                                     );
                                     if (value) {
-                                      // displayLoanToast(context, TypeMsg.msg,
-                                      //     LoanTextConstants.addedObject);
-                                      loanersitemsNotifier.setLoanerItems(
+                                      pageNotifier
+                                          .setLoanPage(LoanPage.adminItem);
+                                      await loanersitemsNotifier.setLoanerItems(
                                           loaner.value,
                                           await itemListNotifier.copy());
+                                      displayLoanToast(context, TypeMsg.msg,
+                                          LoanTextConstants.addedObject);
                                     } else {
-                                      // displayLoanToast(context, TypeMsg.error,
-                                      //     LoanTextConstants.addingError);
+                                      displayLoanToast(context, TypeMsg.error,
+                                          LoanTextConstants.addingError);
                                     }
                                   });
                                 } else {

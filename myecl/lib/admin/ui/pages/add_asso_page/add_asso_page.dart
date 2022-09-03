@@ -5,6 +5,9 @@ import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/admin/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class AddAssoPage extends HookConsumerWidget {
   const AddAssoPage({Key? key}) : super(key: key);
@@ -119,10 +122,19 @@ class AddAssoPage extends HookConsumerWidget {
               ),
             ),
           ),
-          onTap: () {
-            groupListNotifier.createGroup(
-                SimpleGroup(name: name.text, description: description.text, id: ''));
-            pageNotifier.setAdminPage(AdminPage.main);
+          onTap: () async {
+            tokenExpireWrapper(ref, () async {
+              final value = await groupListNotifier.createGroup(SimpleGroup(
+                  name: name.text, description: description.text, id: ''));
+              if (value) {
+                pageNotifier.setAdminPage(AdminPage.main);
+                displayAdminToast(
+                    context, TypeMsg.msg, AdminTextConstants.addedAssociation);
+              } else {
+                displayAdminToast(
+                    context, TypeMsg.error, AdminTextConstants.addingError);
+              }
+            });
           },
         )
       ]),
