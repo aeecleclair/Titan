@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
+import 'package:myecl/amap/providers/admin_delivery_order_list.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -15,58 +16,61 @@ class DeliveryAdminPage extends HookConsumerWidget {
     final deliveryList = ref.watch(deliveryListProvider);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
     final isAmapAdmin = ref.watch(isAmapAdminProvider);
+    final deliveryOrderList = ref.watch(adminDeliveryOrderList);
     List<Widget> listWidgetOrder = [];
-    deliveryList.when(
+    deliveryOrderList.when(
       data: (deliveries) {
-        deliveries.sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
-        if (!isAmapAdmin) {
-          deliveries = deliveries.where((element) => !element.locked).toList();
-        }
+        final deliveryList = deliveries.keys.toList();
+        deliveryList.sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
         if (deliveries.isNotEmpty) {
-          final historyIndex = deliveries.lastIndexWhere(
+          final historyIndex = deliveryList.lastIndexWhere(
               (element) => element.deliveryDate.isBefore(DateTime.now()));
-          final history = deliveries.sublist(0, historyIndex + 1);
-          final current = deliveries.sublist(historyIndex + 1);
-          if (current.isNotEmpty){
-          listWidgetOrder.addAll([
-            const SizedBox(
-              height: 30,
-            ),
-            const Text(
-              AMAPTextConstants.deliveryList,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: AMAPColorConstants.textDark,
+          final history = deliveryList.sublist(0, historyIndex + 1);
+          final current = deliveryList.sublist(historyIndex + 1);
+          if (current.isNotEmpty) {
+            listWidgetOrder.addAll([
+              const SizedBox(
+                height: 30,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ]);
-          for (Delivery c in current) {
-            listWidgetOrder.add(DeliveryAdminUi(c: c, i: c.id));
-          }}
-          if (history.isNotEmpty){
-          listWidgetOrder.addAll([
-            const SizedBox(
-              height: 30,
-            ),
-            const Text(
-              AMAPTextConstants.deliveryHistory,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: AMAPColorConstants.textDark,
+              const Text(
+                AMAPTextConstants.deliveryList,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: AMAPColorConstants.textDark,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ]);
-          for (Delivery c in history) {
-            listWidgetOrder.add(DeliveryAdminUi(c: c, i: c.id));
-          }}
+              const SizedBox(
+                height: 20,
+              ),
+            ]);
+            for (Delivery c in current) {
+              listWidgetOrder
+                  .add(DeliveryAdminUi(c: c, i: c.id, orders: deliveries[c]!));
+            }
+          }
+          if (history.isNotEmpty) {
+            listWidgetOrder.addAll([
+              const SizedBox(
+                height: 30,
+              ),
+              const Text(
+                AMAPTextConstants.deliveryHistory,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: AMAPColorConstants.textDark,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ]);
+            for (Delivery c in history) {
+              listWidgetOrder
+                  .add(DeliveryAdminUi(c: c, i: c.id, orders: deliveries[c]!));
+            }
+          }
         } else {
           listWidgetOrder.add(Column(
             children: [
