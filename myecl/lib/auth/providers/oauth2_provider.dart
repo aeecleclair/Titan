@@ -44,9 +44,6 @@ final loadingrovider = Provider((ref) {
 final idProvider = Provider((ref) {
   return ref.watch(authTokenProvider).when(
     data: (tokens) {
-      print(tokens["token"] == ""
-          ? null
-          : JwtDecoder.decode(tokens["token"] as String)["sub"]);
       return tokens["token"] == ""
           ? null
           : JwtDecoder.decode(tokens["token"] as String)["sub"];
@@ -92,7 +89,6 @@ class OAuth2TokenProvider
           await _authTokenRepository.authorizationFlow(username, password);
       final tokens = await _authTokenRepository.getTokens(authorizationCode);
       state = AsyncValue.data(tokens);
-      print(tokens["token"]);
       storeToken();
     } catch (e) {
       state = AsyncValue.error(e);
@@ -106,7 +102,6 @@ class OAuth2TokenProvider
         try {
           final tokens = await _authTokenRepository.refreshTokens(token);
           state = AsyncValue.data(tokens);
-          print(tokens["token"]);
           storeToken();
         } catch (e) {
           state = AsyncValue.error(e);
@@ -124,7 +119,6 @@ class OAuth2TokenProvider
         final tokens = await _authTokenRepository
             .refreshTokens(token["refreshToken"] as String);
         state = AsyncValue.data(tokens);
-        print(tokens["token"]);
         storeToken();
         return true;
       },

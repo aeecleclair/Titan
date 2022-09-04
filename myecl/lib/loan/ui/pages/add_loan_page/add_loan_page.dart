@@ -562,7 +562,7 @@ class AddLoanPage extends HookConsumerWidget {
                                           );
                                           if (value) {
                                             await adminLoanListNotifier
-                                                .setLoanerItems(
+                                                .setTData(
                                                     loaner,
                                                     await loanListNotifier
                                                         .copy());

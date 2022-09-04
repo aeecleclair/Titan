@@ -142,7 +142,7 @@ class AdminLoanPage extends HookConsumerWidget {
                     var loaded = await loanListNotifier.toggleExpanded(l);
                     if (!loaded) {
                       loanerLoanListNotifier.loadLoan(l.id);
-                      loanListNotifier.setLoanerItems(
+                      loanListNotifier.setTData(
                           l, await loanerLoanListNotifier.copy());
                     }
                   });
@@ -179,7 +179,7 @@ class AdminLoanPage extends HookConsumerWidget {
 
     return LoanRefresher(
       onRefresh: () async {
-        loanListNotifier.loadLoanerList(loaners);
+        loanListNotifier.loadTList(loaners);
       },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(

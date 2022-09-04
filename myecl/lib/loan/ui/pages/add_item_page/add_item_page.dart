@@ -228,7 +228,7 @@ class AddItemPage extends HookConsumerWidget {
                                     if (value) {
                                       pageNotifier
                                           .setLoanPage(LoanPage.adminItem);
-                                      await loanersitemsNotifier.setLoanerItems(
+                                      await loanersitemsNotifier.setTData(
                                           loaner.value,
                                           await itemListNotifier.copy());
                                       displayLoanToast(context, TypeMsg.msg,

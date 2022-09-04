@@ -506,7 +506,7 @@ class EditLoanPage extends HookConsumerWidget {
                                     ),
                                   );
                                   if (value) {
-                                    await adminLoanListNotifier.setLoanerItems(
+                                    await adminLoanListNotifier.setTData(
                                         asso.value, await loanListNotifier.copy());
                                   pageNotifier.setLoanPage(LoanPage.groupLoan);
                                     displayLoanToast(context, TypeMsg.msg,

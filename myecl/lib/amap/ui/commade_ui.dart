@@ -73,8 +73,8 @@ class OrderUi extends ConsumerWidget {
               ),
               Expanded(
                 child: Text(
-                  !isAdmin ? "Le " +
-                      processDate(c.deliveryDate) : c.user.getName() +
+                  (!isAdmin ? "Le " +
+                      processDate(c.deliveryDate) : c.user.getName()) +
                       " (" +
                       c.collectionSlot +
                       ")",

@@ -64,7 +64,7 @@ final deliveryListProvider =
   return _orderListNotifier;
 });
 
-final deliveryList = Provider((ref) {
+final deliveryList = Provider<List<Delivery>>((ref) {
   final deliveryProvider = ref.watch(deliveryListProvider);
   return deliveryProvider.when(data: (orders) {
     return orders;

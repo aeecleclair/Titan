@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/amap/providers/admin_delivery_order_list.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
@@ -25,6 +26,7 @@ class AddCmdPage extends HookConsumerWidget {
     final dateController = useTextEditingController();
     final productsList = ref.watch(productListProvider);
     final deliveryNotifier = ref.watch(deliveryListProvider.notifier);
+    final adminNotifier = ref.watch(adminDeliveryOrderList.notifier);
     final List<Product> products = [];
     final categories = [];
 
@@ -205,6 +207,7 @@ class AddCmdPage extends HookConsumerWidget {
                                         await deliveryNotifier.addDelivery(del);
                                     if (value) {
                                       pageNotifier.setAmapPage(AmapPage.admin);
+                                      await adminNotifier.addT(del);
                                       displayAMAPToast(context, TypeMsg.msg,
                                           AMAPTextConstants.addedCommand);
                                     } else {

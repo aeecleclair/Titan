@@ -31,6 +31,11 @@ class OrderListNotifier extends ListNotifier<Order> {
     return await loadList(() async => _userRepository.getOrderList(userId));
   }
 
+  Future<AsyncValue<List<Order>>> loadDeliveryOrderList() async {
+    return await loadList(() async =>
+        _orderListRepository.getDeliveryOrderList(deliveryId));
+  }
+
   Future<bool> addOrder(Order order) async {
     return await add(
         (o) async => _orderListRepository.createOrder(deliveryId, o, userId),
@@ -140,6 +145,20 @@ class OrderListNotifier extends ListNotifier<Order> {
       state = AsyncValue.error(e);
     }
     return _price;
+  }
+
+  Future<AsyncValue<List<Order>>> copy() async {
+    return state.when(
+      data: (orders) async {
+        return AsyncValue.data(orders.sublist(0));
+      },
+      error: (error, stackTrace) {
+        return AsyncValue.error(error);
+      },
+      loading: () {
+        return const AsyncValue.loading();
+      },
+    );
   }
 }
 

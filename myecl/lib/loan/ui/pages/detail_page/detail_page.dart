@@ -225,7 +225,7 @@ class DetailPage extends HookConsumerWidget {
                                             pageNotifier.setLoanPage(
                                                 LoanPage.adminLoan);
                                             await adminloanListNotifier
-                                                .setLoanerItems(
+                                                .setTData(
                                                     loaner,
                                                     await loanListNotifier
                                                         .copy());
@@ -264,7 +264,7 @@ class DetailPage extends HookConsumerWidget {
                                               .deleteLoan(loan);
                                           if (value) {
                                             await adminloanListNotifier
-                                                .setLoanerItems(
+                                                .setTData(
                                                     loaner,
                                                     await loanListNotifier
                                                         .copy());

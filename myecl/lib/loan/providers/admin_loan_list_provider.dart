@@ -3,100 +3,11 @@ import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
-import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/providers/map_provider.dart';
 import 'package:tuple/tuple.dart';
 
-class AdminLoanListNotifier extends StateNotifier<
-    AsyncValue<Map<Loaner, Tuple2<AsyncValue<List<Loan>>, bool>>>> {
-  AdminLoanListNotifier({required String token}) : super(const AsyncLoading());
-
-  void loadLoanerList(List<Loaner> loaners) async {
-    Map<Loaner, Tuple2<AsyncValue<List<Loan>>, bool>> loanersItems = {};
-    for (Loaner l in loaners) {
-      loanersItems[l] = const Tuple2(AsyncValue.data([]), false);
-    }
-    state = AsyncValue.data(loanersItems);
-  }
-
-  void addLoan(Loaner loaner, Loan loan) {
-    state.when(data: (d) async {
-      try {
-        List<Loan> currentLoans = d[loaner]!
-            .item1
-            .when(data: (d) => d, error: (e, s) => [], loading: () => []);
-        d[loaner] =
-            Tuple2(AsyncValue.data(currentLoans + [loan]), d[loaner]!.item2);
-        state = AsyncValue.data(d);
-        return true;
-      } catch (error) {
-        state = AsyncValue.data(d);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          rethrow;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      }
-    }, error: (error, s) {
-      if (error is AppException && error.type == ErrorType.tokenExpire) {
-        throw error;
-      } else {
-        state = AsyncValue.error(error);
-        return false;
-      }
-    }, loading: () {
-      state = const AsyncValue.error("Cannot add while loading");
-      return false;
-    });
-  }
-
-  Future<bool> setLoanerItems(
-      Loaner loaner, AsyncValue<List<Loan>> loans) async {
-    return state.when(data: (d) async {
-      try {
-        d[loaner] = Tuple2(loans, d[loaner]!.item2);
-        state = AsyncValue.data(d);
-        return true;
-      } catch (error) {
-        state = AsyncValue.data(d);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          rethrow;
-        } else {
-          state = AsyncValue.error(error);
-          return false;
-        }
-      }
-    }, error: (error, s) {
-      if (error is AppException && error.type == ErrorType.tokenExpire) {
-        throw error;
-      } else {
-        state = AsyncValue.error(error);
-        return false;
-      }
-    }, loading: () {
-      state = const AsyncValue.error("Cannot add while loading");
-      return false;
-    });
-  }
-
-  Future<bool> toggleExpanded(Loaner loaner) {
-    return state.when(data: (d) async {
-      d[loaner] = Tuple2(d[loaner]!.item1, !d[loaner]!.item2);
-      state = AsyncValue.data(d);
-      if (d[loaner] == null) {
-        return false;
-      } else {
-        return d[loaner]!.item1.when(
-            data: (d) async => d.isNotEmpty,
-            error: (e, s) async => false,
-            loading: () async => false);
-      }
-    }, error: (Object error, StackTrace? stackTrace) async {
-      return false;
-    }, loading: () async {
-      return false;
-    });
-  }
+class AdminLoanListNotifier extends MapNotifier<Loaner, Loan> {
+  AdminLoanListNotifier({required String token}) : super(token: token);
 }
 
 final adminLoanListProvider = StateNotifierProvider<AdminLoanListNotifier,
@@ -105,6 +16,6 @@ final adminLoanListProvider = StateNotifierProvider<AdminLoanListNotifier,
   final loaners = ref.watch(loanerList);
   AdminLoanListNotifier _adminloanListNotifier =
       AdminLoanListNotifier(token: token);
-  _adminloanListNotifier.loadLoanerList(loaners);
+  _adminloanListNotifier.loadTList(loaners);
   return _adminloanListNotifier;
 });

@@ -123,7 +123,7 @@ class ItemUi extends HookConsumerWidget {
                                     await itemListNotifier.deleteItem(l);
                                 if (value) {
                                   final value = await itemListNotifier.copy();
-                                  await loanersitemsNotifier.setLoanerItems(
+                                  await loanersitemsNotifier.setTData(
                                       loaner, value);
                                   displayLoanToast(context, TypeMsg.msg,
                                       LoanTextConstants.deletedItem);
