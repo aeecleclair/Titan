@@ -28,7 +28,7 @@ class OAuth2TokenRepository extends Repository {
     "Accept": "application/json",
   };
 
-  final clientId = "client_id";
+  final clientId = "Titan";
   final responseType = "code";
   final scope = "API";
   final state = generateRandomString(128);
