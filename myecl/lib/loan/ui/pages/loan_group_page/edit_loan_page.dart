@@ -14,6 +14,7 @@ import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/loan/ui/pages/loan_group_page/date_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -29,7 +30,8 @@ class EditLoanPage extends HookConsumerWidget {
     final asso = useState(ref.watch(loanerProvider));
     final key = GlobalKey<FormState>();
     final associations = ref.watch(loanerListProvider);
-    final fakeItems = ref.watch(itemListProvider);
+    final items = useState(ref.watch(itemListProvider));
+    final itemListNotifier = ref.watch(itemListProvider.notifier);
     final selectedItems = ref.watch(editSelectedListProvider);
     final selectedItemsNotifier = ref.watch(editSelectedListProvider.notifier);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
@@ -57,39 +59,30 @@ class EditLoanPage extends HookConsumerWidget {
 
     associations.when(
       data: (listAsso) {
-        List<Item> items = [];
-        fakeItems.when(
-            data: (listItems) {
-              items = listItems;
-            },
-            error: (e, s) {},
-            loading: () {});
-
         List<Step> steps = [
           Step(
             title: const Text(LoanTextConstants.association),
-            content: Theme(
-              data: Theme.of(context).copyWith(
-                primaryColor: LoanColorConstants.lightGrey,
-                unselectedWidgetColor: LoanColorConstants.lightGrey,
-              ),
-              child: Column(
-                  children: listAsso
-                      .map(
-                        (e) => RadioListTile(
-                            title: Text(capitalize(e.name),
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500)),
-                            selected: asso.value.name == e.name,
-                            value: e.name,
-                            activeColor: LoanColorConstants.orange,
-                            groupValue: asso.value.name,
-                            onChanged: (s) {
-                              asso.value = e;
-                            }),
-                      )
-                      .toList()),
-            ),
+            content: Column(
+                children: listAsso
+                    .map(
+                      (e) => RadioListTile(
+                          title: Text(capitalize(e.name),
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w500)),
+                          selected: asso.value.name == e.name,
+                          value: e.name,
+                          activeColor: LoanColorConstants.orange,
+                          groupValue: asso.value.name,
+                          onChanged: (s) {
+                            asso.value = e;
+                            tokenExpireWrapper(ref, () async {
+                              itemListNotifier.setId(e.id);
+                              items.value =
+                                  await itemListNotifier.loadItemList();
+                            });
+                          }),
+                    )
+                    .toList()),
             isActive: _currentStep.value >= 0,
             state: _currentStep.value >= 0
                 ? StepState.complete
@@ -98,26 +91,44 @@ class EditLoanPage extends HookConsumerWidget {
           Step(
             title: const Text(LoanTextConstants.objects),
             content: Column(
-              children: items
-                  .map(
-                    (e) => CheckboxListTile(
-                      title: Text(e.name,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: e.available
-                                ? LoanColorConstants.darkGrey
-                                : Colors.grey.shade700,
-                            decoration:
-                                e.available ? null : TextDecoration.lineThrough,
-                          )),
-                      value: selectedItems[items.indexOf(e)],
-                      onChanged: (s) {
-                        selectedItemsNotifier.toggle(items.indexOf(e));
-                      },
-                    ),
-                  )
-                  .toList(),
+              children: items.value.when(data: (itemList) {
+                return itemList
+                    .map(
+                      (e) => CheckboxListTile(
+                        title: Text(e.name,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: e.available
+                                  ? LoanColorConstants.darkGrey
+                                  : Colors.grey.shade700,
+                              decoration: e.available
+                                  ? null
+                                  : TextDecoration.lineThrough,
+                            )),
+                        value: selectedItems[itemList.indexOf(e)],
+                        onChanged: (s) {
+                          if (e.available) {
+                            selectedItemsNotifier.toggle(itemList.indexOf(e));
+                          }
+                        },
+                      ),
+                    )
+                    .toList();
+              }, error: (error, s) {
+                return [
+                  Text(error.toString(),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w500)),
+                ];
+              }, loading: () {
+                return [
+                  const CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        LoanColorConstants.orange),
+                  ),
+                ];
+              }),
             ),
             isActive: _currentStep.value >= 0,
             state: _currentStep.value >= 1
@@ -128,130 +139,8 @@ class EditLoanPage extends HookConsumerWidget {
             title: const Text(LoanTextConstants.dates),
             content: Column(
               children: [
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          margin: const EdgeInsets.only(bottom: 3),
-                          padding: const EdgeInsets.only(left: 10),
-                          child: const Text(
-                            LoanTextConstants.beginDate,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: Color.fromARGB(255, 85, 85, 85),
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () => _selectDate(context, start),
-                          child: SizedBox(
-                            child: AbsorbPointer(
-                              child: TextFormField(
-                                controller: start,
-                                decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.all(10),
-                                  isDense: true,
-                                  enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color:
-                                              Color.fromARGB(255, 85, 85, 85))),
-                                  focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.blue)),
-                                  errorBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.red)),
-                                  border: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color.fromARGB(255, 158, 158, 158),
-                                    ),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return LoanTextConstants.enterDate;
-                                  }
-                                  return null;
-                                },
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ]),
-                ),
-                Container(
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 30),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            margin: const EdgeInsets.only(bottom: 3),
-                            padding: const EdgeInsets.only(left: 10),
-                            child: const Text(
-                              LoanTextConstants.endDate,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Color.fromARGB(255, 85, 85, 85),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () => _selectDate(context, end),
-                            child: SizedBox(
-                              child: AbsorbPointer(
-                                child: TextFormField(
-                                  controller: end,
-                                  decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.all(10),
-                                    isDense: true,
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 85, 85, 85))),
-                                    focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue)),
-                                    errorBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.red)),
-                                    border: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 158, 158, 158),
-                                      ),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return LoanTextConstants.enterDate;
-                                    }
-                                    return null;
-                                  },
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ])),
+                DateEntry(title: LoanTextConstants.beginDate, controller: start),
+                DateEntry(title: LoanTextConstants.endDate, controller: end)
               ],
             ),
             isActive: _currentStep.value >= 0,
@@ -395,17 +284,33 @@ class EditLoanPage extends HookConsumerWidget {
                 Column(
                   children: [
                     const Text(LoanTextConstants.objects + " : "),
-                    ...items
-                        .where(
-                            (element) => selectedItems[items.indexOf(element)])
-                        .map(
-                          (e) => Text(
-                            e.name,
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500),
-                          ),
-                        )
-                        .toList(),
+                    ...items.value.when(
+                      data: (itemList) {
+                        return itemList
+                            .where((element) =>
+                                selectedItems[itemList.indexOf(element)])
+                            .map(
+                              (e) => Text(
+                                e.name,
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w500),
+                              ),
+                            )
+                            .toList();
+                      },
+                      error: (error, s) {
+                        return [Text(error.toString())];
+                      },
+                      loading: () {
+                        return [
+                          const Center(
+                              child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(
+                                LoanColorConstants.orange),
+                          ))
+                        ];
+                      },
+                    )
                   ],
                 ),
                 Row(
@@ -429,15 +334,34 @@ class EditLoanPage extends HookConsumerWidget {
                 Row(
                   children: [
                     const Text(LoanTextConstants.paidCaution + " : "),
-                    Text(caution.text.isEmpty
-                        ? items
-                                .fold<int>(
-                                    0,
-                                    (previousValue, element) =>
-                                        previousValue + element.caution)
-                                .toString() +
-                            "€"
-                        : caution.text),
+                    items.value.when(
+                      data: (itemList) {
+                        return Text(caution.text.isNotEmpty
+                            ? caution.text
+                            : caution.text.isNotEmpty
+                                ? caution.text
+                                : itemList
+                                        .where((element) => selectedItems[
+                                            itemList.indexOf(element)])
+                                        .toList()
+                                        .fold<double>(
+                                            0,
+                                            (previousValue, element) =>
+                                                previousValue + element.caution)
+                                        .toString() +
+                                    "€");
+                      },
+                      error: (error, s) {
+                        return Text(error.toString());
+                      },
+                      loading: () {
+                        return const Center(
+                            child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation(LoanColorConstants.orange),
+                        ));
+                      },
+                    )
                   ],
                 ),
               ],
@@ -478,44 +402,72 @@ class EditLoanPage extends HookConsumerWidget {
                               if (key.currentState == null) {
                                 return;
                               }
-                              if (key.currentState!.validate()) {
-                                tokenExpireWrapper(ref, () async {
-                                  final value =
-                                      await loanListNotifier.updateLoan(
-                                    Loan(
-                                      loaner: loan.loaner,
-                                      items: items
-                                          .where((element) => selectedItems[
-                                              items.indexOf(element)])
-                                          .toList(),
-                                      borrower: borrower.value,
-                                      caution: caution.text.isEmpty
-                                          ? items
-                                              .fold<int>(
-                                                  0,
-                                                  (previousValue, element) =>
-                                                      previousValue +
-                                                      element.caution)
-                                              .toString()
-                                          : caution.text,
-                                      end: DateTime.parse(end.text),
-                                      id: loan.id,
-                                      notes: note.text,
-                                      start: DateTime.parse(start.text),
-                                      returned: loan.returned,
-                                    ),
+                              if (key.currentState!.validate() &&
+                                  borrower.value.id.isNotEmpty) {
+                                if (start.text.compareTo(end.text) >= 0) {
+                                  displayLoanToast(context, TypeMsg.error,
+                                      LoanTextConstants.invalidDates);
+                                } else {
+                                  items.value.when(
+                                    data: (itemList) {
+                                      tokenExpireWrapper(ref, () async {
+                                        List<Item> selected = itemList
+                                            .where((element) => selectedItems[
+                                                itemList.indexOf(element)])
+                                            .toList();
+                                        final value =
+                                            await loanListNotifier.updateLoan(
+                                          Loan(
+                                            loaner: loan.loaner,
+                                            items: selected,
+                                            borrower: borrower.value,
+                                            caution: caution.text.isNotEmpty
+                                                ? caution.text
+                                                : selected
+                                                        .fold<double>(
+                                                            0,
+                                                            (previousValue,
+                                                                    element) =>
+                                                                previousValue +
+                                                                element.caution)
+                                                        .toString() +
+                                                    "€",
+                                            end: DateTime.parse(end.text),
+                                            id: loan.id,
+                                            notes: note.text,
+                                            start: DateTime.parse(start.text),
+                                            returned: loan.returned,
+                                          ),
+                                        );
+                                        if (value) {
+                                          await adminLoanListNotifier.setTData(
+                                              asso.value,
+                                              await loanListNotifier.copy());
+                                          pageNotifier
+                                              .setLoanPage(LoanPage.groupLoan);
+                                          displayLoanToast(context, TypeMsg.msg,
+                                              LoanTextConstants.updatedLoan);
+                                        } else {
+                                          displayLoanToast(
+                                              context,
+                                              TypeMsg.error,
+                                              LoanTextConstants.updatingError);
+                                        }
+                                      });
+                                    },
+                                    error: (error, s) {
+                                      displayLoanToast(context, TypeMsg.error,
+                                          error.toString());
+                                    },
+                                    loading: () {
+                                      displayLoanToast(context, TypeMsg.error,
+                                          LoanTextConstants.addingError);
+                                    },
                                   );
-                                  if (value) {
-                                    await adminLoanListNotifier.setTData(
-                                        asso.value, await loanListNotifier.copy());
-                                  pageNotifier.setLoanPage(LoanPage.groupLoan);
-                                    displayLoanToast(context, TypeMsg.msg,
-                                        LoanTextConstants.updatedLoan);
-                                  } else {
-                                    displayLoanToast(context, TypeMsg.error,
-                                        LoanTextConstants.updatingError);
-                                  }
-                                });
+                                }
+                              } else {
+                                displayLoanToast(context, TypeMsg.error,
+                                    LoanTextConstants.incorrectOrMissingFields);
                               }
                             },
                       child: (isLastStep)
@@ -554,16 +506,13 @@ class EditLoanPage extends HookConsumerWidget {
     );
 
     return SingleChildScrollView(
-        physics: const BouncingScrollPhysics(), child: w);
+        physics: const BouncingScrollPhysics(),
+        child: Theme(
+            data: Theme.of(context).copyWith(
+              primaryColor: LoanColorConstants.lightGrey,
+              unselectedWidgetColor: LoanColorConstants.lightGrey,
+            ),
+            child: w));
   }
 }
 
-_selectDate(BuildContext context, TextEditingController dateController) async {
-  final DateTime now = DateTime.now();
-  final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: now,
-      firstDate: now,
-      lastDate: DateTime(now.year + 1, now.month, now.day));
-  dateController.text = DateFormat('yyyy-MM-dd').format(picked ?? now);
-}

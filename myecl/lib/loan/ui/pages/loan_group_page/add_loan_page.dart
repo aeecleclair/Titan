@@ -13,6 +13,7 @@ import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/loan/ui/pages/loan_group_page/date_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 import 'package:myecl/user/class/list_users.dart';
@@ -57,34 +58,27 @@ class AddLoanPage extends HookConsumerWidget {
           List<Step> steps = [
             Step(
               title: const Text(LoanTextConstants.association),
-              content: Theme(
-                data: Theme.of(context).copyWith(
-                  primaryColor: LoanColorConstants.lightGrey,
-                  unselectedWidgetColor: LoanColorConstants.lightGrey,
-                ),
-                child: Column(
-                    children: listAsso
-                        .map(
-                          (e) => RadioListTile(
-                              title: Text(capitalize(e.name),
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500)),
-                              selected: asso.value.name == e.name,
-                              value: e.name,
-                              activeColor: LoanColorConstants.orange,
-                              groupValue: asso.value.name,
-                              onChanged: (s) async {
-                                asso.value = e;
-                                tokenExpireWrapper(ref, () async {
-                                  itemListNotifier.setId(e.id);
-                                  items.value =
-                                      await itemListNotifier.loadItemList();
-                                });
-                              }),
-                        )
-                        .toList()),
-              ),
+              content: Column(
+                  children: listAsso
+                      .map(
+                        (e) => RadioListTile(
+                            title: Text(capitalize(e.name),
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w500)),
+                            selected: asso.value.name == e.name,
+                            value: e.name,
+                            activeColor: LoanColorConstants.orange,
+                            groupValue: asso.value.name,
+                            onChanged: (s) async {
+                              asso.value = e;
+                              tokenExpireWrapper(ref, () async {
+                                itemListNotifier.setId(e.id);
+                                items.value =
+                                    await itemListNotifier.loadItemList();
+                              });
+                            }),
+                      )
+                      .toList()),
               isActive: _currentStep.value >= 0,
               state: _currentStep.value >= 0
                   ? StepState.complete
@@ -141,131 +135,9 @@ class AddLoanPage extends HookConsumerWidget {
               title: const Text(LoanTextConstants.dates),
               content: Column(
                 children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 30),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            margin: const EdgeInsets.only(bottom: 3),
-                            padding: const EdgeInsets.only(left: 10),
-                            child: const Text(
-                              LoanTextConstants.beginDate,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Color.fromARGB(255, 85, 85, 85),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () => _selectDate(context, start),
-                            child: SizedBox(
-                              child: AbsorbPointer(
-                                child: TextFormField(
-                                  controller: start,
-                                  decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.all(10),
-                                    isDense: true,
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 85, 85, 85))),
-                                    focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue)),
-                                    errorBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.red)),
-                                    border: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 158, 158, 158),
-                                      ),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return LoanTextConstants.enterDate;
-                                    }
-                                    return null;
-                                  },
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ]),
-                  ),
-                  Container(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 30),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              margin: const EdgeInsets.only(bottom: 3),
-                              padding: const EdgeInsets.only(left: 10),
-                              child: const Text(
-                                LoanTextConstants.endDate,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color.fromARGB(255, 85, 85, 85),
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => _selectDate(context, end),
-                              child: SizedBox(
-                                child: AbsorbPointer(
-                                  child: TextFormField(
-                                    controller: end,
-                                    decoration: const InputDecoration(
-                                      contentPadding: EdgeInsets.all(10),
-                                      isDense: true,
-                                      enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 85, 85, 85))),
-                                      focusedBorder: UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.blue)),
-                                      errorBorder: UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.red)),
-                                      border: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color.fromARGB(
-                                              255, 158, 158, 158),
-                                        ),
-                                      ),
-                                    ),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return LoanTextConstants.enterDate;
-                                      }
-                                      return null;
-                                    },
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromARGB(255, 0, 0, 0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ])),
+                  DateEntry(
+                      title: LoanTextConstants.beginDate, controller: start),
+                  DateEntry(title: LoanTextConstants.endDate, controller: end),
                 ],
               ),
               isActive: _currentStep.value >= 0,
@@ -630,7 +502,13 @@ class AddLoanPage extends HookConsumerWidget {
     );
 
     return SingleChildScrollView(
-        physics: const BouncingScrollPhysics(), child: w);
+        physics: const BouncingScrollPhysics(),
+        child: Theme(
+            data: Theme.of(context).copyWith(
+              primaryColor: LoanColorConstants.lightGrey,
+              unselectedWidgetColor: LoanColorConstants.lightGrey,
+            ),
+            child: w));
   }
 
   _selectDate(

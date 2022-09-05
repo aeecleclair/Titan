@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/providers/item_list_provider.dart';
+import 'package:myecl/loan/providers/item_provider.dart';
+import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/loan/ui/pages/item_group_page/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
 
-class AddItemPage extends HookConsumerWidget {
-  const AddItemPage({Key? key}) : super(key: key);
+class EditItemPage extends HookConsumerWidget {
+  const EditItemPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,9 +25,15 @@ class AddItemPage extends HookConsumerWidget {
     final loaners = ref.watch(loanerListProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
-    final name = useTextEditingController();
-    final caution = useTextEditingController();
-    final lendingDuration = useTextEditingController();
+    final item = ref.watch(itemProvider);
+    final itemNotifier = ref.watch(itemProvider.notifier);
+    final name = useTextEditingController(text: item.name);
+    final nameFocus = useState(false);
+    final caution = useTextEditingController(text: item.caution.toString());
+    final cautionFocus = useState(false);
+    final lendingDuration = useTextEditingController(
+        text: (item.suggestedLendingDuration ~/ (24 * 60 * 60)).toString());
+    final lendingDurationFocus = useState(false);
 
     Widget w = const Center(
       child: CircularProgressIndicator(
@@ -70,18 +77,17 @@ class AddItemPage extends HookConsumerWidget {
             ),
             Step(
               title: const Text(LoanTextConstants.objects),
-              content: TextFormField(
+              content: TextEntry(
+                label: LoanTextConstants.name,
+                autofocus: nameFocus.value,
+                suffix: '',
+                isInt: false,
                 controller: name,
-                decoration: const InputDecoration(
-                  labelText: LoanTextConstants.name,
-                ),
-                validator: (value) {
-                  if (value == null) {
-                    return LoanTextConstants.noValue;
-                  } else if (value.isEmpty) {
-                    return LoanTextConstants.noValue;
-                  }
-                  return null;
+                onChanged: (n) {
+                  itemNotifier.setItem(item.copyWith(name: n));
+                  nameFocus.value = true;
+                  cautionFocus.value = false;
+                  lendingDurationFocus.value = false;
                 },
               ),
               isActive: _currentStep.value >= 0,
@@ -91,24 +97,17 @@ class AddItemPage extends HookConsumerWidget {
             ),
             Step(
               title: const Text(LoanTextConstants.caution),
-              content: TextFormField(
+              content: TextEntry(
+                label: LoanTextConstants.caution,
+                autofocus: cautionFocus.value,
+                suffix: '€',
+                isInt: true,
                 controller: caution,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: LoanTextConstants.caution,
-                  suffix: Text('€'),
-                ),
-                validator: (value) {
-                  if (value == null) {
-                    return LoanTextConstants.noValue;
-                  } else if (value.isEmpty) {
-                    return LoanTextConstants.noValue;
-                  } else if (int.tryParse(value) == null) {
-                    return LoanTextConstants.invalidNumber;
-                  } else if (int.parse(value) < 0) {
-                    return LoanTextConstants.positiveNumber;
-                  }
-                  return null;
+                onChanged: (n) {
+                  itemNotifier.setItem(item.copyWith(caution: int.parse(n)));
+                  nameFocus.value = false;
+                  cautionFocus.value = true;
+                  lendingDurationFocus.value = false;
                 },
               ),
               isActive: _currentStep.value >= 0,
@@ -118,24 +117,18 @@ class AddItemPage extends HookConsumerWidget {
             ),
             Step(
               title: const Text(LoanTextConstants.lendingDuration),
-              content: TextFormField(
+              content: TextEntry(
+                label: LoanTextConstants.lendingDuration,
+                autofocus: lendingDurationFocus.value,
+                suffix: LoanTextConstants.days,
+                isInt: true,
                 controller: lendingDuration,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: LoanTextConstants.lendingDuration,
-                  suffix: Text(LoanTextConstants.days),
-                ),
-                validator: (value) {
-                  if (value == null) {
-                    return LoanTextConstants.noValue;
-                  } else if (value.isEmpty) {
-                    return LoanTextConstants.noValue;
-                  } else if (int.tryParse(value) == null) {
-                    return LoanTextConstants.invalidNumber;
-                  } else if (int.parse(value) < 0) {
-                    return LoanTextConstants.positiveNumber;
-                  }
-                  return null;
+                onChanged: (n) {
+                  itemNotifier.setItem(item.copyWith(
+                      suggestedLendingDuration: int.parse(n) * 24 * 60 * 60));
+                  nameFocus.value = false;
+                  cautionFocus.value = false;
+                  lendingDurationFocus.value = true;
                 },
               ),
               isActive: _currentStep.value >= 0,
@@ -156,19 +149,20 @@ class AddItemPage extends HookConsumerWidget {
                   Row(
                     children: [
                       const Text(LoanTextConstants.name + " : "),
-                      Text(name.text),
+                      Text(item.name),
                     ],
                   ),
                   Row(
                     children: [
                       const Text(LoanTextConstants.caution + " : "),
-                      Text(caution.text),
+                      Text(item.caution.toString()),
                     ],
                   ),
                   Row(
                     children: [
                       const Text(LoanTextConstants.lendingDuration + " : "),
-                      Text(lendingDuration.text),
+                      Text((item.suggestedLendingDuration ~/ (24 * 60 * 60))
+                          .toString()),
                     ],
                   ),
                 ],
@@ -189,8 +183,8 @@ class AddItemPage extends HookConsumerWidget {
           }
 
           w = Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
             key: key,
+            // autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Stepper(
               physics: const BouncingScrollPhysics(),
               currentStep: _currentStep.value,
@@ -212,30 +206,18 @@ class AddItemPage extends HookConsumerWidget {
                                 if (key.currentState!.validate()) {
                                   tokenExpireWrapper(ref, () async {
                                     final value =
-                                        await itemListNotifier.addItem(
-                                      Item(
-                                        name: name.text,
-                                        caution: int.parse(caution.text),
-                                        id: '',
-                                        available: true,
-                                        suggestedLendingDuration:
-                                            int.parse(lendingDuration.text) *
-                                                24 *
-                                                60 *
-                                                60,
-                                      ),
-                                    );
+                                        await itemListNotifier.updateItem(item);
                                     if (value) {
                                       pageNotifier
                                           .setLoanPage(LoanPage.adminItem);
-                                      await loanersitemsNotifier.setTData(
+                                      displayLoanToast(context, TypeMsg.msg,
+                                          LoanTextConstants.updatedItem);
+                                      loanersitemsNotifier.setTData(
                                           loaner.value,
                                           await itemListNotifier.copy());
-                                      displayLoanToast(context, TypeMsg.msg,
-                                          LoanTextConstants.addedObject);
                                     } else {
                                       displayLoanToast(context, TypeMsg.error,
-                                          LoanTextConstants.addingError);
+                                          LoanTextConstants.updatingError);
                                     }
                                   });
                                 } else {
@@ -247,7 +229,7 @@ class AddItemPage extends HookConsumerWidget {
                                 }
                               },
                         child: (isLastStep)
-                            ? const Text(LoanTextConstants.add)
+                            ? const Text(LoanTextConstants.edit)
                             : const Text(LoanTextConstants.next),
                       ),
                     ),
