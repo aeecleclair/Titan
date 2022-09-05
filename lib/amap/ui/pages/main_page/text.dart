@@ -51,7 +51,7 @@ class TextPresentation extends StatelessWidget {
                   height: 15,
                 ),
                 const Text(
-                  "Contact asso : Marion Cornic - marion.cornic@ecl20.ec-lyon.fr",
+                  "Contact asso : ...",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
               ],
