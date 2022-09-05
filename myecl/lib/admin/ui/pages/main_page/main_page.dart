@@ -34,7 +34,7 @@ class MainPage extends HookConsumerWidget {
             parent: BouncingScrollPhysics()),
         child: groups.when(data: (g) {
           return Column(children: [
-            const Text(AdminTextConstants.association,
+            const Text(AdminTextConstants.association + "s",
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
