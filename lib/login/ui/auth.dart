@@ -4,7 +4,7 @@ import 'package:animations/animations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/background_painter.dart';
-import 'package:myecl/login/ui/reigster.dart';
+import 'package:myecl/login/ui/register.dart';
 import 'package:myecl/login/ui/sign_in.dart';
 
 class AuthScreen extends HookConsumerWidget {

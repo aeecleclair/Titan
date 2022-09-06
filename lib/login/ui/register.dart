@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/login/class/account_type.dart';
+import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
+import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/login/ui/text_from_decoration.dart';
+import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/tools/functions.dart';
 
-class Register extends StatelessWidget {
+class Register extends HookConsumerWidget {
   const Register({Key? key, required this.onSignInPressed}) : super(key: key);
 
   final VoidCallback onSignInPressed;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final signUpNotifier = ref.watch(signUpProvider.notifier);
+    final username = useTextEditingController();
+    final password = useTextEditingController();
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
@@ -36,28 +46,42 @@ class Register extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: TextFormField(
-                        style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
-                        decoration: registerInputDecoration(hintText: LoginTextConstants.email))
-                  ),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: TextFormField(
+                          controller: username,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                          decoration: registerInputDecoration(
+                              hintText: LoginTextConstants.email))),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: TextFormField(
+                      controller: password,
+                      obscureText: true,
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.white,
                       ),
-                      decoration: registerInputDecoration(hintText: LoginTextConstants.password),
+                      decoration: registerInputDecoration(
+                          hintText: LoginTextConstants.password),
                     ),
                   ),
                   SignUpBar(
                     label: LoginTextConstants.create,
-                    isLoading: true,
-                    onPressed: () {
+                    isLoading: ref.watch(loadingrovider),
+                    onPressed: () async {
+                      print(AccountType.staff.toString().split('.')[1]);
+                      final value = await signUpNotifier.createUser(
+                          username.text, password.text, AccountType.student);
+                      if (value) {
+                        displayLoginToast(context, TypeMsg.msg,
+                            LoginTextConstants.sendedMail);
+                      } else {
+                        displayLoginToast(context, TypeMsg.error,
+                            LoginTextConstants.mailSendingError);
+                      }
                     },
                   ),
                   const Spacer(),

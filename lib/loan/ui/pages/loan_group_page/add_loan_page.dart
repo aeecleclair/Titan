@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
@@ -509,16 +508,5 @@ class AddLoanPage extends HookConsumerWidget {
               unselectedWidgetColor: LoanColorConstants.lightGrey,
             ),
             child: w));
-  }
-
-  _selectDate(
-      BuildContext context, TextEditingController dateController) async {
-    final DateTime now = DateTime.now();
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: now,
-        firstDate: now,
-        lastDate: DateTime(now.year + 1, now.month, now.day));
-    dateController.text = DateFormat('yyyy-MM-dd').format(picked ?? now);
   }
 }

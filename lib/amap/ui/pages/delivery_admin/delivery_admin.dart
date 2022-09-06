@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/admin_delivery_order_list.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
-import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/delivery_admin/admin_delivery_ui.dart';
 import 'package:myecl/amap/ui/refresh_indicator.dart';
@@ -13,9 +12,7 @@ class DeliveryAdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deliveryList = ref.watch(deliveryListProvider);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
-    final isAmapAdmin = ref.watch(isAmapAdminProvider);
     final deliveryOrderList = ref.watch(adminDeliveryOrderList);
     List<Widget> listWidgetOrder = [];
     deliveryOrderList.when(

@@ -1,4 +1,3 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -342,25 +341,5 @@ class EditBookingPage extends HookConsumerWidget {
               ),
               child: w)),
     );
-  }
-
-  _selectDate(
-      BuildContext context, TextEditingController dateController) async {
-    final DateTime now = DateTime.now();
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: now,
-        firstDate: now,
-        lastDate: DateTime(now.year + 1, now.month, now.day));
-    if (picked != null) {
-      final time = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.fromDateTime(picked),
-      );
-      dateController.text = DateFormat('yyyy-MM-dd HH:mm')
-          .format(DateTimeField.combine(picked, time));
-    } else {
-      dateController.text = DateFormat('yyyy-MM-dd HH:mm').format(now);
-    }
   }
 }
