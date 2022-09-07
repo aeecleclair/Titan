@@ -27,7 +27,7 @@ class DeliveryAdminUi extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(isAmapAdminProvider);
+    final isAdmin = ref.watch(isAmapAdmin);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
     final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);

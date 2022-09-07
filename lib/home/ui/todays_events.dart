@@ -58,7 +58,7 @@ class TodaysEvents extends HookConsumerWidget {
             ? Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.only(top: 15, left: 20, right: 5),
+                    padding: const EdgeInsets.only(top: 15, left: 20, right: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -155,7 +155,7 @@ class TodaysEvents extends HookConsumerWidget {
                   ),
                   Positioned(
                     top: 0,
-                    right: 5,
+                    right: 0,
                     child: IconButton(
                       icon: const HeroIcon(HeroIcons.calendar),
                       onPressed: () {

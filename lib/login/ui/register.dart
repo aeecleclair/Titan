@@ -24,7 +24,7 @@ class Register extends HookConsumerWidget {
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: const EdgeInsets.all(22.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

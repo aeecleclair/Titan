@@ -4,6 +4,7 @@ import 'package:animations/animations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/background_painter.dart';
+import 'package:myecl/login/ui/forget.dart';
 import 'package:myecl/login/ui/register.dart';
 import 'package:myecl/login/ui/sign_in.dart';
 
@@ -13,6 +14,7 @@ class AuthScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ValueNotifier<bool> _showSignInPage = useValueNotifier(true);
+    final ValueNotifier<bool> _showRegisterPage = useValueNotifier(false);
     AnimationController _controller =
         useAnimationController(duration: const Duration(seconds: 2));
     return Scaffold(
@@ -48,14 +50,28 @@ class AuthScreen extends HookConsumerWidget {
                               },
                               child: value
                                   ? SignIn(
-                                      key: const ValueKey(LoginTextConstants.signIn),
+                                      key: const ValueKey(
+                                          LoginTextConstants.signIn),
                                       onRegisterPressed: () {
                                         _showSignInPage.value = false;
+                                        _showRegisterPage.value = true;
                                         _controller.forward();
                                       },
-                                    )
-                                  : Register(
-                                      key: const ValueKey(LoginTextConstants.register),
+                                      onForgetPressed: () {
+                                        _showSignInPage.value = false;
+                                        _showRegisterPage.value = false;
+                                        _controller.forward();
+                                      })
+                                  : _showRegisterPage.value ? Register(
+                                      key: const ValueKey(
+                                          LoginTextConstants.register),
+                                      onSignInPressed: () {
+                                        _showSignInPage.value = true;
+                                        _controller.reverse();
+                                      },
+                                    ): ForgetPassword(
+                                      key: const ValueKey(
+                                          LoginTextConstants.forgetPassword),
                                       onSignInPressed: () {
                                         _showSignInPage.value = true;
                                         _controller.reverse();

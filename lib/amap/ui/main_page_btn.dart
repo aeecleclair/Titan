@@ -15,7 +15,7 @@ class MainPageBtn extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(amapPageProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
-    final isAdmin = ref.watch(isAmapAdminProvider);
+    final isAdmin = ref.watch(isAmapAdmin);
     final hideAnimation = useAnimationController(
         duration: const Duration(milliseconds: 200), initialValue: 1);
 
