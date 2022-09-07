@@ -16,16 +16,15 @@ class SignIn extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authNotifier = ref.watch(authTokenProvider.notifier);
-    final auth = ref.watch(authTokenProvider);
-    final username = useTextEditingController();
-    final password = useTextEditingController();
+    final username = useTextEditingController(text: "test2@ecl21.ec-lyon.fr");
+    final password = useTextEditingController(text: "testPass");
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
         padding: const EdgeInsets.all(32.0),
         child: Column(
           children: [
-             Expanded(
+            Expanded(
               flex: 3,
               child: const Align(
                 alignment: Alignment.centerLeft,
@@ -68,7 +67,7 @@ class SignIn extends HookConsumerWidget {
                       onPressed: () async {
                         await authNotifier.getTokenFromRequest(
                             username.text, password.text);
-                        auth.when(
+                        ref.watch(authTokenProvider).when(
                             data: (token) {},
                             error: (e, s) {
                               displayLoginToast(
