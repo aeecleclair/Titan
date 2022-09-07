@@ -14,11 +14,11 @@ class BookingPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         body: Container(
-      decoration: const BoxDecoration(
+      decoration:  BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
+          colors: const [
             BookingColorConstants.darkBlue,
             BookingColorConstants.lightBlue,
           ],

@@ -143,7 +143,7 @@ class Boutons extends HookConsumerWidget {
               width: MediaQuery.of(context).size.width * 0.2,
               height: 70,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(colors: [
+                gradient:  LinearGradient(colors: const [
                   AMAPColorConstants.redGradient1,
                   AMAPColorConstants.redGradient2
                 ], begin: Alignment.topLeft, end: Alignment.bottomRight),

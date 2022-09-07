@@ -152,8 +152,8 @@ class DeliveryUi extends ConsumerWidget {
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
-                            gradient: const LinearGradient(
-                              colors: [
+                            gradient:  LinearGradient(
+                              colors: const [
                                 AMAPColorConstants.textLight,
                                 AMAPColorConstants.textDark,
                               ],
@@ -194,8 +194,8 @@ class DeliveryUi extends ConsumerWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    gradient: const LinearGradient(
-                      colors: [
+                    gradient:  LinearGradient(
+                      colors: const [
                         AMAPColorConstants.redGradient1,
                         AMAPColorConstants.redGradient2,
                       ],

@@ -21,27 +21,31 @@ class SignUpBar extends StatelessWidget {
         child: Container(
             height: 50,
             alignment: Alignment.centerLeft,
-            child: Row(
-              children: [
-                Text(
-                  label,
-                  style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.white),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 20),
-                  child: isLoading
-                      ? const CircularProgressIndicator(
-                          color: Colors.white,
-                        )
-                      : _RoundContinueButton(
-                          onPressed: onPressed,
-                          isRegister: true,
-                        ),
-                ),
-              ],
+            child: GestureDetector(
+              onTap: onPressed,
+              child: Row(
+                children: [
+                  Text(
+                    label,
+                    style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 20),
+                    child: isLoading
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : const Icon(
+                            FontAwesomeIcons.rightLong,
+                            color: Colors.white,
+                            size: 24.0,
+                          ),
+                  ),
+                ],
+              ),
             )));
   }
 }
@@ -65,51 +69,32 @@ class SignInBar extends StatelessWidget {
         child: Container(
           height: 50,
           alignment: Alignment.centerLeft,
-          child: Row(
-            children: [
-              Text(
-                label,
-                style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w800,
-                    color: LoginColorConstants.background),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 20),
-                child: isLoading
-                    ? const CircularProgressIndicator(
-                        color: LoginColorConstants.gradient2,
-                      )
-                    : _RoundContinueButton(
-                        onPressed: onPressed,
-                        isRegister: false,
-                      ),
-              ),
-            ],
+          child: GestureDetector(
+            onTap: onPressed,
+            child: Row(
+              children: [
+                Text(
+                  label,
+                  style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800,
+                      color: LoginColorConstants.background),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 20),
+                  child: isLoading
+                      ? const CircularProgressIndicator(
+                          color: LoginColorConstants.gradient2,
+                        )
+                      : const Icon(
+                          FontAwesomeIcons.rightLong,
+                          color: Color(0xFF27d790),
+                          size: 24.0,
+                        ),
+                ),
+              ],
+            ),
           ),
         ));
-  }
-}
-
-class _RoundContinueButton extends StatelessWidget {
-  const _RoundContinueButton({
-    Key? key,
-    required this.onPressed,
-    required this.isRegister,
-  }) : super(key: key);
-
-  final bool isRegister;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Icon(
-        FontAwesomeIcons.rightLong,
-        color: isRegister ? Colors.white : const Color(0xFF27d790),
-        size: 24.0,
-      ),
-    );
   }
 }

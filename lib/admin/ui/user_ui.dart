@@ -32,7 +32,7 @@ class UserUi extends HookConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(colors: [
+                  gradient: LinearGradient(colors: const [
                     AdminColorConstants.redGradient1,
                     AdminColorConstants.redGradient2
                   ], begin: Alignment.topLeft, end: Alignment.bottomRight),

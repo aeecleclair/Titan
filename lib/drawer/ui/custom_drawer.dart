@@ -15,11 +15,14 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [DrawerColorConstants.lightBlue, DrawerColorConstants.darkBlue])),
+                colors: const [
+              DrawerColorConstants.lightBlue,
+              DrawerColorConstants.darkBlue
+            ])),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

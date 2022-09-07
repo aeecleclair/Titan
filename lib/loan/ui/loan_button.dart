@@ -13,8 +13,8 @@ class LoanCommonButton extends StatelessWidget {
       margin: const EdgeInsets.only(left: 40, right: 40, bottom: 30),
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
       decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
+          gradient:  LinearGradient(
+            colors: const [
               LoanColorConstants.veryLightOrange,
               LoanColorConstants.lightOrange,
             ],

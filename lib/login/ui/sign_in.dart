@@ -25,9 +25,9 @@ class SignIn extends HookConsumerWidget {
         padding: const EdgeInsets.all(32.0),
         child: Column(
           children: [
-            const Expanded(
+             Expanded(
               flex: 3,
-              child: Align(
+              child: const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   LoginTextConstants.welcomeBack,

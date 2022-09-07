@@ -133,8 +133,8 @@ class ListProducts extends HookConsumerWidget {
                                           width: 150,
                                           height: 50,
                                           decoration: BoxDecoration(
-                                            gradient: const LinearGradient(
-                                                colors: [
+                                            gradient:  LinearGradient(
+                                                colors: const [
                                                   AMAPColorConstants.green1,
                                                   AMAPColorConstants.green2
                                                 ],

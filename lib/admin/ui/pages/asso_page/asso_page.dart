@@ -72,8 +72,8 @@ class AssoPage extends HookConsumerWidget {
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
+                          gradient:  LinearGradient(
+                            colors: const [
                               AdminColorConstants.gradient1,
                               AdminColorConstants.gradient2,
                             ],
@@ -104,8 +104,8 @@ class AssoPage extends HookConsumerWidget {
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
+                          gradient:  LinearGradient(
+                            colors: const [
                               AdminColorConstants.redGradient1,
                               AdminColorConstants.redGradient2,
                             ],

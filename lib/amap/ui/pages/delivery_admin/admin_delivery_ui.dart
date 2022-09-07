@@ -218,8 +218,8 @@ class DeliveryAdminUi extends HookConsumerWidget {
                       margin: const EdgeInsets.only(left: 20),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        gradient: const LinearGradient(
-                          colors: [
+                        gradient:  LinearGradient(
+                          colors: const [
                             AMAPColorConstants.redGradient1,
                             AMAPColorConstants.redGradient2,
                           ],

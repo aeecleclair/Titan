@@ -61,7 +61,7 @@ class ItemUi extends HookConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [
+                      gradient:  LinearGradient(colors: const [
                         LoanColorConstants.lightOrange,
                         LoanColorConstants.orange
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -92,7 +92,7 @@ class ItemUi extends HookConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [
+                      gradient:  LinearGradient(colors: const [
                         LoanColorConstants.lightGrey,
                         LoanColorConstants.darkGrey
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),

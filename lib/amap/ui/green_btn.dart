@@ -14,8 +14,8 @@ class GreenBtn extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.65,
         height: 70,
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-              colors: [AMAPColorConstants.greenGradient1, AMAPColorConstants.greenGradient2
+          gradient:  LinearGradient(
+              colors: const [AMAPColorConstants.greenGradient1, AMAPColorConstants.greenGradient2
           ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight),

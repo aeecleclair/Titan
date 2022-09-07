@@ -27,9 +27,9 @@ class Register extends HookConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Expanded(
+             Expanded(
               flex: 3,
-              child: Align(
+              child: const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   LoginTextConstants.createAccount,
@@ -72,7 +72,6 @@ class Register extends HookConsumerWidget {
                     label: LoginTextConstants.create,
                     isLoading: ref.watch(loadingrovider),
                     onPressed: () async {
-                      print(AccountType.staff.toString().split('.')[1]);
                       final value = await signUpNotifier.createUser(
                           username.text, password.text, AccountType.student);
                       if (value) {

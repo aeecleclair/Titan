@@ -57,7 +57,7 @@ class ProductUi extends ConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [
+                      gradient:  LinearGradient(colors: const [
                         AMAPColorConstants.green1,
                         AMAPColorConstants.textLight
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -91,7 +91,7 @@ class ProductUi extends ConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [
+                      gradient:  LinearGradient(colors: const [
                         AMAPColorConstants.redGradient1,
                         AMAPColorConstants.redGradient2
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
