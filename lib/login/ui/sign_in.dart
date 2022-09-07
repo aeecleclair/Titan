@@ -18,6 +18,7 @@ class SignIn extends HookConsumerWidget {
     final authNotifier = ref.watch(authTokenProvider.notifier);
     final username = useTextEditingController(text: "test2@ecl21.ec-lyon.fr");
     final password = useTextEditingController(text: "testPass");
+    final hidePass = useState(true);
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
@@ -48,7 +49,8 @@ class SignIn extends HookConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: TextFormField(
-                        decoration: signInInputDecoration(
+                        decoration: signInRegisterInputDecoration(
+                          isSignIn: true,
                             hintText: LoginTextConstants.email),
                         controller: username,
                       ),
@@ -56,10 +58,11 @@ class SignIn extends HookConsumerWidget {
                     Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: TextFormField(
-                          decoration: signInInputDecoration(
-                              hintText: LoginTextConstants.password),
+                          decoration: signInRegisterInputDecoration(
+                              isSignIn: true,
+                              hintText: LoginTextConstants.password, notifier: hidePass),
                           controller: password,
-                          obscureText: true,
+                          obscureText: hidePass.value,
                         )),
                     SignInBar(
                       isLoading: ref.watch(loadingrovider),

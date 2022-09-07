@@ -20,6 +20,7 @@ class Register extends HookConsumerWidget {
     final signUpNotifier = ref.watch(signUpProvider.notifier);
     final username = useTextEditingController();
     final password = useTextEditingController();
+    final hidePass = useState(true);
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
@@ -27,12 +28,12 @@ class Register extends HookConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             Expanded(
+            Expanded(
               flex: 3,
               child: const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  LoginTextConstants.createAccount,
+                  LoginTextConstants.createAccountTitle,
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -53,19 +54,22 @@ class Register extends HookConsumerWidget {
                             fontSize: 18,
                             color: Colors.white,
                           ),
-                          decoration: registerInputDecoration(
+                          decoration: signInRegisterInputDecoration(
+                              isSignIn: false,
                               hintText: LoginTextConstants.email))),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: TextFormField(
                       controller: password,
-                      obscureText: true,
+                      obscureText: hidePass.value,
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.white,
                       ),
-                      decoration: registerInputDecoration(
-                          hintText: LoginTextConstants.password),
+                      decoration: signInRegisterInputDecoration(
+                          isSignIn: false,
+                          hintText: LoginTextConstants.password,
+                          notifier: hidePass),
                     ),
                   ),
                   SignUpBar(

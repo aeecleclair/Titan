@@ -9,6 +9,7 @@ class LoginColorConstants {
 class LoginTextConstants {
   static const String create = 'Créer';
   static const String createAccount = 'Créer un compte';
+  static const String createAccountTitle = 'Créer un\ncompte';
   static const String email = 'Email';
   static const String forgotPassword = 'Mot de passe oublié ?';
   static const String mailSendingError = 'Erreur lors de la création du compte';
