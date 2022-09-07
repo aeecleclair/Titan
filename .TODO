@@ -1,0 +1,20 @@
+En cours :
+    - Login :
+        - Create account [mail -> app (uni_link)]
+        - Reset password [mail -> app (uni_link)]
+
+    - Settings :
+        - Change Password
+
+    - Events :
+        - Admin page (create, edit, delete)
+        - Display events (list, details)
+
+
+Modules :
+    - Vote (liste prétendance)
+    - Cinéma
+    - JE
+    - Piston
+    ...
+    - Messagerie

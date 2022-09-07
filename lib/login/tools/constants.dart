@@ -11,6 +11,7 @@ class LoginTextConstants {
   static const String createAccount = 'Créer un compte';
   static const String createAccountTitle = 'Créer un\ncompte';
   static const String email = 'Email';
+  static const String forgetPassword = 'Mot de passe\noublié';
   static const String forgotPassword = 'Mot de passe oublié ?';
   static const String mailSendingError = 'Erreur lors de la création du compte';
   static const String password = 'Mot de passe';
@@ -18,4 +19,5 @@ class LoginTextConstants {
   static const String signIn = 'Se connecter';
   static const String register = 'S\'inscrire';
   static const String welcomeBack = 'Bienvenue';
+static const String recover = 'Réinitialiser';
 }

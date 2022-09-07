@@ -9,9 +9,13 @@ import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/tools/functions.dart';
 
 class SignIn extends HookConsumerWidget {
-  const SignIn({Key? key, required this.onRegisterPressed}) : super(key: key);
+  const SignIn(
+      {Key? key,
+      required this.onRegisterPressed,
+      required this.onForgetPressed})
+      : super(key: key);
 
-  final VoidCallback onRegisterPressed;
+  final VoidCallback onRegisterPressed, onForgetPressed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +27,7 @@ class SignIn extends HookConsumerWidget {
         child: Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: const EdgeInsets.all(22.0),
         child: Column(
           children: [
             Expanded(
@@ -51,8 +55,7 @@ class SignIn extends HookConsumerWidget {
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: TextFormField(
                         decoration: signInRegisterInputDecoration(
-                          isSignIn: true,
-                            hintText: LoginTextConstants.email),
+                            isSignIn: true, hintText: LoginTextConstants.email),
                         controller: username,
                         keyboardType: TextInputType.emailAddress,
                       ),
@@ -62,7 +65,8 @@ class SignIn extends HookConsumerWidget {
                         child: TextFormField(
                           decoration: signInRegisterInputDecoration(
                               isSignIn: true,
-                              hintText: LoginTextConstants.password, notifier: hidePass),
+                              hintText: LoginTextConstants.password,
+                              notifier: hidePass),
                           controller: password,
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: hidePass.value,
@@ -112,7 +116,7 @@ class SignIn extends HookConsumerWidget {
                               splashColor:
                                   const Color.fromRGBO(255, 255, 255, 1),
                               onTap: () {
-                                onRegisterPressed();
+                                onForgetPressed();
                               },
                               child: const Text(
                                 LoginTextConstants.forgotPassword,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/login/ui/auth.dart';
@@ -19,6 +20,8 @@ class MyApp extends ConsumerWidget {
         title: 'MyECL',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          textTheme:
+              GoogleFonts.notoSerifMalayalamTextTheme(Theme.of(context).textTheme)
         ),
         home: isLoggedIn ? const AppDrawer() : const AuthScreen());
   }

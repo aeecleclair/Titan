@@ -89,7 +89,7 @@ class OAuth2TokenProvider
           await _authTokenRepository.authorizationFlow(username, password);
       final tokens = await _authTokenRepository.getTokens(authorizationCode);
       state = AsyncValue.data(tokens);
-      storeToken();
+      // storeToken();
     } catch (e) {
       state = AsyncValue.error(e);
     }
@@ -102,7 +102,7 @@ class OAuth2TokenProvider
         try {
           final tokens = await _authTokenRepository.refreshTokens(token);
           state = AsyncValue.data(tokens);
-          storeToken();
+          // storeToken();
         } catch (e) {
           state = AsyncValue.error(e);
         }
