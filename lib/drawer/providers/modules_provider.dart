@@ -29,5 +29,6 @@ final listModuleProvider =
         name: "Réservation", icon: HeroIcons.table, page: ModuleType.booking, selected: false),
     Module(name: "Prêt", icon: HeroIcons.library, page: ModuleType.loan, selected: false),
     Module(name: "Amap", icon: HeroIcons.shoppingCart, page: ModuleType.amap, selected: false),
+    Module(name: "Évenements", icon: HeroIcons.calendar, page: ModuleType.event, selected: false),
   ]);
 });

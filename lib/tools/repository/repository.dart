@@ -21,7 +21,7 @@ abstract class Repository {
     if (response.statusCode == 200) {
       try {
         String resp = utf8.decode(response.body.runes.toList());
-        // print(resp);
+        print(resp);
         return json.decode(resp);
       } catch (e) {
         return [];

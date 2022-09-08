@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/home/class/event.dart';
-import 'package:myecl/home/providers/res_provider.dart';
+import 'package:myecl/event/class/event.dart';
+import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/home/providers/scroll_controller_provider.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
 import 'package:myecl/home/providers/today_provider.dart';
@@ -41,7 +41,7 @@ class TodaysEvents extends HookConsumerWidget {
     final _hasScrolled = ref.watch(hasScrolledProvider);
     final _hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
     final displayToday = useState(true);
-    final res = ref.watch(resListProvider);
+    final res = ref.watch(eventListProvider);
     center(_hasScrolled, _scrollController, today, _hasScrolledNotifier);
     return SizedBox(
       height: MediaQuery.of(context).size.height * .65,
@@ -85,12 +85,14 @@ class TodaysEvents extends HookConsumerWidget {
                   ),
                   Expanded(
                     child: ClipRRect(
-                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(30),
+                          bottomRight: Radius.circular(30)),
                       child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      controller: _scrollController,
-                      scrollDirection: Axis.vertical,
-                      child: Row(
+                        physics: const BouncingScrollPhysics(),
+                        controller: _scrollController,
+                        scrollDirection: Axis.vertical,
+                        child: Row(
                           children: [
                             const SizedBox(
                               width: 80,
@@ -101,7 +103,10 @@ class TodaysEvents extends HookConsumerWidget {
                               child: SizedBox(
                                 height: 24 * 90.0 + 3,
                                 child: Stack(
-                                  children: const [HourBarItems(), CurrentTime()],
+                                  children: const [
+                                    HourBarItems(),
+                                    CurrentTime()
+                                  ],
                                 ),
                               ),
                             ),
@@ -122,8 +127,7 @@ class TodaysEvents extends HookConsumerWidget {
                     selectionDecoration: BoxDecoration(
                       color: Colors.transparent,
                       border: Border.all(
-                          color: HomeColorConstants.darkBlue,
-                          width: 2),
+                          color: HomeColorConstants.darkBlue, width: 2),
                       borderRadius: const BorderRadius.all(Radius.circular(5)),
                       shape: BoxShape.rectangle,
                     ),
@@ -172,19 +176,22 @@ class TodaysEvents extends HookConsumerWidget {
   }
 }
 
-_AppointmentDataSource _getCalendarDataSource(List<Event> res) {
+_AppointmentDataSource _getCalendarDataSource(AsyncValue<List<Event>> res) {
   List<Appointment> appointments = <Appointment>[];
-  res.map((e) {
-    appointments.add(Appointment(
-      startTime: e.startTime,
-      endTime: e.endTime,
-      subject: e.title,
-      color: e.color,
-      isAllDay: false,
-      startTimeZone: "Europe/Paris",
-      endTimeZone: "Europe/Paris",
-    ));
-  }).toList();
+  res.whenData((value) {
+    value.map((e) {
+      appointments.add(Appointment(
+        startTime: e.start,
+        endTime: e.end,
+        subject: e.name,
+        color: uuidToColor(e.id),
+        isAllDay: false,
+        startTimeZone: "Europe/Paris",
+        endTimeZone: "Europe/Paris",
+      ));
+    }).toList();
+  });
+
   return _AppointmentDataSource(appointments);
 }
 
