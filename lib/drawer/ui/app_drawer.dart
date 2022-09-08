@@ -7,6 +7,7 @@ import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
+import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/home/ui/home.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/settings/ui/settings.dart';
@@ -34,6 +35,8 @@ class AppDrawer extends HookConsumerWidget {
         return AmapPage(controllerNotifier: _controllerNotifier);
       case ModuleType.admin:
         return AdminPage(controllerNotifier: _controllerNotifier);
+      case ModuleType.event:
+        return EventPage(controllerNotifier: _controllerNotifier);
     }
   }
 

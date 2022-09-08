@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/home/ui/last_info.dart';
+import 'package:myecl/home/ui/refresh_indicator.dart';
 import 'package:myecl/home/ui/todays_events.dart';
 import 'package:myecl/home/ui/top_bar.dart';
 
@@ -13,27 +15,34 @@ class HomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final eventNotifier = ref.watch(eventListProvider.notifier);
     return Scaffold(
-        body: Container(
-            decoration:  BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: const [
-                  HomeColorConstants.darkBlue,
-                  HomeColorConstants.lightBlue,
-                ],
-              ),
+        body: HomeRefresher(
+      onRefresh: () async {
+        await eventNotifier.loadEventList();
+      },
+      child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: const [
+                HomeColorConstants.darkBlue,
+                HomeColorConstants.lightBlue,
+              ],
             ),
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  TopBar(controllerNotifier: controllerNotifier),
-                  const TodaysEvents(),
-                  const LastInfos(),
-                ],
-              ),
-            )));
+          ),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(
+                parent: BouncingScrollPhysics()),
+            child: Column(
+              children: [
+                TopBar(controllerNotifier: controllerNotifier),
+                const TodaysEvents(),
+                const LastInfos(),
+              ],
+            ),
+          )),
+    ));
   }
 }

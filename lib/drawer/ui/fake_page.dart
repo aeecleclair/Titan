@@ -7,9 +7,9 @@ class FakePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10, bottom: 10),
+      margin: const EdgeInsets.only(top: 10, bottom: 50),
       width: MediaQuery.of(context).size.width - 220,
-      height: 420,
+      height: 400,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         boxShadow: const [
