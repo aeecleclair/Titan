@@ -53,6 +53,7 @@ class SignIn extends HookConsumerWidget {
                           isSignIn: true,
                             hintText: LoginTextConstants.email),
                         controller: username,
+                        keyboardType: TextInputType.emailAddress,
                       ),
                     ),
                     Padding(
@@ -62,6 +63,7 @@ class SignIn extends HookConsumerWidget {
                               isSignIn: true,
                               hintText: LoginTextConstants.password, notifier: hidePass),
                           controller: password,
+                          keyboardType: TextInputType.visiblePassword,
                           obscureText: hidePass.value,
                         )),
                     SignInBar(
