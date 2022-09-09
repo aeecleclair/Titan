@@ -39,17 +39,17 @@ class TopBar extends HookConsumerWidget {
                         page == EventPage.main
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
-                        color: Colors.grey.shade100,
+                        color: Colors.black,
                       ));
                 },
               ),
             ),
-            Text(
+            const Text(
               EventTextConstants.title,
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w500,
-                color: Colors.grey.shade100,
+                color: Colors.black,
               ),
             ),
             const SizedBox(

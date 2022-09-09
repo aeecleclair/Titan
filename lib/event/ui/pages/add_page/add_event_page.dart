@@ -34,7 +34,7 @@ class AddEventPage extends HookConsumerWidget {
     Widget w = const Center(
       child: CircularProgressIndicator(
         valueColor:
-            AlwaysStoppedAnimation<Color>(EventColorConstants.primaryColor),
+            AlwaysStoppedAnimation<Color>(EventColorConstants.blueGradient1),
       ),
     );
 
@@ -44,7 +44,7 @@ class AddEventPage extends HookConsumerWidget {
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: EventColorConstants.accentColor)),
+                color: Colors.black)),
         content: Column(
             children: CalendarEventType.values
                 .map(
@@ -53,10 +53,10 @@ class AddEventPage extends HookConsumerWidget {
                           style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
-                              color: EventColorConstants.accentColor)),
+                              color: Colors.black)),
                       selected: eventType.value.toString() == e.toString(),
                       value: e,
-                      activeColor: EventColorConstants.accentColor,
+                      activeColor: Colors.black,
                       groupValue: eventType.value,
                       onChanged: (s) {
                         eventType.value = e;
@@ -72,19 +72,19 @@ class AddEventPage extends HookConsumerWidget {
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: EventColorConstants.accentColor)),
+                color: Colors.black)),
         content: TextFormField(
           decoration: const InputDecoration(
             labelText: EventTextConstants.name,
             labelStyle: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: EventColorConstants.accentColor,
+              color: Colors.black,
             ),
             contentPadding: EdgeInsets.all(10),
             isDense: true,
             enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: EventColorConstants.accentColor)),
+                borderSide: BorderSide(color: Colors.black)),
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.blue)),
             errorBorder:
@@ -105,7 +105,7 @@ class AddEventPage extends HookConsumerWidget {
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: EventColorConstants.accentColor,
+            color: Colors.black,
           ),
         ),
         isActive: _currentStep.value >= 0,
@@ -117,19 +117,19 @@ class AddEventPage extends HookConsumerWidget {
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: EventColorConstants.accentColor)),
+                color: Colors.black)),
         content: TextFormField(
           decoration: const InputDecoration(
             labelText: EventTextConstants.organizer,
             labelStyle: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: EventColorConstants.accentColor,
+              color: Colors.black,
             ),
             contentPadding: EdgeInsets.all(10),
             isDense: true,
             enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: EventColorConstants.accentColor)),
+                borderSide: BorderSide(color: Colors.black)),
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.blue)),
             errorBorder:
@@ -150,7 +150,7 @@ class AddEventPage extends HookConsumerWidget {
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: EventColorConstants.accentColor,
+            color: Colors.black,
           ),
         ),
         isActive: _currentStep.value >= 0,
@@ -162,7 +162,7 @@ class AddEventPage extends HookConsumerWidget {
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: EventColorConstants.accentColor)),
+                color: Colors.black)),
         content: Column(
           children: [
             Container(
@@ -180,7 +180,7 @@ class AddEventPage extends HookConsumerWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
-                          color: EventColorConstants.accentColor,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -195,7 +195,7 @@ class AddEventPage extends HookConsumerWidget {
                               isDense: true,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: EventColorConstants.accentColor)),
+                                      color: Colors.black)),
                               focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.blue)),
                               errorBorder: UnderlineInputBorder(
@@ -215,7 +215,7 @@ class AddEventPage extends HookConsumerWidget {
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
-                              color: EventColorConstants.accentColor,
+                              color: Colors.black,
                             ),
                           ),
                         ),
@@ -239,7 +239,7 @@ class AddEventPage extends HookConsumerWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
-                            color: EventColorConstants.accentColor,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -255,7 +255,7 @@ class AddEventPage extends HookConsumerWidget {
                                 enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         color:
-                                            EventColorConstants.accentColor)),
+                                            Colors.black)),
                                 focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue)),
                                 errorBorder: UnderlineInputBorder(
@@ -275,7 +275,7 @@ class AddEventPage extends HookConsumerWidget {
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: EventColorConstants.accentColor,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -293,7 +293,7 @@ class AddEventPage extends HookConsumerWidget {
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: EventColorConstants.accentColor)),
+                color: Colors.black)),
         content: Column(
           children: <Widget>[
             TextFormField(
@@ -302,13 +302,13 @@ class AddEventPage extends HookConsumerWidget {
                 labelStyle: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: EventColorConstants.accentColor,
+                  color: Colors.black,
                 ),
                 contentPadding: EdgeInsets.all(10),
                 isDense: true,
                 enabledBorder: UnderlineInputBorder(
                     borderSide:
-                        BorderSide(color: EventColorConstants.accentColor)),
+                        BorderSide(color: Colors.black)),
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue)),
                 errorBorder: UnderlineInputBorder(
@@ -329,7 +329,7 @@ class AddEventPage extends HookConsumerWidget {
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: EventColorConstants.accentColor,
+                color: Colors.black,
               ),
             ),
           ],
@@ -343,7 +343,7 @@ class AddEventPage extends HookConsumerWidget {
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: EventColorConstants.accentColor)),
+                color: Colors.black)),
         content: Column(
           children: <Widget>[
             TextFormField(
@@ -352,13 +352,13 @@ class AddEventPage extends HookConsumerWidget {
                 labelStyle: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: EventColorConstants.accentColor,
+                  color: Colors.black,
                 ),
                 contentPadding: EdgeInsets.all(10),
                 isDense: true,
                 enabledBorder: UnderlineInputBorder(
                     borderSide:
-                        BorderSide(color: EventColorConstants.accentColor)),
+                        BorderSide(color: Colors.black)),
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue)),
                 errorBorder: UnderlineInputBorder(
@@ -379,7 +379,7 @@ class AddEventPage extends HookConsumerWidget {
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: EventColorConstants.accentColor,
+                color: Colors.black,
               ),
             ),
           ],
@@ -393,12 +393,12 @@ class AddEventPage extends HookConsumerWidget {
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: EventColorConstants.accentColor)),
+                color: Colors.black)),
         content: Column(
           children: [
             CheckboxListTile(
               title: const Text(EventTextConstants.recurrence,
-                  style: TextStyle(color: EventColorConstants.accentColor)),
+                  style: TextStyle(color: Colors.black)),
               value: recurrence.value,
               onChanged: (newValue) {
                 if (newValue != null) {
@@ -422,7 +422,7 @@ class AddEventPage extends HookConsumerWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
-                            color: EventColorConstants.accentColor,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -435,18 +435,18 @@ class AddEventPage extends HookConsumerWidget {
                             child: TextFormField(
                               controller: recurrenceEnd,
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(10),
+                                contentPadding: const EdgeInsets.all(10),
                                 isDense: true,
                                 enabled: recurrence.value,
-                                enabledBorder: UnderlineInputBorder(
+                                enabledBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         color:
-                                            EventColorConstants.accentColor)),
-                                focusedBorder: UnderlineInputBorder(
+                                            Colors.black)),
+                                focusedBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue)),
-                                errorBorder: UnderlineInputBorder(
+                                errorBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(color: Colors.red)),
-                                border: UnderlineInputBorder(
+                                border: const UnderlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color.fromARGB(255, 158, 158, 158),
                                   ),
@@ -461,7 +461,7 @@ class AddEventPage extends HookConsumerWidget {
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: EventColorConstants.accentColor,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -471,22 +471,22 @@ class AddEventPage extends HookConsumerWidget {
             TextFormField(
               decoration: InputDecoration(
                 labelText: EventTextConstants.recurrenceRule,
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: EventColorConstants.accentColor,
+                  color: Colors.black,
                 ),
-                contentPadding: EdgeInsets.all(10),
+                contentPadding: const EdgeInsets.all(10),
                 isDense: true,
                 enabled: recurrence.value,
-                enabledBorder: UnderlineInputBorder(
+                enabledBorder: const UnderlineInputBorder(
                     borderSide:
-                        BorderSide(color: EventColorConstants.accentColor)),
-                focusedBorder: UnderlineInputBorder(
+                        BorderSide(color: Colors.black)),
+                focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue)),
-                errorBorder: UnderlineInputBorder(
+                errorBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.red)),
-                border: UnderlineInputBorder(
+                border: const UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: Color.fromARGB(255, 158, 158, 158),
                   ),
@@ -502,7 +502,7 @@ class AddEventPage extends HookConsumerWidget {
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: EventColorConstants.accentColor,
+                color: Colors.black,
               ),
             ),
           ],
@@ -516,7 +516,7 @@ class AddEventPage extends HookConsumerWidget {
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: EventColorConstants.accentColor)),
+                color: Colors.black)),
         content: Column(
           children: <Widget>[
             Row(
@@ -525,12 +525,12 @@ class AddEventPage extends HookConsumerWidget {
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
                 Text(calendarEventTypeToString(eventType.value),
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
               ],
             ),
             Row(
@@ -539,12 +539,12 @@ class AddEventPage extends HookConsumerWidget {
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
                 Text(name.text,
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
               ],
             ),
             Row(
@@ -553,12 +553,12 @@ class AddEventPage extends HookConsumerWidget {
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
                 Text(organizer.text,
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
               ],
             ),
             Row(
@@ -567,12 +567,12 @@ class AddEventPage extends HookConsumerWidget {
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
                 Text(start.value.text,
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
               ],
             ),
             Row(
@@ -581,12 +581,12 @@ class AddEventPage extends HookConsumerWidget {
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
                 Text(end.value.text,
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
               ],
             ),
             Row(
@@ -595,12 +595,12 @@ class AddEventPage extends HookConsumerWidget {
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
                 Text(place.text,
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
               ],
             ),
             Row(
@@ -609,12 +609,12 @@ class AddEventPage extends HookConsumerWidget {
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
                 Text(description.text,
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
               ],
             ),
             Row(
@@ -623,7 +623,7 @@ class AddEventPage extends HookConsumerWidget {
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
                 Text(
                     recurrence.value
                         ? EventTextConstants.yes
@@ -631,7 +631,7 @@ class AddEventPage extends HookConsumerWidget {
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: EventColorConstants.accentColor)),
+                        color: Colors.black)),
               ],
             ),
             if (recurrence.value)
@@ -641,12 +641,12 @@ class AddEventPage extends HookConsumerWidget {
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: EventColorConstants.accentColor)),
+                          color: Colors.black)),
                   Text(recurrenceEnd.text,
                       style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: EventColorConstants.accentColor)),
+                          color: Colors.black)),
                 ],
               ),
             if (recurrence.value)
@@ -656,12 +656,12 @@ class AddEventPage extends HookConsumerWidget {
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: EventColorConstants.accentColor)),
+                          color: Colors.black)),
                   Text(recurrenceRule.text,
                       style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: EventColorConstants.accentColor)),
+                          color: Colors.black)),
                 ],
               ),
           ],
@@ -763,12 +763,7 @@ class AddEventPage extends HookConsumerWidget {
     return Expanded(
       child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Theme(
-              data: Theme.of(context).copyWith(
-                primaryColor: Color.fromARGB(255, 32, 170, 90),
-                unselectedWidgetColor: EventColorConstants.accentColor,
-              ),
-              child: w)),
+          child: w),
     );
   }
 

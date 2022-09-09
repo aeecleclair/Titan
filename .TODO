@@ -7,8 +7,12 @@ En cours :
         - Change Password
 
     - Events :
-        - Admin page (create, edit, delete)
-        - Display events (list, details)
+        - Admin page (edit) (API)
+        - DetailPage
+        - Display events (details) // Multiday, recurrent, onTap -> detailPage
+
+    - Drawer :
+        - Profile Picture
 
 
 Modules :

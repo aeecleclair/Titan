@@ -13,9 +13,9 @@ class EventDialog extends CustomDialogBox {
           title: title,
           descriptions: descriptions,
           onYes: onYes,
-          titleColor: EventColorConstants.accentColor,
-          descriptionColor: EventColorConstants.accentColorDark,
-          yesColor: EventColorConstants.primaryColor,
-          noColor: EventColorConstants.primaryColorDark,
+          titleColor: EventColorConstants.blueGradient2,
+          descriptionColor: EventColorConstants.darkBlue,
+          yesColor: EventColorConstants.redGradient1,
+          noColor: EventColorConstants.blueGradient1,
         );
 }
