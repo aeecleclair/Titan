@@ -1,7 +1,5 @@
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/class/rights.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class AmapUserRepository extends Repository {

@@ -20,7 +20,6 @@ final rightProvider =
   final token = ref.watch(tokenProvider);
   RightNotifier _rightNotifier = RightNotifier(token: token);
   _rightNotifier.loadRights();
-  print('loaded');
   return _rightNotifier;
 });
 

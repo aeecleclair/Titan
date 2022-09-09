@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
@@ -22,10 +21,8 @@ class MyApp extends HookConsumerWidget {
     final token = useState<String?>(null);
 
     useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
-      print(uri);
       recievedUri.value = uri.toString();
       token.value = uri?.queryParameters['token'];
-      print(token.value);
     }, onError: (Object err) {
       recievedUri.value = 'Failed to get initial uri: $err.';
     });
