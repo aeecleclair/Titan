@@ -19,7 +19,8 @@ class SignIn extends HookConsumerWidget {
     final username = useTextEditingController(text: "test2@ecl21.ec-lyon.fr");
     final password = useTextEditingController(text: "testPass");
     final hidePass = useState(true);
-    return Form(
+    return AutofillGroup(
+        child: Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
         padding: const EdgeInsets.all(32.0),
@@ -53,6 +54,7 @@ class SignIn extends HookConsumerWidget {
                           isSignIn: true,
                             hintText: LoginTextConstants.email),
                         controller: username,
+                        keyboardType: TextInputType.emailAddress,
                       ),
                     ),
                     Padding(
@@ -62,6 +64,7 @@ class SignIn extends HookConsumerWidget {
                               isSignIn: true,
                               hintText: LoginTextConstants.password, notifier: hidePass),
                           controller: password,
+                          keyboardType: TextInputType.visiblePassword,
                           obscureText: hidePass.value,
                         )),
                     SignInBar(
@@ -128,6 +131,6 @@ class SignIn extends HookConsumerWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }
