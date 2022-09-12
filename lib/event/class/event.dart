@@ -16,11 +16,10 @@ class Event {
   late final String organizer;
   late final DateTime start;
   late final DateTime end;
-  late final String place;
+  late final bool allDay;
+  late final String location;
   late final CalendarEventType type;
   late final String description;
-  late final bool recurrence;
-  late final DateTime? recurrenceEndDate;
   late final String? recurrenceRule;
 
   Event({
@@ -29,11 +28,10 @@ class Event {
     required this.organizer,
     required this.start,
     required this.end,
-    required this.place,
+    required this.location,
     required this.type,
     required this.description,
-    required this.recurrence,
-    this.recurrenceEndDate,
+    required this.allDay,
     this.recurrenceRule,
   });
 
@@ -43,13 +41,10 @@ class Event {
     organizer = json['organizer'];
     start = DateTime.parse(json['start']);
     end = DateTime.parse(json['end']);
-    place = json['place'];
+    allDay = json['all_day'];
+    location = json['location'];
     type = stringToCalendarEventType(json['type']);
     description = json['description'];
-    recurrence = json['recurrence'];
-    recurrenceEndDate = json['recurrence_end_date'] != null
-        ? DateTime.parse(json['recurrence_end_date'])
-        : null;
     recurrenceRule = json['recurrence_rule'];
   }
 
@@ -60,12 +55,10 @@ class Event {
     data['organizer'] = organizer;
     data['start'] = processDateToAPI(start);
     data['end'] = processDateToAPI(end);
-    data['place'] = place;
+    data['all_day'] = allDay;
+    data['location'] = location;
     data['type'] = calendarEventTypeToString(type);
     data['description'] = description;
-    data['recurrence'] = recurrence;
-    data['recurrence_end_date'] =
-        recurrenceEndDate != null ? processDateToAPI(recurrenceEndDate!) : null;
     data['recurrence_rule'] = recurrenceRule;
     return data;
   }
@@ -76,11 +69,9 @@ class Event {
     String? organizer,
     DateTime? start,
     DateTime? end,
-    String? place,
+    String? location,
     CalendarEventType? type,
     String? description,
-    bool? recurrence,
-    DateTime? recurrenceEndDate,
     String? recurrenceRule,
   }) {
     this.id = id ?? this.id;
@@ -88,11 +79,9 @@ class Event {
     this.organizer = organizer ?? this.organizer;
     this.start = start ?? this.start;
     this.end = end ?? this.end;
-    this.place = place ?? this.place;
+    this.location = location ?? this.location;
     this.type = type ?? this.type;
     this.description = description ?? this.description;
-    this.recurrence = recurrence ?? this.recurrence;
-    this.recurrenceEndDate = recurrenceEndDate ?? this.recurrenceEndDate;
     this.recurrenceRule = recurrenceRule ?? this.recurrenceRule;
   }
 
@@ -102,11 +91,9 @@ class Event {
     organizer = '';
     start = DateTime.now();
     end = DateTime.now();
-    place = '';
+    location = '';
     type = CalendarEventType.eventAE;
     description = '';
-    recurrence = false;
-    recurrenceEndDate = null;
     recurrenceRule = null;
   }
 }

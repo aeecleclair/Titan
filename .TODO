@@ -12,8 +12,8 @@ En cours :
 
     - Events :
         - Admin page (edit) (API)
-        - DetailPage
-        - Display events (details) // Multiday, recurrent, onTap -> detailPage
+        - Slide day
+        - Display events (details) // Multiday, recurrent
 
     - Drawer :
         - Profile Picture

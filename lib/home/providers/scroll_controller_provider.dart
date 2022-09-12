@@ -8,6 +8,5 @@ class ScrollControllerNotifier extends StateNotifier<ScrollController> {
 
 final scrollControllerProvider =
     StateNotifierProvider<ScrollControllerNotifier, ScrollController>((ref) {
-  ScrollController _scrollController = ScrollController();
-  return ScrollControllerNotifier(_scrollController);
+  return ScrollControllerNotifier(ScrollController());
 });
