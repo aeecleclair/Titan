@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
+import 'package:myecl/event/providers/event_page_provider.dart';
+import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/home/tools/functions.dart';
 
 class HourBarItems extends ConsumerWidget {
@@ -10,6 +13,9 @@ class HourBarItems extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final res = ref.watch(eventListProvider);
+    final eventPageNotifier = ref.watch(eventPageProvider.notifier);
+    final eventNotifier = ref.watch(eventProvider.notifier);
+    final appPageNotifier = ref.watch(pageProvider.notifier);
     List<Widget> hourBar = [];
     int dh = 0;
     double dl = 0;
@@ -25,9 +31,14 @@ class HourBarItems extends ConsumerWidget {
           ));
           hourBar.add(
             GestureDetector(
+              onTap: () {
+                eventNotifier.setEvent(r);
+                eventPageNotifier.setEventPage(EventPage.eventDetailfromCalendar);
+                appPageNotifier.setPage(ModuleType.event);
+              },
               child: Container(
-                margin:
-                    const EdgeInsets.only(left: 20, right: 15, top: 2, bottom: 2),
+                margin: const EdgeInsets.only(
+                    left: 20, right: 15, top: 2, bottom: 2),
                 width: 500,
                 height: l * 90.0 - 4,
                 decoration: BoxDecoration(

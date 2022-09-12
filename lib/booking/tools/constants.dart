@@ -19,7 +19,7 @@ class BookingTextConstants {
   static const String bookingCreated = "Réservation créée";
   static const String bookingDemand = "Demande de réservation";
   static const String bookingNote = "Note de la réservation";
-  static const String bookingPage = "Booking";
+  static const String bookingPage = "Réservation";
   static const String bookingReason = "Motif de la réservation";
   static const String confirmation = "Confirmation";
   static const String confirmed = "Validée";

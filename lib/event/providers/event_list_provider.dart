@@ -7,11 +7,37 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 class EventListNotifier extends ListNotifier<Event> {
   final EventRepository _eventRepository = EventRepository();
   EventListNotifier(String token) : super(const AsyncValue.loading()) {
+    print(token);
     _eventRepository.setToken(token);
   }
 
   Future<AsyncValue<List<Event>>> loadEventList() async {
-    return await loadList(_eventRepository.getAllEvent);
+    // return await loadList(_eventRepository.getAllEvent);
+    state = AsyncValue.data([
+      Event(
+        description: "xdftghij",
+        end: DateTime.now().add(Duration(hours: 2)),
+        id: 'etrykhgfeqretyjhg',
+        name: 'Test',
+        organizer: 'zegtq',
+        place: 'rzeherh',
+        recurrence: false,
+        start: DateTime.now(),
+        type: CalendarEventType.direction,
+      ),
+      Event(
+        description: "jhvkjhvhv",
+        end: DateTime.now().add(Duration(hours: 2)),
+        id: 'fuhojnpokhfty',
+        name: 'Test 2',
+        organizer: 'zegtq',
+        place: 'rzeherh',
+        recurrence: false,
+        start: DateTime.now(),
+        type: CalendarEventType.direction,
+      ),
+    ]);
+    return state;
   }
 
   Future<bool> addEvent(Event event) async {
@@ -40,5 +66,6 @@ final eventListProvider =
   final token = ref.watch(tokenProvider);
   EventListNotifier notifier = EventListNotifier(token);
   notifier.loadEventList();
+  print(notifier.state);
   return notifier;
 });
