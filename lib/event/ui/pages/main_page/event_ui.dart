@@ -22,6 +22,7 @@ class EventUi extends ConsumerWidget {
     final eventListNotfier = ref.watch(eventListProvider.notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () {
         eventNotifier.setEvent(e);
         pageNotifier.setEventPage(EventPage.eventDetailfromModule);
@@ -52,7 +53,7 @@ class EventUi extends ConsumerWidget {
                     width: 80,
                     alignment: Alignment.centerRight,
                     child: Text(
-                      e.place,
+                      e.location,
                       style: const TextStyle(fontSize: 13),
                     ),
                   ),

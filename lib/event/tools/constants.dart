@@ -13,6 +13,7 @@ class EventTextConstants {
   static const String addEvent = "Ajouter un événement";
   static const String addedEvent = "Événement ajouté";
   static const String addingError = "Erreur lors de l'ajout";
+  static const String allDay = "Toute la journée";
   static const String confirmation = "Confirmation";
   static const String dates = "Dates";
   static const String deletedEvent = "Événement supprimé";

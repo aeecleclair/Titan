@@ -17,15 +17,16 @@ class HourBarItems extends ConsumerWidget {
     final eventNotifier = ref.watch(eventProvider.notifier);
     final appPageNotifier = ref.watch(pageProvider.notifier);
     List<Widget> hourBar = [];
-    int dh = 0;
+    double dh = 0;
     double dl = 0;
     res.when(
       data: (data) {
+        data.sort((a, b) => a.start.compareTo(b.start));
         for (Event r in data) {
-          int h = r.start.hour;
+          double h = r.start.hour + r.start.minute / 60;
           double l = (r.end.hour - r.start.hour) +
               (r.end.minute - r.start.minute) / 60;
-          int ph = h - dh;
+          double ph = h - dh;
           hourBar.add(SizedBox(
             height: (ph - dl) * 90.0,
           ));
@@ -56,7 +57,7 @@ class HourBarItems extends ConsumerWidget {
                         const SizedBox(
                           height: 12,
                         ),
-                        Text(r.name + " - " + r.place,
+                        Text(r.name + " - " + r.location,
                             style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500,

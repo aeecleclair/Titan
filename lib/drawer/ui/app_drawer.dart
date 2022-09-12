@@ -53,7 +53,7 @@ class AppDrawer extends HookConsumerWidget {
         onHorizontalDragEnd: (details) => _controllerNotifier.onDragEnd(
             details, MediaQuery.of(context).size.width),
         onTap: () {},
-        child: AnimatedBuilder( 
+        child: AnimatedBuilder(
             animation: _controller,
             builder: (BuildContext context, _) {
               double animationVal = _controller.value;

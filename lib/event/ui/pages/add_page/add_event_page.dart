@@ -26,10 +26,9 @@ class AddEventPage extends HookConsumerWidget {
     final start = useTextEditingController();
     final end = useTextEditingController();
     final place = useTextEditingController();
-    final recurrenceEnd = useTextEditingController();
     final description = useTextEditingController();
     final recurrenceRule = useTextEditingController();
-    final recurrence = useState(false);
+    final allDay = useState(false);
 
     Widget w = const Center(
       child: CircularProgressIndicator(
@@ -389,7 +388,7 @@ class AddEventPage extends HookConsumerWidget {
             _currentStep.value >= 2 ? StepState.complete : StepState.disabled,
       ),
       Step(
-        title: const Text(EventTextConstants.recurrence,
+        title: const Text(EventTextConstants.allDay,
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -397,96 +396,33 @@ class AddEventPage extends HookConsumerWidget {
         content: Column(
           children: [
             CheckboxListTile(
-              title: const Text(EventTextConstants.recurrence,
+              title: const Text(EventTextConstants.allDay,
                   style: TextStyle(color: Colors.black)),
-              value: recurrence.value,
+              value: allDay.value,
               onChanged: (newValue) {
                 if (newValue != null) {
-                  recurrence.value = newValue;
+                  allDay.value = newValue;
                 }
               },
             ),
-            Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(bottom: 3),
-                        padding: const EdgeInsets.only(left: 10),
-                        child: const Text(
-                          EventTextConstants.recurrenceEndDate,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => recurrence.value
-                            ? _selectDate(context, recurrenceEnd)
-                            : {},
-                        child: SizedBox(
-                          child: AbsorbPointer(
-                            child: TextFormField(
-                              controller: recurrenceEnd,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.all(10),
-                                isDense: true,
-                                enabled: recurrence.value,
-                                enabledBorder: const UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color:
-                                            Colors.black)),
-                                focusedBorder: const UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue)),
-                                errorBorder: const UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.red)),
-                                border: const UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 158, 158, 158),
-                                  ),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (recurrence.value && value!.isEmpty) {
-                                  return EventTextConstants.noDateError;
-                                }
-                                return null;
-                              },
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ])),
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: EventTextConstants.recurrenceRule,
-                labelStyle: const TextStyle(
+                labelStyle: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   color: Colors.black,
                 ),
-                contentPadding: const EdgeInsets.all(10),
+                contentPadding: EdgeInsets.all(10),
                 isDense: true,
-                enabled: recurrence.value,
-                enabledBorder: const UnderlineInputBorder(
+                enabledBorder: UnderlineInputBorder(
                     borderSide:
                         BorderSide(color: Colors.black)),
-                focusedBorder: const UnderlineInputBorder(
+                focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue)),
-                errorBorder: const UnderlineInputBorder(
+                errorBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.red)),
-                border: const UnderlineInputBorder(
+                border: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: Color.fromARGB(255, 158, 158, 158),
                   ),
@@ -494,7 +430,7 @@ class AddEventPage extends HookConsumerWidget {
               ),
               controller: recurrenceRule,
               validator: (value) {
-                if (recurrence.value && value == null) {
+                if (value == null) {
                   return EventTextConstants.noRuleError;
                 }
                 return null;
@@ -619,13 +555,13 @@ class AddEventPage extends HookConsumerWidget {
             ),
             Row(
               children: [
-                const Text(EventTextConstants.recurrence + " : ",
+                const Text(EventTextConstants.allDay + " : ",
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
                 Text(
-                    recurrence.value
+                    allDay.value
                         ? EventTextConstants.yes
                         : EventTextConstants.no,
                     style: const TextStyle(
@@ -634,22 +570,7 @@ class AddEventPage extends HookConsumerWidget {
                         color: Colors.black)),
               ],
             ),
-            if (recurrence.value)
-              Row(
-                children: [
-                  const Text(EventTextConstants.recurrenceEndDate + " : ",
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
-                  Text(recurrenceEnd.text,
-                      style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
-                ],
-              ),
-            if (recurrence.value)
+            if (recurrenceRule.text.isNotEmpty)
               Row(
                 children: [
                   const Text(EventTextConstants.recurrenceRule + " : ",
@@ -713,13 +634,10 @@ class AddEventPage extends HookConsumerWidget {
                                     end: DateTime.parse(end.text),
                                     name: name.text,
                                     organizer: organizer.text,
-                                    place: place.text,
-                                    recurrence: recurrence.value,
+                                    allDay: allDay.value,
+                                    location: place.text,
                                     start: DateTime.parse(start.text),
                                     type: eventType.value,
-                                    recurrenceEndDate: recurrence.value
-                                        ? DateTime.parse(recurrenceEnd.text)
-                                        : null,
                                     recurrenceRule: recurrenceRule.text);
                                 final value =
                                     await eventListNotifier.addEvent(newEvent);

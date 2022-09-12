@@ -19,14 +19,21 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 class TodaysEvents extends HookConsumerWidget {
   const TodaysEvents({Key? key}) : super(key: key);
 
-  void center(bool _hasScrolled, ScrollController _scrollController,
-      DateTime today, HasScrolledNotifier _hasScrolledNotifier) {
-    if (!_hasScrolled) {
+  void center(
+      bool _hasScrolled,
+      ScrollController _scrollController,
+      DateTime today,
+      HasScrolledNotifier _hasScrolledNotifier,
+      ValueNotifier lastPosition) {
+    if (!_hasScrolled || lastPosition.value == 0.0) {
       Timer.periodic(const Duration(milliseconds: 1), (t) {
         if (_scrollController.positions.isNotEmpty) {
           _scrollController.jumpTo(
             (today.hour + today.minute / 60 + today.second / 3600) * 90.0 - 150,
           );
+          lastPosition.value =
+              (today.hour + today.minute / 60 + today.second / 3600) * 90.0 -
+                  150;
           t.cancel();
           _hasScrolledNotifier.setHasScrolled(true);
         }
@@ -42,7 +49,9 @@ class TodaysEvents extends HookConsumerWidget {
     final _hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
     final displayToday = useState(true);
     final res = ref.watch(eventListProvider);
-    center(_hasScrolled, _scrollController, today, _hasScrolledNotifier);
+    final lastPosition = useState(0.0);
+    center(_hasScrolled, _scrollController, today, _hasScrolledNotifier,
+        lastPosition);
     return SizedBox(
       height: MediaQuery.of(context).size.height * .65,
       child: Container(
@@ -67,7 +76,7 @@ class TodaysEvents extends HookConsumerWidget {
                           child: Text(
                               "Évènements du ${today.day} ${getMonth(today.month)}",
                               style: const TextStyle(
-                                  fontSize: 17,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black)),
                         ),
@@ -166,7 +175,7 @@ class TodaysEvents extends HookConsumerWidget {
                         displayToday.value = true;
                         _hasScrolledNotifier.setHasScrolled(false);
                         center(_hasScrolled, _scrollController, today,
-                            _hasScrolledNotifier);
+                            _hasScrolledNotifier, lastPosition);
                       },
                     ),
                   )
