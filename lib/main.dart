@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/login/ui/auth.dart';
-import 'package:uni_links/uni_links.dart';
+// import 'package:uni_links/uni_links.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -17,15 +17,15 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoggedIn = ref.watch(isLoggedInProvider);
-    final recievedUri = useState<String?>(null);
-    final token = useState<String?>(null);
+    // final recievedUri = useState<String?>(null);
+    // final token = useState<String?>(null);
 
-    useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
-      recievedUri.value = uri.toString();
-      token.value = uri?.queryParameters['token'];
-    }, onError: (Object err) {
-      recievedUri.value = 'Failed to get initial uri: $err.';
-    });
+    // useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
+    //   recievedUri.value = uri.toString();
+    //   token.value = uri?.queryParameters['token'];
+    // }, onError: (Object err) {
+    //   recievedUri.value = 'Failed to get initial uri: $err.';
+    // });
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'MyECL',

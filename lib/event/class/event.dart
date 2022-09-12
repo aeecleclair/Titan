@@ -95,4 +95,18 @@ class Event {
     this.recurrenceEndDate = recurrenceEndDate ?? this.recurrenceEndDate;
     this.recurrenceRule = recurrenceRule ?? this.recurrenceRule;
   }
+
+  Event.empty() {
+    id = '';
+    name = '';
+    organizer = '';
+    start = DateTime.now();
+    end = DateTime.now();
+    place = '';
+    type = CalendarEventType.eventAE;
+    description = '';
+    recurrence = false;
+    recurrenceEndDate = null;
+    recurrenceRule = null;
+  }
 }

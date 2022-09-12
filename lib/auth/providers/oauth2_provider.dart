@@ -7,27 +7,29 @@ final authTokenProvider =
     StateNotifierProvider<OAuth2TokenProvider, AsyncValue<Map<String, String>>>(
         (ref) {
   OAuth2TokenProvider _oauth2TokenRepository = OAuth2TokenProvider();
-  _oauth2TokenRepository.getTokenFromStorage();
+  // _oauth2TokenRepository.getTokenFromStorage();
   return _oauth2TokenRepository;
 });
 
 final isLoggedInProvider = Provider((ref) {
-  return ref.watch(authTokenProvider).when(
-    data: (tokens) {
-      return tokens["token"] == ""
-          ? false
-          : !JwtDecoder.isExpired(tokens["token"] as String);
-    },
-    error: (e, s) {
-      return false;
-    },
-    loading: () {
-      return false;
-    },
-  );
+  return true;
+  // return ref.watch(authTokenProvider).when(
+  //   data: (tokens) {
+  //     return tokens["token"] == ""
+  //         ? false
+  //         : !JwtDecoder.isExpired(tokens["token"] as String);
+  //   },
+  //   error: (e, s) {
+  //     return false;
+  //   },
+  //   loading: () {
+  //     return false;
+  //   },
+  // );
 });
 
 final loadingrovider = Provider((ref) {
+  return false;
   return ref.watch(authTokenProvider).when(
     data: (tokens) {
       return tokens["token"] != "" && ref.watch(isLoggedInProvider);
@@ -42,6 +44,7 @@ final loadingrovider = Provider((ref) {
 });
 
 final idProvider = Provider((ref) {
+  return "";
   return ref.watch(authTokenProvider).when(
     data: (tokens) {
       return tokens["token"] == ""
@@ -58,6 +61,7 @@ final idProvider = Provider((ref) {
 });
 
 final tokenProvider = Provider((ref) {
+  return "dxfcgvhjk";
   return ref.watch(authTokenProvider).when(
     data: (tokens) {
       return tokens["token"] as String;

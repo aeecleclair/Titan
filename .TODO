@@ -3,6 +3,10 @@ En cours :
         - Create account [mail -> app (uni_link)]
         - Reset password [mail -> app (uni_link)]
 
+    - Auth :
+        - Check nonce, state
+        - Implement external auth
+
     - Settings :
         - Change Password
 
@@ -17,6 +21,7 @@ En cours :
 
 Modules :
     - Vote (liste prétendance)
+    - Soli
     - Cinéma
     - JE
     - Piston

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
@@ -13,6 +14,7 @@ class TopBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(eventPageProvider);
     final pageNotifier = ref.watch(eventPageProvider.notifier);
+    final appPageNotifier = ref.watch(pageProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -33,6 +35,14 @@ class TopBar extends HookConsumerWidget {
                             break;
                           case EventPage.addEvent:
                             pageNotifier.setEventPage(EventPage.main);
+                            break;
+                          case EventPage.eventDetailfromModule:
+                            pageNotifier.setEventPage(EventPage.main);
+                            break;
+                          case EventPage.eventDetailfromCalendar:
+                            appPageNotifier.setPage(ModuleType.home);
+                            pageNotifier.setEventPage(EventPage.main);
+                            break;
                         }
                       },
                       icon: FaIcon(
