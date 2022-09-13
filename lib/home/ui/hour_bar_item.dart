@@ -28,11 +28,10 @@ class HourBarItems extends ConsumerWidget {
                     0 &&
                 processDateToAPIWitoutHour(element.end).compareTo(strNow) >= 0)
             .toList();
-        int n = 0;
         int i = 1;
         List<Event> toGather = [];
         while (i < todaysEvent.length) {
-          Event r = todaysEvent[n];
+          Event r = todaysEvent[i - 1];
           DateTime start = correctBeforeDate(r.start);
           DateTime end = correctAfterDate(r.end);
           Event nextR = todaysEvent[i];
@@ -96,7 +95,6 @@ class HourBarItems extends ConsumerWidget {
               dh = nextH;
               dl = maxL.reduce(max);
             }
-            n++;
           }
           i++;
         }
