@@ -1,29 +1,34 @@
 En cours :
+
+    - API :
+        - Right Loan, Event, Admin (1)
+        - Event RecurrentRule (2)
+
     - Login :
-        - Create account [mail -> app (uni_link)]
-        - Reset password [mail -> app (uni_link)]
+        - Create account [mail -> app (uni_link)] (2)
+        - Reset password [mail -> app (uni_link)] (2)
 
     - Auth :
-        - Check nonce, state
-        - Implement external auth
+        - Check nonce, state (1)
+        - Implement external auth (3)
 
     - Settings :
-        - Change Password
+        - Change Password (1)
 
     - Events :
         - Admin page (edit) (API)
-        - Slide day
-        - Display events (details) // Multiday, recurrent
+        - Slide day (4)
+        - Display events recurrent (2)
 
     - Drawer :
-        - Profile Picture
+        - Profile Picture (5)
 
 
 Modules :
-    - Vote (liste prétendance)
-    - Soli
-    - Cinéma
-    - JE
-    - Piston
+    - Vote (liste prétendance) (1)
+    - Soli (3)
+    - Cinéma (2)
+    - JE (4)
+    - Piston (2)
     ...
-    - Messagerie
+    - Messagerie (5)
