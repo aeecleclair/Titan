@@ -15,7 +15,7 @@ class PageSwitcher extends ConsumerWidget {
       case EventPage.main:
         return const MainPage();
       case EventPage.addEvent:
-        return const AddEventPage();      
+        return const AddEventPage();
       case EventPage.eventDetailfromModule:
         return const DetailPage();
       case EventPage.eventDetailfromCalendar:

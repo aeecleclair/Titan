@@ -1,11 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
-import 'package:myecl/event/providers/event_page_provider.dart';
-import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/home/tools/functions.dart';
+import 'package:myecl/home/ui/even_ui.dart';
+import 'package:myecl/tools/functions.dart';
 
 class HourBarItems extends ConsumerWidget {
   const HourBarItems({Key? key}) : super(key: key);
@@ -13,74 +14,148 @@ class HourBarItems extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final res = ref.watch(eventListProvider);
-    final eventPageNotifier = ref.watch(eventPageProvider.notifier);
-    final eventNotifier = ref.watch(eventProvider.notifier);
-    final appPageNotifier = ref.watch(pageProvider.notifier);
+    final now = DateTime.now();
+    final strNow = processDateToAPIWitoutHour(now);
     List<Widget> hourBar = [];
     double dh = 0;
     double dl = 0;
     res.when(
       data: (data) {
         data.sort((a, b) => a.start.compareTo(b.start));
-        for (Event r in data) {
-          double h = r.start.hour + r.start.minute / 60;
-          double l = (r.end.hour - r.start.hour) +
-              (r.end.minute - r.start.minute) / 60;
+        final todaysEvent = data
+            .where((element) =>
+                processDateToAPIWitoutHour(element.start).compareTo(strNow) <=
+                    0 &&
+                processDateToAPIWitoutHour(element.end).compareTo(strNow) >= 0)
+            .toList();
+        int n = 0;
+        int i = 1;
+        List<Event> toGather = [];
+        while (i < todaysEvent.length) {
+          Event r = todaysEvent[n];
+          DateTime start = correctBeforeDate(r.start);
+          DateTime end = correctAfterDate(r.end);
+          Event nextR = todaysEvent[i];
+          if (isDateBetween(nextR.start, start, end)) {
+            if (!toGather.contains(r)) {
+              toGather.add(r);
+            }
+            toGather.add(nextR);
+          } else {
+            if (toGather.isEmpty) {
+              double h = start.hour + start.minute / 60;
+              double l =
+                  (end.hour - start.hour) + (end.minute - start.minute) / 60;
+              double ph = h - dh;
+              hourBar.add(SizedBox(
+                height: (ph - dl) * 90.0,
+              ));
+              hourBar.add(Container(
+                  margin: const EdgeInsets.only(
+                    left: 20,
+                    right: 15,
+                  ),
+                  child: EventUI(r: r, l: l)));
+              dh = h;
+              dl = l;
+            } else {
+              DateTime start = correctBeforeDate(toGather[0].start);
+              double nextH = start.hour + start.minute / 60;
+              List<double> maxL = [];
+              hourBar.add(Container(
+                  margin: const EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                  ),
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: toGather.map((e) {
+                    DateTime start = correctBeforeDate(e.start);
+                    DateTime end = correctAfterDate(e.end);
+                    double h = start.hour + start.minute / 60;
+                    double l = (end.hour - start.hour) +
+                        (end.minute - start.minute) / 60;
+                    maxL.add(l);
+                    double ph = h - dh;
+                    return Container(
+                      width: 180 / toGather.length,
+                      margin: const EdgeInsets.only(
+                        left: 10,
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: (ph - dl) * 90.0,
+                          ),
+                          EventUI(r: e, l: l, n: toGather.length),
+                        ],
+                      ),
+                    );
+                  }).toList())));
+              toGather = [];
+              dh = nextH;
+              dl = maxL.reduce(max);
+            }
+            n++;
+          }
+          i++;
+        }
+        if (toGather.isEmpty) {
+          Event nextR = todaysEvent[i - 1];
+          DateTime start = correctBeforeDate(nextR.start);
+          DateTime end = correctAfterDate(nextR.end);
+          double h = start.hour + start.minute / 60;
+          double l = (end.hour - start.hour) + (end.minute - start.minute) / 60;
           double ph = h - dh;
           hourBar.add(SizedBox(
             height: (ph - dl) * 90.0,
           ));
-          hourBar.add(
-            GestureDetector(
-              onTap: () {
-                eventNotifier.setEvent(r);
-                eventPageNotifier.setEventPage(EventPage.eventDetailfromCalendar);
-                appPageNotifier.setPage(ModuleType.event);
-              },
-              child: Container(
-                margin: const EdgeInsets.only(
-                    left: 20, right: 15, top: 2, bottom: 2),
-                width: 500,
-                height: l * 90.0 - 4,
-                decoration: BoxDecoration(
-                  color: uuidToColor(r.id),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  children: [
-                    const SizedBox(
-                      width: 25,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        Text(r.name + " - " + r.location,
-                            style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white)),
-                        const SizedBox(
-                          height: 3,
-                        ),
-                        l > 0.5
-                            ? Text(doubleToTime(l),
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white.withOpacity(0.5)))
-                            : const SizedBox(),
-                      ],
-                    ),
-                  ],
-                ),
+          hourBar.add(Container(
+              margin: const EdgeInsets.only(
+                left: 20,
+                right: 15,
               ),
-            ),
-          );
+              child: EventUI(r: nextR, l: l)));
           dh = h;
           dl = l;
+        } else {
+          DateTime start = correctBeforeDate(toGather[0].start);
+          double nextH = start.hour + start.minute / 60;
+          List<double> maxL = [];
+          hourBar.add(Container(
+              margin: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                  children: toGather.map((e) {
+                DateTime start = correctBeforeDate(e.start);
+                DateTime end = correctAfterDate(e.end);
+                double h = start.hour + start.minute / 60;
+                double l =
+                    (end.hour - start.hour) + (end.minute - start.minute) / 60;
+                maxL.add(l);
+                double ph = h - dh;
+                return Container(
+                  width: 180 / toGather.length,
+                  margin: const EdgeInsets.only(
+                    left: 10,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: (ph - dl) * 90.0,
+                      ),
+                      EventUI(r: e, l: l, n: toGather.length),
+                    ],
+                  ),
+                );
+              }).toList())));
+          toGather = [];
+          dh = nextH;
+          dl = maxL.reduce(max);
         }
       },
       loading: () =>

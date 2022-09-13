@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/tools/functions.dart';
 
 String doubleToTime(double d) {
   int h = d.toInt();
@@ -49,7 +50,7 @@ Color uuidToColor(String id) {
   i = i % 15;
   switch (i) {
     case 0:
-      return const Color(0xFFf6a278);
+      return const Color(0xFF3B1BBD);
     case 1:
       return const Color(0xFFf16744);
     case 2:
@@ -61,7 +62,7 @@ Color uuidToColor(String id) {
     case 5:
       return const Color(0xFF0193a5);
     case 6:
-      return const Color(0xFFee4540);
+      return const Color(0xFF35bbca);
     case 7:
       return const Color(0xFFc72c41);
     case 8:
@@ -81,4 +82,26 @@ Color uuidToColor(String id) {
     default:
       return const Color(0xFF004a59);
   }
+}
+
+bool isDateBetween(DateTime date, DateTime start, DateTime end) {
+  return date.isAfter(start) && date.isBefore(end);
+}
+
+DateTime correctBeforeDate(DateTime start) {
+  final now = DateTime.now();
+  final strNow = processDateToAPIWitoutHour(now);
+  if (processDateToAPIWitoutHour(start).compareTo(strNow) < 0) {
+    return DateTime(now.year, now.month, now.day, 0, 0);
+  }
+  return start;
+}
+
+DateTime correctAfterDate(DateTime end) {
+  final now = DateTime.now();
+  final strNow = processDateToAPIWitoutHour(now);
+  if (processDateToAPIWitoutHour(end).compareTo(strNow) > 0) {
+    return DateTime(now.year, now.month, now.day, 23, 59);
+  }
+  return end;
 }
