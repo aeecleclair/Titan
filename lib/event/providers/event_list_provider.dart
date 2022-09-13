@@ -58,6 +58,21 @@ class EventListNotifier extends ListNotifier<Event> {
         event.id,
         event);
   }
+
+  Future<Event> findbyId(Object? id) async {
+    return state.when(
+      data: (data) {
+        return data.firstWhere((element) => element.id == id,
+            orElse: () => Event.empty());
+      },
+      loading: () {
+        return Event.empty();
+      },
+      error: (error, stackTrace) {
+        return Event.empty();
+      },
+    );
+  }
 }
 
 final eventListProvider =

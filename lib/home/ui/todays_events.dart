@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
+import 'package:myecl/event/providers/event_page_provider.dart';
+import 'package:myecl/event/providers/event_provider.dart';
+import 'package:myecl/home/providers/display_today_provider.dart';
 import 'package:myecl/home/providers/scroll_controller_provider.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
 import 'package:myecl/home/providers/today_provider.dart';
@@ -47,7 +51,8 @@ class TodaysEvents extends HookConsumerWidget {
     final _scrollController = ref.watch(scrollControllerProvider);
     final _hasScrolled = ref.watch(hasScrolledProvider);
     final _hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
-    final displayToday = useState(true);
+    final displayToday = ref.watch(displayTodayProvider);
+    final displayTodayNotifier = ref.watch(displayTodayProvider.notifier);
     final res = ref.watch(eventListProvider);
     final lastPosition = useState(0.0);
     center(_hasScrolled, _scrollController, today, _hasScrolledNotifier,
@@ -63,7 +68,7 @@ class TodaysEvents extends HookConsumerWidget {
             Radius.circular(30),
           ),
         ),
-        child: displayToday.value
+        child: displayToday
             ? Column(
                 children: [
                   Container(
@@ -83,7 +88,7 @@ class TodaysEvents extends HookConsumerWidget {
                         IconButton(
                           icon: const HeroIcon(HeroIcons.calendar),
                           onPressed: () {
-                            displayToday.value = false;
+                            displayTodayNotifier.setDisplay(false);
                           },
                         )
                       ],
@@ -131,6 +136,7 @@ class TodaysEvents extends HookConsumerWidget {
                 height: MediaQuery.of(context).size.height - 15,
                 child: Stack(children: [
                   SfCalendar(
+                    onTap: (details) async => calendarTapped(details, ref),
                     dataSource: _getCalendarDataSource(res),
                     view: CalendarView.week,
                     selectionDecoration: BoxDecoration(
@@ -172,7 +178,7 @@ class TodaysEvents extends HookConsumerWidget {
                     child: IconButton(
                       icon: const HeroIcon(HeroIcons.calendar),
                       onPressed: () {
-                        displayToday.value = true;
+                        displayTodayNotifier.setDisplay(true);
                         _hasScrolledNotifier.setHasScrolled(false);
                         center(_hasScrolled, _scrollController, today,
                             _hasScrolledNotifier, lastPosition);
@@ -185,11 +191,27 @@ class TodaysEvents extends HookConsumerWidget {
   }
 }
 
+void calendarTapped(CalendarTapDetails details, WidgetRef ref) async {
+  final eventPageNotifier = ref.watch(eventPageProvider.notifier);
+  final eventNotifier = ref.watch(eventProvider.notifier);
+  final appPageNotifier = ref.watch(pageProvider.notifier);
+  final eventListNotifier = ref.watch(eventListProvider.notifier);
+  if (details.targetElement == CalendarElement.appointment ||
+      details.targetElement == CalendarElement.agenda) {
+    final Appointment appointmentDetails = details.appointments![0];
+    final event = await eventListNotifier.findbyId(appointmentDetails.id);
+    eventNotifier.setEvent(event);
+    eventPageNotifier.setEventPage(EventPage.eventDetailfromCalendar);
+    appPageNotifier.setPage(ModuleType.event);
+  }
+}
+
 _AppointmentDataSource _getCalendarDataSource(AsyncValue<List<Event>> res) {
   List<Appointment> appointments = <Appointment>[];
   res.whenData((value) {
     value.map((e) {
       appointments.add(Appointment(
+        id: e.id,
         startTime: e.start,
         endTime: e.end,
         subject: e.name,
