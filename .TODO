@@ -1,8 +1,4 @@
 En cours :
-
-    - API :
-->        - Event RecurrentRule (1)
-
     - Login :
         - Create account [mail -> app (uni_link)] (2)
         - Reset password [mail -> app (uni_link)] (2)
@@ -17,8 +13,9 @@ En cours :
     - Events :
         - Admin page (edit) (API)
         - Slide day (4)
-        - neverEnd / neverStart arrow
+        - neverEnd / neverStart arrow (3)
         - Display events recurrent (2)
+        - Dates issue w/ recurrent events // allDay (1)
 
     - Drawer :
         - Profile Picture (5)

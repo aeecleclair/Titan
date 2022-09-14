@@ -216,9 +216,10 @@ _AppointmentDataSource _getCalendarDataSource(AsyncValue<List<Event>> res) {
         endTime: e.end,
         subject: e.name,
         color: uuidToColor(e.id),
-        isAllDay: false,
+        isAllDay: e.allDay,
         startTimeZone: "Europe/Paris",
         endTimeZone: "Europe/Paris",
+        recurrenceRule: e.recurrenceRule,
       ));
     }).toList();
   });

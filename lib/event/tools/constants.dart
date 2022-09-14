@@ -25,8 +25,10 @@ class EventTextConstants {
   static const String eventType = "Type d'événement";
   static const String incorrectOrMissingFields =
       "Certains champs sont incorrects ou manquants";
+  static const String interval = "Intervalle";
   static const String invalidDates =
       "La date de fin doit être après la date de début";
+  static const String invalidIntervalError = "Veuillez entrer un intervalle valide";
   static const String name = "Nom";
   static const String next = "Suivant";
   static const String no = "Non";
@@ -41,9 +43,12 @@ class EventTextConstants {
   static const String place = "Lieu";
   static const String previous = "Précédent";
   static const String recurrence = "Récurrence";
+  static const String recurrenceDays = "Jours de récurrence";
   static const String recurrenceEndDate = "Date de fin de la récurrence";
   static const String recurrenceRule = "Règle de récurrence";
   static const String startDate = "Date de début";
   static const String title = "Événements";
   static const String yes = "Oui";
+  static const String eventEvery = "Toutes les";
+  static const String weeks = "semaines";
 }

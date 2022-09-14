@@ -617,15 +617,6 @@ class AddBookingPage extends HookConsumerWidget {
         initialDate: now,
         firstDate: now,
         lastDate: DateTime(now.year + 1, now.month, now.day));
-    if (picked != null) {
-      final time = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.fromDateTime(picked),
-      );
-      dateController.text = DateFormat('yyyy-MM-dd HH:mm')
-          .format(DateTimeField.combine(picked, time));
-    } else {
-      dateController.text = DateFormat('yyyy-MM-dd HH:mm').format(now);
-    }
+    dateController.text = DateFormat('yyyy-MM-dd').format(picked ?? now);
   }
 }
