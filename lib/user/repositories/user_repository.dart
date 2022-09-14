@@ -29,4 +29,17 @@ class UserRepository extends Repository {
   Future<User> createUser(User user) async {
     return User.fromJson(await create(user));
   }
+
+  Future<bool> changePassword(
+      String oldPassword, String newPassword, String userId) async {
+    try {
+      return (await create({
+        "old_password": oldPassword,
+        "new_password": newPassword,
+        "user_id": userId
+      }, suffix: "change-password"))["success"];
+    } catch (e) {
+      return false;
+    }
+  }
 }

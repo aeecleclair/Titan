@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
@@ -112,6 +113,51 @@ class MainPage extends HookConsumerWidget {
                       ),
                     )),
               ]),
+              const SizedBox(
+                height: 50,
+              ),
+              GestureDetector(
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    gradient:  LinearGradient(
+                      colors: const [
+                        SettingsColorConstants.gradient1,
+                        SettingsColorConstants.gradient2,
+                      ],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: SettingsColorConstants.gradient2.withOpacity(0.5),
+                        blurRadius: 5,
+                        offset: const Offset(2, 2),
+                        spreadRadius: 2,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: const [
+                      Text(
+                        "Changer de mot de passe",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                      HeroIcon(
+                        HeroIcons.lockClosed,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  pageNotifier.setSettingsPage(SettingsPage.changePass);
+                },
+              ),
               const SizedBox(
                 height: 50,
               ),
