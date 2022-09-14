@@ -806,34 +806,36 @@ class AddEventPage extends HookConsumerWidget {
                         color: Colors.black)),
               ],
             ),
-            Row(
-              children: [
-                const Text(EventTextConstants.startDate + " : ",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black)),
-                Text(start.value.text,
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black)),
-              ],
-            ),
-            Row(
-              children: [
-                const Text(EventTextConstants.endDate + " : ",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black)),
-                Text(end.value.text,
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black)),
-              ],
-            ),
+            if (!recurrent.value || !allDay.value)
+              Row(
+                children: [
+                  const Text(EventTextConstants.startDate + " : ",
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                  Text(start.value.text,
+                      style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                ],
+              ),
+            if (!recurrent.value || !allDay.value)
+              Row(
+                children: [
+                  const Text(EventTextConstants.endDate + " : ",
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                  Text(end.value.text,
+                      style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                ],
+              ),
             Row(
               children: [
                 const Text(EventTextConstants.place + " : ",
@@ -973,6 +975,12 @@ class AddEventPage extends HookConsumerWidget {
                             return;
                           }
                           if (key.currentState!.validate()) {
+                            if (start.text == "") {
+                              start.text = DateTime.now().subtract(const Duration(minutes: 1)).toString();
+                            }
+                            if (end.text == "") {
+                              end.text = DateTime.now().toString();
+                            }
                             if (start.text.compareTo(end.text) >= 0) {
                               displayEventToast(context, TypeMsg.error,
                                   EventTextConstants.invalidDates);

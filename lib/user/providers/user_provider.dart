@@ -20,7 +20,7 @@ class UserNotifier extends SingleNotifier<User> {
   }
 
   Future<AsyncValue<User>> loadMe() async {
-    return await load(() async =>_userRepository.getMe());
+    return await load(() async => _userRepository.getMe());
   }
 
   Future<bool> updateUser(User user) async {
@@ -29,6 +29,12 @@ class UserNotifier extends SingleNotifier<User> {
 
   Future<bool> updateMe(User user) async {
     return await update(_userRepository.updateMe, user);
+  }
+
+  Future<bool> changePassword(
+      String oldPassword, String newPassword, User user) async {
+    return await _userRepository.changePassword(
+        oldPassword, newPassword, user.id);
   }
 }
 

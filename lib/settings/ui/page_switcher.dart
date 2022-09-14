@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
+import 'package:myecl/settings/ui/pages/change_pass/change_pass.dart';
 import 'package:myecl/settings/ui/pages/info_page/info_page.dart';
 import 'package:myecl/settings/ui/pages/main_page/main_page.dart';
 
@@ -15,6 +16,8 @@ class PageSwitcher extends ConsumerWidget {
         return const MainPage();
       case SettingsPage.info:
         return const InfoPage();
+      case SettingsPage.changePass:
+        return const ChangePassPage();
     }
   }
 }
