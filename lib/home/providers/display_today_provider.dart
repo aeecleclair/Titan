@@ -6,7 +6,7 @@ final displayTodayProvider =
 });
 
 class DisplayTodayNotifier extends StateNotifier<bool> {
-  DisplayTodayNotifier() : super(false);
+  DisplayTodayNotifier() : super(true);
 
   void setDisplay(bool i) {
     state = i;

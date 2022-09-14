@@ -1,8 +1,7 @@
 En cours :
 
     - API :
-        - Right Loan, Event, Admin (1)
-        - Event RecurrentRule (2)
+->        - Event RecurrentRule (1)
 
     - Login :
         - Create account [mail -> app (uni_link)] (2)
@@ -18,6 +17,7 @@ En cours :
     - Events :
         - Admin page (edit) (API)
         - Slide day (4)
+        - neverEnd / neverStart arrow
         - Display events recurrent (2)
 
     - Drawer :

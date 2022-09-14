@@ -17,7 +17,7 @@ class MainPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final loanList = ref.watch(loanListProvider);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
-    final isLoanAdmin = ref.watch(isLoanAdminProvider);
+    final isAdmin = ref.watch(isLoanAdmin);
     bool displayHist = false;
     List<Widget> listWidget = [
       Container(
@@ -32,7 +32,7 @@ class MainPage extends HookConsumerWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              isLoanAdmin
+              isAdmin
                   ? Row(
                       children: [
                         IconButton(
