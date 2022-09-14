@@ -236,10 +236,10 @@ _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
   res.where((e) => e.decision == Decision.approved).map((e) {
     RecurrenceProperties recurrence =
         RecurrenceProperties(startDate: DateTime.now());
-    recurrence.recurrenceType = RecurrenceType.daily;
+    recurrence.recurrenceType = RecurrenceType.weekly;
     recurrence.recurrenceRange = RecurrenceRange.noEndDate;
     recurrence.weekDays = WeekDays.values;
-    recurrence.interval = 7;
+    recurrence.interval = 1;
     appointments.add(Appointment(
         startTime: e.start,
         endTime: e.end,

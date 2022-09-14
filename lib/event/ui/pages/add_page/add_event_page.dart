@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
+import 'package:myecl/event/providers/selected_days_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEventPage extends HookConsumerWidget {
   const AddEventPage({Key? key}) : super(key: key);
@@ -27,9 +30,21 @@ class AddEventPage extends HookConsumerWidget {
     final end = useTextEditingController();
     final place = useTextEditingController();
     final description = useTextEditingController();
-    final recurrenceRule = useTextEditingController();
     final allDay = useState(false);
-
+    final recurrent = useState(false);
+    final interval = useTextEditingController(text: "1");
+    final recurrenceEndDate = useTextEditingController();
+    final selectedDays = ref.watch(selectedDaysProvider);
+    final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
+    final dayList = [
+      'Lundi',
+      'Mardi',
+      'Mercredi',
+      'Jeudi',
+      'Vendredi',
+      'Samedi',
+      'Dimanche'
+    ];
     Widget w = const Center(
       child: CircularProgressIndicator(
         valueColor:
@@ -164,50 +179,102 @@ class AddEventPage extends HookConsumerWidget {
                 color: Colors.black)),
         content: Column(
           children: [
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(bottom: 3),
-                      padding: const EdgeInsets.only(left: 10),
-                      child: const Text(
-                        EventTextConstants.startDate,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => _selectDate(context, start),
-                      child: SizedBox(
-                        child: AbsorbPointer(
-                          child: TextFormField(
-                            controller: start,
-                            decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.all(10),
+            CheckboxListTile(
+              title: const Text(EventTextConstants.recurrence,
+                  style: TextStyle(color: Colors.black)),
+              value: recurrent.value,
+              onChanged: (newValue) {
+                if (newValue != null) {
+                  recurrent.value = newValue;
+                  start.text = "";
+                  end.text = "";
+                }
+              },
+            ),
+            CheckboxListTile(
+              title: const Text(EventTextConstants.allDay,
+                  style: TextStyle(color: Colors.black)),
+              value: allDay.value,
+              onChanged: (newValue) {
+                if (newValue != null) {
+                  allDay.value = newValue;
+                  start.text = "";
+                  end.text = "";
+                }
+              },
+            ),
+            recurrent.value
+                ? Column(
+                    children: [
+                      Column(
+                        children: [
+                          const Text(EventTextConstants.recurrenceDays,
+                              style: TextStyle(color: Colors.black)),
+                          Column(
+                              children: dayList
+                                  .map(
+                                    (e) => CheckboxListTile(
+                                      title: Text(e,
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.black)),
+                                      value: selectedDays[dayList.indexOf(e)],
+                                      onChanged: (s) {
+                                        selectedDaysNotifier
+                                            .toggle(dayList.indexOf(e));
+                                      },
+                                    ),
+                                  )
+                                  .toList()),
+                          const Text(EventTextConstants.interval,
+                              style: TextStyle(color: Colors.black)),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              prefix: Container(
+                                margin: const EdgeInsets.only(right: 10),
+                                child: const Text(EventTextConstants.eventEvery,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black)),
+                              ),
+                              suffix: Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                child: const Text(EventTextConstants.weeks,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black)),
+                              ),
+                              labelText: EventTextConstants.interval,
+                              labelStyle: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                              ),
+                              contentPadding: const EdgeInsets.all(10),
                               isDense: true,
-                              enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black)),
-                              focusedBorder: UnderlineInputBorder(
+                              enabledBorder: const UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black)),
+                              focusedBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.blue)),
-                              errorBorder: UnderlineInputBorder(
+                              errorBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.red)),
-                              border: UnderlineInputBorder(
+                              border: const UnderlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Color.fromARGB(255, 158, 158, 158),
                                 ),
                               ),
                             ),
+                            controller: interval,
                             validator: (value) {
-                              if (value!.isEmpty) {
-                                return EventTextConstants.noDateError;
+                              if (value == null) {
+                                return EventTextConstants.noDescriptionError;
+                              } else if (int.tryParse(value) == null) {
+                                return EventTextConstants.invalidIntervalError;
+                              } else if (int.parse(value) < 1) {
+                                return EventTextConstants.invalidIntervalError;
                               }
                               return null;
                             },
@@ -217,70 +284,374 @@ class AddEventPage extends HookConsumerWidget {
                               color: Colors.black,
                             ),
                           ),
-                        ),
+                          if (!allDay.value)
+                            Column(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 20, horizontal: 30),
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          margin:
+                                              const EdgeInsets.only(bottom: 3),
+                                          padding:
+                                              const EdgeInsets.only(left: 10),
+                                          child: const Text(
+                                            EventTextConstants.startDate,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () => allDay.value
+                                              ? _selectDate(context, start)
+                                              : _selectOnlyHour(context, start),
+                                          child: SizedBox(
+                                            child: AbsorbPointer(
+                                              child: TextFormField(
+                                                controller: start,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  contentPadding:
+                                                      EdgeInsets.all(10),
+                                                  isDense: true,
+                                                  enabledBorder:
+                                                      UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .black)),
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .blue)),
+                                                  errorBorder:
+                                                      UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .red)),
+                                                  border: UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                          255, 158, 158, 158),
+                                                    ),
+                                                  ),
+                                                ),
+                                                validator: (value) {
+                                                  if (value!.isEmpty) {
+                                                    return EventTextConstants
+                                                        .noDateError;
+                                                  }
+                                                  return null;
+                                                },
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ]),
+                                ),
+                                Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 20, horizontal: 30),
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            alignment: Alignment.centerLeft,
+                                            margin: const EdgeInsets.only(
+                                                bottom: 3),
+                                            padding:
+                                                const EdgeInsets.only(left: 10),
+                                            child: const Text(
+                                              EventTextConstants.endDate,
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () => allDay.value
+                                                ? _selectDate(context, end)
+                                                : _selectOnlyHour(context, end),
+                                            child: SizedBox(
+                                              child: AbsorbPointer(
+                                                child: TextFormField(
+                                                  controller: end,
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    contentPadding:
+                                                        EdgeInsets.all(10),
+                                                    isDense: true,
+                                                    enabledBorder:
+                                                        UnderlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                                    color: Colors
+                                                                        .black)),
+                                                    focusedBorder:
+                                                        UnderlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                                    color: Colors
+                                                                        .blue)),
+                                                    errorBorder:
+                                                        UnderlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                                    color: Colors
+                                                                        .red)),
+                                                    border:
+                                                        UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                            255, 158, 158, 158),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return EventTextConstants
+                                                          .noDateError;
+                                                    }
+                                                    return null;
+                                                  },
+                                                  style: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ])),
+                              ],
+                            ),
+                          Container(
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 30),
+                              child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      margin: const EdgeInsets.only(bottom: 3),
+                                      padding: const EdgeInsets.only(left: 10),
+                                      child: const Text(
+                                        EventTextConstants.recurrenceEndDate,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => _selectOnlyDayDate(
+                                          context, recurrenceEndDate),
+                                      child: SizedBox(
+                                        child: AbsorbPointer(
+                                          child: TextFormField(
+                                            controller: recurrenceEndDate,
+                                            decoration: const InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.all(10),
+                                              isDense: true,
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.black)),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.blue)),
+                                              errorBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.red)),
+                                              border: UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255, 158, 158, 158),
+                                                ),
+                                              ),
+                                            ),
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return EventTextConstants
+                                                    .noDateError;
+                                              }
+                                              return null;
+                                            },
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ])),
+                        ],
                       ),
-                    ),
-                  ]),
-            ),
-            Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    ],
+                  )
+                : Column(
                     children: [
                       Container(
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(bottom: 3),
-                        padding: const EdgeInsets.only(left: 10),
-                        child: const Text(
-                          EventTextConstants.endDate,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => _selectDate(context, end),
-                        child: SizedBox(
-                          child: AbsorbPointer(
-                            child: TextFormField(
-                              controller: end,
-                              decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.all(10),
-                                isDense: true,
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color:
-                                            Colors.black)),
-                                focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue)),
-                                errorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.red)),
-                                border: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 158, 158, 158),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 30),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                margin: const EdgeInsets.only(bottom: 3),
+                                padding: const EdgeInsets.only(left: 10),
+                                child: const Text(
+                                  EventTextConstants.startDate,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
                                   ),
                                 ),
                               ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return EventTextConstants.noDateError;
-                                }
-                                return null;
-                              },
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
+                              GestureDetector(
+                                onTap: () => allDay.value
+                                    ? _selectOnlyDayDate(context, start)
+                                    : _selectDate(context, start),
+                                child: SizedBox(
+                                  child: AbsorbPointer(
+                                    child: TextFormField(
+                                      controller: start,
+                                      decoration: const InputDecoration(
+                                        contentPadding: EdgeInsets.all(10),
+                                        isDense: true,
+                                        enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.black)),
+                                        focusedBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.blue)),
+                                        errorBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.red)),
+                                        border: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 158, 158, 158),
+                                          ),
+                                        ),
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return EventTextConstants.noDateError;
+                                        }
+                                        return null;
+                                      },
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
+                            ]),
                       ),
-                    ])),
+                      Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 30),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: const EdgeInsets.only(bottom: 3),
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: const Text(
+                                    EventTextConstants.endDate,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () => allDay.value
+                                      ? _selectOnlyDayDate(context, end)
+                                      : _selectDate(context, end),
+                                  child: SizedBox(
+                                    child: AbsorbPointer(
+                                      child: TextFormField(
+                                        controller: end,
+                                        decoration: const InputDecoration(
+                                          contentPadding: EdgeInsets.all(10),
+                                          isDense: true,
+                                          enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.black)),
+                                          focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.blue)),
+                                          errorBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.red)),
+                                          border: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 158, 158, 158),
+                                            ),
+                                          ),
+                                        ),
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return EventTextConstants
+                                                .noDateError;
+                                          }
+                                          return null;
+                                        },
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ])),
+                    ],
+                  ),
           ],
         ),
         isActive: _currentStep.value >= 0,
@@ -306,8 +677,7 @@ class AddEventPage extends HookConsumerWidget {
                 contentPadding: EdgeInsets.all(10),
                 isDense: true,
                 enabledBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.black)),
+                    borderSide: BorderSide(color: Colors.black)),
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue)),
                 errorBorder: UnderlineInputBorder(
@@ -356,8 +726,7 @@ class AddEventPage extends HookConsumerWidget {
                 contentPadding: EdgeInsets.all(10),
                 isDense: true,
                 enabledBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.black)),
+                    borderSide: BorderSide(color: Colors.black)),
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue)),
                 errorBorder: UnderlineInputBorder(
@@ -386,66 +755,6 @@ class AddEventPage extends HookConsumerWidget {
         isActive: _currentStep.value >= 0,
         state:
             _currentStep.value >= 2 ? StepState.complete : StepState.disabled,
-      ),
-      Step(
-        title: const Text(EventTextConstants.allDay,
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black)),
-        content: Column(
-          children: [
-            CheckboxListTile(
-              title: const Text(EventTextConstants.allDay,
-                  style: TextStyle(color: Colors.black)),
-              value: allDay.value,
-              onChanged: (newValue) {
-                if (newValue != null) {
-                  allDay.value = newValue;
-                }
-              },
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: EventTextConstants.recurrenceRule,
-                labelStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black,
-                ),
-                contentPadding: EdgeInsets.all(10),
-                isDense: true,
-                enabledBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.black)),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue)),
-                errorBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red)),
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color.fromARGB(255, 158, 158, 158),
-                  ),
-                ),
-              ),
-              controller: recurrenceRule,
-              validator: (value) {
-                if (value == null) {
-                  return EventTextConstants.noRuleError;
-                }
-                return null;
-              },
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
-        isActive: _currentStep.value >= 0,
-        state:
-            _currentStep.value >= 4 ? StepState.complete : StepState.disabled,
       ),
       Step(
         title: const Text(EventTextConstants.confirmation,
@@ -555,13 +864,13 @@ class AddEventPage extends HookConsumerWidget {
             ),
             Row(
               children: [
-                const Text(EventTextConstants.allDay + " : ",
+                const Text(EventTextConstants.recurrence + " : ",
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
                 Text(
-                    allDay.value
+                    recurrent.value
                         ? EventTextConstants.yes
                         : EventTextConstants.no,
                     style: const TextStyle(
@@ -570,19 +879,60 @@ class AddEventPage extends HookConsumerWidget {
                         color: Colors.black)),
               ],
             ),
-            if (recurrenceRule.text.isNotEmpty)
-              Row(
+            if (recurrent.value)
+              Column(
                 children: [
-                  const Text(EventTextConstants.recurrenceRule + " : ",
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
-                  Text(recurrenceRule.text,
-                      style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
+                  Row(
+                    children: [
+                      const Text(EventTextConstants.recurrenceDays + " : ",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                      Text(
+                          dayList
+                              .where((element) =>
+                                  selectedDays[dayList.indexOf(element)])
+                              .join(", "),
+                          style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(EventTextConstants.interval + " : ",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                      Text(
+                          "Toutes les " +
+                              (interval.text != "1"
+                                  ? interval.text + " "
+                                  : "") +
+                              "semaines",
+                          style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(EventTextConstants.recurrenceEndDate + " : ",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                      Text(recurrenceEndDate.value.text,
+                          style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                    ],
+                  ),
                 ],
               ),
           ],
@@ -628,6 +978,25 @@ class AddEventPage extends HookConsumerWidget {
                                   EventTextConstants.invalidDates);
                             } else {
                               tokenExpireWrapper(ref, () async {
+                                RecurrenceProperties recurrence =
+                                    RecurrenceProperties(
+                                        startDate: DateTime.now());
+                                recurrence.recurrenceType =
+                                    RecurrenceType.weekly;
+                                recurrence.recurrenceRange =
+                                    RecurrenceRange.endDate;
+                                recurrence.endDate =
+                                    DateTime.parse(recurrenceEndDate.text);
+                                recurrence.weekDays = WeekDays.values
+                                    .where((element) => selectedDays[
+                                        (WeekDays.values.indexOf(element) + 1) %
+                                            7])
+                                    .toList();
+                                recurrence.interval = int.parse(interval.text);
+                                final recurrenceRule = SfCalendar.generateRRule(
+                                    recurrence,
+                                    DateTime.parse(start.text),
+                                    DateTime.parse(end.text));
                                 Event newEvent = Event(
                                     id: '',
                                     description: description.text,
@@ -638,7 +1007,7 @@ class AddEventPage extends HookConsumerWidget {
                                     location: place.text,
                                     start: DateTime.parse(start.text),
                                     type: eventType.value,
-                                    recurrenceRule: recurrenceRule.text);
+                                    recurrenceRule: recurrenceRule);
                                 final value =
                                     await eventListNotifier.addEvent(newEvent);
                                 if (value) {
@@ -680,9 +1049,30 @@ class AddEventPage extends HookConsumerWidget {
 
     return Expanded(
       child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: w),
+          physics: const BouncingScrollPhysics(), child: w),
     );
+  }
+
+  _selectOnlyDayDate(
+      BuildContext context, TextEditingController dateController) async {
+    final DateTime now = DateTime.now();
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: now,
+        firstDate: now,
+        lastDate: DateTime(now.year + 1, now.month, now.day));
+    dateController.text = DateFormat('yyyy-MM-dd').format(picked ?? now);
+  }
+
+  _selectOnlyHour(
+      BuildContext context, TextEditingController dateController) async {
+    final TimeOfDay now = TimeOfDay.now();
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: now,
+    );
+    dateController.text = DateFormat('HH:mm')
+        .format(DateTimeField.combine(DateTime.now(), picked));
   }
 
   _selectDate(
