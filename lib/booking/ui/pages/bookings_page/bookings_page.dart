@@ -12,32 +12,8 @@ class BookingsPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userBookings = ref.watch(bookingListProvider);
     final userId = ref.watch(idProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
-    final List<Booking> pendingBookings = [],
-        confirmedBookings = [],
-        canceledBookings = [];
-    userBookings.when(
-        data: (
-          bookings,
-        ) {
-          for (Booking b in bookings) {
-            switch (b.decision) {
-              case Decision.approved:
-                confirmedBookings.add(b);
-                break;
-              case Decision.declined:
-                canceledBookings.add(b);
-                break;
-              case Decision.pending:
-                pendingBookings.add(b);
-                break;
-            }
-          }
-        },
-        error: (e, s) {},
-        loading: () {});
     return SizedBox(
       height: MediaQuery.of(context).size.height - 110,
       child: BookingRefresher(

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_ui.dart';
 
 class ListBooking extends ConsumerWidget {
@@ -39,54 +40,61 @@ class ListBooking extends ConsumerWidget {
         loading: () {});
     return Column(
       children: [
-        pendingBookings.isEmpty
-            ? Container()
-            : Column(children: [
-                const Text("En attente",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white)),
-                const SizedBox(
-                  height: 10,
-                ),
-                ...pendingBookings.map((x) => BookingUi(
-                      booking: x,
-                      isAdmin: isAdmin,
-                    ))
-              ]),
-        confirmedBookings.isEmpty
-            ? Container()
-            : Column(children: [
-                const Text("Confirmés",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white)),
-                const SizedBox(
-                  height: 10,
-                ),
-                ...confirmedBookings.map((x) => BookingUi(
-                      booking: x,
-                      isAdmin: isAdmin,
-                    ))
-              ]),
-        canceledBookings.isEmpty
-            ? Container()
-            : Column(children: [
-                const Text("Réfusés",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white)),
-                const SizedBox(
-                  height: 10,
-                ),
-                ...canceledBookings.map((x) => BookingUi(
-                      booking: x,
-                      isAdmin: isAdmin,
-                    ))
-              ])
+        if (pendingBookings.isEmpty &&
+            confirmedBookings.isEmpty &&
+            canceledBookings.isEmpty)
+          const Center(
+            child: Text(BookingTextConstants.noCurrentBooking,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold)),
+          ),
+        if (pendingBookings.isNotEmpty)
+          Column(children: [
+            const Text(BookingTextConstants.pending,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white)),
+            const SizedBox(
+              height: 10,
+            ),
+            ...pendingBookings.map((x) => BookingUi(
+                  booking: x,
+                  isAdmin: isAdmin,
+                ))
+          ]),
+        if (confirmedBookings.isNotEmpty)
+          Column(children: [
+            const Text(BookingTextConstants.confirmed,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white)),
+            const SizedBox(
+              height: 10,
+            ),
+            ...confirmedBookings.map((x) => BookingUi(
+                  booking: x,
+                  isAdmin: isAdmin,
+                ))
+          ]),
+        if (canceledBookings.isNotEmpty)
+          Column(children: [
+            const Text(BookingTextConstants.declined,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white)),
+            const SizedBox(
+              height: 10,
+            ),
+            ...canceledBookings.map((x) => BookingUi(
+                  booking: x,
+                  isAdmin: isAdmin,
+                ))
+          ])
       ],
     );
   }
