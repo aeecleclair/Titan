@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
+import 'package:myecl/event/providers/is_admin.dart';
 
 class ModuleListNotifier extends StateNotifier<List<Module>> {
   ModuleListNotifier([List<Module>? listModule]) : super(listModule ?? []);
@@ -23,12 +24,33 @@ class ModuleListNotifier extends StateNotifier<List<Module>> {
 
 final listModuleProvider =
     StateNotifierProvider<ModuleListNotifier, List<Module>>((ref) {
+  final eventAdmin = ref.watch(isEventAdmin);
   return ModuleListNotifier([
-    Module(name: "Accueil", icon: HeroIcons.home, page: ModuleType.home, selected: true),
     Module(
-        name: "Réservation", icon: HeroIcons.table, page: ModuleType.booking, selected: false),
-    Module(name: "Prêt", icon: HeroIcons.library, page: ModuleType.loan, selected: false),
-    Module(name: "Amap", icon: HeroIcons.shoppingCart, page: ModuleType.amap, selected: false),
-    Module(name: "Évenements", icon: HeroIcons.calendar, page: ModuleType.event, selected: false),
+        name: "Accueil",
+        icon: HeroIcons.home,
+        page: ModuleType.home,
+        selected: true),
+    Module(
+        name: "Réservation",
+        icon: HeroIcons.table,
+        page: ModuleType.booking,
+        selected: false),
+    Module(
+        name: "Prêt",
+        icon: HeroIcons.library,
+        page: ModuleType.loan,
+        selected: false),
+    Module(
+        name: "Amap",
+        icon: HeroIcons.shoppingCart,
+        page: ModuleType.amap,
+        selected: false),
+    if (eventAdmin)
+      Module(
+          name: "Évenements",
+          icon: HeroIcons.calendar,
+          page: ModuleType.event,
+          selected: false),
   ]);
 });

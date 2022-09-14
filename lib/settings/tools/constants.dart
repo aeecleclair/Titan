@@ -15,7 +15,7 @@ class SettingsTextConstants {
   static const String email = "Email";
   static const String expectingDate = "Date de naissance attendue";
   static const String firstname = "Prénom";
-  static const String floor = "Etage";
+  static const String floor = "Étage";
   static const String name = "Nom";
   static const String nickname = "Surnom";
   static const String promo = "Promotion";
