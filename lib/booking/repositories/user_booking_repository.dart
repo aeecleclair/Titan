@@ -6,7 +6,7 @@ class UserBookingRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'bdebooking/user/';
 
-  Future<List<Booking>> getBookingList(String userId) async {
+  Future<List<Booking>> getMyBookingList(String userId) async {
     return List<Booking>.from(
         (await getList(suffix: userId)).map((x) => Booking.fromJson(x)));
   }
