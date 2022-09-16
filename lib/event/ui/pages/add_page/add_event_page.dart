@@ -976,35 +976,42 @@ class AddEventPage extends HookConsumerWidget {
                           }
                           if (key.currentState!.validate()) {
                             if (start.text == "") {
-                              start.text = DateTime.now().subtract(const Duration(minutes: 1)).toString();
+                              start.text = DateTime.now()
+                                  .subtract(const Duration(minutes: 1))
+                                  .toString();
                             }
                             if (end.text == "") {
                               end.text = DateTime.now().toString();
                             }
-                            if (start.text.compareTo(end.text) >= 0) {
+                            if (start.text.compareTo(end.text) > 0) {
                               displayEventToast(context, TypeMsg.error,
                                   EventTextConstants.invalidDates);
                             } else {
                               tokenExpireWrapper(ref, () async {
-                                RecurrenceProperties recurrence =
-                                    RecurrenceProperties(
-                                        startDate: DateTime.now());
-                                recurrence.recurrenceType =
-                                    RecurrenceType.weekly;
-                                recurrence.recurrenceRange =
-                                    RecurrenceRange.endDate;
-                                recurrence.endDate =
-                                    DateTime.parse(recurrenceEndDate.text);
-                                recurrence.weekDays = WeekDays.values
-                                    .where((element) => selectedDays[
-                                        (WeekDays.values.indexOf(element) + 1) %
-                                            7])
-                                    .toList();
-                                recurrence.interval = int.parse(interval.text);
-                                final recurrenceRule = SfCalendar.generateRRule(
-                                    recurrence,
-                                    DateTime.parse(start.text),
-                                    DateTime.parse(end.text));
+                                String recurrenceRule = "";
+                                if (recurrent.value) {
+                                  RecurrenceProperties recurrence =
+                                      RecurrenceProperties(
+                                          startDate: DateTime.now());
+                                  recurrence.recurrenceType =
+                                      RecurrenceType.weekly;
+                                  recurrence.recurrenceRange =
+                                      RecurrenceRange.endDate;
+                                  recurrence.endDate =
+                                      DateTime.parse(recurrenceEndDate.text);
+                                  recurrence.weekDays = WeekDays.values
+                                      .where((element) => selectedDays[
+                                          (WeekDays.values.indexOf(element) +
+                                                  1) %
+                                              7])
+                                      .toList();
+                                  recurrence.interval =
+                                      int.parse(interval.text);
+                                  recurrenceRule = SfCalendar.generateRRule(
+                                      recurrence,
+                                      DateTime.parse(start.text),
+                                      DateTime.parse(end.text));
+                                }
                                 Event newEvent = Event(
                                     id: '',
                                     description: description.text,

@@ -63,7 +63,7 @@ class Event {
     return data;
   }
 
-  Event.copyWith({
+  Event copyWith({
     String? id,
     String? name,
     String? organizer,
@@ -72,17 +72,21 @@ class Event {
     String? location,
     CalendarEventType? type,
     String? description,
+    bool? allDay,
     String? recurrenceRule,
   }) {
-    this.id = id ?? this.id;
-    this.name = name ?? this.name;
-    this.organizer = organizer ?? this.organizer;
-    this.start = start ?? this.start;
-    this.end = end ?? this.end;
-    this.location = location ?? this.location;
-    this.type = type ?? this.type;
-    this.description = description ?? this.description;
-    this.recurrenceRule = recurrenceRule ?? this.recurrenceRule;
+    return Event(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      organizer: organizer ?? this.organizer,
+      start: start ?? this.start,
+      end: end ?? this.end,
+      location: location ?? this.location,
+      type: type ?? this.type,
+      description: description ?? this.description,
+      recurrenceRule: recurrenceRule ?? this.recurrenceRule,
+      allDay: allDay ?? this.allDay,
+    );
   }
 
   Event.empty() {
