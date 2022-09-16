@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/event/class/event.dart';
@@ -49,15 +50,29 @@ class EventUI extends HookConsumerWidget {
                 const SizedBox(
                   height: 12,
                 ),
+                if (neverStart)
+                  Column(children: [
+                    SizedBox(
+                      width: 140 / n,
+                      child: const HeroIcon(
+                        HeroIcons.chevronDoubleUp,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                  ]),
                 SizedBox(
                   width: 140 / n,
                   child: Text(r.name + " - " + r.location,
-                          maxLines: 10,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white)),
+                      maxLines: 10,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white)),
                 ),
                 const SizedBox(
                   height: 3,
@@ -67,7 +82,22 @@ class EventUI extends HookConsumerWidget {
                       style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white.withOpacity(0.5)))
+                          color: Colors.white.withOpacity(0.5))),
+                const Spacer(),
+                if (neverEnd)
+                  Column(children: [
+                    SizedBox(
+                      width: 140 / n,
+                      child: const HeroIcon(
+                        HeroIcons.chevronDoubleDown,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                  ]),
               ],
             ),
           ],

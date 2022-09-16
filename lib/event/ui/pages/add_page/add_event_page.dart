@@ -36,6 +36,7 @@ class AddEventPage extends HookConsumerWidget {
     final recurrenceEndDate = useTextEditingController();
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
+    final now = DateTime.now();
     final dayList = [
       'Lundi',
       'Mardi',
@@ -1022,7 +1023,9 @@ class AddEventPage extends HookConsumerWidget {
                                     location: place.text,
                                     start: DateTime.parse(start.text),
                                     type: eventType.value,
-                                    recurrenceRule: recurrenceRule);
+                                    recurrenceRule: recurrenceRule,
+                                    fakeEnd: now,
+                                    fakeStart: now);
                                 final value =
                                     await eventListNotifier.addEvent(newEvent);
                                 if (value) {
@@ -1076,7 +1079,8 @@ class AddEventPage extends HookConsumerWidget {
         initialDate: now,
         firstDate: now,
         lastDate: DateTime(now.year + 1, now.month, now.day));
-    dateController.text = DateFormat('yyyy-MM-dd').format(picked ?? now);
+    dateController.text = DateFormat('yyyy-MM-dd')
+        .format(picked ?? now.add(const Duration(hours: 1)));
   }
 
   _selectOnlyHour(
