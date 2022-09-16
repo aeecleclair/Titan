@@ -4,7 +4,7 @@ En cours :
         - Reset password [mail -> app (uni_link)] (2)
 
     - Auth :
-->        - Check nonce, state (1)
+        - Check nonce, state (API)
         - Implement external auth (3)
 
     - Settings :
@@ -14,7 +14,7 @@ En cours :
         - Admin page (edit) (API)
         - Slide day (4)
         - neverEnd / neverStart arrow (3)
-        - Display allday events recurrent (2)
+->        - Display events recurrent (2)
 
     - Drawer :
         - Profile Picture (5)

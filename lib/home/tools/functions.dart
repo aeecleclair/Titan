@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 String doubleToTime(double d) {
   int h = d.toInt();
@@ -104,4 +105,9 @@ DateTime correctAfterDate(DateTime end) {
     return DateTime(now.year, now.month, now.day, 23, 59);
   }
   return end;
+}
+
+bool isDateInReccurence(String recurrenceRule, DateTime day) {
+  final rrule = SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, day);
+  return rrule.contains(day);
 }
