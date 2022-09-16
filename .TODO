@@ -4,15 +4,14 @@ En cours :
         - Reset password [mail -> app (uni_link)] (2)
 
     - Auth :
-        - Check nonce, state (API)
         - Implement external auth (3)
 
     - Settings :
-        - PB Toast (2)
+        - PB Toast (1)
 
     - Events :
         - Admin page (edit) (API)
-        - Slide day (4)
+        - Slide day (PageView) (4)
 
     - Drawer :
         - Profile Picture (5)
