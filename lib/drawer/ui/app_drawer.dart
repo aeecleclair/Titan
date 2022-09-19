@@ -74,9 +74,12 @@ class AppDrawer extends HookConsumerWidget {
                               _controllerNotifier.close();
                             }
                           },
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(cornerval),
-                            child: getPage(page, _controllerNotifier),
+                          child: IgnorePointer(
+                            ignoring: _controller.isCompleted,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(cornerval),
+                              child: getPage(page, _controllerNotifier),
+                            ),
                           )))
                 ],
               );
