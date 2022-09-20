@@ -29,7 +29,7 @@ class HourBarItems extends ConsumerWidget {
                 DateTime.parse(e.end.toString().split(" ")[0] + " 23:59:00");
             data[data.indexOf(e)] =
                 e.copyWith(fakeStart: newStart, fakeEnd: newEnd);
-          } else if (isDateInReccurence(e.recurrenceRule!, now)) {
+          } else if (isDateInReccurence(e.recurrenceRule!, e.start, now)) {
             if (e.allDay) {
               DateTime newStart =
                   DateTime.parse(now.toString().split(" ")[0] + " 00:00:00");

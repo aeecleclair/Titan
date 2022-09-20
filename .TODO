@@ -4,20 +4,26 @@ En cours :
         - Reset password [mail -> app (uni_link)] (2)
 
     - Auth :
-        - Implement external auth (3)
+->        - Implement external auth (1)
 
     - Settings :
-        - PB Toast (1)
+        - PB Toast (3)
 
     - Events :
         - Admin page (edit) (API)
         - Slide day (PageView) (4)
+        - Reccurent Event bug (wrong day / hours)
 
     - Drawer :
         - Profile Picture (5)
 
+    - Sponsors :
+        - Page (GCI)
+
     - Version :
         - Update version ?
+
+    - Page Accueil publique
 
 
 Modules :
