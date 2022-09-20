@@ -107,7 +107,8 @@ DateTime correctAfterDate(DateTime end) {
   return end;
 }
 
-bool isDateInReccurence(String recurrenceRule, DateTime day) {
-  final rrule = SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, day);
-  return rrule.contains(day);
+bool isDateInReccurence(String recurrenceRule, DateTime now, DateTime start) {
+  final rrule =
+      SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
+  return rrule.contains(now);
 }
