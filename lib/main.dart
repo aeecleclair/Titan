@@ -5,6 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/login/ui/auth.dart';
+import 'package:myecl/version/providers/titan_version_provider.dart';
+import 'package:myecl/version/providers/version_verifier_provider.dart';
+import 'package:myecl/version/ui/update_page.dart';
 // import 'package:uni_links/uni_links.dart';
 
 void main() {
@@ -16,7 +19,6 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLoggedIn = ref.watch(isLoggedInProvider);
     // final recievedUri = useState<String?>(null);
     // final token = useState<String?>(null);
 
@@ -26,6 +28,11 @@ class MyApp extends HookConsumerWidget {
     // }, onError: (Object err) {
     //   recievedUri.value = 'Failed to get initial uri: $err.';
     // });
+    final versionVerifier = ref.watch(versionVerifierProvider);
+    final titanVersion = ref.watch(titanVersionProvider);
+    final check = versionVerifier.whenData(
+        (value) => value.minimalTitanVersion.compareTo(titanVersion) <= 0);
+    final isLoggedIn = ref.watch(isLoggedInProvider);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'MyECL',
@@ -33,6 +40,21 @@ class MyApp extends HookConsumerWidget {
             primarySwatch: Colors.blue,
             textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
                 Theme.of(context).textTheme)),
-        home: isLoggedIn ? const AppDrawer() : const AuthScreen());
+        home: check.when(
+            data: (value) => value
+                ? isLoggedIn
+                    ? const AppDrawer()
+                    : const AuthScreen()
+                : const UpdatePage(),
+            loading: () => const Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+            error: (error, stack) => const Scaffold(
+                  body: Center(
+                    child: Text('Error lors du démarrage'),
+                  ),
+                )));
   }
 }
