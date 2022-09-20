@@ -4,9 +4,9 @@ import 'package:myecl/version/class/version.dart';
 class VersionRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "version/";
+  final ext = "information";
 
   Future<Version> getVersion() async {
-    return Version.fromJson(await getOne());
+    return Version.fromJson(await getOne(""));
   }
 }
