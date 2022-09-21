@@ -20,8 +20,8 @@ class SignIn extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authNotifier = ref.watch(authTokenProvider.notifier);
-    final username = useTextEditingController(text: "test2@ecl21.ec-lyon.fr");
-    final password = useTextEditingController(text: "testPass");
+    final username = useTextEditingController();
+    final password = useTextEditingController();
     final hidePass = useState(true);
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
