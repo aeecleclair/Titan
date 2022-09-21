@@ -134,58 +134,63 @@ class TodaysEvents extends HookConsumerWidget {
             : Container(
                 margin: const EdgeInsets.only(top: 15),
                 height: MediaQuery.of(context).size.height - 15,
-                child: Stack(children: [
-                  SfCalendar(
-                    onTap: (details) async => calendarTapped(details, ref),
-                    dataSource: _getCalendarDataSource(res),
-                    view: CalendarView.week,
-                    selectionDecoration: BoxDecoration(
-                      color: Colors.transparent,
-                      border: Border.all(
-                          color: HomeColorConstants.darkBlue, width: 2),
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                      shape: BoxShape.rectangle,
-                    ),
-                    todayHighlightColor: HomeColorConstants.lightBlue,
-                    firstDayOfWeek: 1,
-                    // timeZone: "fr_FR",
-                    timeSlotViewSettings: const TimeSlotViewSettings(
-                      timeFormat: 'HH:mm',
-                    ),
-                    viewHeaderStyle: const ViewHeaderStyle(
-                        dayTextStyle: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
+                child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(30),
+                        bottomRight: Radius.circular(30)),
+                    child: Stack(children: [
+                      SfCalendar(
+                        onTap: (details) async => calendarTapped(details, ref),
+                        dataSource: _getCalendarDataSource(res),
+                        view: CalendarView.week,
+                        selectionDecoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border.all(
+                              color: HomeColorConstants.darkBlue, width: 2),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5)),
+                          shape: BoxShape.rectangle,
                         ),
-                        dateTextStyle: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        )),
-                    headerStyle: const CalendarHeaderStyle(
-                      textAlign: TextAlign.center,
-                      textStyle: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: HomeColorConstants.darkBlue,
+                        todayHighlightColor: HomeColorConstants.lightBlue,
+                        firstDayOfWeek: 1,
+                        // timeZone: "fr_FR",
+                        timeSlotViewSettings: const TimeSlotViewSettings(
+                          timeFormat: 'HH:mm',
+                        ),
+                        viewHeaderStyle: const ViewHeaderStyle(
+                            dayTextStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            dateTextStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            )),
+                        headerStyle: const CalendarHeaderStyle(
+                          textAlign: TextAlign.center,
+                          textStyle: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: HomeColorConstants.darkBlue,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: IconButton(
-                      icon: const HeroIcon(HeroIcons.calendar),
-                      onPressed: () {
-                        displayTodayNotifier.setDisplay(true);
-                        _hasScrolledNotifier.setHasScrolled(false);
-                        center(_hasScrolled, _scrollController, today,
-                            _hasScrolledNotifier, lastPosition);
-                      },
-                    ),
-                  )
-                ])),
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: IconButton(
+                          icon: const HeroIcon(HeroIcons.calendar),
+                          onPressed: () {
+                            displayTodayNotifier.setDisplay(true);
+                            _hasScrolledNotifier.setHasScrolled(false);
+                            center(_hasScrolled, _scrollController, today,
+                                _hasScrolledNotifier, lastPosition);
+                          },
+                        ),
+                      )
+                    ]))),
       ),
     );
   }
