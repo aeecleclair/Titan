@@ -15,7 +15,7 @@ class LoanerRepository extends Repository {
   }
 
   Future<Loaner> getLoaner(String id) async {
-    return Loaner.fromJson(await getOne("loaners/" + id));
+    return Loaner.fromJson(await getOne("loaners/$id"));
   }
 
   Future<Loaner> createLoaner(Loaner loaner) async {
@@ -23,10 +23,10 @@ class LoanerRepository extends Repository {
   }
 
   Future<bool> updateLoaner(Loaner loaner) async {
-    return await update(loaner.toJson(), "loaners/" + loaner.id);
+    return await update(loaner.toJson(), "loaners/${loaner.id}");
   }
 
   Future<bool> deleteLoaner(String loanerId) async {
-    return await delete("loaners/" + loanerId);
+    return await delete("loaners/$loanerId");
   }
 }

@@ -19,8 +19,8 @@ class LoanButton extends StatelessWidget {
           alignment: Alignment.center,
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
-              gradient:  LinearGradient(
-                colors: const[
+              gradient:  const LinearGradient(
+                colors: [
                   LoanColorConstants.orange,
                   LoanColorConstants.lightOrange,
                   LoanColorConstants.orange,

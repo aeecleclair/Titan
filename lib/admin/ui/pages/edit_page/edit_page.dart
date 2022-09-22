@@ -131,7 +131,7 @@ class EditPage extends HookConsumerWidget {
                       width: 20,
                     ),
                     const Text(
-                      AdminTextConstants.members + " :",
+                      "${AdminTextConstants.members} :",
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),
@@ -142,8 +142,8 @@ class EditPage extends HookConsumerWidget {
                       child: Container(
                         padding: const EdgeInsets.all(7),
                         decoration: BoxDecoration(
-                          gradient:  LinearGradient(
-                              colors: const [
+                          gradient:  const LinearGradient(
+                              colors: [
                                 AdminColorConstants.gradient1,
                                 AdminColorConstants.gradient2
                               ],
@@ -210,8 +210,8 @@ class EditPage extends HookConsumerWidget {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    gradient:  LinearGradient(
-                      colors: const [
+                    gradient:  const LinearGradient(
+                      colors: [
                         AdminColorConstants.gradient1,
                         AdminColorConstants.gradient2,
                       ],

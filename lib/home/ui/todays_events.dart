@@ -24,22 +24,22 @@ class TodaysEvents extends HookConsumerWidget {
   const TodaysEvents({Key? key}) : super(key: key);
 
   void center(
-      bool _hasScrolled,
-      ScrollController _scrollController,
+      bool hasScrolled,
+      ScrollController scrollController,
       DateTime today,
-      HasScrolledNotifier _hasScrolledNotifier,
+      HasScrolledNotifier hasScrolledNotifier,
       ValueNotifier lastPosition) {
-    if (!_hasScrolled || lastPosition.value == 0.0) {
+    if (!hasScrolled || lastPosition.value == 0.0) {
       Timer.periodic(const Duration(milliseconds: 1), (t) {
-        if (_scrollController.positions.isNotEmpty) {
-          _scrollController.jumpTo(
+        if (scrollController.positions.isNotEmpty) {
+          scrollController.jumpTo(
             (today.hour + today.minute / 60 + today.second / 3600) * 90.0 - 150,
           );
           lastPosition.value =
               (today.hour + today.minute / 60 + today.second / 3600) * 90.0 -
                   150;
           t.cancel();
-          _hasScrolledNotifier.setHasScrolled(true);
+          hasScrolledNotifier.setHasScrolled(true);
         }
       });
     }
@@ -48,14 +48,14 @@ class TodaysEvents extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final today = ref.watch(nowProvider);
-    final _scrollController = ref.watch(scrollControllerProvider);
-    final _hasScrolled = ref.watch(hasScrolledProvider);
-    final _hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
+    final scrollController = ref.watch(scrollControllerProvider);
+    final hasScrolled = ref.watch(hasScrolledProvider);
+    final hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
     final displayToday = ref.watch(displayTodayProvider);
     final displayTodayNotifier = ref.watch(displayTodayProvider.notifier);
     final res = ref.watch(eventListProvider);
     final lastPosition = useState(0.0);
-    center(_hasScrolled, _scrollController, today, _hasScrolledNotifier,
+    center(hasScrolled, scrollController, today, hasScrolledNotifier,
         lastPosition);
     return SizedBox(
       height: MediaQuery.of(context).size.height * .65,
@@ -104,7 +104,7 @@ class TodaysEvents extends HookConsumerWidget {
                           bottomRight: Radius.circular(30)),
                       child: SingleChildScrollView(
                         physics: const BouncingScrollPhysics(),
-                        controller: _scrollController,
+                        controller: scrollController,
                         scrollDirection: Axis.vertical,
                         child: Row(
                           children: [
@@ -184,9 +184,9 @@ class TodaysEvents extends HookConsumerWidget {
                           icon: const HeroIcon(HeroIcons.calendar),
                           onPressed: () {
                             displayTodayNotifier.setDisplay(true);
-                            _hasScrolledNotifier.setHasScrolled(false);
-                            center(_hasScrolled, _scrollController, today,
-                                _hasScrolledNotifier, lastPosition);
+                            hasScrolledNotifier.setHasScrolled(false);
+                            center(hasScrolled, scrollController, today,
+                                hasScrolledNotifier, lastPosition);
                           },
                         ),
                       )

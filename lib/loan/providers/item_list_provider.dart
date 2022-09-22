@@ -54,8 +54,8 @@ final itemListProvider =
     StateNotifierProvider<ItemListNotifier, AsyncValue<List<Item>>>((ref) {
   final token = ref.watch(tokenProvider);
   final loanerId = ref.watch(loanerIdProvider);
-  ItemListNotifier _itemListNotifier = ItemListNotifier(token: token);
-  _itemListNotifier.setId(loanerId);
-  _itemListNotifier.loadItemList();
-  return _itemListNotifier;
+  ItemListNotifier itemListNotifier = ItemListNotifier(token: token);
+  itemListNotifier.setId(loanerId);
+  itemListNotifier.loadItemList();
+  return itemListNotifier;
 });

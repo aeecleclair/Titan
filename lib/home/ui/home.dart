@@ -22,11 +22,11 @@ class HomePage extends HookConsumerWidget {
         await eventNotifier.loadEventList();
       },
       child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: const [
+              colors: [
                 HomeColorConstants.darkBlue,
                 HomeColorConstants.lightBlue,
               ],

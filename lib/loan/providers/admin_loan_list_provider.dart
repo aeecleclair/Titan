@@ -14,8 +14,8 @@ final adminLoanListProvider = StateNotifierProvider<AdminLoanListNotifier,
     AsyncValue<Map<Loaner, Tuple2<AsyncValue<List<Loan>>, bool>>>>((ref) {
   final token = ref.watch(tokenProvider);
   final loaners = ref.watch(loanerList);
-  AdminLoanListNotifier _adminloanListNotifier =
+  AdminLoanListNotifier adminloanListNotifier =
       AdminLoanListNotifier(token: token);
-  _adminloanListNotifier.loadTList(loaners);
-  return _adminloanListNotifier;
+  adminloanListNotifier.loadTList(loaners);
+  return adminloanListNotifier;
 });

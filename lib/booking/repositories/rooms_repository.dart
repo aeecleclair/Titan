@@ -19,10 +19,10 @@ class RoomRepository extends Repository {
   }
 
   Future<bool> deleteRoom(String roomId) async {
-    return await delete("/" + roomId);
+    return await delete("/$roomId");
   }
 
   Future<Room> getRoom(String roomId) async {
-    return Room.fromJson(await getOne("/" + roomId));
+    return Room.fromJson(await getOne("/$roomId"));
   }
 }

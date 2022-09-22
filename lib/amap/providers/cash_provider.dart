@@ -57,8 +57,8 @@ final cashProvider =
     StateNotifierProvider<CashProvider, AsyncValue<List<Cash>>>(
   (ref) {
     final token = ref.watch(tokenProvider);
-    CashProvider _cashProvider = CashProvider(token: token);
-    _cashProvider.loadCashList();
-    return _cashProvider;
+    CashProvider cashProvider = CashProvider(token: token);
+    cashProvider.loadCashList();
+    return cashProvider;
   },
 );

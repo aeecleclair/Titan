@@ -11,11 +11,11 @@ class Right {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['view'] = view;
-    _data['manage'] = manage;
-    _data['amap_id'] = amapId;
-    return _data;
+    final data = <String, dynamic>{};
+    data['view'] = view;
+    data['manage'] = manage;
+    data['amap_id'] = amapId;
+    return data;
   }
 
   Right copyWith(

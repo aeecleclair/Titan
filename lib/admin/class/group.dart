@@ -21,12 +21,12 @@ class Group {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['name'] = name;
-    _data['description'] = description;
-    _data['id'] = id;
-    _data['members'] = members.map((x) => x.toJson()).toList();
-    return _data;
+    final data = <String, dynamic>{};
+    data['name'] = name;
+    data['description'] = description;
+    data['id'] = id;
+    data['members'] = members.map((x) => x.toJson()).toList();
+    return data;
   }
 
   Group copyWith({

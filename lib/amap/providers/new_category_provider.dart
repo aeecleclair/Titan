@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:riverpod/riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final newCategoryProvider =
     StateNotifierProvider<NewCategoryNotifier, TextEditingController>(

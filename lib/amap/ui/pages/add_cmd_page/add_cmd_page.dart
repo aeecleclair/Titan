@@ -21,7 +21,7 @@ class AddCmdPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final dateController = useTextEditingController();
     final productsList = ref.watch(productListProvider);
@@ -91,7 +91,7 @@ class AddCmdPage extends HookConsumerWidget {
         child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Form(
-                key: _formKey,
+                key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Container(
                     alignment: Alignment.center,
@@ -192,7 +192,7 @@ class AddCmdPage extends HookConsumerWidget {
                               child: const GreenBtn(
                                   text: AMAPTextConstants.addingCommand),
                               onTap: () {
-                                if (_formKey.currentState!.validate()) {
+                                if (formKey.currentState!.validate()) {
                                   final date = dateController.value.text;
                                   final del = Delivery(
                                       id: "",

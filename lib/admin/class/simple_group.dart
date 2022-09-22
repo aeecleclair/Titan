@@ -15,11 +15,11 @@ class SimpleGroup {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['name'] = name;
-    _data['description'] = description;
-    _data['id'] = id;
-    return _data;
+    final data = <String, dynamic>{};
+    data['name'] = name;
+    data['description'] = description;
+    data['id'] = id;
+    return data;
   }
 
   SimpleGroup copyWith({

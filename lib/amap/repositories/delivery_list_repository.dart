@@ -17,21 +17,21 @@ class DeliveryListRepository extends Repository {
   }
 
   Future<bool> updateDelivery(Delivery delivery) async {
-    return await update(delivery.toJson(), "/" + delivery.id);
+    return await update(delivery.toJson(), "/${delivery.id}");
   }
 
   Future<bool> deleteDelivery(String deliveryId) async {
-    return await delete("/" + deliveryId);
+    return await delete("/$deliveryId");
   }
 
   Future<Delivery> getDelivery(String deliveryId) async {
-    return Delivery.fromJson(await getOne("/" + deliveryId));
+    return Delivery.fromJson(await getOne("/$deliveryId"));
   }
 
   Future<List<Product>> getAllProductsFromOrder(
       String deliveryId, String orderId) async {
     return List<Product>.from((await getList(
-            suffix: "/" + deliveryId + "/orders/" + orderId + "/products"))
+            suffix: "/$deliveryId/orders/$orderId/products"))
         .map((x) => Product.fromJson(x)));
   }
 }

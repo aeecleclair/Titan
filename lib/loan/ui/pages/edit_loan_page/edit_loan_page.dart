@@ -25,7 +25,7 @@ class EditLoanPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
-    final _currentStep = useState(0);
+    final currentStep = useState(0);
     final asso = useState(ref.watch(loanerProvider));
     final key = GlobalKey<FormState>();
     final associations = ref.watch(loanerListProvider);
@@ -90,8 +90,8 @@ class EditLoanPage extends HookConsumerWidget {
                       )
                       .toList()),
             ),
-            isActive: _currentStep.value >= 0,
-            state: _currentStep.value >= 0
+            isActive: currentStep.value >= 0,
+            state: currentStep.value >= 0
                 ? StepState.complete
                 : StepState.disabled,
           ),
@@ -119,8 +119,8 @@ class EditLoanPage extends HookConsumerWidget {
                   )
                   .toList(),
             ),
-            isActive: _currentStep.value >= 0,
-            state: _currentStep.value >= 1
+            isActive: currentStep.value >= 0,
+            state: currentStep.value >= 1
                 ? StepState.complete
                 : StepState.disabled,
           ),
@@ -254,8 +254,8 @@ class EditLoanPage extends HookConsumerWidget {
                         ])),
               ],
             ),
-            isActive: _currentStep.value >= 0,
-            state: _currentStep.value >= 2
+            isActive: currentStep.value >= 0,
+            state: currentStep.value >= 2
                 ? StepState.complete
                 : StepState.disabled,
           ),
@@ -326,8 +326,8 @@ class EditLoanPage extends HookConsumerWidget {
                     AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
               );
             }),
-            isActive: _currentStep.value >= 0,
-            state: _currentStep.value >= 3
+            isActive: currentStep.value >= 0,
+            state: currentStep.value >= 3
                 ? StepState.complete
                 : StepState.disabled,
           ),
@@ -355,8 +355,8 @@ class EditLoanPage extends HookConsumerWidget {
                 ),
               ],
             ),
-            isActive: _currentStep.value >= 0,
-            state: _currentStep.value >= 4
+            isActive: currentStep.value >= 0,
+            state: currentStep.value >= 4
                 ? StepState.complete
                 : StepState.disabled,
           ),
@@ -371,8 +371,8 @@ class EditLoanPage extends HookConsumerWidget {
                   const InputDecoration(labelText: LoanTextConstants.note),
               controller: caution,
             ),
-            isActive: _currentStep.value >= 0,
-            state: _currentStep.value >= 5
+            isActive: currentStep.value >= 0,
+            state: currentStep.value >= 5
                 ? StepState.complete
                 : StepState.disabled,
           ),
@@ -382,19 +382,19 @@ class EditLoanPage extends HookConsumerWidget {
               children: <Widget>[
                 Row(
                   children: [
-                    const Text(LoanTextConstants.association + " : "),
+                    const Text("${LoanTextConstants.association} : "),
                     Text(loan.loaner.name),
                   ],
                 ),
                 Row(
                   children: [
-                    const Text(LoanTextConstants.borrower + " : "),
+                    const Text("${LoanTextConstants.borrower} : "),
                     Text(borrower.value.getName()),
                   ],
                 ),
                 Column(
                   children: [
-                    const Text(LoanTextConstants.objects + " : "),
+                    const Text("${LoanTextConstants.objects} : "),
                     ...items
                         .where(
                             (element) => selectedItems[items.indexOf(element)])
@@ -410,51 +410,49 @@ class EditLoanPage extends HookConsumerWidget {
                 ),
                 Row(
                   children: [
-                    const Text(LoanTextConstants.beginDate + " : "),
+                    const Text("${LoanTextConstants.beginDate} : "),
                     Text(start.text),
                   ],
                 ),
                 Row(
                   children: [
-                    const Text(LoanTextConstants.endDate + " : "),
+                    const Text("${LoanTextConstants.endDate} : "),
                     Text(end.text),
                   ],
                 ),
                 Row(
                   children: [
-                    const Text(LoanTextConstants.note + " : "),
+                    const Text("${LoanTextConstants.note} : "),
                     Text(note.text),
                   ],
                 ),
                 Row(
                   children: [
-                    const Text(LoanTextConstants.paidCaution + " : "),
+                    const Text("${LoanTextConstants.paidCaution} : "),
                     Text(caution.text.isEmpty
-                        ? items
+                        ? "${items
                                 .fold<int>(
                                     0,
                                     (previousValue, element) =>
-                                        previousValue + element.caution)
-                                .toString() +
-                            "€"
+                                        previousValue + element.caution)}€"
                         : caution.text),
                   ],
                 ),
               ],
             ),
-            isActive: _currentStep.value >= 0,
-            state: _currentStep.value >= 6
+            isActive: currentStep.value >= 0,
+            state: currentStep.value >= 6
                 ? StepState.complete
                 : StepState.disabled,
           ),
         ];
 
         void continued() {
-          _currentStep.value < steps.length ? _currentStep.value += 1 : null;
+          currentStep.value < steps.length ? currentStep.value += 1 : null;
         }
 
         void cancel() {
-          _currentStep.value > 0 ? _currentStep.value -= 1 : null;
+          currentStep.value > 0 ? currentStep.value -= 1 : null;
         }
 
         w = Form(
@@ -462,12 +460,12 @@ class EditLoanPage extends HookConsumerWidget {
           key: key,
           child: Stepper(
             physics: const BouncingScrollPhysics(),
-            currentStep: _currentStep.value,
-            onStepTapped: (step) => _currentStep.value = step,
+            currentStep: currentStep.value,
+            onStepTapped: (step) => currentStep.value = step,
             onStepContinue: continued,
             onStepCancel: cancel,
             controlsBuilder: (context, ControlsDetails controls) {
-              final isLastStep = _currentStep.value == steps.length - 1;
+              final isLastStep = currentStep.value == steps.length - 1;
               return Row(
                 children: [
                   Expanded(
@@ -526,7 +524,7 @@ class EditLoanPage extends HookConsumerWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  if (_currentStep.value > 0)
+                  if (currentStep.value > 0)
                     Expanded(
                       child: ElevatedButton(
                         onPressed: controls.onStepCancel,

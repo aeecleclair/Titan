@@ -15,8 +15,8 @@ final adminDeliveryOrderList = StateNotifierProvider<AdminDeliveryOrderList,
     AsyncValue<Map<Delivery, Tuple2<AsyncValue<List<Order>>, bool>>>>((ref) {
   final token = ref.watch(tokenProvider);
   final deliveries = ref.watch(deliveryList);
-  AdminDeliveryOrderList _adminDeliveryOrderList =
+  AdminDeliveryOrderList adminDeliveryOrderList =
       AdminDeliveryOrderList(token: token);
-  _adminDeliveryOrderList.loadTList(deliveries);
-  return _adminDeliveryOrderList;
+  adminDeliveryOrderList.loadTList(deliveries);
+  return adminDeliveryOrderList;
 });

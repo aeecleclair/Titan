@@ -11,6 +11,6 @@ class AppException implements Exception {
 
   @override
   String toString() {
-    return type.toString().split('.')[1] + " : " + message;
+    return "${type.toString().split('.')[1]} : $message";
   }
 }

@@ -9,7 +9,7 @@ class ConfirmationText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(title + " : ",
+        Text("$title : ",
             style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,

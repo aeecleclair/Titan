@@ -64,7 +64,7 @@ class EventUi extends ConsumerWidget {
                     child: Container(
                       padding: const EdgeInsets.all(7),
                       decoration: BoxDecoration(
-                        gradient:  LinearGradient(colors: const [
+                        gradient:  const LinearGradient(colors: [
                           EventColorConstants.blueGradient1,
                           EventColorConstants.blueGradient2
                         ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -79,7 +79,7 @@ class EventUi extends ConsumerWidget {
                         borderRadius: const BorderRadius.all(Radius.circular(10)),
                       ),
                       child: const HeroIcon(
-                        HeroIcons.pencilAlt,
+                        HeroIcons.pencilSquare,
                         size: 20,
                         color: Colors.white,
                       ),
@@ -99,7 +99,7 @@ class EventUi extends ConsumerWidget {
                     child: Container(
                       padding: const EdgeInsets.all(7),
                       decoration: BoxDecoration(
-                        gradient:  LinearGradient(colors: const [
+                        gradient:  const LinearGradient(colors: [
                           EventColorConstants.redGradient1,
                           EventColorConstants.redGradient2
                         ], begin: Alignment.topLeft, end: Alignment.bottomRight),

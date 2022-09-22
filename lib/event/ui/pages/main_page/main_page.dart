@@ -31,8 +31,8 @@ class MainPage extends HookConsumerWidget {
                           vertical: 12, horizontal: 20),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                            colors: const [
+                        gradient: const LinearGradient(
+                            colors: [
                               EventColorConstants.blueGradient1,
                               EventColorConstants.blueGradient2
                             ],

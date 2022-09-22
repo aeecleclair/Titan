@@ -52,21 +52,13 @@ CalendarEventType stringToCalendarEventType(String type) {
 }
 
 String processDateOnlyHour(DateTime date) {
-  return date.hour.toString().padLeft(2, '0') +
-      ":" +
-      date.minute.toString().padLeft(2, '0');
+  return "${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
 }
 
 List<String> parseDate(DateTime date) {
   return [
-    date.day.toString().padLeft(2, '0') +
-        "/" +
-        date.month.toString().padLeft(2, '0') +
-        "/" +
-        date.year.toString(),
-    date.hour.toString().padLeft(2, '0') +
-        ":" +
-        date.minute.toString().padLeft(2, '0')
+    "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}",
+    "${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}"
   ];
 }
 
@@ -74,32 +66,25 @@ String formatDates(DateTime dateStart, DateTime dateEnd) {
   final start = parseDate(dateStart);
   final end = parseDate(dateEnd);
   if (start[0] == end[0]) {
-    return "Le " + start[0] + " de " + start[1] + " à " + end[1];
+    return "Le ${start[0]} de ${start[1]} à ${end[1]}";
   } else {
-    return "Du " +
-        start[0] +
-        " à " +
-        start[1] +
-        " au " +
-        end[0] +
-        " à " +
-        end[1];
+    return "Du ${start[0]} à ${start[1]} au ${end[0]} à ${end[1]}";
   }
 }
 
 String formatDateOnlyHour(DateTime dateStart, DateTime dateEnd) {
   final start = parseDate(dateStart);
   final end = parseDate(dateEnd);
-  return "De " + start[1] + " à " + end[1];
+  return "De ${start[1]} à ${end[1]}";
 }
 
 String formatDateOnlyDay(DateTime dateStart, DateTime dateEnd) {
   final start = parseDate(dateStart);
   final end = parseDate(dateEnd);
   if (start[0] == end[0]) {
-    return "Le " + start[0];
+    return "Le ${start[0]}";
   } else {
-    return "Du " + start[0] + " au " + end[0];
+    return "Du ${start[0]} au ${end[0]}";
   }
 }
 
@@ -123,7 +108,7 @@ String formatDays(String recurrenceRule) {
         res += ", ";
       }
     }
-    res += " et " + listDay[listDayShort.indexOf(days[days.length - 1]) - 1];
+    res += " et ${listDay[listDayShort.indexOf(days[days.length - 1]) - 1]}";
   } else {
     res += listDay[listDayShort.indexOf(days[0]) - 1];
   }

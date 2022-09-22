@@ -103,7 +103,7 @@ final loanHistoryProvider = StateNotifierProvider<LoanHistoryNotifier,
     AsyncValue<Map<Loaner, Tuple2<AsyncValue<List<Loan>>, bool>>>>((ref) {
   final token = ref.watch(tokenProvider);
   final loaners = ref.watch(loanerList);
-  LoanHistoryNotifier _loanHistoryNotifier = LoanHistoryNotifier(token: token);
-  _loanHistoryNotifier.loadLoanerList(loaners);
-  return _loanHistoryNotifier;
+  LoanHistoryNotifier loanHistoryNotifier = LoanHistoryNotifier(token: token);
+  loanHistoryNotifier.loadLoanerList(loaners);
+  return loanHistoryNotifier;
 });

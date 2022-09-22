@@ -25,12 +25,12 @@ class Delivery {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['delivery_date'] = processDateToAPIWitoutHour(deliveryDate);
-    _data['products_ids'] = products.map((e) => e.id).toList();
-    _data['locked'] = locked;
-    _data['id'] = id;
-    return _data;
+    final data = <String, dynamic>{};
+    data['delivery_date'] = processDateToAPIWitoutHour(deliveryDate);
+    data['products_ids'] = products.map((e) => e.id).toList();
+    data['locked'] = locked;
+    data['id'] = id;
+    return data;
   }
 
   Delivery copyWith({deliveryDate, products, expanded, id, locked}) {

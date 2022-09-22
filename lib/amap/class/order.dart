@@ -42,15 +42,15 @@ class Order {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['order_id'] = id;
-    _data['delivery_id'] = deliveryId;
-    _data['delivery_date'] = processDateToAPIWitoutHour(deliveryDate);
-    _data['products_ids'] = productsIds;
-    _data['collection_slot'] = collectionSlot;
-    _data['products_quantity'] = products.map((e) => e.quantity).toList();
-    _data['user_id'] = user.id;
-    return _data;
+    final data = <String, dynamic>{};
+    data['order_id'] = id;
+    data['delivery_id'] = deliveryId;
+    data['delivery_date'] = processDateToAPIWitoutHour(deliveryDate);
+    data['products_ids'] = productsIds;
+    data['collection_slot'] = collectionSlot;
+    data['products_quantity'] = products.map((e) => e.quantity).toList();
+    data['user_id'] = user.id;
+    return data;
   }
 
   Order copyWith(

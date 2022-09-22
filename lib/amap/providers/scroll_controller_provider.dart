@@ -11,10 +11,10 @@ final scrollControllerProvider = StateNotifierProvider.family<
     ScrollControllerNotifier,
     ScrollController,
     AnimationController>((ref, animationController) {
-  ScrollController _scrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
 
-  _scrollController.addListener(() {
-    switch (_scrollController.position.userScrollDirection) {
+  scrollController.addListener(() {
+    switch (scrollController.position.userScrollDirection) {
       case ScrollDirection.forward:
         animationController.forward();
         break;
@@ -28,5 +28,5 @@ final scrollControllerProvider = StateNotifierProvider.family<
         break;
     }
   });
-  return ScrollControllerNotifier(_scrollController);
+  return ScrollControllerNotifier(scrollController);
 });

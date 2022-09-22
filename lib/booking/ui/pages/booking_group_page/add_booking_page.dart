@@ -23,7 +23,7 @@ class AddBookingPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
-    final _currentStep = useState(0);
+    final currentStep = useState(0);
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
     final bookingListNotifier = ref.watch(bookingListProvider.notifier);
@@ -68,8 +68,8 @@ class AddBookingPage extends HookConsumerWidget {
                             }),
                       )
                       .toList()),
-              isActive: _currentStep.value >= 0,
-              state: _currentStep.value >= 0
+              isActive: currentStep.value >= 0,
+              state: currentStep.value >= 0
                   ? StepState.complete
                   : StepState.disabled,
             ),
@@ -89,8 +89,8 @@ class AddBookingPage extends HookConsumerWidget {
                   ),
                 ],
               ),
-              isActive: _currentStep.value >= 0,
-              state: _currentStep.value >= 1
+              isActive: currentStep.value >= 0,
+              state: currentStep.value >= 1
                   ? StepState.complete
                   : StepState.disabled,
             ),
@@ -102,8 +102,8 @@ class AddBookingPage extends HookConsumerWidget {
                   controller: motif,
                   errorMsg: BookingTextConstants.noReasonError,
                   label: BookingTextConstants.bookingReason),
-              isActive: _currentStep.value >= 0,
-              state: _currentStep.value >= 2
+              isActive: currentStep.value >= 0,
+              state: currentStep.value >= 2
                   ? StepState.complete
                   : StepState.disabled,
             ),
@@ -115,8 +115,8 @@ class AddBookingPage extends HookConsumerWidget {
                   controller: note,
                   label: BookingTextConstants.bookingNote,
                   errorMsg: BookingTextConstants.noNoteError),
-              isActive: _currentStep.value >= 0,
-              state: _currentStep.value >= 3
+              isActive: currentStep.value >= 0,
+              state: currentStep.value >= 3
                   ? StepState.complete
                   : StepState.disabled,
             ),
@@ -136,8 +136,8 @@ class AddBookingPage extends HookConsumerWidget {
                     valueNotifier: multipleDay,
                     onChanged: (_) {}),
               ]),
-              isActive: _currentStep.value >= 0,
-              state: _currentStep.value >= 4
+              isActive: currentStep.value >= 0,
+              state: currentStep.value >= 4
                   ? StepState.complete
                   : StepState.disabled,
             ),
@@ -174,19 +174,19 @@ class AddBookingPage extends HookConsumerWidget {
                           : BookingTextConstants.no),
                 ],
               ),
-              isActive: _currentStep.value >= 0,
-              state: _currentStep.value >= 5
+              isActive: currentStep.value >= 0,
+              state: currentStep.value >= 5
                   ? StepState.complete
                   : StepState.disabled,
             ),
           ];
 
           void continued() {
-            _currentStep.value < steps.length ? _currentStep.value += 1 : null;
+            currentStep.value < steps.length ? currentStep.value += 1 : null;
           }
 
           void cancel() {
-            _currentStep.value > 0 ? _currentStep.value -= 1 : null;
+            currentStep.value > 0 ? currentStep.value -= 1 : null;
           }
 
           w = Form(
@@ -194,12 +194,12 @@ class AddBookingPage extends HookConsumerWidget {
             key: key,
             child: Stepper(
               physics: const BouncingScrollPhysics(),
-              currentStep: _currentStep.value,
-              onStepTapped: (step) => _currentStep.value = step,
+              currentStep: currentStep.value,
+              onStepTapped: (step) => currentStep.value = step,
               onStepContinue: continued,
               onStepCancel: cancel,
               controlsBuilder: (context, ControlsDetails controls) {
-                final isLastStep = _currentStep.value == steps.length - 1;
+                final isLastStep = currentStep.value == steps.length - 1;
                 return Row(
                   children: [
                     Expanded(
@@ -266,7 +266,7 @@ class AddBookingPage extends HookConsumerWidget {
                     const SizedBox(
                       width: 10,
                     ),
-                    if (_currentStep.value > 0)
+                    if (currentStep.value > 0)
                       Expanded(
                         child: ElevatedButton(
                           onPressed: controls.onStepCancel,

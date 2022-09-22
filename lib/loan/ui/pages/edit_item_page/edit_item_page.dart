@@ -18,7 +18,7 @@ class EditItemPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
-    final _currentStep = useState(0);
+    final currentStep = useState(0);
     final key = GlobalKey<FormState>();
     final loaner = useState(ref.watch(loanerProvider));
     final loaners = ref.watch(loanerListProvider);
@@ -70,8 +70,8 @@ class EditItemPage extends HookConsumerWidget {
                         )
                         .toList()),
               ),
-              isActive: _currentStep.value >= 0,
-              state: _currentStep.value >= 0
+              isActive: currentStep.value >= 0,
+              state: currentStep.value >= 0
                   ? StepState.complete
                   : StepState.disabled,
             ),
@@ -98,8 +98,8 @@ class EditItemPage extends HookConsumerWidget {
                   return null;
                 },
               ),
-              isActive: _currentStep.value >= 0,
-              state: _currentStep.value >= 1
+              isActive: currentStep.value >= 0,
+              state: currentStep.value >= 1
                   ? StepState.complete
                   : StepState.disabled,
             ),
@@ -132,8 +132,8 @@ class EditItemPage extends HookConsumerWidget {
                   return null;
                 },
               ),
-              isActive: _currentStep.value >= 0,
-              state: _currentStep.value >= 2
+              isActive: currentStep.value >= 0,
+              state: currentStep.value >= 2
                   ? StepState.complete
                   : StepState.disabled,
             ),
@@ -167,8 +167,8 @@ class EditItemPage extends HookConsumerWidget {
                   return null;
                 },
               ),
-              isActive: _currentStep.value >= 0,
-              state: _currentStep.value >= 3
+              isActive: currentStep.value >= 0,
+              state: currentStep.value >= 3
                   ? StepState.complete
                   : StepState.disabled,
             ),
@@ -178,43 +178,43 @@ class EditItemPage extends HookConsumerWidget {
                 children: <Widget>[
                   Row(
                     children: [
-                      const Text(LoanTextConstants.association + " : "),
+                      const Text("${LoanTextConstants.association} : "),
                       Text(loaner.value.name),
                     ],
                   ),
                   Row(
                     children: [
-                      const Text(LoanTextConstants.name + " : "),
+                      const Text("${LoanTextConstants.name} : "),
                       Text(item.name),
                     ],
                   ),
                   Row(
                     children: [
-                      const Text(LoanTextConstants.caution + " : "),
+                      const Text("${LoanTextConstants.caution} : "),
                       Text(item.caution.toString()),
                     ],
                   ),
                   Row(
                     children: [
-                      const Text(LoanTextConstants.lendingDuration + " : "),
+                      const Text("${LoanTextConstants.lendingDuration} : "),
                       Text((item.suggestedLendingDuration~/(24 * 60 * 60)).toString()),
                     ],
                   ),
                 ],
               ),
-              isActive: _currentStep.value >= 0,
-              state: _currentStep.value >= 4
+              isActive: currentStep.value >= 0,
+              state: currentStep.value >= 4
                   ? StepState.complete
                   : StepState.disabled,
             ),
           ];
 
           void continued() {
-            _currentStep.value < steps.length ? _currentStep.value += 1 : null;
+            currentStep.value < steps.length ? currentStep.value += 1 : null;
           }
 
           void cancel() {
-            _currentStep.value > 0 ? _currentStep.value -= 1 : null;
+            currentStep.value > 0 ? currentStep.value -= 1 : null;
           }
 
           w = Form(
@@ -222,12 +222,12 @@ class EditItemPage extends HookConsumerWidget {
             // autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Stepper(
               physics: const BouncingScrollPhysics(),
-              currentStep: _currentStep.value,
-              onStepTapped: (step) => _currentStep.value = step,
+              currentStep: currentStep.value,
+              onStepTapped: (step) => currentStep.value = step,
               onStepContinue: continued,
               onStepCancel: cancel,
               controlsBuilder: (context, ControlsDetails controls) {
-                final isLastStep = _currentStep.value == steps.length - 1;
+                final isLastStep = currentStep.value == steps.length - 1;
                 return Row(
                   children: [
                     Expanded(
@@ -271,7 +271,7 @@ class EditItemPage extends HookConsumerWidget {
                     const SizedBox(
                       width: 10,
                     ),
-                    if (_currentStep.value > 0)
+                    if (currentStep.value > 0)
                       Expanded(
                         child: ElevatedButton(
                           onPressed: controls.onStepCancel,

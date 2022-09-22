@@ -46,7 +46,7 @@ class TopBar extends ConsumerWidget {
                       SizedBox(
                           width: 200,
                           child: Text(
-                            user.firstname + " " + user.name,
+                            "${user.firstname} ${user.name}",
                             style: TextStyle(
                               color: Colors.grey.shade100,
                               fontSize: 15,
@@ -76,7 +76,7 @@ class TopBar extends ConsumerWidget {
                     width: 60,
                     height: 40,
                     child: HeroIcon(
-                      HeroIcons.logout,
+                      HeroIcons.arrowRightOnRectangle,
                       color: Colors.grey.shade100,
                       size: 25,
                     ),

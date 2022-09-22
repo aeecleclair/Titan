@@ -15,7 +15,7 @@ class CashRepository extends Repository {
   }
 
   Future<Cash> createCash(Cash cash) async {
-    return Cash.fromJson(await create(cash.toJson(), suffix: cash.user.id + "/cash"));
+    return Cash.fromJson(await create(cash.toJson(), suffix: "${cash.user.id}/cash"));
   }
 
   Future<bool> updateCash(Cash cash) async {

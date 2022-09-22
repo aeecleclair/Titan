@@ -76,9 +76,7 @@ class DeliveryAdminUi extends HookConsumerWidget {
               ),
               Expanded(
                 child: Text(
-                  AMAPTextConstants.deliveryOn +
-                      " " +
-                      processDate(c.deliveryDate),
+                  "${AMAPTextConstants.deliveryOn} ${processDate(c.deliveryDate)}",
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -200,10 +198,7 @@ class DeliveryAdminUi extends HookConsumerWidget {
                           width: 140,
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            c.products.length.toString() +
-                                " " +
-                                AMAPTextConstants.product +
-                                (c.products.length != 1 ? "s" : ""),
+                            "${c.products.length} ${AMAPTextConstants.product}${c.products.length != 1 ? "s" : ""}",
                             style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
@@ -218,8 +213,8 @@ class DeliveryAdminUi extends HookConsumerWidget {
                       margin: const EdgeInsets.only(left: 20),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        gradient:  LinearGradient(
-                          colors: const [
+                        gradient:  const LinearGradient(
+                          colors: [
                             AMAPColorConstants.redGradient1,
                             AMAPColorConstants.redGradient2,
                           ],
@@ -251,7 +246,7 @@ class DeliveryAdminUi extends HookConsumerWidget {
               GestureDetector(
                   child: Container(
                     padding: const EdgeInsets.only(right: 15),
-                    child: const HeroIcon(HeroIcons.viewList,
+                    child: const HeroIcon(HeroIcons.listBullet,
                         color: AMAPColorConstants.textDark),
                   ),
                   onTap: () {

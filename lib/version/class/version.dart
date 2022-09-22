@@ -15,11 +15,11 @@ class Version {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['ready'] = ready;
-    _data['version'] = version;
-    _data['minimal_titan_version'] = minimalTitanVersion;
-    return _data;
+    final data = <String, dynamic>{};
+    data['ready'] = ready;
+    data['version'] = version;
+    data['minimal_titan_version'] = minimalTitanVersion;
+    return data;
   }
 
   Version.empty(

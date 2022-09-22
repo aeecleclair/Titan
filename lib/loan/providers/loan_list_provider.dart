@@ -47,7 +47,7 @@ class LoanListNotifier extends ListNotifier<Loan> {
 final loanListProvider =
     StateNotifierProvider<LoanListNotifier, AsyncValue<List<Loan>>>((ref) {
   final token = ref.watch(tokenProvider);
-  LoanListNotifier _loanListNotifier = LoanListNotifier(token: token);
-  _loanListNotifier.loadLoanList();
-  return _loanListNotifier;
+  LoanListNotifier loanListNotifier = LoanListNotifier(token: token);
+  loanListNotifier.loadLoanList();
+  return loanListNotifier;
 });

@@ -40,7 +40,7 @@ class MainPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      me.firstname + " " + me.name,
+                      "${me.firstname} ${me.name}",
                       style: const TextStyle(
                         fontSize: 20,
                       ),
@@ -64,8 +64,8 @@ class MainPage extends HookConsumerWidget {
                                     width: 50,
                                     height: 50,
                                     decoration: BoxDecoration(
-                                      gradient:  LinearGradient(
-                                        colors: const [
+                                      gradient:  const LinearGradient(
+                                        colors: [
                                           SettingsColorConstants.gradient1,
                                           SettingsColorConstants.gradient2,
                                         ],
@@ -121,8 +121,8 @@ class MainPage extends HookConsumerWidget {
                   width: double.infinity,
                   height: 50,
                   decoration: BoxDecoration(
-                    gradient:  LinearGradient(
-                      colors: const [
+                    gradient:  const LinearGradient(
+                      colors: [
                         SettingsColorConstants.gradient1,
                         SettingsColorConstants.gradient2,
                       ],
@@ -241,7 +241,7 @@ class MainPage extends HookConsumerWidget {
                             children: [
                               const SizedBox(height: 15),
                               Text(
-                                "- " + capitalize(e.name),
+                                "- ${capitalize(e.name)}",
                                 style: const TextStyle(
                                   fontSize: 18,
                                 ),

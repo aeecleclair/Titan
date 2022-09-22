@@ -53,7 +53,7 @@ class AssoPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               Container(
                 padding: const EdgeInsets.all(12),
-                child: const Text(AdminTextConstants.members + " :",
+                child: const Text("${AdminTextConstants.members} :",
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ),
@@ -72,8 +72,8 @@ class AssoPage extends HookConsumerWidget {
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          gradient:  LinearGradient(
-                            colors: const [
+                          gradient:  const LinearGradient(
+                            colors: [
                               AdminColorConstants.gradient1,
                               AdminColorConstants.gradient2,
                             ],
@@ -90,7 +90,7 @@ class AssoPage extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: const HeroIcon(
-                          HeroIcons.pencilAlt,
+                          HeroIcons.pencilSquare,
                           color: Colors.white,
                         )),
                     onTap: () {
@@ -104,8 +104,8 @@ class AssoPage extends HookConsumerWidget {
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          gradient:  LinearGradient(
-                            colors: const [
+                          gradient:  const LinearGradient(
+                            colors: [
                               AdminColorConstants.redGradient1,
                               AdminColorConstants.redGradient2,
                             ],
@@ -122,7 +122,7 @@ class AssoPage extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: const HeroIcon(
-                          HeroIcons.x,
+                          HeroIcons.xMark,
                           color: Colors.white,
                         )),
                     onTap: () {

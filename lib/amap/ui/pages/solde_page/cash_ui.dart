@@ -30,7 +30,7 @@ class CashUi extends HookConsumerWidget {
                   style: const TextStyle(
                       fontSize: 14, fontWeight: FontWeight.bold)),
               Text(
-                AMAPTextConstants.amount + " : " + c.balance.toStringAsFixed(2) + "€",
+                "${AMAPTextConstants.amount} : ${c.balance.toStringAsFixed(2)}€",
                 style: TextStyle(color: Colors.grey.shade600),
               ),
             ],

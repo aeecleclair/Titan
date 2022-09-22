@@ -6,7 +6,7 @@ String doubleToTime(double d) {
   int h = d.toInt();
   int m = ((d - h) * 60).toInt();
   String s = "";
-  s += h != 0 ? h.toString() + "h" : "";
+  s += h != 0 ? "${h}h" : "";
   s += m != 0 ? m.toString().padLeft(2, '0') : "";
   s += h == 0 && m != 0 ? "min" : "";
   return s;

@@ -40,9 +40,9 @@ final loanerListProvider =
     StateNotifierProvider<LoanerListNotifier, AsyncValue<List<Loaner>>>(
   (ref) {
     final token = ref.watch(tokenProvider);
-    LoanerListNotifier _orderListNotifier = LoanerListNotifier(token: token);
-    _orderListNotifier.loadLoanerList();
-    return _orderListNotifier;
+    LoanerListNotifier orderListNotifier = LoanerListNotifier(token: token);
+    orderListNotifier.loadLoanerList();
+    return orderListNotifier;
   },
 );
 

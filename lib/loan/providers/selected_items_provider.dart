@@ -26,9 +26,9 @@ final editSelectedListProvider =
     error: (e, s) {},
     loading: () {},
   );
-  SelectedListProvider _selectedListProvider = SelectedListProvider(products);
-  _selectedListProvider.initWithLoan(products, loan);
-  return _selectedListProvider;
+  SelectedListProvider selectedListProvider = SelectedListProvider(products);
+  selectedListProvider.initWithLoan(products, loan);
+  return selectedListProvider;
 });
 
 class SelectedListProvider extends StateNotifier<List<bool>> {

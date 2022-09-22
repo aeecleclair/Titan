@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
@@ -20,7 +19,7 @@ class AddEventPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(eventPageProvider.notifier);
-    final _currentStep = useState(0);
+    final currentStep = useState(0);
     final key = GlobalKey<FormState>();
     final eventListNotifier = ref.watch(eventListProvider.notifier);
     final eventType = useState(CalendarEventType.happyHour);
@@ -78,9 +77,9 @@ class AddEventPage extends HookConsumerWidget {
                       }),
                 )
                 .toList()),
-        isActive: _currentStep.value >= 0,
+        isActive: currentStep.value >= 0,
         state:
-            _currentStep.value >= 0 ? StepState.complete : StepState.disabled,
+            currentStep.value >= 0 ? StepState.complete : StepState.disabled,
       ),
       Step(
         title: const Text(EventTextConstants.name,
@@ -123,9 +122,9 @@ class AddEventPage extends HookConsumerWidget {
             color: Colors.black,
           ),
         ),
-        isActive: _currentStep.value >= 0,
+        isActive: currentStep.value >= 0,
         state:
-            _currentStep.value >= 3 ? StepState.complete : StepState.disabled,
+            currentStep.value >= 3 ? StepState.complete : StepState.disabled,
       ),
       Step(
         title: const Text(EventTextConstants.organizer,
@@ -168,9 +167,9 @@ class AddEventPage extends HookConsumerWidget {
             color: Colors.black,
           ),
         ),
-        isActive: _currentStep.value >= 0,
+        isActive: currentStep.value >= 0,
         state:
-            _currentStep.value >= 3 ? StepState.complete : StepState.disabled,
+            currentStep.value >= 3 ? StepState.complete : StepState.disabled,
       ),
       Step(
         title: const Text(EventTextConstants.dates,
@@ -655,9 +654,9 @@ class AddEventPage extends HookConsumerWidget {
                   ),
           ],
         ),
-        isActive: _currentStep.value >= 0,
+        isActive: currentStep.value >= 0,
         state:
-            _currentStep.value >= 1 ? StepState.complete : StepState.disabled,
+            currentStep.value >= 1 ? StepState.complete : StepState.disabled,
       ),
       Step(
         title: const Text(EventTextConstants.place,
@@ -704,9 +703,9 @@ class AddEventPage extends HookConsumerWidget {
             ),
           ],
         ),
-        isActive: _currentStep.value >= 0,
+        isActive: currentStep.value >= 0,
         state:
-            _currentStep.value >= 2 ? StepState.complete : StepState.disabled,
+            currentStep.value >= 2 ? StepState.complete : StepState.disabled,
       ),
       Step(
         title: const Text(EventTextConstants.description,
@@ -753,9 +752,9 @@ class AddEventPage extends HookConsumerWidget {
             ),
           ],
         ),
-        isActive: _currentStep.value >= 0,
+        isActive: currentStep.value >= 0,
         state:
-            _currentStep.value >= 2 ? StepState.complete : StepState.disabled,
+            currentStep.value >= 2 ? StepState.complete : StepState.disabled,
       ),
       Step(
         title: const Text(EventTextConstants.confirmation,
@@ -767,7 +766,7 @@ class AddEventPage extends HookConsumerWidget {
           children: <Widget>[
             Row(
               children: [
-                const Text(EventTextConstants.eventType + " : ",
+                const Text("${EventTextConstants.eventType} : ",
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -781,7 +780,7 @@ class AddEventPage extends HookConsumerWidget {
             ),
             Row(
               children: [
-                const Text(EventTextConstants.name + " : ",
+                const Text("${EventTextConstants.name} : ",
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -795,7 +794,7 @@ class AddEventPage extends HookConsumerWidget {
             ),
             Row(
               children: [
-                const Text(EventTextConstants.organizer + " : ",
+                const Text("${EventTextConstants.organizer} : ",
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -810,7 +809,7 @@ class AddEventPage extends HookConsumerWidget {
             if (!recurrent.value || !allDay.value)
               Row(
                 children: [
-                  const Text(EventTextConstants.startDate + " : ",
+                  const Text("${EventTextConstants.startDate} : ",
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -825,7 +824,7 @@ class AddEventPage extends HookConsumerWidget {
             if (!recurrent.value || !allDay.value)
               Row(
                 children: [
-                  const Text(EventTextConstants.endDate + " : ",
+                  const Text("${EventTextConstants.endDate} : ",
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -839,7 +838,7 @@ class AddEventPage extends HookConsumerWidget {
               ),
             Row(
               children: [
-                const Text(EventTextConstants.place + " : ",
+                const Text("${EventTextConstants.place} : ",
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -853,7 +852,7 @@ class AddEventPage extends HookConsumerWidget {
             ),
             Row(
               children: [
-                const Text(EventTextConstants.description + " : ",
+                const Text("${EventTextConstants.description} : ",
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -867,7 +866,7 @@ class AddEventPage extends HookConsumerWidget {
             ),
             Row(
               children: [
-                const Text(EventTextConstants.recurrence + " : ",
+                const Text("${EventTextConstants.recurrence} : ",
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -887,7 +886,7 @@ class AddEventPage extends HookConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      const Text(EventTextConstants.recurrenceDays + " : ",
+                      const Text("${EventTextConstants.recurrenceDays} : ",
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -905,17 +904,15 @@ class AddEventPage extends HookConsumerWidget {
                   ),
                   Row(
                     children: [
-                      const Text(EventTextConstants.interval + " : ",
+                      const Text("${EventTextConstants.interval} : ",
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.black)),
                       Text(
-                          "Toutes les " +
-                              (interval.text != "1"
-                                  ? interval.text + " "
-                                  : "") +
-                              "semaines",
+                          "Toutes les ${interval.text != "1"
+                                  ? "${interval.text} "
+                                  : ""}semaines",
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -924,7 +921,7 @@ class AddEventPage extends HookConsumerWidget {
                   ),
                   Row(
                     children: [
-                      const Text(EventTextConstants.recurrenceEndDate + " : ",
+                      const Text("${EventTextConstants.recurrenceEndDate} : ",
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -940,18 +937,18 @@ class AddEventPage extends HookConsumerWidget {
               ),
           ],
         ),
-        isActive: _currentStep.value >= 0,
+        isActive: currentStep.value >= 0,
         state:
-            _currentStep.value >= 5 ? StepState.complete : StepState.disabled,
+            currentStep.value >= 5 ? StepState.complete : StepState.disabled,
       ),
     ];
 
     void continued() {
-      _currentStep.value < steps.length ? _currentStep.value += 1 : null;
+      currentStep.value < steps.length ? currentStep.value += 1 : null;
     }
 
     void cancel() {
-      _currentStep.value > 0 ? _currentStep.value -= 1 : null;
+      currentStep.value > 0 ? currentStep.value -= 1 : null;
     }
 
     w = Form(
@@ -959,12 +956,12 @@ class AddEventPage extends HookConsumerWidget {
       key: key,
       child: Stepper(
         physics: const BouncingScrollPhysics(),
-        currentStep: _currentStep.value,
-        onStepTapped: (step) => _currentStep.value = step,
+        currentStep: currentStep.value,
+        onStepTapped: (step) => currentStep.value = step,
         onStepContinue: continued,
         onStepCancel: cancel,
         controlsBuilder: (context, ControlsDetails controls) {
-          final isLastStep = _currentStep.value == steps.length - 1;
+          final isLastStep = currentStep.value == steps.length - 1;
           return Row(
             children: [
               Expanded(
@@ -1051,7 +1048,7 @@ class AddEventPage extends HookConsumerWidget {
               const SizedBox(
                 width: 10,
               ),
-              if (_currentStep.value > 0)
+              if (currentStep.value > 0)
                 Expanded(
                   child: ElevatedButton(
                     onPressed: controls.onStepCancel,

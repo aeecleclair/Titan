@@ -12,15 +12,15 @@ class UserListRepository extends Repository {
   }
 
   Future<List<SimpleUser>> searchUser(String query, {List<String>? includeId, List<String>? excludeId}) async {
-    String suffix = "search?query=" + query;
+    String suffix = "search?query=$query";
     if (includeId != null) {
       for (final id in includeId) {
-        suffix += "&includedGroups=" + id;
+        suffix += "&includedGroups=$id";
       }
     }
     if (excludeId != null) {
       for (final id in excludeId) {
-        suffix += "&excludedGroups=" + id;
+        suffix += "&excludedGroups=$id";
       }
     }
     return List<SimpleUser>.from(

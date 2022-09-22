@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/providers/event_provider.dart';
-import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/home/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({Key? key}) : super(key: key);
@@ -119,10 +117,10 @@ class DetailPage extends HookConsumerWidget {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Text(
                               "Toute la journée",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
@@ -148,9 +146,9 @@ class DetailPage extends HookConsumerWidget {
                               ),
                             ],
                           ),
-                          Text(
+                          const Text(
                             "Toute la journée",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,

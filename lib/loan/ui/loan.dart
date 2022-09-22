@@ -15,7 +15,7 @@ class LoanPage extends StatelessWidget {
           TopBar(
             controllerNotifier: controllerNotifier,
           ),
-           Expanded(child: const PageSwitcher()),
+           const Expanded(child: PageSwitcher()),
         ],
       ),
     );
