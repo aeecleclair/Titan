@@ -16,10 +16,10 @@ dependencies:
     sdk: flutter
   flutter_hooks: ^0.18.2+1
   flutter_riverpod: ^1.0.3
-  flutter_secure_storage: ^5.0.2
+  flutter_secure_storage: ^6.0.0
   font_awesome_flutter: ^10.1.0
   google_fonts: ^3.0.1
-  heroicons: ^0.4.0
+  heroicons: ^0.7.0
   hooks_riverpod: ^1.0.3
   http: ^0.13.4
   intl: ^0.17.0
@@ -33,7 +33,7 @@ dependencies:
   uuid: ^3.0.6
 
 dev_dependencies:
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
 

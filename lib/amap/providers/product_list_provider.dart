@@ -41,7 +41,7 @@ final productListProvider =
     StateNotifierProvider<ProductListNotifier, AsyncValue<List<Product>>>(
         (ref) {
   final token = ref.watch(tokenProvider);
-  ProductListNotifier _productListNotifier = ProductListNotifier(token: token);
-  _productListNotifier.loadProductList();
-  return _productListNotifier;
+  ProductListNotifier productListNotifier = ProductListNotifier(token: token);
+  productListNotifier.loadProductList();
+  return productListNotifier;
 });

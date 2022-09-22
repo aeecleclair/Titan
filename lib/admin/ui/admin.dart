@@ -22,7 +22,7 @@ class AdminPage extends ConsumerWidget {
           TopBar(
             controllerNotifier: controllerNotifier,
           ),
-          Expanded(child: const PageSwitcher()),
+          const Expanded(child: PageSwitcher()),
         ],
       ),
     ));

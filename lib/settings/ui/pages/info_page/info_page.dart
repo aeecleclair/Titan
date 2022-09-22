@@ -135,8 +135,8 @@ class InfoPage extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: 15),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                gradient:  LinearGradient(
-                  colors: const  [
+                gradient:  const LinearGradient(
+                  colors: [
                     SettingsColorConstants.gradient1,
                     SettingsColorConstants.gradient2,
                   ],

@@ -30,13 +30,13 @@ class Product {
       );
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['name'] = name;
-    _data['price'] = price;
-    _data['quantity'] = quantity;
-    _data['category'] = category;
-    return _data;
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['price'] = price;
+    data['quantity'] = quantity;
+    data['category'] = category;
+    return data;
   }
 
   static Product empty() {

@@ -82,8 +82,8 @@ final loanerLoanListProvider =
         (ref) {
   final token = ref.watch(tokenProvider);
   final loanerId = ref.watch(loanerIdProvider);
-  LoanerLoanListNotifier _loanerLoanListNotifier =
+  LoanerLoanListNotifier loanerLoanListNotifier =
       LoanerLoanListNotifier(token: token);
-  _loanerLoanListNotifier.loadLoan(loanerId);
-  return _loanerLoanListNotifier;
+  loanerLoanListNotifier.loadLoan(loanerId);
+  return loanerLoanListNotifier;
 });

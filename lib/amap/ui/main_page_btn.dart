@@ -79,8 +79,8 @@ class MainPageBtn extends HookConsumerWidget {
                               width: 30,
                               height: 30,
                               decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    colors: const [
+                                gradient: const LinearGradient(
+                                    colors: [
                                       AMAPColorConstants.green1,
                                       AMAPColorConstants.green2
                                     ],

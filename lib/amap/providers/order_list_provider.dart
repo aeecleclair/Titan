@@ -125,11 +125,11 @@ class OrderListNotifier extends ListNotifier<Order> {
   }
 
   Future<double> getprice(int indexOrder) async {
-    double _price = 0;
+    double price = 0;
     try {
       state.when(
         data: (orders) async {
-          _price =
+          price =
               orders[indexOrder].products.fold(0, (previousValue, element) {
             return previousValue + element.price * element.quantity;
           });
@@ -144,7 +144,7 @@ class OrderListNotifier extends ListNotifier<Order> {
     } catch (e) {
       state = AsyncValue.error(e);
     }
-    return _price;
+    return price;
   }
 
   Future<AsyncValue<List<Order>>> copy() async {
@@ -166,11 +166,11 @@ final orderListProvider = StateNotifierProvider.family<OrderListNotifier,
     AsyncValue<List<Order>>, String>((ref, deliveryId) {
   final userId = ref.watch(idProvider);
   final token = ref.watch(tokenProvider);
-  OrderListNotifier _orderListNotifier = OrderListNotifier(token: token);
-  _orderListNotifier.setId(deliveryId);
-  _orderListNotifier.setUserId(userId);
-  _orderListNotifier.loadOrderList();
-  return _orderListNotifier;
+  OrderListNotifier orderListNotifier = OrderListNotifier(token: token);
+  orderListNotifier.setId(deliveryId);
+  orderListNotifier.setUserId(userId);
+  orderListNotifier.loadOrderList();
+  return orderListNotifier;
 });
 
 final orderList = Provider((ref) {

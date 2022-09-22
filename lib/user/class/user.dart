@@ -39,18 +39,18 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['name'] = name;
-    _data['firstname'] = firstname;
-    _data['nickname'] = nickname;
-    _data['id'] = id;
-    _data['email'] = email;
-    _data['birthday'] = birthday;
-    _data['promo'] = promo;
-    _data['floor'] = floor;
-    _data['created_on'] = createdOn;
-    _data['groups'] = groups.map((e) => e.toJson()).toList();
-    return _data;
+    final data = <String, dynamic>{};
+    data['name'] = name;
+    data['firstname'] = firstname;
+    data['nickname'] = nickname;
+    data['id'] = id;
+    data['email'] = email;
+    data['birthday'] = birthday;
+    data['promo'] = promo;
+    data['floor'] = floor;
+    data['created_on'] = createdOn;
+    data['groups'] = groups.map((e) => e.toJson()).toList();
+    return data;
   }
 
   User.empty() {

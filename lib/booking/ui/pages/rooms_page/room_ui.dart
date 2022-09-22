@@ -45,7 +45,7 @@ class RoomUi extends HookConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient:  LinearGradient(colors: const [
+                      gradient:  const LinearGradient(colors: [
                         Colors.white,
                         Color.fromARGB(255, 175, 216, 226)
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -59,7 +59,7 @@ class RoomUi extends HookConsumerWidget {
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
                     child: const HeroIcon(
-                      HeroIcons.pencilAlt,
+                      HeroIcons.pencilSquare,
                       size: 20,
                       color: BookingColorConstants.darkBlue,
                     ),
@@ -75,12 +75,12 @@ class RoomUi extends HookConsumerWidget {
                 GestureDetector(
                   child: Container(
                     padding: const EdgeInsets.all(7),
-                    decoration:  BoxDecoration(
-                      gradient: LinearGradient(colors: const [
+                    decoration:  const BoxDecoration(
+                      gradient: LinearGradient(colors: [
                         BookingColorConstants.darkBlue,
                         BookingColorConstants.lightBlue
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
                     child: const HeroIcon(
                       HeroIcons.trash,

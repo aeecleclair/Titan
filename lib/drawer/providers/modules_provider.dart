@@ -33,12 +33,12 @@ final listModuleProvider =
         selected: true),
     Module(
         name: "Réservation",
-        icon: HeroIcons.table,
+        icon: HeroIcons.tableCells,
         page: ModuleType.booking,
         selected: false),
     Module(
         name: "Prêt",
-        icon: HeroIcons.library,
+        icon: HeroIcons.buildingLibrary,
         page: ModuleType.loan,
         selected: false),
     Module(

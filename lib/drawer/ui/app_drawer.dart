@@ -21,48 +21,48 @@ class AppDrawer extends HookConsumerWidget {
 
   const AppDrawer({Key? key}) : super(key: key);
 
-  Widget getPage(ModuleType page, SwipeControllerNotifier _controllerNotifier) {
+  Widget getPage(ModuleType page, SwipeControllerNotifier controllerNotifier) {
     switch (page) {
       case ModuleType.settings:
-        return SettingsPage(controllerNotifier: _controllerNotifier);
+        return SettingsPage(controllerNotifier: controllerNotifier);
       case ModuleType.home:
-        return HomePage(controllerNotifier: _controllerNotifier);
+        return HomePage(controllerNotifier: controllerNotifier);
       case ModuleType.booking:
-        return BookingPage(controllerNotifier: _controllerNotifier);
+        return BookingPage(controllerNotifier: controllerNotifier);
       case ModuleType.loan:
-        return LoanPage(controllerNotifier: _controllerNotifier);
+        return LoanPage(controllerNotifier: controllerNotifier);
       case ModuleType.amap:
-        return AmapPage(controllerNotifier: _controllerNotifier);
+        return AmapPage(controllerNotifier: controllerNotifier);
       case ModuleType.admin:
-        return AdminPage(controllerNotifier: _controllerNotifier);
+        return AdminPage(controllerNotifier: controllerNotifier);
       case ModuleType.event:
-        return EventPage(controllerNotifier: _controllerNotifier);
+        return EventPage(controllerNotifier: controllerNotifier);
     }
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final animationController = useAnimationController(duration: duration);
-    final _controller = ref.watch(swipeControllerProvider(animationController));
-    final _controllerNotifier =
+    final controller = ref.watch(swipeControllerProvider(animationController));
+    final controllerNotifier =
         ref.watch(swipeControllerProvider(animationController).notifier);
     final page = ref.watch(pageProvider);
     return GestureDetector(
-        onHorizontalDragStart: _controllerNotifier.onDragStart,
-        onHorizontalDragUpdate: _controllerNotifier.onDragUpdate,
-        onHorizontalDragEnd: (details) => _controllerNotifier.onDragEnd(
+        onHorizontalDragStart: controllerNotifier.onDragStart,
+        onHorizontalDragUpdate: controllerNotifier.onDragUpdate,
+        onHorizontalDragEnd: (details) => controllerNotifier.onDragEnd(
             details, MediaQuery.of(context).size.width),
         onTap: () {},
         child: AnimatedBuilder(
-            animation: _controller,
+            animation: controller,
             builder: (BuildContext context, _) {
-              double animationVal = _controller.value;
+              double animationVal = controller.value;
               double translateVal = animationVal * maxSlide;
               double scaleVal = 1 - (animationVal * 0.3);
               double cornerval = 30.0 * animationVal;
               return Stack(
                 children: [
-                  CustomDrawer(controllerNotifier: _controllerNotifier),
+                  CustomDrawer(controllerNotifier: controllerNotifier),
                   Transform(
                       alignment: Alignment.centerLeft,
                       transform: Matrix4.identity()
@@ -70,15 +70,15 @@ class AppDrawer extends HookConsumerWidget {
                         ..scale(scaleVal),
                       child: GestureDetector(
                           onTap: () {
-                            if (_controller.isCompleted) {
-                              _controllerNotifier.close();
+                            if (controller.isCompleted) {
+                              controllerNotifier.close();
                             }
                           },
                           child: IgnorePointer(
-                            ignoring: _controller.isCompleted,
+                            ignoring: controller.isCompleted,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(cornerval),
-                              child: getPage(page, _controllerNotifier),
+                              child: getPage(page, controllerNotifier),
                             ),
                           )))
                 ],

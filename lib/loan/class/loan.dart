@@ -38,16 +38,16 @@ class Loan {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['borrower_id'] = borrower.id;
-    _data['loaner_id'] = loaner.id;
-    _data['notes'] = notes;
-    _data['start'] = processDateToAPIWitoutHour(start);
-    _data['end'] = processDateToAPIWitoutHour(end);
-    _data['caution'] = caution;
-    _data['item_ids'] = items.map((x) => x.id).toList();
-    return _data;
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['borrower_id'] = borrower.id;
+    data['loaner_id'] = loaner.id;
+    data['notes'] = notes;
+    data['start'] = processDateToAPIWitoutHour(start);
+    data['end'] = processDateToAPIWitoutHour(end);
+    data['caution'] = caution;
+    data['item_ids'] = items.map((x) => x.id).toList();
+    return data;
   }
 
   Loan copyWith({id, loaner, borrower, notes, start, end, caution, items, returned}) {

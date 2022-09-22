@@ -8,9 +8,9 @@ import 'package:myecl/tools/repository/repository.dart';
 
 String generateRandomString(int len) {
   var r = Random.secure();
-  const _chars =
+  const chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
+  return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
 }
 
 String hash(String data) {
@@ -36,7 +36,7 @@ class OAuth2TokenRepository extends Repository {
 
   Future<String> getLogInPage() async {
     final response = await http.post(
-      Uri.parse(host + ext + "authorize"),
+      Uri.parse("$host${ext}authorize"),
       headers: headers,
       body: {
         "client_id": clientId,
@@ -70,7 +70,7 @@ class OAuth2TokenRepository extends Repository {
     try {
       final response = await http
           .post(
-              Uri.parse(host + ext + "authorization-flow/authorize-validation"),
+              Uri.parse("$host${ext}authorization-flow/authorize-validation"),
               headers: headers,
               body: body)
           .timeout(const Duration(seconds: 5));
@@ -108,7 +108,7 @@ class OAuth2TokenRepository extends Repository {
       "grant_type": "authorization_code",
     };
     try {
-      final response = await http.post(Uri.parse(host + ext + "token"),
+      final response = await http.post(Uri.parse("$host${ext}token"),
           headers: headers, body: body);
       if (response.statusCode == 200) {
         final token = jsonDecode(response.body)["access_token"];
@@ -130,7 +130,7 @@ class OAuth2TokenRepository extends Repository {
       "grant_type": "refresh_token",
     };
     try {
-      final response = await http.post(Uri.parse(host + ext + "token"),
+      final response = await http.post(Uri.parse("$host${ext}token"),
           headers: headers, body: body);
       if (response.statusCode == 200) {
         final token = jsonDecode(response.body)["access_token"];

@@ -39,7 +39,7 @@ class ProductUiInList extends ConsumerWidget {
                   width: 40,
                   alignment: Alignment.centerRight,
                   child: Text(
-                    p.price.toStringAsFixed(2) + "€",
+                    "${p.price.toStringAsFixed(2)}€",
                     style: const TextStyle(fontSize: 13),
                   ),
                 ),
@@ -52,7 +52,7 @@ class ProductUiInList extends ConsumerWidget {
                     height: 25,
                     alignment: Alignment.center,
                     child: HeroIcon(
-                      HeroIcons.minusSm,
+                      HeroIcons.minusSmall,
                       size: 20,
                       color: p.quantity > 0
                           ? AMAPColorConstants.green2.withOpacity(0.8)
@@ -82,7 +82,7 @@ class ProductUiInList extends ConsumerWidget {
                     height: 25,
                     alignment: Alignment.center,
                     child: HeroIcon(
-                      HeroIcons.plusSm,
+                      HeroIcons.plusSmall,
                       size: 20,
                       color: p.quantity < 5
                           ? AMAPColorConstants.green2.withOpacity(0.8)

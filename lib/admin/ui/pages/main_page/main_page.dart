@@ -34,7 +34,7 @@ class MainPage extends HookConsumerWidget {
             parent: BouncingScrollPhysics()),
         child: groups.when(data: (g) {
           return Column(children: [
-            const Text(AdminTextConstants.association + "s",
+            const Text("${AdminTextConstants.association}s",
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -68,8 +68,8 @@ class MainPage extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 15),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  gradient:  LinearGradient(
-                    colors: const [
+                  gradient:  const LinearGradient(
+                    colors: [
                       AdminColorConstants.gradient1,
                       AdminColorConstants.gradient2,
                     ],
@@ -139,8 +139,8 @@ class MainPage extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 15),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  gradient:  LinearGradient(
-                    colors: const [
+                  gradient:  const LinearGradient(
+                    colors: [
                       AdminColorConstants.gradient1,
                       AdminColorConstants.gradient2,
                     ],

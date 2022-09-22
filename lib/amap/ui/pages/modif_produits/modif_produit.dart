@@ -19,7 +19,7 @@ class ModifProduct extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     final productsNotifier = ref.watch(productListProvider.notifier);
     final productsList = ref.watch(productListProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
@@ -65,7 +65,7 @@ class ModifProduct extends HookConsumerWidget {
                   color: AMAPColorConstants.background2.withOpacity(0.5)),
               child: Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: _formKey,
+                  key: formKey,
                   child: Container(
                     alignment: Alignment.center,
                     child: SingleChildScrollView(
@@ -248,7 +248,7 @@ class ModifProduct extends HookConsumerWidget {
                                         : AMAPTextConstants.add,
                                   ),
                                   onTap: () {
-                                    if (_formKey.currentState!.validate()) {
+                                    if (formKey.currentState!.validate()) {
                                       String cate = categoryController ==
                                               AMAPTextConstants.createCategory
                                           ? nouvellecategory.text

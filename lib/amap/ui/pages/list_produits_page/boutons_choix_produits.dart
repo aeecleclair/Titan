@@ -59,10 +59,7 @@ class Boutons extends HookConsumerWidget {
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           GestureDetector(
               child: GreenBtn(
-                  text: AMAPTextConstants.confirm +
-                      " (" +
-                      price.toStringAsFixed(2) +
-                      "€)"),
+                  text: "${AMAPTextConstants.confirm} (${price.toStringAsFixed(2)}€)"),
               onTap: () {
                 if (price == 0.0) {
                   displayAMAPToast(
@@ -143,7 +140,7 @@ class Boutons extends HookConsumerWidget {
               width: MediaQuery.of(context).size.width * 0.2,
               height: 70,
               decoration: BoxDecoration(
-                gradient:  LinearGradient(colors: const [
+                gradient:  const LinearGradient(colors: [
                   AMAPColorConstants.redGradient1,
                   AMAPColorConstants.redGradient2
                 ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -157,7 +154,7 @@ class Boutons extends HookConsumerWidget {
               ),
               alignment: Alignment.center,
               child: HeroIcon(
-                HeroIcons.x,
+                HeroIcons.xMark,
                 size: 35,
                 color: AMAPColorConstants.background,
               ),

@@ -62,7 +62,7 @@ class LoanUi extends ConsumerWidget {
                   const SizedBox(
                     height: 7,
                   ),
-                  Text(processDate(l.start) + " - " + processDate(l.end),
+                  Text("${processDate(l.start)} - ${processDate(l.end)}",
                       style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w400,

@@ -97,8 +97,8 @@ class AddAssoPage extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(vertical: 15),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: const [
+              gradient: const LinearGradient(
+                colors: [
                   AdminColorConstants.gradient1,
                   AdminColorConstants.gradient2,
                 ],

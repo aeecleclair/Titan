@@ -6,9 +6,9 @@ import 'package:myecl/auth/repositories/oauth2_repositoty.dart';
 final authTokenProvider =
     StateNotifierProvider<OAuth2TokenProvider, AsyncValue<Map<String, String>>>(
         (ref) {
-  OAuth2TokenProvider _oauth2TokenRepository = OAuth2TokenProvider();
-  _oauth2TokenRepository.getTokenFromStorage();
-  return _oauth2TokenRepository;
+  OAuth2TokenProvider oauth2TokenRepository = OAuth2TokenProvider();
+  oauth2TokenRepository.getTokenFromStorage();
+  return oauth2TokenRepository;
 });
 
 final isLoggedInProvider = Provider((ref) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SwipeControllerNotifier extends StateNotifier<AnimationController> {
-  SwipeControllerNotifier(AnimationController _controller) : super(_controller);
+  SwipeControllerNotifier(AnimationController controller) : super(controller);
 
   static const double maxSlide = 255;
   static const dragRigthStartVal = 60;
@@ -42,9 +42,9 @@ class SwipeControllerNotifier extends StateNotifier<AnimationController> {
 
   void onDragEnd(DragEndDetails endDetails, double width) {
     if (!state.isDismissed && !state.isCompleted) {
-      double _minFlingVelocity = 365.0;
+      double minFlingVelocity = 365.0;
       double dragVelocity = endDetails.velocity.pixelsPerSecond.dx.abs();
-      if (dragVelocity >= _minFlingVelocity) {
+      if (dragVelocity >= minFlingVelocity) {
         double visualVelovity = endDetails.velocity.pixelsPerSecond.dx / width;
         state.fling(velocity: visualVelovity);
       } else if (state.value < 0.5) {

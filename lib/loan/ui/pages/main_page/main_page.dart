@@ -40,7 +40,7 @@ class MainPage extends HookConsumerWidget {
                             pageNotifier.setLoanPage(LoanPage.history);
                           },
                           icon: const HeroIcon(
-                            HeroIcons.clipboardList,
+                            HeroIcons.clipboardDocumentList,
                             color: LoanColorConstants.lightGrey,
                             size: 25,
                           ),

@@ -66,7 +66,7 @@ class EventUI extends HookConsumerWidget {
                   ]),
                 SizedBox(
                   width: 140 / n,
-                  child: Text(r.name + " - " + r.location,
+                  child: Text("${r.name} - ${r.location}",
                       maxLines: 10,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

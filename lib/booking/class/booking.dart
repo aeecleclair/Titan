@@ -42,19 +42,19 @@ class Booking {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data["id"] = id;
-    _data["reason"] = reason;
-    _data["start"] = processDateToAPI(start);
-    _data["end"] = processDateToAPI(end);
-    _data["note"] = note;
-    _data["room_id"] = room.id;
-    _data["key"] = key;
-    _data["decision"] = decision.name;
-    _data["multipleDay"] = multipleDay;
-    _data["recurring"] = recurring;
-    _data["url"] = "";
-    return _data;
+    final data = <String, dynamic>{};
+    data["id"] = id;
+    data["reason"] = reason;
+    data["start"] = processDateToAPI(start);
+    data["end"] = processDateToAPI(end);
+    data["note"] = note;
+    data["room_id"] = room.id;
+    data["key"] = key;
+    data["decision"] = decision.name;
+    data["multipleDay"] = multipleDay;
+    data["recurring"] = recurring;
+    data["url"] = "";
+    return data;
   }
 
   Booking copyWith(

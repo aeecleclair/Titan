@@ -29,7 +29,7 @@ void displayToast(
           colors: [errorGradient1, errorGradient2],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight);
-      icon = HeroIcons.exclamation;
+      icon = HeroIcons.exclamationTriangle;
       break;
   }
 
@@ -80,19 +80,11 @@ String capitalize(String s) {
 }
 
 String processDate(DateTime date) {
-  return date.day.toString().padLeft(2, "0") +
-      "/" +
-      date.month.toString().padLeft(2, "0") +
-      "/" +
-      date.year.toString();
+  return "${date.day.toString().padLeft(2, "0")}/${date.month.toString().padLeft(2, "0")}/${date.year}";
 }
 
 String processDateWithHour(DateTime date) {
-  return processDate(date) +
-      " " +
-      date.hour.toString().padLeft(2, "0") +
-      ":" +
-      date.minute.toString().padLeft(2, "0");
+  return "${processDate(date)} ${date.hour.toString().padLeft(2, "0")}:${date.minute.toString().padLeft(2, "0")}";
 }
 
 String processDatePrint(String d) {
@@ -100,11 +92,7 @@ String processDatePrint(String d) {
     return "";
   }
   List<String> e = d.split("-");
-  return e[2].toString().padLeft(2, "0") +
-      "/" +
-      e[1].toString().padLeft(2, "0") +
-      "/" +
-      e[0].toString();
+  return "${e[2].toString().padLeft(2, "0")}/${e[1].toString().padLeft(2, "0")}/${e[0]}";
 }
 
 String processDateBack(String d) {
@@ -112,11 +100,7 @@ String processDateBack(String d) {
     return "";
   }
   List<String> e = d.split("/");
-  return e[2].toString().padLeft(2, "0") +
-      "-" +
-      e[1].toString().padLeft(2, "0") +
-      "-" +
-      e[0].toString();
+  return "${e[2].toString().padLeft(2, "0")}-${e[1].toString().padLeft(2, "0")}-${e[0]}";
 }
 
 String processDateToAPI(DateTime date) {

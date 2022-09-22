@@ -104,7 +104,7 @@ class DetailPage extends HookConsumerWidget {
                 Container(
                   alignment: Alignment.center,
                   child: Text(
-                    processDate(loan.start) + ' - ' + processDate(loan.end),
+                    '${processDate(loan.start)} - ${processDate(loan.end)}',
                     style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
@@ -140,7 +140,7 @@ class DetailPage extends HookConsumerWidget {
                               ],
                             ),
                             Text(
-                              e.caution.toString() + '€',
+                              '${e.caution}€',
                               style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w400,
@@ -206,7 +206,7 @@ class DetailPage extends HookConsumerWidget {
                                 pageNotifier.setLoanPage(LoanPage.editLoan);
                               });
                             },
-                            icon: HeroIcons.pencilAlt,
+                            icon: HeroIcons.pencilSquare,
                           ),
                           LoanButton(
                             onPressed: () {
@@ -247,7 +247,7 @@ class DetailPage extends HookConsumerWidget {
                                     );
                                   });
                             },
-                            icon: HeroIcons.hand,
+                            icon: HeroIcons.handRaised,
                           ),
                           LoanButton(
                             onPressed: () {
@@ -286,7 +286,7 @@ class DetailPage extends HookConsumerWidget {
                                 },
                               );
                             },
-                            icon: HeroIcons.x,
+                            icon: HeroIcons.xMark,
                           ),
                         ],
                       )

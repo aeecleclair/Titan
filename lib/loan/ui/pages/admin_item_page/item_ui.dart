@@ -50,7 +50,7 @@ class ItemUi extends HookConsumerWidget {
                   width: 40,
                   alignment: Alignment.centerRight,
                   child: Text(
-                    l.caution.toString() + "€",
+                    "${l.caution}€",
                     style: const TextStyle(fontSize: 13),
                   ),
                 ),
@@ -61,7 +61,7 @@ class ItemUi extends HookConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient:  LinearGradient(colors: const [
+                      gradient:  const LinearGradient(colors: [
                         LoanColorConstants.lightOrange,
                         LoanColorConstants.orange
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -74,7 +74,7 @@ class ItemUi extends HookConsumerWidget {
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
                     child: const HeroIcon(
-                      HeroIcons.pencilAlt,
+                      HeroIcons.pencilSquare,
                       size: 20,
                       color: Colors.white,
                     ),
@@ -92,7 +92,7 @@ class ItemUi extends HookConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient:  LinearGradient(colors: const [
+                      gradient:  const LinearGradient(colors: [
                         LoanColorConstants.lightGrey,
                         LoanColorConstants.darkGrey
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),

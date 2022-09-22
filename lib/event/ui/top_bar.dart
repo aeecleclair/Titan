@@ -16,7 +16,7 @@ class TopBar extends HookConsumerWidget {
     final page = ref.watch(eventPageProvider);
     final pageNotifier = ref.watch(eventPageProvider.notifier);
     final appPageNotifier = ref.watch(pageProvider.notifier);
-    final _hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
+    final hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -44,7 +44,7 @@ class TopBar extends HookConsumerWidget {
                           case EventPage.eventDetailfromCalendar:
                             appPageNotifier.setPage(ModuleType.home);
                             pageNotifier.setEventPage(EventPage.main);
-                            _hasScrolledNotifier.setHasScrolled(true);
+                            hasScrolledNotifier.setHasScrolled(true);
                             break;
                         }
                       },

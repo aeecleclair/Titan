@@ -55,7 +55,7 @@ class AddButton extends ConsumerWidget {
                         Text(
                             solde.when(
                                 data: (s) =>
-                                    AMAPTextConstants.amount + " (" + s.balance.toStringAsFixed(2) + "€)",
+                                    "${AMAPTextConstants.amount} (${s.balance.toStringAsFixed(2)}€)",
                                 error: (e, s) => e.toString(),
                                 loading: () => AMAPTextConstants.loading),
                             style: const TextStyle(

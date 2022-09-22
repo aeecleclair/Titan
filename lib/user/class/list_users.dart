@@ -18,12 +18,12 @@ class SimpleUser {
   }
 
   Map<String, dynamic> toJson() {
-    final _users = <String, dynamic>{};
-    _users['name'] = name;
-    _users['firstname'] = firstname;
-    _users['nickname'] = nickname;
-    _users['id'] = id;
-    return _users;
+    final users = <String, dynamic>{};
+    users['name'] = name;
+    users['firstname'] = firstname;
+    users['nickname'] = nickname;
+    users['id'] = id;
+    return users;
   }
 
   SimpleUser.empty()
@@ -34,9 +34,9 @@ class SimpleUser {
 
   String getName() {
     if (nickname.isNotEmpty) {
-      return nickname + ' (' + firstname + ' ' + name + ')';
+      return '$nickname ($firstname $name)';
     } else {
-      return firstname + ' ' + name;
+      return '$firstname $name';
     }
   }
 }

@@ -11,7 +11,7 @@ class ProductListRepository extends Repository {
   }
 
   Future<Product> getProduct(String productId) async {
-    return Product.fromJson(await getOne("/" + productId));
+    return Product.fromJson(await getOne("/$productId"));
   }
 
   Future<Product> createProduct(Product product) async {
@@ -19,10 +19,10 @@ class ProductListRepository extends Repository {
   }
 
   Future<bool> updateProduct(Product product) async {
-    return await update(product.toJson(), "/" + product.id.toString());
+    return await update(product.toJson(), "/${product.id}");
   }
 
   Future<bool> deleteProduct(String productId) async {
-    return await delete("/" + productId);
+    return await delete("/$productId");
   }
 }

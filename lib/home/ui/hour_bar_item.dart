@@ -24,26 +24,24 @@ class HourBarItems extends ConsumerWidget {
         for (Event e in data) {
           if (e.recurrenceRule == "" && e.allDay) {
             DateTime newStart =
-                DateTime.parse(e.start.toString().split(" ")[0] + " 00:00:00");
+                DateTime.parse("${e.start.toString().split(" ")[0]} 00:00:00");
             DateTime newEnd =
-                DateTime.parse(e.end.toString().split(" ")[0] + " 23:59:00");
+                DateTime.parse("${e.end.toString().split(" ")[0]} 23:59:00");
             data[data.indexOf(e)] =
                 e.copyWith(fakeStart: newStart, fakeEnd: newEnd);
           } else if (isDateInReccurence(e.recurrenceRule!, e.start, now)) {
             if (e.allDay) {
               DateTime newStart =
-                  DateTime.parse(now.toString().split(" ")[0] + " 00:00:00");
+                  DateTime.parse("${now.toString().split(" ")[0]} 00:00:00");
               DateTime newEnd =
-                  DateTime.parse(now.toString().split(" ")[0] + " 23:59:00");
+                  DateTime.parse("${now.toString().split(" ")[0]} 23:59:00");
               data[data.indexOf(e)] =
                   e.copyWith(fakeStart: newStart, fakeEnd: newEnd);
             } else {
-              DateTime newStart = DateTime.parse(now.toString().split(" ")[0] +
-                  " " +
-                  e.start.toString().split(" ")[1]);
-              DateTime newEnd = DateTime.parse(now.toString().split(" ")[0] +
-                  " " +
-                  e.end.toString().split(" ")[1]);
+              DateTime newStart = DateTime.parse(
+                  "${now.toString().split(" ")[0]} ${e.start.toString().split(" ")[1]}");
+              DateTime newEnd = DateTime.parse(
+                  "${now.toString().split(" ")[0]} ${e.end.toString().split(" ")[1]}");
               data[data.indexOf(e)] =
                   e.copyWith(fakeStart: newStart, fakeEnd: newEnd);
             }

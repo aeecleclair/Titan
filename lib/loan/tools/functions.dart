@@ -17,25 +17,11 @@ void displayLoanToast(BuildContext context, TypeMsg type, String text) {
 
 String formatItems(List<Item> items) {
   if (items.length == 2) {
-    return items[0].name + " " + LoanTextConstants.and + " " + items[1].name;
+    return "${items[0].name} ${LoanTextConstants.and} ${items[1].name}";
   } else if (items.length == 3) {
-    return items[0].name +
-        ", " +
-        items[1].name +
-        " " +
-        LoanTextConstants.and +
-        " " +
-        items[2].name;
+    return "${items[0].name}, ${items[1].name} ${LoanTextConstants.and} ${items[2].name}";
   } else if (items.length > 3) {
-    return items[0].name +
-        ", " +
-        items[1].name +
-        " " +
-        LoanTextConstants.and +
-        " " +
-        (items.length - 2).toString() +
-        " " +
-        LoanTextConstants.others;
+    return "${items[0].name}, ${items[1].name} ${LoanTextConstants.and} ${items.length - 2} ${LoanTextConstants.others}";
   } else if (items.length == 1) {
     return items[0].name;
   } else {

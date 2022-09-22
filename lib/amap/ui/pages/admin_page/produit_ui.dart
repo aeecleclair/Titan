@@ -46,7 +46,7 @@ class ProductUi extends ConsumerWidget {
                   width: 40,
                   alignment: Alignment.centerRight,
                   child: Text(
-                    p.price.toStringAsFixed(2) + "€",
+                    "${p.price.toStringAsFixed(2)}€",
                     style: const TextStyle(fontSize: 13),
                   ),
                 ),
@@ -57,7 +57,7 @@ class ProductUi extends ConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient:  LinearGradient(colors: const [
+                      gradient:  const LinearGradient(colors: [
                         AMAPColorConstants.green1,
                         AMAPColorConstants.textLight
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -71,7 +71,7 @@ class ProductUi extends ConsumerWidget {
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
                     child: const HeroIcon(
-                      HeroIcons.pencilAlt,
+                      HeroIcons.pencilSquare,
                       size: 20,
                       color: Colors.white,
                     ),
@@ -91,7 +91,7 @@ class ProductUi extends ConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient:  LinearGradient(colors: const [
+                      gradient:  const LinearGradient(colors: [
                         AMAPColorConstants.redGradient1,
                         AMAPColorConstants.redGradient2
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),

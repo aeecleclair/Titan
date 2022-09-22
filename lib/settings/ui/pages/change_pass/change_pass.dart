@@ -31,7 +31,7 @@ class ChangePassPage extends HookConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.all(22.0),
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               Row(

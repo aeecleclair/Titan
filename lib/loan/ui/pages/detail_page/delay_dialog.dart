@@ -7,10 +7,10 @@ class DelayDialog extends StatefulWidget {
   const DelayDialog({Key? key, required this.onYes}) : super(key: key);
 
   @override
-  __IntegerExampleState createState() => __IntegerExampleState();
+  IntegerExampleState createState() => IntegerExampleState();
 }
 
-class __IntegerExampleState extends State<DelayDialog> {
+class IntegerExampleState extends State<DelayDialog> {
   int _currentIntValue = 5;
   @override
   Widget build(BuildContext context) {

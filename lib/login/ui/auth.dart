@@ -13,9 +13,9 @@ class AuthScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ValueNotifier<bool> _showSignInPage = useValueNotifier(true);
-    final ValueNotifier<bool> _showRegisterPage = useValueNotifier(false);
-    AnimationController _controller =
+    final ValueNotifier<bool> showSignInPage = useValueNotifier(true);
+    final ValueNotifier<bool> showRegisterPage = useValueNotifier(false);
+    AnimationController controller =
         useAnimationController(duration: const Duration(seconds: 2));
     return Scaffold(
       body: Stack(
@@ -23,7 +23,7 @@ class AuthScreen extends HookConsumerWidget {
           SizedBox.expand(
             child: CustomPaint(
               painter: BackgroundPainter(
-                animation: _controller,
+                animation: controller,
               ),
             ),
           ),
@@ -31,7 +31,7 @@ class AuthScreen extends HookConsumerWidget {
               child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 800),
                   child: ValueListenableBuilder<bool>(
-                    valueListenable: _showSignInPage,
+                    valueListenable: showSignInPage,
                     builder: (context, value, child) {
                       return SizedBox.expand(
                           child: PageTransitionSwitcher(
@@ -53,28 +53,28 @@ class AuthScreen extends HookConsumerWidget {
                                       key: const ValueKey(
                                           LoginTextConstants.signIn),
                                       onRegisterPressed: () {
-                                        _showSignInPage.value = false;
-                                        _showRegisterPage.value = true;
-                                        _controller.forward();
+                                        showSignInPage.value = false;
+                                        showRegisterPage.value = true;
+                                        controller.forward();
                                       },
                                       onForgetPressed: () {
-                                        _showSignInPage.value = false;
-                                        _showRegisterPage.value = false;
-                                        _controller.forward();
+                                        showSignInPage.value = false;
+                                        showRegisterPage.value = false;
+                                        controller.forward();
                                       })
-                                  : _showRegisterPage.value ? Register(
+                                  : showRegisterPage.value ? Register(
                                       key: const ValueKey(
                                           LoginTextConstants.register),
                                       onSignInPressed: () {
-                                        _showSignInPage.value = true;
-                                        _controller.reverse();
+                                        showSignInPage.value = true;
+                                        controller.reverse();
                                       },
                                     ): ForgetPassword(
                                       key: const ValueKey(
                                           LoginTextConstants.forgetPassword),
                                       onSignInPressed: () {
-                                        _showSignInPage.value = true;
-                                        _controller.reverse();
+                                        showSignInPage.value = true;
+                                        controller.reverse();
                                       },
                                     )));
                     },

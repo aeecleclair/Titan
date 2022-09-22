@@ -53,7 +53,7 @@ class BookingUi extends ConsumerWidget {
                     Container(
                       margin: const EdgeInsets.only(right: 15),
                       child: Text(
-                          booking.room.name + " - " + booking.reason,
+                          "${booking.room.name} - ${booking.reason}",
                           overflow: TextOverflow.fade,
                           softWrap: false,
                           style: const TextStyle(
@@ -67,9 +67,7 @@ class BookingUi extends ConsumerWidget {
                       height: 5,
                     ),
                     Text(
-                      processDateWithHour(booking.start) +
-                          " - " +
-                          processDateWithHour(booking.end),
+                      "${processDateWithHour(booking.start)} - ${processDateWithHour(booking.end)}",
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -120,8 +118,8 @@ class BookingUi extends ConsumerWidget {
                             child: Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                gradient:  LinearGradient(
-                                    colors: const [
+                                gradient:  const LinearGradient(
+                                    colors: [
                                       Color.fromARGB(255, 118, 187, 202),
                                       Color.fromARGB(255, 87, 143, 186)
                                     ],
@@ -139,7 +137,7 @@ class BookingUi extends ConsumerWidget {
                                     const BorderRadius.all(Radius.circular(10)),
                               ),
                               child: const HeroIcon(
-                                HeroIcons.pencilAlt,
+                                HeroIcons.pencilSquare,
                                 size: 25,
                                 color: Colors.white,
                               ),
@@ -156,16 +154,16 @@ class BookingUi extends ConsumerWidget {
                           GestureDetector(
                               child: Container(
                                 padding: const EdgeInsets.all(10),
-                                decoration:  BoxDecoration(
+                                decoration:  const BoxDecoration(
                                   gradient: LinearGradient(
-                                      colors: const[
+                                      colors: [
                                         BookingColorConstants.darkBlue,
                                         BookingColorConstants.lightBlue
                                       ],
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight),
                                   borderRadius:
-                                      const BorderRadius.all(Radius.circular(10)),
+                                      BorderRadius.all(Radius.circular(10)),
                                 ),
                                 child: const HeroIcon(
                                   HeroIcons.trash,
