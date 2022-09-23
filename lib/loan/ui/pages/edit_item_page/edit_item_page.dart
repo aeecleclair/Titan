@@ -31,9 +31,11 @@ class EditItemPage extends HookConsumerWidget {
     final caution = useTextEditingController(text: item.caution.toString());
     final cautionFocus = useState(false);
     final lendingDuration = useTextEditingController(
-        text: (item.suggestedLendingDuration ~/ (24 * 60 * 60))
-            .toString());
+        text: (item.suggestedLendingDuration ~/ (24 * 60 * 60)).toString());
     final lendingDurationFocus = useState(false);
+    void displayLoanToastWithContext(TypeMsg type, String msg) {
+      displayLoanToast(context, type, msg);
+    }
 
     Widget w = const Center(
       child: CircularProgressIndicator(
@@ -197,7 +199,8 @@ class EditItemPage extends HookConsumerWidget {
                   Row(
                     children: [
                       const Text("${LoanTextConstants.lendingDuration} : "),
-                      Text((item.suggestedLendingDuration~/(24 * 60 * 60)).toString()),
+                      Text((item.suggestedLendingDuration ~/ (24 * 60 * 60))
+                          .toString()),
                     ],
                   ),
                 ],
@@ -240,20 +243,20 @@ class EditItemPage extends HookConsumerWidget {
                                 }
                                 if (key.currentState!.validate()) {
                                   tokenExpireWrapper(ref, () async {
-                                    final value = await itemListNotifier
-                                        .updateItem(item);
-                                      if (value) {
+                                    final value =
+                                        await itemListNotifier.updateItem(item);
+                                    if (value) {
                                       pageNotifier
                                           .setLoanPage(LoanPage.adminItem);
-                                        displayLoanToast(context, TypeMsg.msg,
-                                            LoanTextConstants.updatedItem);
-                                        loanersitemsNotifier.setTData(
-                                            loaner.value,
-                                            await itemListNotifier.copy());
-                                      } else {
-                                        displayLoanToast(context, TypeMsg.error,
-                                            LoanTextConstants.updatingError);
-                                      }
+                                      displayLoanToastWithContext(TypeMsg.msg,
+                                          LoanTextConstants.updatedItem);
+                                      loanersitemsNotifier.setTData(
+                                          loaner.value,
+                                          await itemListNotifier.copy());
+                                    } else {
+                                      displayLoanToastWithContext(TypeMsg.error,
+                                          LoanTextConstants.updatingError);
+                                    }
                                   });
                                 } else {
                                   displayLoanToast(

@@ -49,6 +49,10 @@ class EditLoanPage extends HookConsumerWidget {
     final queryController = useTextEditingController();
     final queryFocus = useState(false);
 
+    void displayLoanToastWithContext(TypeMsg type, String msg) {
+      displayLoanToast(context, type, msg);
+    }
+
     Widget w = const Center(
       child: CircularProgressIndicator(
         valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
@@ -430,11 +434,7 @@ class EditLoanPage extends HookConsumerWidget {
                   children: [
                     const Text("${LoanTextConstants.paidCaution} : "),
                     Text(caution.text.isEmpty
-                        ? "${items
-                                .fold<int>(
-                                    0,
-                                    (previousValue, element) =>
-                                        previousValue + element.caution)}€"
+                        ? "${items.fold<int>(0, (previousValue, element) => previousValue + element.caution)}€"
                         : caution.text),
                   ],
                 ),
@@ -505,12 +505,14 @@ class EditLoanPage extends HookConsumerWidget {
                                   );
                                   if (value) {
                                     await adminLoanListNotifier.setTData(
-                                        asso.value, await loanListNotifier.copy());
-                                  pageNotifier.setLoanPage(LoanPage.groupLoan);
-                                    displayLoanToast(context, TypeMsg.msg,
+                                        asso.value,
+                                        await loanListNotifier.copy());
+                                    pageNotifier
+                                        .setLoanPage(LoanPage.groupLoan);
+                                    displayLoanToastWithContext(TypeMsg.msg,
                                         LoanTextConstants.updatedLoan);
                                   } else {
-                                    displayLoanToast(context, TypeMsg.error,
+                                    displayLoanToastWithContext(TypeMsg.error,
                                         LoanTextConstants.updatingError);
                                   }
                                 });

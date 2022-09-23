@@ -54,6 +54,10 @@ class ModifProduct extends HookConsumerWidget {
       }
     }).toList();
 
+    void displayAMAPToastWithContext(TypeMsg type, String msg) {
+      displayAMAPToast(context, type, msg);
+    }
+
     return Column(
       children: [
         const SizedBox(
@@ -267,14 +271,12 @@ class ModifProduct extends HookConsumerWidget {
                                           final value = await productsNotifier
                                               .updateProduct(newProduct);
                                           if (value) {
-                                            displayAMAPToast(
-                                                context,
+                                            displayAMAPToastWithContext(
                                                 TypeMsg.msg,
                                                 AMAPTextConstants
                                                     .updatedProduct);
                                           } else {
-                                            displayAMAPToast(
-                                                context,
+                                            displayAMAPToastWithContext(
                                                 TypeMsg.error,
                                                 AMAPTextConstants
                                                     .updatingError);
@@ -301,28 +303,23 @@ class ModifProduct extends HookConsumerWidget {
                                         tokenExpireWrapper(ref, () async {
                                           final value = await productsNotifier
                                               .addProduct(newProduct);
-                                            if (value) {
-                                              displayAMAPToast(
-                                                  context,
-                                                  TypeMsg.msg,
-                                                  AMAPTextConstants
-                                                      .addedProduct);
-                                            } else {
-                                              displayAMAPToast(
-                                                  context,
-                                                  TypeMsg.error,
-                                                  AMAPTextConstants
-                                                      .addingError);
-                                            }
-                                            pageNotifier
-                                                .setAmapPage(AmapPage.admin);
+                                          if (value) {
+                                            displayAMAPToastWithContext(
+                                                TypeMsg.msg,
+                                                AMAPTextConstants.addedProduct);
+                                          } else {
+                                            displayAMAPToastWithContext(
+                                                TypeMsg.error,
+                                                AMAPTextConstants.addingError);
+                                          }
+                                          pageNotifier
+                                              .setAmapPage(AmapPage.admin);
 
-                                            nameController.clear();
-                                            priceController.clear();
-                                            categoryNotifier.setText(
-                                                AMAPTextConstants
-                                                    .createCategory);
-                                            nouvellecategory.clear();
+                                          nameController.clear();
+                                          priceController.clear();
+                                          categoryNotifier.setText(
+                                              AMAPTextConstants.createCategory);
+                                          nouvellecategory.clear();
                                         });
                                       }
                                     }

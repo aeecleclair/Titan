@@ -13,14 +13,17 @@ import 'package:myecl/tools/tokenExpireWrapper.dart';
 
 class EventUi extends ConsumerWidget {
   final Event e;
-  const EventUi({Key? key, required this.e})
-      : super(key: key);
+  const EventUi({Key? key, required this.e}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(eventPageProvider.notifier);
     final eventListNotfier = ref.watch(eventListProvider.notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
+    void displayEventToastWithContext(TypeMsg type, String msg) {
+      displayEventToast(context, type, msg);
+    }
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
@@ -39,8 +42,8 @@ class EventUi extends ConsumerWidget {
               Expanded(
                 child: Text(
                   e.name,
-                  style: const TextStyle(fontSize: 15,
-                  fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.bold),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -64,19 +67,22 @@ class EventUi extends ConsumerWidget {
                     child: Container(
                       padding: const EdgeInsets.all(7),
                       decoration: BoxDecoration(
-                        gradient:  const LinearGradient(colors: [
-                          EventColorConstants.blueGradient1,
-                          EventColorConstants.blueGradient2
-                        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                        gradient: const LinearGradient(
+                            colors: [
+                              EventColorConstants.blueGradient1,
+                              EventColorConstants.blueGradient2
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight),
                         boxShadow: [
                           BoxShadow(
-                              color:
-                                  EventColorConstants.blueGradient1
+                              color: EventColorConstants.blueGradient1
                                   .withOpacity(0.4),
                               offset: const Offset(2, 3),
                               blurRadius: 5)
                         ],
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
                       ),
                       child: const HeroIcon(
                         HeroIcons.pencilSquare,
@@ -99,10 +105,13 @@ class EventUi extends ConsumerWidget {
                     child: Container(
                       padding: const EdgeInsets.all(7),
                       decoration: BoxDecoration(
-                        gradient:  const LinearGradient(colors: [
-                          EventColorConstants.redGradient1,
-                          EventColorConstants.redGradient2
-                        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                        gradient: const LinearGradient(
+                            colors: [
+                              EventColorConstants.redGradient1,
+                              EventColorConstants.redGradient2
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight),
                         boxShadow: [
                           BoxShadow(
                               color: EventColorConstants.redGradient2
@@ -110,7 +119,8 @@ class EventUi extends ConsumerWidget {
                               offset: const Offset(2, 3),
                               blurRadius: 5)
                         ],
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
                       ),
                       child: const HeroIcon(
                         HeroIcons.trash,
@@ -127,7 +137,7 @@ class EventUi extends ConsumerWidget {
                               onYes: () async {
                                 tokenExpireWrapper(ref, () async {
                                   await eventListNotfier.deleteEvent(e);
-                                  displayEventToast(context, TypeMsg.msg,
+                                  displayEventToastWithContext(TypeMsg.msg,
                                       EventTextConstants.deletedEvent);
                                 });
                               }));

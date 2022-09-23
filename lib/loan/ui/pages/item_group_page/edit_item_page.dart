@@ -35,6 +35,10 @@ class EditItemPage extends HookConsumerWidget {
         text: (item.suggestedLendingDuration ~/ (24 * 60 * 60)).toString());
     final lendingDurationFocus = useState(false);
 
+    void displayLoanToastWithContext(TypeMsg type, String msg) {
+      displayLoanToast(context, type, msg);
+    }
+
     Widget w = const Center(
       child: CircularProgressIndicator(
         valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
@@ -210,13 +214,13 @@ class EditItemPage extends HookConsumerWidget {
                                     if (value) {
                                       pageNotifier
                                           .setLoanPage(LoanPage.adminItem);
-                                      displayLoanToast(context, TypeMsg.msg,
+                                      displayLoanToastWithContext(TypeMsg.msg,
                                           LoanTextConstants.updatedItem);
                                       loanersitemsNotifier.setTData(
                                           loaner.value,
                                           await itemListNotifier.copy());
                                     } else {
-                                      displayLoanToast(context, TypeMsg.error,
+                                      displayLoanToastWithContext(TypeMsg.error,
                                           LoanTextConstants.updatingError);
                                     }
                                   });

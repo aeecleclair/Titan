@@ -1,7 +1,6 @@
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:myecl/auth/repositories/oauth2_repositoty.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 
 final authTokenProvider =

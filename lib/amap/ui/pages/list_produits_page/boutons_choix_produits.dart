@@ -38,6 +38,9 @@ class Boutons extends HookConsumerWidget {
     final userAmount = ref.watch(userAmountProvider);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);
+    void displayAMAPToastWithContext(TypeMsg type, String msg) {
+      displayAMAPToast(context, type, msg);
+    }
 
     final products = [];
     productsList.when(
@@ -59,7 +62,8 @@ class Boutons extends HookConsumerWidget {
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           GestureDetector(
               child: GreenBtn(
-                  text: "${AMAPTextConstants.confirm} (${price.toStringAsFixed(2)}€)"),
+                  text:
+                      "${AMAPTextConstants.confirm} (${price.toStringAsFixed(2)}€)"),
               onTap: () {
                 if (price == 0.0) {
                   displayAMAPToast(
@@ -72,7 +76,7 @@ class Boutons extends HookConsumerWidget {
                     }
                   }
                   Order newOrder = Order(
-                    user: me.toSimpleUser(),
+                      user: me.toSimpleUser(),
                       products: prod,
                       deliveryDate: delList
                           .firstWhere((d) => d.id == deliveryId)
@@ -87,13 +91,13 @@ class Boutons extends HookConsumerWidget {
                     if (value) {
                       pageNotifier.setAmapPage(AmapPage.main);
                       userAmountNotifier.updateCash(-price);
-                      displayAMAPToast(
-                          context, TypeMsg.msg, AMAPTextConstants.addedOrder);
+                      displayAMAPToastWithContext(
+                          TypeMsg.msg, AMAPTextConstants.addedOrder);
                       clearCmd(ref);
                     } else {
                       pageNotifier.setAmapPage(AmapPage.main);
-                      displayAMAPToast(context, TypeMsg.error,
-                          AMAPTextConstants.addingError);
+                      displayAMAPToastWithContext(
+                          TypeMsg.error, AMAPTextConstants.addingError);
                     }
                   });
                 } else {
@@ -120,12 +124,12 @@ class Boutons extends HookConsumerWidget {
                       if (value) {
                         pageNotifier.setAmapPage(AmapPage.main);
                         userAmountNotifier.updateCash(lastPrice - price);
-                        displayAMAPToast(context, TypeMsg.msg,
-                            AMAPTextConstants.updatedOrder);
+                        displayAMAPToastWithContext(
+                            TypeMsg.msg, AMAPTextConstants.updatedOrder);
                       } else {
                         pageNotifier.setAmapPage(AmapPage.main);
-                        displayAMAPToast(context, TypeMsg.error,
-                            AMAPTextConstants.updatingError);
+                        displayAMAPToastWithContext(
+                            TypeMsg.error, AMAPTextConstants.updatingError);
                       }
                     });
                     clearCmd(ref);
@@ -140,7 +144,7 @@ class Boutons extends HookConsumerWidget {
               width: MediaQuery.of(context).size.width * 0.2,
               height: 70,
               decoration: BoxDecoration(
-                gradient:  const LinearGradient(colors: [
+                gradient: const LinearGradient(colors: [
                   AMAPColorConstants.redGradient1,
                   AMAPColorConstants.redGradient2
                 ], begin: Alignment.topLeft, end: Alignment.bottomRight),

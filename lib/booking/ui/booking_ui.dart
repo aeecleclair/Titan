@@ -23,6 +23,10 @@ class BookingUi extends ConsumerWidget {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     final bookingListNotifier = ref.watch(bookingListProvider.notifier);
+    void displayBookingToastWithContext(TypeMsg type, String msg) {
+      displayBookingToast(context, type, msg);
+    }
+
     return SizedBox(
         height: 115,
         width: MediaQuery.of(context).size.width,
@@ -53,14 +57,14 @@ class BookingUi extends ConsumerWidget {
                     Container(
                       margin: const EdgeInsets.only(right: 15),
                       child: Text(
-                          "${booking.room.name} - ${booking.reason}",
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: BookingColorConstants.darkBlue,
-                          ),
+                        "${booking.room.name} - ${booking.reason}",
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: BookingColorConstants.darkBlue,
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -118,7 +122,7 @@ class BookingUi extends ConsumerWidget {
                             child: Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                gradient:  const LinearGradient(
+                                gradient: const LinearGradient(
                                     colors: [
                                       Color.fromARGB(255, 118, 187, 202),
                                       Color.fromARGB(255, 87, 143, 186)
@@ -154,7 +158,7 @@ class BookingUi extends ConsumerWidget {
                           GestureDetector(
                               child: Container(
                                 padding: const EdgeInsets.all(10),
-                                decoration:  const BoxDecoration(
+                                decoration: const BoxDecoration(
                                   gradient: LinearGradient(
                                       colors: [
                                         BookingColorConstants.darkBlue,
@@ -176,23 +180,22 @@ class BookingUi extends ConsumerWidget {
                                     context: context,
                                     builder: (BuildContext context) =>
                                         BookingDialog(
-                                            descriptions:
-                                                "Supprimer la réservation ?",
-                                            title: "Suppression",
+                                            descriptions: BookingTextConstants
+                                                .deletingBooking,
+                                            title:
+                                                BookingTextConstants.deleting,
                                             onYes: () async {
                                               tokenExpireWrapper(ref, () async {
                                                 final value =
                                                     await bookingListNotifier
                                                         .deleteBooking(booking);
                                                 if (value) {
-                                                  displayBookingToast(
-                                                      context,
+                                                  displayBookingToastWithContext(
                                                       TypeMsg.msg,
                                                       BookingTextConstants
                                                           .deletedBooking);
                                                 } else {
-                                                  displayBookingToast(
-                                                      context,
+                                                  displayBookingToastWithContext(
                                                       TypeMsg.error,
                                                       BookingTextConstants
                                                           .deletingError);

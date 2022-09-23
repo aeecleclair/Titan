@@ -25,6 +25,10 @@ class EditPage extends HookConsumerWidget {
     final description = useTextEditingController();
     final descriptionFocus = useState(false);
     final pageNotifier = ref.watch(adminPageProvider.notifier);
+    void displayAdminToastWithContext(TypeMsg type, String msg) {
+      displayAdminToast(context, type, msg);
+    }
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: group.when(
@@ -142,7 +146,7 @@ class EditPage extends HookConsumerWidget {
                       child: Container(
                         padding: const EdgeInsets.all(7),
                         decoration: BoxDecoration(
-                          gradient:  const LinearGradient(
+                          gradient: const LinearGradient(
                               colors: [
                                 AdminColorConstants.gradient1,
                                 AdminColorConstants.gradient2
@@ -191,10 +195,10 @@ class EditPage extends HookConsumerWidget {
                                     newGroup, x);
                                 if (value) {
                                   pageNotifier.setAdminPage(AdminPage.edit);
-                                  displayAdminToast(context, TypeMsg.msg,
+                                  displayAdminToastWithContext(TypeMsg.msg,
                                       AdminTextConstants.updatedAssociation);
                                 } else {
-                                  displayAdminToast(context, TypeMsg.msg,
+                                  displayAdminToastWithContext(TypeMsg.msg,
                                       AdminTextConstants.updatingError);
                                 }
                               });
@@ -210,7 +214,7 @@ class EditPage extends HookConsumerWidget {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    gradient:  const LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [
                         AdminColorConstants.gradient1,
                         AdminColorConstants.gradient2,

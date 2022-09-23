@@ -19,6 +19,10 @@ class AddAssoPage extends HookConsumerWidget {
     final description = useTextEditingController();
     final pageNotifier = ref.watch(adminPageProvider.notifier);
     final groupListNotifier = ref.watch(allGroupListProvider.notifier);
+    void displayAdminToastWithContext(TypeMsg type, String msg) {
+      displayAdminToast(context, type, msg);
+    }
+
     return Form(
       key: key,
       child: Column(children: [
@@ -128,11 +132,11 @@ class AddAssoPage extends HookConsumerWidget {
                   name: name.text, description: description.text, id: ''));
               if (value) {
                 pageNotifier.setAdminPage(AdminPage.main);
-                displayAdminToast(
-                    context, TypeMsg.msg, AdminTextConstants.addedAssociation);
+                displayAdminToastWithContext(
+                    TypeMsg.msg, AdminTextConstants.addedAssociation);
               } else {
-                displayAdminToast(
-                    context, TypeMsg.error, AdminTextConstants.addingError);
+                displayAdminToastWithContext(
+                    TypeMsg.error, AdminTextConstants.addingError);
               }
             });
           },

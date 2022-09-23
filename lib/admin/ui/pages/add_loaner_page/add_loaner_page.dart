@@ -20,6 +20,10 @@ class AddLoanerPage extends HookConsumerWidget {
     final loaners = ref.watch(loanerList);
     final associations = ref.watch(allGroupListProvider);
     final loanersId = loaners.map((x) => x.groupManagerId).toList();
+    void displayAdminToastWithContext(TypeMsg type, String msg) {
+      displayAdminToast(context, type, msg);
+    }
+
     return associations.when(data: (associationList) {
       final canAdd =
           associationList.where((x) => !loanersId.contains(x.id)).toList();
@@ -35,10 +39,10 @@ class AddLoanerPage extends HookConsumerWidget {
                                 await loanerListNotifier.addLoaner(newLoaner);
                             if (value) {
                               pageNotifier.setAdminPage(AdminPage.main);
-                              displayAdminToast(context, TypeMsg.msg,
-                                  AdminTextConstants.addedLoaner);
+                              displayAdminToastWithContext(
+                                  TypeMsg.msg, AdminTextConstants.addedLoaner);
                             } else {
-                              displayAdminToast(context, TypeMsg.error,
+                              displayAdminToastWithContext(TypeMsg.error,
                                   AdminTextConstants.addingError);
                             }
                           });

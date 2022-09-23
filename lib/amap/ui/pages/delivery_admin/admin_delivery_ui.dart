@@ -34,6 +34,10 @@ class DeliveryAdminUi extends HookConsumerWidget {
     final orderListNotifier = ref.watch(orderListProvider(c.id).notifier);
     final adminNotifier = ref.watch(adminDeliveryOrderList.notifier);
 
+    void displayAMAPToastWithContext(TypeMsg type, String msg) {
+      displayAMAPToast(context, type, msg);
+    }
+
     final Map<Product, int> productQuantityDict = {};
     orders.item1.when(
       data: (orders) {
@@ -213,7 +217,7 @@ class DeliveryAdminUi extends HookConsumerWidget {
                       margin: const EdgeInsets.only(left: 20),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        gradient:  const LinearGradient(
+                        gradient: const LinearGradient(
                           colors: [
                             AMAPColorConstants.redGradient1,
                             AMAPColorConstants.redGradient2,
@@ -330,10 +334,10 @@ class DeliveryAdminUi extends HookConsumerWidget {
                                     final value = await deliveryListNotifier
                                         .deleteDelivery(c);
                                     if (value) {
-                                      displayAMAPToast(context, TypeMsg.msg,
+                                      displayAMAPToastWithContext(TypeMsg.msg,
                                           AMAPTextConstants.deletedDelivery);
                                     } else {
-                                      displayAMAPToast(context, TypeMsg.error,
+                                      displayAMAPToastWithContext(TypeMsg.error,
                                           AMAPTextConstants.deletingError);
                                     }
                                   });

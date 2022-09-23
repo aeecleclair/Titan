@@ -44,6 +44,9 @@ class AddLoanPage extends HookConsumerWidget {
     final caution = useTextEditingController();
     final focus = useState(false);
     final borrower = useState(SimpleUser.empty());
+    void displayLoanToastWithContext(TypeMsg type, String msg) {
+      displayLoanToast(context, type, msg);
+    }
 
     Widget w = const Center(
       child: CircularProgressIndicator(
@@ -330,15 +333,7 @@ class AddLoanPage extends HookConsumerWidget {
                               ? caution.text
                               : caution.text.isNotEmpty
                                   ? caution.text
-                                  : "${itemList
-                                          .where((element) => selectedItems[
-                                              itemList.indexOf(element)])
-                                          .toList()
-                                          .fold<double>(
-                                              0,
-                                              (previousValue, element) =>
-                                                  previousValue +
-                                                  element.caution)}€");
+                                  : "${itemList.where((element) => selectedItems[itemList.indexOf(element)]).toList().fold<double>(0, (previousValue, element) => previousValue + element.caution)}€");
                         },
                         error: (error, s) {
                           return Text(error.toString());
@@ -412,14 +407,7 @@ class AddLoanPage extends HookConsumerWidget {
                                               borrower: borrower.value,
                                               caution: caution.text.isNotEmpty
                                                   ? caution.text
-                                                  : "${selected
-                                                          .fold<double>(
-                                                              0,
-                                                              (previousValue,
-                                                                      element) =>
-                                                                  previousValue +
-                                                                  element
-                                                                      .caution)}€",
+                                                  : "${selected.fold<double>(0, (previousValue, element) => previousValue + element.caution)}€",
                                               end: DateTime.parse(end.text),
                                               id: "",
                                               notes: note.text,
@@ -435,13 +423,11 @@ class AddLoanPage extends HookConsumerWidget {
                                                         .copy());
                                             pageNotifier.setLoanPage(
                                                 LoanPage.adminLoan);
-                                            displayLoanToast(
-                                                context,
+                                            displayLoanToastWithContext(
                                                 TypeMsg.msg,
                                                 LoanTextConstants.addedLoan);
                                           } else {
-                                            displayLoanToast(
-                                                context,
+                                            displayLoanToastWithContext(
                                                 TypeMsg.error,
                                                 LoanTextConstants.addingError);
                                           }

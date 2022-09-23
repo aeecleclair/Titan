@@ -25,6 +25,10 @@ class ChangePassPage extends HookConsumerWidget {
     final hideConfirmPass = useState(true);
     final userNotifier = ref.watch(asyncUserProvider.notifier);
     final user = ref.watch(userProvider);
+    void displaySettingsToastWithContext(TypeMsg type, String msg) {
+      displaySettingsToast(context, type, msg);
+    }
+
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       key: key,
@@ -109,15 +113,19 @@ class ChangePassPage extends HookConsumerWidget {
                                   SettingsTextConstants.changingPassword,
                               onYes: () {
                                 tokenExpireWrapper(ref, () async {
-                                  final value = await userNotifier.changePassword(
-                                      oldPassword.text, newPassword.text, user);
+                                  final value =
+                                      await userNotifier.changePassword(
+                                          oldPassword.text,
+                                          newPassword.text,
+                                          user);
                                   if (value) {
                                     pageNotifier
                                         .setSettingsPage(SettingsPage.main);
-                                    displaySettingsToast(context, TypeMsg.msg,
+                                    displaySettingsToastWithContext(TypeMsg.msg,
                                         SettingsTextConstants.passwordChanged);
                                   } else {
-                                    displaySettingsToast(context, TypeMsg.error,
+                                    displaySettingsToastWithContext(
+                                        TypeMsg.error,
                                         SettingsTextConstants.updatingError);
                                   }
                                 });

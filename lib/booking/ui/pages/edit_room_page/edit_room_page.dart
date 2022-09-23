@@ -20,6 +20,10 @@ class EditRoomPage extends HookConsumerWidget {
     final room = ref.watch(roomProvider);
     final roomNotifier = ref.watch(roomProvider.notifier);
     final name = useTextEditingController(text: room.name);
+    void displayBookingToastWithContext(TypeMsg type, String msg) {
+      displayBookingToast(context, type, msg);
+    }
+
     return Form(
       key: key,
       child: Column(
@@ -79,11 +83,11 @@ class EditRoomPage extends HookConsumerWidget {
                 final value = await roomListNotifier.updateRoom(room);
                 if (value) {
                   pageNotifier.setBookingPage(BookingPage.rooms);
-                  displayBookingToast(
-                      context, TypeMsg.msg, BookingTextConstants.editedRoom);
+                  displayBookingToastWithContext(
+                      TypeMsg.msg, BookingTextConstants.editedRoom);
                 } else {
-                  displayBookingToast(
-                      context, TypeMsg.error, BookingTextConstants.editionError);
+                  displayBookingToastWithContext(
+                      TypeMsg.error, BookingTextConstants.editionError);
                 }
               });
             },

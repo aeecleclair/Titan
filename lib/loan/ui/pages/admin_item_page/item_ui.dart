@@ -25,6 +25,10 @@ class ItemUi extends HookConsumerWidget {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final itemList = ref.watch(itemListProvider.notifier);
     final itemNotifier = ref.watch(itemProvider.notifier);
+    void displayLoanToastWithContext(TypeMsg type, String msg) {
+      displayLoanToast(context, type, msg);
+    }
+
     return Container(
         height: 55,
         alignment: Alignment.centerLeft,
@@ -61,7 +65,7 @@ class ItemUi extends HookConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient:  const LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         LoanColorConstants.lightOrange,
                         LoanColorConstants.orange
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -92,7 +96,7 @@ class ItemUi extends HookConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient:  const LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         LoanColorConstants.lightGrey,
                         LoanColorConstants.darkGrey
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -125,10 +129,10 @@ class ItemUi extends HookConsumerWidget {
                                   final value = await itemListNotifier.copy();
                                   await loanersitemsNotifier.setTData(
                                       loaner, value);
-                                  displayLoanToast(context, TypeMsg.msg,
+                                  displayLoanToastWithContext(TypeMsg.msg,
                                       LoanTextConstants.deletedItem);
                                 } else {
-                                  displayLoanToast(context, TypeMsg.error,
+                                  displayLoanToastWithContext(TypeMsg.error,
                                       LoanTextConstants.deletingError);
                                 }
                               });
