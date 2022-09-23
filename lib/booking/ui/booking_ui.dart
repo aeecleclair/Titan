@@ -10,7 +10,7 @@ import 'package:myecl/booking/tools/dialog.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/booking/ui/booking_button.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class BookingUi extends ConsumerWidget {
   final Booking booking;

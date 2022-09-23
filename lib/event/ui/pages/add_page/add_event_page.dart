@@ -10,7 +10,7 @@ import 'package:myecl/event/providers/selected_days_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEventPage extends HookConsumerWidget {

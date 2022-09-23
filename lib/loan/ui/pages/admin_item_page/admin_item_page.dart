@@ -11,7 +11,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_button.dart';
 import 'package:myecl/loan/ui/pages/admin_item_page/item_ui.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class AdminItemPage extends HookConsumerWidget {
   const AdminItemPage({Key? key}) : super(key: key);

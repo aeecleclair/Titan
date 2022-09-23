@@ -10,7 +10,7 @@ import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ProductUi extends ConsumerWidget {
   final Product p;

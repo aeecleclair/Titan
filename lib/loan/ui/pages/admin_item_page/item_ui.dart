@@ -11,7 +11,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/dialog.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ItemUi extends HookConsumerWidget {
   final Item l;

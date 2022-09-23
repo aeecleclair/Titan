@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   animations: ^2.0.2
+  crypto: ^3.0.2
   cupertino_icons: ^1.0.2
   datetime_picker_formfield: ^2.0.1
   flash: ^2.0.3+2
@@ -44,7 +45,6 @@ flutter:
     - assets/images/test3.jpg
 
   uses-material-design: true
-
 
 flutter_icons:
   android: "launcher_icon"

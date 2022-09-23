@@ -12,7 +12,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_button.dart';
 import 'package:myecl/loan/ui/loan_ui.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AdminLoanPage extends HookConsumerWidget {

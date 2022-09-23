@@ -11,7 +11,7 @@ import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/modif_produits/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:uuid/uuid.dart';
 
 class ModifProduct extends HookConsumerWidget {
