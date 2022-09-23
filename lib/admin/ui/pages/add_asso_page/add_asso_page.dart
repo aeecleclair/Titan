@@ -7,7 +7,7 @@ import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class AddAssoPage extends HookConsumerWidget {
   const AddAssoPage({Key? key}) : super(key: key);

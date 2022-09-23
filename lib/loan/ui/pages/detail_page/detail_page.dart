@@ -15,7 +15,7 @@ import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/pages/detail_page/button.dart';
 import 'package:myecl/loan/ui/pages/detail_page/delay_dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class DetailPage extends HookConsumerWidget {
   final bool isAdmin;

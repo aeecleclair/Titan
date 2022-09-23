@@ -9,7 +9,7 @@ import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/dialog.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class EventUi extends ConsumerWidget {
   final Event e;

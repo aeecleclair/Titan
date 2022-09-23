@@ -10,7 +10,7 @@ import 'package:myecl/admin/tools/dialog.dart';
 import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/admin/ui/user_ui.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class EditPage extends HookConsumerWidget {
   const EditPage({Key? key}) : super(key: key);

@@ -7,7 +7,7 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/tools/functions.dart';
 import 'package:myecl/settings/ui/pages/info_page/user_field_modifier.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 

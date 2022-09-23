@@ -15,7 +15,7 @@ import 'package:myecl/booking/ui/pages/booking_group_page/date_entry.dart';
 import 'package:myecl/booking/ui/pages/booking_group_page/step_title.dart';
 import 'package:myecl/booking/ui/pages/booking_group_page/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class AddBookingPage extends HookConsumerWidget {
   const AddBookingPage({Key? key}) : super(key: key);

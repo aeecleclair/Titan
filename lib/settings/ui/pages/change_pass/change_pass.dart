@@ -7,7 +7,7 @@ import 'package:myecl/settings/tools/dialog.dart';
 import 'package:myecl/settings/tools/functions.dart';
 import 'package:myecl/settings/ui/pages/change_pass/test_entry_style.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class ChangePassPage extends HookConsumerWidget {

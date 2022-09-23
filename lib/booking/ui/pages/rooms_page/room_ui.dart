@@ -9,7 +9,7 @@ import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/drawer/tools/dialog.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class RoomUi extends HookConsumerWidget {
   final Room r;
