@@ -20,6 +20,10 @@ class RoomUi extends HookConsumerWidget {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final roomListNotifier = ref.watch(roomListProvider.notifier);
     final roomNotifier = ref.watch(roomProvider.notifier);
+    void displayBookingToastWithContext(TypeMsg type, String msg) {
+      displayBookingToast(context, type, msg);
+    }
+
     return Container(
         height: 55,
         alignment: Alignment.centerLeft,
@@ -45,7 +49,7 @@ class RoomUi extends HookConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient:  const LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         Colors.white,
                         Color.fromARGB(255, 175, 216, 226)
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -75,7 +79,7 @@ class RoomUi extends HookConsumerWidget {
                 GestureDetector(
                   child: Container(
                     padding: const EdgeInsets.all(7),
-                    decoration:  const BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(colors: [
                         BookingColorConstants.darkBlue,
                         BookingColorConstants.lightBlue
@@ -99,10 +103,10 @@ class RoomUi extends HookConsumerWidget {
                                 final value =
                                     await roomListNotifier.deleteRoom(r);
                                 if (value) {
-                                  displayBookingToast(context, TypeMsg.msg,
+                                  displayBookingToastWithContext(TypeMsg.msg,
                                       BookingTextConstants.deletedRoom);
                                 } else {
-                                  displayBookingToast(context, TypeMsg.error,
+                                  displayBookingToastWithContext(TypeMsg.error,
                                       BookingTextConstants.deletingError);
                                 }
                               });

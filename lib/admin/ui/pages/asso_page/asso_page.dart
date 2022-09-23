@@ -22,6 +22,10 @@ class AssoPage extends HookConsumerWidget {
     final groupsNotifier = ref.watch(allGroupListProvider.notifier);
     final pageNotifier = ref.watch(adminPageProvider.notifier);
     final groupId = ref.watch(groupIdProvider);
+    void displayAdminToastWithContext(TypeMsg type, String msg) {
+      displayAdminToast(context, type, msg);
+    }
+
     return AdminRefresher(
       onRefresh: () async {
         await groupNotifier.loadGroup(groupId);
@@ -72,7 +76,7 @@ class AssoPage extends HookConsumerWidget {
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          gradient:  const LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [
                               AdminColorConstants.gradient1,
                               AdminColorConstants.gradient2,
@@ -104,7 +108,7 @@ class AssoPage extends HookConsumerWidget {
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          gradient:  const LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [
                               AdminColorConstants.redGradient1,
                               AdminColorConstants.redGradient2,
@@ -134,14 +138,17 @@ class AssoPage extends HookConsumerWidget {
                               title: AdminTextConstants.deleting,
                               onYes: () async {
                                 tokenExpireWrapper(ref, () async {
-                                  final value = await groupsNotifier.deleteGroup(g.toSimpleGroup());
-                                  if (value){
-                                  pageNotifier.setAdminPage(AdminPage.main);
-                                  displayAdminToast(context, TypeMsg.msg, AdminTextConstants.deletedAssociation);
+                                  final value = await groupsNotifier
+                                      .deleteGroup(g.toSimpleGroup());
+                                  if (value) {
+                                    pageNotifier.setAdminPage(AdminPage.main);
+                                    displayAdminToastWithContext(TypeMsg.msg,
+                                        AdminTextConstants.deletedAssociation);
+                                  } else {
+                                    displayAdminToastWithContext(TypeMsg.error,
+                                        AdminTextConstants.deletingError);
                                   }
-                                  else{
-                                    displayAdminToast(context, TypeMsg.error, AdminTextConstants.deletingError);
-                                  }});
+                                });
                               }));
                     },
                   ),

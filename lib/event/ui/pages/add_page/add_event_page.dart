@@ -35,6 +35,11 @@ class AddEventPage extends HookConsumerWidget {
     final recurrenceEndDate = useTextEditingController();
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
+
+    void displayEventToastWithContext(TypeMsg type, String msg) {
+      displayEventToast(context, type, msg);
+    }
+
     final now = DateTime.now();
     final dayList = [
       'Lundi',
@@ -78,8 +83,7 @@ class AddEventPage extends HookConsumerWidget {
                 )
                 .toList()),
         isActive: currentStep.value >= 0,
-        state:
-            currentStep.value >= 0 ? StepState.complete : StepState.disabled,
+        state: currentStep.value >= 0 ? StepState.complete : StepState.disabled,
       ),
       Step(
         title: const Text(EventTextConstants.name,
@@ -123,8 +127,7 @@ class AddEventPage extends HookConsumerWidget {
           ),
         ),
         isActive: currentStep.value >= 0,
-        state:
-            currentStep.value >= 3 ? StepState.complete : StepState.disabled,
+        state: currentStep.value >= 3 ? StepState.complete : StepState.disabled,
       ),
       Step(
         title: const Text(EventTextConstants.organizer,
@@ -168,8 +171,7 @@ class AddEventPage extends HookConsumerWidget {
           ),
         ),
         isActive: currentStep.value >= 0,
-        state:
-            currentStep.value >= 3 ? StepState.complete : StepState.disabled,
+        state: currentStep.value >= 3 ? StepState.complete : StepState.disabled,
       ),
       Step(
         title: const Text(EventTextConstants.dates,
@@ -655,8 +657,7 @@ class AddEventPage extends HookConsumerWidget {
           ],
         ),
         isActive: currentStep.value >= 0,
-        state:
-            currentStep.value >= 1 ? StepState.complete : StepState.disabled,
+        state: currentStep.value >= 1 ? StepState.complete : StepState.disabled,
       ),
       Step(
         title: const Text(EventTextConstants.place,
@@ -704,8 +705,7 @@ class AddEventPage extends HookConsumerWidget {
           ],
         ),
         isActive: currentStep.value >= 0,
-        state:
-            currentStep.value >= 2 ? StepState.complete : StepState.disabled,
+        state: currentStep.value >= 2 ? StepState.complete : StepState.disabled,
       ),
       Step(
         title: const Text(EventTextConstants.description,
@@ -753,8 +753,7 @@ class AddEventPage extends HookConsumerWidget {
           ],
         ),
         isActive: currentStep.value >= 0,
-        state:
-            currentStep.value >= 2 ? StepState.complete : StepState.disabled,
+        state: currentStep.value >= 2 ? StepState.complete : StepState.disabled,
       ),
       Step(
         title: const Text(EventTextConstants.confirmation,
@@ -910,9 +909,7 @@ class AddEventPage extends HookConsumerWidget {
                               fontWeight: FontWeight.bold,
                               color: Colors.black)),
                       Text(
-                          "Toutes les ${interval.text != "1"
-                                  ? "${interval.text} "
-                                  : ""}semaines",
+                          "Toutes les ${interval.text != "1" ? "${interval.text} " : ""}semaines",
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -938,8 +935,7 @@ class AddEventPage extends HookConsumerWidget {
           ],
         ),
         isActive: currentStep.value >= 0,
-        state:
-            currentStep.value >= 5 ? StepState.complete : StepState.disabled,
+        state: currentStep.value >= 5 ? StepState.complete : StepState.disabled,
       ),
     ];
 
@@ -1027,10 +1023,10 @@ class AddEventPage extends HookConsumerWidget {
                                     await eventListNotifier.addEvent(newEvent);
                                 if (value) {
                                   pageNotifier.setEventPage(EventPage.main);
-                                  displayEventToast(context, TypeMsg.msg,
+                                  displayEventToastWithContext(TypeMsg.msg,
                                       EventTextConstants.addedEvent);
                                 } else {
-                                  displayEventToast(context, TypeMsg.error,
+                                  displayEventToastWithContext(TypeMsg.error,
                                       EventTextConstants.addingError);
                                 }
                               });

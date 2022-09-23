@@ -43,6 +43,9 @@ class EditBookingPage extends HookConsumerWidget {
     final recurring = useState(booking.recurring);
     final multipleDay = useState(booking.multipleDay);
     final keyRequired = useState(booking.key);
+    void displayBookingToastWithContext(TypeMsg type, String msg) {
+      displayBookingToast(context, type, msg);
+    }
 
     Widget w = const Center(
       child: CircularProgressIndicator(
@@ -280,13 +283,11 @@ class EditBookingPage extends HookConsumerWidget {
                                             .updateBooking(newBooking);
                                         pageNotifier
                                             .setBookingPage(BookingPage.main);
-                                        displayBookingToast(
-                                            context,
+                                        displayBookingToastWithContext(
                                             TypeMsg.msg,
                                             BookingTextConstants.editedBooking);
                                       } else {
-                                        displayBookingToast(
-                                            context,
+                                        displayBookingToastWithContext(
                                             TypeMsg.error,
                                             BookingTextConstants.editionError);
                                       }

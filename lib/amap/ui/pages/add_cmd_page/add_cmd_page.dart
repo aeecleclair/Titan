@@ -39,6 +39,10 @@ class AddCmdPage extends HookConsumerWidget {
     final selected = ref.watch(selectedListProvider);
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
 
+    void displayAMAPToastWithContext(TypeMsg type, String msg) {
+      displayAMAPToast(context, type, msg);
+    }
+
     products.map((e) {
       if (!categories.contains(e.category)) {
         categories.add(e.category);
@@ -208,11 +212,10 @@ class AddCmdPage extends HookConsumerWidget {
                                     if (value) {
                                       pageNotifier.setAmapPage(AmapPage.admin);
                                       await adminNotifier.addT(del);
-                                      displayAMAPToast(context, TypeMsg.msg,
+                                      displayAMAPToastWithContext(TypeMsg.msg,
                                           AMAPTextConstants.addedCommand);
                                     } else {
-                                      displayAMAPToast(
-                                          context,
+                                      displayAMAPToastWithContext(
                                           TypeMsg.error,
                                           AMAPTextConstants
                                               .alreadyExistCommand);

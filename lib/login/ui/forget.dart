@@ -10,7 +10,8 @@ import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/tools/functions.dart';
 
 class ForgetPassword extends HookConsumerWidget {
-  const ForgetPassword({Key? key, required this.onSignInPressed}) : super(key: key);
+  const ForgetPassword({Key? key, required this.onSignInPressed})
+      : super(key: key);
 
   final VoidCallback onSignInPressed;
 
@@ -18,6 +19,10 @@ class ForgetPassword extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final signUpNotifier = ref.watch(signUpProvider.notifier);
     final username = useTextEditingController();
+    void displayLoginToastWithContext(TypeMsg type, String msg) {
+      displayLoginToast(context, type, msg);
+    }
+
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
@@ -58,14 +63,14 @@ class ForgetPassword extends HookConsumerWidget {
                     label: LoginTextConstants.recover,
                     isLoading: ref.watch(loadingrovider),
                     onPressed: () async {
-                      final value = await signUpNotifier.recoverUser(
-                          username.text);
+                      final value =
+                          await signUpNotifier.recoverUser(username.text);
                       if (value) {
-                        displayLoginToast(context, TypeMsg.msg,
-                            LoginTextConstants.sendedMail);
+                        displayLoginToastWithContext(
+                            TypeMsg.msg, LoginTextConstants.sendedMail);
                       } else {
-                        displayLoginToast(context, TypeMsg.error,
-                            LoginTextConstants.mailSendingError);
+                        displayLoginToastWithContext(
+                            TypeMsg.error, LoginTextConstants.mailSendingError);
                       }
                     },
                   ),

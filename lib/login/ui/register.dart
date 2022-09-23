@@ -21,6 +21,10 @@ class Register extends HookConsumerWidget {
     final username = useTextEditingController();
     final password = useTextEditingController();
     final hidePass = useState(true);
+    void displayLoginToastWithContext(TypeMsg type, String msg) {
+      displayLoginToast(context, type, msg);
+    }
+
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
@@ -79,11 +83,11 @@ class Register extends HookConsumerWidget {
                       final value = await signUpNotifier.createUser(
                           username.text, password.text, AccountType.student);
                       if (value) {
-                        displayLoginToast(context, TypeMsg.msg,
-                            LoginTextConstants.sendedMail);
+                        displayLoginToastWithContext(
+                            TypeMsg.msg, LoginTextConstants.sendedMail);
                       } else {
-                        displayLoginToast(context, TypeMsg.error,
-                            LoginTextConstants.mailSendingError);
+                        displayLoginToastWithContext(
+                            TypeMsg.error, LoginTextConstants.mailSendingError);
                       }
                     },
                   ),

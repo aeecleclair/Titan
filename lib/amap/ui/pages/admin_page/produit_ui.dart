@@ -21,6 +21,10 @@ class ProductUi extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryId = ref.watch(deliveryIdProvider);
+    void displayAMAPToastWithContext(TypeMsg type, String msg) {
+      displayAMAPToast(context, type, msg);
+    }
+
     return Container(
         height: 55,
         alignment: Alignment.centerLeft,
@@ -57,7 +61,7 @@ class ProductUi extends ConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient:  const LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         AMAPColorConstants.green1,
                         AMAPColorConstants.textLight
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -91,7 +95,7 @@ class ProductUi extends ConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient:  const LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         AMAPColorConstants.redGradient1,
                         AMAPColorConstants.redGradient2
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -123,7 +127,7 @@ class ProductUi extends ConsumerWidget {
                                         deliveryProductListProvider(deliveryId)
                                             .notifier)
                                     .deleteProduct(p);
-                                displayAMAPToast(context, TypeMsg.msg,
+                                displayAMAPToastWithContext(TypeMsg.msg,
                                     AMAPTextConstants.deletedProduct);
                               });
                             }));

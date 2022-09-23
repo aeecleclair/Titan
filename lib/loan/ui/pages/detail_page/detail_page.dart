@@ -30,6 +30,10 @@ class DetailPage extends HookConsumerWidget {
     final adminloanListNotifier = ref.watch(adminLoanListProvider.notifier);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loanHistoryNotifier = ref.watch(loanHistoryProvider.notifier);
+    void displayLoanToastWithContext(TypeMsg type, String msg) {
+      displayLoanToast(context, type, msg);
+    }
+
     return Stack(
       children: [
         Column(children: [
@@ -185,11 +189,11 @@ class DetailPage extends HookConsumerWidget {
                                         final value = await loanListNotifier
                                             .extendLoan(newLoan, i);
                                         if (value) {
-                                          displayLoanToast(context, TypeMsg.msg,
+                                          displayLoanToastWithContext(
+                                              TypeMsg.msg,
                                               LoanTextConstants.extendedLoan);
                                         } else {
-                                          displayLoanToast(
-                                              context,
+                                          displayLoanToastWithContext(
                                               TypeMsg.error,
                                               LoanTextConstants.extendingError);
                                         }
@@ -229,13 +233,11 @@ class DetailPage extends HookConsumerWidget {
                                                     loaner,
                                                     await loanListNotifier
                                                         .copy());
-                                            displayLoanToast(
-                                                context,
+                                            displayLoanToastWithContext(
                                                 TypeMsg.msg,
                                                 LoanTextConstants.returnedLoan);
                                           } else {
-                                            displayLoanToast(
-                                                context,
+                                            displayLoanToastWithContext(
                                                 TypeMsg.msg,
                                                 LoanTextConstants
                                                     .returningError);
@@ -270,13 +272,11 @@ class DetailPage extends HookConsumerWidget {
                                                         .copy());
                                             pageNotifier.setLoanPage(
                                                 LoanPage.adminLoan);
-                                            displayLoanToast(
-                                                context,
+                                            displayLoanToastWithContext(
                                                 TypeMsg.msg,
                                                 LoanTextConstants.deletedLoan);
                                           } else {
-                                            displayLoanToast(
-                                                context,
+                                            displayLoanToastWithContext(
                                                 TypeMsg.msg,
                                                 LoanTextConstants
                                                     .deletingError);

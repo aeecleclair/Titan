@@ -28,10 +28,10 @@ class EditBookingPage extends HookConsumerWidget {
     final booking = ref.watch(bookingProvider);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     final room = useState(booking.room);
-    final start =
-        useTextEditingController(text: DateFormat('yyyy-MM-dd HH:mm').format(booking.start));
-    final end =
-        useTextEditingController(text: DateFormat('yyyy-MM-dd HH:mm').format(booking.end));
+    final start = useTextEditingController(
+        text: DateFormat('yyyy-MM-dd HH:mm').format(booking.start));
+    final end = useTextEditingController(
+        text: DateFormat('yyyy-MM-dd HH:mm').format(booking.end));
     final motif = useTextEditingController(text: booking.reason);
     final motifFocus = useState(false);
     final note = useTextEditingController(text: booking.note);
@@ -39,6 +39,10 @@ class EditBookingPage extends HookConsumerWidget {
     final recurring = useState(booking.recurring);
     final multipleDay = useState(booking.multipleDay);
     final keyRequired = useState(booking.key);
+
+    void displayBookingToastWithContext(TypeMsg type, String msg) {
+      displayBookingToast(context, type, msg);
+    }
 
     Widget w = const Center(
       child: CircularProgressIndicator(
@@ -594,13 +598,11 @@ class EditBookingPage extends HookConsumerWidget {
                                             .updateBooking(newBooking);
                                         pageNotifier
                                             .setBookingPage(BookingPage.main);
-                                        displayBookingToast(
-                                            context,
+                                        displayBookingToastWithContext(
                                             TypeMsg.msg,
                                             BookingTextConstants.editedBooking);
                                       } else {
-                                        displayBookingToast(
-                                            context,
+                                        displayBookingToastWithContext(
                                             TypeMsg.error,
                                             BookingTextConstants.editionError);
                                       }

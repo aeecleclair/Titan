@@ -28,6 +28,9 @@ class AddItemPage extends HookConsumerWidget {
     final name = useTextEditingController();
     final caution = useTextEditingController();
     final lendingDuration = useTextEditingController();
+    void displayLoanToastWithContext(TypeMsg type, String msg) {
+      displayLoanToast(context, type, msg);
+    }
 
     Widget w = const Center(
       child: CircularProgressIndicator(
@@ -202,10 +205,10 @@ class AddItemPage extends HookConsumerWidget {
                                       await loanersitemsNotifier.setTData(
                                           loaner.value,
                                           await itemListNotifier.copy());
-                                      displayLoanToast(context, TypeMsg.msg,
+                                      displayLoanToastWithContext(TypeMsg.msg,
                                           LoanTextConstants.addedObject);
                                     } else {
-                                      displayLoanToast(context, TypeMsg.error,
+                                      displayLoanToastWithContext(TypeMsg.error,
                                           LoanTextConstants.addingError);
                                     }
                                   });

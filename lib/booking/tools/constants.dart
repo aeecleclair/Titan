@@ -28,6 +28,7 @@ class BookingTextConstants {
   static const String deleting = "Suppression";
   static const String deletedBooking = "Réservation supprimée";
   static const String deletedRoom = "Salle supprimée";
+  static const String deletingBooking = "Supprimer la réservation ?";
   static const String deletingError = "Erreur lors de la suppression";
   static const String deletingRoom = "Supprimer la salle ?";
   static const String edit = "Modifier";
@@ -36,7 +37,8 @@ class BookingTextConstants {
   static const String editedRoom = "Salle modifiée";
   static const String endDate = "Date de fin";
   static const String historyPage = "Historique";
-  static const String incorrectOrMissingFields = "Champs incorrects ou manquants";
+  static const String incorrectOrMissingFields =
+      "Champs incorrects ou manquants";
   static const String invalidRoom = "Salle invalide";
   static const String invalidDates = "Dates invalides";
   static const String necessaryKey = "Clé nécessaire";

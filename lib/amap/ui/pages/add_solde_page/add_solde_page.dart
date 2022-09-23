@@ -21,6 +21,10 @@ class AddSoldePage extends HookConsumerWidget {
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final editingController = useTextEditingController();
     final focus = useState(false);
+    void displayAMAPToastWithContext(TypeMsg type, String msg) {
+      displayAMAPToast(context, type, msg);
+    }
+
     return AmapRefresher(
         onRefresh: () async {
           users.value = await usersNotifier.filterUsers("");
@@ -84,13 +88,11 @@ class AddSoldePage extends HookConsumerWidget {
                                               await cashListNotifier.addCash(
                                                   Cash(balance: 0.0, user: e));
                                           if (value) {
-                                            displayAMAPToast(
-                                                context,
+                                            displayAMAPToastWithContext(
                                                 TypeMsg.msg,
                                                 AMAPTextConstants.addedUser);
                                           } else {
-                                            displayAMAPToast(
-                                                context,
+                                            displayAMAPToastWithContext(
                                                 TypeMsg.error,
                                                 AMAPTextConstants.addingError);
                                           }

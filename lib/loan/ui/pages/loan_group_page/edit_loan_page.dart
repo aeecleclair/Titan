@@ -50,6 +50,10 @@ class EditLoanPage extends HookConsumerWidget {
     final queryController = useTextEditingController();
     final queryFocus = useState(false);
 
+    void displayLoanToastWithContext(TypeMsg type, String msg) {
+      displayLoanToast(context, type, msg);
+    }
+
     Widget w = const Center(
       child: CircularProgressIndicator(
         valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
@@ -138,7 +142,8 @@ class EditLoanPage extends HookConsumerWidget {
             title: const Text(LoanTextConstants.dates),
             content: Column(
               children: [
-                DateEntry(title: LoanTextConstants.beginDate, controller: start),
+                DateEntry(
+                    title: LoanTextConstants.beginDate, controller: start),
                 DateEntry(title: LoanTextConstants.endDate, controller: end)
               ],
             ),
@@ -339,14 +344,7 @@ class EditLoanPage extends HookConsumerWidget {
                             ? caution.text
                             : caution.text.isNotEmpty
                                 ? caution.text
-                                : "${itemList
-                                        .where((element) => selectedItems[
-                                            itemList.indexOf(element)])
-                                        .toList()
-                                        .fold<double>(
-                                            0,
-                                            (previousValue, element) =>
-                                                previousValue + element.caution)}€");
+                                : "${itemList.where((element) => selectedItems[itemList.indexOf(element)]).toList().fold<double>(0, (previousValue, element) => previousValue + element.caution)}€");
                       },
                       error: (error, s) {
                         return Text(error.toString());
@@ -420,13 +418,7 @@ class EditLoanPage extends HookConsumerWidget {
                                             borrower: borrower.value,
                                             caution: caution.text.isNotEmpty
                                                 ? caution.text
-                                                : "${selected
-                                                        .fold<double>(
-                                                            0,
-                                                            (previousValue,
-                                                                    element) =>
-                                                                previousValue +
-                                                                element.caution)}€",
+                                                : "${selected.fold<double>(0, (previousValue, element) => previousValue + element.caution)}€",
                                             end: DateTime.parse(end.text),
                                             id: loan.id,
                                             notes: note.text,
@@ -440,11 +432,11 @@ class EditLoanPage extends HookConsumerWidget {
                                               await loanListNotifier.copy());
                                           pageNotifier
                                               .setLoanPage(LoanPage.groupLoan);
-                                          displayLoanToast(context, TypeMsg.msg,
+                                          displayLoanToastWithContext(
+                                              TypeMsg.msg,
                                               LoanTextConstants.updatedLoan);
                                         } else {
-                                          displayLoanToast(
-                                              context,
+                                          displayLoanToastWithContext(
                                               TypeMsg.error,
                                               LoanTextConstants.updatingError);
                                         }
@@ -510,4 +502,3 @@ class EditLoanPage extends HookConsumerWidget {
             child: w));
   }
 }
-
