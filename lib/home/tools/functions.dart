@@ -110,5 +110,7 @@ DateTime correctAfterDate(DateTime end) {
 bool isDateInReccurence(String recurrenceRule, DateTime now, DateTime start) {
   final rrule =
       SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
-  return rrule.contains(now);
+  final dates = rrule.map((e) => processDateToAPIWitoutHour(e)).toList();
+  return dates.contains(
+      processDateToAPIWitoutHour(DateTime(now.year, now.month, now.day)));
 }

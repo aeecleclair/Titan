@@ -12,67 +12,67 @@ final authTokenProvider =
 });
 
 final isLoggedInProvider = Provider((ref) {
-  // return true;
-  return ref.watch(authTokenProvider).when(
-    data: (tokens) {
-      return tokens["token"] == ""
-          ? false
-          : !JwtDecoder.isExpired(tokens["token"] as String);
-    },
-    error: (e, s) {
-      return false;
-    },
-    loading: () {
-      return false;
-    },
-  );
+  return true;
+  // return ref.watch(authTokenProvider).when(
+  //   data: (tokens) {
+  //     return tokens["token"] == ""
+  //         ? false
+  //         : !JwtDecoder.isExpired(tokens["token"] as String);
+  //   },
+  //   error: (e, s) {
+  //     return false;
+  //   },
+  //   loading: () {
+  //     return false;
+  //   },
+  // );
 });
 
 final loadingrovider = Provider((ref) {
-  // return false;
-  return ref.watch(authTokenProvider).when(
-    data: (tokens) {
-      return tokens["token"] != "" && ref.watch(isLoggedInProvider);
-    },
-    error: (e, s) {
-      return false;
-    },
-    loading: () {
-      return true;
-    },
-  );
+  return false;
+  // return ref.watch(authTokenProvider).when(
+  //   data: (tokens) {
+  //     return tokens["token"] != "" && ref.watch(isLoggedInProvider);
+  //   },
+  //   error: (e, s) {
+  //     return false;
+  //   },
+  //   loading: () {
+  //     return true;
+  //   },
+  // );
 });
 
 final idProvider = Provider((ref) {
-  // return "";
-  return ref.watch(authTokenProvider).when(
-    data: (tokens) {
-      return tokens["token"] == ""
-          ? null
-          : JwtDecoder.decode(tokens["token"] as String)["sub"];
-    },
-    error: (e, s) {
-      return null;
-    },
-    loading: () {
-      return null;
-    },
-  );
+  return "";
+  // return ref.watch(authTokenProvider).when(
+  //   data: (tokens) {
+  //     return tokens["token"] == ""
+  //         ? null
+  //         : JwtDecoder.decode(tokens["token"] as String)["sub"];
+  //   },
+  //   error: (e, s) {
+  //     return null;
+  //   },
+  //   loading: () {
+  //     return null;
+  //   },
+  // );
 });
 
 final tokenProvider = Provider((ref) {
-  // return "dxfcgvhjk";
-  return ref.watch(authTokenProvider).when(
-    data: (tokens) {
-      return tokens["token"] as String;
-    },
-    error: (e, s) {
-      return "";
-    },
-    loading: () {
-      return "";
-    },
-  );
+  return "dxfcgvhjk";
+  // return ref.watch(authTokenProvider).when(
+  //   data: (tokens) {
+  //     return tokens["token"] as String;
+  //   },
+  //   error: (e, s) {
+  //     return "";
+  //   },
+  //   loading: () {
+  //     return "";
+  //   },
+  // );
 });
 
 class OAuth2TokenProvider
