@@ -99,7 +99,7 @@ String formatDays(String recurrenceRule) {
     "Dimanche"
   ];
   final listDayShort = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
-  final days = recurrenceRule.split(";")[1].split("BYDAY=")[1].split(",");
+  final days = recurrenceRule.split("BYDAY=")[1].split(";")[0].split(",");
   String res = "";
   if (days.length > 1) {
     for (int i = 0; i < days.length - 1; i++) {

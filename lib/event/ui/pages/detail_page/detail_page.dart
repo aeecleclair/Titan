@@ -84,7 +84,7 @@ class DetailPage extends HookConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Tous les ${formatDays(event.recurrenceRule!)}",
+                              "Tous les ${formatDays(event.recurrenceRule)}",
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -137,7 +137,7 @@ class DetailPage extends HookConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Tous les ${formatDays(event.recurrenceRule!)}",
+                                "Tous les ${formatDays(event.recurrenceRule)}",
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,

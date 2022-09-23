@@ -11,32 +11,38 @@ class EventListNotifier extends ListNotifier<Event> {
   }
 
   Future<AsyncValue<List<Event>>> loadEventList() async {
-    return await loadList(_eventRepository.getAllEvent);
-    // state = AsyncValue.data([
-    //   Event(
-    //     description: "xdftghij",
-    //     end: DateTime.now().add(Duration(hours: 2)),
-    //     id: 'etrykhgfeqretyjhg',
-    //     name: 'Test',
-    //     organizer: 'zegtq',
-    //     place: 'rzeherh',
-    //     recurrence: false,
-    //     start: DateTime.now(),
-    //     type: CalendarEventType.direction,
-    //   ),
-    //   Event(
-    //     description: "jhvkjhvhv",
-    //     end: DateTime.now().add(Duration(hours: 2)),
-    //     id: 'fuhojnpokhfty',
-    //     name: 'Test 2',
-    //     organizer: 'zegtq',
-    //     place: 'rzeherh',
-    //     recurrence: false,
-    //     start: DateTime.now(),
-    //     type: CalendarEventType.direction,
-    //   ),
-    // ]);
-    // return state;
+    // return await loadList(_eventRepository.getAllEvent);
+    state = AsyncValue.data([
+      Event(
+        description: "xdftghij",
+        end: DateTime.now(),
+        id: 'etrykhgfeqretyjhg',
+        name: 'Test',
+        organizer: 'zegtq',
+        start: DateTime.now(),
+        type: CalendarEventType.direction,
+        allDay: true,
+        fakeEnd: DateTime.now(),
+        fakeStart: DateTime.now(),
+        location: 'srfhf',
+        recurrenceRule: '',
+      ),
+      Event(
+        description: "jhvkjhvhv",
+        end: DateTime.now().add(Duration(hours: 2)),
+        id: 'fuhojnpokhfty',
+        name: 'Test 2',
+        organizer: 'zegtq',
+        start: DateTime.now(),
+        type: CalendarEventType.direction,
+        allDay: false,
+        fakeEnd: DateTime.now(),
+        fakeStart: DateTime.now(),
+        location: 'zoej(afklnbvze',
+        recurrenceRule: "FREQ=WEEKLY;INTERVAL=1;BYDAY=FR,WE;UNTIL=20221231"
+      ),
+    ]);
+    return state;
   }
 
   Future<bool> addEvent(Event event) async {

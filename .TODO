@@ -6,9 +6,6 @@ En cours :
     - Auth :
 ->        - Test external auth (1)
 
-    - Settings :
-        - PB Toast (3)
-
     - Events :
         - Admin page (edit) (API)
         - Slide day (PageView) (4)

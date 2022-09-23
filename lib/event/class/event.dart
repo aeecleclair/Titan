@@ -22,7 +22,7 @@ class Event {
   late final String location;
   late final CalendarEventType type;
   late final String description;
-  late final String? recurrenceRule;
+  late final String recurrenceRule;
 
   Event({
     required this.id,
@@ -36,7 +36,7 @@ class Event {
     required this.allDay,
     required this.fakeEnd,
     required this.fakeStart,
-    this.recurrenceRule,
+    required this.recurrenceRule,
   });
 
   Event.fromJson(Map<String, dynamic> json) {
@@ -111,6 +111,6 @@ class Event {
     location = '';
     type = CalendarEventType.eventAE;
     description = '';
-    recurrenceRule = null;
+    recurrenceRule = '';
   }
 }

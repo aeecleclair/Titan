@@ -23,7 +23,7 @@ class CurrentTime extends ConsumerWidget {
           ),
           Container(
             height: 3,
-            width: 500,
+            width: MediaQuery.of(context).size.width, 
             color: Colors.black,
           )
         ],

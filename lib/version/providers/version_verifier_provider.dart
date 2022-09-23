@@ -8,7 +8,10 @@ class VersionVerifierNotifier extends SingleNotifier<Version> {
   VersionVerifierNotifier() : super(const AsyncLoading());
 
   Future<AsyncValue<Version>> loadVersion() async {
-    return await load(_versionRepository.getVersion);
+    // return await load(_versionRepository.getVersion);
+    state = AsyncData(
+        Version(version: '1.0.0', minimalTitanVersion: '1.0.0', ready: true));
+    return state;
   }
 }
 
