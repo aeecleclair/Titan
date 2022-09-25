@@ -17,7 +17,7 @@ class PageScheme extends StatelessWidget {
           height: 20,
         ),
         SizedBox(
-            height: MediaQuery.of(context).size.height - 240, child: subPage),
+            height: MediaQuery.of(context).size.height - 264, child: subPage),
       ],
     );
   }
