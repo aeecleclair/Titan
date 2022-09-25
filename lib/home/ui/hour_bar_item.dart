@@ -31,7 +31,7 @@ class HourBarItems extends ConsumerWidget {
                   DateTime.parse("${e.end.toString().split(" ")[0]} 23:59:00");
               data[data.indexOf(e)] =
                   e.copyWith(fakeStart: newStart, fakeEnd: newEnd);
-            } else if (isDateInReccurence(e.recurrenceRule, e.start, now)) {
+            } else if (isDateInReccurence(e.recurrenceRule, strNow, e.start)) {
               if (e.allDay) {
                 DateTime newStart =
                     DateTime.parse("${now.toString().split(" ")[0]} 00:00:00");
@@ -47,6 +47,9 @@ class HourBarItems extends ConsumerWidget {
                 data[data.indexOf(e)] =
                     e.copyWith(fakeStart: newStart, fakeEnd: newEnd);
               }
+            } else {
+              data[data.indexOf(e)] =
+                  e.copyWith(fakeStart: e.start, fakeEnd: e.end);
             }
           }
           data.sort((a, b) => a.fakeStart.compareTo(b.fakeStart));
@@ -86,12 +89,15 @@ class HourBarItems extends ConsumerWidget {
                     right: 15,
                   ),
                   child: EventUI(
-                      r: r,
-                      l: l,
-                      neverStart: !r.allDay &&
-                          r.start.toString() != r.fakeStart.toString(),
-                      neverEnd: !r.allDay &&
-                          r.end.toString() != r.fakeEnd.toString()),
+                    r: r,
+                    l: l,
+                    neverStart: r.start != r.fakeStart &&
+                        r.recurrenceRule == "" &&
+                        !r.allDay,
+                    neverEnd: r.end != r.fakeEnd &&
+                        r.recurrenceRule == "" &&
+                        !r.allDay,
+                  ),
                 ));
                 dh = h;
                 dl = l;
@@ -125,15 +131,16 @@ class HourBarItems extends ConsumerWidget {
                                   height: (ph - dl) * 90.0,
                                 ),
                                 EventUI(
-                                    r: e,
-                                    l: l,
-                                    n: toGather.length,
-                                    neverStart: !e.allDay &&
-                                        e.start.toString() !=
-                                            e.fakeStart.toString(),
-                                    neverEnd: !e.allDay &&
-                                        e.end.toString() !=
-                                            e.fakeEnd.toString()),
+                                  r: e,
+                                  l: l,
+                                  n: toGather.length,
+                                  neverStart: r.start != r.fakeStart &&
+                                      r.recurrenceRule == "" &&
+                                      !r.allDay,
+                                  neverEnd: r.end != r.fakeEnd &&
+                                      r.recurrenceRule == "" &&
+                                      !r.allDay,
+                                ),
                               ],
                             ),
                           );
@@ -163,12 +170,15 @@ class HourBarItems extends ConsumerWidget {
                     right: 15,
                   ),
                   child: EventUI(
-                      r: r,
-                      l: l,
-                      neverStart: !r.allDay &&
-                          r.start.toString() != r.fakeStart.toString(),
-                      neverEnd: !r.allDay &&
-                          r.end.toString() != r.fakeEnd.toString())));
+                    r: r,
+                    l: l,
+                    neverStart: r.start != r.fakeStart &&
+                        r.recurrenceRule == "" &&
+                        !r.allDay,
+                    neverEnd: r.end != r.fakeEnd &&
+                        r.recurrenceRule == "" &&
+                        !r.allDay,
+                  )));
             }
           } else {
             DateTime start = correctBeforeDate(toGather[0].fakeStart);
@@ -184,6 +194,7 @@ class HourBarItems extends ConsumerWidget {
                     children: toGather.map((e) {
                       DateTime start = correctBeforeDate(e.fakeStart);
                       DateTime end = correctAfterDate(e.fakeEnd);
+
                       double h = start.hour + start.minute / 60;
                       double l = (end.hour - start.hour) +
                           (end.minute - start.minute) / 60;
@@ -201,14 +212,16 @@ class HourBarItems extends ConsumerWidget {
                               height: (ph - dl) * 90.0,
                             ),
                             EventUI(
-                                r: e,
-                                l: l,
-                                n: toGather.length,
-                                neverStart: !e.allDay &&
-                                    e.start.toString() !=
-                                        e.fakeStart.toString(),
-                                neverEnd: !e.allDay &&
-                                    e.end.toString() != e.fakeEnd.toString()),
+                              r: e,
+                              l: l,
+                              n: toGather.length,
+                              neverStart: e.start != e.fakeStart &&
+                                  e.recurrenceRule == "" &&
+                                  !e.allDay,
+                              neverEnd: e.end != e.fakeEnd &&
+                                  e.recurrenceRule == "" &&
+                                  !e.allDay,
+                            ),
                           ],
                         ),
                       );

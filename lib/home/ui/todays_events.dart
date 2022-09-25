@@ -23,28 +23,6 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 class TodaysEvents extends HookConsumerWidget {
   const TodaysEvents({Key? key}) : super(key: key);
 
-  void center(
-      bool hasScrolled,
-      ScrollController scrollController,
-      DateTime today,
-      HasScrolledNotifier hasScrolledNotifier,
-      ValueNotifier lastPosition) {
-    if (!hasScrolled || lastPosition.value == 0.0) {
-      Timer.periodic(const Duration(milliseconds: 1), (t) {
-        if (scrollController.positions.isNotEmpty) {
-          scrollController.jumpTo(
-            (today.hour + today.minute / 60 + today.second / 3600) * 90.0 - 150,
-          );
-          lastPosition.value =
-              (today.hour + today.minute / 60 + today.second / 3600) * 90.0 -
-                  150;
-          t.cancel();
-          hasScrolledNotifier.setHasScrolled(true);
-        }
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final today = ref.watch(nowProvider);
@@ -55,8 +33,26 @@ class TodaysEvents extends HookConsumerWidget {
     final displayTodayNotifier = ref.watch(displayTodayProvider.notifier);
     final res = ref.watch(eventListProvider);
     final lastPosition = useState(0.0);
-    center(hasScrolled, scrollController, today, hasScrolledNotifier,
-        lastPosition);
+
+    void center() {
+      if (!hasScrolled || lastPosition.value == 0.0) {
+        Timer.periodic(const Duration(milliseconds: 1), (t) {
+          if (scrollController.positions.isNotEmpty) {
+            scrollController.jumpTo(
+              (today.hour + today.minute / 60 + today.second / 3600) * 90.0 -
+                  150,
+            );
+            lastPosition.value =
+                (today.hour + today.minute / 60 + today.second / 3600) * 90.0 -
+                    150;
+            t.cancel();
+            hasScrolledNotifier.setHasScrolled(true);
+          }
+        });
+      }
+    }
+
+    center();
     return SizedBox(
       height: MediaQuery.of(context).size.height * .65,
       child: Container(
@@ -185,8 +181,7 @@ class TodaysEvents extends HookConsumerWidget {
                           onPressed: () {
                             displayTodayNotifier.setDisplay(true);
                             hasScrolledNotifier.setHasScrolled(false);
-                            center(hasScrolled, scrollController, today,
-                                hasScrolledNotifier, lastPosition);
+                            center();
                           },
                         ),
                       )
