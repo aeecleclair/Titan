@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/login/class/account_type.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
@@ -85,6 +86,10 @@ class Register extends HookConsumerWidget {
                       if (value) {
                         displayLoginToastWithContext(
                             TypeMsg.msg, LoginTextConstants.sendedMail);
+                        hidePass.value = true;
+                        username.clear();
+                        password.clear();
+                        onSignInPressed();
                       } else {
                         displayLoginToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);

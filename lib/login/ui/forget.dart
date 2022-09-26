@@ -67,7 +67,9 @@ class ForgetPassword extends HookConsumerWidget {
                           await signUpNotifier.recoverUser(username.text);
                       if (value) {
                         displayLoginToastWithContext(
-                            TypeMsg.msg, LoginTextConstants.sendedMail);
+                            TypeMsg.msg, LoginTextConstants.sendedResetMail);
+                        username.clear();
+                        onSignInPressed();
                       } else {
                         displayLoginToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);

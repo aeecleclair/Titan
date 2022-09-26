@@ -47,7 +47,7 @@ class NoInternetPage extends HookConsumerWidget {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width * 0.4,
+                    width: 250,
                     decoration: BoxDecoration(
                         color: Colors.blue,
                         boxShadow: [
@@ -65,6 +65,7 @@ class NoInternetPage extends HookConsumerWidget {
                           size: 25,
                                 color: Colors.white,
                         ),
+                        
                         Text('Réessayer',
                             style: TextStyle(
                                 fontSize: 25, 
