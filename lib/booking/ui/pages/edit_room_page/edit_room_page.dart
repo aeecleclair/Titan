@@ -18,7 +18,6 @@ class EditRoomPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final room = ref.watch(roomProvider);
-    final roomNotifier = ref.watch(roomProvider.notifier);
     final name = useTextEditingController(text: room.name);
     void displayBookingToastWithContext(TypeMsg type, String msg) {
       displayBookingToast(context, type, msg);
@@ -39,9 +38,6 @@ class EditRoomPage extends HookConsumerWidget {
                   color: Colors.white,
                 ),
                 controller: name,
-                onChanged: (value) {
-                  roomNotifier.setRoom(room.copyWith(name: value));
-                },
                 decoration: const InputDecoration(
                   prefixIcon: Icon(
                     Icons.search,
@@ -80,7 +76,8 @@ class EditRoomPage extends HookConsumerWidget {
             ),
             onTap: () {
               tokenExpireWrapper(ref, () async {
-                final value = await roomListNotifier.updateRoom(room);
+                final value = await roomListNotifier
+                    .updateRoom(room.copyWith(name: name.text));
                 if (value) {
                   pageNotifier.setBookingPage(BookingPage.rooms);
                   displayBookingToastWithContext(

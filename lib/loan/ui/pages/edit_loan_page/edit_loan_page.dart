@@ -117,7 +117,10 @@ class EditLoanPage extends HookConsumerWidget {
                           )),
                       value: selectedItems[items.indexOf(e)],
                       onChanged: (s) {
-                        selectedItemsNotifier.toggle(items.indexOf(e));
+                        print(s);
+                        if (e.available || selectedItems[items.indexOf(e)]) {
+                          selectedItemsNotifier.toggle(items.indexOf(e));
+                        }
                       },
                     ),
                   )
@@ -268,18 +271,7 @@ class EditLoanPage extends HookConsumerWidget {
             content: users.value.when(data: (u) {
               return Column(children: <Widget>[
                 TextField(
-                  onChanged: (value) {
-                    queryFocus.value = true;
-                    noteFocus.value = false;
-                    cautionFocus.value = false;
-                    tokenExpireWrapper(ref, () async {
-                      final value =
-                          await usersNotifier.filterUsers(queryController.text);
-                      users.value = value;
-                    });
-                  },
                   controller: queryController,
-                  autofocus: queryFocus.value,
                   decoration: const InputDecoration(
                       labelText: LoanTextConstants.looking,
                       hintText: LoanTextConstants.looking,
@@ -340,13 +332,6 @@ class EditLoanPage extends HookConsumerWidget {
             content: Column(
               children: <Widget>[
                 TextFormField(
-                  autofocus: noteFocus.value,
-                  onChanged: (value) {
-                    loanNotifier.setLoan(loan.copyWith(notes: value));
-                    noteFocus.value = true;
-                    cautionFocus.value = false;
-                    queryFocus.value = false;
-                  },
                   decoration:
                       const InputDecoration(labelText: LoanTextConstants.note),
                   controller: note,
@@ -367,10 +352,6 @@ class EditLoanPage extends HookConsumerWidget {
           Step(
             title: const Text(LoanTextConstants.caution),
             content: TextFormField(
-              autofocus: cautionFocus.value,
-              onChanged: (value) {
-                loanNotifier.setLoan(loan.copyWith(caution: value));
-              },
               decoration:
                   const InputDecoration(labelText: LoanTextConstants.note),
               controller: caution,

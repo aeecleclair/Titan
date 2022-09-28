@@ -83,12 +83,10 @@ class AddBookingPage extends HookConsumerWidget {
                   DateEntry(
                     text: BookingTextConstants.startDate,
                     controller: start,
-                    onTap: (_) {},
                   ),
                   DateEntry(
                     text: BookingTextConstants.endDate,
                     controller: end,
-                    onTap: (_) {},
                   ),
                 ],
               ),
@@ -100,8 +98,6 @@ class AddBookingPage extends HookConsumerWidget {
             Step(
               title: const StepTitle(title: BookingTextConstants.reason),
               content: TextEntry(
-                  autofocus: false,
-                  onChanged: (_) {},
                   controller: motif,
                   errorMsg: BookingTextConstants.noReasonError,
                   label: BookingTextConstants.bookingReason),
@@ -113,8 +109,6 @@ class AddBookingPage extends HookConsumerWidget {
             Step(
               title: const StepTitle(title: BookingTextConstants.note),
               content: TextEntry(
-                  autofocus: false,
-                  onChanged: (_) {},
                   controller: note,
                   label: BookingTextConstants.bookingNote,
                   errorMsg: BookingTextConstants.noNoteError),
@@ -128,16 +122,13 @@ class AddBookingPage extends HookConsumerWidget {
               content: Column(children: [
                 CheckBoxEntry(
                     title: BookingTextConstants.necessaryKey,
-                    valueNotifier: keyRequired,
-                    onChanged: (_) {}),
+                    valueNotifier: keyRequired),
                 CheckBoxEntry(
                     title: BookingTextConstants.recurrent,
-                    valueNotifier: recurring,
-                    onChanged: (_) {}),
+                    valueNotifier: recurring),
                 CheckBoxEntry(
                     title: BookingTextConstants.multipleDay,
-                    valueNotifier: multipleDay,
-                    onChanged: (_) {}),
+                    valueNotifier: multipleDay),
               ]),
               isActive: currentStep.value >= 0,
               state: currentStep.value >= 4

@@ -13,7 +13,7 @@ class SignUpRepository extends Repository {
     return (await create({
       "email": email,
       "password": password,
-      "account_type": AccountTypeToID(accountType),
+      "account_type": accountTypeToID(accountType),
     }, suffix: "create"))["success"];
   }
 

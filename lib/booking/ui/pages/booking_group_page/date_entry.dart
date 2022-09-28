@@ -6,12 +6,7 @@ import 'package:myecl/booking/tools/constants.dart';
 class DateEntry extends StatelessWidget {
   final String text;
   final TextEditingController controller;
-  final Function(dynamic) onTap;
-  const DateEntry(
-      {Key? key,
-      required this.text,
-      required this.controller,
-      required this.onTap})
+  const DateEntry({Key? key, required this.text, required this.controller})
       : super(key: key);
 
   @override
@@ -37,9 +32,7 @@ class DateEntry extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  _selectDate(context, controller).then((value) {
-                    onTap(value);
-                  });
+                  _selectDate(context, controller);
                 },
                 child: SizedBox(
                   child: AbsorbPointer(

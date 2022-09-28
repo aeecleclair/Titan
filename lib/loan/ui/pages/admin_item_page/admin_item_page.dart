@@ -11,6 +11,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_button.dart';
 import 'package:myecl/loan/ui/pages/admin_item_page/item_ui.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class AdminItemPage extends HookConsumerWidget {
@@ -91,7 +92,7 @@ class AdminItemPage extends HookConsumerWidget {
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.only(left: 20),
                           child: Text(
-                            l.name,
+                            capitalize(l.name),
                             style: const TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.w600,

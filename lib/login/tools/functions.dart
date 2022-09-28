@@ -14,7 +14,7 @@ void displayLoginToast(BuildContext context, TypeMsg type, String text) {
       const Color.fromARGB(255, 255, 255, 255));
 }
 
-String AccountTypeToID(AccountType type) {
+String accountTypeToID(AccountType type) {
   switch (type) {
     case AccountType.student:
       return '39691052-2ae5-4e12-99d0-7a9f5f2b0136';
