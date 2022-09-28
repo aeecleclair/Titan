@@ -21,22 +21,29 @@ class AppDrawer extends HookConsumerWidget {
 
   const AppDrawer({Key? key}) : super(key: key);
 
-  Widget getPage(ModuleType page, SwipeControllerNotifier controllerNotifier) {
+  Widget getPage(ModuleType page, SwipeControllerNotifier controllerNotifier,
+      AnimationController controller) {
     switch (page) {
       case ModuleType.settings:
-        return SettingsPage(controllerNotifier: controllerNotifier);
+        return SettingsHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.home:
         return HomePage(controllerNotifier: controllerNotifier);
       case ModuleType.booking:
-        return BookingPage(controllerNotifier: controllerNotifier);
+        return BookingHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.loan:
-        return LoanPage(controllerNotifier: controllerNotifier);
+        return LoanHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.amap:
-        return AmapPage(controllerNotifier: controllerNotifier);
+        return AmapHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.admin:
-        return AdminPage(controllerNotifier: controllerNotifier);
+        return AdminHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.event:
-        return EventPage(controllerNotifier: controllerNotifier);
+        return EventHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
     }
   }
 
@@ -78,7 +85,8 @@ class AppDrawer extends HookConsumerWidget {
                             ignoring: controller.isCompleted,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(cornerval),
-                              child: getPage(page, controllerNotifier),
+                              child:
+                                  getPage(page, controllerNotifier, controller),
                             ),
                           )))
                 ],
