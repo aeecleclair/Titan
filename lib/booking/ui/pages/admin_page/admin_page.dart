@@ -13,15 +13,15 @@ class AdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     return SizedBox(
-      height: MediaQuery.of(context).size.height - 110,
+      height: MediaQuery.of(context).size.height - 117,
       child: BookingRefresher(
-      onRefresh: () async {
-        await ref.watch(bookingListProvider.notifier).loadBookings();
-      },
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()),
-        child: Column(
+        onRefresh: () async {
+          await ref.watch(bookingListProvider.notifier).loadBookings();
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics()),
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const SizedBox(
@@ -32,7 +32,8 @@ class AdminPage extends HookConsumerWidget {
                   pageNotifier.setBookingPage(BookingPage.rooms);
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   width: MediaQuery.of(context).size.width * 0.6,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -57,17 +58,20 @@ class AdminPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20,),
-              const Text(BookingTextConstants.bookingDemand,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white
-                  )),
               const SizedBox(
                 height: 20,
               ),
-              const ListBooking(isAdmin: true,)
+              const Text(BookingTextConstants.bookingDemand,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white)),
+              const SizedBox(
+                height: 20,
+              ),
+              const ListBooking(
+                isAdmin: true,
+              )
             ],
           ),
         ),

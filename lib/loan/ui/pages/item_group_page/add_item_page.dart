@@ -75,12 +75,10 @@ class AddItemPage extends HookConsumerWidget {
             Step(
               title: const Text(LoanTextConstants.objects),
               content: TextEntry(
-                autofocus: false,
                 label: LoanTextConstants.name,
                 suffix: '',
                 isInt: false,
                 controller: name,
-                onChanged: (_) {},
               ),
               isActive: currentStep.value >= 0,
               state: currentStep.value >= 1
@@ -90,12 +88,10 @@ class AddItemPage extends HookConsumerWidget {
             Step(
               title: const Text(LoanTextConstants.caution),
               content: TextEntry(
-                autofocus: false,
                 controller: caution,
                 isInt: true,
                 label: LoanTextConstants.caution,
                 suffix: '€',
-                onChanged: (_) {},
               ),
               isActive: currentStep.value >= 0,
               state: currentStep.value >= 2
@@ -105,12 +101,10 @@ class AddItemPage extends HookConsumerWidget {
             Step(
               title: const Text(LoanTextConstants.lendingDuration),
               content: TextEntry(
-                autofocus: false,
                 controller: lendingDuration,
                 isInt: true,
                 label: LoanTextConstants.lendingDuration,
                 suffix: LoanTextConstants.days,
-                onChanged: (_) {},
               ),
               isActive: currentStep.value >= 0,
               state: currentStep.value >= 3

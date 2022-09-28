@@ -63,12 +63,11 @@ class NoInternetPage extends HookConsumerWidget {
                         HeroIcon(
                           HeroIcons.arrowPath,
                           size: 25,
-                                color: Colors.white,
+                          color: Colors.white,
                         ),
-                        
                         Text('Réessayer',
                             style: TextStyle(
-                                fontSize: 25, 
+                                fontSize: 25,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold)),
                       ],

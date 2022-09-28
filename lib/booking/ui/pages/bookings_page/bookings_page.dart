@@ -13,16 +13,17 @@ class BookingsPage extends HookConsumerWidget {
     final userId = ref.watch(idProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     return SizedBox(
-      height: MediaQuery.of(context).size.height - 110,
+      height: MediaQuery.of(context).size.height - 117,
       child: BookingRefresher(
         onRefresh: () async {
           await bookingsNotifier.loadUserBookings(userId);
         },
         child: const SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics()),
-          child: ListBooking(isAdmin: false,)
-        ),
+            physics:
+                AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+            child: ListBooking(
+              isAdmin: false,
+            )),
       ),
     );
   }

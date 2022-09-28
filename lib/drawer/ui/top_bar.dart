@@ -17,7 +17,7 @@ class TopBar extends ConsumerWidget {
     return Column(
       children: [
         Container(
-          height: 35,
+          height: 25,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,7 +64,8 @@ class TopBar extends ConsumerWidget {
                         title: "Déconnexion",
                         onYes: () {
                           auth.deleteToken();
-                          displayDrawerToast(context, TypeMsg.msg, "Déconnexion");
+                          displayDrawerToast(
+                              context, TypeMsg.msg, "Déconnexion");
                         }));
               },
               child: Column(

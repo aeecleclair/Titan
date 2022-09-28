@@ -115,7 +115,7 @@ class BookingUi extends ConsumerWidget {
                       ),
                     )
                   : SizedBox(
-                      width: 130,
+                      width: 115,
                       child: Row(
                         children: [
                           GestureDetector(
@@ -142,7 +142,7 @@ class BookingUi extends ConsumerWidget {
                               ),
                               child: const HeroIcon(
                                 HeroIcons.pencilSquare,
-                                size: 25,
+                                size: 22,
                                 color: Colors.white,
                               ),
                             ),
@@ -153,7 +153,7 @@ class BookingUi extends ConsumerWidget {
                             },
                           ),
                           Container(
-                            width: 20,
+                            width: 15,
                           ),
                           GestureDetector(
                               child: Container(
@@ -171,7 +171,7 @@ class BookingUi extends ConsumerWidget {
                                 ),
                                 child: const HeroIcon(
                                   HeroIcons.trash,
-                                  size: 25,
+                                  size: 22,
                                   color: Colors.white,
                                 ),
                               ),
