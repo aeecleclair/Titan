@@ -34,20 +34,15 @@ class EditLoanPage extends HookConsumerWidget {
     final selectedItemsNotifier = ref.watch(editSelectedListProvider.notifier);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loan = ref.watch(loanProvider);
-    final loanNotifier = ref.watch(loanProvider.notifier);
     final borrower = useState(loan.borrower);
     final note = useTextEditingController(text: loan.notes);
-    final noteFocus = useState(false);
     final start =
         useTextEditingController(text: loan.start.toString().split(" ")[0]);
     final end =
         useTextEditingController(text: loan.end.toString().split(" ")[0]);
     final caution = useTextEditingController(text: loan.caution);
-    final cautionFocus = useState(false);
     final users = useState(ref.watch(userList));
-    final usersNotifier = ref.watch(userList.notifier);
     final queryController = useTextEditingController();
-    final queryFocus = useState(false);
 
     void displayLoanToastWithContext(TypeMsg type, String msg) {
       displayLoanToast(context, type, msg);
@@ -117,7 +112,6 @@ class EditLoanPage extends HookConsumerWidget {
                           )),
                       value: selectedItems[items.indexOf(e)],
                       onChanged: (s) {
-                        print(s);
                         if (e.available || selectedItems[items.indexOf(e)]) {
                           selectedItemsNotifier.toggle(items.indexOf(e));
                         }

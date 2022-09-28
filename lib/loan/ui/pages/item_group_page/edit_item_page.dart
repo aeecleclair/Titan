@@ -26,14 +26,10 @@ class EditItemPage extends HookConsumerWidget {
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final item = ref.watch(itemProvider);
-    final itemNotifier = ref.watch(itemProvider.notifier);
     final name = useTextEditingController(text: item.name);
-    final nameFocus = useState(false);
     final caution = useTextEditingController(text: item.caution.toString());
-    final cautionFocus = useState(false);
     final lendingDuration = useTextEditingController(
         text: (item.suggestedLendingDuration ~/ (24 * 60 * 60)).toString());
-    final lendingDurationFocus = useState(false);
 
     void displayLoanToastWithContext(TypeMsg type, String msg) {
       displayLoanToast(context, type, msg);
