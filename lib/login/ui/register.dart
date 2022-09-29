@@ -85,6 +85,10 @@ class Register extends HookConsumerWidget {
                       if (value) {
                         displayLoginToastWithContext(
                             TypeMsg.msg, LoginTextConstants.sendedMail);
+                        hidePass.value = true;
+                        username.clear();
+                        password.clear();
+                        onSignInPressed();
                       } else {
                         displayLoginToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);

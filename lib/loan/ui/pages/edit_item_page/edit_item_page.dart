@@ -25,14 +25,10 @@ class EditItemPage extends HookConsumerWidget {
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final item = ref.watch(itemProvider);
-    final itemNotifier = ref.watch(itemProvider.notifier);
     final name = useTextEditingController(text: item.name);
-    final nameFocus = useState(false);
     final caution = useTextEditingController(text: item.caution.toString());
-    final cautionFocus = useState(false);
     final lendingDuration = useTextEditingController(
         text: (item.suggestedLendingDuration ~/ (24 * 60 * 60)).toString());
-    final lendingDurationFocus = useState(false);
     void displayLoanToastWithContext(TypeMsg type, String msg) {
       displayLoanToast(context, type, msg);
     }
@@ -80,13 +76,6 @@ class EditItemPage extends HookConsumerWidget {
             Step(
               title: const Text(LoanTextConstants.objects),
               content: TextFormField(
-                onChanged: (n) {
-                  itemNotifier.setItem(item.copyWith(name: n));
-                  nameFocus.value = true;
-                  cautionFocus.value = false;
-                  lendingDurationFocus.value = false;
-                },
-                autofocus: nameFocus.value,
                 controller: name,
                 decoration: const InputDecoration(
                   labelText: LoanTextConstants.name,
@@ -108,13 +97,6 @@ class EditItemPage extends HookConsumerWidget {
             Step(
               title: const Text(LoanTextConstants.caution),
               content: TextFormField(
-                onChanged: (d) {
-                  itemNotifier.setItem(item.copyWith(caution: int.parse(d)));
-                  cautionFocus.value = true;
-                  lendingDurationFocus.value = false;
-                  nameFocus.value = false;
-                },
-                autofocus: cautionFocus.value,
                 controller: caution,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
@@ -142,14 +124,6 @@ class EditItemPage extends HookConsumerWidget {
             Step(
               title: const Text(LoanTextConstants.lendingDuration),
               content: TextFormField(
-                onChanged: (d) {
-                  itemNotifier.setItem(
-                      item.copyWith(suggestedLendingDuration: double.parse(d)));
-                  cautionFocus.value = false;
-                  lendingDurationFocus.value = true;
-                  nameFocus.value = false;
-                },
-                autofocus: lendingDurationFocus.value,
                 controller: lendingDuration,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
@@ -243,8 +217,15 @@ class EditItemPage extends HookConsumerWidget {
                                 }
                                 if (key.currentState!.validate()) {
                                   tokenExpireWrapper(ref, () async {
-                                    final value =
-                                        await itemListNotifier.updateItem(item);
+                                    final value = await itemListNotifier
+                                        .updateItem(item.copyWith(
+                                            name: name.text,
+                                            caution: int.parse(caution.text),
+                                            suggestedLendingDuration: int.parse(
+                                                    lendingDuration.text) *
+                                                24 *
+                                                60 *
+                                                60));
                                     if (value) {
                                       pageNotifier
                                           .setLoanPage(LoanPage.adminItem);

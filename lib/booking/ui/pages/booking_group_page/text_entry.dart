@@ -3,15 +3,11 @@ import 'package:flutter/material.dart';
 class TextEntry extends StatelessWidget {
   final String label, errorMsg;
   final TextEditingController controller;
-  final bool autofocus;
-  final Function(String) onChanged;
   const TextEntry(
       {Key? key,
       required this.label,
       required this.errorMsg,
-      required this.controller,
-      required this.onChanged,
-      required this.autofocus})
+      required this.controller})
       : super(key: key);
 
   @override
@@ -39,8 +35,6 @@ class TextEntry extends StatelessWidget {
         ),
       ),
       controller: controller,
-      autofocus: autofocus,
-      onChanged: onChanged,
       validator: (value) {
         if (value == null) {
           return errorMsg;

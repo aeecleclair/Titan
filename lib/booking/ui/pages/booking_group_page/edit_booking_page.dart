@@ -37,9 +37,7 @@ class EditBookingPage extends HookConsumerWidget {
     final end = useTextEditingController(
         text: DateFormat('yyyy-MM-dd HH:mm').format(booking.end));
     final motif = useTextEditingController(text: booking.reason);
-    final motifFocus = useState(false);
     final note = useTextEditingController(text: booking.note);
-    final noteFocus = useState(false);
     final recurring = useState(booking.recurring);
     final multipleDay = useState(booking.multipleDay);
     final keyRequired = useState(booking.key);
@@ -90,23 +88,13 @@ class EditBookingPage extends HookConsumerWidget {
               content: Column(
                 children: [
                   DateEntry(
-                      text: BookingTextConstants.startDate,
-                      controller: start,
-                      onTap: (value) {
-                        if (value != null) {
-                          bookingNotifier
-                              .setBooking(booking.copyWith(start: start.value));
-                        }
-                      }),
+                    text: BookingTextConstants.startDate,
+                    controller: start,
+                  ),
                   DateEntry(
-                      text: BookingTextConstants.endDate,
-                      controller: end,
-                      onTap: (value) {
-                        if (value != null) {
-                          bookingNotifier
-                              .setBooking(booking.copyWith(end: end.value));
-                        }
-                      }),
+                    text: BookingTextConstants.endDate,
+                    controller: end,
+                  ),
                 ],
               ),
               isActive: currentStep.value >= 0,
@@ -117,15 +105,9 @@ class EditBookingPage extends HookConsumerWidget {
             Step(
               title: const StepTitle(title: BookingTextConstants.reason),
               content: TextEntry(
-                autofocus: motifFocus.value,
                 controller: motif,
                 errorMsg: BookingTextConstants.noReasonError,
                 label: BookingTextConstants.bookingReason,
-                onChanged: (value) {
-                  bookingNotifier.setBooking(booking.copyWith(reason: value));
-                  motifFocus.value = true;
-                  noteFocus.value = false;
-                },
               ),
               isActive: currentStep.value >= 0,
               state: currentStep.value >= 2
@@ -135,15 +117,9 @@ class EditBookingPage extends HookConsumerWidget {
             Step(
               title: const StepTitle(title: BookingTextConstants.note),
               content: TextEntry(
-                autofocus: noteFocus.value,
                 controller: note,
                 errorMsg: BookingTextConstants.noNoteError,
                 label: BookingTextConstants.bookingNote,
-                onChanged: (value) {
-                  bookingNotifier.setBooking(booking.copyWith(note: value));
-                  noteFocus.value = true;
-                  motifFocus.value = false;
-                },
               ),
               isActive: currentStep.value >= 0,
               state: currentStep.value >= 3
@@ -154,32 +130,17 @@ class EditBookingPage extends HookConsumerWidget {
               title: const StepTitle(title: BookingTextConstants.other),
               content: Column(children: [
                 CheckBoxEntry(
-                    title: BookingTextConstants.necessaryKey,
-                    valueNotifier: keyRequired,
-                    onChanged: (newValue) {
-                      bookingNotifier
-                          .setBooking(booking.copyWith(key: newValue));
-                      motifFocus.value = false;
-                      noteFocus.value = false;
-                    }),
+                  title: BookingTextConstants.necessaryKey,
+                  valueNotifier: keyRequired,
+                ),
                 CheckBoxEntry(
-                    title: BookingTextConstants.recurrent,
-                    valueNotifier: recurring,
-                    onChanged: (newValue) {
-                      bookingNotifier
-                          .setBooking(booking.copyWith(recurring: newValue));
-                      motifFocus.value = false;
-                      noteFocus.value = false;
-                    }),
+                  title: BookingTextConstants.recurrent,
+                  valueNotifier: recurring,
+                ),
                 CheckBoxEntry(
-                    title: BookingTextConstants.multipleDay,
-                    valueNotifier: multipleDay,
-                    onChanged: (newValue) {
-                      bookingNotifier
-                          .setBooking(booking.copyWith(multipleDay: newValue));
-                      motifFocus.value = false;
-                      noteFocus.value = false;
-                    }),
+                  title: BookingTextConstants.multipleDay,
+                  valueNotifier: multipleDay,
+                ),
               ]),
               isActive: currentStep.value >= 0,
               state: currentStep.value >= 4

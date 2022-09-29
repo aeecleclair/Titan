@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/group.dart';
+import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
@@ -19,11 +20,10 @@ class EditPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final group = ref.watch(groupProvider);
     final groupNotifier = ref.watch(groupProvider.notifier);
+    final groupListNotifier = ref.watch(allGroupListProvider.notifier);
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();
-    final nameFocus = useState(false);
     final description = useTextEditingController();
-    final descriptionFocus = useState(false);
     final pageNotifier = ref.watch(adminPageProvider.notifier);
     void displayAdminToastWithContext(TypeMsg type, String msg) {
       displayAdminToast(context, type, msg);
@@ -59,13 +59,7 @@ class EditPage extends HookConsumerWidget {
                       ),
                       SizedBox(
                         child: TextFormField(
-                          autofocus: nameFocus.value,
                           controller: name,
-                          onChanged: (value) {
-                            groupNotifier.setGroup(g.copyWith(name: value));
-                            nameFocus.value = true;
-                            descriptionFocus.value = false;
-                          },
                           validator: (value) {
                             if (value == null) {
                               return AdminTextConstants.emptyFieldError;
@@ -103,13 +97,7 @@ class EditPage extends HookConsumerWidget {
                       ),
                       SizedBox(
                         child: TextFormField(
-                          autofocus: descriptionFocus.value,
                           controller: description,
-                          onChanged: (value) {
-                            groupNotifier.setGroup(g.copyWith(name: value));
-                            descriptionFocus.value = true;
-                            nameFocus.value = false;
-                          },
                           validator: (value) {
                             if (value == null) {
                               return AdminTextConstants.emptyFieldError;
@@ -239,8 +227,22 @@ class EditPage extends HookConsumerWidget {
                     ),
                   ),
                 ),
-                onTap: () {
-                  pageNotifier.setAdminPage(AdminPage.asso);
+                onTap: () async {
+                  tokenExpireWrapper(ref, () async {
+                    Group newGroup = g.copyWith(
+                        name: name.text, description: description.text);
+                    groupNotifier.setGroup(newGroup);
+                    final value = await groupListNotifier
+                        .updateGroup(newGroup.toSimpleGroup());
+                    if (value) {
+                      pageNotifier.setAdminPage(AdminPage.asso);
+                      displayAdminToastWithContext(
+                          TypeMsg.msg, AdminTextConstants.updatedAssociation);
+                    } else {
+                      displayAdminToastWithContext(
+                          TypeMsg.msg, AdminTextConstants.updatingError);
+                    }
+                  });
                 },
               )
             ]),

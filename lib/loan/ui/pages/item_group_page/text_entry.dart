@@ -3,25 +3,20 @@ import 'package:myecl/loan/tools/constants.dart';
 
 class TextEntry extends StatelessWidget {
   final String label, suffix;
-  final bool isInt, autofocus;
+  final bool isInt;
   final TextEditingController controller;
-  final Function(String) onChanged;
   const TextEntry(
       {Key? key,
       required this.label,
       required this.suffix,
       required this.isInt,
-      required this.controller,
-      required this.onChanged,
-      required this.autofocus})
+      required this.controller})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      autofocus: autofocus,
-      onChanged: onChanged,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: label,

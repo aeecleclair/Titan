@@ -17,32 +17,38 @@ class HomePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final eventNotifier = ref.watch(eventListProvider.notifier);
     return Scaffold(
-        body: HomeRefresher(
-      onRefresh: () async {
-        await eventNotifier.loadEventList();
-      },
-      child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                HomeColorConstants.darkBlue,
-                HomeColorConstants.lightBlue,
-              ],
+        body: WillPopScope(
+          onWillPop: () async { 
+            controllerNotifier.toggle();
+            return false;
+           },
+          child: HomeRefresher(
+              onRefresh: () async {
+          await eventNotifier.loadEventList();
+              },
+              child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  HomeColorConstants.darkBlue,
+                  HomeColorConstants.lightBlue,
+                ],
+              ),
             ),
-          ),
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics()),
-            child: Column(
-              children: [
-                TopBar(controllerNotifier: controllerNotifier),
-                const TodaysEvents(),
-                const LastInfos(),
-              ],
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(
+                  parent: BouncingScrollPhysics()),
+              child: Column(
+                children: [
+                  TopBar(controllerNotifier: controllerNotifier),
+                  const TodaysEvents(),
+                  const LastInfos(),
+                ],
+              ),
+            )),
             ),
-          )),
-    ));
+        ));
   }
 }

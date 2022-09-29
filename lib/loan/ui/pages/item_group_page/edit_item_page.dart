@@ -79,16 +79,9 @@ class EditItemPage extends HookConsumerWidget {
               title: const Text(LoanTextConstants.objects),
               content: TextEntry(
                 label: LoanTextConstants.name,
-                autofocus: nameFocus.value,
                 suffix: '',
                 isInt: false,
                 controller: name,
-                onChanged: (n) {
-                  itemNotifier.setItem(item.copyWith(name: n));
-                  nameFocus.value = true;
-                  cautionFocus.value = false;
-                  lendingDurationFocus.value = false;
-                },
               ),
               isActive: currentStep.value >= 0,
               state: currentStep.value >= 1
@@ -99,16 +92,9 @@ class EditItemPage extends HookConsumerWidget {
               title: const Text(LoanTextConstants.caution),
               content: TextEntry(
                 label: LoanTextConstants.caution,
-                autofocus: cautionFocus.value,
                 suffix: '€',
                 isInt: true,
                 controller: caution,
-                onChanged: (n) {
-                  itemNotifier.setItem(item.copyWith(caution: int.parse(n)));
-                  nameFocus.value = false;
-                  cautionFocus.value = true;
-                  lendingDurationFocus.value = false;
-                },
               ),
               isActive: currentStep.value >= 0,
               state: currentStep.value >= 2
@@ -119,17 +105,9 @@ class EditItemPage extends HookConsumerWidget {
               title: const Text(LoanTextConstants.lendingDuration),
               content: TextEntry(
                 label: LoanTextConstants.lendingDuration,
-                autofocus: lendingDurationFocus.value,
                 suffix: LoanTextConstants.days,
                 isInt: true,
                 controller: lendingDuration,
-                onChanged: (n) {
-                  itemNotifier.setItem(item.copyWith(
-                      suggestedLendingDuration: int.parse(n) * 24 * 60 * 60));
-                  nameFocus.value = false;
-                  cautionFocus.value = false;
-                  lendingDurationFocus.value = true;
-                },
               ),
               isActive: currentStep.value >= 0,
               state: currentStep.value >= 3
@@ -205,8 +183,15 @@ class EditItemPage extends HookConsumerWidget {
                                 }
                                 if (key.currentState!.validate()) {
                                   tokenExpireWrapper(ref, () async {
-                                    final value =
-                                        await itemListNotifier.updateItem(item);
+                                    final value = await itemListNotifier
+                                        .updateItem(item.copyWith(
+                                            name: name.text,
+                                            caution: int.parse(caution.text),
+                                            suggestedLendingDuration: int.parse(
+                                                    lendingDuration.text) *
+                                                24 *
+                                                60 *
+                                                60));
                                     if (value) {
                                       pageNotifier
                                           .setLoanPage(LoanPage.adminItem);

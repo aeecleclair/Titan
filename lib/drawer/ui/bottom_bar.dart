@@ -14,6 +14,7 @@ class BottomBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final page = ref.watch(pageProvider);
     final pageNotifier = ref.watch(pageProvider.notifier);
     final hasScrolled = ref.watch(hasScrolledProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
@@ -28,6 +29,7 @@ class BottomBar extends ConsumerWidget {
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
                   pageNotifier.setPage(ModuleType.settings);
+                  controllerNotifier.toggle();
                   hasScrolled.setHasScrolled(false);
                 },
                 onDoubleTap: () {
@@ -42,7 +44,9 @@ class BottomBar extends ConsumerWidget {
                     ),
                     HeroIcon(
                       HeroIcons.cog,
-                      color: DrawerColorConstants.lightText,
+                      color: page == ModuleType.settings
+                          ? DrawerColorConstants.selectedText
+                          : DrawerColorConstants.lightText,
                       size: 25,
                     ),
                     Container(
@@ -50,7 +54,9 @@ class BottomBar extends ConsumerWidget {
                     ),
                     Text("Paramètres",
                         style: TextStyle(
-                          color: DrawerColorConstants.lightText,
+                          color: page == ModuleType.settings
+                              ? DrawerColorConstants.selectedText
+                              : DrawerColorConstants.lightText,
                           fontSize: 15,
                         ))
                   ],
@@ -61,6 +67,7 @@ class BottomBar extends ConsumerWidget {
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
                         pageNotifier.setPage(ModuleType.admin);
+                        controllerNotifier.toggle();
                         hasScrolled.setHasScrolled(false);
                       },
                       onDoubleTap: () {
@@ -72,7 +79,9 @@ class BottomBar extends ConsumerWidget {
                         children: [
                           HeroIcon(
                             HeroIcons.userGroup,
-                            color: DrawerColorConstants.lightText,
+                            color: page == ModuleType.admin
+                                ? DrawerColorConstants.selectedText
+                                : DrawerColorConstants.lightText,
                             size: 25,
                           ),
                           Container(
@@ -80,7 +89,9 @@ class BottomBar extends ConsumerWidget {
                           ),
                           Text("Administration",
                               style: TextStyle(
-                                color: DrawerColorConstants.lightText,
+                                color: page == ModuleType.admin
+                                    ? DrawerColorConstants.selectedText
+                                    : DrawerColorConstants.lightText,
                                 fontSize: 15,
                               )),
                           Container(

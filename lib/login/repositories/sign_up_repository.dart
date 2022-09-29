@@ -1,4 +1,5 @@
 import 'package:myecl/login/class/account_type.dart';
+import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -9,11 +10,11 @@ class SignUpRepository extends Repository {
 
   Future<bool> createUser(
       String email, String password, AccountType accountType) async {
-    return await create({
+    return (await create({
       "email": email,
       "password": password,
-      "account_type": accountType.toString().split('.')[1]
-    }, suffix: "create");
+      "account_type": accountTypeToID(accountType),
+    }, suffix: "create"))["success"];
   }
 
   Future<bool> activateUser(String token, String password, DateTime birthday,
@@ -29,7 +30,7 @@ class SignUpRepository extends Repository {
   }
 
   Future<bool> recoverUser(String email) async {
-    return await create({"email": email}, suffix: "recover");
+    return (await create({"email": email}, suffix: "recover"))["success"];
   }
 
   Future<bool> resetPasswordUser(String token, String password) async {

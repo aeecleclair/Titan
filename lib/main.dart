@@ -7,6 +7,7 @@ import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/login/ui/auth.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
+import 'package:myecl/version/ui/no_internert_page.dart';
 import 'package:myecl/version/ui/update_page.dart';
 // import 'package:uni_links/uni_links.dart';
 
@@ -52,11 +53,7 @@ class MyApp extends HookConsumerWidget {
                       child: CircularProgressIndicator(),
                     ),
                   ),
-              error: (error, stack) => const Scaffold(
-                    body: Center(
-                      child: Text('Error lors du démarrage'),
-                    ),
-                  )),
+              error: (error, stack) => const Scaffold(body: NoInternetPage())),
         ));
   }
 }
