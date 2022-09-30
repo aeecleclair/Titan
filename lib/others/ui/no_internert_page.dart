@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/others/ui/refresh_indicator.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
-import 'package:myecl/version/ui/refresh_indicator.dart';
 
 class NoInternetPage extends HookConsumerWidget {
   const NoInternetPage({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class NoInternetPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final versionVerifierNotifier = ref.watch(versionVerifierProvider.notifier);
     return Scaffold(
-      body: VersionRefresher(
+      body: OthersRefresher(
         onRefresh: () async {
           await versionVerifierNotifier.loadVersion();
         },

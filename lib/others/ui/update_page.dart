@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:myecl/version/tools/constants.dart';
+
+import 'package:flutter/material.dart';
+import 'package:myecl/others/tools/constants.dart';
 
 class UpdatePage extends StatelessWidget {
   const UpdatePage({Key? key}) : super(key: key);
@@ -8,7 +9,7 @@ class UpdatePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Text(
-        VersionTextConstants.tooOldVersion,
+        OthersTextConstants.tooOldVersion,
         style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w400,
