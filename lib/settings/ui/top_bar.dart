@@ -48,15 +48,15 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            const Text(
-              SettingsTextConstants.settings,
-              style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
-            ),
+            // const Text(
+            //   SettingsTextConstants.settings,
+            //   style: TextStyle(
+            //       fontSize: 30,
+            //       fontWeight: FontWeight.w500,
+            //       color: Colors.black),
+            // ),
             const SizedBox(
-              width: 70,
+              width: 100,
             ),
           ],
         ),

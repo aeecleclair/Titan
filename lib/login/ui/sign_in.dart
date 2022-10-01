@@ -36,14 +36,6 @@ class SignIn extends HookConsumerWidget {
               flex: 3,
               child: Align(
                 alignment: Alignment.centerLeft,
-                // child: Padding(
-                //   padding: EdgeInsets.only(bottom: 35),
-                //   child: HeroIcon(
-                //     HeroIcons.bolt,
-                //     color: Colors.white,
-                //     size: 100,
-                //   ),
-                // ),
                 child: Text("MyECL",
                     style: GoogleFonts.elMessiri(
                         textStyle: const TextStyle(
@@ -56,41 +48,41 @@ class SignIn extends HookConsumerWidget {
                 flex: 5,
                 child: Column(
                   children: [
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(vertical: 16),
-                    //   child: TextFormField(
-                    //     decoration: signInRegisterInputDecoration(
-                    //         isSignIn: true, hintText: LoginTextConstants.email),
-                    //     controller: username,
-                    //     keyboardType: TextInputType.emailAddress,
-                    //     autofillHints: const [
-                    //       AutofillHints.username,
-                    //       AutofillHints.email,
-                    //     ],
-                    //   ),
-                    // ),
-                    // Padding(
-                    //     padding: const EdgeInsets.symmetric(vertical: 16),
-                    //     child: TextFormField(
-                    //       decoration: signInRegisterInputDecoration(
-                    //           isSignIn: true,
-                    //           hintText: LoginTextConstants.password,
-                    //           notifier: hidePass),
-                    //       controller: password,
-                    //       keyboardType: TextInputType.visiblePassword,
-                    //       autofillHints: const [AutofillHints.password],
-                    //       obscureText: hidePass.value,
-                    //     )),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: TextFormField(
+                        decoration: signInRegisterInputDecoration(
+                            isSignIn: true, hintText: LoginTextConstants.email),
+                        controller: username,
+                        keyboardType: TextInputType.emailAddress,
+                        autofillHints: const [
+                          AutofillHints.username,
+                          AutofillHints.email,
+                        ],
+                      ),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: TextFormField(
+                          decoration: signInRegisterInputDecoration(
+                              isSignIn: true,
+                              hintText: LoginTextConstants.password,
+                              notifier: hidePass),
+                          controller: password,
+                          keyboardType: TextInputType.visiblePassword,
+                          autofillHints: const [AutofillHints.password],
+                          obscureText: hidePass.value,
+                        )),
                     Expanded(
                       flex: 2,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const HeroIcon(
-                            HeroIcons.bolt,
-                            color: LoginColorConstants.background,
-                            size: 150,
-                          ),
+                          // const HeroIcon(
+                          //   HeroIcons.bolt,
+                          //   color: LoginColorConstants.background,
+                          //   size: 150,
+                          // ),
                           SignInBar(
                             isLoading: ref.watch(loadingrovider),
                             label: LoginTextConstants.signIn,
