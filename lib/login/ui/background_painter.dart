@@ -62,17 +62,20 @@ class BackgroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var path = Path();
-    var paint = Paint();
+    Path path = Path();
+    Paint paint = Paint();
 
-    var path2 = Path();
-    var paint2 = Paint();
+    Path path2 = Path();
+    Paint paint2 = Paint();
 
-    var path3 = Path();
-    var paint3 = Paint();
+    Path path3 = Path();
+    Paint paint3 = Paint();
 
-    var w = size.width;
-    var h = size.height;
+    Path path4 = Path();
+    Paint paint4 = Paint();
+
+    double w = size.width;
+    double h = size.height;
 
     path.moveTo(w, h / 2);
     path.lineTo(w, 0);
@@ -82,31 +85,43 @@ class BackgroundPainter extends CustomPainter {
       path,
       [
         Point(
-          lerpDouble(w * 1.25 / 5, w * 2 / 7, blueAnim.value)!,
+          lerpDouble(w * 1.2 / 5, w * 2 / 7, blueAnim.value)!,
           lerpDouble(h * 12 / 25, h * 13 / 25, blueAnim.value)!,
         ),
         Point(
-          lerpDouble(w * 5 / 7, w * 4.5 / 7, blueAnim.value)!,
+          lerpDouble(w * 4.5 / 7, w * 4.5 / 7, blueAnim.value)!,
           lerpDouble(h / 13, h / 6.5, blueAnim.value)!,
         ),
         Point(
           w,
-          lerpDouble(h / 4, h / 7, blueAnim.value)!,
+          lerpDouble(h / 4, h / 6.5, blueAnim.value)!,
         ),
       ],
     );
 
     path2.lineTo(w, 0);
     path2.lineTo(0, 0);
-    path2.lineTo(0, h / 12);
+    path2.lineTo(0, lerpDouble(h / 12, 0, blueAnim2.value)!);
     _addPointsToPath(
       path2,
       [
-        Point(w / 11, h / 20),
-        Point(w * 2 / 9, h / 10),
-        Point(w / 3.5, 0),
-        Point(w * 5.5 / 9, h / 12),
-        Point(w * 2 / 3, 0)
+        Point(
+          lerpDouble(w / 11, 0, blueAnim.value)!,
+          lerpDouble(h / 20, -10, blueAnim.value)!,
+        ),
+        Point(
+          lerpDouble(w * 2 / 9, w / 11, blueAnim.value)!,
+          lerpDouble(h / 10, 0, blueAnim.value)!,
+        ),
+        Point(
+          lerpDouble(w / 3.5, w / 7, blueAnim.value)!,
+          lerpDouble(0, h / 35, blueAnim.value)!,
+        ),
+        Point(
+          lerpDouble(w * 5.5 / 9, w / 3, blueAnim.value)!,
+          lerpDouble(h / 12, h / 20, blueAnim.value)!,
+        ),
+        Point(lerpDouble(w * 2 / 3, w / 2, blueAnim.value)!, 0),
       ],
     );
 
@@ -132,6 +147,24 @@ class BackgroundPainter extends CustomPainter {
       ],
     );
 
+    path4.moveTo(w, h / 10);
+    path4.lineTo(w, 0);
+    path4.lineTo(w * 4 / 5, 0);
+    _addPointsToPath(path4, [
+      Point(
+        w * 11.5 / 14,
+        lerpDouble(0, h / 12, blueAnim.value)!,
+      ),
+      Point(
+        w * 13 / 14,
+        lerpDouble(0, h / 10.5, blueAnim.value)!,
+      ),
+      Point(
+        w,
+        lerpDouble(0, h / 10.2, blueAnim.value)!,
+      )
+    ]);
+
     var colors = [LoginColorConstants.gradient1, LoginColorConstants.gradient2];
 
     Rect rectShape = Rect.fromLTWH(0, 0, w, h);
@@ -142,12 +175,14 @@ class BackgroundPainter extends CustomPainter {
 
     paint2 = Paint()..shader = gradient.createShader(rectShape);
     paint3 = Paint()..shader = gradient.createShader(rectShape);
+    paint4 = Paint()..shader = gradient.createShader(rectShape);
+    canvas.drawPath(path3, paint3);
+    canvas.drawPath(path, paint);
 
     canvas.drawShadow(
         path, LoginColorConstants.background.withAlpha(125), 10.0, false);
-    canvas.drawPath(path3, paint3);
-    canvas.drawPath(path, paint);
     canvas.drawPath(path2, paint2);
+    canvas.drawPath(path4, paint4);
   }
 
   @override

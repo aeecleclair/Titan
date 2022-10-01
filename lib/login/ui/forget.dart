@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
@@ -26,28 +28,43 @@ class ForgetPassword extends HookConsumerWidget {
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
-        padding: const EdgeInsets.all(22.0),
+        padding: const EdgeInsets.all(30.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Expanded(
+            Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: onSignInPressed,
+                child: const HeroIcon(
+                  HeroIcons.chevronLeft,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+            ),
+            Expanded(
               flex: 3,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   LoginTextConstants.forgetPassword,
-                  style: TextStyle(
+                  style: GoogleFonts.elMessiri(
+                      textStyle: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
-                  ),
+                  )),
                 ),
               ),
             ),
             Expanded(
-              flex: 4,
+              flex: 5,
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: TextFormField(
@@ -59,6 +76,9 @@ class ForgetPassword extends HookConsumerWidget {
                           decoration: signInRegisterInputDecoration(
                               isSignIn: false,
                               hintText: LoginTextConstants.email))),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   SignUpBar(
                     label: LoginTextConstants.recover,
                     isLoading: ref.watch(loadingrovider),

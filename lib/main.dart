@@ -6,7 +6,6 @@ import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/login/ui/auth.dart';
 import 'package:myecl/others/ui/no_internert_page.dart';
-import 'package:myecl/others/ui/public_page.dart';
 import 'package:myecl/others/ui/update_page.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
@@ -42,7 +41,7 @@ class MyApp extends HookConsumerWidget {
             primarySwatch: Colors.blue,
             textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
                 Theme.of(context).textTheme)),
-        home: PublicPage());
+        home: AuthScreen());
     // home: SafeArea(
     //   child: check.when(
     //       data: (value) => value

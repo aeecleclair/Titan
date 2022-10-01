@@ -66,12 +66,12 @@ class SignInBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Container(
+        child: SizedBox(
           height: 50,
-          alignment: Alignment.centerLeft,
           child: GestureDetector(
             onTap: onPressed,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   label,
@@ -88,7 +88,7 @@ class SignInBar extends StatelessWidget {
                         )
                       : const Icon(
                           FontAwesomeIcons.rightLong,
-                          color: Color(0xFF27d790),
+                          color: LoginColorConstants.gradient2,
                           size: 24.0,
                         ),
                 ),
