@@ -65,15 +65,15 @@ class OAuth2TokenRepository extends Repository {
       "scope": scope,
       "code_challenge": hash(codeVerifier),
       "code_challenge_method": "S256",
-      "redirect_uri": "http://127.0.0.1:8000/",
+      "redirect_uri": "http://hyperion.mlyec.fr/information/",
     };
     try {
-      final response = await http
-          .post(
-              Uri.parse("$host${ext}authorization-flow/authorize-validation"),
-              headers: headers,
-              body: body)
-          .timeout(const Duration(seconds: 5));
+      print("$host${ext}authorization-flow/authorize-validation");
+      final response = await http.post(
+          Uri.parse("$host${ext}authorization-flow/authorize-validation"),
+          headers: headers,
+          body: body);
+      print(response.headers);
       if (response.statusCode != 302) {
         throw Exception('Wrong credentials');
       }
@@ -107,6 +107,7 @@ class OAuth2TokenRepository extends Repository {
       "code_verifier": codeVerifier,
       "grant_type": "authorization_code",
     };
+    print("$host${ext}token");
     try {
       final response = await http.post(Uri.parse("$host${ext}token"),
           headers: headers, body: body);

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:myecl/tools/exception.dart';
 
 abstract class Repository {
-  final host = "http://10.0.2.2:8000/";
+  final host = "https://hyperion.myecl.fr/";
   final ext = "";
   final Map<String, String> headers = {
     "Content-Type": "application/json",
