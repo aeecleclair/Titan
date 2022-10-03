@@ -8,7 +8,7 @@ final settingsPageProvider = StateNotifierProvider<SettingsPageNotifier, Setting
 });
 
 class SettingsPageNotifier extends StateNotifier<SettingsPage> {
-  SettingsPageNotifier() : super(SettingsPage.main);
+  SettingsPageNotifier() : super(SettingsPage.info);
 
   void setSettingsPage(SettingsPage i) {
     state = i;

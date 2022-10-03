@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -7,7 +5,6 @@ import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
 import 'package:myecl/settings/ui/refresh_indicator.dart';
-import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class MainPage extends HookConsumerWidget {
