@@ -34,7 +34,7 @@ class TopBar extends HookConsumerWidget {
                           case SettingsPage.info:
                             pageNotifier.setSettingsPage(SettingsPage.main);
                             break;
-                          case SettingsPage.changePass:
+                          case SettingsPage.security:
                             pageNotifier.setSettingsPage(SettingsPage.main);
                             break;
                         }

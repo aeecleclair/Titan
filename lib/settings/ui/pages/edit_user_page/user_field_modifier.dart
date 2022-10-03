@@ -29,6 +29,11 @@ class UserFieldModifier extends StatelessWidget {
           child: TextFormField(
             keyboardType: keyboardType,
             controller: controller,
+            cursorColor: const Color(0xFFfb6d10),
+            decoration: const InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 10),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFFfb6d10)))),
             style: const TextStyle(fontSize: 20),
           ),
         ),

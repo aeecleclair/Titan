@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/tools/functions.dart';
-import 'package:myecl/settings/ui/pages/info_page/user_field_modifier.dart';
+import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart';
 import 'package:myecl/settings/ui/refresh_indicator.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -251,7 +251,22 @@ class InfoPage extends HookConsumerWidget {
         context: context,
         initialDate: DateTime.parse(me.birthday),
         firstDate: DateTime(1900),
-        lastDate: DateTime.now());
+        lastDate: DateTime.now(),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: const ColorScheme.light(
+                primary: Color(0xFFfb6d10),
+                onPrimary: Colors.white,
+                surface: Colors.white,
+                onSurface: Colors.black,
+              ),
+              dialogBackgroundColor: Colors.white,
+            ),
+            child: child!,
+          );
+        });
+
     dateController.text = picked == null
         ? me.birthday
         : processDatePrint(DateFormat('yyyy-MM-dd').format(picked));

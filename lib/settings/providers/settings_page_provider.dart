@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum SettingsPage { main, info, changePass }
+enum SettingsPage { main, info, security }
 
 
 final settingsPageProvider = StateNotifierProvider<SettingsPageNotifier, SettingsPage>((ref) {
@@ -8,7 +8,7 @@ final settingsPageProvider = StateNotifierProvider<SettingsPageNotifier, Setting
 });
 
 class SettingsPageNotifier extends StateNotifier<SettingsPage> {
-  SettingsPageNotifier() : super(SettingsPage.info);
+  SettingsPageNotifier() : super(SettingsPage.security);
 
   void setSettingsPage(SettingsPage i) {
     state = i;

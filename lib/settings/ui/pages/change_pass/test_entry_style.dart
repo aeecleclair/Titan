@@ -5,13 +5,13 @@ InputDecoration changePassInputDecoration(
     {required String hintText, required ValueNotifier<bool> notifier}) {
   return InputDecoration(
       contentPadding: const EdgeInsets.symmetric(vertical: 18.0),
-      hintStyle: const TextStyle(
+      hintStyle: TextStyle(
         fontSize: 18,
-        color: Colors.black,
+        color: Colors.grey.shade400,
       ),
       hintText: hintText,
       focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Color.fromARGB(255, 124, 124, 124))),
+          borderSide: BorderSide(color: Color(0xFFfb6d10))),
       enabledBorder: const UnderlineInputBorder(
         borderSide: BorderSide(color: Color.fromARGB(255, 124, 124, 124)),
       ),
