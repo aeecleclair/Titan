@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
-import 'package:myecl/settings/tools/constants.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -48,13 +47,6 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            // const Text(
-            //   SettingsTextConstants.settings,
-            //   style: TextStyle(
-            //       fontSize: 30,
-            //       fontWeight: FontWeight.w500,
-            //       color: Colors.black),
-            // ),
             const SizedBox(
               width: 100,
             ),

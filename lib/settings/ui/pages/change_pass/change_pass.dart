@@ -60,7 +60,7 @@ class ChangePassPage extends HookConsumerWidget {
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: TextFormField(
-                  cursorColor: Color(0xFFfb6d10),
+                  cursorColor: const Color(0xFFfb6d10),
                   decoration: changePassInputDecoration(
                       hintText: SettingsTextConstants.oldPassword,
                       notifier: hideOldPass),
@@ -79,7 +79,7 @@ class ChangePassPage extends HookConsumerWidget {
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: TextFormField(
-                  cursorColor: Color(0xFFfb6d10),
+                  cursorColor: const Color(0xFFfb6d10),
                   decoration: changePassInputDecoration(
                       hintText: SettingsTextConstants.newPassword,
                       notifier: hideNewPass),
@@ -98,7 +98,7 @@ class ChangePassPage extends HookConsumerWidget {
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: TextFormField(
-                  cursorColor: Color(0xFFfb6d10),
+                  cursorColor: const Color(0xFFfb6d10),
                   decoration: changePassInputDecoration(
                       hintText: SettingsTextConstants.confirmPassword,
                       notifier: hideConfirmPass),

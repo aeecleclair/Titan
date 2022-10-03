@@ -13,8 +13,8 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
-class InfoPage extends HookConsumerWidget {
-  const InfoPage({Key? key}) : super(key: key);
+class EditUserPage extends HookConsumerWidget {
+  const EditUserPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
