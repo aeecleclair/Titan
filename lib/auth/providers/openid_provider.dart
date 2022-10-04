@@ -87,7 +87,7 @@ class OpenIdTokenProvider
   final List<String> scopes = ["API"];
   OpenIdTokenProvider() : super(const AsyncValue.loading());
 
-  Future getTokenFromRequest(String username, String password) async {
+  Future getTokenFromRequest() async {
     state = const AsyncValue.loading();
     AuthorizationTokenResponse? resp = await appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(

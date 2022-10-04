@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class LoginColorConstants {
-  static const Color gradient1 = Color(0xFF1dbead);
-  static const Color gradient2 = Color(0xFF27d790);
+  static const Color gradient1 = Color(0xFFfb6d10);
+  static const Color gradient2 = Color(0xffeb3e1b);
   static const Color background = Color(0xFF222643);
 }
 
