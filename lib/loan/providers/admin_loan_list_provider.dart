@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';

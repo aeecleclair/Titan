@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 // import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:uni_links/uni_links.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/login/ui/auth.dart';
 import 'package:myecl/others/ui/no_internert_page.dart';
@@ -20,20 +22,26 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final recievedUri = useState<String?>(null);
-    // final token = useState<String?>(null);
+    final recievedUri = useState<String?>(null);
+    final token = useState<String?>(null);
 
-    // useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
-    //   recievedUri.value = uri.toString();
-    //   token.value = uri?.queryParameters['token'];
-    // }, onError: (Object err) {
-    //   recievedUri.value = 'Failed to get initial uri: $err.';
-    // });
     final versionVerifier = ref.watch(versionVerifierProvider);
     final titanVersion = ref.watch(titanVersionProvider);
     final check = versionVerifier.whenData(
         (value) => value.minimalTitanVersion.compareTo(titanVersion) <= 0);
     final isLoggedIn = ref.watch(isLoggedInProvider);
+    final authTokenNotifier = ref.watch(authTokenProvider.notifier);
+
+    // useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
+    //   recievedUri.value = uri.toString();
+    //   token.value = uri?.queryParameters['token'];
+    //   if (recievedUri.value != null && recievedUri.value!.contains(OpenIdTokenProvider.redirectUrl)) {
+    //     authTokenNotifier.getAuthToken(token.value!);
+    //   }
+    // }, onError: (Object err) {
+    //   recievedUri.value = 'Failed to get initial uri: $err.';
+    // });
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'MyECL',

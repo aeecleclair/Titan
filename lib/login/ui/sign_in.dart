@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
-import 'package:myecl/login/ui/text_from_decoration.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/tools/functions.dart';
 
 class SignIn extends HookConsumerWidget {
@@ -22,9 +20,6 @@ class SignIn extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authNotifier = ref.watch(authTokenProvider.notifier);
-    final username = useTextEditingController();
-    final password = useTextEditingController();
-    final hidePass = useState(true);
     return AutofillGroup(
         child: Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -48,47 +43,46 @@ class SignIn extends HookConsumerWidget {
                 flex: 5,
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: TextFormField(
-                        decoration: signInRegisterInputDecoration(
-                            isSignIn: true, hintText: LoginTextConstants.email),
-                        controller: username,
-                        keyboardType: TextInputType.emailAddress,
-                        autofillHints: const [
-                          AutofillHints.username,
-                          AutofillHints.email,
-                        ],
-                      ),
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: TextFormField(
-                          decoration: signInRegisterInputDecoration(
-                              isSignIn: true,
-                              hintText: LoginTextConstants.password,
-                              notifier: hidePass),
-                          controller: password,
-                          keyboardType: TextInputType.visiblePassword,
-                          autofillHints: const [AutofillHints.password],
-                          obscureText: hidePass.value,
-                        )),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(vertical: 16),
+                    //   child: TextFormField(
+                    //     decoration: signInRegisterInputDecoration(
+                    //         isSignIn: true, hintText: LoginTextConstants.email),
+                    //     controller: username,
+                    //     keyboardType: TextInputType.emailAddress,
+                    //     autofillHints: const [
+                    //       AutofillHints.username,
+                    //       AutofillHints.email,
+                    //     ],
+                    //   ),
+                    // ),
+                    // Padding(
+                    //     padding: const EdgeInsets.symmetric(vertical: 16),
+                    //     child: TextFormField(
+                    //       decoration: signInRegisterInputDecoration(
+                    //           isSignIn: true,
+                    //           hintText: LoginTextConstants.password,
+                    //           notifier: hidePass),
+                    //       controller: password,
+                    //       keyboardType: TextInputType.visiblePassword,
+                    //       autofillHints: const [AutofillHints.password],
+                    //       obscureText: hidePass.value,
+                    //     )),
                     Expanded(
                       flex: 2,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // const HeroIcon(
-                          //   HeroIcons.bolt,
-                          //   color: LoginColorConstants.background,
-                          //   size: 150,
-                          // ),
+                          const HeroIcon(
+                            HeroIcons.bolt,
+                            color: LoginColorConstants.background,
+                            size: 150,
+                          ),
                           SignInBar(
                             isLoading: ref.watch(loadingrovider),
                             label: LoginTextConstants.signIn,
                             onPressed: () async {
-                              await authNotifier.getTokenFromRequest(
-                                  username.text, password.text);
+                              await authNotifier.getTokenFromRequest();
                               ref.watch(authTokenProvider).when(
                                   data: (token) {},
                                   error: (e, s) {

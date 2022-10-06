@@ -4,9 +4,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 
 final authTokenProvider =
-    StateNotifierProvider<OAuth2TokenProvider, AsyncValue<Map<String, String>>>(
+    StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
         (ref) {
-  OAuth2TokenProvider oauth2TokenRepository = OAuth2TokenProvider();
+  OpenIdTokenProvider oauth2TokenRepository = OpenIdTokenProvider();
   oauth2TokenRepository.getTokenFromStorage();
   return oauth2TokenRepository;
 });
@@ -75,19 +75,19 @@ final tokenProvider = Provider((ref) {
   );
 });
 
-class OAuth2TokenProvider
+class OpenIdTokenProvider
     extends StateNotifier<AsyncValue<Map<String, String>>> {
   FlutterAppAuth appAuth = const FlutterAppAuth();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
   final String tokenName = "my_ecl_auth_token";
   final String clientId = "Titan";
-  final String redirectUrl = "titan://myecl.fr/account/activate";
+  static const String redirectUrl = "titan://myecl.fr/account/activate";
   final String discoveryUrl =
       "https://hyperion.myecl.fr/.well-known/openid-configuration";
   final List<String> scopes = ["API"];
-  OAuth2TokenProvider() : super(const AsyncValue.loading());
+  OpenIdTokenProvider() : super(const AsyncValue.loading());
 
-  Future getTokenFromRequest(String username, String password) async {
+  Future getTokenFromRequest() async {
     state = const AsyncValue.loading();
     AuthorizationTokenResponse? resp = await appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(
@@ -138,6 +138,27 @@ class OAuth2TokenProvider
       } else {
         deleteToken();
         state = const AsyncValue.error("No token found");
+      }
+    });
+  }
+
+  Future<void> getAuthToken(String authorizationToken) async {
+    appAuth
+        .token(TokenRequest(
+      clientId,
+      redirectUrl,
+      discoveryUrl: discoveryUrl,
+      scopes: scopes,
+      authorizationCode: authorizationToken,
+    ))
+        .then((resp) {
+      if (resp != null) {
+        state = AsyncValue.data({
+          "token": resp.accessToken!,
+          "refreshToken": resp.refreshToken!,
+        });
+      } else {
+        state = const AsyncValue.error("Error");
       }
     });
   }

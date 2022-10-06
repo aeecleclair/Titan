@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/repositories/event_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
@@ -12,37 +12,6 @@ class EventListNotifier extends ListNotifier<Event> {
 
   Future<AsyncValue<List<Event>>> loadEventList() async {
     return await loadList(_eventRepository.getAllEvent);
-    // state = AsyncValue.data([
-    //   Event(
-    //     description: "xdftghij",
-    //     end: DateTime.now(),
-    //     id: 'etrykhgfeqretyjhg',
-    //     name: 'Test',
-    //     organizer: 'zegtq',
-    //     start: DateTime.now(),
-    //     type: CalendarEventType.direction,
-    //     allDay: true,
-    //     fakeEnd: DateTime.now(),
-    //     fakeStart: DateTime.now(),
-    //     location: 'srfhf',
-    //     recurrenceRule: '',
-    //   ),
-    //   Event(
-    //     description: "jhvkjhvhv",
-    //     end: DateTime.now().add(Duration(hours: 2)),
-    //     id: 'fuhojnpokhfty',
-    //     name: 'Test 2',
-    //     organizer: 'zegtq',
-    //     start: DateTime.now(),
-    //     type: CalendarEventType.direction,
-    //     allDay: false,
-    //     fakeEnd: DateTime.now(),
-    //     fakeStart: DateTime.now(),
-    //     location: 'zoej(afklnbvze',
-    //     recurrenceRule: "FREQ=WEEKLY;INTERVAL=1;BYDAY=FR,WE;UNTIL=20221231"
-    //   ),
-    // ]);
-    // return state;
   }
 
   Future<bool> addEvent(Event event) async {
