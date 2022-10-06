@@ -35,7 +35,8 @@ class User {
     promo = json['promo'];
     floor = json['floor'];
     createdOn = json['created_on'];
-    groups = List.from(json['groups']).map((e) => SimpleGroup.fromJson(e)).toList();
+    groups =
+        List.from(json['groups']).map((e) => SimpleGroup.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -58,10 +59,10 @@ class User {
     firstname = 'Prénom';
     nickname = 'Surnom';
     id = '';
-    email = '';
-    birthday = '';
-    promo = 0;
-    floor = '';
+    email = 'empty@ecl.ec-lyon.fr';
+    birthday = DateTime.now().toIso8601String().split("T")[0];
+    promo = 22;
+    floor = 'W1';
     createdOn = '';
     groups = [];
   }
@@ -92,12 +93,8 @@ class User {
     );
   }
 
-  SimpleUser toSimpleUser()  {
+  SimpleUser toSimpleUser() {
     return SimpleUser(
-      name: name,
-      firstname: firstname,
-      nickname: nickname,
-      id: id
-    );
+        name: name, firstname: firstname, nickname: nickname, id: id);
   }
 }

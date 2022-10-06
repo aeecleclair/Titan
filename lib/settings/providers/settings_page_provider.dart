@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum SettingsPage { main, info, changePass }
+enum SettingsPage { main, info, security }
 
 
 final settingsPageProvider = StateNotifierProvider<SettingsPageNotifier, SettingsPage>((ref) {

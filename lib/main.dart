@@ -7,10 +7,10 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/login/ui/auth.dart';
+import 'package:myecl/others/ui/no_internert_page.dart';
+import 'package:myecl/others/ui/update_page.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
-import 'package:myecl/version/ui/no_internert_page.dart';
-import 'package:myecl/version/ui/update_page.dart';
 // import 'package:uni_links/uni_links.dart';
 
 void main() {
@@ -49,6 +49,7 @@ class MyApp extends HookConsumerWidget {
             primarySwatch: Colors.blue,
             textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
                 Theme.of(context).textTheme)),
+        // home: AppDrawer());
         home: SafeArea(
           child: check.when(
               data: (value) => value

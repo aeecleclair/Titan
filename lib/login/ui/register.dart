@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/class/account_type.dart';
@@ -18,7 +20,7 @@ class Register extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final signUpNotifier = ref.watch(signUpProvider.notifier);
-    final username = useTextEditingController();
+    final mail = useTextEditingController();
     final password = useTextEditingController();
     final hidePass = useState(true);
     void displayLoginToastWithContext(TypeMsg type, String msg) {
@@ -28,32 +30,47 @@ class Register extends HookConsumerWidget {
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
-        padding: const EdgeInsets.all(22.0),
+        padding: const EdgeInsets.all(30.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Expanded(
+            Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: onSignInPressed,
+                child: const HeroIcon(
+                  HeroIcons.chevronLeft,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+            ),
+            Expanded(
               flex: 3,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   LoginTextConstants.createAccountTitle,
-                  style: TextStyle(
+                  style: GoogleFonts.elMessiri(
+                      textStyle: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
-                  ),
+                  )),
                 ),
               ),
             ),
             Expanded(
-              flex: 4,
+              flex: 5,
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: TextFormField(
-                          controller: username,
+                          controller: mail,
                           style: const TextStyle(
                             fontSize: 18,
                             color: Colors.white,
@@ -76,17 +93,20 @@ class Register extends HookConsumerWidget {
                           notifier: hidePass),
                     ),
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   SignUpBar(
                     label: LoginTextConstants.create,
                     isLoading: ref.watch(loadingrovider),
                     onPressed: () async {
                       final value = await signUpNotifier.createUser(
-                          username.text, password.text, AccountType.student);
+                          mail.text, password.text, AccountType.student);
                       if (value) {
                         displayLoginToastWithContext(
                             TypeMsg.msg, LoginTextConstants.sendedMail);
                         hidePass.value = true;
-                        username.clear();
+                        mail.clear();
                         password.clear();
                         onSignInPressed();
                       } else {
