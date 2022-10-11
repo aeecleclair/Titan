@@ -13,7 +13,11 @@ class SimpleUser {
   SimpleUser.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     firstname = json['firstname'];
-    nickname = json['nickname'];
+    if (json['nickname'] != null) {
+      nickname = json['nickname'];
+    } else {
+      nickname = "";
+    }
     id = json['id'];
   }
 

@@ -16,5 +16,5 @@ class AdminDialog extends CustomDialogBox {
             titleColor: AdminColorConstants.gradient1,
             descriptionColor: Colors.black,
             yesColor: AdminColorConstants.gradient2,
-            noColor: AdminColorConstants.redGradient1);
+            noColor: AdminColorConstants.background2);
 }

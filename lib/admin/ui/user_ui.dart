@@ -18,9 +18,6 @@ class UserUi extends HookConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              width: 20,
-            ),
             Expanded(
               child: Text(
                 user.getName(),
@@ -32,14 +29,10 @@ class UserUi extends HookConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(colors: [
-                    AdminColorConstants.redGradient1,
-                    AdminColorConstants.redGradient2
-                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  color: AdminColorConstants.background2,
                   boxShadow: [
                     BoxShadow(
-                        color:
-                            AdminColorConstants.redGradient2.withOpacity(0.4),
+                        color: AdminColorConstants.background2.withOpacity(0.4),
                         offset: const Offset(2, 3),
                         blurRadius: 5)
                   ],
@@ -54,9 +47,6 @@ class UserUi extends HookConsumerWidget {
               onTap: () {
                 onDelete();
               },
-            ),
-            Container(
-              width: 15,
             ),
           ],
         ));

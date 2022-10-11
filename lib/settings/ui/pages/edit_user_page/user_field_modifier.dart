@@ -31,7 +31,8 @@ class UserFieldModifier extends StatelessWidget {
             controller: controller,
             cursorColor: const Color(0xFFfb6d10),
             decoration: const InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 10),
+                contentPadding: EdgeInsets.all(10),
+                isDense: true,
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Color(0xFFfb6d10)))),
             style: const TextStyle(fontSize: 20),

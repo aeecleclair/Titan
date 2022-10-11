@@ -26,7 +26,7 @@ final userList =
   (ref) {
     final token = ref.watch(tokenProvider);
     UserListNotifier userListNotifier = UserListNotifier(token: token);
-    userListNotifier.filterUsers("");
+    userListNotifier.filterUsers(" ");
     return userListNotifier;
   },
 );

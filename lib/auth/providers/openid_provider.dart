@@ -89,22 +89,26 @@ class OpenIdTokenProvider
 
   Future getTokenFromRequest() async {
     state = const AsyncValue.loading();
-    AuthorizationTokenResponse? resp = await appAuth.authorizeAndExchangeCode(
-      AuthorizationTokenRequest(
-        clientId,
-        redirectUrl,
-        discoveryUrl: discoveryUrl,
-        scopes: scopes,
-      ),
-    );
-    if (resp != null) {
-      await _secureStorage.write(key: tokenName, value: resp.refreshToken);
-      state = AsyncValue.data({
-        "token": resp.accessToken!,
-        "refreshToken": resp.refreshToken!,
-      });
-    } else {
-      state = const AsyncValue.error("Error");
+    try {
+      AuthorizationTokenResponse? resp = await appAuth.authorizeAndExchangeCode(
+        AuthorizationTokenRequest(
+          clientId,
+          redirectUrl,
+          discoveryUrl: discoveryUrl,
+          scopes: scopes,
+        ),
+      );
+      if (resp != null) {
+        await _secureStorage.write(key: tokenName, value: resp.refreshToken);
+        state = AsyncValue.data({
+          "token": resp.accessToken!,
+          "refreshToken": resp.refreshToken!,
+        });
+      } else {
+        state = const AsyncValue.error("Error");
+      }
+    } catch (e) {
+      state = AsyncValue.error("Error $e");
     }
   }
 

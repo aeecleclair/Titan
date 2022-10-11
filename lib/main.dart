@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-// import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
@@ -11,7 +10,6 @@ import 'package:myecl/others/ui/no_internert_page.dart';
 import 'package:myecl/others/ui/update_page.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
-// import 'package:uni_links/uni_links.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -30,17 +28,14 @@ class MyApp extends HookConsumerWidget {
     final check = versionVerifier.whenData(
         (value) => value.minimalTitanVersion.compareTo(titanVersion) <= 0);
     final isLoggedIn = ref.watch(isLoggedInProvider);
-    final authTokenNotifier = ref.watch(authTokenProvider.notifier);
 
-    // useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
-    //   recievedUri.value = uri.toString();
-    //   token.value = uri?.queryParameters['token'];
-    //   if (recievedUri.value != null && recievedUri.value!.contains(OpenIdTokenProvider.redirectUrl)) {
-    //     authTokenNotifier.getAuthToken(token.value!);
-    //   }
-    // }, onError: (Object err) {
-    //   recievedUri.value = 'Failed to get initial uri: $err.';
-    // });
+    useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
+      recievedUri.value = uri.toString();
+      token.value = uri?.queryParameters['token'];
+      if (recievedUri.value != null) {}
+    }, onError: (Object err) {
+      recievedUri.value = 'Failed to get initial uri: $err.';
+    });
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
