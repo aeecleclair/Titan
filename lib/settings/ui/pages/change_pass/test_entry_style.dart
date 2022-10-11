@@ -16,13 +16,13 @@ InputDecoration changePassInputDecoration(
         borderSide: BorderSide(color: Color.fromARGB(255, 124, 124, 124)),
       ),
       errorBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: SettingsColorConstants.redGradient1),
+        borderSide: BorderSide(color: SettingsColorConstants.background2),
       ),
       focusedErrorBorder: const UnderlineInputBorder(
         borderSide:
             BorderSide(width: 2.0, color: SettingsColorConstants.gradient2),
       ),
-      errorStyle: const TextStyle(color: SettingsColorConstants.redGradient1),
+      errorStyle: const TextStyle(color: SettingsColorConstants.background2),
       suffixIcon: IconButton(
         icon: Icon(notifier.value ? Icons.visibility : Icons.visibility_off,
             color: const Color.fromARGB(255, 124, 124, 124)),

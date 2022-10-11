@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 class SettingsColorConstants {
   static final Color background = Colors.grey.shade100;
-  static const Color gradient1 = Color(0xFF32a3f3);
-  static const Color gradient2 = Color(0xFF3284ee);
-  static const Color redGradient1 = Color(0xFF9E131F);
-  static const Color redGradient2 = Color(0xFF590512);
+  static const Color gradient1 = Color(0xFFfb6d10);
+  static const Color gradient2 = Color(0xffeb3e1b);
+  static const Color background2 = Color(0xFF222643);
 }
 
 class SettingsTextConstants {
@@ -13,7 +12,8 @@ class SettingsTextConstants {
   static const String admin = "Administrateur";
   static const String birthday = "Date de naissance";
   static const String changePassword = "Changer de mot de passe";
-  static const String changingPassword = "Voulez-vous vraiment changer votre mot de passe ?";
+  static const String changingPassword =
+      "Voulez-vous vraiment changer votre mot de passe ?";
   static const String confirmPassword = "Confirmer le mot de passe";
   static const String edit = "Modifier";
   static const String email = "Email";
@@ -24,12 +24,16 @@ class SettingsTextConstants {
   static const String name = "Nom";
   static const String newPassword = "Nouveau mot de passe";
   static const String nickname = "Surnom";
+  static const String notification = "Notifications";
   static const String oldPassword = "Ancien mot de passe";
   static const String passwordChanged = "Mot de passe changé";
-  static const String passwordsNotMatch = "Les mots de passe ne correspondent pas";
+  static const String passwordsNotMatch =
+      "Les mots de passe ne correspondent pas";
   static const String promo = "Promotion";
   static const String save = "Enregistrer";
   static const String settings = "Paramètres";
   static const String updatedProfile = "Profil modifié";
-  static const String updatingError = "Erreur lors de la modification du profil";
+  static const String updateNotification = "Mettre à jour les notifications";
+  static const String updatingError =
+      "Erreur lors de la modification du profil";
 }

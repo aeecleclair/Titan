@@ -13,8 +13,8 @@ class SettignsDialog extends CustomDialogBox {
           descriptions: descriptions,
           onYes: onYes,
           titleColor: SettingsColorConstants.gradient2,
-          descriptionColor: SettingsColorConstants.redGradient2,
+          descriptionColor: SettingsColorConstants.background2,
           yesColor: SettingsColorConstants.gradient1,
-          noColor: SettingsColorConstants.redGradient1,
+          noColor: SettingsColorConstants.background2,
         );
 }

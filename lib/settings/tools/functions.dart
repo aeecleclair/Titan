@@ -9,8 +9,8 @@ void displaySettingsToast(BuildContext context, TypeMsg type, String text) {
       text,
       SettingsColorConstants.gradient1,
       SettingsColorConstants.gradient2,
-      SettingsColorConstants.redGradient1,
-      SettingsColorConstants.redGradient2,
+      SettingsColorConstants.background2,
+      SettingsColorConstants.background2,
       SettingsColorConstants.background);
 }
 

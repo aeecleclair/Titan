@@ -89,7 +89,9 @@ class MainPage extends HookConsumerWidget {
             ),
             SettingsItem(
               icon: HeroIcons.bell,
-              onTap: () {},
+              onTap: () {
+                pageNotifier.setSettingsPage(SettingsPage.notification);
+              },
               child: const Text("Notifications",
                   style: TextStyle(
                       fontSize: 15,
