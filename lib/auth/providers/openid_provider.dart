@@ -2,6 +2,8 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
@@ -90,6 +92,25 @@ class OpenIdTokenProvider
   Future getTokenFromRequest() async {
     state = const AsyncValue.loading();
     try {
+      if (kIsWeb) {
+        // Present the dialog to the user
+        final result = await FlutterWebAuth.authenticate(
+            url:
+                "https://hyperion.myecl.fr/auth/authorize?client_id=$clientId&response_type=code&scope=API",
+            callbackUrlScheme: redirectUrl);
+        print(result);
+// Extract token from resulting url
+        final token = Uri.parse(result).queryParameters['token'];
+      } else {
+        await appAuth.authorizeAndExchangeCode(
+          AuthorizationTokenRequest(
+            clientId,
+            redirectUrl,
+            discoveryUrl: discoveryUrl,
+            scopes: scopes,
+          ),
+        );
+      }
       AuthorizationTokenResponse? resp = await appAuth.authorizeAndExchangeCode(
         AuthorizationTokenRequest(
           clientId,

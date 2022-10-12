@@ -29,13 +29,13 @@ class MyApp extends HookConsumerWidget {
         (value) => value.minimalTitanVersion.compareTo(titanVersion) <= 0);
     final isLoggedIn = ref.watch(isLoggedInProvider);
 
-    useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
-      recievedUri.value = uri.toString();
-      token.value = uri?.queryParameters['token'];
-      if (recievedUri.value != null) {}
-    }, onError: (Object err) {
-      recievedUri.value = 'Failed to get initial uri: $err.';
-    });
+    // useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
+    //   recievedUri.value = uri.toString();
+    //   token.value = uri?.queryParameters['token'];
+    //   if (recievedUri.value != null) {}
+    // }, onError: (Object err) {
+    //   recievedUri.value = 'Failed to get initial uri: $err.';
+    // });
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
