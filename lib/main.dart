@@ -44,20 +44,20 @@ class MyApp extends HookConsumerWidget {
             primarySwatch: Colors.blue,
             textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
                 Theme.of(context).textTheme)),
-        // home: AppDrawer());
-        home: SafeArea(
-          child: check.when(
-              data: (value) => value
-                  ? isLoggedIn
-                      ? const AppDrawer()
-                      : const AuthScreen()
-                  : const UpdatePage(),
-              loading: () => const Scaffold(
-                    body: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-              error: (error, stack) => const Scaffold(body: NoInternetPage())),
-        ));
+        home: const SafeArea(child: AppDrawer()));
+        // home: SafeArea(
+        //   child: check.when(
+        //       data: (value) => value
+        //           ? isLoggedIn
+        //               ? const AppDrawer()
+        //               : const AuthScreen()
+        //           : const UpdatePage(),
+        //       loading: () => const Scaffold(
+        //             body: Center(
+        //               child: CircularProgressIndicator(),
+        //             ),
+        //           ),
+        //       error: (error, stack) => const Scaffold(body: NoInternetPage())),
+        // ));
   }
 }

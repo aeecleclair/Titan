@@ -44,6 +44,9 @@ class AppDrawer extends HookConsumerWidget {
       case ModuleType.event:
         return EventHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
+      case ModuleType.vote:
+        return EventHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
     }
   }
 

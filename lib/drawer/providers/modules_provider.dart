@@ -52,5 +52,10 @@ final listModuleProvider =
           icon: HeroIcons.calendar,
           page: ModuleType.event,
           selected: false),
+    Module(
+        name: "Vote",
+        icon: HeroIcons.envelopeOpen,
+        page: ModuleType.vote,
+        selected: false),
   ]);
 });
