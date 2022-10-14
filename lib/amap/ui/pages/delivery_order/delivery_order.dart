@@ -23,7 +23,8 @@ class DeliveryOrderPage extends HookConsumerWidget {
     orderList.when(data: (orders) {
       if (orders.isNotEmpty) {
         for (Order c in orders) {
-          listWidgetOrder.add(OrderUi(c: c, i: orders.indexOf(c), isAdmin: true));
+          listWidgetOrder
+              .add(OrderUi(c: c, i: orders.indexOf(c), isAdmin: true));
         }
       } else {
         listWidgetOrder.add(Column(

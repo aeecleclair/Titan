@@ -7,6 +7,7 @@ import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
+import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -105,7 +106,7 @@ class AddLoanerPage extends HookConsumerWidget {
                                     ),
                                   ))
                               .toList())
-                      : const Center(child: Text('No more loaners to add'));
+                      : const Center(child: Text(AdminTextConstants.noMoreLoaner));
                 }, error: (Object error, StackTrace? stackTrace) {
                   return Text(error.toString());
                 }, loading: () {

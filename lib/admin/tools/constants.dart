@@ -30,6 +30,7 @@ class AdminTextConstants {
   static const String looking = "Recherche";
   static const String members = "Membres";
   static const String name = "Nom";
+  static const String noMoreLoaner = "Aucun prêteur n'est disponible";
   static const String removeAssociationMember =
       "Supprimer le membre de l'association ?";
   static const String updatedAssociation = "Association modifiée";

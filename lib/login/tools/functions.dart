@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/login/class/account_type.dart';
 
@@ -7,11 +8,11 @@ void displayLoginToast(BuildContext context, TypeMsg type, String text) {
       context,
       type,
       text,
-      Colors.lightGreenAccent,
-      const Color.fromARGB(255, 139, 243, 19),
-      const Color.fromARGB(255, 255, 153, 89),
-      const Color.fromARGB(255, 243, 147, 13),
-      const Color.fromARGB(255, 255, 255, 255));
+      LoginColorConstants.gradient1,
+      LoginColorConstants.gradient2,
+      LoginColorConstants.background,
+      Colors.black,
+      Colors.white);
 }
 
 String accountTypeToID(AccountType type) {

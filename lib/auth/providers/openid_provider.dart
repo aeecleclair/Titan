@@ -100,8 +100,15 @@ class OpenIdTokenProvider
             callbackUrlScheme: redirectUrl);
         print(result);
         final token = Uri.parse(result).queryParameters['token'];
+        final refreshToken = Uri.parse(result).queryParameters['refresh_token'];
+        await _secureStorage.write(key: tokenName, value: refreshToken);
+        state = AsyncValue.data({
+          "token": token!,
+          "refreshToken": refreshToken!,
+        });
       } else {
-        await appAuth.authorizeAndExchangeCode(
+        AuthorizationTokenResponse? resp =
+            await appAuth.authorizeAndExchangeCode(
           AuthorizationTokenRequest(
             clientId,
             redirectUrl,
@@ -109,23 +116,15 @@ class OpenIdTokenProvider
             scopes: scopes,
           ),
         );
-      }
-      AuthorizationTokenResponse? resp = await appAuth.authorizeAndExchangeCode(
-        AuthorizationTokenRequest(
-          clientId,
-          redirectUrl,
-          discoveryUrl: discoveryUrl,
-          scopes: scopes,
-        ),
-      );
-      if (resp != null) {
-        await _secureStorage.write(key: tokenName, value: resp.refreshToken);
-        state = AsyncValue.data({
-          "token": resp.accessToken!,
-          "refreshToken": resp.refreshToken!,
-        });
-      } else {
-        state = const AsyncValue.error("Error");
+        if (resp != null) {
+          await _secureStorage.write(key: tokenName, value: resp.refreshToken);
+          state = AsyncValue.data({
+            "token": resp.accessToken!,
+            "refreshToken": resp.refreshToken!,
+          });
+        } else {
+          state = const AsyncValue.error("Error");
+        }
       }
     } catch (e) {
       state = AsyncValue.error("Error $e");

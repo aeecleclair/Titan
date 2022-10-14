@@ -11,5 +11,5 @@ class OthersRefresher extends Refresher {
             key: key,
             onRefresh: onRefresh,
             child: child,
-            col: OthersColorConstants.darkGrey);
+            col: OthersColorConstants.background);
 }

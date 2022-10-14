@@ -45,7 +45,8 @@ class CashUi extends HookConsumerWidget {
                   child: TextFormField(
                     controller: amount,
                     keyboardType: TextInputType.number,
-                    validator: (value) => value!.isEmpty ? AMAPTextConstants.add : null,
+                    validator: (value) =>
+                        value!.isEmpty ? AMAPTextConstants.add : null,
                   ),
                 ),
                 const SizedBox(

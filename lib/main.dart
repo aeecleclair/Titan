@@ -10,6 +10,7 @@ import 'package:myecl/others/ui/no_internert_page.dart';
 import 'package:myecl/others/ui/update_page.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -29,13 +30,15 @@ class MyApp extends HookConsumerWidget {
         (value) => value.minimalTitanVersion.compareTo(titanVersion) <= 0);
     final isLoggedIn = ref.watch(isLoggedInProvider);
 
-    // useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
-    //   recievedUri.value = uri.toString();
-    //   token.value = uri?.queryParameters['token'];
-    //   if (recievedUri.value != null) {}
-    // }, onError: (Object err) {
-    //   recievedUri.value = 'Failed to get initial uri: $err.';
-    // });
+    if (kIsWeb) {
+      useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
+        recievedUri.value = uri.toString();
+        token.value = uri?.queryParameters['token'];
+        if (recievedUri.value != null) {}
+      }, onError: (Object err) {
+        recievedUri.value = 'Failed to get initial uri: $err.';
+      });
+    }
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -44,20 +47,20 @@ class MyApp extends HookConsumerWidget {
             primarySwatch: Colors.blue,
             textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
                 Theme.of(context).textTheme)),
-        // home: AppDrawer());
-        home: SafeArea(
-          child: check.when(
-              data: (value) => value
-                  ? isLoggedIn
-                      ? const AppDrawer()
-                      : const AuthScreen()
-                  : const UpdatePage(),
-              loading: () => const Scaffold(
-                    body: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-              error: (error, stack) => const Scaffold(body: NoInternetPage())),
-        ));
+        home: const SafeArea(child: UpdatePage()));
+    // home: SafeArea(
+    //   child: check.when(
+    //       data: (value) => value
+    //           ? isLoggedIn
+    //               ? const AppDrawer()
+    //               : const AuthScreen()
+    //           : const UpdatePage(),
+    //       loading: () => const Scaffold(
+    //             body: Center(
+    //               child: CircularProgressIndicator(),
+    //             ),
+    //           ),
+    //       error: (error, stack) => const Scaffold(body: NoInternetPage())),
+    // ));
   }
 }
