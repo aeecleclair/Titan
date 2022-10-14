@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/booking/tools/constants.dart';
 
 class CheckBoxEntry extends StatelessWidget {
   final String title;
@@ -10,7 +11,8 @@ class CheckBoxEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CheckboxListTile(
-      title: Text(title, style: const TextStyle(color: Colors.white)),
+      title: Text(title,
+          style: const TextStyle(color: BookingColorConstants.darkBlue)),
       value: valueNotifier.value,
       onChanged: (newValue) {
         if (newValue != null) {

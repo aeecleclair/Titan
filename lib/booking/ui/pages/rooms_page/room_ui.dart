@@ -36,7 +36,8 @@ class RoomUi extends HookConsumerWidget {
             Expanded(
               child: Text(
                 r.name,
-                style: const TextStyle(fontSize: 18, color: Colors.white),
+                style: const TextStyle(
+                    fontSize: 18, color: BookingColorConstants.darkBlue),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -50,7 +51,7 @@ class RoomUi extends HookConsumerWidget {
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(colors: [
-                        Colors.white,
+                        BookingColorConstants.darkBlue,
                         Color.fromARGB(255, 175, 216, 226)
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                       boxShadow: [
@@ -89,7 +90,7 @@ class RoomUi extends HookConsumerWidget {
                     child: const HeroIcon(
                       HeroIcons.trash,
                       size: 20,
-                      color: Colors.white,
+                      color: BookingColorConstants.darkBlue,
                     ),
                   ),
                   onTap: () {

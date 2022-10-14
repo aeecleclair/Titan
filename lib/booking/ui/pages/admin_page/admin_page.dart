@@ -36,11 +36,11 @@ class AdminPage extends HookConsumerWidget {
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   width: MediaQuery.of(context).size.width * 0.6,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: BookingColorConstants.darkBlue,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.white.withOpacity(0.15),
+                        color: BookingColorConstants.darkBlue.withOpacity(0.15),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset: const Offset(0, 3),
@@ -51,7 +51,7 @@ class AdminPage extends HookConsumerWidget {
                     child: Text(
                       BookingTextConstants.room,
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 20,
                       ),
                     ),
@@ -65,7 +65,7 @@ class AdminPage extends HookConsumerWidget {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white)),
+                      color: BookingColorConstants.darkBlue)),
               const SizedBox(
                 height: 20,
               ),

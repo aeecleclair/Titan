@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/tools/functions.dart';
@@ -29,7 +30,7 @@ class TopBar extends HookConsumerWidget {
                       onPressed: () {
                         switch (page) {
                           case BookingPage.main:
-                              controllerNotifier.toggle();
+                            controllerNotifier.toggle();
                             break;
                           case BookingPage.admin:
                             pageNotifier.setBookingPage(BookingPage.main);
@@ -58,17 +59,17 @@ class TopBar extends HookConsumerWidget {
                         page == BookingPage.main
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
-                        color: Colors.grey.shade100,
+                        color: BookingColorConstants.darkBlue,
                       ));
                 },
               ),
             ),
             Text(
               getPageTitle(page),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w500,
-                color: Colors.grey.shade100,
+                color: BookingColorConstants.darkBlue,
               ),
             ),
             const SizedBox(

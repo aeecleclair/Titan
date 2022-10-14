@@ -89,16 +89,14 @@ class OpenIdTokenProvider
   final List<String> scopes = ["API"];
   OpenIdTokenProvider() : super(const AsyncValue.loading());
 
-  Future getTokenFromRequest() async {
+  Future getTokenFromRequest() async { // TODO:
     state = const AsyncValue.loading();
     try {
       if (kIsWeb) {
-        print('tewt');
         final result = await FlutterWebAuth.authenticate(
             url:
                 "https://hyperion.myecl.fr/auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}",
             callbackUrlScheme: redirectUrl);
-        print(result);
         final token = Uri.parse(result).queryParameters['token'];
         final refreshToken = Uri.parse(result).queryParameters['refresh_token'];
         await _secureStorage.write(key: tokenName, value: refreshToken);

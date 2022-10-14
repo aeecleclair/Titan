@@ -33,7 +33,7 @@ class BookingUi extends ConsumerWidget {
         child: Container(
             margin: const EdgeInsets.only(left: 30, right: 30, bottom: 20),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: BookingColorConstants.darkBlue,
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
@@ -143,7 +143,7 @@ class BookingUi extends ConsumerWidget {
                               child: const HeroIcon(
                                 HeroIcons.pencilSquare,
                                 size: 22,
-                                color: Colors.white,
+                                color: BookingColorConstants.darkBlue,
                               ),
                             ),
                             onTap: () {
@@ -172,7 +172,7 @@ class BookingUi extends ConsumerWidget {
                                 child: const HeroIcon(
                                   HeroIcons.trash,
                                   size: 22,
-                                  color: Colors.white,
+                                  color: BookingColorConstants.darkBlue,
                                 ),
                               ),
                               onTap: () {

@@ -26,7 +26,7 @@ class DateEntry extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: Colors.white,
+                    color: BookingColorConstants.darkBlue,
                   ),
                 ),
               ),
@@ -42,7 +42,8 @@ class DateEntry extends StatelessWidget {
                         contentPadding: EdgeInsets.all(10),
                         isDense: true,
                         enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white)),
+                            borderSide: BorderSide(
+                                color: BookingColorConstants.darkBlue)),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.blue)),
                         errorBorder: UnderlineInputBorder(
@@ -62,7 +63,7 @@ class DateEntry extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                        color: BookingColorConstants.darkBlue,
                       ),
                     ),
                   ),

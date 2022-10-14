@@ -26,7 +26,11 @@ class MainPage extends HookConsumerWidget {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Calendar(),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height -
+                          290 -
+                          (isAdmin ? 70 : 0),
+                      child: const Calendar()),
                   const SizedBox(
                     height: 20,
                   ),

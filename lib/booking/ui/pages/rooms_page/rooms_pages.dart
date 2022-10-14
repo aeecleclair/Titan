@@ -32,11 +32,11 @@ class RoomsPage extends HookConsumerWidget {
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   width: MediaQuery.of(context).size.width * 0.6,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: BookingColorConstants.darkBlue,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.white.withOpacity(0.15),
+                        color: BookingColorConstants.darkBlue.withOpacity(0.15),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset: const Offset(0, 3),
@@ -56,13 +56,16 @@ class RoomsPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 40),
               const Text(BookingTextConstants.registeredRooms,
-                  style: TextStyle(fontSize: 18, color: Colors.white)),
+                  style: TextStyle(
+                      fontSize: 18, color: BookingColorConstants.darkBlue)),
               const SizedBox(height: 20),
               roomList.when(data: (rooms) {
                 if (rooms.isEmpty) {
                   return const Center(
                     child: Text(BookingTextConstants.noRoomFoundError,
-                        style: TextStyle(fontSize: 12, color: Colors.white)),
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: BookingColorConstants.darkBlue)),
                   );
                 }
                 return Column(
@@ -72,7 +75,8 @@ class RoomsPage extends HookConsumerWidget {
               }, loading: () {
                 return const Center(
                     child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(Colors.white),
+                  valueColor:
+                      AlwaysStoppedAnimation(BookingColorConstants.darkBlue),
                 ));
               })
             ])));

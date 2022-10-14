@@ -54,180 +54,86 @@ class Calendar extends HookConsumerWidget {
       }
     }
 
-    return SizedBox(
-      height: 360,
-      width: MediaQuery.of(context).size.width,
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 30),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: BookingColorConstants.softBlack,
-              offset: const Offset(2, 3),
-              blurRadius: 10,
-            ),
-          ],
-        ),
-        child: bookings.when(data: (res) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 5),
-            child: Stack(
-              children: [
-                SfCalendar(
-                  onTap: (details) => calendarTapped(details, context),
-                  dataSource: _getCalendarDataSource(res),
-                  // appointmentBuilder: (BuildContext context,
-                  //     CalendarAppointmentDetails details) {
-                  //   final Appointment meeting = details.appointments.first;
-                  //   if (_controller.view != CalendarView.month &&
-                  //       _controller.view != CalendarView.schedule &&
-                  //       meeting.startTime.day == meeting.endTime.day) {
-                  //     return Column(
-                  //       children: [
-                  //         Container(
-                  //           padding: const EdgeInsets.all(3),
-                  //           height: 50,
-                  //           alignment: Alignment.topLeft,
-                  //           decoration: BoxDecoration(
-                  //             shape: BoxShape.rectangle,
-                  //             borderRadius: const BorderRadius.only(
-                  //                 topLeft: Radius.circular(5),
-                  //                 topRight: Radius.circular(5)),
-                  //             color: meeting.color,
-                  //           ),
-                  //           child: SingleChildScrollView(
-                  //               child: Column(
-                  //             mainAxisAlignment: MainAxisAlignment.start,
-                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                  //             children: [
-                  //               Text(
-                  //                 meeting.subject,
-                  //                 style: const TextStyle(
-                  //                   color: Colors.white,
-                  //                   fontSize: 12,
-                  //                   fontWeight: FontWeight.w500,
-                  //                 ),
-                  //                 maxLines: 3,
-                  //                 softWrap: false,
-                  //                 overflow: TextOverflow.ellipsis,
-                  //               ),
-                  //             ],
-                  //           )),
-                  //         ),
-                  //         Container(
-                  //           height: details.bounds.height - 70,
-                  //           padding: const EdgeInsets.fromLTRB(3, 5, 3, 2),
-                  //           color: meeting.color.withOpacity(0.8),
-                  //           alignment: Alignment.topLeft,
-                  //           child: SingleChildScrollView(
-                  //               child: Column(
-                  //             mainAxisAlignment: MainAxisAlignment.start,
-                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                  //             children: [
-                  //               Text(
-                  //                 meeting.notes!,
-                  //                 style: const TextStyle(
-                  //                   color: Colors.white,
-                  //                   fontSize: 10,
-                  //                 ),
-                  //               )
-                  //             ],
-                  //           )),
-                  //         ),
-                  //         Container(
-                  //           height: 20,
-                  //           decoration: BoxDecoration(
-                  //             shape: BoxShape.rectangle,
-                  //             borderRadius: const BorderRadius.only(
-                  //                 bottomLeft: Radius.circular(5),
-                  //                 bottomRight: Radius.circular(5)),
-                  //             color: meeting.color,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     );
-                  //   }
-                  //   return Container(
-                  //     padding: const EdgeInsets.all(3),
-                  //     height: 50,
-                  //     alignment: Alignment.topLeft,
-                  //     decoration: BoxDecoration(
-                  //       shape: BoxShape.rectangle,
-                  //       borderRadius:
-                  //           const BorderRadius.all(Radius.circular(5)),
-                  //       color: meeting.color,
-                  //     ),
-                  //     child: Text(
-                  //           meeting.subject,
-                  //           style: const TextStyle(
-                  //             color: Colors.white,
-                  //             fontSize: 12,
-                  //             fontWeight: FontWeight.w500,
-                  //           ),
-                  //     ),
-                  //   );
-                  // },
-                  view: CalendarView.week,
-                  selectionDecoration: BoxDecoration(
-                    color: Colors.transparent,
-                    border: Border.all(
-                        color: BookingColorConstants.darkBlue, width: 2),
-                    borderRadius: const BorderRadius.all(Radius.circular(5)),
-                    shape: BoxShape.rectangle,
-                  ),
-                  todayHighlightColor: BookingColorConstants.lightBlue,
-                  firstDayOfWeek: 1,
-                  timeZone: 'Europe/Paris',
-                  timeSlotViewSettings: const TimeSlotViewSettings(
-                    timeFormat: 'HH:mm',
-                  ),
-                  viewHeaderStyle: const ViewHeaderStyle(
-                      dayTextStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 12,
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      return SizedBox(
+        height: constraints.maxHeight,
+        width: constraints.maxWidth,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.only(top: 10),
+          decoration: BoxDecoration(
+            border: Border.all(color: BookingColorConstants.darkBlue, width: 2),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: bookings.when(data: (res) {
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 5),
+              child: Stack(
+                children: [
+                  SfCalendar(
+                    onTap: (details) => calendarTapped(details, context),
+                    dataSource: _getCalendarDataSource(res),
+                    view: CalendarView.week,
+                    selectionDecoration: BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border.all(
+                          color: BookingColorConstants.darkBlue, width: 2),
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      shape: BoxShape.rectangle,
+                    ),
+                    todayHighlightColor: BookingColorConstants.lightBlue,
+                    firstDayOfWeek: 1,
+                    timeZone: 'Europe/Paris',
+                    timeSlotViewSettings: const TimeSlotViewSettings(
+                      timeFormat: 'HH:mm',
+                    ),
+                    viewHeaderStyle: const ViewHeaderStyle(
+                        dayTextStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        dateTextStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        )),
+                    headerStyle: const CalendarHeaderStyle(
+                      textAlign: TextAlign.center,
+                      textStyle: TextStyle(
+                        fontSize: 20,
                         fontWeight: FontWeight.w600,
+                        color: BookingColorConstants.darkBlue,
                       ),
-                      dateTextStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      )),
-                  headerStyle: const CalendarHeaderStyle(
-                    textAlign: TextAlign.center,
-                    textStyle: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: BookingColorConstants.darkBlue,
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 10,
-                  left: 10,
-                  child: Container(
-                    height: 20,
-                    width: 20,
-                    color: Colors.white,
-                  ),
-                )
-              ],
-            ),
-          );
-        }, error: (Object error, StackTrace? stackTrace) {
-          return Center(
-            child: Text(error.toString()),
-          );
-        }, loading: () {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: BookingColorConstants.darkBlue,
-            ),
-          );
-        }),
-      ),
-    );
+                  Positioned(
+                    top: 10,
+                    left: 10,
+                    child: Container(
+                      height: 20,
+                      width: 20,
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              ),
+            );
+          }, error: (Object error, StackTrace? stackTrace) {
+            return Center(
+              child: Text(error.toString()),
+            );
+          }, loading: () {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: BookingColorConstants.darkBlue,
+              ),
+            );
+          }),
+        ),
+      );
+    });
   }
 }
 

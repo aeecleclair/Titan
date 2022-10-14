@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/booking/tools/constants.dart';
 
 class TextEntry extends StatelessWidget {
   final String label, errorMsg;
@@ -18,12 +19,12 @@ class TextEntry extends StatelessWidget {
         labelStyle: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w400,
-          color: Colors.white,
+          color: BookingColorConstants.darkBlue,
         ),
         contentPadding: const EdgeInsets.all(10),
         isDense: true,
         enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white)),
+            borderSide: BorderSide(color: BookingColorConstants.darkBlue)),
         focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.blue)),
         errorBorder: const UnderlineInputBorder(
@@ -44,7 +45,7 @@ class TextEntry extends StatelessWidget {
       style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w500,
-        color: Colors.white,
+        color: BookingColorConstants.darkBlue,
       ),
     );
   }

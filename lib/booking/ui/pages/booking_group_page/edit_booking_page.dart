@@ -66,10 +66,10 @@ class EditBookingPage extends HookConsumerWidget {
                                 style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.white)),
+                                    color: BookingColorConstants.darkBlue)),
                             selected: room.value.name == e.name,
                             value: e.name,
-                            activeColor: Colors.white,
+                            activeColor: BookingColorConstants.darkBlue,
                             groupValue: room.value.name,
                             onChanged: (s) {
                               room.value = e;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
-import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/booking/ui/page_switcher.dart';
 import 'package:myecl/booking/ui/top_bar.dart';
@@ -53,16 +52,17 @@ class BookingHomePage extends HookConsumerWidget {
         return false;
       },
       child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              BookingColorConstants.darkBlue,
-              BookingColorConstants.lightBlue,
-            ],
-          ),
-        ),
+        // decoration: const BoxDecoration(
+        //   gradient: LinearGradient(
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.bottomCenter,
+        //     colors: [
+        //       BookingColorConstants.darkBlue,
+        //       BookingColorConstants.lightBlue,
+        //     ],
+        //   ),
+        // ),
+        color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/booking/tools/constants.dart';
 
 class ConfirmationText extends StatelessWidget {
   final String title, value;
@@ -13,12 +14,12 @@ class ConfirmationText extends StatelessWidget {
             style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: Colors.white)),
+                color: BookingColorConstants.darkBlue)),
         Text(value,
             style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.white)),
+                color: BookingColorConstants.darkBlue)),
       ],
     );
   }

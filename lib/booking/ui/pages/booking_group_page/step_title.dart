@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/booking/tools/constants.dart';
 
 class StepTitle extends StatelessWidget {
   final String title;
@@ -8,6 +9,8 @@ class StepTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(title,
         style: const TextStyle(
-            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white));
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: BookingColorConstants.darkBlue));
   }
 }

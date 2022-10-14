@@ -15,15 +15,15 @@ class UpdatePage extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const HeroIcon(
+            children: const [
+              HeroIcon(
                 HeroIcons.bellAlert,
                 size: 100,
               ),
-              const SizedBox(
+              SizedBox(
                 height: 50,
               ),
-              const Center(
+              Center(
                 child: Text(
                   OthersTextConstants.tooOldVersion,
                   textAlign: TextAlign.center,

@@ -33,16 +33,17 @@ class AddRoomPage extends HookConsumerWidget {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               style: const TextStyle(
-                color: Colors.white,
+                color: BookingColorConstants.darkBlue,
               ),
               controller: name,
               decoration: const InputDecoration(
                   prefixIcon: Icon(
                     Icons.search,
-                    color: Colors.white,
+                    color: BookingColorConstants.darkBlue,
                   ),
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white, width: 2),
+                      borderSide: BorderSide(
+                          color: BookingColorConstants.darkBlue, width: 2),
                       borderRadius: BorderRadius.all(Radius.circular(25.0)))),
             ),
           ),
@@ -54,11 +55,11 @@ class AddRoomPage extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               width: MediaQuery.of(context).size.width * 0.6,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: BookingColorConstants.darkBlue,
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.white.withOpacity(0.15),
+                    color: BookingColorConstants.darkBlue.withOpacity(0.15),
                     spreadRadius: 5,
                     blurRadius: 7,
                     offset: const Offset(0, 3),

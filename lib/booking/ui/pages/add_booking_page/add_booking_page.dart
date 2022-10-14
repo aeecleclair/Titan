@@ -52,7 +52,7 @@ class AddBookingPage extends HookConsumerWidget {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white)),
+                      color: BookingColorConstants.darkBlue)),
               content: Column(
                   children: roomList
                       .map(
@@ -61,10 +61,10 @@ class AddBookingPage extends HookConsumerWidget {
                                 style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.white)),
+                                    color: BookingColorConstants.darkBlue)),
                             selected: room.value.name == e.name,
                             value: e.name,
-                            activeColor: Colors.white,
+                            activeColor: BookingColorConstants.darkBlue,
                             groupValue: room.value.name,
                             onChanged: (s) {
                               room.value = e;
@@ -81,7 +81,7 @@ class AddBookingPage extends HookConsumerWidget {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white)),
+                      color: BookingColorConstants.darkBlue)),
               content: Column(
                 children: [
                   Container(
@@ -100,7 +100,7 @@ class AddBookingPage extends HookConsumerWidget {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                                color: BookingColorConstants.darkBlue,
                               ),
                             ),
                           ),
@@ -114,8 +114,9 @@ class AddBookingPage extends HookConsumerWidget {
                                     contentPadding: EdgeInsets.all(10),
                                     isDense: true,
                                     enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white)),
+                                        borderSide: BorderSide(
+                                            color: BookingColorConstants
+                                                .darkBlue)),
                                     focusedBorder: UnderlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.blue)),
@@ -138,7 +139,7 @@ class AddBookingPage extends HookConsumerWidget {
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.white,
+                                    color: BookingColorConstants.darkBlue,
                                   ),
                                 ),
                               ),
@@ -162,7 +163,7 @@ class AddBookingPage extends HookConsumerWidget {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
-                                  color: Colors.white,
+                                  color: BookingColorConstants.darkBlue,
                                 ),
                               ),
                             ),
@@ -176,8 +177,9 @@ class AddBookingPage extends HookConsumerWidget {
                                       contentPadding: EdgeInsets.all(10),
                                       isDense: true,
                                       enabledBorder: UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.white)),
+                                          borderSide: BorderSide(
+                                              color: BookingColorConstants
+                                                  .darkBlue)),
                                       focusedBorder: UnderlineInputBorder(
                                           borderSide:
                                               BorderSide(color: Colors.blue)),
@@ -200,7 +202,7 @@ class AddBookingPage extends HookConsumerWidget {
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
-                                      color: Colors.white,
+                                      color: BookingColorConstants.darkBlue,
                                     ),
                                   ),
                                 ),
@@ -219,7 +221,7 @@ class AddBookingPage extends HookConsumerWidget {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white)),
+                      color: BookingColorConstants.darkBlue)),
               content: Column(
                 children: <Widget>[
                   TextFormField(
@@ -228,12 +230,13 @@ class AddBookingPage extends HookConsumerWidget {
                       labelStyle: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: Colors.white,
+                        color: BookingColorConstants.darkBlue,
                       ),
                       contentPadding: EdgeInsets.all(10),
                       isDense: true,
                       enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white)),
+                          borderSide: BorderSide(
+                              color: BookingColorConstants.darkBlue)),
                       focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.blue)),
                       errorBorder: UnderlineInputBorder(
@@ -254,7 +257,7 @@ class AddBookingPage extends HookConsumerWidget {
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: Colors.white,
+                      color: BookingColorConstants.darkBlue,
                     ),
                   ),
                 ],
@@ -269,19 +272,20 @@ class AddBookingPage extends HookConsumerWidget {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white)),
+                      color: BookingColorConstants.darkBlue)),
               content: TextFormField(
                 decoration: const InputDecoration(
                   labelText: BookingTextConstants.bookingNote,
                   labelStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: Colors.white,
+                    color: BookingColorConstants.darkBlue,
                   ),
                   contentPadding: EdgeInsets.all(10),
                   isDense: true,
                   enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white)),
+                      borderSide:
+                          BorderSide(color: BookingColorConstants.darkBlue)),
                   focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.blue)),
                   errorBorder: UnderlineInputBorder(
@@ -302,7 +306,7 @@ class AddBookingPage extends HookConsumerWidget {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                  color: BookingColorConstants.darkBlue,
                 ),
               ),
               isActive: currentStep.value >= 0,
@@ -315,11 +319,11 @@ class AddBookingPage extends HookConsumerWidget {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white)),
+                      color: BookingColorConstants.darkBlue)),
               content: Column(children: [
                 CheckboxListTile(
                   title: const Text(BookingTextConstants.necessaryKey,
-                      style: TextStyle(color: Colors.white)),
+                      style: TextStyle(color: BookingColorConstants.darkBlue)),
                   value: keyRequired.value,
                   onChanged: (newValue) {
                     if (newValue != null) {
@@ -329,7 +333,7 @@ class AddBookingPage extends HookConsumerWidget {
                 ),
                 CheckboxListTile(
                   title: const Text(BookingTextConstants.recurrent,
-                      style: TextStyle(color: Colors.white)),
+                      style: TextStyle(color: BookingColorConstants.darkBlue)),
                   value: recurring.value,
                   onChanged: (newValue) {
                     if (newValue != null) {
@@ -339,7 +343,7 @@ class AddBookingPage extends HookConsumerWidget {
                 ),
                 CheckboxListTile(
                   title: const Text(BookingTextConstants.multipleDay,
-                      style: TextStyle(color: Colors.white)),
+                      style: TextStyle(color: BookingColorConstants.darkBlue)),
                   value: multipleDay.value,
                   onChanged: (newValue) {
                     if (newValue != null) {
@@ -358,7 +362,7 @@ class AddBookingPage extends HookConsumerWidget {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white)),
+                      color: BookingColorConstants.darkBlue)),
               content: Column(
                 children: <Widget>[
                   Row(
@@ -367,12 +371,12 @@ class AddBookingPage extends HookConsumerWidget {
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                       Text(room.value.name,
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                     ],
                   ),
                   Row(
@@ -381,12 +385,12 @@ class AddBookingPage extends HookConsumerWidget {
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                       Text(start.value.text,
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                     ],
                   ),
                   Row(
@@ -395,12 +399,12 @@ class AddBookingPage extends HookConsumerWidget {
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                       Text(end.value.text,
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                     ],
                   ),
                   Row(
@@ -409,12 +413,12 @@ class AddBookingPage extends HookConsumerWidget {
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                       Text(motif.text,
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                     ],
                   ),
                   Row(
@@ -423,12 +427,12 @@ class AddBookingPage extends HookConsumerWidget {
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                       Text(note.text,
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                     ],
                   ),
                   Row(
@@ -437,7 +441,7 @@ class AddBookingPage extends HookConsumerWidget {
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                       Text(
                           keyRequired.value
                               ? BookingTextConstants.yes
@@ -445,7 +449,7 @@ class AddBookingPage extends HookConsumerWidget {
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                     ],
                   ),
                   Row(
@@ -454,7 +458,7 @@ class AddBookingPage extends HookConsumerWidget {
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                       Text(
                           recurring.value
                               ? BookingTextConstants.yes
@@ -462,7 +466,7 @@ class AddBookingPage extends HookConsumerWidget {
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                     ],
                   ),
                   Row(
@@ -471,7 +475,7 @@ class AddBookingPage extends HookConsumerWidget {
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                       Text(
                           multipleDay.value
                               ? BookingTextConstants.yes
@@ -479,7 +483,7 @@ class AddBookingPage extends HookConsumerWidget {
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: BookingColorConstants.darkBlue)),
                     ],
                   ),
                 ],
