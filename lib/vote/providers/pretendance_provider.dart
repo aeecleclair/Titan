@@ -12,7 +12,31 @@ class PretendanceNotifier extends ListNotifier<Pretendance> {
   }
 
   Future<AsyncValue<List<Pretendance>>> loadPretendanceList() async {
-    return await loadList(_pretendanceRepository.getPretendances);
+    // return await loadList(_pretendanceRepository.getPretendances);
+    state = AsyncValue.data([
+      Pretendance(
+        id: '1',
+        name: 'Pretendance 1',
+        description: 'Pretendance 1',
+        logoPath: '',
+        listType: ListType.serio,
+      ),
+      Pretendance(
+        id: '2',
+        name: 'Pretendance 2',
+        description: 'Pretendance 2',
+        logoPath: '',
+        listType: ListType.pipo,
+      ),
+      Pretendance(
+        id: '3',
+        name: 'Pretendance 3',
+        description: 'Pretendance 3',
+        logoPath: '',
+        listType: ListType.serio,
+      ),
+    ]);
+    return state;
   }
 
   Future<bool> addPretendance(Pretendance pretendance) async {
@@ -39,7 +63,7 @@ class PretendanceNotifier extends ListNotifier<Pretendance> {
   }
 }
 
-final pretendanceNotifier =
+final pretendanceProvider =
     StateNotifierProvider<PretendanceNotifier, AsyncValue<List<Pretendance>>>(
         (ref) {
   final token = ref.watch(tokenProvider);
