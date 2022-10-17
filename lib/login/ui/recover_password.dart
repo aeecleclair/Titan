@@ -5,7 +5,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
-import 'package:myecl/login/class/create_account.dart';
 import 'package:myecl/login/class/recover_request.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';

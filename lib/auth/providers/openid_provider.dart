@@ -134,31 +134,30 @@ class OpenIdTokenProvider
     _secureStorage.read(key: tokenName).then((token) async {
       if (token != null) {
         try {
-          appAuth
-              .token(TokenRequest(
+          final resp = await appAuth.token(TokenRequest(
             clientId,
             redirectUrl,
             discoveryUrl: discoveryUrl,
             scopes: scopes,
             refreshToken: token,
-          ))
-              .then((resp) {
-            if (resp != null) {
-              state = AsyncValue.data({
-                "token": resp.accessToken!,
-                "refreshToken": resp.refreshToken!,
-              });
-              storeToken();
-            } else {
-              state = const AsyncValue.error("Error");
-            }
-          });
+          ));
+          if (resp != null) {
+            state = AsyncValue.data({
+              "token": resp.accessToken!,
+              "refreshToken": resp.refreshToken!,
+            });
+            storeToken();
+          } else {
+            state = const AsyncValue.error("Error");
+            deleteToken();
+          }
         } catch (e) {
           state = AsyncValue.error(e);
+          deleteToken();
         }
       } else {
-        deleteToken();
         state = const AsyncValue.error("No token found");
+        deleteToken();
       }
     });
   }
