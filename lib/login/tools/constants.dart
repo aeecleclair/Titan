@@ -9,6 +9,8 @@ class LoginColorConstants {
 class LoginTextConstants {
   static const String accountActivated = 'Compte activé';
   static const String accountNotActivated = 'Compte non activé';
+  static const String activationCode = 'Code d\'activation';
+  static const String birthday = 'Date de naissance';
   static const String create = 'Créer';
   static const String createAccount = 'Créer un compte';
   static const String createAccountTitle = 'Créer un\ncompte';
@@ -17,17 +19,25 @@ class LoginTextConstants {
   static const String endActivation = 'Finaliser l\'activation';
   static const String endResetPassword = 'Finaliser la réinitialisation';
   static const String errorResetPassword = 'Erreur lors de la réinitialisation';
+  static const String expectingDate = 'Une date est attendue';
   static const String fillAllFields = 'Veuillez remplir tous les champs';
+  static const String firstname = 'Prénom';
+  static const String floor = 'Étage';
   static const String forgetPassword = 'Mot de passe\noublié';
   static const String forgotPassword = 'Mot de passe oublié ?';
   static const String mailSendingError = 'Erreur lors de la création du compte';
+  static const String name = 'Nom';
+  static const String newPassword = 'Nouveau mot de passe';
   static const String password = 'Mot de passe';
+  static const String phone = 'Téléphone';
+  static const String promo = 'Promo';
   static const String sendedMail = 'Mail de confirmation envoyé';
   static const String sendedResetMail = 'Mail de réinitialisation envoyé';
   static const String signIn = 'Se connecter';
   static const String register = 'S\'inscrire';
-  static const String welcomeBack = 'Bienvenue';
   static const String recievedMail = 'J\'ai reçu le mail';
   static const String recover = 'Réinitialiser';
   static const String resetedPassword = 'Mot de passe réinitialisé';
+  static const String username = 'Surnom';
+  static const String welcomeBack = 'Bienvenue';
 }

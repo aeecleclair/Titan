@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/login/class/create_account.dart';
@@ -10,7 +11,7 @@ import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/login/ui/background_painter.dart';
-import 'package:myecl/login/ui/create_account_field.dart';
+import 'package:myecl/login/ui/login_field.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -45,63 +46,114 @@ class CreateAccountPage extends HookConsumerWidget {
     List<Widget> steps = [
       CreateAccountField(
         controller: activationCode,
-        label: 'Code d\'activation',
+        label: LoginTextConstants.activationCode,
         index: 1,
         pageController: pageController,
         currentPage: currentPage,
       ),
       CreateAccountField(
         controller: password,
-        label: 'Mot de passe',
+        label: LoginTextConstants.password,
         index: 2,
         pageController: pageController,
         currentPage: currentPage,
+        keyboardType: TextInputType.visiblePassword,
       ),
       CreateAccountField(
         controller: name,
-        label: "Nom",
+        label: LoginTextConstants.name,
         index: 3,
         pageController: pageController,
         currentPage: currentPage,
       ),
       CreateAccountField(
         controller: firstname,
-        label: 'Prénom',
+        label: LoginTextConstants.firstname,
         index: 4,
         pageController: pageController,
         currentPage: currentPage,
       ),
       CreateAccountField(
         controller: username,
-        label: "Surnom",
+        label: LoginTextConstants.username,
         index: 5,
         pageController: pageController,
         currentPage: currentPage,
       ),
-      CreateAccountField(
-        controller: birthday,
-        label: "Date de naissance",
-        index: 6,
-        pageController: pageController,
-        currentPage: currentPage,
-      ),
+      Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+        const SizedBox(
+          height: 9,
+        ),
+        const Align(
+          alignment: Alignment.centerLeft,
+          child: Text(LoginTextConstants.birthday,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: LoginColorConstants.background,
+              )),
+        ),
+        GestureDetector(
+          onTap: () {
+            _selectDate(context, birthday);
+            pageController.animateToPage(6,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.decelerate);
+            currentPage.value = 6;
+          },
+          child: AbsorbPointer(
+            child: TextFormField(
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              controller: birthday,
+              cursorColor: Colors.white,
+              decoration: const InputDecoration(
+                  suffix: HeroIcon(HeroIcons.calendar,
+                      color: Colors.white, size: 30),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: LoginColorConstants.background)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                    color: Colors.white,
+                  )),
+                  errorBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                    color: Colors.white,
+                  )),
+                  errorStyle: TextStyle(color: Colors.white)),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return LoginTextConstants.emptyFieldError;
+                }
+                return null;
+              },
+            ),
+          ),
+        ),
+      ]),
       CreateAccountField(
         controller: promo,
-        label: "Promo",
+        label: LoginTextConstants.promo,
         index: 7,
         pageController: pageController,
         currentPage: currentPage,
+        keyboardType: TextInputType.number,
       ),
       CreateAccountField(
         controller: phone,
-        label: "Téléphone",
+        label: LoginTextConstants.phone,
         index: 8,
         pageController: pageController,
         currentPage: currentPage,
+        keyboardType: TextInputType.phone,
       ),
       CreateAccountField(
         controller: floor,
-        label: "Étage",
+        label: LoginTextConstants.floor,
         index: 9,
         pageController: pageController,
         currentPage: currentPage,
@@ -265,5 +317,31 @@ class CreateAccountPage extends HookConsumerWidget {
         ),
       ),
     ]));
+  }
+
+  _selectDate(
+      BuildContext context, TextEditingController dateController) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime.now(),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: const ColorScheme.light(
+                primary: Color(0xFFfb6d10),
+                onPrimary: Colors.white,
+                surface: Colors.white,
+                onSurface: Colors.black,
+              ),
+              dialogBackgroundColor: Colors.white,
+            ),
+            child: child!,
+          );
+        });
+
+    dateController.text = processDatePrint(
+        DateFormat('yyyy-MM-dd').format(picked ?? DateTime.now()));
   }
 }
