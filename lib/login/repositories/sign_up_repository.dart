@@ -1,6 +1,7 @@
 import 'package:myecl/login/class/account_type.dart';
+import 'package:myecl/login/class/create_account.dart';
+import 'package:myecl/login/class/recover_request.dart';
 import 'package:myecl/login/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class SignUpRepository extends Repository {
@@ -15,18 +16,6 @@ class SignUpRepository extends Repository {
       "password": password,
       "account_type": accountTypeToID(accountType),
     }, suffix: "create"))["success"];
-  }
-
-  Future<bool> activateUser(String token, String password, DateTime birthday,
-      String phone, int promo, String floor) async {
-    return await create({
-      "activation_token": token,
-      "password": password,
-      "birthday": processDateToAPI(birthday),
-      "phone": phone,
-      "promo": promo,
-      "floor": floor
-    }, suffix: "activate");
   }
 
   Future<bool> recoverUser(String email) async {
@@ -45,5 +34,13 @@ class SignUpRepository extends Repository {
       "old_password": oldPassword,
       "new_password": newPassword
     }, suffix: "change-password");
+  }
+
+  Future<bool> activateUser(CreateAccount createAccount) async {
+    return await create(createAccount.toJson(), suffix: "activate");
+  }
+
+  Future<bool> resetPassword(RecoverRequest recoverRequest) async {
+    return await create(recoverRequest.toJson(), suffix: "reset-password");
   }
 }

@@ -12,10 +12,11 @@ import 'package:myecl/login/ui/text_from_decoration.dart';
 import 'package:myecl/tools/functions.dart';
 
 class ForgetPassword extends HookConsumerWidget {
-  const ForgetPassword({Key? key, required this.onSignInPressed})
+  const ForgetPassword(
+      {Key? key, required this.onSignInPressed, required this.onMailRecieved})
       : super(key: key);
 
-  final VoidCallback onSignInPressed;
+  final VoidCallback onSignInPressed, onMailRecieved;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -97,23 +98,46 @@ class ForgetPassword extends HookConsumerWidget {
                     },
                   ),
                   const Spacer(),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: InkWell(
-                      splashColor: Colors.white,
-                      onTap: () {
-                        onSignInPressed();
-                      },
-                      child: const Text(
-                        LoginTextConstants.signIn,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                          decoration: TextDecoration.underline,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                            onTap: () {
+                              onSignInPressed();
+                            },
+                            child: const Text(
+                              LoginTextConstants.signIn,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
+                              ),
+                            ),
+                          )),
+                      Container(
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                            onTap: () {
+                              onMailRecieved();
+                            },
+                            child: const Text(
+                              LoginTextConstants.recievedMail,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
+                              ),
+                            ),
+                          )),
+                    ],
                   ),
                 ],
               ),

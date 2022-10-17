@@ -83,13 +83,13 @@ class OpenIdTokenProvider
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
   final String tokenName = "my_ecl_auth_token";
   final String clientId = "Titan";
-  static const String redirectUrl = "titan://myecl.fr/account/activate";
+  static const String redirectUrl = "titan://validate";
   final String discoveryUrl =
       "https://hyperion.myecl.fr/.well-known/openid-configuration";
   final List<String> scopes = ["API"];
   OpenIdTokenProvider() : super(const AsyncValue.loading());
 
-  Future getTokenFromRequest() async { // TODO:
+  Future getTokenFromRequest() async {
     state = const AsyncValue.loading();
     try {
       if (kIsWeb) {

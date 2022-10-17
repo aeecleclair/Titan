@@ -3,6 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/drawer/providers/page_provider.dart';
+import 'package:myecl/login/class/create_account.dart';
+import 'package:myecl/login/ui/create_account_page.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/login/ui/auth.dart';
@@ -21,24 +24,26 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final recievedUri = useState<String?>(null);
-    final token = useState<String?>(null);
-
     final versionVerifier = ref.watch(versionVerifierProvider);
     final titanVersion = ref.watch(titanVersionProvider);
     final check = versionVerifier.whenData(
         (value) => value.minimalTitanVersion.compareTo(titanVersion) <= 0);
     final isLoggedIn = ref.watch(isLoggedInProvider);
 
-    if (kIsWeb) {
-      useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
-        recievedUri.value = uri.toString();
-        token.value = uri?.queryParameters['token'];
-        if (recievedUri.value != null) {}
-      }, onError: (Object err) {
-        recievedUri.value = 'Failed to get initial uri: $err.';
-      });
-    }
+    // if (!kIsWeb) {
+    //   uriLinkStream.listen((Uri? uri) {
+    //     print('uri : $uri');
+    //     if (uri != null) {
+    //       print(uri.queryParameters);
+    //       uri.queryParameters.forEach((key, value) {
+    //         print('key : $key');
+    //         print('value : $value');
+    //       });
+    //     }
+    //   }, onError: (Object err) {
+    //     print('err $err');
+    //   });
+    // }
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -47,9 +52,10 @@ class MyApp extends HookConsumerWidget {
             primarySwatch: Colors.blue,
             textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
                 Theme.of(context).textTheme)),
-        // home: const SafeArea(child: UpdatePage()));
-    home: SafeArea(
-      child: check.when(
+        // home: Scaffold(
+        //   body: CreateAccountPage(),
+        // ));
+    home: check.when(
           data: (value) => value
               ? isLoggedIn
                   ? const AppDrawer()
@@ -61,6 +67,8 @@ class MyApp extends HookConsumerWidget {
                 ),
               ),
           error: (error, stack) => const Scaffold(body: NoInternetPage())),
-    ));
+    );
   }
 }
+
+// https://hyperion.myecl.fr/redirect/titan://test?token=azer

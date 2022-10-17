@@ -1,7 +1,9 @@
 En cours :
+    - SafeArea (2)
+
     - Login :
-        - Create account [mail -> app (uni_link)] (1)
-        - Reset password [mail -> app (uni_link)] (1)
+        - Create account (1)
+        - Reset password (1)
 
     - Events :
         - Admin page (edit) (API)
@@ -25,3 +27,8 @@ Modules :
     - Piston (2)
     ...
     - Messagerie (5)
+
+Questions :
+
+    authentifiaction bio pour admin ?
+    QrCode avec uni_link (pour PC/mobile et mobile/mobile)

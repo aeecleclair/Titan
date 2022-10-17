@@ -43,31 +43,6 @@ class SignIn extends HookConsumerWidget {
                 flex: 5,
                 child: Column(
                   children: [
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(vertical: 16),
-                    //   child: TextFormField(
-                    //     decoration: signInRegisterInputDecoration(
-                    //         isSignIn: true, hintText: LoginTextConstants.email),
-                    //     controller: username,
-                    //     keyboardType: TextInputType.emailAddress,
-                    //     autofillHints: const [
-                    //       AutofillHints.username,
-                    //       AutofillHints.email,
-                    //     ],
-                    //   ),
-                    // ),
-                    // Padding(
-                    //     padding: const EdgeInsets.symmetric(vertical: 16),
-                    //     child: TextFormField(
-                    //       decoration: signInRegisterInputDecoration(
-                    //           isSignIn: true,
-                    //           hintText: LoginTextConstants.password,
-                    //           notifier: hidePass),
-                    //       controller: password,
-                    //       keyboardType: TextInputType.visiblePassword,
-                    //       autofillHints: const [AutofillHints.password],
-                    //       obscureText: hidePass.value,
-                    //     )),
                     Expanded(
                       flex: 2,
                       child: Column(

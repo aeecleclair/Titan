@@ -13,9 +13,11 @@ import 'package:myecl/login/ui/text_from_decoration.dart';
 import 'package:myecl/tools/functions.dart';
 
 class Register extends HookConsumerWidget {
-  const Register({Key? key, required this.onSignInPressed}) : super(key: key);
+  const Register(
+      {Key? key, required this.onSignInPressed, required this.onMailRecieved})
+      : super(key: key);
 
-  final VoidCallback onSignInPressed;
+  final VoidCallback onSignInPressed, onMailRecieved;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,9 +66,7 @@ class Register extends HookConsumerWidget {
               flex: 5,
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const Spacer(),
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: TextFormField(
@@ -78,23 +78,8 @@ class Register extends HookConsumerWidget {
                           decoration: signInRegisterInputDecoration(
                               isSignIn: false,
                               hintText: LoginTextConstants.email))),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: TextFormField(
-                      controller: password,
-                      obscureText: hidePass.value,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                      decoration: signInRegisterInputDecoration(
-                          isSignIn: false,
-                          hintText: LoginTextConstants.password,
-                          notifier: hidePass),
-                    ),
-                  ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   SignUpBar(
                     label: LoginTextConstants.create,
@@ -116,23 +101,46 @@ class Register extends HookConsumerWidget {
                     },
                   ),
                   const Spacer(),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: InkWell(
-                      splashColor: Colors.white,
-                      onTap: () {
-                        onSignInPressed();
-                      },
-                      child: const Text(
-                        LoginTextConstants.signIn,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                          decoration: TextDecoration.underline,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                            onTap: () {
+                              onSignInPressed();
+                            },
+                            child: const Text(
+                              LoginTextConstants.signIn,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
+                              ),
+                            ),
+                          )),
+                      Container(
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                            onTap: () {
+                              onMailRecieved();
+                            },
+                            child: const Text(
+                              LoginTextConstants.recievedMail,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
+                              ),
+                            ),
+                          )),
+                    ],
                   ),
                 ],
               ),
