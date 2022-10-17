@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/section_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
@@ -50,7 +49,7 @@ class MainPage extends HookConsumerWidget {
                     ),
                   ),
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       width: double.infinity,
                       child: pretendances.when(
                         data: (pretendanceList) => ListView.builder(

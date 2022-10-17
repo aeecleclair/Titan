@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
-import 'package:myecl/vote/tools/constants.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;

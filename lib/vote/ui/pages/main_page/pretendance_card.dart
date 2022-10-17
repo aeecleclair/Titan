@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/vote/class/pretendance.dart';
@@ -22,11 +19,11 @@ class PretendanceCard extends HookConsumerWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 40, left: 50),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           bottomLeft: Radius.circular(20),
         ),
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
@@ -36,7 +33,7 @@ class PretendanceCard extends HookConsumerWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(255, 1, 40, 72).withOpacity(0.5),
+            color: const Color.fromARGB(255, 1, 40, 72).withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 5,
             offset: const Offset(2, 3), // changes position of shadow
@@ -47,7 +44,7 @@ class PretendanceCard extends HookConsumerWidget {
         children: [
           Row(
             children: [
-              Expanded(
+              const Expanded(
                   child: HeroIcon(
                 HeroIcons.cubeTransparent,
                 color: Colors.white,
@@ -96,7 +93,7 @@ class PretendanceCard extends HookConsumerWidget {
           if (isCurrent)
             Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(

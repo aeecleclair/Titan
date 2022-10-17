@@ -20,7 +20,7 @@ class SideItem extends HookConsumerWidget {
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: isSelected
-                        ? Color.fromARGB(255, 1, 40, 72)
+                        ? const Color.fromARGB(255, 1, 40, 72)
                         : Colors.grey.shade500)),
             const SizedBox(
               height: 7,
@@ -29,7 +29,7 @@ class SideItem extends HookConsumerWidget {
               Container(
                 width: 8,
                 height: 8,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 1, 40, 72),
                   shape: BoxShape.circle,
                 ),
