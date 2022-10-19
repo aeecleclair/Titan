@@ -18,6 +18,10 @@ class MainPage extends HookConsumerWidget {
     final selectedSection = useState(0);
     final selectedPretendance = useState(-1);
     final currentPretendance = useState(-1);
+    final animation = useAnimationController(
+      duration: const Duration(milliseconds: 2400),
+    );
+    animation.forward(from: 0);
     return VoteRefresher(
       onRefresh: () async {
         ref.refresh(sectionProvider);
@@ -60,6 +64,7 @@ class MainPage extends HookConsumerWidget {
                                 isSelected: index == selectedSection.value,
                                 onTap: () {
                                   selectedSection.value = index;
+                                  animation.forward(from: 0);
                                 },
                               );
                             }).toList(),
@@ -91,7 +96,8 @@ class MainPage extends HookConsumerWidget {
                                         final index =
                                             pretendanceList.indexOf(e);
                                         return PretendanceCard(
-                                            pretendance: pretendanceList[index],
+                                            index: index,
+                                            pretendance: e,
                                             isCurrent: index ==
                                                 currentPretendance.value,
                                             isSelected: index ==
@@ -107,7 +113,8 @@ class MainPage extends HookConsumerWidget {
                                             },
                                             onVote: () {
                                               selectedPretendance.value = index;
-                                            });
+                                            },
+                                            animation: animation);
                                       }).toList(),
                                     ),
                                   ),
@@ -117,7 +124,7 @@ class MainPage extends HookConsumerWidget {
                                 ),
                                 Container(
                                   alignment: Alignment.centerRight,
-                                  padding: EdgeInsets.only(right: 30),
+                                  padding: const EdgeInsets.only(right: 30),
                                   child: GestureDetector(
                                     onTap: () {},
                                     child: Container(
