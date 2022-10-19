@@ -43,14 +43,16 @@ class SettingsHomePage extends ConsumerWidget {
         decoration: const BoxDecoration(
           color: Colors.white,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            TopBar(
-              controllerNotifier: controllerNotifier,
-            ),
-            const Expanded(child: PageSwitcher()),
-          ],
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              TopBar(
+                controllerNotifier: controllerNotifier,
+              ),
+              const Expanded(child: PageSwitcher()),
+            ],
+          ),
         ),
       ),
     ));

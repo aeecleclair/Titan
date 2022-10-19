@@ -29,11 +29,11 @@ class MainPage extends HookConsumerWidget {
           await groupsNotifier.loadGroups();
           await loanListNotifier.loadLoanerList();
         },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics()),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics()),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: groups.when(data: (g) {
               return Column(children: [
                 const Align(

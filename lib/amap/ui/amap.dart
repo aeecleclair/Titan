@@ -23,11 +23,11 @@ class AmapHomePage extends HookConsumerWidget {
           switch (page) {
             case AmapPage.main:
               if (!controller.isCompleted) {
-              controllerNotifier.toggle();
-              break;
-            } else {
-              return true;
-            }
+                controllerNotifier.toggle();
+                break;
+              } else {
+                return true;
+              }
             case AmapPage.pres:
               pageNotifier.setAmapPage(AmapPage.main);
               break;
@@ -69,13 +69,15 @@ class AmapHomePage extends HookConsumerWidget {
               fit: BoxFit.cover,
             ),
           ),
-          child: Column(
-            children: [
-              TopBar(
-                controllerNotifier: controllerNotifier,
-              ),
-              const Expanded(child: PageSwitcher()),
-            ],
+          child: SafeArea(
+            child: Column(
+              children: [
+                TopBar(
+                  controllerNotifier: controllerNotifier,
+                ),
+                const Expanded(child: PageSwitcher()),
+              ],
+            ),
           ),
         ),
       ),

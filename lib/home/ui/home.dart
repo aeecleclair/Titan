@@ -18,15 +18,15 @@ class HomePage extends HookConsumerWidget {
     final eventNotifier = ref.watch(eventListProvider.notifier);
     return Scaffold(
         body: WillPopScope(
-          onWillPop: () async { 
-            controllerNotifier.toggle();
-            return false;
-           },
-          child: HomeRefresher(
-              onRefresh: () async {
+      onWillPop: () async {
+        controllerNotifier.toggle();
+        return false;
+      },
+      child: HomeRefresher(
+        onRefresh: () async {
           await eventNotifier.loadEventList();
-              },
-              child: Container(
+        },
+        child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -40,15 +40,17 @@ class HomePage extends HookConsumerWidget {
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(
                   parent: BouncingScrollPhysics()),
-              child: Column(
-                children: [
-                  TopBar(controllerNotifier: controllerNotifier),
-                  const TodaysEvents(),
-                  const LastInfos(),
-                ],
+              child: SafeArea(
+                child: Column(
+                  children: [
+                    TopBar(controllerNotifier: controllerNotifier),
+                    const TodaysEvents(),
+                    const LastInfos(),
+                  ],
+                ),
               ),
             )),
-            ),
-        ));
+      ),
+    ));
   }
 }

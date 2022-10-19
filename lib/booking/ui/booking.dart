@@ -52,25 +52,17 @@ class BookingHomePage extends HookConsumerWidget {
         return false;
       },
       child: Container(
-        // decoration: const BoxDecoration(
-        //   gradient: LinearGradient(
-        //     begin: Alignment.topCenter,
-        //     end: Alignment.bottomCenter,
-        //     colors: [
-        //       BookingColorConstants.darkBlue,
-        //       BookingColorConstants.lightBlue,
-        //     ],
-        //   ),
-        // ),
         color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            TopBar(
-              controllerNotifier: controllerNotifier,
-            ),
-            const PageSwitcher()
-          ],
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              TopBar(
+                controllerNotifier: controllerNotifier,
+              ),
+              const PageSwitcher()
+            ],
+          ),
         ),
       ),
     ));

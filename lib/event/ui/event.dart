@@ -45,14 +45,16 @@ class EventHomePage extends ConsumerWidget {
         }
         return false;
       },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          TopBar(
-            controllerNotifier: controllerNotifier,
-          ),
-          const PageSwitcher()
-        ],
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            TopBar(
+              controllerNotifier: controllerNotifier,
+            ),
+            const PageSwitcher()
+          ],
+        ),
       ),
     ));
   }

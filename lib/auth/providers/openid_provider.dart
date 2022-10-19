@@ -127,6 +127,7 @@ class OpenIdTokenProvider
         }
       }
     } catch (e) {
+      print(e);
       state = AsyncValue.error("Error $e");
     }
   }
