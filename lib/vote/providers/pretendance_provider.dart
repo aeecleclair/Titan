@@ -35,6 +35,13 @@ class PretendanceNotifier extends ListNotifier<Pretendance> {
         logoPath: '',
         listType: ListType.serio,
       ),
+      Pretendance(
+        id: '4',
+        name: 'Pretendance 4',
+        description: 'Pretendance 4',
+        logoPath: '',
+        listType: ListType.pipo,
+      ),
     ]);
     return state;
   }

@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/section_provider.dart';
+import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/pages/main_page/pretendance_card.dart';
 import 'package:myecl/vote/ui/pages/main_page/side_item.dart';
@@ -18,10 +19,17 @@ class MainPage extends HookConsumerWidget {
     final selectedSection = useState(0);
     final selectedPretendance = useState(-1);
     final currentPretendance = useState(-1);
+    final selectedPretendanceList = ref.watch(selectedPretendanceProvider);
+    final selectedPretendanceListNotifier =
+        ref.watch(selectedPretendanceProvider.notifier);
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 2400),
     );
-    animation.forward(from: 0);
+    final pageOpened = useState(false);
+    if (!pageOpened.value) {
+      animation.forward();
+      pageOpened.value = true;
+    }
     return VoteRefresher(
       onRefresh: () async {
         ref.refresh(sectionProvider);
@@ -65,6 +73,7 @@ class MainPage extends HookConsumerWidget {
                                 onTap: () {
                                   selectedSection.value = index;
                                   animation.forward(from: 0);
+                                  currentPretendance.value = -1;
                                 },
                               );
                             }).toList(),
@@ -91,6 +100,7 @@ class MainPage extends HookConsumerWidget {
                                 ),
                                 Expanded(
                                   child: SingleChildScrollView(
+                                    physics: const BouncingScrollPhysics(),
                                     child: Column(
                                       children: pretendanceList.map((e) {
                                         final index =
@@ -100,8 +110,9 @@ class MainPage extends HookConsumerWidget {
                                             pretendance: e,
                                             isCurrent: index ==
                                                 currentPretendance.value,
-                                            isSelected: index ==
-                                                selectedPretendance.value,
+                                            isSelected: e.id ==
+                                                selectedPretendanceList[
+                                                    selectedSection.value],
                                             onTap: () {
                                               if (currentPretendance.value ==
                                                   index) {
@@ -112,7 +123,10 @@ class MainPage extends HookConsumerWidget {
                                               }
                                             },
                                             onVote: () {
-                                              selectedPretendance.value = index;
+                                              selectedPretendanceListNotifier
+                                                  .changeSelection(
+                                                      selectedSection.value,
+                                                      e.id);
                                             },
                                             animation: animation);
                                       }).toList(),
@@ -131,23 +145,13 @@ class MainPage extends HookConsumerWidget {
                                       width: 200,
                                       height: 50,
                                       decoration: BoxDecoration(
-                                          gradient: LinearGradient(
+                                          gradient: const LinearGradient(
                                               begin: Alignment.topLeft,
                                               end: Alignment.bottomRight,
-                                              colors: selectedPretendance
-                                                          .value !=
-                                                      -1
-                                                  ? const [
-                                                      VoteColorConstants.green5,
-                                                      Color.fromARGB(
-                                                          255, 1, 40, 72),
-                                                    ]
-                                                  : const [
-                                                      Color.fromARGB(
-                                                          150, 32, 83, 116),
-                                                      Color.fromARGB(
-                                                          150, 1, 40, 72),
-                                                    ]),
+                                              colors: [
+                                                VoteColorConstants.green5,
+                                                Color.fromARGB(255, 1, 40, 72),
+                                              ]),
                                           borderRadius:
                                               BorderRadius.circular(15)),
                                       child: const Center(
