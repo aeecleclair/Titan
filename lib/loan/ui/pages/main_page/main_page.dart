@@ -172,20 +172,16 @@ class MainPage extends HookConsumerWidget {
       onRefresh: () async {
         await loanListNotifier.loadLoanList();
       },
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            ...listWidget,
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          ...listWidget,
+          const SizedBox(
+            height: 20,
+          ),
+        ],
       ),
     );
   }

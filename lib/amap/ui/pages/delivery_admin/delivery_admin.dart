@@ -135,14 +135,10 @@ class DeliveryAdminPage extends HookConsumerWidget {
     );
 
     return AmapRefresher(
-        onRefresh: () async {
-          await deliveryListNotifier.loadDeliveriesList();
-        },
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics(),
-          ),
-          child: Column(children: listWidgetOrder),
-        ));
+      onRefresh: () async {
+        await deliveryListNotifier.loadDeliveriesList();
+      },
+      child: Column(children: listWidgetOrder),
+    );
   }
 }

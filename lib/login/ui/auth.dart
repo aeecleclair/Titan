@@ -97,6 +97,9 @@ class AuthScreen extends HookConsumerWidget {
                                                                 showActivationPage
                                                                         .value =
                                                                     false;
+                                                                showRegisterPage
+                                                                        .value =
+                                                                    true;
                                                               },
                                                             )
                                                           : Register(
@@ -146,6 +149,9 @@ class AuthScreen extends HookConsumerWidget {
                                                               onActivationPressed:
                                                                   () {
                                                                 showResetPage
+                                                                        .value =
+                                                                    false;
+                                                                showRegisterPage
                                                                         .value =
                                                                     false;
                                                               },

@@ -182,29 +182,25 @@ class AdminLoanPage extends HookConsumerWidget {
       onRefresh: () async {
         loanListNotifier.loadTList(loaners);
       },
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            GestureDetector(
-              child: const LoanCommonButton(text: LoanTextConstants.addLoan),
-              onTap: () {
-                pageNotifier.setLoanPage(LoanPage.addLoan);
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ...listWidget,
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 30,
+          ),
+          GestureDetector(
+            child: const LoanCommonButton(text: LoanTextConstants.addLoan),
+            onTap: () {
+              pageNotifier.setLoanPage(LoanPage.addLoan);
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          ...listWidget,
+          const SizedBox(
+            height: 20,
+          ),
+        ],
       ),
     );
   }

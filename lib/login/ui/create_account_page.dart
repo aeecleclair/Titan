@@ -36,8 +36,6 @@ class CreateAccountPage extends HookConsumerWidget {
     final phone = useTextEditingController();
     final floor = useTextEditingController();
     final currentPage = useState(0);
-    AnimationController controller = useAnimationController(
-        duration: const Duration(seconds: 2), initialValue: 1);
     final pageController = usePageController();
     void displayLoginToastWithContext(TypeMsg type, String msg) {
       displayLoginToast(context, type, msg);
@@ -186,7 +184,6 @@ class CreateAccountPage extends HookConsumerWidget {
             if (value) {
               displayLoginToastWithContext(
                   TypeMsg.msg, LoginTextConstants.accountActivated);
-              pageNotifier.setPage(ModuleType.home);
               authTokenNotifier.deleteToken();
               onActivationPressed();
             } else {

@@ -82,14 +82,9 @@ class DeliveryOrderPage extends HookConsumerWidget {
     });
 
     return AmapRefresher(
-      onRefresh: () async {
-        await orderListNotifier.loadOrderList();
-      },
-      child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics(),
-          ),
-          child: Column(children: listWidgetOrder)),
-    );
+        onRefresh: () async {
+          await orderListNotifier.loadOrderList();
+        },
+        child: Column(children: listWidgetOrder));
   }
 }

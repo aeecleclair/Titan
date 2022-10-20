@@ -32,7 +32,7 @@ class CreateAccount {
     phone = json['phone'];
     promo = json['promo'];
     floor = json['floor'];
-    activationToken = json['activationToken'];
+    activationToken = json['activation_token'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,7 +45,7 @@ class CreateAccount {
     data['phone'] = phone;
     data['promo'] = promo;
     data['floor'] = floor;
-    data['activationToken'] = activationToken;
+    data['activation_token'] = activationToken;
     return data;
   }
 

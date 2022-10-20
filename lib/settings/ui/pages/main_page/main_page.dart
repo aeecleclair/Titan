@@ -21,179 +21,175 @@ class MainPage extends HookConsumerWidget {
       onRefresh: () async {
         await meNotifier.loadMe();
       },
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Column(children: [
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(SettingsTextConstants.settings,
-                  style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        child: Column(children: [
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(SettingsTextConstants.settings,
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black)),
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text("Compte",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black)),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          SettingsItem(
+            icon: HeroIcons.user,
+            onTap: () {
+              pageNotifier.setSettingsPage(SettingsPage.info);
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(me.nickname != "" ? me.nickname : me.firstname,
+                    style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.black)),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text("${me.firstname} ${me.name}",
+                    style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black)),
+              ],
             ),
-            const SizedBox(
-              height: 50,
-            ),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text("Compte",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black)),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            SettingsItem(
-              icon: HeroIcons.user,
-              onTap: () {
-                pageNotifier.setSettingsPage(SettingsPage.info);
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(me.nickname != "" ? me.nickname : me.firstname,
-                      style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.black)),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text("${me.firstname} ${me.name}",
-                      style: const TextStyle(
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(SettingsTextConstants.settings,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black)),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          SettingsItem(
+            icon: HeroIcons.bell,
+            onTap: () {
+              pageNotifier.setSettingsPage(SettingsPage.notification);
+            },
+            child: const Text("Notifications",
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black)),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          SettingsItem(
+            icon: HeroIcons.shieldCheck,
+            onTap: () {
+              pageNotifier.setSettingsPage(SettingsPage.security);
+            },
+            child: const Text("Securité",
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black)),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          SettingsItem(
+            icon: HeroIcons.moon,
+            onTap: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Mode sombre",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.black)),
+                Padding(
+                  padding: const EdgeInsets.only(right: 30),
+                  child: Text("Désactivé",
+                      style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black)),
-                ],
-              ),
+                          color: Colors.grey[500])),
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 50,
-            ),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(SettingsTextConstants.settings,
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black)),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            SettingsItem(
-              icon: HeroIcons.bell,
-              onTap: () {
-                pageNotifier.setSettingsPage(SettingsPage.notification);
-              },
-              child: const Text("Notifications",
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.black)),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            SettingsItem(
-              icon: HeroIcons.shieldCheck,
-              onTap: () {
-                pageNotifier.setSettingsPage(SettingsPage.security);
-              },
-              child: const Text("Securité",
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.black)),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            SettingsItem(
-              icon: HeroIcons.moon,
-              onTap: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Mode sombre",
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          SettingsItem(
+            icon: HeroIcons.language,
+            onTap: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Langue",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.black)),
+                Padding(
+                  padding: const EdgeInsets.only(right: 30),
+                  child: Text("Français",
                       style: TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.black)),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 30),
-                    child: Text("Désactivé",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey[500])),
-                  ),
-                ],
-              ),
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[500])),
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 30,
-            ),
-            SettingsItem(
-              icon: HeroIcons.language,
-              onTap: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Langue",
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.black)),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 30),
-                    child: Text("Français",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey[500])),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            SettingsItem(
-              icon: HeroIcons.lifebuoy,
-              onTap: () {},
-              child: const Text("Aide",
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.black)),
-            ),
-            const SizedBox(
-              height: 60,
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text("Version $titanVersion",
-                  style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black)),
-              const Text("https://hyperion.myecl.fr",
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black)),
-            ]),
-            const SizedBox(
-              height: 20,
-            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          SettingsItem(
+            icon: HeroIcons.lifebuoy,
+            onTap: () {},
+            child: const Text("Aide",
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black)),
+          ),
+          const SizedBox(
+            height: 60,
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text("Version $titanVersion",
+                style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black)),
+            const Text("https://hyperion.myecl.fr",
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black)),
           ]),
-        ),
+          const SizedBox(
+            height: 20,
+          ),
+        ]),
       ),
     );
   }

@@ -18,67 +18,61 @@ class RoomsPage extends HookConsumerWidget {
         onRefresh: () async {
           await roomListNotifier.loadRooms();
         },
-        child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics()),
-            child: Column(children: [
-              const SizedBox(height: 20),
-              GestureDetector(
-                onTap: () {
-                  pageNotifier.setBookingPage(BookingPage.addRoom);
-                },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  decoration: BoxDecoration(
-                    color: BookingColorConstants.darkBlue,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: BookingColorConstants.darkBlue.withOpacity(0.15),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
+        child: Column(children: [
+          const SizedBox(height: 20),
+          GestureDetector(
+            onTap: () {
+              pageNotifier.setBookingPage(BookingPage.addRoom);
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              width: MediaQuery.of(context).size.width * 0.6,
+              decoration: BoxDecoration(
+                color: BookingColorConstants.darkBlue,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: BookingColorConstants.darkBlue.withOpacity(0.15),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
                   ),
-                  child: const Center(
-                    child: Text(
-                      BookingTextConstants.addRoom,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                    ),
+                ],
+              ),
+              child: const Center(
+                child: Text(
+                  BookingTextConstants.addRoom,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
-              const Text(BookingTextConstants.registeredRooms,
-                  style: TextStyle(
-                      fontSize: 18, color: BookingColorConstants.darkBlue)),
-              const SizedBox(height: 20),
-              roomList.when(data: (rooms) {
-                if (rooms.isEmpty) {
-                  return const Center(
-                    child: Text(BookingTextConstants.noRoomFoundError,
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: BookingColorConstants.darkBlue)),
-                  );
-                }
-                return Column(
-                    children: rooms.map((e) => RoomUi(r: e)).toList());
-              }, error: (Object error, StackTrace? stackTrace) {
-                return Text(error.toString());
-              }, loading: () {
-                return const Center(
-                    child: CircularProgressIndicator(
-                  valueColor:
-                      AlwaysStoppedAnimation(BookingColorConstants.darkBlue),
-                ));
-              })
-            ])));
+            ),
+          ),
+          const SizedBox(height: 40),
+          const Text(BookingTextConstants.registeredRooms,
+              style: TextStyle(
+                  fontSize: 18, color: BookingColorConstants.darkBlue)),
+          const SizedBox(height: 20),
+          roomList.when(data: (rooms) {
+            if (rooms.isEmpty) {
+              return const Center(
+                child: Text(BookingTextConstants.noRoomFoundError,
+                    style: TextStyle(
+                        fontSize: 12, color: BookingColorConstants.darkBlue)),
+              );
+            }
+            return Column(children: rooms.map((e) => RoomUi(r: e)).toList());
+          }, error: (Object error, StackTrace? stackTrace) {
+            return Text(error.toString());
+          }, loading: () {
+            return const Center(
+                child: CircularProgressIndicator(
+              valueColor:
+                  AlwaysStoppedAnimation(BookingColorConstants.darkBlue),
+            ));
+          })
+        ]));
   }
 }

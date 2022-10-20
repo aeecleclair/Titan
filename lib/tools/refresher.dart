@@ -32,7 +32,11 @@ class Refresher extends HookConsumerWidget {
         tokenExpireWrapper(ref, onRefresh);
       },
       color: col,
-      child: child);
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics()
+        ),
+        child: child));
 
   Widget buildIOSList(WidgetRef ref) => CustomScrollView(
         physics: const BouncingScrollPhysics(),

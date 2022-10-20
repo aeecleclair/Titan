@@ -30,163 +30,159 @@ class AssoPage extends HookConsumerWidget {
       onRefresh: () async {
         await groupNotifier.loadGroup(groupId);
       },
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()),
-        child: group.when(data: (g) {
-          return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Column(
-                children: [
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(AdminTextConstants.administration,
-                        style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black)),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(capitalize(g.name),
-                        style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: AdminColorConstants.gradient1)),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  if (g.description.isNotEmpty)
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(g.description,
-                          style: const TextStyle(fontSize: 18)),
-                    ),
-                  const SizedBox(height: 40),
+      child: group.when(data: (g) {
+        return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            child: Column(
+              children: [
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(AdminTextConstants.administration,
+                      style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black)),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(capitalize(g.name),
+                      style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: AdminColorConstants.gradient1)),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                if (g.description.isNotEmpty)
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: const Text("${AdminTextConstants.members} :",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
+                    child: Text(g.description,
+                        style: const TextStyle(fontSize: 18)),
                   ),
-                  ...g.members.map((x) => Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.only(top: 25),
-                      child: Text(capitalize(x.getName()),
-                          style: const TextStyle(fontSize: 18)))),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          child: Container(
-                              margin: const EdgeInsets.only(top: 20, right: 10),
-                              padding: const EdgeInsets.symmetric(vertical: 15),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    AdminColorConstants.gradient1,
-                                    AdminColorConstants.gradient2,
-                                  ],
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AdminColorConstants.gradient2
-                                        .withOpacity(0.5),
-                                    blurRadius: 5,
-                                    offset: const Offset(2, 2),
-                                    spreadRadius: 2,
-                                  ),
+                const SizedBox(height: 40),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: const Text("${AdminTextConstants.members} :",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                ),
+                ...g.members.map((x) => Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.only(top: 25),
+                    child: Text(capitalize(x.getName()),
+                        style: const TextStyle(fontSize: 18)))),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        child: Container(
+                            margin: const EdgeInsets.only(top: 20, right: 10),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [
+                                  AdminColorConstants.gradient1,
+                                  AdminColorConstants.gradient2,
                                 ],
-                                borderRadius: BorderRadius.circular(15),
                               ),
-                              child: const HeroIcon(
-                                HeroIcons.pencilSquare,
-                                color: Colors.white,
-                                size: 30,
-                              )),
-                          onTap: () {
-                            pageNotifier.setAdminPage(AdminPage.edit);
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          child: Container(
-                              margin: const EdgeInsets.only(top: 20, left: 10),
-                              padding: const EdgeInsets.symmetric(vertical: 15),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    AdminColorConstants.gradient1,
-                                    AdminColorConstants.gradient2,
-                                  ],
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AdminColorConstants.gradient2
+                                      .withOpacity(0.5),
+                                  blurRadius: 5,
+                                  offset: const Offset(2, 2),
+                                  spreadRadius: 2,
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AdminColorConstants.gradient2
-                                        .withOpacity(0.5),
-                                    blurRadius: 5,
-                                    offset: const Offset(2, 2),
-                                    spreadRadius: 2,
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: const HeroIcon(
-                                HeroIcons.xMark,
-                                color: Colors.white,
-                                size: 30,
-                              )),
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) => AdminDialog(
-                                    descriptions:
-                                        AdminTextConstants.deleteAssociation,
-                                    title: AdminTextConstants.deleting,
-                                    onYes: () async {
-                                      tokenExpireWrapper(ref, () async {
-                                        final value = await groupsNotifier
-                                            .deleteGroup(g.toSimpleGroup());
-                                        if (value) {
-                                          pageNotifier
-                                              .setAdminPage(AdminPage.main);
-                                          displayAdminToastWithContext(
-                                              TypeMsg.msg,
-                                              AdminTextConstants
-                                                  .deletedAssociation);
-                                        } else {
-                                          displayAdminToastWithContext(
-                                              TypeMsg.error,
-                                              AdminTextConstants.deletingError);
-                                        }
-                                      });
-                                    }));
-                          },
-                        ),
+                              ],
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: const HeroIcon(
+                              HeroIcons.pencilSquare,
+                              color: Colors.white,
+                              size: 30,
+                            )),
+                        onTap: () {
+                          pageNotifier.setAdminPage(AdminPage.edit);
+                        },
                       ),
-                    ],
-                  )
-                ],
-              ));
-        }, error: (e, s) {
-          return Text(e.toString());
-        }, loading: () {
-          return const Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation(AdminColorConstants.gradient1),
-            ),
-          );
-        }),
-      ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        child: Container(
+                            margin: const EdgeInsets.only(top: 20, left: 10),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [
+                                  AdminColorConstants.gradient1,
+                                  AdminColorConstants.gradient2,
+                                ],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AdminColorConstants.gradient2
+                                      .withOpacity(0.5),
+                                  blurRadius: 5,
+                                  offset: const Offset(2, 2),
+                                  spreadRadius: 2,
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: const HeroIcon(
+                              HeroIcons.xMark,
+                              color: Colors.white,
+                              size: 30,
+                            )),
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AdminDialog(
+                                  descriptions:
+                                      AdminTextConstants.deleteAssociation,
+                                  title: AdminTextConstants.deleting,
+                                  onYes: () async {
+                                    tokenExpireWrapper(ref, () async {
+                                      final value = await groupsNotifier
+                                          .deleteGroup(g.toSimpleGroup());
+                                      if (value) {
+                                        pageNotifier
+                                            .setAdminPage(AdminPage.main);
+                                        displayAdminToastWithContext(
+                                            TypeMsg.msg,
+                                            AdminTextConstants
+                                                .deletedAssociation);
+                                      } else {
+                                        displayAdminToastWithContext(
+                                            TypeMsg.error,
+                                            AdminTextConstants.deletingError);
+                                      }
+                                    });
+                                  }));
+                        },
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ));
+      }, error: (e, s) {
+        return Text(e.toString());
+      }, loading: () {
+        return const Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation(AdminColorConstants.gradient1),
+          ),
+        );
+      }),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/tools/refresher.dart';
 
 class SettingsRefresher extends Refresher {
@@ -10,5 +11,5 @@ class SettingsRefresher extends Refresher {
             key: key,
             onRefresh: onRefresh,
             child: child,
-            col: const Color(0xFF32a3f3));
+            col: SettingsColorConstants.gradient1);
 }

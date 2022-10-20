@@ -17,52 +17,49 @@ class MainPage extends HookConsumerWidget {
     final bookingsNotifier = ref.watch(bookingListProvider.notifier);
     return Expanded(
       child: BookingRefresher(
-          onRefresh: () async {
-            await bookingsNotifier.loadBookings();
-          },
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics()),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                      height: MediaQuery.of(context).size.height -
-                          290 -
-                          (isAdmin ? 70 : 0),
-                      child: const Calendar()),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Button(
-                    text: BookingTextConstants.addBookingPage,
-                    page: BookingPage.addBooking,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Button(
-                    text: BookingTextConstants.myBookings,
-                    page: BookingPage.bookings,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  isAdmin
-                      ? Column(
-                          children: const [
-                            Button(
-                              text: BookingTextConstants.adminPage,
-                              page: BookingPage.admin,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        )
-                      : Container(),
-                ]),
-          )),
+        onRefresh: () async {
+          await bookingsNotifier.loadBookings();
+        },
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                  height: MediaQuery.of(context).size.height -
+                      290 -
+                      (isAdmin ? 70 : 0),
+                  child: const Calendar()),
+              const SizedBox(
+                height: 20,
+              ),
+              const Button(
+                text: BookingTextConstants.addBookingPage,
+                page: BookingPage.addBooking,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Button(
+                text: BookingTextConstants.myBookings,
+                page: BookingPage.bookings,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              isAdmin
+                  ? Column(
+                      children: const [
+                        Button(
+                          text: BookingTextConstants.adminPage,
+                          page: BookingPage.admin,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    )
+                  : Container(),
+            ]),
+      ),
     );
   }
 }

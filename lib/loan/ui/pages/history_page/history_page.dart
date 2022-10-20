@@ -175,20 +175,16 @@ class HistoryPage extends HookConsumerWidget {
       onRefresh: () async {
         loanHistoryNotifier.loadLoanerList(loaners);
       },
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            ...listWidget,
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          ...listWidget,
+          const SizedBox(
+            height: 20,
+          ),
+        ],
       ),
     );
   }
