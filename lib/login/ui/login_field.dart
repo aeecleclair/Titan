@@ -47,6 +47,7 @@ class CreateAccountField extends HookConsumerWidget {
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
+          autofocus: true,
           keyboardType: keyboardType,
           onFieldSubmitted: (_) {
             pageController.animateToPage(index,

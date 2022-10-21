@@ -94,10 +94,6 @@ class CreateAccountPage extends HookConsumerWidget {
         GestureDetector(
           onTap: () {
             _selectDate(context, birthday);
-            pageController.animateToPage(6,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.decelerate);
-            currentPage.value = 6;
           },
           child: AbsorbPointer(
             child: TextFormField(
