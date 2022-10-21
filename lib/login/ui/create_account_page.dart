@@ -5,12 +5,10 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/login/class/create_account.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/tools/functions.dart';
-import 'package:myecl/login/ui/background_painter.dart';
 import 'package:myecl/login/ui/login_field.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/tools/functions.dart';
@@ -23,7 +21,6 @@ class CreateAccountPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(pageProvider.notifier);
     final authTokenNotifier = ref.watch(authTokenProvider.notifier);
     final signUpNotifier = ref.watch(signUpProvider.notifier);
     final activationCode = useTextEditingController();

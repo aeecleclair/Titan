@@ -90,13 +90,7 @@ class EventUi extends ConsumerWidget {
                         color: Colors.white,
                       ),
                     ),
-                    onTap: () {
-                      // final productModif =
-                      //     ref.watch(modifiedProductProvider.notifier);
-                      // final pageNotifier = ref.watch(amapPageProvider.notifier);
-                      // productModif.setModifiedProduct(i);
-                      // pageNotifier.setAmapPage(AmapPage.modif);
-                    },
+                    onTap: () {},
                   ),
                   Container(
                     width: 15,

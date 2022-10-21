@@ -41,15 +41,6 @@ class AddEventPage extends HookConsumerWidget {
     }
 
     final now = DateTime.now();
-    final dayList = [
-      'Lundi',
-      'Mardi',
-      'Mercredi',
-      'Jeudi',
-      'Vendredi',
-      'Samedi',
-      'Dimanche'
-    ];
     Widget w = const Center(
       child: CircularProgressIndicator(
         valueColor:
@@ -213,7 +204,7 @@ class AddEventPage extends HookConsumerWidget {
                           const Text(EventTextConstants.recurrenceDays,
                               style: TextStyle(color: Colors.black)),
                           Column(
-                              children: dayList
+                              children: EventTextConstants.dayList
                                   .map(
                                     (e) => CheckboxListTile(
                                       title: Text(e,
@@ -221,10 +212,13 @@ class AddEventPage extends HookConsumerWidget {
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.black)),
-                                      value: selectedDays[dayList.indexOf(e)],
+                                      value: selectedDays[EventTextConstants
+                                          .dayList
+                                          .indexOf(e)],
                                       onChanged: (s) {
-                                        selectedDaysNotifier
-                                            .toggle(dayList.indexOf(e));
+                                        selectedDaysNotifier.toggle(
+                                            EventTextConstants.dayList
+                                                .indexOf(e));
                                       },
                                     ),
                                   )
@@ -891,9 +885,9 @@ class AddEventPage extends HookConsumerWidget {
                               fontWeight: FontWeight.bold,
                               color: Colors.black)),
                       Text(
-                          dayList
-                              .where((element) =>
-                                  selectedDays[dayList.indexOf(element)])
+                          EventTextConstants.dayList
+                              .where((element) => selectedDays[
+                                  EventTextConstants.dayList.indexOf(element)])
                               .join(", "),
                           style: const TextStyle(
                               fontSize: 20,

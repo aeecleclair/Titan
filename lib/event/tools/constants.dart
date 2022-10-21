@@ -23,12 +23,14 @@ class EventTextConstants {
   static const String endDate = "Date de fin";
   static const String eventList = "Liste des événements";
   static const String eventType = "Type d'événement";
+  static const String every = "Tous les";
   static const String incorrectOrMissingFields =
       "Certains champs sont incorrects ou manquants";
   static const String interval = "Intervalle";
   static const String invalidDates =
       "La date de fin doit être après la date de début";
-  static const String invalidIntervalError = "Veuillez entrer un intervalle valide";
+  static const String invalidIntervalError =
+      "Veuillez entrer un intervalle valide";
   static const String name = "Nom";
   static const String next = "Suivant";
   static const String no = "Non";
@@ -51,4 +53,14 @@ class EventTextConstants {
   static const String yes = "Oui";
   static const String eventEvery = "Toutes les";
   static const String weeks = "semaines";
+
+  static const List<String> dayList = [
+    'Lundi',
+    'Mardi',
+    'Mercredi',
+    'Jeudi',
+    'Vendredi',
+    'Samedi',
+    'Dimanche'
+  ];
 }

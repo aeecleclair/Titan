@@ -14,7 +14,8 @@ class ProductUiInList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryId = ref.watch(deliveryIdProvider);
-    final productsNotifier = ref.watch(deliveryProductListProvider(deliveryId).notifier);
+    final productsNotifier =
+        ref.watch(deliveryProductListProvider(deliveryId).notifier);
     final price = ref.watch(priceProvider);
     final priceNotifier = ref.watch(priceProvider.notifier);
     return Container(

@@ -6,7 +6,8 @@ class DateEntry extends StatelessWidget {
   final String title;
   final TextEditingController controller;
 
-  const DateEntry({Key? key, required this.title, required this.controller}) : super(key: key);
+  const DateEntry({Key? key, required this.title, required this.controller})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(

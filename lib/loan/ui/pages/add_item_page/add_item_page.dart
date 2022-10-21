@@ -76,6 +76,7 @@ class AddItemPage extends HookConsumerWidget {
               title: const Text(LoanTextConstants.objects),
               content: TextFormField(
                 controller: name,
+                keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   labelText: LoanTextConstants.name,
                 ),

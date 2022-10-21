@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class LoanColorConstants {
-  static const Color lightGrey = Color(0xff393b47);
-  static const Color darkGrey = Color(0xff232533);
-  static const Color orange = Color(0xffcb8026);
-  static const Color lightOrange = Color(0xffebb97c);
-  static const Color veryLightOrange = Color(0xffffe1bd);
+  static const Color lightGrey = Color(0xff3A353F);
+  static const Color darkGrey = Color(0xff505668);
+  static const Color orange = Color(0xffC24332);
+  static const Color lightOrange = Color(0xffC05850);
+  static const Color veryLightOrange = Color(0xffF1ECE1);
 }
 
 class LoanTextConstants {

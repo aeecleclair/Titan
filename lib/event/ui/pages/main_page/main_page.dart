@@ -74,8 +74,8 @@ class MainPage extends HookConsumerWidget {
               ),
             );
           }, error: (error, stack) {
-            return const Center(
-              child: Text('error'),
+            return Center(
+              child: Text("Error $error"),
             );
           })
         ],

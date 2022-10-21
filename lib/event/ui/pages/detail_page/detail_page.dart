@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/providers/event_provider.dart';
+import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/home/tools/functions.dart';
 
@@ -84,7 +85,7 @@ class DetailPage extends HookConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Tous les ${formatDays(event.recurrenceRule)}",
+                              "${EventTextConstants.every} ${formatDays(event.recurrenceRule)}",
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -119,7 +120,7 @@ class DetailPage extends HookConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
                             Text(
-                              "Toute la journée",
+                              EventTextConstants.allDay,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -137,7 +138,7 @@ class DetailPage extends HookConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Tous les ${formatDays(event.recurrenceRule)}",
+                                "${EventTextConstants.every} ${formatDays(event.recurrenceRule)}",
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -147,7 +148,7 @@ class DetailPage extends HookConsumerWidget {
                             ],
                           ),
                           const Text(
-                            "Toute la journée",
+                            EventTextConstants.allDay,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,

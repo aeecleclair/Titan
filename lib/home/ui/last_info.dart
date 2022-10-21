@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/home/tools/constants.dart';
 
 class LastInfos extends ConsumerWidget {
   const LastInfos({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class LastInfos extends ConsumerWidget {
             margin: const EdgeInsets.only(left: 30, right: 30),
             padding: const EdgeInsets.only(top: 20),
             alignment: Alignment.centerLeft,
-            child: const Text("Dernières annonces",
+            child: const Text(HomeTextConstants.lastInfos,
                 style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w600,

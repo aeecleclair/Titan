@@ -75,7 +75,7 @@ class TodaysEvents extends HookConsumerWidget {
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                              "Évènements du ${today.day} ${getMonth(today.month)}",
+                              "${HomeTextConstants.eventOf} ${today.day} ${getMonth(today.month)}",
                               style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,

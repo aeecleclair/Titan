@@ -10,29 +10,32 @@ class LoanCommonButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 40, right: 40, bottom: 30),
+      margin: const EdgeInsets.only(left: 30, right: 30, bottom: 30),
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+      width: double.infinity,
       decoration: BoxDecoration(
           gradient:  const LinearGradient(
             colors: [
-              LoanColorConstants.veryLightOrange,
               LoanColorConstants.lightOrange,
+              LoanColorConstants.orange,
             ],
           ),
           borderRadius: BorderRadius.circular(20),
           boxShadow: const [
             BoxShadow(
-              color: LoanColorConstants.veryLightOrange,
+              color: LoanColorConstants.lightOrange,
               blurRadius: 10,
               offset: Offset(0, 5),
             ),
           ]),
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: LoanColorConstants.darkGrey,
-          fontWeight: FontWeight.w700,
-          fontSize: 25,
+      child: Center(
+        child: Text(
+          text,
+          style: const TextStyle(
+            color: LoanColorConstants.veryLightOrange,
+            fontWeight: FontWeight.w700,
+            fontSize: 25,
+          ),
         ),
       ),
     );

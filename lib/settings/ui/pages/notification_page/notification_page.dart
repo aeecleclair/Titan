@@ -15,7 +15,7 @@ class NotificationPage extends HookConsumerWidget {
         child: Column(children: [
           const Align(
             alignment: Alignment.centerLeft,
-            child: Text(SettingsTextConstants.notification,
+            child: Text(SettingsTextConstants.notifications,
                 style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.w700,
@@ -57,7 +57,7 @@ class NotificationPage extends HookConsumerWidget {
                           ),
                         ))
                     .toList()),
-            error: (e, s) => Text('error $e'),
+            error: (e, s) => Text('Error $e'),
             loading: () => const CircularProgressIndicator(
               color: SettingsColorConstants.gradient1,
             ),

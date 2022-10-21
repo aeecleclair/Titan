@@ -14,11 +14,10 @@ class GreenBtn extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.65,
         height: 70,
         decoration: BoxDecoration(
-          gradient:  const LinearGradient(
-              colors: [AMAPColorConstants.greenGradient1, AMAPColorConstants.greenGradient2
-          ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight),
+          gradient: const LinearGradient(colors: [
+            AMAPColorConstants.greenGradient1,
+            AMAPColorConstants.greenGradient2
+          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
           boxShadow: [
             BoxShadow(
                 color: AMAPColorConstants.greenGradient2.withOpacity(0.4),

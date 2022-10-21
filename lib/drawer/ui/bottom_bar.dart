@@ -52,7 +52,7 @@ class BottomBar extends ConsumerWidget {
                     Container(
                       width: 15,
                     ),
-                    Text("Paramètres",
+                    Text(DrawerTextConstants.settings,
                         style: TextStyle(
                           color: page == ModuleType.settings
                               ? DrawerColorConstants.selectedText
@@ -87,7 +87,7 @@ class BottomBar extends ConsumerWidget {
                           Container(
                             width: 15,
                           ),
-                          Text("Administration",
+                          Text(DrawerTextConstants.admin,
                               style: TextStyle(
                                 color: page == ModuleType.admin
                                     ? DrawerColorConstants.selectedText

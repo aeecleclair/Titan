@@ -37,7 +37,7 @@ class ChangePassPage extends HookConsumerWidget {
           children: [
             const Align(
               alignment: Alignment.centerLeft,
-              child: Text("Sécurité",
+              child: Text(SettingsTextConstants.security,
                   style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.w700,
@@ -48,7 +48,7 @@ class ChangePassPage extends HookConsumerWidget {
             ),
             const Align(
               alignment: Alignment.centerLeft,
-              child: Text("Changer le mot de passe",
+              child: Text(SettingsTextConstants.changePassword,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,

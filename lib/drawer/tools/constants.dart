@@ -8,3 +8,10 @@ class DrawerColorConstants {
   static const Color fakePageBlue = Color(0xFF3390CE);
   static const Color fakePageShadow = Color(0x4F3390CE);
 }
+
+class DrawerTextConstants {
+  static const String admin = "Administration";
+  static const String logingOut = "Voulez-vous vous déconnecter ?";
+  static const String logOut = "Déconnexion";
+  static const String settings = "Paramètres";
+}

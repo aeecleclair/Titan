@@ -27,7 +27,7 @@ class AddSoldePage extends HookConsumerWidget {
 
     return AmapRefresher(
         onRefresh: () async {
-          users.value = await usersNotifier.filterUsers("");
+          users.value = await usersNotifier.filterUsers(" ");
         },
         child: users.value.when(data: (u) {
           return SizedBox(

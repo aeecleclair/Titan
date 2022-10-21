@@ -48,7 +48,7 @@ class EditUserPage extends HookConsumerWidget {
               child: Column(children: [
                 const Align(
                   alignment: Alignment.centerLeft,
-                  child: Text("Compte",
+                  child: Text(SettingsTextConstants.account,
                       style: TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.w700,
@@ -59,7 +59,7 @@ class EditUserPage extends HookConsumerWidget {
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text("Photo de profil",
+                  child: Text(SettingsTextConstants.profilePicture,
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
@@ -83,7 +83,7 @@ class EditUserPage extends HookConsumerWidget {
                 TextButton(
                     onPressed: () {},
                     child: const Text(
-                      "Ajouter une photo",
+                      SettingsTextConstants.addProfilePicture,
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -91,17 +91,17 @@ class EditUserPage extends HookConsumerWidget {
                     )),
                 const SizedBox(height: 50),
                 UserFieldModifier(
-                    label: "Prénom",
+                    label: SettingsTextConstants.firstname,
                     keyboardType: TextInputType.text,
                     controller: firstNameController),
                 const SizedBox(height: 50),
                 UserFieldModifier(
-                    label: "Nom",
+                    label: SettingsTextConstants.name,
                     keyboardType: TextInputType.text,
                     controller: nameController),
                 const SizedBox(height: 50),
                 UserFieldModifier(
-                    label: "Surnom",
+                    label: SettingsTextConstants.nickname,
                     keyboardType: TextInputType.text,
                     controller: nickNameController),
                 const SizedBox(height: 50),
@@ -109,7 +109,7 @@ class EditUserPage extends HookConsumerWidget {
                   SizedBox(
                     width: 120,
                     child: Text(
-                      "Date de naissance",
+                      SettingsTextConstants.birthday,
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
@@ -223,7 +223,7 @@ class EditUserPage extends HookConsumerWidget {
                         borderRadius: BorderRadius.circular(20)),
                     child: const Center(
                       child: Text(
-                        "Enregistrer",
+                        SettingsTextConstants.save,
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.w400,

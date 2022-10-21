@@ -89,7 +89,7 @@ class MainPage extends HookConsumerWidget {
             onTap: () {
               pageNotifier.setSettingsPage(SettingsPage.notification);
             },
-            child: const Text("Notifications",
+            child: const Text(SettingsTextConstants.notifications,
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w800,
@@ -103,7 +103,7 @@ class MainPage extends HookConsumerWidget {
             onTap: () {
               pageNotifier.setSettingsPage(SettingsPage.security);
             },
-            child: const Text("Securité",
+            child: const Text(SettingsTextConstants.security,
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w800,
@@ -118,14 +118,14 @@ class MainPage extends HookConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Mode sombre",
+                const Text(SettingsTextConstants.darkMode,
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w800,
                         color: Colors.black)),
                 Padding(
                   padding: const EdgeInsets.only(right: 30),
-                  child: Text("Désactivé",
+                  child: Text(SettingsTextConstants.darkModeOff,
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
@@ -143,14 +143,14 @@ class MainPage extends HookConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Langue",
+                const Text(SettingsTextConstants.language,
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w800,
                         color: Colors.black)),
                 Padding(
                   padding: const EdgeInsets.only(right: 30),
-                  child: Text("Français",
+                  child: Text(SettingsTextConstants.languageFr,
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
@@ -165,7 +165,7 @@ class MainPage extends HookConsumerWidget {
           SettingsItem(
             icon: HeroIcons.lifebuoy,
             onTap: () {},
-            child: const Text("Aide",
+            child: const Text(SettingsTextConstants.help,
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w800,
@@ -175,12 +175,12 @@ class MainPage extends HookConsumerWidget {
             height: 60,
           ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("Version $titanVersion",
+            Text("${SettingsTextConstants.version} $titanVersion",
                 style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
                     color: Colors.black)),
-            const Text("https://hyperion.myecl.fr",
+            const Text(SettingsTextConstants.hyperionUrl,
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,

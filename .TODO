@@ -26,6 +26,7 @@ Pages avec des boutons enregistrer ou valider
 
 Loaners
 
+    textfield
     rendre plus explicite l’utilisateur sélectionné
     suggérer la caution et la date de retour en fonction des objets empruntés
     retour en arrière après avoir validé un prêt : celui-ci n’apparait pas encore, il faut recharger. Ajouter un pull to refresh (ou le faire fonctionner s’il est déjà sensé exister) ?

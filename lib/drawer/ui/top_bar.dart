@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/drawer/tools/dialog.dart';
 import 'package:myecl/drawer/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
@@ -60,12 +61,12 @@ class TopBar extends ConsumerWidget {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) => BookingDialog(
-                        descriptions: "Voulez-vous vous déconnecter ?",
-                        title: "Déconnexion",
+                        descriptions: DrawerTextConstants.logingOut,
+                        title: DrawerTextConstants.logOut,
                         onYes: () {
                           auth.deleteToken();
                           displayDrawerToast(
-                              context, TypeMsg.msg, "Déconnexion");
+                              context, TypeMsg.msg, DrawerTextConstants.logOut);
                         }));
               },
               child: Column(
