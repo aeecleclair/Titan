@@ -68,15 +68,19 @@ class Register extends HookConsumerWidget {
                   const Spacer(),
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: TextFormField(
-                          controller: mail,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                          decoration: signInRegisterInputDecoration(
-                              isSignIn: false,
-                              hintText: LoginTextConstants.email))),
+                      child: AutofillGroup(
+                          child: TextFormField(
+                        controller: mail,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                        decoration: signInRegisterInputDecoration(
+                            isSignIn: false,
+                            hintText: LoginTextConstants.email),
+                        keyboardType: TextInputType.emailAddress,
+                        autofillHints: const [AutofillHints.email],
+                      ))),
                   const SizedBox(
                     height: 30,
                   ),
