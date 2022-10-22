@@ -50,7 +50,7 @@ class AddLoanPage extends HookConsumerWidget {
 
     Widget w = const Center(
       child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.orange),
+        valueColor: AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
       ),
     );
 
@@ -98,7 +98,7 @@ class AddLoanPage extends HookConsumerWidget {
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                                 color: e.available
-                                    ? LoanColorConstants.darkGrey
+                                    ? LoanColorConstants.orange
                                     : Colors.grey.shade700,
                                 decoration: e.available
                                     ? null
@@ -242,8 +242,13 @@ class AddLoanPage extends HookConsumerWidget {
             Step(
               title: const Text(LoanTextConstants.caution),
               content: TextFormField(
-                decoration:
-                    const InputDecoration(labelText: LoanTextConstants.note),
+                decoration: InputDecoration(
+                    // labelText: LoanTextConstants.caution,
+                    hintText: items.value.when(
+                        data: (itemList) =>
+                            "${itemList.where((element) => selectedItems[itemList.indexOf(element)]).toList().fold<double>(0, (previousValue, element) => previousValue + element.caution)}€",
+                        error: (Object error, StackTrace? stackTrace) => "",
+                        loading: () => "")),
                 controller: caution,
                 validator: (value) {
                   if (value == null) {
@@ -378,6 +383,16 @@ class AddLoanPage extends HookConsumerWidget {
                 final isLastStep = currentStep.value == steps.length - 1;
                 return Row(
                   children: [
+                    if (currentStep.value > 0)
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: controls.onStepCancel,
+                          child: const Text(LoanTextConstants.previous),
+                        ),
+                      ),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: ElevatedButton(
                         onPressed: !isLastStep
@@ -421,8 +436,8 @@ class AddLoanPage extends HookConsumerWidget {
                                                     loaner,
                                                     await loanListNotifier
                                                         .copy());
-                                            pageNotifier.setLoanPage(
-                                                LoanPage.admin);
+                                            pageNotifier
+                                                .setLoanPage(LoanPage.admin);
                                             displayLoanToastWithContext(
                                                 TypeMsg.msg,
                                                 LoanTextConstants.addedLoan);
@@ -456,16 +471,6 @@ class AddLoanPage extends HookConsumerWidget {
                             : const Text(LoanTextConstants.next),
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    if (currentStep.value > 0)
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: controls.onStepCancel,
-                          child: const Text(LoanTextConstants.previous),
-                        ),
-                      )
                   ],
                 );
               },
@@ -484,11 +489,16 @@ class AddLoanPage extends HookConsumerWidget {
 
     return SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Theme(
-            data: Theme.of(context).copyWith(
-              primaryColor: LoanColorConstants.lightGrey,
-              unselectedWidgetColor: LoanColorConstants.lightGrey,
-            ),
-            child: w));
+        child: Column(children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 10, left: 30, right: 30),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(LoanTextConstants.addLoan,
+                    style:
+                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold))),
+          ),
+          w
+        ]));
   }
 }

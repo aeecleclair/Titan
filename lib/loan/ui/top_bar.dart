@@ -43,12 +43,6 @@ class TopBar extends HookConsumerWidget {
                           case LoanPage.addItem:
                             pageNotifier.setLoanPage(LoanPage.admin);
                             break;
-                          case LoanPage.history:
-                            pageNotifier.setLoanPage(LoanPage.main);
-                            break;
-                          case LoanPage.historyDetail:
-                            pageNotifier.setLoanPage(LoanPage.history);
-                            break;
                           case LoanPage.groupLoan:
                             pageNotifier.setLoanPage(LoanPage.admin);
                             break;
@@ -69,17 +63,17 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            const Text(
-              LoanTextConstants.loan,
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w500,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ),
-            const SizedBox(
-              width: 70,
-            ),
+            // const Text(
+            //   LoanTextConstants.loan,
+            //   style: TextStyle(
+            //     fontSize: 30,
+            //     fontWeight: FontWeight.w500,
+            //     color: Color.fromARGB(255, 0, 0, 0),
+            //   ),
+            // ),
+            // const SizedBox(
+            //   width: 70,
+            // ),
           ],
         ),
       ],

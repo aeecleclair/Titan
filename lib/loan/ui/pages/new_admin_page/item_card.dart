@@ -38,7 +38,7 @@ class ItemCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
               Text(item.name,
@@ -53,12 +53,12 @@ class ItemCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.grey.shade400)),
               const SizedBox(height: 5),
-              Text(item.caution.toString(),
-                  style: TextStyle(
+              Text('${item.caution} €',
+                  style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
-              Spacer(),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

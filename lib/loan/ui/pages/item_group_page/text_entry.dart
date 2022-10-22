@@ -5,19 +5,21 @@ class TextEntry extends StatelessWidget {
   final String label, suffix;
   final bool isInt;
   final TextEditingController controller;
+  final TextInputType keyboardType;
   const TextEntry(
       {Key? key,
       required this.label,
       required this.suffix,
       required this.isInt,
-      required this.controller})
+      required this.controller,
+      required this.keyboardType})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      keyboardType: TextInputType.number,
+      keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: label,
         suffix: Text(suffix),

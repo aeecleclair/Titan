@@ -75,6 +75,7 @@ class AddItemPage extends HookConsumerWidget {
             Step(
               title: const Text(LoanTextConstants.objects),
               content: TextEntry(
+                keyboardType: TextInputType.text,
                 label: LoanTextConstants.name,
                 suffix: '',
                 isInt: false,
@@ -88,6 +89,7 @@ class AddItemPage extends HookConsumerWidget {
             Step(
               title: const Text(LoanTextConstants.caution),
               content: TextEntry(
+                keyboardType: TextInputType.number,
                 controller: caution,
                 isInt: true,
                 label: LoanTextConstants.caution,
@@ -101,6 +103,7 @@ class AddItemPage extends HookConsumerWidget {
             Step(
               title: const Text(LoanTextConstants.lendingDuration),
               content: TextEntry(
+                keyboardType: TextInputType.number,
                 controller: lendingDuration,
                 isInt: true,
                 label: LoanTextConstants.lendingDuration,
@@ -169,6 +172,16 @@ class AddItemPage extends HookConsumerWidget {
                 final isLastStep = currentStep.value == steps.length - 1;
                 return Row(
                   children: [
+                    if (currentStep.value > 0)
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: controls.onStepCancel,
+                          child: const Text(LoanTextConstants.previous),
+                        ),
+                      ),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: ElevatedButton(
                         onPressed: !isLastStep
@@ -194,8 +207,7 @@ class AddItemPage extends HookConsumerWidget {
                                       ),
                                     );
                                     if (value) {
-                                      pageNotifier
-                                          .setLoanPage(LoanPage.admin);
+                                      pageNotifier.setLoanPage(LoanPage.admin);
                                       await loanersitemsNotifier.setTData(
                                           loaner.value,
                                           await itemListNotifier.copy());
@@ -219,16 +231,6 @@ class AddItemPage extends HookConsumerWidget {
                             : const Text(LoanTextConstants.next),
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    if (currentStep.value > 0)
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: controls.onStepCancel,
-                          child: const Text(LoanTextConstants.previous),
-                        ),
-                      )
                   ],
                 );
               },
@@ -249,6 +251,17 @@ class AddItemPage extends HookConsumerWidget {
       loading: () {},
     );
     return SingleChildScrollView(
-        physics: const BouncingScrollPhysics(), child: w);
+        physics: const BouncingScrollPhysics(),
+        child: Column(children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 10, left: 30, right: 30),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(LoanTextConstants.addObject,
+                    style:
+                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold))),
+          ),
+          w
+        ]));
   }
 }

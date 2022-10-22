@@ -389,6 +389,16 @@ class EditLoanPage extends HookConsumerWidget {
               final isLastStep = currentStep.value == steps.length - 1;
               return Row(
                 children: [
+                  if (currentStep.value > 0)
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: controls.onStepCancel,
+                        child: const Text(LoanTextConstants.previous),
+                      ),
+                    ),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: !isLastStep
@@ -462,16 +472,6 @@ class EditLoanPage extends HookConsumerWidget {
                           : const Text(LoanTextConstants.next),
                     ),
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  if (currentStep.value > 0)
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: controls.onStepCancel,
-                        child: const Text(LoanTextConstants.previous),
-                      ),
-                    )
                 ],
               );
             },
@@ -494,11 +494,16 @@ class EditLoanPage extends HookConsumerWidget {
 
     return SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Theme(
-            data: Theme.of(context).copyWith(
-              primaryColor: LoanColorConstants.lightGrey,
-              unselectedWidgetColor: LoanColorConstants.lightGrey,
-            ),
-            child: w));
+        child: Column(children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 10, left: 30, right: 30),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(LoanTextConstants.editLoan,
+                    style:
+                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold))),
+          ),
+          w
+        ]));
   }
 }

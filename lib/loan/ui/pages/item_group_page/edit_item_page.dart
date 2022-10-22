@@ -78,6 +78,7 @@ class EditItemPage extends HookConsumerWidget {
             Step(
               title: const Text(LoanTextConstants.objects),
               content: TextEntry(
+                keyboardType: TextInputType.text,
                 label: LoanTextConstants.name,
                 suffix: '',
                 isInt: false,
@@ -91,6 +92,7 @@ class EditItemPage extends HookConsumerWidget {
             Step(
               title: const Text(LoanTextConstants.caution),
               content: TextEntry(
+                keyboardType: TextInputType.number,
                 label: LoanTextConstants.caution,
                 suffix: '€',
                 isInt: true,
@@ -104,6 +106,7 @@ class EditItemPage extends HookConsumerWidget {
             Step(
               title: const Text(LoanTextConstants.lendingDuration),
               content: TextEntry(
+                keyboardType: TextInputType.number,
                 label: LoanTextConstants.lendingDuration,
                 suffix: LoanTextConstants.days,
                 isInt: true,
@@ -173,6 +176,16 @@ class EditItemPage extends HookConsumerWidget {
                 final isLastStep = currentStep.value == steps.length - 1;
                 return Row(
                   children: [
+                    if (currentStep.value > 0)
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: controls.onStepCancel,
+                          child: const Text(LoanTextConstants.previous),
+                        ),
+                      ),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: ElevatedButton(
                         onPressed: !isLastStep
@@ -193,8 +206,7 @@ class EditItemPage extends HookConsumerWidget {
                                                 60 *
                                                 60));
                                     if (value) {
-                                      pageNotifier
-                                          .setLoanPage(LoanPage.admin);
+                                      pageNotifier.setLoanPage(LoanPage.admin);
                                       displayLoanToastWithContext(TypeMsg.msg,
                                           LoanTextConstants.updatedItem);
                                       loanersitemsNotifier.setTData(
@@ -218,16 +230,6 @@ class EditItemPage extends HookConsumerWidget {
                             : const Text(LoanTextConstants.next),
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    if (currentStep.value > 0)
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: controls.onStepCancel,
-                          child: const Text(LoanTextConstants.previous),
-                        ),
-                      )
                   ],
                 );
               },
@@ -248,6 +250,17 @@ class EditItemPage extends HookConsumerWidget {
       loading: () {},
     );
     return SingleChildScrollView(
-        physics: const BouncingScrollPhysics(), child: w);
+        physics: const BouncingScrollPhysics(),
+        child: Column(children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 10, left: 30, right: 30),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(LoanTextConstants.editItem,
+                    style:
+                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold))),
+          ),
+          w
+        ]));
   }
 }

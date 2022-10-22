@@ -14,7 +14,7 @@ import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/new_admin_page/item_card.dart';
-import 'package:myecl/loan/ui/pages/new_admin_page/loan_card.dart';
+import 'package:myecl/loan/ui/loan_card.dart';
 import 'package:myecl/loan/ui/pages/new_admin_page/loaner_chip.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
 import 'package:myecl/tools/functions.dart';
@@ -60,7 +60,7 @@ class NewAdminPage extends HookConsumerWidget {
         loanListNotifier.setTData(loaner, await loanerLoanListNotifier.copy());
       },
       child: Padding(
-        padding: const EdgeInsets.only(top: 30.0),
+        padding: const EdgeInsets.only(top: 10.0),
         child: Column(
           children: [
             const Padding(
@@ -69,7 +69,7 @@ class NewAdminPage extends HookConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(LoanTextConstants.admin,
                     style:
-                        TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
               ),
             ),
             const SizedBox(height: 30),

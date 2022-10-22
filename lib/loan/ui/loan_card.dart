@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;
@@ -39,33 +40,33 @@ class LoanCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
-              Text(loan.borrower.name,
+              Text(loan.borrower.getName(),
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
-              const SizedBox(height: 7),
               Text(formatItems(loan.items),
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey.shade400)),
-              const SizedBox(height: 5),
               Text(loan.caution,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
-              const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("En cours",
+                  Text(
+                      DateTime.now().compareTo(loan.end) <= 0
+                          ? "En cours"
+                          : "Terminé",
                       style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey.shade400)),
-                  Text(processDateOnlyHour(loan.end),
+                  Text(processDate(loan.end),
                       style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,

@@ -40,12 +40,6 @@ class LoanHomePage extends HookConsumerWidget {
             case LoanPage.addItem:
               pageNotifier.setLoanPage(LoanPage.admin);
               break;
-            case LoanPage.history:
-              pageNotifier.setLoanPage(LoanPage.main);
-              break;
-            case LoanPage.historyDetail:
-              pageNotifier.setLoanPage(LoanPage.history);
-              break;
             case LoanPage.groupLoan:
               pageNotifier.setLoanPage(LoanPage.admin);
               break;

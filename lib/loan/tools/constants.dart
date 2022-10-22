@@ -37,6 +37,8 @@ class LoanTextConstants {
   static const String deletingError = "Erreur lors de la suppression";
   static const String deletingItem = "Supprimer l'objet ?";
   static const String edit = "Modifier";
+  static const String editItem = "Modifier l'objet";
+  static const String editLoan = "Modifier le prêt";
   static const String editedRoom = "Salle modifiée";
   static const String endDate = "Date de fin du prêt";
   static const String enterDate = "Veuillez entrer une date";
@@ -47,6 +49,7 @@ class LoanTextConstants {
       "Des champs sont manquants ou incorrects";
   static const String invalidNumber = "Veuillez entrer un nombre";
   static const String invalidDates = "Les dates ne sont pas valides";
+  static const String item = "Objet";
   static const String itemHandling = "Gestion des objets";
   static const String lendingDuration = "Durée possible du prêt";
   static const String loan = "Prêt";
