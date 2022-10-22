@@ -47,7 +47,7 @@ class MainPage extends HookConsumerWidget {
                         ),
                         IconButton(
                           onPressed: () {
-                            pageNotifier.setLoanPage(LoanPage.option);
+                            pageNotifier.setLoanPage(LoanPage.admin);
                           },
                           icon: const HeroIcon(
                             HeroIcons.plus,

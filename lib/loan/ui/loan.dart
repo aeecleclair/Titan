@@ -34,14 +34,11 @@ class LoanHomePage extends HookConsumerWidget {
               } else {
                 return true;
               }
-            case LoanPage.option:
-              pageNotifier.setLoanPage(LoanPage.main);
-              break;
             case LoanPage.addLoan:
-              pageNotifier.setLoanPage(LoanPage.adminLoan);
+              pageNotifier.setLoanPage(LoanPage.admin);
               break;
             case LoanPage.addItem:
-              pageNotifier.setLoanPage(LoanPage.adminItem);
+              pageNotifier.setLoanPage(LoanPage.admin);
               break;
             case LoanPage.history:
               pageNotifier.setLoanPage(LoanPage.main);
@@ -50,16 +47,13 @@ class LoanHomePage extends HookConsumerWidget {
               pageNotifier.setLoanPage(LoanPage.history);
               break;
             case LoanPage.groupLoan:
-              pageNotifier.setLoanPage(LoanPage.adminLoan);
+              pageNotifier.setLoanPage(LoanPage.admin);
               break;
             case LoanPage.editItem:
-              pageNotifier.setLoanPage(LoanPage.adminItem);
+              pageNotifier.setLoanPage(LoanPage.admin);
               break;
-            case LoanPage.adminItem:
-              pageNotifier.setLoanPage(LoanPage.option);
-              break;
-            case LoanPage.adminLoan:
-              pageNotifier.setLoanPage(LoanPage.option);
+            case LoanPage.admin:
+              pageNotifier.setLoanPage(LoanPage.main);
               break;
           }
           return false;
@@ -70,7 +64,7 @@ class LoanHomePage extends HookConsumerWidget {
               TopBar(
                 controllerNotifier: controllerNotifier,
               ),
-              const Expanded(child: NewAdminPage()),
+              const Expanded(child: PageSwitcher()),
             ],
           ),
         ),

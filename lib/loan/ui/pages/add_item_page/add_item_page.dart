@@ -231,8 +231,7 @@ class AddItemPage extends HookConsumerWidget {
                                       ),
                                     );
                                     if (value) {
-                                      pageNotifier
-                                          .setLoanPage(LoanPage.adminItem);
+                                      pageNotifier.setLoanPage(LoanPage.admin);
                                       await loanersitemsNotifier.setTData(
                                           loaner.value,
                                           await itemListNotifier.copy());

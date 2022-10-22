@@ -422,7 +422,7 @@ class AddLoanPage extends HookConsumerWidget {
                                                     await loanListNotifier
                                                         .copy());
                                             pageNotifier.setLoanPage(
-                                                LoanPage.adminLoan);
+                                                LoanPage.admin);
                                             displayLoanToastWithContext(
                                                 TypeMsg.msg,
                                                 LoanTextConstants.addedLoan);
