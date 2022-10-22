@@ -2,18 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/is_loan_admin_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
-import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
-import 'package:myecl/loan/ui/pages/new_admin_page/loaner_chip.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
 
 class MainPage extends HookConsumerWidget {
@@ -25,8 +21,6 @@ class MainPage extends HookConsumerWidget {
     final loanList = ref.watch(loanListProvider);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
     final isAdmin = ref.watch(isLoanAdmin);
-    final loaner = ref.watch(loanerProvider);
-    final loanerNotifier = ref.watch(loanerIdProvider.notifier);
     ref.watch(adminLoanListProvider);
     ref.watch(itemListProvider);
     ref.watch(loanerLoanListProvider);
@@ -47,8 +41,6 @@ class MainPage extends HookConsumerWidget {
       loading: () {},
       error: (error, s) {},
     );
-
-    print(dictCateListWidget);
 
     return LoanRefresher(
         onRefresh: () async {

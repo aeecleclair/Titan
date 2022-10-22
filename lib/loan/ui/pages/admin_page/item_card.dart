@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:myecl/loan/class/item.dart';
 
 class ItemCard extends StatelessWidget {
@@ -35,12 +32,12 @@ class ItemCard extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 17.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               Text(item.name,
                   style: const TextStyle(
                       fontSize: 18,
@@ -70,8 +67,14 @@ class ItemCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              blurRadius: 10,
+                              offset: const Offset(2, 3))
+                        ],
                       ),
-                      child: const Icon(Icons.edit),
+                      child: const Icon(Icons.edit, color: Colors.black),
                     ),
                   ),
                   GestureDetector(
@@ -82,6 +85,12 @@ class ItemCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 10,
+                              offset: const Offset(2, 3))
+                        ],
                       ),
                       child: const Icon(Icons.delete, color: Colors.white),
                     ),

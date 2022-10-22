@@ -6,9 +6,8 @@ import 'package:myecl/loan/ui/pages/item_group_page/add_item_page.dart';
 import 'package:myecl/loan/ui/pages/item_group_page/edit_item_page.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/add_loan_page.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/edit_loan_page.dart';
-import 'package:myecl/loan/ui/pages/history_page/history_page.dart';
 import 'package:myecl/loan/ui/pages/main_page/main_page.dart';
-import 'package:myecl/loan/ui/pages/new_admin_page/new_admin_page.dart';
+import 'package:myecl/loan/ui/pages/admin_page/admin_page.dart';
 
 class PageSwitcher extends ConsumerWidget {
   const PageSwitcher({Key? key}) : super(key: key);
@@ -30,7 +29,7 @@ class PageSwitcher extends ConsumerWidget {
       case LoanPage.editItem:
         return const EditItemPage();
       case LoanPage.admin:
-        return const NewAdminPage();
+        return const AdminPage();
     }
   }
 }

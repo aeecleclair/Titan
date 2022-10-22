@@ -41,7 +41,7 @@ class LoanCard extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,14 +50,14 @@ class LoanCard extends StatelessWidget {
                 Column(children: [
                   const SizedBox(height: 10),
                   Container(
-                    height: 30,
                     alignment: Alignment.center,
-                    child: Text(loan.loaner.name,
+                    child: Text(capitalize(loan.loaner.name),
                         style: const TextStyle(
-                            fontSize: 25,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
                   ),
+                  const SizedBox(height: 5),
                 ]),
               const SizedBox(height: 10),
               Text(loan.borrower.getName(),
@@ -106,8 +106,14 @@ class LoanCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.grey.shade200,
                           borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
+                          ],
                         ),
-                        child: const Icon(Icons.edit),
+                        child: const Icon(Icons.edit, color: Colors.black),
                       ),
                     ),
                     GestureDetector(
@@ -116,11 +122,17 @@ class LoanCard extends StatelessWidget {
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: Colors.grey.shade200,
                           borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
+                          ],
                         ),
                         child: const Icon(Icons.calendar_month_outlined,
-                            color: Colors.white),
+                            color: Colors.black),
                       ),
                     ),
                     GestureDetector(
@@ -131,6 +143,12 @@ class LoanCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
+                          ],
                         ),
                         child: const Icon(Icons.check, color: Colors.white),
                       ),

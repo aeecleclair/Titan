@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class DrawerColorConstants {
   static final Color lightText = Colors.grey.shade100.withOpacity(0.6);
   static final Color selectedText = Colors.grey.shade100;
-  static const Color lightBlue = Color(0xFF2F86C1);
-  static const Color darkBlue = Color(0xFF1E557A);
-  static const Color fakePageBlue = Color(0xFF3390CE);
-  static const Color fakePageShadow = Color(0x4F3390CE);
+  static const Color lightBlue = Color.fromARGB(255, 46, 46, 46);
+  static const Color darkBlue = Color.fromARGB(255, 8, 8, 8);
+  static const Color fakePageBlue = Color.fromARGB(255, 48, 48, 48);
+  static const Color fakePageShadow = Color.fromARGB(79, 60, 60, 60);
 }
 
 class DrawerTextConstants {
