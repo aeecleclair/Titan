@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/ui/page_switcher.dart';
+import 'package:myecl/loan/ui/pages/new_admin_page/new_admin_page.dart';
 import 'package:myecl/loan/ui/top_bar.dart';
 
 class LoanHomePage extends HookConsumerWidget {
@@ -69,7 +70,7 @@ class LoanHomePage extends HookConsumerWidget {
               TopBar(
                 controllerNotifier: controllerNotifier,
               ),
-              const Expanded(child: PageSwitcher()),
+              const Expanded(child: NewAdminPage()),
             ],
           ),
         ),

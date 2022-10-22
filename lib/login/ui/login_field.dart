@@ -60,6 +60,8 @@ class CreateAccountField extends HookConsumerWidget {
           cursorColor: Colors.white,
           decoration: (keyboardType == TextInputType.visiblePassword)
               ? InputDecoration(
+                  contentPadding:
+                      EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
                   suffixIcon: IconButton(
                     icon: Icon(
                       hidePassword.value

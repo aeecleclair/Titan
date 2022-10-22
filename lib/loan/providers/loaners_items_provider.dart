@@ -4,6 +4,7 @@ import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
+import 'package:myecl/tools/providers/toggle_map_provider.dart';
 import 'package:tuple/tuple.dart';
 
 class LoanersItems extends MapNotifier<Loaner, Item> {
@@ -11,7 +12,7 @@ class LoanersItems extends MapNotifier<Loaner, Item> {
 }
 
 final loanersItemsProvider = StateNotifierProvider<LoanersItems,
-    AsyncValue<Map<Loaner, Tuple2<AsyncValue<List<Item>>, bool>>>>((ref) {
+    AsyncValue<Map<Loaner, AsyncValue<List<Item>>>>>((ref) {
   final token = ref.watch(tokenProvider);
   final loaners = ref.watch(loanerList);
   LoanersItems loanerLoanListNotifier = LoanersItems(token: token);

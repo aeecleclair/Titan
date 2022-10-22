@@ -9,8 +9,8 @@ class SignUpProvider extends StateNotifier {
   final SignUpRepository _repository = SignUpRepository();
 
   Future<bool> createUser(
-      String email, String password, AccountType accountType) async {
-    return await _repository.createUser(email, password, accountType);
+      String email, AccountType accountType) async {
+    return await _repository.createUser(email, accountType);
   }
 
   Future<bool> recoverUser(String email) async {

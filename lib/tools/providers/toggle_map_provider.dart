@@ -1,14 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/exception.dart';
+import 'package:tuple/tuple.dart';
 
-class MapNotifier<T, E> extends StateNotifier<
-    AsyncValue<Map<T, AsyncValue<List<E>>>>> {
-  MapNotifier({required String token}) : super(const AsyncLoading());
+class ToggleMapNotifier<T, E> extends StateNotifier<
+    AsyncValue<Map<T, Tuple2<AsyncValue<List<E>>, bool>>>> {
+  ToggleMapNotifier({required String token}) : super(const AsyncLoading());
 
   void loadTList(List<T> tList) async {
-    Map<T, AsyncValue<List<E>>> loanersItems = {};
+    Map<T, Tuple2<AsyncValue<List<E>>, bool>> loanersItems = {};
     for (T l in tList) {
-      loanersItems[l] = const AsyncValue.data([]);
+      loanersItems[l] = const Tuple2(AsyncValue.data([]), false);
     }
     state = AsyncValue.data(loanersItems);
   }
@@ -16,7 +17,7 @@ class MapNotifier<T, E> extends StateNotifier<
   Future addT(T t) async {
     state.when(
       data: (loanersItems) async {
-        loanersItems[t] = const AsyncValue.data([]);
+        loanersItems[t] = const Tuple2(AsyncValue.data([]), false);
         state = AsyncValue.data(loanersItems);
       },
       loading: () {},
@@ -28,8 +29,10 @@ class MapNotifier<T, E> extends StateNotifier<
     state.when(data: (d) async {
       try {
         List<E> currentLoans = d[t]!
+            .item1
             .when(data: (d) => d, error: (e, s) => [], loading: () => []);
-        d[t] = AsyncValue.data(currentLoans + [e]);
+        d[t] =
+            Tuple2(AsyncValue.data(currentLoans + [e]), d[t]!.item2);
         state = AsyncValue.data(d);
         return true;
       } catch (error) {
@@ -54,10 +57,11 @@ class MapNotifier<T, E> extends StateNotifier<
     });
   }
 
-  Future<bool> setTData(T t, AsyncValue<List<E>> asyncEList) async {
+  Future<bool> setTData(
+      T t, AsyncValue<List<E>> asyncEList) async {
     return state.when(data: (d) async {
       try {
-        d[t] = asyncEList;
+        d[t] = Tuple2(asyncEList, d[t]!.item2);
         state = AsyncValue.data(d);
         return true;
       } catch (error) {
@@ -78,6 +82,25 @@ class MapNotifier<T, E> extends StateNotifier<
       }
     }, loading: () {
       state = const AsyncValue.error("Cannot add while loading");
+      return false;
+    });
+  }
+
+  Future<bool> toggleExpanded(T t) {
+    return state.when(data: (d) async {
+      d[t] = Tuple2(d[t]!.item1, !d[t]!.item2);
+      state = AsyncValue.data(d);
+      if (d[t] == null) {
+        return false;
+      } else {
+        return d[t]!.item1.when(
+            data: (a) async => a.isNotEmpty || !d[t]!.item2,
+            error: (e, s) async => false,
+            loading: () async => false);
+      }
+    }, error: (Object error, StackTrace? stackTrace) async {
+      return false;
+    }, loading: () async {
       return false;
     });
   }

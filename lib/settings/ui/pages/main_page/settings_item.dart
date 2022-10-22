@@ -19,7 +19,7 @@ class SettingsItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: const EdgeInsets.only(right: 50),
+          padding: const EdgeInsets.only(right: 30),
           child: HeroIcon(
             icon,
             size: 30,

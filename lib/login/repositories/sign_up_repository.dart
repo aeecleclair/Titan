@@ -9,13 +9,17 @@ class SignUpRepository extends Repository {
   // ignore: overridden_fields
   final ext = "users/";
 
-  Future<bool> createUser(
-      String email, String password, AccountType accountType) async {
-    return (await create({
-      "email": email,
-      "password": password,
-      "account_type": accountTypeToID(accountType),
-    }, suffix: "create"))["success"];
+  Future<bool> createUser(String email, AccountType accountType) async {
+    try {
+      final value = await create({
+        "email": email,
+        "account_type": accountTypeToID(accountType),
+      }, suffix: "create");
+      return value["success"];
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
   Future<bool> recoverUser(String email) async {

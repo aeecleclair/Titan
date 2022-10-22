@@ -3,11 +3,11 @@ import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/map_provider.dart';
+import 'package:myecl/tools/providers/toggle_map_provider.dart';
 import 'package:tuple/tuple.dart';
 
 
-class AdminDeliveryOrderList extends MapNotifier<Delivery, Order> {
+class AdminDeliveryOrderList extends ToggleMapNotifier<Delivery, Order> {
   AdminDeliveryOrderList({required String token}) : super(token: token);
 }
 
