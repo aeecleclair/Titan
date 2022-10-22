@@ -10,14 +10,17 @@ class CreateAccountField extends HookConsumerWidget {
   final PageController pageController;
   final ValueNotifier<int> currentPage;
   final TextInputType keyboardType;
-  const CreateAccountField(
-      {super.key,
-      required this.controller,
-      required this.label,
-      required this.index,
-      required this.pageController,
-      required this.currentPage,
-      this.keyboardType = TextInputType.text});
+  final List<String> autofillHints;
+  const CreateAccountField({
+    super.key,
+    required this.controller,
+    required this.label,
+    required this.index,
+    required this.pageController,
+    required this.currentPage,
+    this.keyboardType = TextInputType.text,
+    this.autofillHints = const [],
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,7 +44,8 @@ class CreateAccountField extends HookConsumerWidget {
         const SizedBox(
           height: 14,
         ),
-        TextFormField(
+        AutofillGroup(
+            child: TextFormField(
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -49,6 +53,7 @@ class CreateAccountField extends HookConsumerWidget {
           ),
           autofocus: true,
           keyboardType: keyboardType,
+          autofillHints: autofillHints,
           onFieldSubmitted: (_) {
             pageController.animateToPage(index,
                 duration: const Duration(milliseconds: 500),
@@ -102,7 +107,7 @@ class CreateAccountField extends HookConsumerWidget {
             }
             return null;
           },
-        ),
+        )),
       ],
     );
   }

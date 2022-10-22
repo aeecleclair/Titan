@@ -60,6 +60,8 @@ class CreateAccountPage extends HookConsumerWidget {
         index: 3,
         pageController: pageController,
         currentPage: currentPage,
+        keyboardType: TextInputType.name,
+        autofillHints: const [AutofillHints.familyName],
       ),
       CreateAccountField(
         controller: firstname,
@@ -67,6 +69,8 @@ class CreateAccountPage extends HookConsumerWidget {
         index: 4,
         pageController: pageController,
         currentPage: currentPage,
+        keyboardType: TextInputType.name,
+        autofillHints: const [AutofillHints.givenName],
       ),
       CreateAccountField(
         controller: username,
@@ -74,6 +78,7 @@ class CreateAccountPage extends HookConsumerWidget {
         index: 5,
         pageController: pageController,
         currentPage: currentPage,
+        keyboardType: TextInputType.name,
       ),
       Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         const SizedBox(
@@ -141,6 +146,7 @@ class CreateAccountPage extends HookConsumerWidget {
         pageController: pageController,
         currentPage: currentPage,
         keyboardType: TextInputType.phone,
+        autofillHints: const [AutofillHints.telephoneNumber],
       ),
       CreateAccountField(
         controller: floor,
