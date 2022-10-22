@@ -85,7 +85,7 @@ class LoanUi extends ConsumerWidget {
           ])),
       onTap: () {
         pageNotifier
-            .setLoanPage(isAdmin ? LoanPage.groupLoan : LoanPage.detail);
+            .setLoanPage(isAdmin ? LoanPage.groupLoan : LoanPage.admin);
         loanNotifier.setLoan(l);
       },
     );

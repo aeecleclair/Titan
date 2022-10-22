@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;
-  const LoanCard({super.key, required this.loan});
+  final Function() onEdit, onCalendar, onReturn;
+  const LoanCard(
+      {super.key,
+      required this.loan,
+      required this.onEdit,
+      required this.onCalendar,
+      required this.onReturn});
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +83,7 @@ class LoanCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: onEdit,
                     child: Container(
                       width: 40,
                       height: 40,
@@ -90,7 +95,7 @@ class LoanCard extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: onCalendar,
                     child: Container(
                       width: 40,
                       height: 40,
@@ -103,7 +108,7 @@ class LoanCard extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: onReturn,
                     child: Container(
                       width: 40,
                       height: 40,

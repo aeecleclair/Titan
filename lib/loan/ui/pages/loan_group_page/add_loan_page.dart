@@ -414,37 +414,46 @@ class AddLoanPage extends HookConsumerWidget {
                                               .where((element) => selectedItems[
                                                   itemList.indexOf(element)])
                                               .toList();
-                                          final value =
-                                              await loanListNotifier.addLoan(
-                                            Loan(
-                                              loaner: loaner,
-                                              items: selected,
-                                              borrower: borrower.value,
-                                              caution: caution.text.isNotEmpty
-                                                  ? caution.text
-                                                  : "${selected.fold<double>(0, (previousValue, element) => previousValue + element.caution)}€",
-                                              end: DateTime.parse(end.text),
-                                              id: "",
-                                              notes: note.text,
-                                              start: DateTime.parse(start.text),
-                                              returned: false,
-                                            ),
-                                          );
-                                          if (value) {
-                                            await adminLoanListNotifier
-                                                .setTData(
-                                                    loaner,
-                                                    await loanListNotifier
-                                                        .copy());
-                                            pageNotifier
-                                                .setLoanPage(LoanPage.admin);
-                                            displayLoanToastWithContext(
-                                                TypeMsg.msg,
-                                                LoanTextConstants.addedLoan);
+                                          if (selected.isNotEmpty) {
+                                            final value =
+                                                await loanListNotifier.addLoan(
+                                              Loan(
+                                                loaner: loaner,
+                                                items: selected,
+                                                borrower: borrower.value,
+                                                caution: caution.text.isNotEmpty
+                                                    ? caution.text
+                                                    : "${selected.fold<double>(0, (previousValue, element) => previousValue + element.caution)}€",
+                                                end: DateTime.parse(end.text),
+                                                id: "",
+                                                notes: note.text,
+                                                start:
+                                                    DateTime.parse(start.text),
+                                                returned: false,
+                                              ),
+                                            );
+                                            if (value) {
+                                              await adminLoanListNotifier
+                                                  .setTData(
+                                                      loaner,
+                                                      await loanListNotifier
+                                                          .copy());
+                                              pageNotifier
+                                                  .setLoanPage(LoanPage.admin);
+                                              displayLoanToastWithContext(
+                                                  TypeMsg.msg,
+                                                  LoanTextConstants.addedLoan);
+                                            } else {
+                                              displayLoanToastWithContext(
+                                                  TypeMsg.error,
+                                                  LoanTextConstants
+                                                      .addingError);
+                                            }
                                           } else {
                                             displayLoanToastWithContext(
                                                 TypeMsg.error,
-                                                LoanTextConstants.addingError);
+                                                LoanTextConstants
+                                                    .noItemSelected);
                                           }
                                         });
                                       },

@@ -28,9 +28,6 @@ class TopBar extends HookConsumerWidget {
                   return IconButton(
                       onPressed: () {
                         switch (page) {
-                          case LoanPage.detail:
-                            pageNotifier.setLoanPage(LoanPage.main);
-                            break;
                           case LoanPage.editLoan:
                             pageNotifier.setLoanPage(LoanPage.groupLoan);
                             break;

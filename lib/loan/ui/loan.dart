@@ -21,11 +21,8 @@ class LoanHomePage extends HookConsumerWidget {
       body: WillPopScope(
         onWillPop: () async {
           switch (page) {
-            case LoanPage.detail:
-              pageNotifier.setLoanPage(LoanPage.main);
-              break;
             case LoanPage.editLoan:
-              pageNotifier.setLoanPage(LoanPage.groupLoan);
+              pageNotifier.setLoanPage(LoanPage.main);
               break;
             case LoanPage.main:
               if (!controller.isCompleted) {

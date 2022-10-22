@@ -20,10 +20,7 @@ class PageSwitcher extends ConsumerWidget {
       case LoanPage.addItem:
         return const AddItemPage();
       case LoanPage.addLoan:
-        print("addLoan");
         return const AddLoanPage();
-      case LoanPage.detail:
-        return const DetailPage(isAdmin: false);
       case LoanPage.editLoan:
         return const EditLoanPage();
       case LoanPage.main:

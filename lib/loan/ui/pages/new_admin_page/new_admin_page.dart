@@ -8,16 +8,20 @@ import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/loan/ui/pages/detail_page/delay_dialog.dart';
 import 'package:myecl/loan/ui/pages/new_admin_page/item_card.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
 import 'package:myecl/loan/ui/pages/new_admin_page/loaner_chip.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class NewAdminPage extends HookConsumerWidget {
@@ -27,13 +31,20 @@ class NewAdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final loanList = ref.watch(adminLoanListProvider);
     final loaner = ref.watch(loanerProvider);
-    final loanListNotifier = ref.watch(adminLoanListProvider.notifier);
+    final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final loanersItems = ref.watch(loanersItemsProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final loanerLoanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loaded = useState(false);
     final pageNotifier = ref.watch(loanPageProvider.notifier);
+    final loanNotifier = ref.watch(loanProvider.notifier);
+    final loanerListNotifier = ref.watch(loanerLoanListProvider.notifier);
+    final adminloanListNotifier = ref.watch(adminLoanListProvider.notifier);
+    void displayLoanToastWithContext(TypeMsg type, String msg) {
+      displayLoanToast(context, type, msg);
+    }
+
     if (!loaded.value) {
       ref.watch(userList);
       itemListNotifier.setId(loaner.id);
@@ -46,7 +57,7 @@ class NewAdminPage extends HookConsumerWidget {
       loanerLoanListNotifier.loadLoan(loaner.id);
       loanerLoanListNotifier.copy().then(
         (value) {
-          loanListNotifier.setTData(loaner, value);
+          adminloanListNotifier.setTData(loaner, value);
         },
       );
       loaded.value = true;
@@ -57,7 +68,8 @@ class NewAdminPage extends HookConsumerWidget {
         itemListNotifier.loadItemList();
         loanersitemsNotifier.setTData(loaner, await itemListNotifier.copy());
         loanerLoanListNotifier.loadLoan(loaner.id);
-        loanListNotifier.setTData(loaner, await loanerLoanListNotifier.copy());
+        adminloanListNotifier.setTData(
+            loaner, await loanerLoanListNotifier.copy());
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 10.0),
@@ -95,7 +107,7 @@ class NewAdminPage extends HookConsumerWidget {
                                               await itemListNotifier.copy());
                                           loanerLoanListNotifier
                                               .loadLoan(loaner.id);
-                                          loanListNotifier.setTData(
+                                          adminloanListNotifier.setTData(
                                               loaner,
                                               await loanerLoanListNotifier
                                                   .copy());
@@ -171,6 +183,84 @@ class NewAdminPage extends HookConsumerWidget {
                                         ...data
                                             .map((e) => LoanCard(
                                                   loan: e,
+                                                  onEdit: () {
+                                                    loanNotifier
+                                                        .setLoan(e)
+                                                        .then((_) {
+                                                      ref.watch(
+                                                          itemListProvider);
+                                                      pageNotifier.setLoanPage(
+                                                          LoanPage.editLoan);
+                                                    });
+                                                  },
+                                                  onCalendar: () {
+                                                    showDialog<int>(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return DelayDialog(
+                                                            onYes: (i) async {
+                                                              Loan newLoan = e.copyWith(
+                                                                  end: e.end.add(
+                                                                      Duration(
+                                                                          days:
+                                                                              i)));
+                                                              await loanNotifier
+                                                                  .setLoan(
+                                                                      newLoan);
+                                                              tokenExpireWrapper(
+                                                                  ref,
+                                                                  () async {
+                                                                final value =
+                                                                    await loanerListNotifier
+                                                                        .extendLoan(
+                                                                            newLoan,
+                                                                            i);
+                                                                if (value) {
+                                                                  displayLoanToastWithContext(
+                                                                      TypeMsg
+                                                                          .msg,
+                                                                      LoanTextConstants
+                                                                          .extendedLoan);
+                                                                } else {
+                                                                  displayLoanToastWithContext(
+                                                                      TypeMsg
+                                                                          .error,
+                                                                      LoanTextConstants
+                                                                          .extendingError);
+                                                                }
+                                                              });
+                                                            },
+                                                          );
+                                                        });
+                                                  },
+                                                  onReturn: () async {
+                                                    tokenExpireWrapper(ref,
+                                                        () async {
+                                                      final value =
+                                                          await loanListNotifier
+                                                              .returnLoan(e);
+                                                      if (value) {
+                                                        pageNotifier
+                                                            .setLoanPage(
+                                                                LoanPage.admin);
+                                                        await adminloanListNotifier
+                                                            .setTData(
+                                                                loaner,
+                                                                await loanListNotifier
+                                                                    .copy());
+                                                        displayLoanToastWithContext(
+                                                            TypeMsg.msg,
+                                                            LoanTextConstants
+                                                                .returnedLoan);
+                                                      } else {
+                                                        displayLoanToastWithContext(
+                                                            TypeMsg.msg,
+                                                            LoanTextConstants
+                                                                .returningError);
+                                                      }
+                                                    });
+                                                  },
                                                 ))
                                             .toList(),
                                         const SizedBox(width: 10),

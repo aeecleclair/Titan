@@ -441,7 +441,7 @@ class EditLoanPage extends HookConsumerWidget {
                                               asso.value,
                                               await loanListNotifier.copy());
                                           pageNotifier
-                                              .setLoanPage(LoanPage.groupLoan);
+                                              .setLoanPage(LoanPage.admin);
                                           displayLoanToastWithContext(
                                               TypeMsg.msg,
                                               LoanTextConstants.updatedLoan);

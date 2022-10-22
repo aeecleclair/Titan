@@ -8,16 +8,20 @@ import 'package:myecl/loan/providers/is_loan_admin_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
 import 'package:myecl/loan/ui/loan_ui.dart';
+import 'package:myecl/loan/ui/pages/detail_page/delay_dialog.dart';
 import 'package:myecl/loan/ui/pages/new_admin_page/loaner_chip.dart';
 import 'package:myecl/loan/ui/refresh_indicator.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -29,12 +33,16 @@ class MainPage extends HookConsumerWidget {
     final loanListNotifier = ref.watch(loanListProvider.notifier);
     final isAdmin = ref.watch(isLoanAdmin);
     final loaner = ref.watch(loanerProvider);
+    final loanNotifier = ref.watch(loanProvider.notifier);
     final loanerNotifier = ref.watch(loanerIdProvider.notifier);
+    final loanerListNotifier = ref.watch(loanerLoanListProvider.notifier);
+    final adminloanListNotifier = ref.watch(adminLoanListProvider.notifier);
     ref.watch(adminLoanListProvider);
     ref.watch(itemListProvider);
     ref.watch(loanerLoanListProvider);
     List<Loaner> categories = [];
     Map<Loaner, List<List<Loan>>> dictCateListWidget = {};
+
 
     loanList.when(
       data: (data) {
@@ -151,8 +159,10 @@ class MainPage extends HookConsumerWidget {
                             ...dictCateListWidget[loaner]![0]
                                 .map((e) => LoanCard(
                                       loan: e,
-                                    ))
-                                .toList(),
+                                      onEdit: () {},
+                                      onCalendar: () {},
+                                      onReturn: () async {},
+                                    )),
                             const SizedBox(width: 10),
                           ],
                         ),
@@ -188,6 +198,9 @@ class MainPage extends HookConsumerWidget {
                         ...dictCateListWidget[loaner]![1]
                             .map((e) => LoanCard(
                                   loan: e,
+                                  onEdit: () {},
+                                  onCalendar: () {},
+                                  onReturn: () async {},
                                 ))
                             .toList(),
                         const SizedBox(width: 10),

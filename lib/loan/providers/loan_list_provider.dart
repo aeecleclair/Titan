@@ -42,6 +42,8 @@ class LoanListNotifier extends ListNotifier<Loan> {
         loan.id,
         loan);
   }
+
+  copy() {}
 }
 
 final loanListProvider =
