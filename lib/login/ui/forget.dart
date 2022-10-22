@@ -21,7 +21,7 @@ class ForgetPassword extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final signUpNotifier = ref.watch(signUpProvider.notifier);
-    final username = useTextEditingController();
+    final email = useTextEditingController();
     void displayLoginToastWithContext(TypeMsg type, String msg) {
       displayLoginToast(context, type, msg);
     }
@@ -67,16 +67,23 @@ class ForgetPassword extends HookConsumerWidget {
                     height: 30,
                   ),
                   Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: AutofillGroup(
                       child: TextFormField(
-                          controller: username,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                          decoration: signInRegisterInputDecoration(
-                              isSignIn: false,
-                              hintText: LoginTextConstants.email))),
+                        controller: email,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                        decoration: signInRegisterInputDecoration(
+                          isSignIn: false,
+                          hintText: LoginTextConstants.email,
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        autofillHints: const [AutofillHints.email],
+                      ),
+                    ),
+                  ),
                   const SizedBox(
                     height: 30,
                   ),
@@ -85,11 +92,11 @@ class ForgetPassword extends HookConsumerWidget {
                     isLoading: ref.watch(loadingrovider),
                     onPressed: () async {
                       final value =
-                          await signUpNotifier.recoverUser(username.text);
+                          await signUpNotifier.recoverUser(email.text);
                       if (value) {
                         displayLoginToastWithContext(
                             TypeMsg.msg, LoginTextConstants.sendedResetMail);
-                        username.clear();
+                        email.clear();
                       } else {
                         displayLoginToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);
