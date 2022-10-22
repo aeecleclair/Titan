@@ -5,13 +5,15 @@ import 'package:myecl/tools/functions.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;
+  final bool isAdmin;
   final Function() onEdit, onCalendar, onReturn;
   const LoanCard(
       {super.key,
       required this.loan,
       required this.onEdit,
       required this.onCalendar,
-      required this.onReturn});
+      required this.onReturn,
+      required this.isAdmin});
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,19 @@ class LoanCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (!isAdmin)
+                Column(children: [
+                  const SizedBox(height: 10),
+                  Container(
+                    height: 30,
+                    alignment: Alignment.center,
+                    child: Text(loan.loaner.name,
+                        style: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black)),
+                  ),
+                ]),
               const SizedBox(height: 10),
               Text(loan.borrower.getName(),
                   style: const TextStyle(
@@ -79,48 +94,49 @@ class LoanCard extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: onEdit,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(30),
+              if (isAdmin)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: onEdit,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: const Icon(Icons.edit),
                       ),
-                      child: const Icon(Icons.edit),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: onCalendar,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(30),
+                    GestureDetector(
+                      onTap: onCalendar,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: const Icon(Icons.calendar_month_outlined,
+                            color: Colors.white),
                       ),
-                      child: const Icon(Icons.calendar_month_outlined,
-                          color: Colors.white),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: onReturn,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(30),
+                    GestureDetector(
+                      onTap: onReturn,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: const Icon(Icons.check, color: Colors.white),
                       ),
-                      child: const Icon(Icons.check, color: Colors.white),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
               const SizedBox(height: 10),
             ],
           ),
