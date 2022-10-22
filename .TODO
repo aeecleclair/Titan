@@ -1,6 +1,7 @@
 En cours :
     - Login :
         - Reset password : test (1)
+        - back button
 
     - Events :
         - Admin page (edit) (API)
@@ -39,10 +40,10 @@ Loaners
 
 Modules :
     - Vote (liste prétendance) (1)
-    - Soli (3)
     - Cinéma (2)
-    - JE (4)
     - Piston (2)
+    - Soli (3)
+    - JE (4)
     ...
     - Messagerie (5)
 

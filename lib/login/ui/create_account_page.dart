@@ -173,15 +173,20 @@ class CreateAccountPage extends HookConsumerWidget {
               activationToken: activationCode.text,
               password: password.text,
             );
-            final value = await signUpNotifier.activateUser(finalcreateAccount);
-            if (value) {
-              displayLoginToastWithContext(
-                  TypeMsg.msg, LoginTextConstants.accountActivated);
-              authTokenNotifier.deleteToken();
-              onActivationPressed();
-            } else {
-              displayLoginToastWithContext(
-                  TypeMsg.error, LoginTextConstants.accountNotActivated);
+            try {
+              final value =
+                  await signUpNotifier.activateUser(finalcreateAccount);
+              if (value) {
+                displayLoginToastWithContext(
+                    TypeMsg.msg, LoginTextConstants.accountActivated);
+                authTokenNotifier.deleteToken();
+                onActivationPressed();
+              } else {
+                displayLoginToastWithContext(
+                    TypeMsg.error, LoginTextConstants.accountNotActivated);
+              }
+            } catch (e) {
+              displayLoginToastWithContext(TypeMsg.error, e.toString());
             }
           } else {
             displayLoginToastWithContext(
@@ -198,7 +203,7 @@ class CreateAccountPage extends HookConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.centerLeft,
             child: GestureDetector(
               onTap: onActivationPressed,
               child: const HeroIcon(
@@ -229,7 +234,7 @@ class CreateAccountPage extends HookConsumerWidget {
               children: [
                 const Spacer(),
                 Expanded(
-                    flex: 3,
+                    flex: 4,
                     child: PageView(
                         scrollDirection: Axis.horizontal,
                         controller: pageController,
@@ -290,7 +295,7 @@ class CreateAccountPage extends HookConsumerWidget {
                   },
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
               ],
             ),

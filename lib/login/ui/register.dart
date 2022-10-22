@@ -36,7 +36,7 @@ class Register extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.centerLeft,
               child: GestureDetector(
                 onTap: onSignInPressed,
                 child: const HeroIcon(
@@ -86,13 +86,11 @@ class Register extends HookConsumerWidget {
                     onPressed: () async {
                       final value = await signUpNotifier.createUser(
                           mail.text, AccountType.student);
-                      print(value);
                       if (value) {
                         displayLoginToastWithContext(
                             TypeMsg.msg, LoginTextConstants.sendedMail);
                         hidePass.value = true;
                         mail.clear();
-                        onSignInPressed();
                       } else {
                         displayLoginToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);

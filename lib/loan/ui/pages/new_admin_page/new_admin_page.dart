@@ -120,8 +120,91 @@ class NewAdminPage extends HookConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        loans[loaner]!.when(
-                            data: (List<Loan> data) => SingleChildScrollView(
+                        if (loans[loaner] != null)
+                          loans[loaner]!.when(
+                              data: (List<Loan> data) => SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    physics: const BouncingScrollPhysics(),
+                                    child: Row(
+                                      children: [
+                                        const SizedBox(width: 10),
+                                        GestureDetector(
+                                          onTap: () {
+                                            pageNotifier
+                                                .setLoanPage(LoanPage.addLoan);
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Container(
+                                              width: 140,
+                                              height: 180,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.shade200
+                                                        .withOpacity(0.5),
+                                                    spreadRadius: 5,
+                                                    blurRadius: 10,
+                                                    offset: const Offset(3, 3),
+                                                  ),
+                                                  BoxShadow(
+                                                    color: Colors.grey.shade200
+                                                        .withOpacity(0.5),
+                                                    spreadRadius: 5,
+                                                    blurRadius: 10,
+                                                    offset: const Offset(3, 3),
+                                                  ),
+                                                ],
+                                              ),
+                                              child: const Center(
+                                                  child: HeroIcon(
+                                                HeroIcons.plus,
+                                                size: 40.0,
+                                                color: Colors.black,
+                                              )),
+                                            ),
+                                          ),
+                                        ),
+                                        ...data
+                                            .map((e) => LoanCard(
+                                                  loan: e,
+                                                ))
+                                            .toList(),
+                                        const SizedBox(width: 10),
+                                      ],
+                                    ),
+                                  ),
+                              error: (Object error, StackTrace? stackTrace) {
+                                return Center(child: Text('Error $error'));
+                              },
+                              loading: () {
+                                return const Center(
+                                    child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ));
+                              }),
+                        const SizedBox(height: 20),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 30.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(LoanTextConstants.itemHandling,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 205, 205, 205))),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        loanersItems.when(
+                          data: (items) {
+                            if (items[loaner] != null) {
+                              return items[loaner]!.when(
+                                data: (List<Item> data) =>
+                                    SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   physics: const BouncingScrollPhysics(),
                                   child: Row(
@@ -130,13 +213,15 @@ class NewAdminPage extends HookConsumerWidget {
                                       GestureDetector(
                                         onTap: () {
                                           pageNotifier
-                                              .setLoanPage(LoanPage.addLoan);
+                                              .setLoanPage(LoanPage.addItem);
                                         },
                                         child: Container(
-                                          padding: const EdgeInsets.all(15.0),
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 5.0),
+                                          padding: const EdgeInsets.all(12.0),
                                           child: Container(
                                             width: 140,
-                                            height: 180,
+                                            height: 160,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                               borderRadius:
@@ -159,111 +244,36 @@ class NewAdminPage extends HookConsumerWidget {
                                               ],
                                             ),
                                             child: const Center(
-                                                child: HeroIcon(
-                                              HeroIcons.plus,
-                                              size: 40.0,
-                                              color: Colors.black,
-                                            )),
+                                              child: HeroIcon(
+                                                HeroIcons.plus,
+                                                size: 40.0,
+                                                color: Colors.black,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                      ...data
-                                          .map((e) => LoanCard(
-                                                loan: e,
-                                              ))
-                                          .toList(),
+                                      ...data.map((e) => ItemCard(item: e)),
                                       const SizedBox(width: 10),
                                     ],
                                   ),
                                 ),
-                            error: (Object error, StackTrace? stackTrace) {
-                              return Center(child: Text('Error $error'));
-                            },
-                            loading: () {
+                                error: (Object error, StackTrace? stackTrace) {
+                                  return Center(child: Text('Error $error'));
+                                },
+                                loading: () {
+                                  return const Center(
+                                      child: CircularProgressIndicator(
+                                    color: Colors.black,
+                                  ));
+                                },
+                              );
+                            } else {
                               return const Center(
-                                  child: CircularProgressIndicator(
-                                color: Colors.black,
-                              ));
-                            }),
-                        const SizedBox(height: 20),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 30.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(LoanTextConstants.itemHandling,
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 205, 205, 205))),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        loanersItems.when(
-                          data: (items) => items[loaner]!.when(
-                            data: (List<Item> data) => SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              child: Row(
-                                children: [
-                                  const SizedBox(width: 10),
-                                  GestureDetector(
-                                    onTap: () {
-                                      pageNotifier
-                                          .setLoanPage(LoanPage.addItem);
-                                    },
-                                    child: Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 5.0),
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Container(
-                                        width: 140,
-                                        height: 160,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.shade200
-                                                  .withOpacity(0.5),
-                                              spreadRadius: 5,
-                                              blurRadius: 10,
-                                              offset: const Offset(3, 3),
-                                            ),
-                                            BoxShadow(
-                                              color: Colors.grey.shade200
-                                                  .withOpacity(0.5),
-                                              spreadRadius: 5,
-                                              blurRadius: 10,
-                                              offset: const Offset(3, 3),
-                                            ),
-                                          ],
-                                        ),
-                                        child: const Center(
-                                          child: HeroIcon(
-                                            HeroIcons.plus,
-                                            size: 40.0,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  ...data.map((e) => ItemCard(item: e)),
-                                  const SizedBox(width: 10),
-                                ],
-                              ),
-                            ),
-                            error: (Object error, StackTrace? stackTrace) {
-                              return Center(child: Text('Error $error'));
-                            },
-                            loading: () {
-                              return const Center(
-                                  child: CircularProgressIndicator(
-                                color: Colors.black,
-                              ));
-                            },
-                          ),
+                                child: Text('No items'),
+                              );
+                            }
+                          },
                           error: (Object error, StackTrace? stackTrace) {
                             return const Center(child: Text('Error'));
                           },

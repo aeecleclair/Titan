@@ -34,7 +34,7 @@ class ForgetPassword extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.centerLeft,
               child: GestureDetector(
                 onTap: onSignInPressed,
                 child: const HeroIcon(
@@ -90,7 +90,6 @@ class ForgetPassword extends HookConsumerWidget {
                         displayLoginToastWithContext(
                             TypeMsg.msg, LoginTextConstants.sendedResetMail);
                         username.clear();
-                        onSignInPressed();
                       } else {
                         displayLoginToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);

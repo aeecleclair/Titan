@@ -31,153 +31,170 @@ class AuthScreen extends HookConsumerWidget {
               ),
             ),
           ),
-          Center(
-              child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 800),
-                  child: ValueListenableBuilder<bool>(
-                      valueListenable: showSignInPage,
-                      builder: (context, value, child) {
-                        return SizedBox.expand(
-                            child: PageTransitionSwitcher(
-                                reverse: !value,
-                                duration: const Duration(milliseconds: 800),
-                                transitionBuilder:
-                                    (child, animation, secondaryAnimation) {
-                                  return SharedAxisTransition(
-                                    animation: animation,
-                                    secondaryAnimation: secondaryAnimation,
-                                    transitionType:
-                                        SharedAxisTransitionType.vertical,
-                                    fillColor: Colors.transparent,
-                                    child: child,
-                                  );
-                                },
-                                child: value
-                                    ? SignIn(
-                                        key: const ValueKey(
-                                            LoginTextConstants.signIn),
-                                        onRegisterPressed: () {
-                                          showSignInPage.value = false;
-                                          showRegisterPage.value = true;
-                                          controller.forward();
-                                        },
-                                        onForgetPressed: () {
-                                          showSignInPage.value = false;
-                                          showRegisterPage.value = false;
-                                          controller.forward();
-                                        })
-                                    : showRegisterPage.value
-                                        ? ValueListenableBuilder<bool>(
-                                            valueListenable: showActivationPage,
-                                            builder: (context, value, child) {
-                                              return SizedBox.expand(
-                                                  child: PageTransitionSwitcher(
-                                                      reverse: !value,
-                                                      duration: const Duration(
-                                                          milliseconds: 800),
-                                                      transitionBuilder: (child,
-                                                          animation,
-                                                          secondaryAnimation) {
-                                                        return SharedAxisTransition(
-                                                          animation: animation,
-                                                          secondaryAnimation:
-                                                              secondaryAnimation,
-                                                          transitionType:
-                                                              SharedAxisTransitionType
-                                                                  .vertical,
-                                                          fillColor: Colors
-                                                              .transparent,
-                                                          child: child,
-                                                        );
-                                                      },
-                                                      child: value
-                                                          ? CreateAccountPage(
-                                                              onActivationPressed:
-                                                                  () {
-                                                                showActivationPage
-                                                                        .value =
-                                                                    false;
-                                                                showRegisterPage
-                                                                        .value =
-                                                                    true;
-                                                              },
-                                                            )
-                                                          : Register(
-                                                              key: const ValueKey(
-                                                                  LoginTextConstants
-                                                                      .register),
-                                                              onSignInPressed:
-                                                                  () {
-                                                                showSignInPage
-                                                                        .value =
-                                                                    true;
-                                                                controller
-                                                                    .reverse();
-                                                              },
-                                                              onMailRecieved:
-                                                                  () {
-                                                                showActivationPage
-                                                                        .value =
-                                                                    true;
-                                                              })));
-                                            })
-                                        : ValueListenableBuilder<bool>(
-                                            valueListenable: showResetPage,
-                                            builder: (context, value, child) {
-                                              return SizedBox.expand(
-                                                  child: PageTransitionSwitcher(
-                                                      reverse: !value,
-                                                      duration: const Duration(
-                                                          milliseconds: 800),
-                                                      transitionBuilder: (child,
-                                                          animation,
-                                                          secondaryAnimation) {
-                                                        return SharedAxisTransition(
-                                                          animation: animation,
-                                                          secondaryAnimation:
-                                                              secondaryAnimation,
-                                                          transitionType:
-                                                              SharedAxisTransitionType
-                                                                  .vertical,
-                                                          fillColor: Colors
-                                                              .transparent,
-                                                          child: child,
-                                                        );
-                                                      },
-                                                      child: value
-                                                          ? RecoverPasswordPage(
-                                                              onActivationPressed:
-                                                                  () {
-                                                                showResetPage
-                                                                        .value =
-                                                                    false;
-                                                                showRegisterPage
-                                                                        .value =
-                                                                    false;
-                                                              },
-                                                            )
-                                                          : ForgetPassword(
-                                                              key: const ValueKey(
-                                                                  LoginTextConstants
-                                                                      .forgetPassword),
-                                                              onSignInPressed:
-                                                                  () {
-                                                                showSignInPage
-                                                                        .value =
-                                                                    true;
-                                                                controller
-                                                                    .reverse();
-                                                              },
-                                                              onMailRecieved:
-                                                                  () {
-                                                                showResetPage
-                                                                        .value =
-                                                                    true;
-                                                              },
-                                                            )));
-                                            },
-                                          )));
-                      }))),
+          SafeArea(
+            child: Center(
+                child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 800),
+                    child: ValueListenableBuilder<bool>(
+                        valueListenable: showSignInPage,
+                        builder: (context, value, child) {
+                          return SizedBox.expand(
+                              child: PageTransitionSwitcher(
+                                  reverse: !value,
+                                  duration: const Duration(milliseconds: 800),
+                                  transitionBuilder:
+                                      (child, animation, secondaryAnimation) {
+                                    return SharedAxisTransition(
+                                      animation: animation,
+                                      secondaryAnimation: secondaryAnimation,
+                                      transitionType:
+                                          SharedAxisTransitionType.vertical,
+                                      fillColor: Colors.transparent,
+                                      child: child,
+                                    );
+                                  },
+                                  child: value
+                                      ? SignIn(
+                                          key: const ValueKey(
+                                              LoginTextConstants.signIn),
+                                          onRegisterPressed: () {
+                                            showSignInPage.value = false;
+                                            showRegisterPage.value = true;
+                                            controller.forward();
+                                          },
+                                          onForgetPressed: () {
+                                            showSignInPage.value = false;
+                                            showRegisterPage.value = false;
+                                            controller.forward();
+                                          })
+                                      : showRegisterPage.value
+                                          ? ValueListenableBuilder<bool>(
+                                              valueListenable:
+                                                  showActivationPage,
+                                              builder: (context, value, child) {
+                                                return SizedBox.expand(
+                                                    child:
+                                                        PageTransitionSwitcher(
+                                                            reverse: !value,
+                                                            duration:
+                                                                const Duration(
+                                                                    milliseconds:
+                                                                        800),
+                                                            transitionBuilder:
+                                                                (child,
+                                                                    animation,
+                                                                    secondaryAnimation) {
+                                                              return SharedAxisTransition(
+                                                                animation:
+                                                                    animation,
+                                                                secondaryAnimation:
+                                                                    secondaryAnimation,
+                                                                transitionType:
+                                                                    SharedAxisTransitionType
+                                                                        .vertical,
+                                                                fillColor: Colors
+                                                                    .transparent,
+                                                                child: child,
+                                                              );
+                                                            },
+                                                            child: value
+                                                                ? CreateAccountPage(
+                                                                    onActivationPressed:
+                                                                        () {
+                                                                      showActivationPage
+                                                                              .value =
+                                                                          false;
+                                                                      showSignInPage
+                                                                              .value =
+                                                                          true;
+                                                                      controller
+                                                                          .reverse();
+                                                                    },
+                                                                  )
+                                                                : Register(
+                                                                    key: const ValueKey(
+                                                                        LoginTextConstants
+                                                                            .register),
+                                                                    onSignInPressed:
+                                                                        () {
+                                                                      showSignInPage
+                                                                              .value =
+                                                                          true;
+                                                                      controller
+                                                                          .reverse();
+                                                                    },
+                                                                    onMailRecieved:
+                                                                        () {
+                                                                      showActivationPage
+                                                                              .value =
+                                                                          true;
+                                                                    })));
+                                              })
+                                          : ValueListenableBuilder<bool>(
+                                              valueListenable: showResetPage,
+                                              builder: (context, value, child) {
+                                                return SizedBox.expand(
+                                                    child:
+                                                        PageTransitionSwitcher(
+                                                            reverse: !value,
+                                                            duration:
+                                                                const Duration(
+                                                                    milliseconds:
+                                                                        800),
+                                                            transitionBuilder:
+                                                                (child,
+                                                                    animation,
+                                                                    secondaryAnimation) {
+                                                              return SharedAxisTransition(
+                                                                animation:
+                                                                    animation,
+                                                                secondaryAnimation:
+                                                                    secondaryAnimation,
+                                                                transitionType:
+                                                                    SharedAxisTransitionType
+                                                                        .vertical,
+                                                                fillColor: Colors
+                                                                    .transparent,
+                                                                child: child,
+                                                              );
+                                                            },
+                                                            child: value
+                                                                ? RecoverPasswordPage(
+                                                                    onActivationPressed:
+                                                                        () {
+                                                                      showResetPage
+                                                                              .value =
+                                                                          false;
+                                                                      showSignInPage
+                                                                              .value =
+                                                                          true;
+                                                                      controller
+                                                                          .reverse();
+                                                                    },
+                                                                  )
+                                                                : ForgetPassword(
+                                                                    key: const ValueKey(
+                                                                        LoginTextConstants
+                                                                            .forgetPassword),
+                                                                    onSignInPressed:
+                                                                        () {
+                                                                      showSignInPage
+                                                                              .value =
+                                                                          true;
+                                                                      controller
+                                                                          .reverse();
+                                                                    },
+                                                                    onMailRecieved:
+                                                                        () {
+                                                                      showResetPage
+                                                                              .value =
+                                                                          true;
+                                                                    },
+                                                                  )));
+                                              },
+                                            )));
+                        }))),
+          ),
         ],
       ),
     );
