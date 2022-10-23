@@ -18,7 +18,7 @@ class TopBar extends ConsumerWidget {
     return Column(
       children: [
         Container(
-          height: 25,
+          height: 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,18 +76,17 @@ class TopBar extends ConsumerWidget {
                   ),
                   SizedBox(
                     width: 60,
-                    height: 40,
+                    height: 30,
                     child: HeroIcon(
-                      HeroIcons.arrowRightOnRectangle,
+                      HeroIcons.power,
                       color: Colors.grey.shade100,
-                      size: 25,
                     ),
                   ),
                 ],
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }

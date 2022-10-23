@@ -127,12 +127,14 @@ class MainPage extends HookConsumerWidget {
                         ),
                       )
                     ])
-                  : const Center(
-                      child: Text(LoanTextConstants.noLoan,
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 205, 205, 205)))),
+                  : (dictCateListWidget[1].isEmpty)
+                      ? const Center(
+                          child: Text(LoanTextConstants.noLoan,
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 205, 205, 205))))
+                      : Container(),
               const SizedBox(height: 30),
               if (dictCateListWidget[1].isNotEmpty)
                 Column(children: [

@@ -59,79 +59,71 @@ class Calendar extends HookConsumerWidget {
       return SizedBox(
         height: constraints.maxHeight,
         width: constraints.maxWidth,
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 30),
-          padding: const EdgeInsets.only(top: 10),
-          decoration: BoxDecoration(
-            border: Border.all(color: BookingColorConstants.darkBlue, width: 2),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: bookings.when(data: (res) {
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 5),
-              child: Stack(
-                children: [
-                  SfCalendar(
-                    onTap: (details) => calendarTapped(details, context),
-                    dataSource: _getCalendarDataSource(res),
-                    view: CalendarView.week,
-                    selectionDecoration: BoxDecoration(
-                      color: Colors.transparent,
-                      border: Border.all(
-                          color: BookingColorConstants.darkBlue, width: 2),
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                      shape: BoxShape.rectangle,
-                    ),
-                    todayHighlightColor: BookingColorConstants.lightBlue,
-                    firstDayOfWeek: 1,
-                    timeZone: 'Europe/Paris',
-                    timeSlotViewSettings: const TimeSlotViewSettings(
-                      timeFormat: 'HH:mm',
-                    ),
-                    viewHeaderStyle: const ViewHeaderStyle(
-                        dayTextStyle: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        dateTextStyle: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        )),
-                    headerStyle: const CalendarHeaderStyle(
-                      textAlign: TextAlign.center,
-                      textStyle: TextStyle(
-                        fontSize: 20,
+        child: bookings.when(data: (res) {
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 5),
+            child: Stack(
+              children: [
+                SfCalendar(
+                  onTap: (details) => calendarTapped(details, context),
+                  dataSource: _getCalendarDataSource(res),
+                  view: CalendarView.week,
+                  selectionDecoration: BoxDecoration(
+                    color: Colors.transparent,
+                    border: Border.all(
+                        color: BookingColorConstants.darkBlue, width: 2),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
+                    shape: BoxShape.rectangle,
+                  ),
+                  todayHighlightColor: BookingColorConstants.lightBlue,
+                  firstDayOfWeek: 1,
+                  timeZone: 'Europe/Paris',
+                  timeSlotViewSettings: const TimeSlotViewSettings(
+                    timeFormat: 'HH:mm',
+                  ),
+                  viewHeaderStyle: const ViewHeaderStyle(
+                      dayTextStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: BookingColorConstants.darkBlue,
                       ),
+                      dateTextStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      )),
+                  headerStyle: const CalendarHeaderStyle(
+                    textAlign: TextAlign.center,
+                    textStyle: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: BookingColorConstants.darkBlue,
                     ),
                   ),
-                  Positioned(
-                    top: 10,
-                    left: 10,
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      color: Colors.white,
-                    ),
-                  )
-                ],
-              ),
-            );
-          }, error: (Object error, StackTrace? stackTrace) {
-            return Center(
-              child: Text(error.toString()),
-            );
-          }, loading: () {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: BookingColorConstants.darkBlue,
-              ),
-            );
-          }),
-        ),
+                ),
+                Positioned(
+                  top: 10,
+                  left: 10,
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ),
+          );
+        }, error: (Object error, StackTrace? stackTrace) {
+          return Center(
+            child: Text(error.toString()),
+          );
+        }, loading: () {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: BookingColorConstants.darkBlue,
+            ),
+          );
+        }),
       );
     });
   }

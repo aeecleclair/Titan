@@ -141,7 +141,7 @@ class AdminPage extends HookConsumerWidget {
                                           child: Container(
                                             padding: const EdgeInsets.all(15.0),
                                             child: Container(
-                                              width: 140,
+                                              width: 120,
                                               height: 180,
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
@@ -309,7 +309,7 @@ class AdminPage extends HookConsumerWidget {
                                               horizontal: 5.0),
                                           padding: const EdgeInsets.all(12.0),
                                           child: Container(
-                                            width: 140,
+                                            width: 120,
                                             height: 160,
                                             decoration: BoxDecoration(
                                               color: Colors.white,

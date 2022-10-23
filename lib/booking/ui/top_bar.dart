@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
-import 'package:myecl/booking/tools/functions.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -64,22 +63,22 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            Text(
-              getPageTitle(page),
-              style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w500,
-                color: BookingColorConstants.darkBlue,
-              ),
-            ),
-            const SizedBox(
-              width: 70,
-            ),
+            // Text(
+            //   getPageTitle(page),
+            //   style: const TextStyle(
+            //     fontSize: 30,
+            //     fontWeight: FontWeight.w500,
+            //     color: BookingColorConstants.darkBlue,
+            //   ),
+            // ),
+            // const SizedBox(
+            //   width: 70,
+            // ),
           ],
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        // const SizedBox(
+        //   height: 20,
+        // ),
       ],
     );
   }
