@@ -70,12 +70,11 @@ class Calendar extends HookConsumerWidget {
                   view: CalendarView.week,
                   selectionDecoration: BoxDecoration(
                     color: Colors.transparent,
-                    border: Border.all(
-                        color: BookingColorConstants.darkBlue, width: 2),
+                    border: Border.all(color: Colors.black, width: 2),
                     borderRadius: const BorderRadius.all(Radius.circular(5)),
                     shape: BoxShape.rectangle,
                   ),
-                  todayHighlightColor: BookingColorConstants.lightBlue,
+                  todayHighlightColor: Colors.black,
                   firstDayOfWeek: 1,
                   timeZone: 'Europe/Paris',
                   timeSlotViewSettings: const TimeSlotViewSettings(
@@ -97,7 +96,7 @@ class Calendar extends HookConsumerWidget {
                     textStyle: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: BookingColorConstants.darkBlue,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -146,6 +145,7 @@ _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
         startTimeZone: "Europe/Paris",
         endTimeZone: "Europe/Paris",
         notes: e.note,
+        color: const Color.fromARGB(255, 189, 80, 78),
         recurrenceRule: e.recurring
             ? SfCalendar.generateRRule(recurrence, e.start, e.end)
             : ""));

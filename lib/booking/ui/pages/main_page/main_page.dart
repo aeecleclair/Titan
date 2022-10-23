@@ -5,6 +5,7 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
+import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/pages/main_page/booking_card.dart';
 import 'package:myecl/booking/ui/refresh_indicator.dart';
@@ -18,7 +19,7 @@ class MainPage extends HookConsumerWidget {
     final isAdmin = !ref.watch(isBookingAdmin);
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final bookingsNotifier = ref.watch(bookingListProvider.notifier);
-    final bookings = ref.watch(bookingListProvider);
+    final bookings = ref.watch(userBookingListProvider);
     return BookingRefresher(
       onRefresh: () async {
         await bookingsNotifier.loadBookings();
