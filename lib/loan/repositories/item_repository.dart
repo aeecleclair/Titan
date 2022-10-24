@@ -12,7 +12,6 @@ class ItemRepository extends Repository {
   }
 
   Future<Item> createItem(String loanerId, Item item) async {
-    print(item.toJson());
     return Item.fromJson(
         await create(item.toJson(), suffix: "$loanerId/items"));
   }

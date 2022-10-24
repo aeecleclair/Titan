@@ -3,7 +3,12 @@ import 'package:myecl/loan/class/item.dart';
 
 class ItemCard extends StatelessWidget {
   final Item item;
-  const ItemCard({super.key, required this.item});
+  final Function() onEdit, onDelete;
+  const ItemCard(
+      {super.key,
+      required this.item,
+      required this.onEdit,
+      required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +22,6 @@ class ItemCard extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade200.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 10,
-              offset: const Offset(3, 3),
-            ),
             BoxShadow(
               color: Colors.grey.shade200.withOpacity(0.5),
               spreadRadius: 5,
@@ -60,7 +59,7 @@ class ItemCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: onEdit,
                     child: Container(
                       width: 40,
                       height: 40,
@@ -78,7 +77,7 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: onDelete,
                     child: Container(
                       width: 40,
                       height: 40,

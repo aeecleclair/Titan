@@ -7,6 +7,7 @@ import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
+import 'package:myecl/loan/providers/item_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
@@ -14,6 +15,7 @@ import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/tools/dialog.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/pages/detail_page/delay_dialog.dart';
 import 'package:myecl/loan/ui/pages/admin_page/item_card.dart';
@@ -40,6 +42,7 @@ class AdminPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final loanNotifier = ref.watch(loanProvider.notifier);
     final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
+    final itemNotifier = ref.watch(itemProvider.notifier);
     void displayLoanToastWithContext(TypeMsg type, String msg) {
       displayLoanToast(context, type, msg);
     }
@@ -345,7 +348,52 @@ class AdminPage extends HookConsumerWidget {
                                           ),
                                         ),
                                       ),
-                                      ...data.map((e) => ItemCard(item: e)),
+                                      ...data.map((e) => ItemCard(
+                                            item: e,
+                                            onDelete: () async {
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return LoanDialog(
+                                                        descriptions:
+                                                            LoanTextConstants
+                                                                .deletingItem,
+                                                        onYes: () {
+                                                          tokenExpireWrapper(
+                                                              ref, () async {
+                                                            final value =
+                                                                await itemListNotifier
+                                                                    .deleteItem(
+                                                                        e);
+                                                            if (value) {
+                                                              await loanersitemsNotifier
+                                                                  .setTData(
+                                                                      loaner,
+                                                                      await itemListNotifier
+                                                                          .copy());
+                                                              displayLoanToastWithContext(
+                                                                  TypeMsg.msg,
+                                                                  LoanTextConstants
+                                                                      .deletedItem);
+                                                            } else {
+                                                              displayLoanToastWithContext(
+                                                                  TypeMsg.error,
+                                                                  LoanTextConstants
+                                                                      .deletingError);
+                                                            }
+                                                          });
+                                                        },
+                                                        title: LoanTextConstants
+                                                            .delete);
+                                                  });
+                                            },
+                                            onEdit: () {
+                                              pageNotifier.setLoanPage(
+                                                  LoanPage.editItem);
+                                              itemNotifier.setItem(e);
+                                            },
+                                          )),
                                       const SizedBox(width: 10),
                                     ],
                                   ),
