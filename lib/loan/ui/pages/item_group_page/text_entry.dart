@@ -20,9 +20,20 @@ class TextEntry extends StatelessWidget {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
+      cursorColor: Colors.black,
       decoration: InputDecoration(
         labelText: label,
-        suffix: Text(suffix),
+        suffix: Text(suffix,
+            style: const TextStyle(
+              color: Colors.black,
+            )),
+        floatingLabelStyle: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black, width: 2.0),
+        ),
       ),
       validator: (value) {
         if (value == null) {

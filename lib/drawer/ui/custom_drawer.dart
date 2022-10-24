@@ -20,9 +20,9 @@ class CustomDrawer extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-              DrawerColorConstants.lightBlue,
               DrawerColorConstants.darkBlue,
               DrawerColorConstants.lightBlue,
+              DrawerColorConstants.darkBlue,
             ])),
         child: SafeArea(
           child: Column(

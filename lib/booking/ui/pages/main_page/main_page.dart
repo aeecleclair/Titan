@@ -15,7 +15,7 @@ class MainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = !ref.watch(isBookingAdmin); //! A changer
+    final isAdmin = ref.watch(isBookingAdmin);
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final bookings = ref.watch(userBookingListProvider);
@@ -150,34 +150,6 @@ class MainPage extends HookConsumerWidget {
                 color: BookingColorConstants.darkBlue,
               ));
             })
-
-        // const Button(
-        //   text: BookingTextConstants.addBookingPage,
-        //   page: BookingPage.addBooking,
-        // ),
-        // const SizedBox(
-        //   height: 20,
-        // ),
-        // const Button(
-        //   text: BookingTextConstants.myBookings,
-        //   page: BookingPage.bookings,
-        // ),
-        // const SizedBox(
-        //   height: 20,
-        // ),
-        // isAdmin
-        //     ? Column(
-        //         children: const [
-        //           Button(
-        //             text: BookingTextConstants.adminPage,
-        //             page: BookingPage.admin,
-        //           ),
-        //           SizedBox(
-        //             height: 20,
-        //           ),
-        //         ],
-        //       )
-        //     : Container(),
       ]),
     );
   }
