@@ -45,7 +45,6 @@ class AddItemPage extends HookConsumerWidget {
                       style: TextStyle(
                           fontSize: 40, fontWeight: FontWeight.bold))),
             ),
-            // w
             const SizedBox(height: 30),
             loaners.when(
                 data: (data) => SingleChildScrollView(

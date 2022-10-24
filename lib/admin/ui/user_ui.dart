@@ -29,7 +29,11 @@ class UserUi extends HookConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
-                  color: AdminColorConstants.background2,
+                  gradient: const LinearGradient(
+                    colors: [AdminColorConstants.background2, Colors.black],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                   boxShadow: [
                     BoxShadow(
                         color: AdminColorConstants.background2.withOpacity(0.4),

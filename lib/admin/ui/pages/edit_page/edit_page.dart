@@ -31,10 +31,10 @@ class EditPage extends HookConsumerWidget {
       displayAdminToast(context, type, msg);
     }
 
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+    return SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: group.when(
             data: (g) {
               name.text = g.name;

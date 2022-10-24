@@ -29,6 +29,7 @@ class ItemListNotifier extends ListNotifier<Item> {
   }
 
   Future<bool> updateItem(Item item) async {
+    print(item.toJson());
     return await update(
         (i) async => _itemrepository.updateItem(loanerId, i),
         (items, item) =>

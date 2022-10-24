@@ -171,7 +171,8 @@ class AssoPage extends HookConsumerWidget {
                       ),
                     ),
                   ],
-                )
+                ),
+                const SizedBox(height: 20),
               ],
             ));
       }, error: (e, s) {

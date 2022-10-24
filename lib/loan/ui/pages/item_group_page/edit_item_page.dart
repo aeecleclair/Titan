@@ -44,11 +44,10 @@ class EditItemPage extends HookConsumerWidget {
               padding: EdgeInsets.only(top: 10, left: 30, right: 30),
               child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(LoanTextConstants.addObject,
+                  child: Text(LoanTextConstants.editItem,
                       style: TextStyle(
                           fontSize: 40, fontWeight: FontWeight.bold))),
             ),
-            // w
             const SizedBox(height: 30),
             loaners.when(
                 data: (data) => SingleChildScrollView(
@@ -119,7 +118,7 @@ class EditItemPage extends HookConsumerWidget {
                                 name: name.text,
                                 caution: int.parse(caution.text),
                                 suggestedLendingDuration:
-                                    int.parse(lendingDuration.text) *
+                                    double.parse(lendingDuration.text) *
                                         24 *
                                         60 *
                                         60));
@@ -156,7 +155,7 @@ class EditItemPage extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      child: const Text(LoanTextConstants.add,
+                      child: const Text(LoanTextConstants.edit,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 25,
