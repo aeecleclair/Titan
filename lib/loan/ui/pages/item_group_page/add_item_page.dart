@@ -10,7 +10,7 @@ import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/loaner_chip.dart';
-import 'package:myecl/loan/ui/pages/item_group_page/text_entry.dart';
+import 'package:myecl/loan/ui/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 

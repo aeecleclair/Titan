@@ -51,6 +51,7 @@ class LoanTextConstants {
   static const String invalidDates = "Les dates ne sont pas valides";
   static const String item = "Objet";
   static const String itemHandling = "Gestion des objets";
+  static const String itemsSelected = "Objets sélectionnés";
   static const String lendingDuration = "Durée possible du prêt";
   static const String loan = "Prêt";
   static const String loanHandling = "Gestion des prêts";
@@ -60,6 +61,7 @@ class LoanTextConstants {
   static const String no = "Non";
   static const String noAssociationsFounded = "Aucune association trouvée";
   static const String noAvailableItems = "Aucun objet disponible";
+  static const String noItems = "Aucun objet";
   static const String noItemSelected = "Aucun objet sélectionné";
   static const String noLoan = "Aucun prêt";
   static const String note = "Note";

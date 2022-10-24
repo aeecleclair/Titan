@@ -7,9 +7,13 @@ En cours :
         - UI
 
     - Loan / Booking :
-        - AMAP
-        - Add/Edit Loan/Item Ui Update
         - Card
+
+    - Loan :
+        - available
+
+    - AMAP
+        - MapNotifier opti reload
 
     - Events :
         - Admin page (edit) (API)

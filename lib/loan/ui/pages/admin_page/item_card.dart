@@ -49,7 +49,7 @@ class ItemCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.grey.shade400)),
               const SizedBox(height: 5),
-              Text('${item.caution} €',
+              Text('${item.caution.toStringAsFixed(2)} €',
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

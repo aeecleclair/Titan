@@ -27,11 +27,11 @@ class TextEntry extends StatelessWidget {
             style: const TextStyle(
               color: Colors.black,
             )),
-        floatingLabelStyle: TextStyle(
+        floatingLabelStyle: const TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
-        focusedBorder: UnderlineInputBorder(
+        focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2.0),
         ),
       ),
