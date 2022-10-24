@@ -4,6 +4,7 @@ import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/ui/page_switcher.dart';
 import 'package:myecl/admin/ui/top_bar.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
 class AdminHomePage extends ConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -15,6 +16,7 @@ class AdminHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(adminPageProvider);
+    final meNotifier = ref.watch(asyncUserProvider.notifier);
     final pageNotifier = ref.watch(adminPageProvider.notifier);
     return Scaffold(
         body: WillPopScope(
@@ -23,6 +25,7 @@ class AdminHomePage extends ConsumerWidget {
           case AdminPage.main:
             if (!controller.isCompleted) {
               controllerNotifier.toggle();
+              await meNotifier.loadMe();
               break;
             } else {
               return true;

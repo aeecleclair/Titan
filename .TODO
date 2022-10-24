@@ -18,7 +18,9 @@ En cours :
 
 Not Found :
     - GET 'bdebooking/user/'
-    - GET 'b
+    - GET 'bdebooking/rooms'
+
+PB Notifications : groups non accessible pr non admin
 
 Créer un compte
 
