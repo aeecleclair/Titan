@@ -10,13 +10,12 @@ class BookingsPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.watch(idProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     return SizedBox(
       height: MediaQuery.of(context).size.height - 117,
       child: BookingRefresher(
           onRefresh: () async {
-            await bookingsNotifier.loadUserBookings(userId);
+            await bookingsNotifier.loadUserBookings();
           },
           child: const ListBooking(
             isAdmin: false,

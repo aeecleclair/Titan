@@ -95,59 +95,53 @@ class AdminPage extends HookConsumerWidget {
           const SizedBox(
             height: 60,
           ),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                  color: AMAPColorConstants.background2.withOpacity(0.5)),
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(
-                    parent: BouncingScrollPhysics()),
-                child: Column(
-                  children: [
-                    GestureDetector(
-                        child: const GreenBtn(
-                            text: AMAPTextConstants.handlingAccount),
-                        onTap: () {
-                          productModif.setModifiedProduct(-1);
-                          pageNotifier.setAmapPage(AmapPage.solde);
-                        }),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    GestureDetector(
-                        child: const GreenBtn(
-                            text: AMAPTextConstants.deliveryHandling),
-                        onTap: () {
-                          productModif.setModifiedProduct(-1);
-                          pageNotifier.setAmapPage(AmapPage.deliveryAdmin);
-                        }),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    GestureDetector(
-                        child: const GreenBtn(
-                            text: AMAPTextConstants.addingProduct),
-                        onTap: () {
-                          productModif.setModifiedProduct(-1);
-                          pageNotifier.setAmapPage(AmapPage.modif);
-                        }),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    GestureDetector(
-                        child: const GreenBtn(
-                            text: AMAPTextConstants.addingACommand),
-                        onTap: () {
-                          productModif.setModifiedProduct(-1);
-                          pageNotifier.setAmapPage(AmapPage.addCmd);
-                        }),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    ...listWidget
-                  ],
+          Container(
+            decoration: BoxDecoration(
+                color: AMAPColorConstants.background2.withOpacity(0.5)),
+            child: Column(
+              children: [
+                GestureDetector(
+                    child:
+                        const GreenBtn(text: AMAPTextConstants.handlingAccount),
+                    onTap: () {
+                      productModif.setModifiedProduct(-1);
+                      pageNotifier.setAmapPage(AmapPage.solde);
+                    }),
+                const SizedBox(
+                  height: 40,
                 ),
-              ),
+                GestureDetector(
+                    child: const GreenBtn(
+                        text: AMAPTextConstants.deliveryHandling),
+                    onTap: () {
+                      productModif.setModifiedProduct(-1);
+                      pageNotifier.setAmapPage(AmapPage.deliveryAdmin);
+                    }),
+                const SizedBox(
+                  height: 40,
+                ),
+                GestureDetector(
+                    child:
+                        const GreenBtn(text: AMAPTextConstants.addingProduct),
+                    onTap: () {
+                      productModif.setModifiedProduct(-1);
+                      pageNotifier.setAmapPage(AmapPage.modif);
+                    }),
+                const SizedBox(
+                  height: 40,
+                ),
+                GestureDetector(
+                    child:
+                        const GreenBtn(text: AMAPTextConstants.addingACommand),
+                    onTap: () {
+                      productModif.setModifiedProduct(-1);
+                      pageNotifier.setAmapPage(AmapPage.addCmd);
+                    }),
+                const SizedBox(
+                  height: 40,
+                ),
+                ...listWidget
+              ],
             ),
           ),
         ],

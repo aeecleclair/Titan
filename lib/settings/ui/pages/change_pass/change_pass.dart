@@ -29,151 +29,154 @@ class ChangePassPage extends HookConsumerWidget {
       displaySettingsToast(context, type, msg);
     }
 
-    return Form(
-      key: key,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: Column(
-          children: [
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(SettingsTextConstants.security,
-                  style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black)),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(SettingsTextConstants.changePassword,
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black)),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: TextFormField(
-                  cursorColor: const Color(0xFFfb6d10),
-                  decoration: changePassInputDecoration(
-                      hintText: SettingsTextConstants.oldPassword,
-                      notifier: hideOldPass),
-                  controller: oldPassword,
-                  obscureText: hideOldPass.value,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return SettingsTextConstants.emptyField;
-                    }
-                    return null;
-                  },
-                )),
-            const SizedBox(
-              height: 30,
-            ),
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: TextFormField(
-                  cursorColor: const Color(0xFFfb6d10),
-                  decoration: changePassInputDecoration(
-                      hintText: SettingsTextConstants.newPassword,
-                      notifier: hideNewPass),
-                  controller: newPassword,
-                  obscureText: hideNewPass.value,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return SettingsTextConstants.emptyField;
-                    }
-                    return null;
-                  },
-                )),
-            const SizedBox(
-              height: 30,
-            ),
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: TextFormField(
-                  cursorColor: const Color(0xFFfb6d10),
-                  decoration: changePassInputDecoration(
-                      hintText: SettingsTextConstants.confirmPassword,
-                      notifier: hideConfirmPass),
-                  controller: confirmPassword,
-                  obscureText: hideConfirmPass.value,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return SettingsTextConstants.emptyField;
-                    } else if (value != newPassword.text) {
-                      return SettingsTextConstants.passwordsNotMatch;
-                    }
-                    return null;
-                  },
-                )),
-            const SizedBox(
-              height: 60,
-            ),
-            GestureDetector(
-              onTap: () {
-                if (key.currentState!.validate()) {
-                  showDialog(
-                      context: context,
-                      builder: (context) => SettignsDialog(
-                            descriptions:
-                                SettingsTextConstants.changingPassword,
-                            onYes: () {
-                              tokenExpireWrapper(ref, () async {
-                                final value = await userNotifier.changePassword(
-                                    oldPassword.text, newPassword.text, user);
-                                if (value) {
-                                  pageNotifier
-                                      .setSettingsPage(SettingsPage.main);
-                                  displaySettingsToastWithContext(TypeMsg.msg,
-                                      SettingsTextConstants.passwordChanged);
-                                } else {
-                                  displaySettingsToastWithContext(TypeMsg.error,
-                                      SettingsTextConstants.updatingError);
-                                }
-                              });
-                            },
-                            title: SettingsTextConstants.edit,
-                          ));
-                }
-              },
-              child: Container(
-                width: double.infinity,
-                height: 50,
-                decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFfb6d10), Color(0xffeb3e1b)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xffeb3e1b).withOpacity(0.5),
-                        spreadRadius: 1,
-                        blurRadius: 7,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(10)),
-                child: const Center(
-                  child: Text(
-                    SettingsTextConstants.save,
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Form(
+        key: key,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Column(
+            children: [
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(SettingsTextConstants.security,
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                        fontSize: 40,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black)),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(SettingsTextConstants.changePassword,
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black)),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: TextFormField(
+                    cursorColor: const Color(0xFFfb6d10),
+                    decoration: changePassInputDecoration(
+                        hintText: SettingsTextConstants.oldPassword,
+                        notifier: hideOldPass),
+                    controller: oldPassword,
+                    obscureText: hideOldPass.value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return SettingsTextConstants.emptyField;
+                      }
+                      return null;
+                    },
+                  )),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: TextFormField(
+                    cursorColor: const Color(0xFFfb6d10),
+                    decoration: changePassInputDecoration(
+                        hintText: SettingsTextConstants.newPassword,
+                        notifier: hideNewPass),
+                    controller: newPassword,
+                    obscureText: hideNewPass.value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return SettingsTextConstants.emptyField;
+                      }
+                      return null;
+                    },
+                  )),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: TextFormField(
+                    cursorColor: const Color(0xFFfb6d10),
+                    decoration: changePassInputDecoration(
+                        hintText: SettingsTextConstants.confirmPassword,
+                        notifier: hideConfirmPass),
+                    controller: confirmPassword,
+                    obscureText: hideConfirmPass.value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return SettingsTextConstants.emptyField;
+                      } else if (value != newPassword.text) {
+                        return SettingsTextConstants.passwordsNotMatch;
+                      }
+                      return null;
+                    },
+                  )),
+              const SizedBox(
+                height: 60,
+              ),
+              GestureDetector(
+                onTap: () {
+                  if (key.currentState!.validate()) {
+                    showDialog(
+                        context: context,
+                        builder: (context) => SettignsDialog(
+                              descriptions:
+                                  SettingsTextConstants.changingPassword,
+                              onYes: () {
+                                tokenExpireWrapper(ref, () async {
+                                  final value = await userNotifier.changePassword(
+                                      oldPassword.text, newPassword.text, user);
+                                  if (value) {
+                                    pageNotifier
+                                        .setSettingsPage(SettingsPage.main);
+                                    displaySettingsToastWithContext(TypeMsg.msg,
+                                        SettingsTextConstants.passwordChanged);
+                                  } else {
+                                    displaySettingsToastWithContext(TypeMsg.error,
+                                        SettingsTextConstants.updatingError);
+                                  }
+                                });
+                              },
+                              title: SettingsTextConstants.edit,
+                            ));
+                  }
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFFfb6d10), Color(0xffeb3e1b)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xffeb3e1b).withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 7,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const Center(
+                    child: Text(
+                      SettingsTextConstants.save,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

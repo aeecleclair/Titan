@@ -18,11 +18,11 @@ class MainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isAdmin = !ref.watch(isBookingAdmin);
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
-    final bookingsNotifier = ref.watch(bookingListProvider.notifier);
+    final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final bookings = ref.watch(userBookingListProvider);
     return BookingRefresher(
       onRefresh: () async {
-        await bookingsNotifier.loadBookings();
+        await bookingsNotifier.loadUserBookings();
       },
       child: Column(children: [
         const Padding(

@@ -16,6 +16,9 @@ En cours :
     - Settings :
         - Notification (choisir module + push) (5)
 
+Not Found :
+    - GET 'bdebooking/user/'
+    - GET 'b
 
 Créer un compte
 
@@ -30,9 +33,8 @@ Loaners
     textfield
     rendre plus explicite l’utilisateur sélectionné
     suggérer la caution et la date de retour en fonction des objets empruntés
-    retour en arrière après avoir validé un prêt : celui-ci n’apparait pas encore, il faut recharger. Ajouter un pull to refresh (ou le faire fonctionner s’il est déjà sensé exister) ?
+    retour en arrière après avoir validé un prêt : celui-ci n’apparait pas encore
     formulaire avec des boutons suivants : on a deux fois plus de cliques à faire : veut-on afficher toutes les questions d’un coup ?
-    UX : comment rendre la distinction Mes prêts / Administration des prêts plus explicite ? Pour le moment l’administration est derrière un +
     UX : une page par loaner avec les prêts et les objets ou une page prêt/une page objet avec tous les loaners ?
     UI détail d’un prêt
 

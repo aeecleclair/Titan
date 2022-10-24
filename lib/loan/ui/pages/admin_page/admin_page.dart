@@ -9,6 +9,7 @@ import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
+import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
@@ -28,8 +29,9 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loanList = ref.watch(adminLoanListProvider);
+    final adminLoanList = ref.watch(adminLoanListProvider);
     final loaner = ref.watch(loanerProvider);
+    final loanerIdNotifier = ref.watch(loanerIdProvider.notifier);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final loanersItems = ref.watch(loanersItemsProvider);
@@ -37,7 +39,7 @@ class AdminPage extends HookConsumerWidget {
     final loaded = useState(false);
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final loanNotifier = ref.watch(loanProvider.notifier);
-    final adminloanListNotifier = ref.watch(adminLoanListProvider.notifier);
+    final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
     void displayLoanToastWithContext(TypeMsg type, String msg) {
       displayLoanToast(context, type, msg);
     }
@@ -54,7 +56,7 @@ class AdminPage extends HookConsumerWidget {
       loanListNotifier.loadLoan(loaner.id);
       loanListNotifier.copy().then(
         (value) {
-          adminloanListNotifier.setTData(loaner, value);
+          adminLoanListNotifier.setTData(loaner, value);
         },
       );
       loaded.value = true;
@@ -65,7 +67,7 @@ class AdminPage extends HookConsumerWidget {
         itemListNotifier.loadItemList();
         loanersitemsNotifier.setTData(loaner, await itemListNotifier.copy());
         loanListNotifier.loadLoan(loaner.id);
-        adminloanListNotifier.setTData(loaner, await loanListNotifier.copy());
+        adminLoanListNotifier.setTData(loaner, await loanListNotifier.copy());
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 10.0),
@@ -81,7 +83,7 @@ class AdminPage extends HookConsumerWidget {
               ),
             ),
             const SizedBox(height: 30),
-            loanList.when(
+            adminLoanList.when(
                 data: (Map<Loaner, AsyncValue<List<Loan>>> loans) => Column(
                       children: [
                         SingleChildScrollView(
@@ -97,12 +99,13 @@ class AdminPage extends HookConsumerWidget {
                                         label: capitalize(key.name),
                                         selected: loaner.id == key.id,
                                         onTap: () async {
+                                          loanerIdNotifier.setId(key.id);
                                           itemListNotifier.setId(key.id);
                                           itemListNotifier.loadItemList();
                                           loanersitemsNotifier.setTData(key,
                                               await itemListNotifier.copy());
                                           loanListNotifier.loadLoan(loaner.id);
-                                          adminloanListNotifier.setTData(loaner,
+                                          adminLoanListNotifier.setTData(loaner,
                                               await loanListNotifier.copy());
                                         },
                                       ),
@@ -211,7 +214,7 @@ class AdminPage extends HookConsumerWidget {
                                                                             newLoan,
                                                                             i);
                                                                 if (value) {
-                                                                  await adminloanListNotifier
+                                                                  await adminLoanListNotifier
                                                                       .setTData(
                                                                           loaner,
                                                                           await loanListNotifier
@@ -243,7 +246,7 @@ class AdminPage extends HookConsumerWidget {
                                                         pageNotifier
                                                             .setLoanPage(
                                                                 LoanPage.admin);
-                                                        await adminloanListNotifier
+                                                        await adminLoanListNotifier
                                                             .setTData(
                                                                 loaner,
                                                                 await loanListNotifier
