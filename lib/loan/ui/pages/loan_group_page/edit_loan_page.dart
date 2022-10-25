@@ -635,9 +635,11 @@ class EditLoanPage extends HookConsumerWidget {
                             });
                           }
                         },
+                        cursorColor: Colors.black,
                         controller: queryController,
                         autofocus: focus.value,
                         decoration: const InputDecoration(
+                          labelText: LoanTextConstants.borrower,
                           floatingLabelStyle: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,

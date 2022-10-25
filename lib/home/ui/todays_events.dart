@@ -53,140 +53,130 @@ class TodaysEvents extends HookConsumerWidget {
     }
 
     center();
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * .65,
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 30),
-        alignment: Alignment.centerLeft,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade100,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(30),
-          ),
-        ),
-        child: displayToday
-            ? Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(top: 15, left: 20, right: 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return SizedBox(
+          height: constraints.maxHeight,
+          width: MediaQuery.of(context).size.width,
+          child: Container(
+              alignment: Alignment.centerLeft,
+              child: displayToday
+                  ? Column(
                       children: [
                         Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                              "${HomeTextConstants.eventOf} ${today.day} ${getMonth(today.month)}",
-                              style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black)),
-                        ),
-                        IconButton(
-                          icon: const HeroIcon(HeroIcons.calendar),
-                          onPressed: () {
-                            displayTodayNotifier.setDisplay(false);
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30)),
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        controller: scrollController,
-                        scrollDirection: Axis.vertical,
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              width: 80,
-                              height: 24 * 90.0 + 3,
-                              child: HourBar(),
-                            ),
-                            Expanded(
-                              child: SizedBox(
-                                height: 24 * 90.0 + 3,
-                                child: Stack(
-                                  children: const [
-                                    HourBarItems(),
-                                    CurrentTime()
-                                  ],
-                                ),
+                          padding: const EdgeInsets.only(
+                              top: 15, left: 20, right: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                    "${today.day} ${getMonth(today.month)}",
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black)),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            : Container(
-                margin: const EdgeInsets.only(top: 15),
-                height: MediaQuery.of(context).size.height - 15,
-                child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight: Radius.circular(30)),
-                    child: Stack(children: [
-                      SfCalendar(
-                        onTap: (details) async => calendarTapped(details, ref),
-                        dataSource: _getCalendarDataSource(res),
-                        view: CalendarView.week,
-                        selectionDecoration: BoxDecoration(
-                          color: Colors.transparent,
-                          border: Border.all(
-                              color: HomeColorConstants.darkBlue, width: 2),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5)),
-                          shape: BoxShape.rectangle,
-                        ),
-                        todayHighlightColor: HomeColorConstants.lightBlue,
-                        firstDayOfWeek: 1,
-                        // timeZone: "fr_FR",
-                        timeSlotViewSettings: const TimeSlotViewSettings(
-                          timeFormat: 'HH:mm',
-                        ),
-                        viewHeaderStyle: const ViewHeaderStyle(
-                            dayTextStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            dateTextStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            )),
-                        headerStyle: const CalendarHeaderStyle(
-                          textAlign: TextAlign.center,
-                          textStyle: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: HomeColorConstants.darkBlue,
+                              IconButton(
+                                icon: const HeroIcon(HeroIcons.calendar),
+                                onPressed: () {
+                                  displayTodayNotifier.setDisplay(false);
+                                },
+                              )
+                            ],
                           ),
                         ),
-                      ),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: IconButton(
-                          icon: const HeroIcon(HeroIcons.calendar),
-                          onPressed: () {
-                            displayTodayNotifier.setDisplay(true);
-                            hasScrolledNotifier.setHasScrolled(false);
-                            center();
-                          },
+                        const SizedBox(
+                          height: 10,
                         ),
-                      )
-                    ]))),
-      ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            controller: scrollController,
+                            scrollDirection: Axis.vertical,
+                            child: Row(
+                              children: [
+                                const SizedBox(
+                                  width: 80,
+                                  height: 24 * 90.0 + 3,
+                                  child: HourBar(),
+                                ),
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 24 * 90.0 + 3,
+                                    child: Stack(
+                                      children: const [
+                                        HourBarItems(),
+                                        CurrentTime()
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(
+                      margin: const EdgeInsets.only(top: 15),
+                      height: MediaQuery.of(context).size.height - 15,
+                      child: Stack(children: [
+                        SfCalendar(
+                          onTap: (details) async =>
+                              calendarTapped(details, ref),
+                          dataSource: _getCalendarDataSource(res),
+                          view: CalendarView.week,
+                          selectionDecoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(
+                                color: HomeColorConstants.darkBlue, width: 2),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5)),
+                            shape: BoxShape.rectangle,
+                          ),
+                          todayHighlightColor: HomeColorConstants.lightBlue,
+                          firstDayOfWeek: 1,
+                          // timeZone: "fr_FR",
+                          timeSlotViewSettings: const TimeSlotViewSettings(
+                            timeFormat: 'HH:mm',
+                          ),
+                          viewHeaderStyle: const ViewHeaderStyle(
+                              dayTextStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              dateTextStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              )),
+                          headerStyle: const CalendarHeaderStyle(
+                            textAlign: TextAlign.center,
+                            textStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: HomeColorConstants.darkBlue,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: IconButton(
+                            icon: const HeroIcon(HeroIcons.calendar),
+                            onPressed: () {
+                              displayTodayNotifier.setDisplay(true);
+                              hasScrolledNotifier.setHasScrolled(false);
+                              center();
+                            },
+                          ),
+                        )
+                      ]))),
+        );
+      },
     );
   }
 }

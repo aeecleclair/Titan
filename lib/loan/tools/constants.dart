@@ -21,7 +21,7 @@ class LoanTextConstants {
   static const String association = "Association";
   static const String availableItems = "Objets disponibles";
   static const String beginDate = "Date du début du prêt";
-  static const String borrower = "Borrower";
+  static const String borrower = "Emprunteur";
   static const String caution = "Caution";
   static const String cancel = "Annuler";
   static const String confirm = "Confirmer";

@@ -28,27 +28,27 @@ class TopBar extends HookConsumerWidget {
                       },
                       icon: FaIcon(
                         FontAwesomeIcons.chevronRight,
-                        color: Colors.grey.shade100,
+                        color: Colors.black,
                       ));
                 },
               ),
             ),
-            Text("MyECL",
-                style: GoogleFonts.elMessiri(
-                  textStyle: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey.shade100,
-                  ),
-                )),
-            const SizedBox(
-              width: 70,
-            ),
+            // Text("MyECL",
+            //     style: GoogleFonts.elMessiri(
+            //       textStyle: TextStyle(
+            //         fontSize: 30,
+            //         fontWeight: FontWeight.w500,
+            //         color: Colors.black,
+            //       ),
+            //     )),
+            // const SizedBox(
+            //   width: 70,
+            // ),
           ],
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        // const SizedBox(
+        //   height: 20,
+        // ),
       ],
     );
   }
