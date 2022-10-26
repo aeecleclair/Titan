@@ -619,7 +619,8 @@ class EditLoanPage extends HookConsumerWidget {
                 child: Column(children: [
                   const SizedBox(height: 20),
                   Text(
-                      '${numberSelected.value} ${LoanTextConstants.itemsSelected}'),
+                    formatNumberItems(numberSelected.value),
+                  ),
                   const SizedBox(height: 20),
                   users.value.when(data: (u) {
                     return Column(children: <Widget>[

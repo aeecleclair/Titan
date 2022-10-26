@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
-import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
@@ -182,7 +181,8 @@ class AddLoanPage extends HookConsumerWidget {
                 child: Column(children: [
                   const SizedBox(height: 20),
                   Text(
-                      '${numberSelected.value} ${LoanTextConstants.itemsSelected}'),
+                    formatNumberItems(numberSelected.value),
+                  ),
                   const SizedBox(height: 20),
                   users.value.when(data: (u) {
                     return Column(children: <Widget>[

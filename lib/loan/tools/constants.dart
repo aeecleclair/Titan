@@ -50,8 +50,10 @@ class LoanTextConstants {
   static const String invalidNumber = "Veuillez entrer un nombre";
   static const String invalidDates = "Les dates ne sont pas valides";
   static const String item = "Objet";
+  static const String items = "Objets";
   static const String itemHandling = "Gestion des objets";
-  static const String itemsSelected = "Objets sélectionnés";
+  static const String itemSelected = "objet sélectionné";
+  static const String itemsSelected = "objets sélectionnés";
   static const String lendingDuration = "Durée possible du prêt";
   static const String loan = "Prêt";
   static const String loanHandling = "Gestion des prêts";
@@ -66,7 +68,6 @@ class LoanTextConstants {
   static const String noLoan = "Aucun prêt";
   static const String note = "Note";
   static const String noValue = "Veuillez entrer une valeur";
-  static const String objects = "Objets";
   static const String onGoingLoan = "Prêt en cours";
   static const String others = "autres";
   static const String paidCaution = "Caution payée";

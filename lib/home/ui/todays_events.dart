@@ -63,33 +63,33 @@ class TodaysEvents extends HookConsumerWidget {
               child: displayToday
                   ? Column(
                       children: [
-                        Container(
-                          padding: const EdgeInsets.only(
-                              top: 15, left: 20, right: 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                    "${today.day} ${getMonth(today.month)}",
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black)),
-                              ),
-                              IconButton(
-                                icon: const HeroIcon(HeroIcons.calendar),
-                                onPressed: () {
-                                  displayTodayNotifier.setDisplay(false);
-                                },
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        // Container(
+                        //   padding: const EdgeInsets.only(
+                        //       top: 15, left: 20, right: 0),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       Container(
+                        //         alignment: Alignment.centerLeft,
+                        //         child: Text(
+                        //             "${today.day} ${getMonth(today.month)}",
+                        //             style: const TextStyle(
+                        //                 fontSize: 20,
+                        //                 fontWeight: FontWeight.w600,
+                        //                 color: Colors.black)),
+                        //       ),
+                        //       IconButton(
+                        //         icon: const HeroIcon(HeroIcons.calendar),
+                        //         onPressed: () {
+                        //           displayTodayNotifier.setDisplay(false);
+                        //         },
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
+                        // const SizedBox(
+                        //   height: 10,
+                        // ),
                         Expanded(
                           child: SingleChildScrollView(
                             physics: const BouncingScrollPhysics(),

@@ -28,6 +28,7 @@ En cours :
 Not Found :
     - GET 'bdebooking/user/'
     - GET 'bdebooking/rooms'
+    - GET 'calendar/events'
 
 PB Notifications : groups non accessible pr non admin
 

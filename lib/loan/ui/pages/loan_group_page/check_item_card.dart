@@ -58,7 +58,7 @@ class CheckItemCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: item.available
                             ? Colors.grey.shade400
-                            : Color.fromARGB(255, 172, 32, 10))),
+                            : const Color.fromARGB(255, 172, 32, 10))),
                 const SizedBox(height: 5),
                 Text('${item.caution.toStringAsFixed(2)} €',
                     style: const TextStyle(

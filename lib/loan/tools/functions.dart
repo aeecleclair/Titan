@@ -36,3 +36,13 @@ String numberDaysToIsoDate(int days) {
 int isoDatetoNumberDays(String date) {
   return DateTime.parse(date).difference(DateTime(0, 0, 0)).inDays;
 }
+
+String formatNumberItems(int n) {
+  if (n >= 2) {
+    return "$n ${LoanTextConstants.itemsSelected}";
+  } else if (n == 1) {
+    return "$n ${LoanTextConstants.itemSelected} ";
+  } else {
+    return LoanTextConstants.noItemSelected;
+  }
+}
