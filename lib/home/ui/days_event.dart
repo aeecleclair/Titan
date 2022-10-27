@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/event/class/event.dart';
+import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/home/tools/functions.dart';
 
 class DaysEvent extends StatelessWidget {
@@ -29,17 +30,36 @@ class DaysEvent extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: event.end.compareTo(now) < 0
-                        ? Colors.black
-                        : event.start.compareTo(now) <= 0
-                            ? Colors.deepOrange
-                            : Colors.white,
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: event.end.compareTo(now) < 0
+                          ? [
+                              Colors.grey.shade900,
+                              Colors.black,
+                            ]
+                          : event.start.compareTo(now) <= 0
+                              ? [
+                                  HomeColorConstants.gradient1,
+                                  HomeColorConstants.gradient2,
+                                ]
+                              : [
+                                  Colors.white,
+                                  Colors.grey.shade100,
+                                ],
+                    ),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          offset: const Offset(0, 5))
+                        color: event.end.compareTo(now) < 0
+                            ? Colors.black.withOpacity(0.2)
+                            : event.start.compareTo(now) <= 0
+                                ? HomeColorConstants.gradient2.withOpacity(0.2)
+                                : Colors.grey.withOpacity(0.2),
+                        spreadRadius: 5,
+                        blurRadius: 10,
+                        offset: const Offset(3, 3),
+                      )
                     ]),
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),

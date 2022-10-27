@@ -31,21 +31,21 @@ class MyApp extends HookConsumerWidget {
             primarySwatch: Colors.blue,
             textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
                 Theme.of(context).textTheme)),
-        // home: Scaffold(
-        //   body: AppDrawer(),
-        // ));
-    home: check.when(
-          data: (value) => value
-              ? isLoggedIn
-                  ? const AppDrawer()
-                  : const AuthScreen()
-              : const UpdatePage(),
-          loading: () => const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-          error: (error, stack) => const Scaffold(body: NoInternetPage())),
-    );
+        home: const Scaffold(
+          body: AppDrawer(),
+        ));
+    // home: check.when(
+    //       data: (value) => value
+    //           ? isLoggedIn
+    //               ? const AppDrawer()
+    //               : const AuthScreen()
+    //           : const UpdatePage(),
+    //       loading: () => const Scaffold(
+    //             body: Center(
+    //               child: CircularProgressIndicator(),
+    //             ),
+    //           ),
+    //       error: (error, stack) => const Scaffold(body: NoInternetPage())),
+    // );
   }
 }

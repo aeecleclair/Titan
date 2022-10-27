@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:myecl/tools/repository/repository.dart';
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
@@ -87,7 +88,7 @@ class OpenIdTokenProvider
   final String refreshTokenKey = "refresh_token";
   final String redirectUrl = "titan://validate";
   final String discoveryUrl =
-      "https://hyperion.myecl.fr/.well-known/openid-configuration";
+      "${Repository.host}.well-known/openid-configuration";
   final List<String> scopes = ["API"];
   OpenIdTokenProvider() : super(const AsyncValue.loading());
 
@@ -97,7 +98,7 @@ class OpenIdTokenProvider
       if (kIsWeb) {
         final result = await FlutterWebAuth.authenticate(
             url:
-                "https://hyperion.myecl.fr/auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}",
+                "${Repository.host}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}",
             callbackUrlScheme: redirectUrl);
         final token = Uri.parse(result).queryParameters[tokenKey];
         final refreshToken = Uri.parse(result).queryParameters[refreshTokenKey];
