@@ -1,18 +1,16 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
+import 'package:myecl/event/providers/sorted_event_list_provider.dart';
 import 'package:myecl/home/tools/constants.dart';
-import 'package:myecl/home/tools/functions.dart';
 import 'package:myecl/home/ui/day_card.dart';
+import 'package:myecl/home/ui/days_event.dart';
 import 'package:myecl/home/ui/month_bar.dart';
 import 'package:myecl/home/ui/refresh_indicator.dart';
-import 'package:myecl/home/ui/todays_events.dart';
 import 'package:myecl/home/ui/top_bar.dart';
 
 class HomePage extends HookConsumerWidget {
@@ -23,27 +21,15 @@ class HomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final eventNotifier = ref.watch(eventListProvider.notifier);
+    final sortedEventList = ref.watch(sortedEventListProvider);
     final now = DateTime.now();
     final selectedDay = useState(0);
     const offset = 1;
     final position = useState(0.0);
     final needReload = useState(false);
     final days = List<DateTime>.generate(
-        10, (index) => now.add(Duration(days: index - offset)));
+        15, (index) => now.add(Duration(days: index - offset)));
     final ScrollController scrollController = useScrollController();
-
-    // Future.delayed(Duration(microseconds: 1)).then(((value) {
-      // scrollController.jumpTo(position.value);
-    // }));
-    // if (needReload.value) {
-    //   print('in');
-    //   print(position.value);
-    //   scrollController.jumpTo(position.value);
-    //   if (scrollController.position.pixels == position.value) {
-    //     needReload.value = false;
-    //   }
-    //   print(scrollController.position.pixels);
-    // }
 
     return Scaffold(
       body: WillPopScope(
@@ -86,14 +72,19 @@ class HomePage extends HookConsumerWidget {
                       scrollDirection: Axis.horizontal,
                       physics: const BouncingScrollPhysics(),
                       controller: scrollController,
-                      itemCount: days.length,
+                      itemCount: days.length + 2,
                       itemBuilder: (BuildContext context, int i) {
+                        if (i == 0 || i == days.length + 1) {
+                          return const SizedBox(
+                            width: 15,
+                          );
+                        }
                         return DayCard(
-                          isToday: offset == i,
-                          isSelected: selectedDay.value == i - offset,
-                          day: days[i],
+                          isToday: offset == i - 1,
+                          isSelected: selectedDay.value == i - 1 - offset,
+                          day: days[i - 1],
                           numberOfEvent: Random().nextInt(10),
-                          index: i,
+                          index: i - 1,
                           offset: offset,
                           notifier: selectedDay,
                           onTap: () {
@@ -122,11 +113,26 @@ class HomePage extends HookConsumerWidget {
                     height: 20,
                   ),
                   SizedBox(
-                      height: MediaQuery.of(context).size.height - 370,
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(children: []),
-                      ))
+                    height: MediaQuery.of(context).size.height - 370,
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: sortedEventList.keys.isNotEmpty
+                          ? Column(
+                              children: sortedEventList
+                                  .map((key, value) => MapEntry(
+                                      key,
+                                      DaysEvent(
+                                        day: key,
+                                        now: now,
+                                        events: value,
+                                      )))
+                                  .values
+                                  .toList())
+                          : const Center(
+                              child: Text("No events found"),
+                            ),
+                    ),
+                  )
                 ],
               ),
             ),

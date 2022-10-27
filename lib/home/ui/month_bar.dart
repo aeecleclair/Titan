@@ -15,14 +15,19 @@ class MonthBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final now = DateTime.now();
-    final day = useState(now);
+    DateTime now = DateTime.now();
+    final currentMonth = useState(now.month);
 
-    final currentMonth = useState(day.value.month);
     scrollController.addListener(() {
-      day.value = days[(scrollController.position.pixels - 15) ~/ 86 + offset];
-      currentMonth.value = day.value.month;
+      now = days[(scrollController.position.pixels -
+              15 +
+              MediaQuery.of(context).size.width / 2) ~/
+          86];
+      if (now.month != currentMonth.value) {
+        currentMonth.value = now.month;
+      }
     });
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

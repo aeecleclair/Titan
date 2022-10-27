@@ -115,3 +115,26 @@ bool isDateInReccurence(String recurrenceRule, String strNow, DateTime start) {
   final dates = rrule.map((e) => processDateToAPIWitoutHour(e)).toList();
   return dates.contains(strNow);
 }
+
+String formatDelayToToday(DateTime date, DateTime now) {
+  final strNow = processDateToAPIWitoutHour(now);
+  final strDate = processDateToAPIWitoutHour(date);
+  if (now.year > date.year) {
+    return "Il y a ${now.year - date.year} ans";
+  } else if (now.month > date.month) {
+    return "Il y a ${now.month - date.month} mois";
+  } else if (now.day - date.day == 1) {
+    return "Hier";
+  } else if (now.day - date.day > 1) {
+    return "Il y a ${now.day - date.day} jours";
+  } else if (strDate.compareTo(strNow) == 0) {
+    return "Aujourd'hui";
+  } else if (strDate.compareTo(strNow) == 1) {
+    return "Demain";
+  } else if ((now.month == date.month) ||
+      (now.month != date.month && now.day - date.day < 14)) {
+    return "Dans ${date.day - now.day} jours";
+  } else {
+    return "En ${getMonth(date.month)}";
+  }
+}
