@@ -14,6 +14,8 @@ String doubleToTime(double d) {
 
 String getMonth(int m) {
   switch (m) {
+    case 0:
+      return "Décembre";
     case 1:
       return "Janvier";
     case 2:

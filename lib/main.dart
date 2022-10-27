@@ -24,21 +24,6 @@ class MyApp extends HookConsumerWidget {
         (value) => value.minimalTitanVersion.compareTo(titanVersion) <= 0);
     final isLoggedIn = ref.watch(isLoggedInProvider);
 
-    // if (!kIsWeb) {
-    //   uriLinkStream.listen((Uri? uri) {
-    //     print('uri : $uri');
-    //     if (uri != null) {
-    //       print(uri.queryParameters);
-    //       uri.queryParameters.forEach((key, value) {
-    //         print('key : $key');
-    //         print('value : $value');
-    //       });
-    //     }
-    //   }, onError: (Object err) {
-    //     print('err $err');
-    //   });
-    // }
-
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'MyECL',
@@ -46,23 +31,21 @@ class MyApp extends HookConsumerWidget {
             primarySwatch: Colors.blue,
             textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
                 Theme.of(context).textTheme)),
-        // home: Scaffold(
-        //   body: CreateAccountPage(),
-        // ));
-    home: check.when(
-          data: (value) => value
-              ? isLoggedIn
-                  ? const AppDrawer()
-                  : const AuthScreen()
-              : const UpdatePage(),
-          loading: () => const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-          error: (error, stack) => const Scaffold(body: NoInternetPage())),
-    );
+        home: Scaffold(
+          body: AppDrawer(),
+        ));
+    // home: check.when(
+    //       data: (value) => value
+    //           ? isLoggedIn
+    //               ? const AppDrawer()
+    //               : const AuthScreen()
+    //           : const UpdatePage(),
+    //       loading: () => const Scaffold(
+    //             body: Center(
+    //               child: CircularProgressIndicator(),
+    //             ),
+    //           ),
+    //       error: (error, stack) => const Scaffold(body: NoInternetPage())),
+    // );
   }
 }
-
-// https://hyperion.myecl.fr/redirect/titan://test?token=azer

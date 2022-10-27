@@ -5,7 +5,8 @@ import 'package:myecl/home/tools/constants.dart';
 class DayCard extends StatelessWidget {
   final bool isToday, isSelected;
   final DateTime day;
-  final int numberOfEvent;
+  final int numberOfEvent, index, offset;
+  final ValueNotifier<int> notifier;
   final void Function() onTap;
   const DayCard(
       {super.key,
@@ -13,12 +14,18 @@ class DayCard extends StatelessWidget {
       required this.isToday,
       required this.isSelected,
       required this.numberOfEvent,
+      required this.index,
+      required this.notifier,
+      required this.offset,
       required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        notifier.value = index - offset;
+        onTap();
+      },
       child: Container(
         alignment: Alignment.center,
         margin:
@@ -74,7 +81,7 @@ class DayCard extends StatelessWidget {
             SizedBox(
               height: 15,
               child: Text(
-                DateFormat('EE').format(day),
+                DateFormat('E').format(day),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: isToday ? Colors.white : Colors.black,
@@ -83,7 +90,7 @@ class DayCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-                height: 20,
+                height: 25,
                 child: numberOfEvent < 6
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +106,7 @@ class DayCard extends StatelessWidget {
                               ),
                           ])
                     : Container(
-                        alignment: Alignment.bottomCenter,
+                        alignment: Alignment.center,
                         child: Text(
                           "$numberOfEvent",
                           style: TextStyle(

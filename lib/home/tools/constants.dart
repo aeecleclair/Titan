@@ -11,7 +11,7 @@ class HomeTextConstants {
   static const String lastInfos = "Dernières annonces";
   static const String eventOf = "Évènements du";
 
-  static const String dayEvents = "Évènements du jour";
+  static const String incomingEvents = "Évènements à venir";
 
   static const String calendar = "Calendrier";
 }
