@@ -16,8 +16,6 @@ class Event {
   late final String organizer;
   late final DateTime start;
   late final DateTime end;
-  late final DateTime fakeStart;
-  late final DateTime fakeEnd;
   late final bool allDay;
   late final String location;
   late final CalendarEventType type;
@@ -34,8 +32,6 @@ class Event {
     required this.type,
     required this.description,
     required this.allDay,
-    required this.fakeEnd,
-    required this.fakeStart,
     required this.recurrenceRule,
   });
 
@@ -49,8 +45,6 @@ class Event {
     location = json['location'];
     type = stringToCalendarEventType(json['type']);
     description = json['description'];
-    fakeStart = start;
-    fakeEnd = end;
     recurrenceRule = json['recurrence_rule'];
   }
 
@@ -80,8 +74,6 @@ class Event {
     String? description,
     bool? allDay,
     String? recurrenceRule,
-    DateTime? fakeStart,
-    DateTime? fakeEnd,
   }) {
     return Event(
       id: id ?? this.id,
@@ -93,8 +85,6 @@ class Event {
       type: type ?? this.type,
       description: description ?? this.description,
       recurrenceRule: recurrenceRule ?? this.recurrenceRule,
-      fakeEnd: fakeEnd ?? this.fakeEnd,
-      fakeStart: fakeStart ?? this.fakeStart,
       allDay: allDay ?? this.allDay,
     );
   }
@@ -106,8 +96,6 @@ class Event {
     start = DateTime.now();
     end = DateTime.now();
     allDay = false;
-    fakeStart = DateTime.now();
-    fakeEnd = DateTime.now();
     location = '';
     type = CalendarEventType.eventAE;
     description = '';

@@ -11,66 +11,7 @@ class EventListNotifier extends ListNotifier<Event> {
   }
 
   Future<AsyncValue<List<Event>>> loadEventList() async {
-    // return await loadList(_eventRepository.getAllEvent);
-    state = AsyncValue.data([
-      Event(
-        id: '4',
-        name: 'HH USE',
-        organizer: 'USE',
-        start: DateTime.now(),
-        end: DateTime.now().add(const Duration(hours: 1)),
-        location: 'Foyer',
-        type: CalendarEventType.happyHour,
-        allDay: false,
-        fakeEnd: DateTime.now().add(const Duration(hours: 1)),
-        fakeStart: DateTime.now(),
-        recurrenceRule: '',
-        description: 'test',
-      ),
-      Event(
-        id: '4',
-        name: 'HH USE',
-        organizer: 'USE',
-        start: DateTime.now().add(const Duration(days: 1)),
-        end: DateTime.now().add(const Duration(days: 1, hours: 1)),
-        location: 'Foyer',
-        type: CalendarEventType.happyHour,
-        allDay: false,
-        fakeEnd: DateTime.now().add(const Duration(hours: 1)),
-        fakeStart: DateTime.now(),
-        recurrenceRule: '',
-        description: 'test',
-      ),
-      Event(
-        id: '4',
-        name: 'HH USE',
-        organizer: 'USE',
-        start: DateTime.now(),
-        end: DateTime.now().add(const Duration(hours: 2)),
-        location: 'Foyer',
-        type: CalendarEventType.happyHour,
-        allDay: false,
-        fakeEnd: DateTime.now().add(const Duration(hours: 1)),
-        fakeStart: DateTime.now(),
-        recurrenceRule: '',
-        description: 'test',
-      ),
-      Event(
-        id: '4',
-        name: 'HH USE',
-        organizer: 'USE',
-        start: DateTime.now().add(const Duration(hours: 3)),
-        end: DateTime.now().add(const Duration(hours: 4)),
-        location: 'Foyer',
-        type: CalendarEventType.happyHour,
-        allDay: false,
-        fakeEnd: DateTime.now().add(const Duration(hours: 1)),
-        fakeStart: DateTime.now(),
-        recurrenceRule: '',
-        description: 'test',
-      ),
-    ]);
-    return state;
+    return await loadList(_eventRepository.getAllEvent);
   }
 
   Future<bool> addEvent(Event event) async {

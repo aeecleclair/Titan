@@ -104,7 +104,7 @@ class HomePage extends HookConsumerWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(HomeTextConstants.incomingEvents,
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 25,
                               fontWeight: FontWeight.w700,
                               color: Colors.black)),
                     ),
@@ -113,7 +113,7 @@ class HomePage extends HookConsumerWidget {
                     height: 20,
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height - 370,
+                    height: MediaQuery.of(context).size.height - 375,
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       child: sortedEventList.keys.isNotEmpty

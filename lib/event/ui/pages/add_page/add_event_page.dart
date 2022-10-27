@@ -1010,9 +1010,7 @@ class AddEventPage extends HookConsumerWidget {
                                     location: place.text,
                                     start: DateTime.parse(start.text),
                                     type: eventType.value,
-                                    recurrenceRule: recurrenceRule,
-                                    fakeEnd: now,
-                                    fakeStart: now);
+                                    recurrenceRule: recurrenceRule);
                                 final value =
                                     await eventListNotifier.addEvent(newEvent);
                                 if (value) {

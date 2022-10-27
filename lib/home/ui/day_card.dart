@@ -81,7 +81,8 @@ class DayCard extends StatelessWidget {
             SizedBox(
               height: 15,
               child: Text(
-                DateFormat('E').format(day),
+                HomeTextConstants
+                    .translateDayShort[DateFormat('E').format(day)]!,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: isToday ? Colors.white : Colors.black,

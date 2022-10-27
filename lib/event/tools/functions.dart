@@ -66,7 +66,7 @@ String formatDates(DateTime dateStart, DateTime dateEnd) {
   final start = parseDate(dateStart);
   final end = parseDate(dateEnd);
   if (start[0] == end[0]) {
-    return "Le ${start[0]} de ${start[1]} à ${end[1]}";
+    return "De ${start[1]} à ${end[1]}";
   } else {
     return "Du ${start[0]} à ${start[1]} au ${end[0]} à ${end[1]}";
   }

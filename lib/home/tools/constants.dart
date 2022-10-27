@@ -8,10 +8,18 @@ class HomeColorConstants {
 }
 
 class HomeTextConstants {
-  static const String lastInfos = "Dernières annonces";
-  static const String eventOf = "Évènements du";
-
-  static const String incomingEvents = "Évènements à venir";
-
   static const String calendar = "Calendrier";
+  static const String eventOf = "Évènements du";
+  static const String incomingEvents = "Évènements à venir";
+  static const String lastInfos = "Dernières annonces";
+
+  static const Map<String, String> translateDayShort = {
+    'Mon': 'Lun',
+    'Tue': 'Mar',
+    'Wed': 'Mer',
+    'Thu': 'Jeu',
+    'Fri': 'Ven',
+    'Sat': 'Sam',
+    'Sun': 'Dim',
+  };
 }

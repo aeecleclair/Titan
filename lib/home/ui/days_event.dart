@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:myecl/event/class/event.dart';
+import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/home/tools/functions.dart';
 
@@ -19,13 +21,17 @@ class DaysEvent extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(formatDelayToToday(day, now),
                   style: const TextStyle(
-                      fontSize: 18, color: Color.fromARGB(255, 205, 205, 205))),
+                      fontSize: 18,
+                      color: Color.fromARGB(255, 205, 205, 205),
+                      fontWeight: FontWeight.bold)),
             ),
             const SizedBox(
               height: 10,
             ),
-            for (final event in events)
-              Container(
+            ...events.map((event) {
+              final textColor =
+                  event.start.compareTo(now) <= 0 ? Colors.white : Colors.black;
+              return Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
                 width: double.infinity,
@@ -35,8 +41,8 @@ class DaysEvent extends StatelessWidget {
                       end: Alignment.bottomRight,
                       colors: event.end.compareTo(now) < 0
                           ? [
-                              Colors.grey.shade900,
-                              Colors.black,
+                              Colors.grey.shade700,
+                              Colors.grey.shade800,
                             ]
                           : event.start.compareTo(now) <= 0
                               ? [
@@ -62,37 +68,68 @@ class DaysEvent extends StatelessWidget {
                       )
                     ]),
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            event.name,
+                            style: TextStyle(
+                                color: textColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: HeroIcon(
+                              HeroIcons.ellipsisVertical,
+                              color: textColor,
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
-                        event.name,
+                        formatDates(event.start, event.end),
                         style: TextStyle(
-                            color: isDateBetween(now, event.start, event.end)
-                                ? Colors.white
-                                : Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
+                            color: textColor.withOpacity(0.7), fontSize: 13),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            event.location,
+                            style: TextStyle(color: textColor, fontSize: 15),
+                          ),
+                          Text(
+                            event.organizer,
+                            style: TextStyle(color: textColor, fontSize: 15),
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
                         event.description,
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        event.location,
-                        style: const TextStyle(color: Colors.black),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: textColor.withOpacity(0.7), fontSize: 13),
                       ),
                     ],
                   ),
                 ),
-              )
+              );
+            })
           ],
         ));
   }
