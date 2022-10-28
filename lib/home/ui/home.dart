@@ -23,24 +23,29 @@ class HomePage extends HookConsumerWidget {
     final sortedEventList = ref.watch(sortedEventListProvider);
     final now = DateTime.now();
     final selectedDay = useState(0);
-    const offset = 1;
+    final offset = useState(1);
     final position = useState(0.0);
     final needReload = useState(false);
-    final days = List<DateTime>.generate(
-        15, (index) => normalizedDate(now.add(Duration(days: index - offset))));
+    final numberDay = useState(6);
+    final ValueNotifier<List<DateTime>> days = useState([]);
+    days.value = List<DateTime>.generate(
+        numberDay.value,
+        (index) =>
+            normalizedDate(now.add(Duration(days: index - offset.value))));
     final ScrollController scrollController = useScrollController();
     final daysEventScrollController = useScrollController();
 
     Map<DateTime, double> widgetPositions = {};
     if (sortedEventList.keys.isNotEmpty) {
-      widgetPositions.addAll({days[0]: 0});
-      for (int i = 0; i < days.length - 1; i++) {
-        DateTime date = days[i];
+      widgetPositions.addAll({days.value[0]: 0});
+      for (int i = 0; i < days.value.length - 1; i++) {
+        DateTime date = days.value[i];
         int height = 0;
         if (sortedEventList.keys.contains(date)) {
-          height = 53 + 190 * sortedEventList[date]!.length;
+          height = 55 + 190 * sortedEventList[date]!.length;
         }
-        widgetPositions[days[i + 1]] = height + widgetPositions[days[i]]!;
+        widgetPositions[days.value[i + 1]] =
+            height + widgetPositions[days.value[i]]!;
       }
     }
 
@@ -75,7 +80,8 @@ class HomePage extends HookConsumerWidget {
                   MonthBar(
                       scrollController: scrollController,
                       days: days,
-                      offset: offset),
+                      offset: offset,
+                      numberDay: numberDay),
                   const SizedBox(
                     height: 10,
                   ),
@@ -85,29 +91,29 @@ class HomePage extends HookConsumerWidget {
                       scrollDirection: Axis.horizontal,
                       physics: const BouncingScrollPhysics(),
                       controller: scrollController,
-                      itemCount: days.length + 2,
+                      itemCount: numberDay.value + 2,
                       itemBuilder: (BuildContext context, int i) {
-                        if (i == 0 || i == days.length + 1) {
+                        if (i == 0 || i == days.value.length + 1) {
                           return const SizedBox(
                             width: 15,
                           );
                         }
+                        final day = days.value[i - 1];
                         return DayCard(
-                          isToday: offset == i - 1,
-                          isSelected: selectedDay.value == i - 1 - offset,
-                          day: days[i - 1],
-                          numberOfEvent:
-                              sortedEventList.keys.contains(days[i - 1])
-                                  ? sortedEventList[days[i - 1]]!.length
-                                  : 0,
+                          isToday: offset.value == i - 1,
+                          isSelected: selectedDay.value == i - 1 - offset.value,
+                          day: day,
+                          numberOfEvent: sortedEventList.keys.contains(day)
+                              ? sortedEventList[day]!.length
+                              : 0,
                           index: i - 1,
-                          offset: offset,
+                          offset: offset.value,
                           notifier: selectedDay,
                           onTap: () {
                             position.value = scrollController.position.pixels;
                             needReload.value = true;
                             daysEventScrollController.animateTo(
-                                widgetPositions[days[i - 1]] ?? 0.0,
+                                widgetPositions[day] ?? 0.0,
                                 duration: const Duration(milliseconds: 500),
                                 curve: Curves.decelerate);
                           },

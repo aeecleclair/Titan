@@ -5,13 +5,15 @@ import 'package:myecl/home/tools/functions.dart';
 
 class MonthBar extends HookConsumerWidget {
   final ScrollController scrollController;
-  final List<DateTime> days;
-  final int offset;
+  final ValueNotifier<List<DateTime>> days;
+  final ValueNotifier<int> offset;
+  final ValueNotifier<int> numberDay;
   const MonthBar(
       {super.key,
       required this.scrollController,
       required this.days,
-      required this.offset});
+      required this.offset,
+      required this.numberDay});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,12 +21,20 @@ class MonthBar extends HookConsumerWidget {
     final currentMonth = useState(now.month);
 
     scrollController.addListener(() {
-      now = days[(scrollController.position.pixels -
+      now = days.value[(scrollController.position.pixels -
               15 +
               MediaQuery.of(context).size.width / 2) ~/
           86];
       if (now.month != currentMonth.value) {
         currentMonth.value = now.month;
+      }
+      if (scrollController.position.pixels >
+          scrollController.position.maxScrollExtent - 50) {
+        numberDay.value += 10;
+        // } else if (scrollController.position.pixels <
+        //     scrollController.position.minScrollExtent + 50) {
+        //   numberDay.value += 1;
+        //   offset.value += 1;
       }
     });
 
