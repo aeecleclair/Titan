@@ -33,8 +33,9 @@ class DaysEvent extends StatelessWidget {
                   event.start.compareTo(now) <= 0 ? Colors.white : Colors.black;
               return Container(
                 margin:
-                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
                 width: double.infinity,
+                height: 169,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,

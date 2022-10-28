@@ -11,7 +11,118 @@ class EventListNotifier extends ListNotifier<Event> {
   }
 
   Future<AsyncValue<List<Event>>> loadEventList() async {
-    return await loadList(_eventRepository.getAllEvent);
+    // return await loadList(_eventRepository.getAllEvent);
+    state = AsyncValue.data([
+      Event(
+          id: 'rthryuk',
+          name: 'HH USE',
+          organizer: 'USE',
+          start: DateTime.now(),
+          end: DateTime.now().add(const Duration(hours: 2)),
+          location: 'Foyer',
+          type: CalendarEventType.eventUSE,
+          description:
+              'Culpa est ex irure amet sunt officia ex qui. Amet eiusmod nulla cillum aliqua enim esse nulla eu ex est ipsum aliquip. Culpa tempor aliquip sunt veniam incididunt sunt. Id ad minim culpa dolor dolor quis irure non tempor voluptate excepteur eu. Mollit magna in deserunt elit dolore culpa ut excepteur. Dolor quis cupidatat amet pariatur eu aliqua aute. Duis dolore cupidatat elit tempor exercitation aliqua nulla.',
+          allDay: false,
+          recurrenceRule: ''),
+      Event(
+          id: 'rthryuk',
+          name: 'HH USE',
+          organizer: 'USE',
+          start: DateTime.now().add(const Duration(days: 2)),
+          end: DateTime.now().add(const Duration(days: 2, hours: 2)),
+          location: 'Foyer',
+          type: CalendarEventType.eventUSE,
+          description:
+              'Culpa est ex irure amet sunt officia ex qui. Amet eiusmod nulla cillum aliqua enim esse nulla eu ex est ipsum aliquip. Culpa tempor aliquip sunt veniam incididunt sunt. Id ad minim culpa dolor dolor quis irure non tempor voluptate excepteur eu. Mollit magna in deserunt elit dolore culpa ut excepteur. Dolor quis cupidatat amet pariatur eu aliqua aute. Duis dolore cupidatat elit tempor exercitation aliqua nulla.',
+          allDay: false,
+          recurrenceRule: ''),
+      Event(
+          id: 'rthryuk',
+          name: 'HH USE',
+          organizer: 'USE',
+          start: DateTime.now().add(const Duration(days: 2)),
+          end: DateTime.now().add(const Duration(days: 2, hours: 2)),
+          location: 'Foyer',
+          type: CalendarEventType.eventUSE,
+          description:
+              'Culpa est ex irure amet sunt officia ex qui. Amet eiusmod nulla cillum aliqua enim esse nulla eu ex est ipsum aliquip. Culpa tempor aliquip sunt veniam incididunt sunt. Id ad minim culpa dolor dolor quis irure non tempor voluptate excepteur eu. Mollit magna in deserunt elit dolore culpa ut excepteur. Dolor quis cupidatat amet pariatur eu aliqua aute. Duis dolore cupidatat elit tempor exercitation aliqua nulla.',
+          allDay: false,
+          recurrenceRule: ''),
+      Event(
+          id: 'rthryuk',
+          name: 'HH USE',
+          organizer: 'USE',
+          start: DateTime.now().add(const Duration(days: 3)),
+          end: DateTime.now().add(const Duration(days: 3, hours: 2)),
+          location: 'Foyer',
+          type: CalendarEventType.eventUSE,
+          description:
+              'Culpa est ex irure amet sunt officia ex qui. Amet eiusmod nulla cillum aliqua enim esse nulla eu ex est ipsum aliquip. Culpa tempor aliquip sunt veniam incididunt sunt. Id ad minim culpa dolor dolor quis irure non tempor voluptate excepteur eu. Mollit magna in deserunt elit dolore culpa ut excepteur. Dolor quis cupidatat amet pariatur eu aliqua aute. Duis dolore cupidatat elit tempor exercitation aliqua nulla.',
+          allDay: false,
+          recurrenceRule: ''),
+      Event(
+          id: 'rthryuk',
+          name: 'HH USE',
+          organizer: 'USE',
+          start: DateTime.now().add(const Duration(days: 3)),
+          end: DateTime.now().add(const Duration(days: 3, hours: 2)),
+          location: 'Foyer',
+          type: CalendarEventType.eventUSE,
+          description:
+              'Culpa est ex irure amet sunt officia ex qui. Amet eiusmod nulla cillum aliqua enim esse nulla eu ex est ipsum aliquip. Culpa tempor aliquip sunt veniam incididunt sunt. Id ad minim culpa dolor dolor quis irure non tempor voluptate excepteur eu. Mollit magna in deserunt elit dolore culpa ut excepteur. Dolor quis cupidatat amet pariatur eu aliqua aute. Duis dolore cupidatat elit tempor exercitation aliqua nulla.',
+          allDay: false,
+          recurrenceRule: ''),
+      Event(
+          id: 'rthryuk',
+          name: 'HH USE',
+          organizer: 'USE',
+          start: DateTime.now().add(const Duration(days: 3)),
+          end: DateTime.now().add(const Duration(days: 3, hours: 2)),
+          location: 'Foyer',
+          type: CalendarEventType.eventUSE,
+          description:
+              'Culpa est ex irure amet sunt officia ex qui. Amet eiusmod nulla cillum aliqua enim esse nulla eu ex est ipsum aliquip. Culpa tempor aliquip sunt veniam incididunt sunt. Id ad minim culpa dolor dolor quis irure non tempor voluptate excepteur eu. Mollit magna in deserunt elit dolore culpa ut excepteur. Dolor quis cupidatat amet pariatur eu aliqua aute. Duis dolore cupidatat elit tempor exercitation aliqua nulla.',
+          allDay: false,
+          recurrenceRule: ''),
+      Event(
+          id: 'rthryuk',
+          name: 'HH USE',
+          organizer: 'USE',
+          start: DateTime.now().add(const Duration(days: 3)),
+          end: DateTime.now().add(const Duration(days: 3, hours: 2)),
+          location: 'Foyer',
+          type: CalendarEventType.eventUSE,
+          description:
+              'Culpa est ex irure amet sunt officia ex qui. Amet eiusmod nulla cillum aliqua enim esse nulla eu ex est ipsum aliquip. Culpa tempor aliquip sunt veniam incididunt sunt. Id ad minim culpa dolor dolor quis irure non tempor voluptate excepteur eu. Mollit magna in deserunt elit dolore culpa ut excepteur. Dolor quis cupidatat amet pariatur eu aliqua aute. Duis dolore cupidatat elit tempor exercitation aliqua nulla.',
+          allDay: false,
+          recurrenceRule: ''),
+      Event(
+          id: 'rthryuk',
+          name: 'HH USE',
+          organizer: 'USE',
+          start: DateTime.now().add(const Duration(days: 3)),
+          end: DateTime.now().add(const Duration(days: 3, hours: 2)),
+          location: 'Foyer',
+          type: CalendarEventType.eventUSE,
+          description:
+              'Culpa est ex irure amet sunt officia ex qui. Amet eiusmod nulla cillum aliqua enim esse nulla eu ex est ipsum aliquip. Culpa tempor aliquip sunt veniam incididunt sunt. Id ad minim culpa dolor dolor quis irure non tempor voluptate excepteur eu. Mollit magna in deserunt elit dolore culpa ut excepteur. Dolor quis cupidatat amet pariatur eu aliqua aute. Duis dolore cupidatat elit tempor exercitation aliqua nulla.',
+          allDay: false,
+          recurrenceRule: ''),
+      Event(
+          id: 'rthryuk',
+          name: 'HH USE',
+          organizer: 'USE',
+          start: DateTime.now().add(const Duration(days: 3)),
+          end: DateTime.now().add(const Duration(days: 3, hours: 2)),
+          location: 'Foyer',
+          type: CalendarEventType.eventUSE,
+          description:
+              'Culpa est ex irure amet sunt officia ex qui. Amet eiusmod nulla cillum aliqua enim esse nulla eu ex est ipsum aliquip. Culpa tempor aliquip sunt veniam incididunt sunt. Id ad minim culpa dolor dolor quis irure non tempor voluptate excepteur eu. Mollit magna in deserunt elit dolore culpa ut excepteur. Dolor quis cupidatat amet pariatur eu aliqua aute. Duis dolore cupidatat elit tempor exercitation aliqua nulla.',
+          allDay: false,
+          recurrenceRule: ''),
+    ]);
+    return state;
   }
 
   Future<bool> addEvent(Event event) async {

@@ -129,7 +129,7 @@ String formatDelayToToday(DateTime date, DateTime now) {
     return "Il y a ${now.day - date.day} jours";
   } else if (strDate.compareTo(strNow) == 0) {
     return "Aujourd'hui";
-  } else if (strDate.compareTo(strNow) == 1) {
+  } else if (date.day - now.day == 1) {
     return "Demain";
   } else if ((now.month == date.month) ||
       (now.month != date.month && now.day - date.day < 14)) {
@@ -137,4 +137,8 @@ String formatDelayToToday(DateTime date, DateTime now) {
   } else {
     return "En ${getMonth(date.month)}";
   }
+}
+
+DateTime normalizedDate(DateTime date) {
+  return DateTime(date.year, date.month, date.day, 0, 0, 0, 0, 0);
 }

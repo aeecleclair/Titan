@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -7,6 +5,7 @@ import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/sorted_event_list_provider.dart';
 import 'package:myecl/home/tools/constants.dart';
+import 'package:myecl/home/tools/functions.dart';
 import 'package:myecl/home/ui/day_card.dart';
 import 'package:myecl/home/ui/days_event.dart';
 import 'package:myecl/home/ui/month_bar.dart';
@@ -28,8 +27,22 @@ class HomePage extends HookConsumerWidget {
     final position = useState(0.0);
     final needReload = useState(false);
     final days = List<DateTime>.generate(
-        15, (index) => now.add(Duration(days: index - offset)));
+        15, (index) => normalizedDate(now.add(Duration(days: index - offset))));
     final ScrollController scrollController = useScrollController();
+    final daysEventScrollController = useScrollController();
+
+    Map<DateTime, double> widgetPositions = {};
+    if (sortedEventList.keys.isNotEmpty) {
+      widgetPositions.addAll({days[0]: 0});
+      for (int i = 0; i < days.length - 1; i++) {
+        DateTime date = days[i];
+        int height = 0;
+        if (sortedEventList.keys.contains(date)) {
+          height = 53 + 190 * sortedEventList[date]!.length;
+        }
+        widgetPositions[days[i + 1]] = height + widgetPositions[days[i]]!;
+      }
+    }
 
     return Scaffold(
       body: WillPopScope(
@@ -83,13 +96,20 @@ class HomePage extends HookConsumerWidget {
                           isToday: offset == i - 1,
                           isSelected: selectedDay.value == i - 1 - offset,
                           day: days[i - 1],
-                          numberOfEvent: Random().nextInt(10),
+                          numberOfEvent:
+                              sortedEventList.keys.contains(days[i - 1])
+                                  ? sortedEventList[days[i - 1]]!.length
+                                  : 0,
                           index: i - 1,
                           offset: offset,
                           notifier: selectedDay,
                           onTap: () {
                             position.value = scrollController.position.pixels;
                             needReload.value = true;
+                            daysEventScrollController.animateTo(
+                                widgetPositions[days[i - 1]] ?? 0.0,
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.decelerate);
                           },
                         );
                       },
@@ -113,9 +133,10 @@ class HomePage extends HookConsumerWidget {
                     height: 20,
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height - 375,
+                    height: MediaQuery.of(context).size.height - 376,
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
+                      controller: daysEventScrollController,
                       child: sortedEventList.keys.isNotEmpty
                           ? Column(
                               children: sortedEventList

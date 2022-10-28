@@ -40,7 +40,6 @@ class AddEventPage extends HookConsumerWidget {
       displayEventToast(context, type, msg);
     }
 
-    final now = DateTime.now();
     Widget w = const Center(
       child: CircularProgressIndicator(
         valueColor:
