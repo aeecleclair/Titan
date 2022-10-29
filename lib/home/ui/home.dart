@@ -4,9 +4,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/sorted_event_list_provider.dart';
+import 'package:myecl/home/providers/number_day_provider.dart';
 import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/home/tools/functions.dart';
 import 'package:myecl/home/ui/day_card.dart';
+import 'package:myecl/home/ui/day_list.dart';
 import 'package:myecl/home/ui/days_event.dart';
 import 'package:myecl/home/ui/month_bar.dart';
 import 'package:myecl/home/ui/refresh_indicator.dart';
@@ -22,32 +24,9 @@ class HomePage extends HookConsumerWidget {
     final eventNotifier = ref.watch(eventListProvider.notifier);
     final sortedEventList = ref.watch(sortedEventListProvider);
     final now = DateTime.now();
-    // final selectedDay = useState(0);
-    // final offset = useState(0);
-    final position = useState(0.0);
-    final needReload = useState(false);
-    final numberDay = useState(6);
-    final ValueNotifier<List<DateTime>> days = useState([]);
-    days.value = List<DateTime>.generate(
-        numberDay.value,
-        (index) =>
-            normalizedDate(now.add(Duration(days: index))));
     final ScrollController scrollController = useScrollController();
     final daysEventScrollController = useScrollController();
-
-    Map<DateTime, double> widgetPositions = {};
-    if (sortedEventList.keys.isNotEmpty) {
-      widgetPositions.addAll({days.value[0]: 0});
-      for (int i = 0; i < days.value.length - 1; i++) {
-        DateTime date = days.value[i];
-        int height = 0;
-        if (sortedEventList.keys.contains(date)) {
-          height = 55 + 190 * sortedEventList[date]!.length;
-        }
-        widgetPositions[days.value[i + 1]] =
-            height + widgetPositions[days.value[i]]!;
-      }
-    }
+    print('HomePage build');
 
     return Scaffold(
       body: WillPopScope(
@@ -79,44 +58,12 @@ class HomePage extends HookConsumerWidget {
                   ),
                   MonthBar(
                       scrollController: scrollController,
-                      days: days,
-                      numberDay: numberDay),
+                      width: MediaQuery.of(context).size.width),
                   const SizedBox(
                     height: 10,
                   ),
-                  SizedBox(
-                    height: 125,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      controller: scrollController,
-                      itemCount: numberDay.value + 2,
-                      itemBuilder: (BuildContext context, int i) {
-                        if (i == 0 || i == days.value.length + 1) {
-                          return const SizedBox(
-                            width: 15,
-                          );
-                        }
-                        final day = days.value[i - 1];
-                        return DayCard(
-                          isToday: i == 1,
-                          day: day,
-                          numberOfEvent: sortedEventList.keys.contains(day)
-                              ? sortedEventList[day]!.length
-                              : 0,
-                          index: i - 1,
-                          onTap: () {
-                            position.value = scrollController.position.pixels;
-                            needReload.value = true;
-                            daysEventScrollController.animateTo(
-                                widgetPositions[day] ?? 0.0,
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.decelerate);
-                          },
-                        );
-                      },
-                    ),
-                  ),
+                  DayList(scrollController, daysEventScrollController,
+                      sortedEventList),
                   const SizedBox(
                     height: 20,
                   ),

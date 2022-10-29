@@ -25,27 +25,27 @@ class MyApp extends HookConsumerWidget {
     final isLoggedIn = ref.watch(isLoggedInProvider);
 
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'MyECL',
-        theme: ThemeData(
-            primarySwatch: Colors.blue,
-            textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
-                Theme.of(context).textTheme)),
-        home: const Scaffold(
-          body: AppDrawer(),
-        ));
-    // home: check.when(
-    //       data: (value) => value
-    //           ? isLoggedIn
-    //               ? const AppDrawer()
-    //               : const AuthScreen()
-    //           : const UpdatePage(),
-    //       loading: () => const Scaffold(
-    //             body: Center(
-    //               child: CircularProgressIndicator(),
-    //             ),
-    //           ),
-    //       error: (error, stack) => const Scaffold(body: NoInternetPage())),
-    // );
+      debugShowCheckedModeBanner: false,
+      title: 'MyECL',
+      theme: ThemeData(
+          primarySwatch: Colors.blue,
+          textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
+              Theme.of(context).textTheme)),
+      // home: const Scaffold(
+      //   body: AppDrawer(),
+      // ));
+      home: check.when(
+          data: (value) => value
+              ? isLoggedIn
+                  ? const AppDrawer()
+                  : const AuthScreen()
+              : const UpdatePage(),
+          loading: () => const Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+          error: (error, stack) => const Scaffold(body: NoInternetPage())),
+    );
   }
 }

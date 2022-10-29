@@ -68,7 +68,8 @@ class DaysEvent extends StatelessWidget {
                       )
                     ]),
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -92,7 +93,7 @@ class DaysEvent extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 7,
                       ),
                       Text(
                         formatDates(event.start, event.end),
@@ -100,7 +101,7 @@ class DaysEvent extends StatelessWidget {
                             color: textColor.withOpacity(0.7), fontSize: 13),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 5,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,7 +117,7 @@ class DaysEvent extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 5,
                       ),
                       Text(
                         event.description,
