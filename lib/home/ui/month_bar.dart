@@ -6,13 +6,11 @@ import 'package:myecl/home/tools/functions.dart';
 class MonthBar extends HookConsumerWidget {
   final ScrollController scrollController;
   final ValueNotifier<List<DateTime>> days;
-  final ValueNotifier<int> offset;
   final ValueNotifier<int> numberDay;
   const MonthBar(
       {super.key,
       required this.scrollController,
       required this.days,
-      required this.offset,
       required this.numberDay});
 
   @override

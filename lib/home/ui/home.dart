@@ -22,8 +22,8 @@ class HomePage extends HookConsumerWidget {
     final eventNotifier = ref.watch(eventListProvider.notifier);
     final sortedEventList = ref.watch(sortedEventListProvider);
     final now = DateTime.now();
-    final selectedDay = useState(0);
-    final offset = useState(1);
+    // final selectedDay = useState(0);
+    // final offset = useState(0);
     final position = useState(0.0);
     final needReload = useState(false);
     final numberDay = useState(6);
@@ -31,7 +31,7 @@ class HomePage extends HookConsumerWidget {
     days.value = List<DateTime>.generate(
         numberDay.value,
         (index) =>
-            normalizedDate(now.add(Duration(days: index - offset.value))));
+            normalizedDate(now.add(Duration(days: index))));
     final ScrollController scrollController = useScrollController();
     final daysEventScrollController = useScrollController();
 
@@ -80,7 +80,6 @@ class HomePage extends HookConsumerWidget {
                   MonthBar(
                       scrollController: scrollController,
                       days: days,
-                      offset: offset,
                       numberDay: numberDay),
                   const SizedBox(
                     height: 10,
@@ -100,15 +99,12 @@ class HomePage extends HookConsumerWidget {
                         }
                         final day = days.value[i - 1];
                         return DayCard(
-                          isToday: offset.value == i - 1,
-                          isSelected: selectedDay.value == i - 1 - offset.value,
+                          isToday: i == 1,
                           day: day,
                           numberOfEvent: sortedEventList.keys.contains(day)
                               ? sortedEventList[day]!.length
                               : 0,
                           index: i - 1,
-                          offset: offset.value,
-                          notifier: selectedDay,
                           onTap: () {
                             position.value = scrollController.position.pixels;
                             needReload.value = true;

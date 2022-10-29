@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:myecl/home/providers/selected_day.dart';
 import 'package:myecl/home/tools/constants.dart';
 
-class DayCard extends StatelessWidget {
-  final bool isToday, isSelected;
+class DayCard extends HookConsumerWidget {
+  final bool isToday;
   final DateTime day;
-  final int numberOfEvent, index, offset;
-  final ValueNotifier<int> notifier;
+  final int numberOfEvent, index;
   final void Function() onTap;
   const DayCard(
       {super.key,
       required this.day,
       required this.isToday,
-      required this.isSelected,
       required this.numberOfEvent,
       required this.index,
-      required this.notifier,
-      required this.offset,
       required this.onTap});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedDayNotifier = ref.watch(selectedDayProvider.notifier);
+    final selectedDay = ref.watch(selectedDayProvider);
     return GestureDetector(
       onTap: () {
-        notifier.value = index - offset;
+        selectedDayNotifier.setSelected(index);
         onTap();
       },
       child: Container(
@@ -34,7 +34,7 @@ class DayCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(70),
           border: Border.all(
               color:
-                  (isSelected && !isToday) ? Colors.black : Colors.transparent,
+                  (selectedDay == index && !isToday) ? Colors.black : Colors.transparent,
               width: 2),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
