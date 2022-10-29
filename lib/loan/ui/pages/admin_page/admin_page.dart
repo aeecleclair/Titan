@@ -35,6 +35,7 @@ class AdminPage extends HookConsumerWidget {
     final loaner = ref.watch(loanerProvider);
     final loanerIdNotifier = ref.watch(loanerIdProvider.notifier);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
+    final loanerLoanList = ref.watch(loanerLoanListProvider);
     final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final loanersItems = ref.watch(loanersItemsProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
@@ -103,13 +104,57 @@ class AdminPage extends HookConsumerWidget {
                                         selected: loaner.id == key.id,
                                         onTap: () async {
                                           loanerIdNotifier.setId(key.id);
-                                          itemListNotifier.setId(key.id);
-                                          itemListNotifier.loadItemList();
-                                          loanersitemsNotifier.setTData(key,
-                                              await itemListNotifier.copy());
-                                          loanListNotifier.loadLoan(loaner.id);
-                                          adminLoanListNotifier.setTData(loaner,
-                                              await loanListNotifier.copy());
+                                          loanersItems.whenData(
+                                            (value) async {
+                                              if (value[key] != null) {
+                                                value[key]!
+                                                    .whenData((value) async {
+                                                  if (value.isEmpty) {
+                                                    itemListNotifier
+                                                        .setId(key.id);
+                                                    itemListNotifier
+                                                        .loadItemList();
+                                                    loanersitemsNotifier.setTData(
+                                                        key,
+                                                        await itemListNotifier
+                                                            .copy());
+                                                  }
+                                                });
+                                              } else {
+                                                itemListNotifier.setId(key.id);
+                                                itemListNotifier.loadItemList();
+                                                loanersitemsNotifier.setTData(
+                                                    key,
+                                                    await itemListNotifier
+                                                        .copy());
+                                              }
+                                            },
+                                          );
+                                          adminLoanList.whenData(
+                                            (value) async {
+                                              if (value[key] != null) {
+                                                value[key]!
+                                                    .whenData((value) async {
+                                                  if (value.isEmpty) {
+                                                    loanListNotifier
+                                                        .loadLoan(key.id);
+                                                    adminLoanListNotifier
+                                                        .setTData(
+                                                            key,
+                                                            await loanListNotifier
+                                                                .copy());
+                                                  }
+                                                });
+                                              } else {
+                                                loanListNotifier
+                                                    .loadLoan(key.id);
+                                                adminLoanListNotifier.setTData(
+                                                    key,
+                                                    await loanListNotifier
+                                                        .copy());
+                                              }
+                                            },
+                                          );
                                         },
                                       ),
                                       value))
