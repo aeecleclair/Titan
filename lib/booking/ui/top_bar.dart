@@ -44,10 +44,10 @@ class TopBar extends HookConsumerWidget {
                             pageNotifier.setBookingPage(BookingPage.admin);
                             break;
                           case BookingPage.addRoom:
-                            pageNotifier.setBookingPage(BookingPage.rooms);
+                            pageNotifier.setBookingPage(BookingPage.admin);
                             break;
                           case BookingPage.editRoom:
-                            pageNotifier.setBookingPage(BookingPage.rooms);
+                            pageNotifier.setBookingPage(BookingPage.admin);
                             break;
                           case BookingPage.editBooking:
                             pageNotifier.setBookingPage(BookingPage.bookings);
@@ -63,22 +63,8 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            // Text(
-            //   getPageTitle(page),
-            //   style: const TextStyle(
-            //     fontSize: 30,
-            //     fontWeight: FontWeight.w500,
-            //     color: BookingColorConstants.darkBlue,
-            //   ),
-            // ),
-            // const SizedBox(
-            //   width: 70,
-            // ),
           ],
         ),
-        // const SizedBox(
-        //   height: 20,
-        // ),
       ],
     );
   }

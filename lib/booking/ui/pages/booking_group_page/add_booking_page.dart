@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
@@ -9,10 +10,9 @@ import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
 import 'package:myecl/booking/ui/pages/booking_group_page/checkbox_entry.dart';
-import 'package:myecl/booking/ui/pages/booking_group_page/confirmation_text.dart';
 import 'package:myecl/booking/ui/pages/booking_group_page/date_entry.dart';
-import 'package:myecl/booking/ui/pages/booking_group_page/step_title.dart';
 import 'package:myecl/booking/ui/pages/booking_group_page/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -23,7 +23,6 @@ class AddBookingPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
-    final currentStep = useState(0);
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
     final bookingListNotifier = ref.watch(bookingListProvider.notifier);
@@ -40,256 +39,164 @@ class AddBookingPage extends HookConsumerWidget {
       displayBookingToast(context, type, msg);
     }
 
-    Widget w = const Center(
-      child: CircularProgressIndicator(
-        valueColor:
-            AlwaysStoppedAnimation<Color>(BookingColorConstants.veryLightBlue),
-      ),
-    );
-
-    rooms.when(
-      data: (roomList) {
-        if (roomList.isNotEmpty) {
-          List<Step> steps = [
-            Step(
-              title: const StepTitle(title: BookingTextConstants.room),
-              content: Column(
-                  children: roomList
-                      .map(
-                        (e) => RadioListTile(
-                            title: Text(capitalize(e.name),
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: BookingColorConstants.darkBlue)),
-                            selected: room.value.name == e.name,
-                            value: e.name,
-                            activeColor: BookingColorConstants.darkBlue,
-                            groupValue: room.value.name,
-                            onChanged: (s) {
-                              room.value = e;
-                            }),
-                      )
-                      .toList()),
-              isActive: currentStep.value >= 0,
-              state: currentStep.value >= 0
-                  ? StepState.complete
-                  : StepState.disabled,
-            ),
-            Step(
-              title: const StepTitle(title: BookingTextConstants.dates),
-              content: Column(
-                children: [
-                  DateEntry(
-                    text: BookingTextConstants.startDate,
-                    controller: start,
-                  ),
-                  DateEntry(
-                    text: BookingTextConstants.endDate,
-                    controller: end,
-                  ),
-                ],
-              ),
-              isActive: currentStep.value >= 0,
-              state: currentStep.value >= 1
-                  ? StepState.complete
-                  : StepState.disabled,
-            ),
-            Step(
-              title: const StepTitle(title: BookingTextConstants.reason),
-              content: TextEntry(
-                  controller: motif,
-                  errorMsg: BookingTextConstants.noReasonError,
-                  label: BookingTextConstants.bookingReason),
-              isActive: currentStep.value >= 0,
-              state: currentStep.value >= 2
-                  ? StepState.complete
-                  : StepState.disabled,
-            ),
-            Step(
-              title: const StepTitle(title: BookingTextConstants.note),
-              content: TextEntry(
-                  controller: note,
-                  label: BookingTextConstants.bookingNote,
-                  errorMsg: BookingTextConstants.noNoteError),
-              isActive: currentStep.value >= 0,
-              state: currentStep.value >= 3
-                  ? StepState.complete
-                  : StepState.disabled,
-            ),
-            Step(
-              title: const StepTitle(title: BookingTextConstants.other),
-              content: Column(children: [
-                CheckBoxEntry(
-                    title: BookingTextConstants.necessaryKey,
-                    valueNotifier: keyRequired),
-                CheckBoxEntry(
-                    title: BookingTextConstants.recurrent,
-                    valueNotifier: recurring),
-                CheckBoxEntry(
-                    title: BookingTextConstants.multipleDay,
-                    valueNotifier: multipleDay),
-              ]),
-              isActive: currentStep.value >= 0,
-              state: currentStep.value >= 4
-                  ? StepState.complete
-                  : StepState.disabled,
-            ),
-            Step(
-              title: const StepTitle(title: BookingTextConstants.confirmation),
-              content: Column(
-                children: <Widget>[
-                  ConfirmationText(
-                      title: BookingTextConstants.room, value: room.value.name),
-                  ConfirmationText(
-                      title: BookingTextConstants.startDate,
-                      value: start.value.text),
-                  ConfirmationText(
-                      title: BookingTextConstants.endDate,
-                      value: end.value.text),
-                  ConfirmationText(
-                      title: BookingTextConstants.reason, value: motif.text),
-                  ConfirmationText(
-                      title: BookingTextConstants.note, value: note.text),
-                  ConfirmationText(
-                      title: BookingTextConstants.necessaryKey,
-                      value: keyRequired.value
-                          ? BookingTextConstants.yes
-                          : BookingTextConstants.no),
-                  ConfirmationText(
-                      title: BookingTextConstants.recurrent,
-                      value: recurring.value
-                          ? BookingTextConstants.yes
-                          : BookingTextConstants.no),
-                  ConfirmationText(
-                      title: BookingTextConstants.multipleDay,
-                      value: multipleDay.value
-                          ? BookingTextConstants.yes
-                          : BookingTextConstants.no),
-                ],
-              ),
-              isActive: currentStep.value >= 0,
-              state: currentStep.value >= 5
-                  ? StepState.complete
-                  : StepState.disabled,
-            ),
-          ];
-
-          void continued() {
-            currentStep.value < steps.length ? currentStep.value += 1 : null;
-          }
-
-          void cancel() {
-            currentStep.value > 0 ? currentStep.value -= 1 : null;
-          }
-
-          w = Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: key,
-            child: Stepper(
-              physics: const BouncingScrollPhysics(),
-              currentStep: currentStep.value,
-              onStepTapped: (step) => currentStep.value = step,
-              onStepContinue: continued,
-              onStepCancel: cancel,
-              controlsBuilder: (context, ControlsDetails controls) {
-                final isLastStep = currentStep.value == steps.length - 1;
-                return Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: !isLastStep
-                            ? controls.onStepContinue
-                            : () {
-                                if (key.currentState == null) {
-                                  return;
-                                }
-                                if (key.currentState!.validate()) {
-                                  if (start.text.compareTo(end.text) >= 0) {
-                                    displayBookingToast(context, TypeMsg.error,
-                                        BookingTextConstants.invalidDates);
-                                  } else if (room.value.id.isEmpty) {
-                                    displayBookingToast(context, TypeMsg.error,
-                                        BookingTextConstants.invalidRoom);
-                                  } else {
-                                    tokenExpireWrapper(ref, () async {
-                                      Booking newBooking = Booking(
-                                          id: '',
-                                          reason: motif.text,
-                                          start:
-                                              DateTime.parse(start.value.text),
-                                          end: DateTime.parse(end.value.text),
-                                          note: note.text,
-                                          room: room.value,
-                                          key: keyRequired.value,
-                                          decision: Decision.pending,
-                                          multipleDay: multipleDay.value,
-                                          recurring: recurring.value);
-                                      final value = await bookingListNotifier
-                                          .addBooking(newBooking);
-                                      if (value) {
-                                        await bookingsNotifier
-                                            .addBooking(newBooking);
-                                        pageNotifier
-                                            .setBookingPage(BookingPage.main);
-                                        displayBookingToastWithContext(
-                                            TypeMsg.msg,
-                                            BookingTextConstants.addedBooking);
-                                      } else {
-                                        displayBookingToastWithContext(
-                                            TypeMsg.error,
-                                            BookingTextConstants.addingError);
-                                      }
-                                    });
-                                  }
-                                } else {
-                                  displayBookingToast(
-                                      context,
-                                      TypeMsg.error,
-                                      BookingTextConstants
-                                          .incorrectOrMissingFields);
-                                }
-                              },
-                        child: (isLastStep)
-                            ? const Text(BookingTextConstants.add)
-                            : const Text(BookingTextConstants.next),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    if (currentStep.value > 0)
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: controls.onStepCancel,
-                          child: const Text(BookingTextConstants.previous),
-                        ),
-                      )
-                  ],
-                );
-              },
-              steps: steps,
-            ),
-          );
-        } else {
-          w = const Text(BookingTextConstants.noRoomFound);
-        }
-      },
-      error: (e, s) {
-        w = Text(e.toString());
-      },
-      loading: () {},
-    );
-
     return Expanded(
       child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Theme(
-              data: Theme.of(context).copyWith(
-                primaryColor: BookingColorConstants.veryLightBlue,
-                unselectedWidgetColor: BookingColorConstants.veryLightBlue,
-              ),
-              child: w)),
+          child: Form(
+              key: key,
+              child: Column(children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(BookingTextConstants.addBooking,
+                          style: TextStyle(
+                              fontSize: 40, fontWeight: FontWeight.bold))),
+                ),
+                const SizedBox(height: 30),
+                rooms.when(
+                    data: (data) => SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(width: 15),
+                              ...data.map(
+                                (e) => RoomChip(
+                                  label: capitalize(e.name),
+                                  selected: room.value.id == e.id,
+                                  onTap: () async {
+                                    room.value = e;
+                                  },
+                                ),
+                              ),
+                              const SizedBox(width: 15),
+                            ],
+                          ),
+                        ),
+                    error: (Object error, StackTrace? stackTrace) => Center(
+                          child: Text("Error : $error"),
+                        ),
+                    loading: () => const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.blue,
+                          ),
+                        )),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Column(children: [
+                    DateEntry(
+                        title: BookingTextConstants.startDate,
+                        controller: start),
+                    const SizedBox(height: 30),
+                    DateEntry(
+                        title: BookingTextConstants.endDate, controller: end),
+                    const SizedBox(height: 30),
+                    TextEntry(
+                      keyboardType: TextInputType.text,
+                      label: BookingTextConstants.note,
+                      suffix: '',
+                      isInt: false,
+                      controller: note,
+                    ),
+                    const SizedBox(height: 30),
+                    TextEntry(
+                      keyboardType: TextInputType.text,
+                      controller: motif,
+                      isInt: false,
+                      label: BookingTextConstants.reason,
+                      suffix: '',
+                    ),
+                    const SizedBox(height: 30),
+                    CheckBoxEntry(
+                      title: BookingTextConstants.necessaryKey,
+                      valueNotifier: keyRequired,
+                    ),
+                    const SizedBox(height: 30),
+                    CheckBoxEntry(
+                      title: BookingTextConstants.recurrent,
+                      valueNotifier: recurring,
+                    ),
+                    const SizedBox(height: 30),
+                    CheckBoxEntry(
+                      title: BookingTextConstants.multipleDay,
+                      valueNotifier: multipleDay,
+                    ),
+                    const SizedBox(height: 50),
+                    GestureDetector(
+                      onTap: () {
+                        if (key.currentState == null) {
+                          return;
+                        }
+                        if (key.currentState!.validate()) {
+                          if (processDateBack(start.text)
+                                  .compareTo(processDateBack(end.text)) >=
+                              0) {
+                            displayBookingToast(context, TypeMsg.error,
+                                BookingTextConstants.invalidDates);
+                          } else if (room.value.id.isEmpty) {
+                            displayBookingToast(context, TypeMsg.error,
+                                BookingTextConstants.invalidRoom);
+                          } else {
+                            tokenExpireWrapper(ref, () async {
+                              Booking newBooking = Booking(
+                                  id: '',
+                                  reason: motif.text,
+                                  start: DateTime.parse(processDateBack(start.value.text)),
+                                  end: DateTime.parse(processDateBack(end.value.text)),
+                                  note: note.text,
+                                  room: room.value,
+                                  key: keyRequired.value,
+                                  decision: Decision.pending,
+                                  multipleDay: multipleDay.value,
+                                  recurring: recurring.value);
+                              final value = await bookingListNotifier
+                                  .addBooking(newBooking);
+                              if (value) {
+                                await bookingsNotifier.addBooking(newBooking);
+                                pageNotifier.setBookingPage(BookingPage.main);
+                                displayBookingToastWithContext(TypeMsg.msg,
+                                    BookingTextConstants.addedBooking);
+                              } else {
+                                displayBookingToastWithContext(TypeMsg.error,
+                                    BookingTextConstants.addingError);
+                              }
+                            });
+                          }
+                        } else {
+                          displayBookingToast(context, TypeMsg.error,
+                              BookingTextConstants.incorrectOrMissingFields);
+                        }
+                      },
+                      child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.only(top: 8, bottom: 12),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 10,
+                                offset: const Offset(
+                                    3, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: const Text(BookingTextConstants.add,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold))),
+                    ),
+                    const SizedBox(height: 30),
+                  ]),
+                )
+              ]))),
     );
   }
 }

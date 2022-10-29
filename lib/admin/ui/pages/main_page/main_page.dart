@@ -42,7 +42,7 @@ class MainPage extends HookConsumerWidget {
                       color: Colors.black)),
             ),
             const SizedBox(
-              height: 50,
+              height: 30,
             ),
             const Align(
               alignment: Alignment.centerLeft,

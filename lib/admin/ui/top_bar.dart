@@ -59,13 +59,7 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            const SizedBox(
-              width: 70,
-            ),
           ],
-        ),
-        const SizedBox(
-          height: 20,
         ),
       ],
     );

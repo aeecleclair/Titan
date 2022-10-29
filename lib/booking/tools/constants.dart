@@ -11,6 +11,7 @@ class BookingTextConstants {
   static const String add = "Ajouter";
   static const String addBookingPage = "Demande";
   static const String addRoom = "Ajouter une salle";
+  static const String addBooking = "Ajouter une réservation";
   static const String addedBooking = "Demande ajoutée";
   static const String addedRoom = "Salle ajoutée";
   static const String addingError = "Erreur lors de l'ajout";
@@ -35,6 +36,7 @@ class BookingTextConstants {
   static const String editionError = "Erreur lors de la modification";
   static const String editedBooking = "Réservation modifiée";
   static const String editedRoom = "Salle modifiée";
+  static const String editRoom = "Modifier une salle";
   static const String endDate = "Date de fin";
   static const String historyPage = "Historique";
   static const String incorrectOrMissingFields =
@@ -60,6 +62,8 @@ class BookingTextConstants {
   static const String recurrent = "Récurrent";
   static const String registeredRooms = "Salles enregistrées";
   static const String room = "Salle";
+  static const String roomName = "Nom de la salle";
   static const String startDate = "Date de début";
   static const String yes = "Oui";
+
 }

@@ -26,7 +26,6 @@ class HomePage extends HookConsumerWidget {
     final now = DateTime.now();
     final ScrollController scrollController = useScrollController();
     final daysEventScrollController = useScrollController();
-    print('HomePage build');
 
     return Scaffold(
       body: WillPopScope(
@@ -42,17 +41,17 @@ class HomePage extends HookConsumerWidget {
               child: Column(
                 children: [
                   TopBar(controllerNotifier: controllerNotifier),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(HomeTextConstants.calendar,
-                          style: TextStyle(
-                              fontSize: 40,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black)),
-                    ),
-                  ),
+                  // const Padding(
+                  //   padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  //   child: Align(
+                  //     alignment: Alignment.centerLeft,
+                  //     child: Text(HomeTextConstants.calendar,
+                  //         style: TextStyle(
+                  //             fontSize: 40,
+                  //             fontWeight: FontWeight.w700,
+                  //             color: Colors.black)),
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 30,
                   ),
@@ -82,7 +81,7 @@ class HomePage extends HookConsumerWidget {
                     height: 20,
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height - 376,
+                    height: MediaQuery.of(context).size.height - 380,
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       controller: daysEventScrollController,

@@ -86,10 +86,10 @@ class DaysEvent extends StatelessWidget {
                           GestureDetector(
                             onTap: () {},
                             child: HeroIcon(
-                              HeroIcons.ellipsisVertical,
+                              HeroIcons.informationCircle,
                               color: textColor,
                             ),
-                          )
+                          ),
                         ],
                       ),
                       const SizedBox(

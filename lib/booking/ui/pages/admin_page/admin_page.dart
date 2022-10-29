@@ -88,9 +88,13 @@ class AdminPage extends HookConsumerWidget {
                     child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Chip(
-                          label: const HeroIcon(
-                            HeroIcons.plus,
-                            color: Colors.black,
+                          label: const Padding(
+                            padding: EdgeInsets.all(6.0),
+                            child: HeroIcon(
+                              HeroIcons.plus,
+                              color: Colors.black,
+                              size: 20,
+                            ),
                           ),
                           backgroundColor: Colors.grey.shade200,
                         )),
@@ -101,6 +105,7 @@ class AdminPage extends HookConsumerWidget {
                       selected: room.id == e.id,
                       onTap: () {
                         roomNotifier.setRoom(e);
+                        pageNotifier.setBookingPage(BookingPage.editRoom);
                       },
                     ),
                   ),

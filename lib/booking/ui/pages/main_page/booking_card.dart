@@ -43,25 +43,25 @@ class BookingCard extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 10),
-              Text(booking.reason,
+              const SizedBox(height: 12),
+              Text(booking.room.name,
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
-              const SizedBox(height: 7),
+              const SizedBox(height: 3),
               Text(formatDates(booking.start, booking.end),
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey.shade400)),
-              const SizedBox(height: 5),
-              Text(booking.room.name,
+              // const SizedBox(height: 3),
+              Text(booking.reason,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
-              const SizedBox(height: 5),
+              // const SizedBox(height: 3),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
