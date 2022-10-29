@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
+import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
@@ -17,7 +19,7 @@ class TopBar extends HookConsumerWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 25,
+          height: 15,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,16 +52,27 @@ class TopBar extends HookConsumerWidget {
                             break;
                         }
                       },
-                      icon: FaIcon(
+                      icon: HeroIcon(
                         page == AdminPage.main
-                            ? FontAwesomeIcons.chevronRight
-                            : FontAwesomeIcons.chevronLeft,
+                            ? HeroIcons.bars3BottomLeft
+                            : HeroIcons.chevronLeft,
                         color: const Color.fromARGB(255, 0, 0, 0),
                       ));
                 },
               ),
             ),
+            const Text(AdminTextConstants.administration,
+                style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black)),
+            const SizedBox(
+              width: 30,
+            ),
           ],
+        ),
+        const SizedBox(
+          height: 30,
         ),
       ],
     );

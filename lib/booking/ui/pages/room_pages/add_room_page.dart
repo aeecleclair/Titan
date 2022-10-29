@@ -32,7 +32,7 @@ class AddRoomPage extends HookConsumerWidget {
           Form(
             key: key,
             child: Column(
-              children: <Widget>[
+              children: [
                 const SizedBox(
                   height: 50,
                 ),

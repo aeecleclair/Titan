@@ -33,6 +33,7 @@ class BookingTextConstants {
   static const String deletingError = "Erreur lors de la suppression";
   static const String deletingRoom = "Supprimer la salle ?";
   static const String edit = "Modifier";
+  static const String editBooking = "Modifier une réservation";
   static const String editionError = "Erreur lors de la modification";
   static const String editedBooking = "Réservation modifiée";
   static const String editedRoom = "Salle modifiée";
@@ -65,5 +66,4 @@ class BookingTextConstants {
   static const String roomName = "Nom de la salle";
   static const String startDate = "Date de début";
   static const String yes = "Oui";
-
 }

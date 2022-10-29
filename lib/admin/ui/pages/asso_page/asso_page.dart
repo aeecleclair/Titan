@@ -35,17 +35,6 @@ class AssoPage extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Column(
               children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(AdminTextConstants.administration,
-                      style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black)),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(capitalize(g.name),

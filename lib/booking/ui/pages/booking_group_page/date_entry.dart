@@ -1,6 +1,7 @@
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
 
 class DateEntry extends StatelessWidget {
   final String title;
@@ -61,5 +62,30 @@ _selectDate(BuildContext context, TextEditingController dateController) async {
           child: child!,
         );
       });
-  dateController.text = processDate(picked ?? now);
+  if (picked != null) {
+    final time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(picked),
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: Theme(
+              data: ThemeData.light().copyWith(
+                colorScheme: const ColorScheme.light(
+                  primary: Color.fromARGB(255, 172, 32, 10),
+                  onPrimary: Colors.white,
+                  surface: Colors.white,
+                  onSurface: Colors.black,
+                ),
+                dialogBackgroundColor: Colors.white,
+              ),
+              child: child!),
+        );
+      },
+    );
+    dateController.text = DateFormat('yyyy-MM-dd HH:mm')
+        .format(DateTimeField.combine(picked, time));
+  } else {
+    dateController.text = DateFormat('yyyy-MM-dd HH:mm').format(now);
+  }
 }

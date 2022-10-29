@@ -5,6 +5,7 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
@@ -22,6 +23,7 @@ class AdminPage extends HookConsumerWidget {
     final roomList = ref.watch(roomListProvider);
     final room = ref.watch(roomProvider);
     final roomNotifier = ref.watch(roomProvider.notifier);
+    final bookingListNotifier = ref.watch(bookingListProvider.notifier);
     final bookings = ref.watch(bookingListProvider);
     final List<Booking> pendingBookings = [],
         confirmedBookings = [],
@@ -153,8 +155,15 @@ class AdminPage extends HookConsumerWidget {
                       const SizedBox(width: 10),
                       ...pendingBookings.map((e) => BookingCard(
                             booking: e,
-                            onEdit: () {},
-                            onReturn: () {},
+                            isAdmin: true,
+                            onEdit: () {
+                              bookingListNotifier.toggleConfirmed(
+                                  e, Decision.approved);
+                            },
+                            onReturn: () {
+                              bookingListNotifier.toggleConfirmed(
+                                  e, Decision.declined);
+                            },
                           )),
                       const SizedBox(width: 10),
                     ],
@@ -185,8 +194,12 @@ class AdminPage extends HookConsumerWidget {
                       const SizedBox(width: 10),
                       ...confirmedBookings.map((e) => BookingCard(
                             booking: e,
+                            isAdmin: true,
                             onEdit: () {},
-                            onReturn: () {},
+                            onReturn: () {
+                              bookingListNotifier.toggleConfirmed(
+                                  e, Decision.declined);
+                            },
                           )),
                       const SizedBox(width: 10),
                     ],
@@ -217,7 +230,11 @@ class AdminPage extends HookConsumerWidget {
                       const SizedBox(width: 10),
                       ...canceledBookings.map((e) => BookingCard(
                             booking: e,
-                            onEdit: () {},
+                            isAdmin: true,
+                            onEdit: () {
+                              bookingListNotifier.toggleConfirmed(
+                                  e, Decision.approved);
+                            },
                             onReturn: () {},
                           )),
                       const SizedBox(width: 10),

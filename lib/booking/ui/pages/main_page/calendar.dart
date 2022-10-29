@@ -131,12 +131,6 @@ class Calendar extends HookConsumerWidget {
 _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
   List<Appointment> appointments = <Appointment>[];
   res.where((e) => e.decision == Decision.approved).map((e) {
-    RecurrenceProperties recurrence =
-        RecurrenceProperties(startDate: DateTime.now());
-    recurrence.recurrenceType = RecurrenceType.weekly;
-    recurrence.recurrenceRange = RecurrenceRange.noEndDate;
-    recurrence.weekDays = WeekDays.values;
-    recurrence.interval = 1;
     appointments.add(Appointment(
         startTime: e.start,
         endTime: e.end,
@@ -146,9 +140,7 @@ _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
         endTimeZone: "Europe/Paris",
         notes: e.note,
         color: const Color.fromARGB(255, 189, 80, 78),
-        recurrenceRule: e.recurring
-            ? SfCalendar.generateRRule(recurrence, e.start, e.end)
-            : ""));
+        recurrenceRule: e.recurrenceRule));
   }).toList();
   return _AppointmentDataSource(appointments);
 }

@@ -35,17 +35,6 @@ class MainPage extends HookConsumerWidget {
           return Column(children: [
             const Align(
               alignment: Alignment.centerLeft,
-              child: Text(AdminTextConstants.administration,
-                  style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black)),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const Align(
-              alignment: Alignment.centerLeft,
               child: Text(AdminTextConstants.association,
                   style: TextStyle(
                       fontSize: 20,
@@ -53,7 +42,7 @@ class MainPage extends HookConsumerWidget {
                       color: AdminColorConstants.gradient1)),
             ),
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
             ...g
                 .map(

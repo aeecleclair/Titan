@@ -16,7 +16,7 @@ class TopBar extends HookConsumerWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 25,
+          height: 15,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,7 +50,7 @@ class TopBar extends HookConsumerWidget {
                             pageNotifier.setBookingPage(BookingPage.admin);
                             break;
                           case BookingPage.editBooking:
-                            pageNotifier.setBookingPage(BookingPage.bookings);
+                            pageNotifier.setBookingPage(BookingPage.main);
                             break;
                         }
                       },

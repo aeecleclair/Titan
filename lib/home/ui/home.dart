@@ -41,20 +41,6 @@ class HomePage extends HookConsumerWidget {
               child: Column(
                 children: [
                   TopBar(controllerNotifier: controllerNotifier),
-                  // const Padding(
-                  //   padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  //   child: Align(
-                  //     alignment: Alignment.centerLeft,
-                  //     child: Text(HomeTextConstants.calendar,
-                  //         style: TextStyle(
-                  //             fontSize: 40,
-                  //             fontWeight: FontWeight.w700,
-                  //             color: Colors.black)),
-                  //   ),
-                  // ),
-                  const SizedBox(
-                    height: 30,
-                  ),
                   MonthBar(
                       scrollController: scrollController,
                       width: MediaQuery.of(context).size.width),

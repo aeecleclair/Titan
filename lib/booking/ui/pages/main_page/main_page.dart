@@ -3,9 +3,11 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/booking/tools/dialog.dart';
 import 'package:myecl/booking/ui/pages/main_page/booking_card.dart';
 import 'package:myecl/booking/ui/refresh_indicator.dart';
 import 'package:myecl/booking/ui/pages/main_page/calendar.dart';
@@ -19,6 +21,7 @@ class MainPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final bookings = ref.watch(userBookingListProvider);
+    final bookingNotifier = ref.watch(bookingProvider.notifier);
     return BookingRefresher(
       onRefresh: () async {
         await bookingsNotifier.loadUserBookings();
@@ -34,7 +37,7 @@ class MainPage extends HookConsumerWidget {
         ),
         const SizedBox(height: 10),
         SizedBox(
-            height: MediaQuery.of(context).size.height - 460,
+            height: MediaQuery.of(context).size.height - 450,
             child: const Calendar()),
         SizedBox(
           height: (isAdmin) ? 25 : 30,
@@ -128,8 +131,25 @@ class MainPage extends HookConsumerWidget {
                       ),
                       ...data.map((e) => BookingCard(
                             booking: e,
-                            onEdit: () {},
-                            onReturn: () {},
+                            isAdmin: false,
+                            onEdit: () {
+                              bookingNotifier.setBooking(e);
+                              pageNotifier
+                                  .setBookingPage(BookingPage.editBooking);
+                            },
+                            onReturn: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return BookingDialog(
+                                      title: BookingTextConstants.deleting,
+                                      descriptions:
+                                          BookingTextConstants.deletingBooking,
+                                      onYes: () {
+                                      },
+                                    );
+                                  });
+                            },
                           )),
                       const SizedBox(width: 10),
                     ],

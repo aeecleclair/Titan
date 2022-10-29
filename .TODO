@@ -9,6 +9,9 @@ En cours :
     - Loan :
         - available (API -> number ?)
 
+    - Booking :
+        - user can delete booking ?
+
     - AMAP
         - MapNotifier opti reload
 
@@ -36,16 +39,6 @@ Créer un compte
 Pages avec des boutons enregistrer ou valider
 
     si la page est longue, le bouton valider est initialement caché. Si on clique sur la flèche en haut à gauche, on part donc s’en enregistrer
-
-Loaners
-
-    textfield
-    rendre plus explicite l’utilisateur sélectionné
-    suggérer la caution et la date de retour en fonction des objets empruntés
-    retour en arrière après avoir validé un prêt : celui-ci n’apparait pas encore
-    formulaire avec des boutons suivants : on a deux fois plus de cliques à faire : veut-on afficher toutes les questions d’un coup ?
-    UI détail d’un prêt
-
 
 
 Modules :

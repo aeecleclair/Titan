@@ -11,7 +11,7 @@ class AssoUi extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

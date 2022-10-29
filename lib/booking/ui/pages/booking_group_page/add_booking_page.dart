@@ -33,7 +33,6 @@ class AddBookingPage extends HookConsumerWidget {
     final motif = useTextEditingController();
     final note = useTextEditingController();
     final recurring = useState(false);
-    final multipleDay = useState(false);
     final keyRequired = useState(false);
     void displayBookingToastWithContext(TypeMsg type, String msg) {
       displayBookingToast(context, type, msg);
@@ -53,7 +52,7 @@ class AddBookingPage extends HookConsumerWidget {
                           style: TextStyle(
                               fontSize: 40, fontWeight: FontWeight.bold))),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 rooms.when(
                     data: (data) => SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -83,7 +82,7 @@ class AddBookingPage extends HookConsumerWidget {
                             color: Colors.blue,
                           ),
                         )),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Column(children: [
@@ -109,31 +108,19 @@ class AddBookingPage extends HookConsumerWidget {
                       label: BookingTextConstants.reason,
                       suffix: '',
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
                     CheckBoxEntry(
                       title: BookingTextConstants.necessaryKey,
                       valueNotifier: keyRequired,
                     ),
-                    const SizedBox(height: 30),
-                    CheckBoxEntry(
-                      title: BookingTextConstants.recurrent,
-                      valueNotifier: recurring,
-                    ),
-                    const SizedBox(height: 30),
-                    CheckBoxEntry(
-                      title: BookingTextConstants.multipleDay,
-                      valueNotifier: multipleDay,
-                    ),
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 20),
                     GestureDetector(
                       onTap: () {
                         if (key.currentState == null) {
                           return;
                         }
                         if (key.currentState!.validate()) {
-                          if (processDateBack(start.text)
-                                  .compareTo(processDateBack(end.text)) >=
-                              0) {
+                          if (start.text.compareTo(end.text) >= 0) {
                             displayBookingToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidDates);
                           } else if (room.value.id.isEmpty) {
@@ -144,14 +131,13 @@ class AddBookingPage extends HookConsumerWidget {
                               Booking newBooking = Booking(
                                   id: '',
                                   reason: motif.text,
-                                  start: DateTime.parse(processDateBack(start.value.text)),
-                                  end: DateTime.parse(processDateBack(end.value.text)),
+                                  start: DateTime.parse(start.value.text),
+                                  end: DateTime.parse(end.value.text),
                                   note: note.text,
                                   room: room.value,
                                   key: keyRequired.value,
                                   decision: Decision.pending,
-                                  multipleDay: multipleDay.value,
-                                  recurring: recurring.value);
+                                  recurrenceRule: '');
                               final value = await bookingListNotifier
                                   .addBooking(newBooking);
                               if (value) {
