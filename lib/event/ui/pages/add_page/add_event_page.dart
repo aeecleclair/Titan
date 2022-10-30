@@ -21,6 +21,7 @@ class AddEventPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final now = DateTime.now();
     final pageNotifier = ref.watch(eventPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final eventListNotifier = ref.watch(eventListProvider.notifier);
@@ -446,12 +447,12 @@ class AddEventPage extends HookConsumerWidget {
                         }
                         if (key.currentState!.validate()) {
                           if (start.text == "") {
-                            start.text = DateTime.now()
+                            start.text = now
                                 .subtract(const Duration(minutes: 1))
                                 .toString();
                           }
                           if (end.text == "") {
-                            end.text = DateTime.now().toString();
+                            end.text = now.toString();
                           }
                           if (start.text.compareTo(end.text) > 0) {
                             displayEventToast(context, TypeMsg.error,
@@ -459,10 +460,20 @@ class AddEventPage extends HookConsumerWidget {
                           } else {
                             tokenExpireWrapper(ref, () async {
                               String recurrenceRule = "";
+                              String startString = start.text;
+                              if (!startString.contains("-")) {
+                                startString =
+                                    "${processDateToAPIWitoutHour(now)} $startString";
+                              }
+                              String endString = end.text;
+                              if (!endString.contains("-")) {
+                                endString =
+                                    "${processDateToAPIWitoutHour(now)} $endString";
+                              }
                               if (recurrent.value) {
                                 RecurrenceProperties recurrence =
                                     RecurrenceProperties(
-                                        startDate: DateTime.now());
+                                        startDate: now);
                                 recurrence.recurrenceType =
                                     RecurrenceType.weekly;
                                 recurrence.recurrenceRange =
@@ -477,18 +488,18 @@ class AddEventPage extends HookConsumerWidget {
                                 recurrence.interval = int.parse(interval.text);
                                 recurrenceRule = SfCalendar.generateRRule(
                                     recurrence,
-                                    DateTime.parse(start.text),
-                                    DateTime.parse(end.text));
+                                    DateTime.parse(startString),
+                                    DateTime.parse(endString));
                               }
                               Event newEvent = Event(
                                   id: '',
                                   description: description.text,
-                                  end: DateTime.parse(end.text),
+                                  end: DateTime.parse(endString),
                                   name: name.text,
                                   organizer: organizer.text,
                                   allDay: allDay.value,
                                   location: place.text,
-                                  start: DateTime.parse(start.text),
+                                  start: DateTime.parse(startString),
                                   type: eventType.value,
                                   recurrenceRule: recurrenceRule);
                               final value =
