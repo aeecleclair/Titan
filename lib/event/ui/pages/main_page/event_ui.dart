@@ -12,138 +12,220 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class EventUi extends ConsumerWidget {
-  final Event e;
-  const EventUi({Key? key, required this.e}) : super(key: key);
+  final Event event;
+  const EventUi({Key? key, required this.event}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final now = DateTime.now();
     final pageNotifier = ref.watch(eventPageProvider.notifier);
-    final eventListNotfier = ref.watch(eventListProvider.notifier);
+    final eventListNotifier = ref.watch(eventListProvider.notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
     void displayEventToastWithContext(TypeMsg type, String msg) {
       displayEventToast(context, type, msg);
     }
 
+    final textColor =
+        event.start.compareTo(now) <= 0 ? Colors.white : Colors.black;
+
     return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () {
-        eventNotifier.setEvent(e);
-        pageNotifier.setEventPage(EventPage.eventDetailfromModule);
-      },
-      child: Container(
-          height: 55,
-          alignment: Alignment.centerLeft,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 20,
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          eventNotifier.setEvent(event);
+          pageNotifier.setEventPage(EventPage.eventDetailfromModule);
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+          width: double.infinity,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: event.end.compareTo(now) < 0
+                    ? [
+                        Colors.grey.shade700,
+                        Colors.grey.shade800,
+                      ]
+                    : event.start.compareTo(now) <= 0
+                        ? [
+                            EventColorConstants.gradient1,
+                            EventColorConstants.gradient2,
+                          ]
+                        : [
+                            Colors.white,
+                            Colors.grey.shade100,
+                          ],
               ),
-              Expanded(
-                child: Text(
-                  e.name,
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold),
-                  overflow: TextOverflow.ellipsis,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: event.end.compareTo(now) < 0
+                      ? Colors.black.withOpacity(0.2)
+                      : event.start.compareTo(now) <= 0
+                          ? EventColorConstants.gradient2.withOpacity(0.2)
+                          : Colors.grey.withOpacity(0.2),
+                  spreadRadius: 5,
+                  blurRadius: 10,
+                  offset: const Offset(3, 3),
+                )
+              ]),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      event.name,
+                      style: TextStyle(
+                          color: textColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        eventNotifier.setEvent(event);
+                        pageNotifier
+                            .setEventPage(EventPage.eventDetailfromModule);
+                      },
+                      child: HeroIcon(
+                        HeroIcons.informationCircle,
+                        color: textColor,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: 15,
-                  ),
-                  Container(
-                    width: 80,
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      e.location,
-                      style: const TextStyle(fontSize: 13),
+                const SizedBox(
+                  height: 7,
+                ),
+                Text(
+                  formatDates(event.start, event.end),
+                  style: TextStyle(
+                      color: textColor.withOpacity(0.7), fontSize: 13),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      event.location,
+                      style: TextStyle(color: textColor, fontSize: 15),
                     ),
-                  ),
-                  Container(
-                    width: 20,
-                  ),
-                  GestureDetector(
-                    child: Container(
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                            colors: [
-                              EventColorConstants.blueGradient1,
-                              EventColorConstants.blueGradient2
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                        boxShadow: [
-                          BoxShadow(
-                              color: EventColorConstants.blueGradient1
-                                  .withOpacity(0.4),
-                              offset: const Offset(2, 3),
-                              blurRadius: 5)
-                        ],
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                      ),
-                      child: const HeroIcon(
-                        HeroIcons.pencilSquare,
-                        size: 20,
-                        color: Colors.white,
-                      ),
+                    Text(
+                      event.organizer,
+                      style: TextStyle(color: textColor, fontSize: 15),
                     ),
-                    onTap: () {},
-                  ),
-                  Container(
-                    width: 15,
-                  ),
-                  GestureDetector(
-                    child: Container(
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                            colors: [
-                              EventColorConstants.redGradient1,
-                              EventColorConstants.redGradient2
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                        boxShadow: [
-                          BoxShadow(
-                              color: EventColorConstants.redGradient2
-                                  .withOpacity(0.4),
-                              offset: const Offset(2, 3),
-                              blurRadius: 5)
-                        ],
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                      ),
-                      child: const HeroIcon(
-                        HeroIcons.trash,
-                        size: 20,
-                        color: Colors.white,
+                  ],
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  event.description,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: textColor.withOpacity(0.7), fontSize: 13),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          decoration: BoxDecoration(
+                              color: event.end.compareTo(now) < 0
+                                  ? Colors.grey.shade700
+                                  : event.start.compareTo(now) <= 0
+                                      ? EventColorConstants.gradient1
+                                      : Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                  color: event.end.compareTo(now) < 0
+                                      ? Colors.grey.shade700
+                                      : event.start.compareTo(now) <= 0
+                                          ? EventColorConstants.gradient1
+                                          : Colors.grey.shade300)),
+                          child: Center(
+                            child: Text(
+                              'Éditer',
+                              style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => EventDialog(
-                              descriptions: EventTextConstants.deletingEvent,
-                              title: EventTextConstants.deleting,
-                              onYes: () async {
-                                tokenExpireWrapper(ref, () async {
-                                  await eventListNotfier.deleteEvent(e);
-                                  displayEventToastWithContext(TypeMsg.msg,
-                                      EventTextConstants.deletedEvent);
-                                });
-                              }));
-                    },
-                  )
-                ],
-              ),
-              Container(
-                width: 15,
-              ),
-            ],
-          )),
-    );
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return EventDialog(
+                                  descriptions:
+                                      EventTextConstants.deletingEvent,
+                                  onYes: () async {
+                                    final value = await eventListNotifier
+                                        .deleteEvent(event);
+                                    if (value) {
+                                      displayEventToastWithContext(TypeMsg.msg,
+                                          EventTextConstants.deletedEvent);
+                                    } else {
+                                      displayEventToastWithContext(
+                                          TypeMsg.error,
+                                          EventTextConstants.deletingError);
+                                    }
+                                  },
+                                  title: EventTextConstants.deleting,
+                                );
+                              });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          decoration: BoxDecoration(
+                              color: event.end.compareTo(now) < 0
+                                  ? Colors.grey.shade700
+                                  : event.start.compareTo(now) <= 0
+                                      ? EventColorConstants.gradient1
+                                      : Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                  color: event.end.compareTo(now) < 0
+                                      ? Colors.grey.shade700
+                                      : event.start.compareTo(now) <= 0
+                                          ? EventColorConstants.gradient1
+                                          : Colors.grey.shade300)),
+                          child: Center(
+                            child: Text(
+                              'Supprimer',
+                              style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }

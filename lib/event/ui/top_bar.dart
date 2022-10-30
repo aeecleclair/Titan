@@ -59,11 +59,7 @@ class TopBar extends HookConsumerWidget {
             ),
             const Text(
               EventTextConstants.title,
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)
             ),
             const SizedBox(
               width: 70,
