@@ -199,6 +199,10 @@ DateTime normalizedDate(DateTime date) {
   return DateTime(date.year, date.month, date.day, 0, 0, 0, 0, 0);
 }
 
+DateTime mergeDates(DateTime date, DateTime time) {
+  return DateTime(date.year, date.month, date.day, time.hour, time.minute);
+}
+
 List<DateTime> getDateInRecurrence(String recurrenceRule, DateTime start) {
   return SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
 }

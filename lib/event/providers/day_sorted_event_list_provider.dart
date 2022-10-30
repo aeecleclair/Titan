@@ -6,41 +6,24 @@ import 'package:myecl/event/tools/functions.dart';
 final daySortedEventListProvider = Provider<Map<DateTime, List<Event>>>((ref) {
   final eventList = ref.watch(eventListProvider);
   final sortedEventList = <DateTime, List<Event>>{};
-  DateTime now = DateTime.now();
-  now = DateTime(now.year, now.month, now.day, 0, 0, 0, 0, 0);
   return eventList.when(
       data: (events) {
         for (final event in events) {
           List<DateTime> normalizedDates = [];
           if (event.recurrenceRule.isEmpty) {
-            normalizedDates.add(DateTime(event.start.year, event.start.month,
-                event.start.day, 0, 0, 0, 0, 0));
+            normalizedDates.add(normalizedDate(event.start));
           } else {
             normalizedDates =
                 getDateInRecurrence(event.recurrenceRule, event.start)
                     .map(
-                      (x) => DateTime(x.year, x.month, x.day, 0, 0, 0, 0, 0),
+                      (x) => normalizedDate(x),
                     )
                     .toList();
           }
           for (final normalizedDate in normalizedDates) {
             final e = event.copyWith(
-                start: DateTime(
-                    normalizedDate.year,
-                    normalizedDate.month,
-                    normalizedDate.day,
-                    event.start.hour,
-                    event.start.minute,
-                    event.start.second,
-                    event.start.millisecond),
-                end: DateTime(
-                    normalizedDate.year,
-                    normalizedDate.month,
-                    normalizedDate.day,
-                    event.end.hour,
-                    event.end.minute,
-                    event.end.second,
-                    event.end.millisecond));
+                start: mergeDates(normalizedDate, event.start),
+                end: mergeDates(normalizedDate, event.end));
             if (sortedEventList.containsKey(normalizedDate)) {
               final index = sortedEventList[normalizedDate]!
                   .indexWhere((element) => element.start.isAfter(e.start));

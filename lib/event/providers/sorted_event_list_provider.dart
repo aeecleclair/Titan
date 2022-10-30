@@ -7,42 +7,26 @@ final sortedEventListProvider = Provider<Map<String, List<Event>>>((ref) {
   final eventList = ref.watch(eventListProvider);
   final sortedEventList = <String, List<Event>>{};
   final dateTitle = <String, DateTime>{};
-  DateTime now = DateTime.now();
-  now = DateTime(now.year, now.month, now.day, 0, 0, 0, 0, 0);
+  final now = normalizedDate(DateTime.now());
   return eventList.when(
       data: (events) {
         for (final event in events) {
           List<DateTime> normalizedDates = [];
           if (event.recurrenceRule.isEmpty) {
-            normalizedDates.add(DateTime(event.start.year, event.start.month,
-                event.start.day, 0, 0, 0, 0, 0));
+            normalizedDates.add(normalizedDate(event.start));
           } else {
             normalizedDates =
                 getDateInRecurrence(event.recurrenceRule, event.start)
                     .map(
-                      (x) => DateTime(x.year, x.month, x.day, 0, 0, 0, 0, 0),
+                      (x) => normalizedDate(x),
                     )
                     .toList();
           }
           for (final normalizedDate in normalizedDates) {
             String formatedDelay = formatDelayToToday(normalizedDate, now);
             final e = event.copyWith(
-                start: DateTime(
-                    normalizedDate.year,
-                    normalizedDate.month,
-                    normalizedDate.day,
-                    event.start.hour,
-                    event.start.minute,
-                    event.start.second,
-                    event.start.millisecond),
-                end: DateTime(
-                    normalizedDate.year,
-                    normalizedDate.month,
-                    normalizedDate.day,
-                    event.end.hour,
-                    event.end.minute,
-                    event.end.second,
-                    event.end.millisecond));
+                start: mergeDates(normalizedDate, event.start),
+                end: mergeDates(normalizedDate, event.end));
             dateTitle[formatedDelay] = normalizedDate;
             if (sortedEventList.containsKey(formatedDelay)) {
               final index = sortedEventList[formatedDelay]!

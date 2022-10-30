@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/day_sorted_event_list_provider.dart';
+import 'package:myecl/event/providers/sorted_event_list_provider.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/home/providers/days_provider.dart';
 import 'package:myecl/home/providers/number_day_provider.dart';
-import 'package:myecl/home/tools/functions.dart';
 import 'package:myecl/home/ui/day_card.dart';
 
 class DayList extends HookConsumerWidget {
   final ScrollController scrollController, daysEventScrollController;
-  final Map<String, List<Event>> sortedEventList;
   const DayList(this.scrollController, this.daysEventScrollController,
-      this.sortedEventList,
       {super.key});
 
   @override
@@ -22,9 +19,9 @@ class DayList extends HookConsumerWidget {
     final needReload = useState(false);
     final numberDay = ref.watch(numberDayProvider);
     final daySortedEventList = ref.watch(daySortedEventListProvider);
+    final sortedEventList = ref.watch(sortedEventListProvider);
     final days = ref.watch(daysProvider);
-    DateTime now = DateTime.now();
-    now = DateTime(now.year, now.month, now.day, 0, 0, 0, 0, 0);
+    DateTime now = normalizedDate(DateTime.now());
 
     Map<String, double> widgetPositions = {};
     if (sortedEventList.keys.isNotEmpty) {

@@ -44,8 +44,7 @@ class HomePage extends HookConsumerWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  DayList(scrollController, daysEventScrollController,
-                      sortedEventList),
+                  DayList(scrollController, daysEventScrollController),
                   const SizedBox(
                     height: 20,
                   ),
