@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/class/event.dart';
+import 'package:myecl/event/providers/day_sorted_event_list_provider.dart';
+import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/home/providers/days_provider.dart';
 import 'package:myecl/home/providers/number_day_provider.dart';
+import 'package:myecl/home/tools/functions.dart';
 import 'package:myecl/home/ui/day_card.dart';
 
 class DayList extends HookConsumerWidget {
   final ScrollController scrollController, daysEventScrollController;
-  final Map<DateTime, List<Event>> sortedEventList;
+  final Map<String, List<Event>> sortedEventList;
   const DayList(this.scrollController, this.daysEventScrollController,
       this.sortedEventList,
       {super.key});
@@ -18,20 +21,30 @@ class DayList extends HookConsumerWidget {
     final position = useState(0.0);
     final needReload = useState(false);
     final numberDay = ref.watch(numberDayProvider);
+    final daySortedEventList = ref.watch(daySortedEventListProvider);
     final days = ref.watch(daysProvider);
+    DateTime now = DateTime.now();
+    now = DateTime(now.year, now.month, now.day, 0, 0, 0, 0, 0);
 
-    Map<DateTime, double> widgetPositions = {};
+    Map<String, double> widgetPositions = {};
     if (sortedEventList.keys.isNotEmpty) {
-      widgetPositions.addAll({days[0]: 0});
+      widgetPositions.addAll({formatDelayToToday(days[0], now): 0});
       for (int i = 0; i < days.length - 1; i++) {
         DateTime date = days[i];
         int height = 0;
-        if (sortedEventList.keys.contains(date)) {
-          height = 50 + 180 * sortedEventList[date]!.length;
+        String formattedDate = formatDelayToToday(date, now);
+        String formattedNextDate = formatDelayToToday(days[i + 1], now);
+
+        if (formattedNextDate != formattedDate) {
+          if (sortedEventList.keys.contains(formattedDate)) {
+            height = 43 + 170 * sortedEventList[formattedDate]!.length;
+          }
         }
-        widgetPositions[days[i + 1]] = height + widgetPositions[days[i]]!;
+        widgetPositions[formattedNextDate] =
+            height + widgetPositions[formattedDate]!;
       }
     }
+
     return SizedBox(
       height: 125,
       child: ListView.builder(
@@ -49,14 +62,15 @@ class DayList extends HookConsumerWidget {
           return DayCard(
             isToday: i == 1,
             day: day,
-            numberOfEvent: sortedEventList.keys.contains(day)
-                ? sortedEventList[day]!.length
+            numberOfEvent: daySortedEventList.keys.contains(day)
+                ? daySortedEventList[day]!.length
                 : 0,
             index: i - 1,
             onTap: () {
               position.value = scrollController.position.pixels;
               needReload.value = true;
-              daysEventScrollController.animateTo(widgetPositions[day] ?? 0.0,
+              daysEventScrollController.animateTo(
+                  widgetPositions[formatDelayToToday(day, now)] ?? 0.0,
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.decelerate);
             },

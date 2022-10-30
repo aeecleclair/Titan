@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 void displayEventToast(BuildContext context, TypeMsg type, String text) {
   return displayToast(
@@ -88,6 +89,39 @@ String formatDateOnlyDay(DateTime dateStart, DateTime dateEnd) {
   }
 }
 
+String getMonth(int m) {
+  switch (m) {
+    case 0:
+      return "Décembre";
+    case 1:
+      return "Janvier";
+    case 2:
+      return "Février";
+    case 3:
+      return "Mars";
+    case 4:
+      return "Avril";
+    case 5:
+      return "Mai";
+    case 6:
+      return "Juin";
+    case 7:
+      return "Juillet";
+    case 8:
+      return "Août";
+    case 9:
+      return "Septembre";
+    case 10:
+      return "Octobre";
+    case 11:
+      return "Novembre";
+    case 12:
+      return "Décembre";
+    default:
+      return "";
+  }
+}
+
 String formatDays(String recurrenceRule) {
   final listDay = [
     "Lundi",
@@ -159,4 +193,41 @@ String formatRecurrenceRule(
   }
   r += " jusqu'au ${processDate(DateTime.parse(endDay))}";
   return r;
+}
+
+DateTime normalizedDate(DateTime date) {
+  return DateTime(date.year, date.month, date.day, 0, 0, 0, 0, 0);
+}
+
+List<DateTime> getDateInRecurrence(String recurrenceRule, DateTime start) {
+  return SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
+}
+
+int dayDifference(DateTime start, DateTime end) {
+  return end.difference(start).inDays;
+}
+
+String formatDelayToToday(DateTime date, DateTime now) {
+  final strNow = processDateToAPIWitoutHour(now);
+  final strDate = processDateToAPIWitoutHour(date);
+  final diff = dayDifference(now, date);
+  if (now.year > date.year) {
+    return "Il y a ${now.year - date.year} ans";
+  } else if (now.month > date.month) {
+    return "Il y a ${now.month - date.month} mois";
+  } else if (diff == -1) {
+    return "Hier";
+  } else if (now.month > date.month && now.day - date.day > 1) {
+    return "Il y a ${now.day - date.day} jours";
+  } else if (diff == 0) {
+    return "Aujourd'hui";
+  } else if (diff == 1) {
+    return "Demain";
+  } else if (((now.month < date.month ||
+          (strDate.compareTo(strNow) > 0 && now.month >= date.month)) &&
+      diff < 14)) {
+    return "Dans $diff jours";
+  } else {
+    return "En ${getMonth(date.month)}";
+  }
 }

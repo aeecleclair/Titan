@@ -109,39 +109,14 @@ DateTime correctAfterDate(DateTime end) {
   return end;
 }
 
+List<DateTime> getDateInRecurrence(String recurrenceRule, DateTime start) {
+  return SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
+}
+
 bool isDateInReccurence(String recurrenceRule, String strNow, DateTime start) {
-  final rrule =
-      SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
+  final rrule = getDateInRecurrence(recurrenceRule, start);
   final dates = rrule.map((e) => processDateToAPIWitoutHour(e)).toList();
   return dates.contains(strNow);
-}
-
-int dayDifference(DateTime start, DateTime end) {
-  return end.difference(start).inDays;
-}
-
-String formatDelayToToday(DateTime date, DateTime now) {
-  final strNow = processDateToAPIWitoutHour(now);
-  final strDate = processDateToAPIWitoutHour(date);
-  if (now.year > date.year) {
-    return "Il y a ${now.year - date.year} ans";
-  } else if (now.month > date.month) {
-    return "Il y a ${now.month - date.month} mois";
-  } else if (dayDifference(now, date) == -1) {
-    return "Hier";
-  } else if (now.month > date.month && now.day - date.day > 1) {
-    return "Il y a ${now.day - date.day} jours";
-  } else if (strDate.compareTo(strNow) == 0) {
-    return "Aujourd'hui";
-  } else if (dayDifference(now, date) == 1) {
-    return "Demain";
-  } else if (((now.month < date.month ||
-          strDate.compareTo(strNow) > 0 && now.month >= date.month) &&
-      dayDifference(now, date) < 14)) {
-    return "Dans ${dayDifference(now, date)} jours";
-  } else {
-    return "En ${getMonth(date.month)}";
-  }
 }
 
 DateTime normalizedDate(DateTime date) {

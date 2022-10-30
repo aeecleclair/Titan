@@ -3,10 +3,10 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/home/tools/constants.dart';
-import 'package:myecl/home/tools/functions.dart';
 
 class DaysEvent extends StatelessWidget {
-  final DateTime day, now;
+  final DateTime now;
+  final String day;
   final List<Event> events;
   const DaysEvent(
       {super.key, required this.day, required this.events, required this.now});
@@ -19,7 +19,7 @@ class DaysEvent extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Text(formatDelayToToday(day, now),
+              child: Text(day,
                   style: const TextStyle(
                       fontSize: 18,
                       color: Color.fromARGB(255, 205, 205, 205),
@@ -29,8 +29,12 @@ class DaysEvent extends StatelessWidget {
               height: 10,
             ),
             ...events.map((event) {
+              final start = DateTime(event.start.year, event.start.month,
+                  event.start.day, event.start.hour, event.start.minute);
+              final end = DateTime(event.end.year, event.end.month,
+                  event.end.day, event.end.hour, event.end.minute);
               final textColor =
-                  event.start.compareTo(now) <= 0 ? Colors.white : Colors.black;
+                  start.compareTo(now) <= 0 ? Colors.white : Colors.black;
               return Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
@@ -39,12 +43,12 @@ class DaysEvent extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: event.end.compareTo(now) < 0
+                      colors: end.compareTo(now) < 0
                           ? [
                               Colors.grey.shade700,
                               Colors.grey.shade800,
                             ]
-                          : event.start.compareTo(now) <= 0
+                          : start.compareTo(now) <= 0
                               ? [
                                   HomeColorConstants.gradient1,
                                   HomeColorConstants.gradient2,
@@ -57,9 +61,9 @@ class DaysEvent extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: event.end.compareTo(now) < 0
+                        color: end.compareTo(now) < 0
                             ? Colors.black.withOpacity(0.2)
-                            : event.start.compareTo(now) <= 0
+                            : start.compareTo(now) <= 0
                                 ? HomeColorConstants.gradient2.withOpacity(0.2)
                                 : Colors.grey.withOpacity(0.2),
                         spreadRadius: 5,
@@ -96,7 +100,7 @@ class DaysEvent extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        formatDates(event.start, event.end, event.allDay),
+                        formatDates(start, end, event.allDay),
                         style: TextStyle(
                             color: textColor.withOpacity(0.7), fontSize: 13),
                       ),
