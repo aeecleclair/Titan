@@ -100,7 +100,8 @@ class EventUi extends ConsumerWidget {
                   height: 7,
                 ),
                 Text(
-                  formatDates(event.start, event.end),
+                  formatRecurrenceRule(event.start, event.end,
+                      event.recurrenceRule, event.allDay),
                   style: TextStyle(
                       color: textColor.withOpacity(0.7), fontSize: 13),
                 ),

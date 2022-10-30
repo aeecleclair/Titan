@@ -70,7 +70,7 @@ class DetailPage extends HookConsumerWidget {
               ? event.recurrenceRule == ""
                   ? Center(
                       child: Text(
-                        formatDates(event.start, event.end),
+                        formatDates(event.start, event.end, event.allDay),
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,

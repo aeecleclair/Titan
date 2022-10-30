@@ -69,7 +69,7 @@ class AddEventPage extends HookConsumerWidget {
                       const SizedBox(width: 15),
                       ...CalendarEventType.values.map(
                         (e) => EventTypeChip(
-                          label: capitalize(e.name),
+                          label: calendarEventTypeToString(e),
                           selected: eventType.value == e,
                           onTap: () async {
                             eventType.value = e;
@@ -472,8 +472,7 @@ class AddEventPage extends HookConsumerWidget {
                               }
                               if (recurrent.value) {
                                 RecurrenceProperties recurrence =
-                                    RecurrenceProperties(
-                                        startDate: now);
+                                    RecurrenceProperties(startDate: now);
                                 recurrence.recurrenceType =
                                     RecurrenceType.weekly;
                                 recurrence.recurrenceRange =

@@ -96,7 +96,7 @@ class DaysEvent extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        formatDates(event.start, event.end),
+                        formatDates(event.start, event.end, event.allDay),
                         style: TextStyle(
                             color: textColor.withOpacity(0.7), fontSize: 13),
                       ),
