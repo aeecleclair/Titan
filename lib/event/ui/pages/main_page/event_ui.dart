@@ -9,7 +9,6 @@ import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/dialog.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class EventUi extends ConsumerWidget {
   final Event event;
@@ -156,7 +155,7 @@ class EventUi extends ConsumerWidget {
                                           : Colors.grey.shade300)),
                           child: Center(
                             child: Text(
-                              'Éditer',
+                              EventTextConstants.edit,
                               style: TextStyle(
                                   color: textColor,
                                   fontSize: 15,
@@ -211,7 +210,7 @@ class EventUi extends ConsumerWidget {
                                           : Colors.grey.shade300)),
                           child: Center(
                             child: Text(
-                              'Supprimer',
+                              EventTextConstants.delete,
                               style: TextStyle(
                                   color: textColor,
                                   fontSize: 15,

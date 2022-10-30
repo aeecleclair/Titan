@@ -18,11 +18,13 @@ class EventTextConstants {
   static const String allDay = "Toute la journée";
   static const String confirmation = "Confirmation";
   static const String dates = "Dates";
+  static const String delete = "Supprimer";
   static const String deletedEvent = "Événement supprimé";
   static const String deleting = "Suppression";
   static const String deletingError = "Erreur lors de la suppression";
   static const String deletingEvent = "Supprimer l'événement ?";
   static const String description = "Description";
+  static const String edit = "Modifier";
   static const String endDate = "Date de fin";
   static const String endHour = "Heure de fin";
   static const String eventList = "Liste des événements";

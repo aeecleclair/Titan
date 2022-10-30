@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/tools/constants.dart';
 
 class ItemCard extends StatelessWidget {
   final Item item;
@@ -43,7 +44,10 @@ class ItemCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
               const SizedBox(height: 5),
-              Text(item.available ? 'Disponible' : 'Non disponible',
+              Text(
+                  item.available
+                      ? LoanTextConstants.available
+                      : LoanTextConstants.unavailable,
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,

@@ -17,6 +17,7 @@ class LoanTextConstants {
   static const String addedRoom = "Salle ajoutée";
   static const String addingError = "Erreur lors de l'ajout";
   static const String admin = "Administrateur";
+  static const String available = "Disponible";
   static const String and = "et";
   static const String association = "Association";
   static const String availableItems = "Objets disponibles";
@@ -36,11 +37,13 @@ class LoanTextConstants {
   static const String deleting = "Suppression";
   static const String deletingError = "Erreur lors de la suppression";
   static const String deletingItem = "Supprimer l'objet ?";
+  static const String duration = "Durée";
   static const String edit = "Modifier";
   static const String editItem = "Modifier l'objet";
   static const String editLoan = "Modifier le prêt";
   static const String editedRoom = "Salle modifiée";
   static const String endDate = "Date de fin du prêt";
+  static const String ended = "Terminé";
   static const String enterDate = "Veuillez entrer une date";
   static const String extendedLoan = "Prêt prolongé";
   static const String extendingError = "Erreur lors de la prolongation";
@@ -68,6 +71,7 @@ class LoanTextConstants {
   static const String noLoan = "Aucun prêt";
   static const String note = "Note";
   static const String noValue = "Veuillez entrer une valeur";
+  static const String onGoing = "En cours";
   static const String onGoingLoan = "Prêt en cours";
   static const String others = "autres";
   static const String paidCaution = "Caution payée";
@@ -77,6 +81,7 @@ class LoanTextConstants {
   static const String returningError = "Erreur lors du retour";
   static const String returningLoan = "Retour";
   static const String returnLoan = "Rendre le prêt ?";
+  static const String unavailable = "Indisponible";
   static const String update = "Modifier";
   static const String updatedItem = "Objet modifié";
   static const String updatedLoan = "Prêt modifié";

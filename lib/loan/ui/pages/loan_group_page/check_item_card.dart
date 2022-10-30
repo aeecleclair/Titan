@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/tools/constants.dart';
 
 class CheckItemCard extends StatelessWidget {
   final Item item;
@@ -52,7 +53,10 @@ class CheckItemCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
                 const SizedBox(height: 5),
-                Text(item.available ? 'Disponible' : 'Non disponible',
+                Text(
+                    item.available
+                        ? LoanTextConstants.available
+                        : LoanTextConstants.unavailable,
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -67,7 +71,7 @@ class CheckItemCard extends StatelessWidget {
                         color: Colors.black)),
                 const SizedBox(height: 5),
                 Text(
-                    'Durée : ${item.suggestedLendingDuration ~/ (24 * 60 * 60)} jours',
+                    '${LoanTextConstants.duration} : ${item.suggestedLendingDuration ~/ (24 * 60 * 60)} ${LoanTextConstants.days}',
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,

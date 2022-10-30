@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
@@ -57,17 +56,18 @@ class TopBar extends HookConsumerWidget {
                             ? HeroIcons.bars3BottomLeft
                             : HeroIcons.chevronLeft,
                         color: const Color.fromARGB(255, 0, 0, 0),
+                        size: 30,
                       ));
                 },
               ),
             ),
             const Text(AdminTextConstants.administration,
                 style: TextStyle(
-                    fontSize: 35,
+                    fontSize: 33,
                     fontWeight: FontWeight.w700,
                     color: Colors.black)),
             const SizedBox(
-              width: 30,
+              width: 70,
             ),
           ],
         ),

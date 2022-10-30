@@ -12,6 +12,7 @@ class HomeTextConstants {
   static const String eventOf = "Évènements du";
   static const String incomingEvents = "Évènements à venir";
   static const String lastInfos = "Dernières annonces";
+  static const String noEvents = "Aucun évènement";
 
   static const Map<String, String> translateDayShort = {
     'Mon': 'Lun',

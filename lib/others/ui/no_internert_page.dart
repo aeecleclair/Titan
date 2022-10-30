@@ -77,7 +77,7 @@ class NoInternetPage extends HookConsumerWidget {
                           size: 25,
                           color: Colors.white,
                         ),
-                        Text('Réessayer',
+                        Text(OthersTextConstants.retry,
                             style: TextStyle(
                                 fontSize: 25,
                                 color: Colors.white,

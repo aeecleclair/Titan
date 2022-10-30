@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 
@@ -80,8 +81,8 @@ class LoanCard extends StatelessWidget {
                 children: [
                   Text(
                       DateTime.now().compareTo(loan.end) <= 0
-                          ? "En cours"
-                          : "Terminé",
+                          ? LoanTextConstants.onGoing
+                          : LoanTextConstants.ended,
                       style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,

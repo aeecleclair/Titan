@@ -26,7 +26,7 @@ class AddMemberPage extends HookConsumerWidget {
     return AdminRefresher(
         onRefresh: () async {
           users.value = await usersNotifier
-              .filterUsers("", excludeGroup: [group.value!.toSimpleGroup()]);
+              .filterUsers(" ", excludeGroup: [group.value!.toSimpleGroup()]);
         },
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),

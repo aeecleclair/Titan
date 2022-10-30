@@ -178,7 +178,7 @@ class EditUserPage extends HookConsumerWidget {
                 ]),
                 const SizedBox(height: 50),
                 UserFieldModifier(
-                    label: "Etage",
+                    label: SettingsTextConstants.floor,
                     keyboardType: TextInputType.text,
                     controller: floorController),
                 const SizedBox(height: 50),

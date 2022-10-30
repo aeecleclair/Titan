@@ -37,7 +37,7 @@ class MainPage extends HookConsumerWidget {
           ),
           const Align(
             alignment: Alignment.centerLeft,
-            child: Text("Compte",
+            child: Text(SettingsTextConstants.account,
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,

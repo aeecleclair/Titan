@@ -59,17 +59,6 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            // const Text(
-            //   LoanTextConstants.loan,
-            //   style: TextStyle(
-            //     fontSize: 30,
-            //     fontWeight: FontWeight.w500,
-            //     color: Color.fromARGB(255, 0, 0, 0),
-            //   ),
-            // ),
-            // const SizedBox(
-            //   width: 70,
-            // ),
           ],
         ),
       ],

@@ -542,7 +542,22 @@ class AddEventPage extends HookConsumerWidget {
         context: context,
         initialDate: now,
         firstDate: now,
-        lastDate: DateTime(now.year + 1, now.month, now.day));
+        lastDate: DateTime(now.year + 1, now.month, now.day),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: const ColorScheme.light(
+                primary: Color.fromARGB(255, 10, 153, 172),
+                onPrimary: Colors.white,
+                surface: Colors.white,
+                onSurface: Colors.black,
+              ),
+              dialogBackgroundColor: Colors.white,
+            ),
+            child: child!,
+          );
+        });
+
     dateController.text = DateFormat('yyyy-MM-dd')
         .format(picked ?? now.add(const Duration(hours: 1)));
   }
@@ -551,9 +566,22 @@ class AddEventPage extends HookConsumerWidget {
       BuildContext context, TextEditingController dateController) async {
     final TimeOfDay now = TimeOfDay.now();
     final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: now,
-    );
+        context: context,
+        initialTime: now,
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: const ColorScheme.light(
+                primary: Color.fromARGB(255, 10, 153, 172),
+                onPrimary: Colors.white,
+                surface: Colors.white,
+                onSurface: Colors.black,
+              ),
+              dialogBackgroundColor: Colors.white,
+            ),
+            child: child!,
+          );
+        });
     dateController.text = DateFormat('HH:mm')
         .format(DateTimeField.combine(DateTime.now(), picked));
   }
@@ -565,12 +593,39 @@ class AddEventPage extends HookConsumerWidget {
         context: context,
         initialDate: now,
         firstDate: now,
-        lastDate: DateTime(now.year + 1, now.month, now.day));
+        lastDate: DateTime(now.year + 1, now.month, now.day),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: const ColorScheme.light(
+                primary: Color.fromARGB(255, 10, 153, 172),
+                onPrimary: Colors.white,
+                surface: Colors.white,
+                onSurface: Colors.black,
+              ),
+              dialogBackgroundColor: Colors.white,
+            ),
+            child: child!,
+          );
+        });
     if (picked != null) {
       final time = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.fromDateTime(picked),
-      );
+          context: context,
+          initialTime: TimeOfDay.fromDateTime(picked),
+          builder: (BuildContext context, Widget? child) {
+            return Theme(
+              data: ThemeData.light().copyWith(
+                colorScheme: const ColorScheme.light(
+                  primary: Color.fromARGB(255, 10, 153, 172),
+                  onPrimary: Colors.white,
+                  surface: Colors.white,
+                  onSurface: Colors.black,
+                ),
+                dialogBackgroundColor: Colors.white,
+              ),
+              child: child!,
+            );
+          });
       dateController.text = DateFormat('yyyy-MM-dd HH:mm')
           .format(DateTimeField.combine(picked, time));
     } else {

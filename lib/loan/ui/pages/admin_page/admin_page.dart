@@ -35,7 +35,6 @@ class AdminPage extends HookConsumerWidget {
     final loaner = ref.watch(loanerProvider);
     final loanerIdNotifier = ref.watch(loanerIdProvider.notifier);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
-    final loanerLoanList = ref.watch(loanerLoanListProvider);
     final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final loanersItems = ref.watch(loanersItemsProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 
 class BookingCard extends HookConsumerWidget {
@@ -63,15 +64,15 @@ class BookingCard extends HookConsumerWidget {
                 children: [
                   Text(
                       booking.decision == Decision.pending
-                          ? 'En attente'
+                          ? BookingTextConstants.pending
                           : booking.decision == Decision.approved
-                              ? 'Approuvé'
-                              : 'Refusé',
+                              ? BookingTextConstants.confirmed
+                              : BookingTextConstants.declined,
                       style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey.shade400)),
-                  Text('Clé: ${booking.key ? 'Oui' : 'Non'}',
+                  Text('${BookingTextConstants.keys}: ${booking.key ? BookingTextConstants.yes : BookingTextConstants.no}',
                       style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,

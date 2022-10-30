@@ -64,27 +64,33 @@ class HomePage extends HookConsumerWidget {
                     height: 20,
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height - 370,
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      controller: daysEventScrollController,
-                      child: sortedEventList.keys.isNotEmpty
-                          ? Column(
-                              children: sortedEventList
-                                  .map((key, value) => MapEntry(
-                                      key,
-                                      DaysEvent(
-                                        day: key,
-                                        now: now,
-                                        events: value,
-                                      )))
-                                  .values
-                                  .toList())
-                          : const Center(
-                              child: Text("No events found"),
-                            ),
-                    ),
-                  )
+                      height: MediaQuery.of(context).size.height - 370,
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        controller: daysEventScrollController,
+                        child: sortedEventList.keys.isNotEmpty
+                            ? Column(
+                                children: sortedEventList
+                                    .map((key, value) => MapEntry(
+                                        key,
+                                        DaysEvent(
+                                          day: key,
+                                          now: now,
+                                          events: value,
+                                        )))
+                                    .values
+                                    .toList())
+                            : const Center(
+                                child: Text(
+                                  HomeTextConstants.noEvents,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                          Color.fromARGB(255, 205, 205, 205)),
+                                ),
+                              ),
+                      ))
                 ],
               ),
             ),

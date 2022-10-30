@@ -49,6 +49,9 @@ class BookingTextConstants {
   static const String invalidIntervalError = "Intervalle invalide";
   static const String invalidDates = "Dates invalides";
   static const String invalidRoom = "Salle invalide";
+  static const String keys = "Clés";
+  static const String multipleDay = "Plusieurs jours";
+  static const String myBookings = "Mes réservations";
   static const String necessaryKey = "Clé nécessaire";
   static const String next = "Suivant";
   static const String no = "Non";
@@ -60,8 +63,6 @@ class BookingTextConstants {
   static const String noRoomFoundError = "Aucune salle enregistrée";
   static const String noRoomFound = "Aucune salle trouvée";
   static const String note = "Note";
-  static const String multipleDay = "Plusieurs jours";
-  static const String myBookings = "Mes réservations";
   static const String other = "Autre";
   static const String pending = "En attente";
   static const String previous = "Précédent";
