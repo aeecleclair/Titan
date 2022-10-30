@@ -24,6 +24,7 @@ class EventTextConstants {
   static const String deletingEvent = "Supprimer l'événement ?";
   static const String description = "Description";
   static const String endDate = "Date de fin";
+  static const String endHour = "Heure de fin";
   static const String eventList = "Liste des événements";
   static const String eventType = "Type d'événement";
   static const String every = "Tous les";
@@ -52,6 +53,7 @@ class EventTextConstants {
   static const String recurrenceEndDate = "Date de fin de la récurrence";
   static const String recurrenceRule = "Règle de récurrence";
   static const String startDate = "Date de début";
+  static const String startHour = "Heure de début";
   static const String title = "Événements";
   static const String yes = "Oui";
   static const String eventEvery = "Toutes les";

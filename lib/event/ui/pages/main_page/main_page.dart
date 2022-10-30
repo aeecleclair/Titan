@@ -24,7 +24,6 @@ class MainPage extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(
           children: [
-            // const SizedBox(height: 30),
             events.when(data: (events) {
               return Column(
                 children: [
