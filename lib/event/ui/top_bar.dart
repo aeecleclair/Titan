@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
@@ -48,19 +49,18 @@ class TopBar extends HookConsumerWidget {
                             break;
                         }
                       },
-                      icon: FaIcon(
+                      icon: HeroIcon(
                         page == EventPage.main
-                            ? FontAwesomeIcons.chevronRight
-                            : FontAwesomeIcons.chevronLeft,
+                            ? HeroIcons.bars3BottomLeft
+                            : HeroIcons.chevronLeft,
                         color: Colors.black,
+                        size: 30,
                       ));
                 },
               ),
             ),
-            const Text(
-              EventTextConstants.title,
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)
-            ),
+            const Text(EventTextConstants.title,
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
             const SizedBox(
               width: 70,
             ),

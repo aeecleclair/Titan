@@ -29,6 +29,7 @@ class TopBar extends HookConsumerWidget {
                       icon: const HeroIcon(
                         HeroIcons.bars3BottomLeft,
                         color: Colors.black,
+                        size: 30,
                       ));
                 },
               ),

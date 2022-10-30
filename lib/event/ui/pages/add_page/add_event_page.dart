@@ -395,7 +395,7 @@ class AddEventPage extends HookConsumerWidget {
                                     child: TextFormField(
                                       controller: end,
                                       decoration: const InputDecoration(
-                                        labelText: EventTextConstants.startDate,
+                                        labelText: EventTextConstants.endDate,
                                         floatingLabelStyle: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,

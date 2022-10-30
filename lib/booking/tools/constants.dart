@@ -16,6 +16,7 @@ class BookingTextConstants {
   static const String addedRoom = "Salle ajoutée";
   static const String addingError = "Erreur lors de l'ajout";
   static const String adminPage = "Administrateur";
+  static const String allDay = "Toute la journée";
   static const String booking = "Réservation";
   static const String bookingCreated = "Réservation créée";
   static const String bookingDemand = "Demande de réservation";
@@ -39,16 +40,21 @@ class BookingTextConstants {
   static const String editedRoom = "Salle modifiée";
   static const String editRoom = "Modifier une salle";
   static const String endDate = "Date de fin";
+  static const String endHour = "Heure de fin";
+  static const String eventEvery = "Tous les";
   static const String historyPage = "Historique";
   static const String incorrectOrMissingFields =
       "Champs incorrects ou manquants";
-  static const String invalidRoom = "Salle invalide";
+  static const String interval = "Intervalle";
+  static const String invalidIntervalError = "Intervalle invalide";
   static const String invalidDates = "Dates invalides";
+  static const String invalidRoom = "Salle invalide";
   static const String necessaryKey = "Clé nécessaire";
   static const String next = "Suivant";
   static const String no = "Non";
   static const String noCurrentBooking = "Pas de réservation en cours";
   static const String noDateError = "Veuillez choisir une date";
+  static const String noDescriptionError = "Veuillez entrer une description";
   static const String noNoteError = "Veuillez entrer une note";
   static const String noReasonError = "Veuillez entrer un motif";
   static const String noRoomFoundError = "Aucune salle enregistrée";
@@ -60,10 +66,25 @@ class BookingTextConstants {
   static const String pending = "En attente";
   static const String previous = "Précédent";
   static const String reason = "Motif";
+  static const String recurrence = "Récurrence";
+  static const String recurrenceDays = "Jours de récurrence";
+  static const String recurrenceEndDate = "Date de fin de récurrence";
   static const String recurrent = "Récurrent";
   static const String registeredRooms = "Salles enregistrées";
   static const String room = "Salle";
   static const String roomName = "Nom de la salle";
   static const String startDate = "Date de début";
+  static const String startHour = "Heure de début";
+  static const String weeks = "Semaines";
   static const String yes = "Oui";
+
+  static const List<String> dayList = [
+    "Lundi",
+    "Mardi",
+    "Mercredi",
+    "Jeudi",
+    "Vendredi",
+    "Samedi",
+    "Dimanche"
+  ];
 }
