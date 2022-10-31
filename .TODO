@@ -2,18 +2,18 @@ En cours :
     - Login :
         - Reset password : test (1)
 
-    - Loan / Booking :
-        - Card
+    - Loan / Booking / Event :
+        - Card (2)
 
     - Loan :
-        - available (API -> number ?)
+        - available (API -> number ?) (2)
 
     - Booking :
         - user can delete booking (API)
 
     - Events :
         - Admin page (edit) (API)
-        - event page recurrent event color
+        - event page recurrent event color (2)
 
     - Drawer / Settings:
         - Profile Picture (5)
