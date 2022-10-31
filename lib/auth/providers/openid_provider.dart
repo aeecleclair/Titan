@@ -93,13 +93,11 @@ class OpenIdTokenProvider
     state = const AsyncValue.loading();
     try {
       if (kIsWeb) {
-        print('tewt');
         final result = await FlutterWebAuth.authenticate(
             url:
                 "https://hyperion.myecl.fr/auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}",
             callbackUrlScheme: redirectUrl);
-        print(result);
-        final token = Uri.parse(result).queryParameters['token'];
+        // final token = Uri.parse(result).queryParameters['token'];
       } else {
         await appAuth.authorizeAndExchangeCode(
           AuthorizationTokenRequest(

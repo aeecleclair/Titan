@@ -17,28 +17,32 @@ class PretendanceNotifier extends ListNotifier<Pretendance> {
       Pretendance(
         id: '1',
         name: 'Pretendance 1',
-        description: 'Pretendance 1',
+        description:
+            'Illum nihil accusamus earum delectus doloribus quos consequatur impedit itaque. Recusandae ut excepturi qui rerum quisquam porro. Maiores consequuntur adipisci. Ea itaque provident. Est tenetur dolor officia voluptates molestiae. Perspiciatis voluptates autem rerum repellendus.',
         logoPath: '',
         listType: ListType.serio,
       ),
       Pretendance(
         id: '2',
         name: 'Pretendance 2',
-        description: 'Pretendance 2',
+        description:
+            'Aut qui cum consequatur enim animi tenetur quam consectetur. Aut et assumenda tenetur saepe et. Est corporis consequatur. Ut deserunt enim quisquam et enim amet cupiditate ipsum.',
         logoPath: '',
         listType: ListType.pipo,
       ),
       Pretendance(
         id: '3',
         name: 'Pretendance 3',
-        description: 'Pretendance 3',
+        description:
+            'Sed et veritatis voluptas nesciunt sed. Aperiam eius et eos optio quia. Facilis laudantium consequatur excepturi consequatur architecto. Nisi autem qui natus. Dolores sed dolores optio expedita sequi. Accusamus pariatur aliquam explicabo laboriosam sequi.',
         logoPath: '',
         listType: ListType.serio,
       ),
       Pretendance(
         id: '4',
         name: 'Pretendance 4',
-        description: 'Pretendance 4',
+        description:
+            'Est numquam quidem eveniet blanditiis. Earum quo vitae nihil qui ducimus cupiditate. Qui possimus sequi dolor non dignissimos veritatis quos corporis accusantium. Corrupti et id eum fuga aliquam. Accusantium et explicabo earum veniam deserunt. Et sit fugit ut distinctio quasi.',
         logoPath: '',
         listType: ListType.pipo,
       ),

@@ -3,10 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/section_provider.dart';
-import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
+import 'package:myecl/vote/ui/pages/main_page/list_side_item.dart';
 import 'package:myecl/vote/ui/pages/main_page/pretendance_card.dart';
-import 'package:myecl/vote/ui/pages/main_page/side_item.dart';
+import 'package:myecl/vote/ui/pages/main_page/section_title.dart';
 import 'package:myecl/vote/ui/refresh_indicator.dart';
 
 class MainPage extends HookConsumerWidget {
@@ -16,12 +16,6 @@ class MainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sections = ref.watch(sectionProvider);
     final pretendances = ref.watch(pretendanceProvider);
-    final selectedSection = useState(0);
-    final selectedPretendance = useState(-1);
-    final currentPretendance = useState(-1);
-    final selectedPretendanceList = ref.watch(selectedPretendanceProvider);
-    final selectedPretendanceListNotifier =
-        ref.watch(selectedPretendanceProvider.notifier);
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 2400),
     );
@@ -44,144 +38,88 @@ class MainPage extends HookConsumerWidget {
               padding: const EdgeInsets.only(left: 30.0),
               child: Column(children: [
                 const SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(VoteTextConstants.vote,
-                      style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black)),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Expanded(
-                  child: sections.when(
-                    data: (sectionList) => Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: Column(
-                            children: sectionList.map((e) {
-                              final index = sectionList.indexOf(e);
-                              return SideItem(
-                                section: e,
-                                isSelected: index == selectedSection.value,
-                                onTap: () {
-                                  selectedSection.value = index;
-                                  animation.forward(from: 0);
-                                  currentPretendance.value = -1;
-                                },
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: pretendances.when(
-                              data: (pretendanceList) => Column(children: [
-                                Container(
-                                  padding: const EdgeInsets.only(left: 20),
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                      sectionList[selectedSection.value].name,
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700,
-                                          color:
-                                              Color.fromARGB(255, 1, 40, 72))),
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                Expanded(
-                                  child: SingleChildScrollView(
-                                    physics: const BouncingScrollPhysics(),
-                                    child: Column(
-                                      children: pretendanceList.map((e) {
-                                        final index =
-                                            pretendanceList.indexOf(e);
-                                        return PretendanceCard(
-                                            index: index,
-                                            pretendance: e,
-                                            isCurrent: index ==
-                                                currentPretendance.value,
-                                            isSelected: e.id ==
-                                                selectedPretendanceList[
-                                                    selectedSection.value],
-                                            onTap: () {
-                                              if (currentPretendance.value ==
-                                                  index) {
-                                                currentPretendance.value = -1;
-                                              } else {
-                                                currentPretendance.value =
-                                                    index;
-                                              }
-                                            },
-                                            onVote: () {
-                                              selectedPretendanceListNotifier
-                                                  .changeSelection(
-                                                      selectedSection.value,
-                                                      e.id);
-                                            },
-                                            animation: animation);
-                                      }).toList(),
+                sections.when(
+                  data: (sectionList) => Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height - 220,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            ListSideItem(
+                                sectionList: sectionList, animation: animation),
+                            Expanded(
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: pretendances.when(
+                                  data: (pretendanceList) => Column(children: [
+                                    SectionTitle(sectionList: sectionList),
+                                    const SizedBox(
+                                      height: 15,
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                Container(
-                                  alignment: Alignment.centerRight,
-                                  padding: const EdgeInsets.only(right: 30),
-                                  child: GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      width: 200,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          gradient: const LinearGradient(
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                              colors: [
-                                                VoteColorConstants.green5,
-                                                Color.fromARGB(255, 1, 40, 72),
-                                              ]),
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      child: const Center(
-                                        child: Text(
-                                          VoteTextConstants.vote,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w700),
+                                    Expanded(
+                                      child: SingleChildScrollView(
+                                        physics: const BouncingScrollPhysics(),
+                                        child: Column(
+                                          children: pretendanceList.map((e) {
+                                            final index =
+                                                pretendanceList.indexOf(e);
+                                            return PretendanceCard(
+                                                index: index,
+                                                pretendance: e,
+                                                animation: animation);
+                                          }).toList(),
                                         ),
                                       ),
                                     ),
+                                  ]),
+                                  loading: () => const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  error: (error, stack) => const Center(
+                                    child: Text('Error'),
                                   ),
                                 ),
-                              ]),
-                              loading: () => const Center(
-                                child: CircularProgressIndicator(),
                               ),
-                              error: (error, stack) => const Center(
-                                child: Text('Error'),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 30.0),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 10, bottom: 12),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: const Center(
+                              child: Text(
+                                VoteTextConstants.vote,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700),
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    loading: () =>
-                        const Center(child: CircularProgressIndicator()),
-                    error: (error, stack) => const Center(child: Text('Error')),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
                   ),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (error, stack) => const Center(child: Text('Error')),
                 ),
               ])),
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 
 class TopBar extends HookConsumerWidget {
@@ -44,17 +45,14 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            // const Text(
-            //   VoteTextConstants.vote,
-            //   style: TextStyle(
-            //     fontSize: 30,
-            //     fontWeight: FontWeight.w500,
-            //     color: Color.fromARGB(255, 0, 0, 0),
-            //   ),
-            // ),
-            // const SizedBox(
-            //   width: 70,
-            // ),
+            const Text(VoteTextConstants.vote,
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black)),
+            const SizedBox(
+              width: 70,
+            ),
           ],
         ),
       ],
