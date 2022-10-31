@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/section_provider.dart';
+import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/pages/main_page/list_side_item.dart';
 import 'package:myecl/vote/ui/pages/main_page/pretendance_card.dart';
@@ -14,8 +16,10 @@ class MainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final pageNotifier = ref.watch(votePageProvider.notifier);
     final sections = ref.watch(sectionProvider);
     final pretendances = ref.watch(pretendanceProvider);
+    final isAdmin = true;
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 2400),
     );
@@ -37,14 +41,14 @@ class MainPage extends HookConsumerWidget {
           child: Padding(
               padding: const EdgeInsets.only(left: 30.0),
               child: Column(children: [
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: isAdmin ? 10 : 15,
                 ),
                 sections.when(
                   data: (sectionList) => Column(
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height - 220,
+                        height: MediaQuery.of(context).size.height - (isAdmin ? 215 : 220),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -55,7 +59,57 @@ class MainPage extends HookConsumerWidget {
                                 width: double.infinity,
                                 child: pretendances.when(
                                   data: (pretendanceList) => Column(children: [
-                                    SectionTitle(sectionList: sectionList),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SectionTitle(sectionList: sectionList),
+                                        if (isAdmin)
+                                          Container(
+                                            margin: EdgeInsets.only(right: 20),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                pageNotifier.setVotePage(
+                                                    VotePage.admin);
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12,
+                                                        vertical: 8),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                          color: Colors.black
+                                                              .withOpacity(0.2),
+                                                          blurRadius: 10,
+                                                          offset: const Offset(
+                                                              0, 5))
+                                                    ]),
+                                                child: Row(
+                                                  children: const [
+                                                    HeroIcon(
+                                                        HeroIcons.userGroup,
+                                                        color: Colors.white),
+                                                    SizedBox(width: 10),
+                                                    Text("Admin",
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.white)),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                      ],
+                                    ),
                                     const SizedBox(
                                       height: 15,
                                     ),
