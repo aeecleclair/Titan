@@ -50,23 +50,12 @@ class EditUserPage extends HookConsumerWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(SettingsTextConstants.account,
                       style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black)),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 205, 205, 205))),
                 ),
                 const SizedBox(
-                  height: 50,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(SettingsTextConstants.profilePicture,
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey.shade500)),
-                ),
-                const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Container(
                   padding: const EdgeInsets.all(20),
@@ -79,7 +68,7 @@ class EditUserPage extends HookConsumerWidget {
                     color: Colors.grey.shade500,
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {},
                     child: const Text(

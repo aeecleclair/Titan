@@ -9,19 +9,18 @@ class MonthBar extends HookConsumerWidget {
   final ScrollController scrollController;
   final double width;
   const MonthBar(
-      {super.key,
-      required this.scrollController,
-      required this.width});
+      {super.key, required this.scrollController, required this.width});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final numberDayNotifier = ref.watch(numberDayProvider.notifier);
-    final currentMonth = useState(DateTime.now().month);
+    final currentMonth =
+        useState(DateTime.now().add(const Duration(days: 1)).month);
     final days = ref.watch(daysProvider);
 
     scrollController.addListener(() {
-      int m = days[(scrollController.position.pixels - 15 + width / 2) ~/ 86]
-          .month;
+      int m =
+          days[(scrollController.position.pixels - 15 + width / 2) ~/ 86].month;
       if (m != currentMonth.value) {
         currentMonth.value = m;
       }

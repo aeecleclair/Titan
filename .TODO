@@ -1,7 +1,6 @@
 En cours :
     - Login :
         - Reset password : test (1)
-        - back button
 
     - Loan / Booking :
         - Card
@@ -10,11 +9,11 @@ En cours :
         - available (API -> number ?)
 
     - Booking :
-        - user can delete booking ?
+        - user can delete booking (API)
 
     - Events :
         - Admin page (edit) (API)
-        - home page recurrent events
+        - event page recurrent event color
 
     - Drawer / Settings:
         - Profile Picture (5)

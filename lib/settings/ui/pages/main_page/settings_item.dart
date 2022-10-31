@@ -15,21 +15,22 @@ class SettingsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 30),
-          child: HeroIcon(
-            icon,
-            size: 30,
-            color: Colors.black,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 30),
+            child: HeroIcon(
+              icon,
+              size: 30,
+              color: Colors.black,
+            ),
           ),
-        ),
-        Expanded(child: child),
-        GestureDetector(
-          onTap: onTap,
-          child: Container(
+          Expanded(child: child),
+          Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: Colors.grey[200],
@@ -40,8 +41,8 @@ class SettingsItem extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
