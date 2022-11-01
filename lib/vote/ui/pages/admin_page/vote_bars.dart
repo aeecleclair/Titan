@@ -41,7 +41,7 @@ class VoteBars extends HookConsumerWidget {
                                 color: isTouched.value
                                     ? Colors.grey.shade800
                                     : barColor,
-                                width: 45,
+                                width: 40,
                                 borderSide: isTouched.value
                                     ? const BorderSide(
                                         color: Colors.white, width: 2)
@@ -70,25 +70,19 @@ class VoteBars extends HookConsumerWidget {
           gridData: FlGridData(show: false),
           barTouchData: BarTouchData(
             touchTooltipData: BarTouchTooltipData(
+              tooltipRoundedRadius: 20,
+              tooltipPadding: const EdgeInsets.only(
+                  left: 10, right: 10, top: 12, bottom: 5),
+              tooltipMargin: 10,
               tooltipBgColor: Colors.grey.shade200,
               getTooltipItem: (group, groupIndex, rod, rodIndex) {
                 return BarTooltipItem(
-                  sectionNames[group.x],
+                  (rod.toY.toInt() - 1).toString(),
                   const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
-                  children: [
-                    TextSpan(
-                      text: (rod.toY.toInt() - 1).toString(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
                 );
               },
             ),
@@ -136,12 +130,7 @@ class VoteBars extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '${(voteValue[value.toInt()] /
-                                      voteValue
-                                          .reduce((a, b) => a + b)
-                                          .toInt() *
-                                      100)
-                                  .toStringAsFixed(2)}%',
+                          '${(voteValue[value.toInt()] / voteValue.reduce((a, b) => a + b).toInt() * 100).toStringAsFixed(2)}%',
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
