@@ -67,7 +67,7 @@ class MainPage extends HookConsumerWidget {
                                         SectionTitle(sectionList: sectionList),
                                         if (isAdmin)
                                           Container(
-                                            margin: EdgeInsets.only(right: 20),
+                                            margin: const EdgeInsets.only(right: 20),
                                             child: GestureDetector(
                                               onTap: () {
                                                 pageNotifier.setVotePage(

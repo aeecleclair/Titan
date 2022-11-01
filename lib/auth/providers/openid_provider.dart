@@ -97,7 +97,7 @@ class OpenIdTokenProvider
             url:
                 "https://hyperion.myecl.fr/auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}",
             callbackUrlScheme: redirectUrl);
-        // final token = Uri.parse(result).queryParameters['token'];
+        final token = Uri.parse(result).queryParameters['token'];
       } else {
         await appAuth.authorizeAndExchangeCode(
           AuthorizationTokenRequest(

@@ -9,13 +9,13 @@ import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/providers/section_provider.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/tools/functions.dart';
 import 'package:myecl/vote/ui/pages/admin_page/pretendance_card.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_chip.dart';
+import 'package:myecl/vote/ui/pages/admin_page/vote_bars.dart';
 import 'package:myecl/vote/ui/refresh_indicator.dart';
 
 class AdminPage extends HookConsumerWidget {
@@ -202,7 +202,10 @@ class AdminPage extends HookConsumerWidget {
                                     color: Color.fromARGB(255, 205, 205, 205))),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height - 529,
+                            child: const VoteBars())
                       ],
                     ),
                 error: (Object error, StackTrace? stackTrace) {

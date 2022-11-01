@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
 import 'package:myecl/vote/providers/selected_section_provider.dart';
-import 'package:myecl/vote/tools/constants.dart';
 
 class PretendanceCard extends HookConsumerWidget {
   final Pretendance pretendance;

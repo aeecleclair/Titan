@@ -38,14 +38,6 @@ class PretendanceNotifier extends ListNotifier<Pretendance> {
         logoPath: '',
         listType: ListType.serio,
       ),
-      Pretendance(
-        id: '4',
-        name: 'Pretendance 4',
-        description:
-            'Est numquam quidem eveniet blanditiis. Earum quo vitae nihil qui ducimus cupiditate. Qui possimus sequi dolor non dignissimos veritatis quos corporis accusantium. Corrupti et id eum fuga aliquam. Accusantium et explicabo earum veniam deserunt. Et sit fugit ut distinctio quasi.',
-        logoPath: '',
-        listType: ListType.pipo,
-      ),
     ]);
     return state;
   }

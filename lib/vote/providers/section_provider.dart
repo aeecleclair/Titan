@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';

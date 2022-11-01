@@ -1,7 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/repositories/section_repository.dart';
 
