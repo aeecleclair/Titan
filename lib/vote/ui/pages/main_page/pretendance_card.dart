@@ -18,7 +18,7 @@ class PretendanceCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedSection = ref.watch(selectedSectionProvider);
+    final selectedSection = ref.watch(selectedsectionsProvider);
     final selectedPretendanceListNotifier =
         ref.watch(selectedPretendanceProvider.notifier);
     final selectedPretendanceIndexNotifier =

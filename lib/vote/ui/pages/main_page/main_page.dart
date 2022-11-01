@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
-import 'package:myecl/vote/providers/section_provider.dart';
+import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/pages/main_page/list_side_item.dart';
@@ -17,7 +17,7 @@ class MainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(votePageProvider.notifier);
-    final sections = ref.watch(sectionProvider);
+    final sections = ref.watch(sectionsProvider);
     final pretendances = ref.watch(pretendanceProvider);
     final isAdmin = true;
     final animation = useAnimationController(
@@ -30,7 +30,7 @@ class MainPage extends HookConsumerWidget {
     }
     return VoteRefresher(
       onRefresh: () async {
-        ref.refresh(sectionProvider);
+        ref.refresh(sectionsProvider);
         ref.refresh(pretendanceProvider);
       },
       child: SingleChildScrollView(
@@ -48,7 +48,8 @@ class MainPage extends HookConsumerWidget {
                   data: (sectionList) => Column(
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height - (isAdmin ? 215 : 220),
+                        height: MediaQuery.of(context).size.height -
+                            (isAdmin ? 215 : 220),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [

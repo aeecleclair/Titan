@@ -9,7 +9,7 @@ class SectionTitle extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedSection = ref.watch(selectedSectionProvider);
+    final selectedSection = ref.watch(selectedsectionsProvider);
     return Container(
       padding: const EdgeInsets.only(left: 20),
       alignment: Alignment.centerLeft,

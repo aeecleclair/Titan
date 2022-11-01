@@ -11,5 +11,6 @@ class VoteColorConstants {
 }
 
 class VoteTextConstants {
+  static const String pretendance = 'Prétendance';
   static const String vote = 'Vote';
 }

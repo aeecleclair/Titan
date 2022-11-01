@@ -1,11 +1,11 @@
 enum ListType {serio, pipo}
 
 class Pretendance {
-  String id;
-  String name;
-  String logoPath;
-  String description;
-  ListType listType;
+  late String id;
+  late String name;
+  late String logoPath;
+  late String description;
+  late ListType listType;
 
   Pretendance({
     required this.id,

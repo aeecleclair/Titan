@@ -8,12 +8,14 @@ import 'package:myecl/vote/ui/pages/main_page/side_item.dart';
 class ListSideItem extends HookConsumerWidget {
   final List<Section> sectionList;
   final AnimationController animation;
-  const ListSideItem({super.key, required this.sectionList, required this.animation});
+  const ListSideItem(
+      {super.key, required this.sectionList, required this.animation});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedSection = ref.watch(selectedSectionProvider);
-    final selectedSectionNotifier = ref.watch(selectedSectionProvider.notifier);
+    final selectedSection = ref.watch(selectedsectionsProvider);
+    final selectedSectionNotifier =
+        ref.watch(selectedsectionsProvider.notifier);
     final selectedPretendanceIndexNotifier =
         ref.watch(selectedPretendanceIndexProvider.notifier);
     return SingleChildScrollView(

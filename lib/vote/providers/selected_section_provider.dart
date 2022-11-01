@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final selectedSectionProvider =
+final selectedsectionsProvider =
     StateNotifierProvider<SelectedSection, int>((ref) {
   return SelectedSection();
 });

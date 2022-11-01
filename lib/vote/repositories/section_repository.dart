@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/providers/section_provider.dart';
+import 'package:myecl/vote/providers/sections_provider.dart';
 
 class SectionRepository extends Repository {
   @override
@@ -29,10 +30,3 @@ class SectionRepository extends Repository {
     return (await getList()).map((e) => Section.fromJson(e)).toList();
   }
 }
-
-final sectionRepositoryProvider = StateNotifierProvider<SectionNotifier, AsyncValue<List<Section>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final sectionNotifier = SectionNotifier(token: token);
-  sectionNotifier.loadSectionList();
-  return sectionNotifier;
-});

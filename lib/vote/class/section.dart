@@ -1,8 +1,8 @@
 class Section {
-  String id;
-  String name;
-  String logoPath;
-  String description;
+  late String id;
+  late String name;
+  late String logoPath;
+  late String description;
   Section({
     required this.id,
     required this.name,
@@ -39,5 +39,12 @@ class Section {
       logoPath: map['logoPath'],
       description: map['description'],
     );
+  }
+
+  Section.empty() {
+    id = '';
+    name = '';
+    logoPath = '';
+    description = '';
   }
 }

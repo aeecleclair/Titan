@@ -72,6 +72,26 @@ class PretendanceNotifier extends ListNotifier<Pretendance> {
         pretendance.id,
         pretendance);
   }
+
+  Future<AsyncValue<List<Pretendance>>> loadPretendanceListBySection(
+      String sectionId) async {
+    return await loadList(
+        () => _pretendanceRepository.getPretendanceList(sectionId));
+  }
+
+  Future<AsyncValue<List<Pretendance>>> copy() async {
+    return state.when(
+      data: (pretendances) async {
+        return AsyncValue.data(pretendances);
+      },
+      loading: () async {
+        return const AsyncValue.loading();
+      },
+      error: (error, stackTrace) async {
+        return AsyncValue.error(error);
+      },
+    );
+  }
 }
 
 final pretendanceProvider =
