@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum VotePage { main, admin }
+enum VotePage { main, admin, addSection, addPretendance }
 
-
-final votePageProvider = StateNotifierProvider<VotePageNotifier, VotePage>((ref) {
+final votePageProvider =
+    StateNotifierProvider<VotePageNotifier, VotePage>((ref) {
   return VotePageNotifier();
 });
 

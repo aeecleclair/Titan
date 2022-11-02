@@ -26,8 +26,9 @@ class Section {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
-      'logoPath': logoPath,
+      'logo_path': logoPath,
       'description': description,
     };
   }

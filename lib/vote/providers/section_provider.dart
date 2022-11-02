@@ -7,8 +7,12 @@ final sectionProvider = Provider<Section>((ref) {
   final sectionId = ref.watch(sectionIdProvider);
   final sectionList = ref.watch(sectionsProvider);
   return sectionList.when(
-    data: (sectionList) =>
-        sectionList.firstWhere((loaner) => loaner.id == sectionId),
+    data: (sectionList) {
+      if (sectionList.isEmpty) {
+        return Section.empty();
+      }
+      return sectionList.firstWhere((loaner) => loaner.id == sectionId);
+    },
     error: (error, stackTrace) => Section.empty(),
     loading: () => Section.empty(),
   );

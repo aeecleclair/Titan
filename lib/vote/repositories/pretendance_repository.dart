@@ -4,7 +4,7 @@ import 'package:myecl/vote/class/pretendance.dart';
 class PretendanceRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "/campaign/";
+  final ext = "campaign/";
 
   Future<bool> deletePretendance(String pretendanceId) async {
     return await delete("lists/$pretendanceId");

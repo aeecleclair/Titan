@@ -11,6 +11,14 @@ class VoteColorConstants {
 }
 
 class VoteTextConstants {
+  static const String add = 'Ajouter';
+  static const String addedSection = 'Section ajoutée';
+  static const String addingError = 'Erreur lors de l\'ajout de la section';
+  static const String addSection = 'Ajouter une section';
+  static const String noSection = 'Aucune section';
   static const String pretendance = 'Prétendance';
+  static const String sectionDescription = 'Description de la section';
+  static const String sectionName = 'Nom de la section';
   static const String vote = 'Vote';
+
 }

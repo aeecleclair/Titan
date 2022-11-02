@@ -34,6 +34,12 @@ class TopBar extends HookConsumerWidget {
                           case VotePage.admin:
                             pageNotifier.setVotePage(VotePage.main);
                             break;
+                          case VotePage.addSection:
+                            pageNotifier.setVotePage(VotePage.admin);
+                            break;
+                          case VotePage.addPretendance:
+                            pageNotifier.setVotePage(VotePage.admin);
+                            break;
                         }
                       },
                       icon: FaIcon(

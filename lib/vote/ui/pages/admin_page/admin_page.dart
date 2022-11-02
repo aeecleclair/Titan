@@ -10,11 +10,12 @@ import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/providers/section_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
+import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/tools/functions.dart';
 import 'package:myecl/vote/ui/pages/admin_page/pretendance_card.dart';
-import 'package:myecl/vote/ui/pages/admin_page/section_chip.dart';
+import 'package:myecl/vote/ui/section_chip.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_bars.dart';
 import 'package:myecl/vote/ui/refresh_indicator.dart';
 
@@ -24,8 +25,9 @@ class AdminPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sectionPretendance = ref.watch(sectionPretendanceProvider);
-    final loaner = ref.watch(sectionProvider);
-    final loanerIdNotifier = ref.watch(sectionIdProvider.notifier);
+    final section = ref.watch(sectionProvider);
+    final sectionList = ref.watch(sectionsProvider);
+    final sectionIdNotifier = ref.watch(sectionIdProvider.notifier);
     final pretendanceNotifier = ref.watch(pretendanceProvider.notifier);
     final loaded = useState(false);
     final pageNotifier = ref.watch(votePageProvider.notifier);
@@ -36,19 +38,19 @@ class AdminPage extends HookConsumerWidget {
     }
 
     if (!loaded.value) {
-      pretendanceNotifier.loadPretendanceListBySection(loaner.id);
+      // pretendanceNotifier.loadPretendanceListBySection(section.id);
       pretendanceNotifier.copy().then(
         (value) {
-          sectionPretendanceNotifier.setTData(loaner, value);
+          sectionPretendanceNotifier.setTData(section, value);
         },
       );
       loaded.value = true;
     }
     return VoteRefresher(
       onRefresh: () async {
-        pretendanceNotifier.loadPretendanceListBySection(loaner.id);
+        // pretendanceNotifier.loadPretendanceListBySection(section.id);
         sectionPretendanceNotifier.setTData(
-            loaner, await pretendanceNotifier.copy());
+            section, await pretendanceNotifier.copy());
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 10.0),
@@ -56,7 +58,7 @@ class AdminPage extends HookConsumerWidget {
           children: [
             const SizedBox(height: 20),
             sectionPretendance.when(
-                data: (Map<Section, AsyncValue<List<Pretendance>>> loans) =>
+                data: (Map<Section, AsyncValue<List<Pretendance>>> sections) =>
                     Column(
                       children: [
                         SingleChildScrollView(
@@ -66,45 +68,64 @@ class AdminPage extends HookConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const SizedBox(width: 15),
-                              ...loans
-                                  .map((key, value) => MapEntry(
-                                      SectionChip(
-                                        label: capitalize(key.name),
-                                        selected: loaner.id == key.id,
-                                        onTap: () async {
-                                          loanerIdNotifier.setId(key.id);
-                                          sectionPretendance.whenData(
-                                            (value) async {
-                                              if (value[key] != null) {
-                                                value[key]!
-                                                    .whenData((value) async {
-                                                  if (value.isEmpty) {
-                                                    pretendanceNotifier
-                                                        .loadPretendanceListBySection(
-                                                            key.id);
-                                                    sectionPretendanceNotifier
-                                                        .setTData(
-                                                            key,
-                                                            await pretendanceNotifier
-                                                                .copy());
-                                                  }
-                                                });
-                                              } else {
-                                                pretendanceNotifier
-                                                    .loadPretendanceListBySection(
-                                                        key.id);
-                                                sectionPretendanceNotifier
-                                                    .setTData(
-                                                        key,
-                                                        await pretendanceNotifier
-                                                            .copy());
-                                              }
-                                            },
-                                          );
-                                        },
+                              GestureDetector(
+                                onTap: () {
+                                  pageNotifier.setVotePage(VotePage.addSection);
+                                },
+                                child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 10.0),
+                                    child: Chip(
+                                      label: const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: HeroIcon(
+                                          HeroIcons.plus,
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                      value))
-                                  .keys,
+                                      backgroundColor: Colors.grey.shade200,
+                                    )),
+                              ),
+                              if (section.id != Section.empty().id)
+                                ...sections
+                                    .map((key, value) => MapEntry(
+                                        SectionChip(
+                                          label: capitalize(key.name),
+                                          selected: section.id == key.id,
+                                          onTap: () async {
+                                            sectionIdNotifier.setId(key.id);
+                                            sectionPretendance.whenData(
+                                              (value) async {
+                                                if (value[key] != null) {
+                                                  value[key]!
+                                                      .whenData((value) async {
+                                                    if (value.isEmpty) {
+                                                      pretendanceNotifier
+                                                          .loadPretendanceListBySection(
+                                                              key.id);
+                                                      sectionPretendanceNotifier
+                                                          .setTData(
+                                                              key,
+                                                              await pretendanceNotifier
+                                                                  .copy());
+                                                    }
+                                                  });
+                                                } else {
+                                                  pretendanceNotifier
+                                                      .loadPretendanceListBySection(
+                                                          key.id);
+                                                  sectionPretendanceNotifier
+                                                      .setTData(
+                                                          key,
+                                                          await pretendanceNotifier
+                                                              .copy());
+                                                }
+                                              },
+                                            );
+                                          },
+                                        ),
+                                        value))
+                                    .keys,
                               const SizedBox(width: 15),
                             ],
                           ),
@@ -122,8 +143,8 @@ class AdminPage extends HookConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        if (loans[loaner] != null)
-                          loans[loaner]!.when(
+                        if (sections[section] != null)
+                          sections[section]!.when(
                               data: (List<Pretendance> data) =>
                                   SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
@@ -132,7 +153,10 @@ class AdminPage extends HookConsumerWidget {
                                       children: [
                                         const SizedBox(width: 10),
                                         GestureDetector(
-                                          onTap: () {},
+                                          onTap: () {
+                                            pageNotifier.setVotePage(
+                                                VotePage.addPretendance);
+                                          },
                                           child: Container(
                                             padding: const EdgeInsets.all(15.0),
                                             child: Container(
@@ -204,7 +228,7 @@ class AdminPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 20),
                         SizedBox(
-                            height: MediaQuery.of(context).size.height - 529,
+                            height: MediaQuery.of(context).size.height - 530,
                             child: const VoteBars())
                       ],
                     ),

@@ -42,7 +42,7 @@ class MyApp extends HookConsumerWidget {
         debugShowCheckedModeBanner: false,
         title: 'MyECL',
         theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.orange,
             textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
                 Theme.of(context).textTheme)),
         home: const SafeArea(child: AppDrawer()));

@@ -11,58 +11,7 @@ class SectionNotifier extends ListNotifier<Section> {
   }
 
   Future<AsyncValue<List<Section>>> loadSectionList() async {
-    // return await loadList(_sectionRepository.getSections);
-    state = AsyncValue.data([
-      Section(
-        id: '1',
-        name: 'Section 1',
-        description: 'Section 1',
-        logoPath: '',
-      ),
-      Section(
-        id: '2',
-        name: 'Section 2',
-        description: 'Section 2',
-        logoPath: '',
-      ),
-      Section(
-        id: '3',
-        name: 'Section 3',
-        description: 'Section 3',
-        logoPath: '',
-      ),
-      Section(
-        id: '4',
-        name: 'Section 4',
-        description: 'Section 4',
-        logoPath: '',
-      ),
-      Section(
-        id: '5',
-        name: 'Section 5',
-        description: 'Section 5',
-        logoPath: '',
-      ),
-      Section(
-        id: '6',
-        name: 'Section 6',
-        description: 'Section 6',
-        logoPath: '',
-      ),
-      Section(
-        id: '7',
-        name: 'Section 7',
-        description: 'Section 7',
-        logoPath: '',
-      ),
-      Section(
-        id: '8',
-        name: 'Section 8',
-        description: 'Section 8',
-        logoPath: '',
-      ),
-    ]);
-    return state;
+    return await loadList(_sectionRepository.getSections);
   }
 
   Future<bool> addSection(Section section) async {

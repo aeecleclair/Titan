@@ -12,34 +12,7 @@ class PretendanceNotifier extends ListNotifier<Pretendance> {
   }
 
   Future<AsyncValue<List<Pretendance>>> loadPretendanceList() async {
-    // return await loadList(_pretendanceRepository.getPretendances);
-    state = AsyncValue.data([
-      Pretendance(
-        id: '1',
-        name: 'Pretendance 1',
-        description:
-            'Illum nihil accusamus earum delectus doloribus quos consequatur impedit itaque. Recusandae ut excepturi qui rerum quisquam porro. Maiores consequuntur adipisci. Ea itaque provident. Est tenetur dolor officia voluptates molestiae. Perspiciatis voluptates autem rerum repellendus.',
-        logoPath: '',
-        listType: ListType.serio,
-      ),
-      Pretendance(
-        id: '2',
-        name: 'Pretendance 2',
-        description:
-            'Aut qui cum consequatur enim animi tenetur quam consectetur. Aut et assumenda tenetur saepe et. Est corporis consequatur. Ut deserunt enim quisquam et enim amet cupiditate ipsum.',
-        logoPath: '',
-        listType: ListType.pipo,
-      ),
-      Pretendance(
-        id: '3',
-        name: 'Pretendance 3',
-        description:
-            'Sed et veritatis voluptas nesciunt sed. Aperiam eius et eos optio quia. Facilis laudantium consequatur excepturi consequatur architecto. Nisi autem qui natus. Dolores sed dolores optio expedita sequi. Accusamus pariatur aliquam explicabo laboriosam sequi.',
-        logoPath: '',
-        listType: ListType.serio,
-      ),
-    ]);
-    return state;
+    return await loadList(_pretendanceRepository.getPretendances);
   }
 
   Future<bool> addPretendance(Pretendance pretendance) async {

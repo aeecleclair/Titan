@@ -19,6 +19,7 @@ class MainPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(votePageProvider.notifier);
     final sections = ref.watch(sectionsProvider);
     final pretendances = ref.watch(pretendanceProvider);
+    print(pretendances);
     final isAdmin = true;
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 2400),
@@ -67,7 +68,8 @@ class MainPage extends HookConsumerWidget {
                                         SectionTitle(sectionList: sectionList),
                                         if (isAdmin)
                                           Container(
-                                            margin: const EdgeInsets.only(right: 20),
+                                            margin: const EdgeInsets.only(
+                                                right: 20),
                                             child: GestureDetector(
                                               onTap: () {
                                                 pageNotifier.setVotePage(
