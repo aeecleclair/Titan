@@ -1,33 +1,41 @@
-enum ListType {serio, pipo}
+import 'package:myecl/vote/class/members.dart';
+import 'package:myecl/vote/class/section.dart';
+import 'package:myecl/vote/tools/functions.dart';
+
+enum ListType { serio, pipo }
 
 class Pretendance {
   late String id;
   late String name;
-  late String logoPath;
   late String description;
   late ListType listType;
+  late List<Member> members;
+  late Section section;
 
   Pretendance({
     required this.id,
     required this.name,
-    required this.logoPath,
     required this.description,
     required this.listType,
+    required this.members,
+    required this.section,
   });
 
   Pretendance copyWith({
     String? id,
     String? name,
-    String? logoPath,
     String? description,
     ListType? listType,
+    List<Member>? members,
+    Section? section,
   }) {
     return Pretendance(
       id: id ?? this.id,
       name: name ?? this.name,
-      logoPath: logoPath ?? this.logoPath,
       description: description ?? this.description,
       listType: listType ?? this.listType,
+      members: members ?? this.members,
+      section: section ?? this.section,
     );
   }
 
@@ -35,9 +43,10 @@ class Pretendance {
     return {
       'id': id,
       'name': name,
-      'logoPath': logoPath,
       'description': description,
-      'listType': listType,
+      'type': listType.toString().split('.').last,
+      'members': members.map((x) => x.toJson()).toList(),
+      'section': section.id,
     };
   }
 
@@ -45,9 +54,11 @@ class Pretendance {
     return Pretendance(
       id: map['id'],
       name: map['name'],
-      logoPath: map['logoPath'],
       description: map['description'],
-      listType: map['listType'],
+      listType: stringToListType(map['type']),
+      members:
+          List<Member>.from(map['members']?.map((x) => Member.fromJson(x))),
+      section: Section.fromJson(map['section']),
     );
   }
 }

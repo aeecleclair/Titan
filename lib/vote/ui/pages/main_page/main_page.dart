@@ -119,16 +119,25 @@ class MainPage extends HookConsumerWidget {
                                     Expanded(
                                       child: SingleChildScrollView(
                                         physics: const BouncingScrollPhysics(),
-                                        child: Column(
-                                          children: pretendanceList.map((e) {
-                                            final index =
-                                                pretendanceList.indexOf(e);
-                                            return PretendanceCard(
-                                                index: index,
-                                                pretendance: e,
-                                                animation: animation);
-                                          }).toList(),
-                                        ),
+                                        child: pretendanceList.isNotEmpty
+                                            ? Column(
+                                                children:
+                                                    pretendanceList.map((e) {
+                                                  final index = pretendanceList
+                                                      .indexOf(e);
+                                                  return PretendanceCard(
+                                                      index: index,
+                                                      pretendance: e,
+                                                      animation: animation);
+                                                }).toList(),
+                                              )
+                                            : const SizedBox(
+                                                height: 150,
+                                                child: Center(
+                                                  child: Text(VoteTextConstants
+                                                      .noPretendanceList),
+                                                ),
+                                              ),
                                       ),
                                     ),
                                   ]),
@@ -147,28 +156,30 @@ class MainPage extends HookConsumerWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 30.0),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            padding: const EdgeInsets.only(top: 10, bottom: 12),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: const Center(
-                              child: Text(
-                                VoteTextConstants.vote,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700),
+                      if (sectionList.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(right: 30.0),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 12),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: const Center(
+                                child: Text(
+                                  VoteTextConstants.vote,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
                       const SizedBox(
                         height: 20,
                       ),

@@ -16,13 +16,12 @@ class PretendanceNotifier extends ListNotifier<Pretendance> {
   }
 
   Future<bool> addPretendance(Pretendance pretendance) async {
-    return await add(
-        (p) async => _pretendanceRepository.createPretendance(p), pretendance);
+    return await add(_pretendanceRepository.createPretendance, pretendance);
   }
 
   Future<bool> updatePretendance(Pretendance pretendance) async {
     return await update(
-        (p) async => _pretendanceRepository.updatePretendance(p),
+        _pretendanceRepository.updatePretendance,
         (pretendances, pretendance) => pretendances
           ..[pretendances.indexWhere((p) => p.id == pretendance.id)] =
               pretendance,
@@ -31,7 +30,7 @@ class PretendanceNotifier extends ListNotifier<Pretendance> {
 
   Future<bool> deletePretendance(Pretendance pretendance) async {
     return await delete(
-        (id) async => _pretendanceRepository.deletePretendance(id),
+        _pretendanceRepository.deletePretendance,
         (pretendances, pretendance) =>
             pretendances..removeWhere((p) => p.id == pretendance.id),
         pretendance.id,

@@ -20,7 +20,7 @@ class PageSwitcher extends ConsumerWidget {
       case VotePage.addSection:
         return const AddSectionPage();
       case VotePage.addPretendance:
-        return const AddPretendance();
+        return const AddPretendancePage();
     }
   }
 }

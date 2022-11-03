@@ -1,12 +1,10 @@
 class Section {
   late String id;
   late String name;
-  late String logoPath;
   late String description;
   Section({
     required this.id,
     required this.name,
-    required this.logoPath,
     required this.description,
   });
 
@@ -19,7 +17,6 @@ class Section {
     return Section(
       id: id ?? this.id,
       name: name ?? this.name,
-      logoPath: logoPath ?? this.logoPath,
       description: description ?? this.description,
     );
   }
@@ -28,7 +25,6 @@ class Section {
     return {
       'id': id,
       'name': name,
-      'logo_path': logoPath,
       'description': description,
     };
   }
@@ -37,7 +33,6 @@ class Section {
     return Section(
       id: map['id'],
       name: map['name'],
-      logoPath: map['logoPath'],
       description: map['description'],
     );
   }
@@ -45,7 +40,6 @@ class Section {
   Section.empty() {
     id = '';
     name = '';
-    logoPath = '';
     description = '';
   }
 }

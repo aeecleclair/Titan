@@ -15,7 +15,6 @@ void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-
 class MyApp extends HookConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -42,23 +41,36 @@ class MyApp extends HookConsumerWidget {
         debugShowCheckedModeBanner: false,
         title: 'MyECL',
         theme: ThemeData(
-            primarySwatch: Colors.orange,
+            primarySwatch: MaterialColor(4280360191, {
+              50: Color(0xfff2f2f2),
+              100: Color(0xffe6e6e6),
+              200: Color(0xffcccccc),
+              300: Color(0xffb3b3b3),
+              350: Color(0xffaaaaaa),
+              400: Color(0xff999999),
+              500: Color(0xff808080),
+              600: Color(0xff666666),
+              700: Color(0xff4d4d4d),
+              800: Color(0xff333333),
+              850: Color(0xff262626),
+              900: Color(0xff1a1a1a)
+            }),
             textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
                 Theme.of(context).textTheme)),
         home: const SafeArea(child: AppDrawer()));
-        // home: SafeArea(
-        //   child: check.when(
-        //       data: (value) => value
-        //           ? isLoggedIn
-        //               ? const AppDrawer()
-        //               : const AuthScreen()
-        //           : const UpdatePage(),
-        //       loading: () => const Scaffold(
-        //             body: Center(
-        //               child: CircularProgressIndicator(),
-        //             ),
-        //           ),
-        //       error: (error, stack) => const Scaffold(body: NoInternetPage())),
-        // ));
+    // home: SafeArea(
+    //   child: check.when(
+    //       data: (value) => value
+    //           ? isLoggedIn
+    //               ? const AppDrawer()
+    //               : const AuthScreen()
+    //           : const UpdatePage(),
+    //       loading: () => const Scaffold(
+    //             body: Center(
+    //               child: CircularProgressIndicator(),
+    //             ),
+    //           ),
+    //       error: (error, stack) => const Scaffold(body: NoInternetPage())),
+    // ));
   }
 }

@@ -15,11 +15,11 @@ class SectionRepository extends Repository {
   }
 
   Future<bool> updateSection(Section section) async {
-    return await update(section, "/${section.id}");
+    return await update(section.toJson(), "/${section.id}");
   }
 
   Future<Section> createSection(Section section) async {
-    return Section.fromJson(await create(section));
+    return Section.fromJson(await create(section.toJson()));
   }
 
   Future<List<Section>> getSections() async {

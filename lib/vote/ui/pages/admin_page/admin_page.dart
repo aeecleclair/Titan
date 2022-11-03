@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
@@ -33,12 +33,13 @@ class AdminPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(votePageProvider.notifier);
     final sectionPretendanceNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
+    ref.watch(userList);
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayVoteToast(context, type, msg);
     }
 
     if (!loaded.value) {
-      // pretendanceNotifier.loadPretendanceListBySection(section.id);
+      pretendanceNotifier.loadPretendanceListBySection(section.id);
       pretendanceNotifier.copy().then(
         (value) {
           sectionPretendanceNotifier.setTData(section, value);
@@ -48,7 +49,7 @@ class AdminPage extends HookConsumerWidget {
     }
     return VoteRefresher(
       onRefresh: () async {
-        // pretendanceNotifier.loadPretendanceListBySection(section.id);
+        pretendanceNotifier.loadPretendanceListBySection(section.id);
         sectionPretendanceNotifier.setTData(
             section, await pretendanceNotifier.copy());
       },

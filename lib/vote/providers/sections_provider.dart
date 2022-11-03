@@ -15,7 +15,7 @@ class SectionNotifier extends ListNotifier<Section> {
   }
 
   Future<bool> addSection(Section section) async {
-    return await add((s) async => _sectionRepository.createSection(s), section);
+    return await add(_sectionRepository.createSection, section);
   }
 
   Future<bool> updateSection(Section section) async {

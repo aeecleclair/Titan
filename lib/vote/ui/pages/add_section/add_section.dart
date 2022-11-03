@@ -4,18 +4,25 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/section.dart';
+import 'package:myecl/vote/providers/section_id_provider.dart';
+import 'package:myecl/vote/providers/section_provider.dart';
+import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/tools/functions.dart';
-import 'package:myecl/vote/ui/pages/text_entry.dart';
+import 'package:myecl/vote/ui/text_entry.dart';
 
 class AddSectionPage extends HookConsumerWidget {
   const AddSectionPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final sectionPretendanceNotifier =
+        ref.watch(sectionPretendanceProvider.notifier);
     final sectionListNotifier = ref.watch(sectionsProvider.notifier);
+    final sections = ref.watch(sectionsProvider);
+    final sectionIdNotifier = ref.watch(sectionIdProvider.notifier);
     final pageNotifier = ref.watch(votePageProvider.notifier);
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();
@@ -89,14 +96,17 @@ class AddSectionPage extends HookConsumerWidget {
                               fontWeight: FontWeight.bold))),
                   onTap: () {
                     tokenExpireWrapper(ref, () async {
-                      final value = await sectionListNotifier.addSection(
-                          Section(
-                              name: name.text,
-                              id: '',
-                              description: description.text,
-                              logoPath: ''));
+                      Section newSection = Section(
+                          name: name.text,
+                          id: '',
+                          description: description.text);
+                      final value =
+                          await sectionListNotifier.addSection(newSection);
                       if (value) {
                         pageNotifier.setVotePage(VotePage.admin);
+                        sections.whenData((value) {
+                          sectionPretendanceNotifier.addT(value.last);
+                        });
                         displayVoteToastWithContext(
                             TypeMsg.msg, VoteTextConstants.addedSection);
                       } else {
