@@ -17,9 +17,9 @@ void displayVoteToast(BuildContext context, TypeMsg type, String text) {
 
 ListType stringToListType(String type) {
   switch (type) {
-    case 'serio':
+    case 'Serio':
       return ListType.serio;
-    case 'pipo':
+    case 'Pipo':
       return ListType.pipo;
     default:
       return ListType.pipo;

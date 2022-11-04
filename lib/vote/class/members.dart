@@ -7,7 +7,8 @@ class Member extends SimpleUser {
       {required super.name,
       required super.firstname,
       required super.nickname,
-      required super.id, required this.role});
+      required super.id,
+      required this.role});
 
   Member copyWith({String? role}) {
     return Member(
@@ -21,7 +22,7 @@ class Member extends SimpleUser {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'id': super.id,
+      'user_id': super.id,
       'role': role,
     };
   }
@@ -36,13 +37,13 @@ class Member extends SimpleUser {
     );
   }
 
-  factory Member.fromSimpleUser(SimpleUser user) {
+  factory Member.fromSimpleUser(SimpleUser user, String role) {
     return Member(
       name: user.name,
       firstname: user.firstname,
       nickname: user.nickname,
       id: user.id,
-      role: '',
+      role: role,
     );
   }
 

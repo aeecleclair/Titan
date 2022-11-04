@@ -3,9 +3,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/pretendance.dart';
+import 'package:myecl/vote/providers/pretendance_members.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/section_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
@@ -13,6 +15,7 @@ import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/tools/functions.dart';
+import 'package:myecl/vote/ui/pages/add_pretendance/member_card.dart';
 import 'package:myecl/vote/ui/section_chip.dart';
 import 'package:myecl/vote/ui/text_entry.dart';
 
@@ -23,6 +26,7 @@ class AddPretendancePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(votePageProvider.notifier);
     final key = GlobalKey<FormState>();
+    final addMemberKey = GlobalKey<FormState>();
     final section = useState(ref.watch(sectionProvider));
     final sections = ref.watch(sectionsProvider);
     final pretendanceListNotifier = ref.watch(pretendanceProvider.notifier);
@@ -34,9 +38,11 @@ class AddPretendancePage extends HookConsumerWidget {
     final usersNotifier = ref.watch(userList.notifier);
     final focus = useState(false);
     final queryController = useTextEditingController();
+    final role = useTextEditingController();
     final lastQuery = useState('');
-    final member = useState(Member.empty());
-    final members = useState<List<Member>>([]);
+    final member = useState(SimpleUser.empty());
+    final members = ref.watch(pretendanceMembersProvider);
+    final membersNotifier = ref.watch(pretendanceMembersProvider.notifier);
     final displayUserSearch = useState(false);
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayVoteToast(context, type, msg);
@@ -48,7 +54,7 @@ class AddPretendancePage extends HookConsumerWidget {
           key: key,
           child: Column(children: [
             const SizedBox(
-              height: 50,
+              height: 30,
             ),
             const Padding(
               padding: EdgeInsets.only(top: 10, left: 30, right: 30),
@@ -134,91 +140,181 @@ class AddPretendancePage extends HookConsumerWidget {
               ),
             ),
             const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: users.value.when(data: (u) {
-                return Column(children: <Widget>[
-                  TextFormField(
-                    onChanged: (value) {
-                      print("value: $value");
-                      print("lastQuery: ${lastQuery.value}");
-                      if (value.isNotEmpty) {
-                        if (value != lastQuery.value) {
-                          lastQuery.value = value;
-                          tokenExpireWrapper(ref, () async {
-                            final value = await usersNotifier
-                                .filterUsers(queryController.text);
-                            users.value = value;
-                            displayUserSearch.value = true;
-                          });
-                          focus.value = true;
-                        } else {
-                          focus.value = false;
-                        }
-                      }
-                    },
-                    cursorColor: Colors.black,
-                    controller: queryController,
-                    autofocus: focus.value,
-                    decoration: const InputDecoration(
-                      labelText: VoteTextConstants.members,
-                      floatingLabelStyle: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 2.0),
-                      ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(width: 15),
+                  ...members.map(
+                    (e) => MemberCard(
+                      member: e,
+                      onDelete: () async {
+                        membersNotifier.removeMember(e);
+                      },
+                      onEdit: () {},
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
+                  const SizedBox(width: 15),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Container(
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    floatingLabelStyle: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                    ),
+                    labelText: VoteTextConstants.addMember,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
-                  if (displayUserSearch.value)
-                    ...u.map(
-                      (e) => GestureDetector(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    width: 20,
+                  child: Form(
+                    key: addMemberKey,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: users.value.when(data: (u) {
+                            return Column(children: <Widget>[
+                              TextFormField(
+                                onChanged: (newQuery) {
+                                  if (newQuery.isNotEmpty &&
+                                      newQuery != lastQuery.value) {
+                                    tokenExpireWrapper(ref, () async {
+                                      final value = await usersNotifier
+                                          .filterUsers(queryController.text);
+                                      users.value = value;
+                                      displayUserSearch.value = true;
+                                      focus.value = true;
+                                      lastQuery.value = newQuery;
+                                    });
+                                  }
+                                },
+                                cursorColor: Colors.black,
+                                controller: queryController,
+                                autofocus: focus.value,
+                                decoration: const InputDecoration(
+                                  labelText: VoteTextConstants.members,
+                                  floatingLabelStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Expanded(
-                                    child: Text(
-                                      e.getName(),
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: (member.value.id == e.id)
-                                            ? FontWeight.bold
-                                            : FontWeight.w400,
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black, width: 2.0),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              if (displayUserSearch.value)
+                                ...u.map(
+                                  (e) => GestureDetector(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                width: 20,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  e.getName(),
+                                                  style: TextStyle(
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        (member.value.id ==
+                                                                e.id)
+                                                            ? FontWeight.bold
+                                                            : FontWeight.w400,
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ]),
                                       ),
-                                      overflow: TextOverflow.ellipsis,
+                                      onTap: () {
+                                        member.value = e;
+                                        queryController.text = e.getName();
+                                        focus.value = false;
+                                        displayUserSearch.value = false;
+                                      }),
+                                ),
+                              TextEntry(
+                                  label: VoteTextConstants.role,
+                                  suffix: '',
+                                  isInt: false,
+                                  controller: role,
+                                  keyboardType: TextInputType.text),
+                              const SizedBox(height: 30),
+                              GestureDetector(
+                                onTap: () {
+                                  if (addMemberKey.currentState == null) {
+                                    return;
+                                  }
+                                  if (addMemberKey.currentState!.validate()) {
+                                    membersNotifier.addMember(
+                                        Member.fromSimpleUser(
+                                            member.value, role.text));
+                                    role.text = '';
+                                    member.value = SimpleUser.empty();
+                                  }
+                                },
+                                child: Container(
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.only(
+                                        top: 8, bottom: 12),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 5,
+                                          blurRadius: 10,
+                                          offset: const Offset(3,
+                                              3), // changes position of shadow
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ]),
-                          ),
-                          onTap: () {
-                            members.value.add(Member.fromSimpleUser(e));
-                            member.value = Member.empty();
-                            queryController.text = e.getName();
-                            focus.value = false;
-                            displayUserSearch.value = false;
+                                    child: const Text(VoteTextConstants.add,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold))),
+                              )
+                            ]);
+                          }, error: (error, s) {
+                            return Text(error.toString(),
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w500));
+                          }, loading: () {
+                            return const CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  VoteColorConstants.green1),
+                            );
                           }),
-                    )
-                ]);
-              }, error: (error, s) {
-                return Text(error.toString(),
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w500));
-              }, loading: () {
-                return const CircularProgressIndicator(
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(VoteColorConstants.green1),
-                );
-              }),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: 50),
             Padding(
@@ -236,13 +332,15 @@ class AddPretendancePage extends HookConsumerWidget {
                             name: name.text,
                             id: '',
                             description: description.text,
+                            logoPath: '',
                             listType: listType.value,
-                            members: members.value,
+                            members: members,
                             section: section.value,
                           ),
                         );
                         if (value) {
                           pageNotifier.setVotePage(VotePage.admin);
+                          membersNotifier.clearMembers();
                           await sectionsNotifier.setTData(section.value,
                               await pretendanceListNotifier.copy());
                           displayVoteToastWithContext(
@@ -279,7 +377,8 @@ class AddPretendancePage extends HookConsumerWidget {
                               color: Colors.white,
                               fontSize: 25,
                               fontWeight: FontWeight.bold))),
-                ))
+                )),
+            const SizedBox(height: 30),
           ]),
         ));
   }

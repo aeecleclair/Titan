@@ -20,7 +20,7 @@ class SectionNotifier extends ListNotifier<Section> {
 
   Future<bool> updateSection(Section section) async {
     return await update(
-        (s) async => _sectionRepository.updateSection(s),
+        _sectionRepository.updateSection,
         (sections, section) => sections
           ..[sections.indexWhere((s) => s.id == section.id)] = section,
         section);
@@ -28,7 +28,7 @@ class SectionNotifier extends ListNotifier<Section> {
 
   Future<bool> deleteSection(Section section) async {
     return await delete(
-        (id) async => _sectionRepository.deleteSection(id),
+        _sectionRepository.deleteSection,
         (sections, section) => sections..removeWhere((s) => s.id == section.id),
         section.id,
         section);
