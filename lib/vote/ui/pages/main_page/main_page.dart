@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/vote/class/section.dart';
+import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
@@ -22,8 +22,8 @@ class MainPage extends HookConsumerWidget {
     final sections = ref.watch(sectionsProvider);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final section = ref.watch(sectionProvider);
-    final pretendanceNotifier = ref.watch(pretendanceProvider.notifier);
     final sectionsPretendances = ref.watch(sectionPretendanceProvider);
+    final pretendances = ref.watch(pretendanceProvider);
     final sectionPretendanceNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
     final isAdmin = true;
@@ -33,20 +33,29 @@ class MainPage extends HookConsumerWidget {
     final pageOpened = useState(false);
     if (!pageOpened.value) {
       animation.forward();
-      print(section);
       pageOpened.value = true;
     }
     return VoteRefresher(
       onRefresh: () async {
-        await sectionsNotifier.loadSectionList();
-        sections.whenData((value) {
-          if (value.isNotEmpty) {
-            sectionPretendanceNotifier.loadTList(value);
+        final loaners = await sectionsNotifier.loadSectionList();
+        loaners.whenData((value) {
+          List<Pretendance> list = [];
+          pretendances.when(data: (pretendance) {
+            list = pretendance;
+          }, error: (error, stackTrace) {
+            list = [];
+          }, loading: () {
+            list = [];
+          });
+          sectionPretendanceNotifier.loadTList(value);
+          for (final l in value) {
+            sectionPretendanceNotifier.setTData(
+                l,
+                AsyncValue.data(list
+                    .where((element) => element.section.id == l.id)
+                    .toList()));
           }
         });
-        await pretendanceNotifier.loadPretendanceListBySection(section.id);
-        sectionPretendanceNotifier.setTData(
-            section, await pretendanceNotifier.copy());
       },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(

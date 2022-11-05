@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
@@ -30,6 +29,8 @@ class AdminPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(votePageProvider.notifier);
     final sectionPretendanceNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
+    final sectionsNotifier = ref.watch(sectionsProvider.notifier);
+    final pretendances = ref.watch(pretendanceProvider);
     ref.watch(userList);
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayVoteToast(context, type, msg);
@@ -37,9 +38,24 @@ class AdminPage extends HookConsumerWidget {
 
     return VoteRefresher(
       onRefresh: () async {
-        await pretendanceNotifier.loadPretendanceListBySection(section.id);
-        sectionPretendanceNotifier.setTData(
-            section, await pretendanceNotifier.copy());
+        final loaners = await sectionsNotifier.loadSectionList();
+        loaners.whenData((value) {
+          List<Pretendance> list = [];
+          pretendances.when(data: (pretendance) {
+            list = pretendance;
+          }, error: (error, stackTrace) {
+            list = [];
+          }, loading: () {
+            list = [];
+          });
+          sectionPretendanceNotifier.loadTList(value);
+          for (final l in value) {
+            sectionPretendanceNotifier.setTData(
+                l,
+                AsyncValue.data(list
+                    .where((element) => element.section.id == l.id)
+                    .toList()));
+          }});
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 10.0),

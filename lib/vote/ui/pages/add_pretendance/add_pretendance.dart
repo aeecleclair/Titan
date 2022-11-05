@@ -162,155 +162,151 @@ class AddPretendancePage extends HookConsumerWidget {
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Container(
-                child: InputDecorator(
-                  decoration: InputDecoration(
-                    floatingLabelStyle: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 2.0),
-                    ),
-                    labelText: VoteTextConstants.addMember,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
+              child: InputDecorator(
+                decoration: InputDecoration(
+                  floatingLabelStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
-                  child: Form(
-                    key: addMemberKey,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: users.value.when(data: (u) {
-                            return Column(children: <Widget>[
-                              TextFormField(
-                                onChanged: (newQuery) {
-                                  if (newQuery.isNotEmpty &&
-                                      newQuery != lastQuery.value) {
-                                    tokenExpireWrapper(ref, () async {
-                                      final value = await usersNotifier
-                                          .filterUsers(queryController.text);
-                                      users.value = value;
-                                      displayUserSearch.value = true;
-                                      focus.value = true;
-                                      lastQuery.value = newQuery;
-                                    });
-                                  }
-                                },
-                                cursorColor: Colors.black,
-                                controller: queryController,
-                                autofocus: focus.value,
-                                decoration: const InputDecoration(
-                                  labelText: VoteTextConstants.members,
-                                  floatingLabelStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 2.0),
-                                  ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 2.0),
+                  ),
+                  labelText: VoteTextConstants.addMember,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+                child: Form(
+                  key: addMemberKey,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: users.value.when(data: (u) {
+                          return Column(children: <Widget>[
+                            TextFormField(
+                              onChanged: (newQuery) {
+                                if (newQuery.isNotEmpty &&
+                                    newQuery != lastQuery.value) {
+                                  tokenExpireWrapper(ref, () async {
+                                    final value = await usersNotifier
+                                        .filterUsers(queryController.text);
+                                    users.value = value;
+                                    displayUserSearch.value = true;
+                                    focus.value = true;
+                                    lastQuery.value = newQuery;
+                                  });
+                                }
+                              },
+                              cursorColor: Colors.black,
+                              controller: queryController,
+                              autofocus: focus.value,
+                              decoration: const InputDecoration(
+                                labelText: VoteTextConstants.members,
+                                floatingLabelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.black, width: 2.0),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              if (displayUserSearch.value)
-                                ...u.map(
-                                  (e) => GestureDetector(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                width: 20,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  e.getName(),
-                                                  style: TextStyle(
-                                                    fontSize: 13,
-                                                    fontWeight:
-                                                        (member.value.id ==
-                                                                e.id)
-                                                            ? FontWeight.bold
-                                                            : FontWeight.w400,
-                                                  ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            if (displayUserSearch.value)
+                              ...u.map(
+                                (e) => GestureDetector(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              width: 20,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                e.getName(),
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight:
+                                                      (member.value.id == e.id)
+                                                          ? FontWeight.bold
+                                                          : FontWeight.w400,
                                                 ),
+                                                overflow: TextOverflow.ellipsis,
                                               ),
-                                            ]),
-                                      ),
-                                      onTap: () {
-                                        member.value = e;
-                                        queryController.text = e.getName();
-                                        focus.value = false;
-                                        displayUserSearch.value = false;
-                                      }),
-                                ),
-                              TextEntry(
-                                  label: VoteTextConstants.role,
-                                  suffix: '',
-                                  isInt: false,
-                                  controller: role,
-                                  keyboardType: TextInputType.text),
-                              const SizedBox(height: 30),
-                              GestureDetector(
-                                onTap: () {
-                                  if (addMemberKey.currentState == null) {
-                                    return;
-                                  }
-                                  if (addMemberKey.currentState!.validate()) {
-                                    membersNotifier.addMember(
-                                        Member.fromSimpleUser(
-                                            member.value, role.text));
-                                    role.text = '';
-                                    member.value = SimpleUser.empty();
-                                  }
-                                },
-                                child: Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.only(
-                                        top: 8, bottom: 12),
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5),
-                                          spreadRadius: 5,
-                                          blurRadius: 10,
-                                          offset: const Offset(3,
-                                              3), // changes position of shadow
-                                        ),
-                                      ],
+                                            ),
+                                          ]),
                                     ),
-                                    child: const Text(VoteTextConstants.add,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold))),
-                              )
-                            ]);
-                          }, error: (error, s) {
-                            return Text(error.toString(),
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500));
-                          }, loading: () {
-                            return const CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  VoteColorConstants.green1),
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
+                                    onTap: () {
+                                      member.value = e;
+                                      queryController.text = e.getName();
+                                      focus.value = false;
+                                      displayUserSearch.value = false;
+                                    }),
+                              ),
+                            TextEntry(
+                                label: VoteTextConstants.role,
+                                suffix: '',
+                                isInt: false,
+                                controller: role,
+                                keyboardType: TextInputType.text),
+                            const SizedBox(height: 30),
+                            GestureDetector(
+                              onTap: () {
+                                if (addMemberKey.currentState == null) {
+                                  return;
+                                }
+                                if (addMemberKey.currentState!.validate()) {
+                                  membersNotifier.addMember(
+                                      Member.fromSimpleUser(
+                                          member.value, role.text));
+                                  role.text = '';
+                                  member.value = SimpleUser.empty();
+                                }
+                              },
+                              child: Container(
+                                  width: double.infinity,
+                                  padding:
+                                      const EdgeInsets.only(top: 8, bottom: 12),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 10,
+                                        offset: const Offset(
+                                            3, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: const Text(VoteTextConstants.add,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold))),
+                            )
+                          ]);
+                        }, error: (error, s) {
+                          return Text(error.toString(),
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w500));
+                        }, loading: () {
+                          return const CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                VoteColorConstants.green1),
+                          );
+                        }),
+                      ),
+                    ],
                   ),
                 ),
               ),

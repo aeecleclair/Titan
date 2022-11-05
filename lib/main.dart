@@ -29,7 +29,6 @@ class MyApp extends HookConsumerWidget {
     final check = versionVerifier.whenData(
         (value) => value.minimalTitanVersion.compareTo(titanVersion) <= 0);
     final isLoggedIn = ref.watch(isLoggedInProvider);
-    ref.watch(sectionProvider);
 
     // useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
     //   recievedUri.value = uri.toString();
@@ -43,7 +42,7 @@ class MyApp extends HookConsumerWidget {
         debugShowCheckedModeBanner: false,
         title: 'MyECL',
         theme: ThemeData(
-            primarySwatch: MaterialColor(4280360191, {
+            primarySwatch: const MaterialColor(4280360191, {
               50: Color(0xfff2f2f2),
               100: Color(0xffe6e6e6),
               200: Color(0xffcccccc),
