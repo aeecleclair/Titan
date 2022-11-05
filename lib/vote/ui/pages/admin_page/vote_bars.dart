@@ -4,8 +4,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/vote/providers/section_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
+import 'package:myecl/vote/providers/sections_provider.dart';
 
 class VoteBars extends HookConsumerWidget {
   const VoteBars({super.key});
@@ -22,7 +22,7 @@ class VoteBars extends HookConsumerWidget {
 
     List<BarChartGroupData> pretendanceBars = [];
     List<String> sectionNames = [];
-    List<double> voteValue = [];
+    List<int> voteValue = [];
 
     sectionsPretendance.when(
         data: (data) {
@@ -30,14 +30,13 @@ class VoteBars extends HookConsumerWidget {
             data[section]!.when(
                 data: ((data) {
                   sectionNames = data.map((e) => e.name).toList();
-                  voteValue =
-                      data.map((e) => Random().nextDouble() * 800).toList();
+                  voteValue = data.map((e) => Random().nextInt(800)).toList();
                   pretendanceBars = data
                       .map((x) => BarChartGroupData(
                             x: data.indexOf(x),
                             barRods: [
                               BarChartRodData(
-                                toY: voteValue[data.indexOf(x)],
+                                toY: voteValue[data.indexOf(x)].toDouble(),
                                 color: isTouched.value
                                     ? Colors.grey.shade800
                                     : barColor,

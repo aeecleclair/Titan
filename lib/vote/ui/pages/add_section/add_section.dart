@@ -5,7 +5,6 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
-import 'package:myecl/vote/providers/section_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';

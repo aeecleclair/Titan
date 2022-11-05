@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/vote/class/pretendance.dart';
+import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
-import 'package:myecl/vote/providers/selected_section_provider.dart';
 
 class PretendanceCard extends HookConsumerWidget {
   final Pretendance pretendance;
@@ -19,7 +19,8 @@ class PretendanceCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedSection = ref.watch(selectedsectionsProvider);
+    final section = ref.watch(sectionProvider);
+    final sections = ref.watch(sectionsProvider);
     final selectedPretendanceListNotifier =
         ref.watch(selectedPretendanceProvider.notifier);
     return Container(
@@ -75,21 +76,28 @@ class PretendanceCard extends HookConsumerWidget {
                     )
                   ],
                 ),
-                Text(pretendance.description,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey.shade400)),
+                Center(
+                  child: Text(pretendance.description,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey.shade400)),
+                ),
                 const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
                       onTap: () {
-                        selectedPretendanceListNotifier.changeSelection(
-                            selectedSection, pretendance.id);
+                        sections.when(
+                            data: (data) {
+                              selectedPretendanceListNotifier.changeSelection(
+                                  data.indexOf(section), pretendance.id);
+                            },
+                            error: (e, s) {},
+                            loading: () {});
                       },
                       child: Container(
                         width: 40,

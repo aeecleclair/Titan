@@ -28,11 +28,12 @@ class Member extends SimpleUser {
   }
 
   factory Member.fromJson(Map<String, dynamic> map) {
+    final user = map['user'];
     return Member(
-      name: map['name'],
-      firstname: map['firstname'],
-      nickname: map['nickname'],
-      id: map['id'],
+      name: user['name'],
+      firstname: user['firstname'],
+      nickname: user['nickname'],
+      id: user['id'],
       role: map['role'],
     );
   }

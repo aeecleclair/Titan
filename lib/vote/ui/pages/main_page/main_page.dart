@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
+import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
@@ -18,8 +20,12 @@ class MainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(votePageProvider.notifier);
     final sections = ref.watch(sectionsProvider);
-    final pretendances = ref.watch(pretendanceProvider);
-    print(pretendances);
+    final sectionsNotifier = ref.watch(sectionsProvider.notifier);
+    final section = ref.watch(sectionProvider);
+    final pretendanceNotifier = ref.watch(pretendanceProvider.notifier);
+    final sectionsPretendances = ref.watch(sectionPretendanceProvider);
+    final sectionPretendanceNotifier =
+        ref.watch(sectionPretendanceProvider.notifier);
     final isAdmin = true;
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 2400),
@@ -27,12 +33,20 @@ class MainPage extends HookConsumerWidget {
     final pageOpened = useState(false);
     if (!pageOpened.value) {
       animation.forward();
+      print(section);
       pageOpened.value = true;
     }
     return VoteRefresher(
       onRefresh: () async {
-        ref.refresh(sectionsProvider);
-        ref.refresh(pretendanceProvider);
+        await sectionsNotifier.loadSectionList();
+        sections.whenData((value) {
+          if (value.isNotEmpty) {
+            sectionPretendanceNotifier.loadTList(value);
+          }
+        });
+        await pretendanceNotifier.loadPretendanceListBySection(section.id);
+        sectionPretendanceNotifier.setTData(
+            section, await pretendanceNotifier.copy());
       },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(
@@ -59,7 +73,7 @@ class MainPage extends HookConsumerWidget {
                             Expanded(
                               child: SizedBox(
                                 width: double.infinity,
-                                child: pretendances.when(
+                                child: sectionsPretendances.when(
                                   data: (pretendanceList) => Column(children: [
                                     Row(
                                       mainAxisAlignment:
@@ -122,15 +136,30 @@ class MainPage extends HookConsumerWidget {
                                         child: pretendanceList.isNotEmpty
                                             ? Column(
                                                 children:
-                                                    pretendanceList.map((e) {
-                                                  final index = pretendanceList
-                                                      .indexOf(e);
+                                                    pretendanceList[section]!
+                                                        .when(
+                                                data: (pretendance) =>
+                                                    pretendance.map((e) {
+                                                  final index =
+                                                      pretendance.indexOf(e);
                                                   return PretendanceCard(
                                                       index: index,
                                                       pretendance: e,
                                                       animation: animation);
                                                 }).toList(),
-                                              )
+                                                loading: () => const [
+                                                  Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  )
+                                                ],
+                                                error: (error, stack) => const [
+                                                  Center(
+                                                    child:
+                                                        Text("Error occured"),
+                                                  )
+                                                ],
+                                              ))
                                             : const SizedBox(
                                                 height: 150,
                                                 child: Center(

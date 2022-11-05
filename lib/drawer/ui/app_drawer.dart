@@ -12,6 +12,7 @@ import 'package:myecl/home/ui/home.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/vote/ui/vote.dart';
+import 'package:myecl/vote/providers/sections_provider.dart';
 
 class AppDrawer extends HookConsumerWidget {
   static Duration duration = const Duration(milliseconds: 200);

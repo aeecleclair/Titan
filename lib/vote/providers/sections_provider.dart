@@ -2,6 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/vote/class/section.dart';
+import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/repositories/section_repository.dart';
 
 class SectionNotifier extends ListNotifier<Section> {
@@ -52,4 +53,12 @@ final sectionList = Provider<List<Section>>((ref) {
   }, loading: () {
     return [];
   });
+});
+
+final sectionProvider = Provider<Section>((ref) {
+  final sections = ref.watch(sectionList);
+  final sectionId = ref.watch(sectionIdProvider);
+  return sections.isEmpty
+      ? Section.empty()
+      : sections.where((element) => element.id == sectionId).first;
 });

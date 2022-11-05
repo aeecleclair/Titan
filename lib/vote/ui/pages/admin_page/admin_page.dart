@@ -8,7 +8,6 @@ import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
-import 'package:myecl/vote/providers/section_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
@@ -26,10 +25,8 @@ class AdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sectionPretendance = ref.watch(sectionPretendanceProvider);
     final section = ref.watch(sectionProvider);
-    final sectionList = ref.watch(sectionsProvider);
     final sectionIdNotifier = ref.watch(sectionIdProvider.notifier);
     final pretendanceNotifier = ref.watch(pretendanceProvider.notifier);
-    final loaded = useState(false);
     final pageNotifier = ref.watch(votePageProvider.notifier);
     final sectionPretendanceNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
@@ -38,18 +35,9 @@ class AdminPage extends HookConsumerWidget {
       displayVoteToast(context, type, msg);
     }
 
-    if (!loaded.value) {
-      pretendanceNotifier.loadPretendanceListBySection(section.id);
-      pretendanceNotifier.copy().then(
-        (value) {
-          sectionPretendanceNotifier.setTData(section, value);
-        },
-      );
-      loaded.value = true;
-    }
     return VoteRefresher(
       onRefresh: () async {
-        pretendanceNotifier.loadPretendanceListBySection(section.id);
+        await pretendanceNotifier.loadPretendanceListBySection(section.id);
         sectionPretendanceNotifier.setTData(
             section, await pretendanceNotifier.copy());
       },
@@ -95,34 +83,17 @@ class AdminPage extends HookConsumerWidget {
                                           selected: section.id == key.id,
                                           onTap: () async {
                                             sectionIdNotifier.setId(key.id);
-                                            sectionPretendance.whenData(
-                                              (value) async {
-                                                if (value[key] != null) {
-                                                  value[key]!
-                                                      .whenData((value) async {
-                                                    if (value.isEmpty) {
-                                                      pretendanceNotifier
-                                                          .loadPretendanceListBySection(
-                                                              key.id);
-                                                      sectionPretendanceNotifier
-                                                          .setTData(
-                                                              key,
-                                                              await pretendanceNotifier
-                                                                  .copy());
-                                                    }
-                                                  });
-                                                } else {
-                                                  pretendanceNotifier
-                                                      .loadPretendanceListBySection(
-                                                          key.id);
-                                                  sectionPretendanceNotifier
-                                                      .setTData(
-                                                          key,
-                                                          await pretendanceNotifier
-                                                              .copy());
-                                                }
-                                              },
-                                            );
+                                            pretendanceNotifier
+                                                .loadPretendanceListBySection(
+                                                    key.id)
+                                                .then((value) {
+                                              pretendanceNotifier
+                                                  .copy()
+                                                  .then((value) {
+                                                sectionPretendanceNotifier
+                                                    .setTData(key, value);
+                                              });
+                                            });
                                           },
                                         ),
                                         value))

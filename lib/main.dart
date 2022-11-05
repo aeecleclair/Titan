@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/login/ui/auth.dart';
@@ -28,6 +29,7 @@ class MyApp extends HookConsumerWidget {
     final check = versionVerifier.whenData(
         (value) => value.minimalTitanVersion.compareTo(titanVersion) <= 0);
     final isLoggedIn = ref.watch(isLoggedInProvider);
+    ref.watch(sectionProvider);
 
     // useState<Stream<Uri?>>(uriLinkStream).value.listen((Uri? uri) {
     //   recievedUri.value = uri.toString();

@@ -9,7 +9,6 @@ import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/pretendance_members.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
-import 'package:myecl/vote/providers/section_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
@@ -332,7 +331,6 @@ class AddPretendancePage extends HookConsumerWidget {
                             name: name.text,
                             id: '',
                             description: description.text,
-                            logoPath: '',
                             listType: listType.value,
                             members: members,
                             section: section.value,

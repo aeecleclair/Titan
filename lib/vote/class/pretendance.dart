@@ -9,7 +9,6 @@ class Pretendance {
   late String id;
   late String name;
   late String description;
-  late String logoPath;
   late ListType listType;
   late List<Member> members;
   late Section section;
@@ -18,7 +17,6 @@ class Pretendance {
     required this.id,
     required this.name,
     required this.description,
-    required this.logoPath,
     required this.listType,
     required this.members,
     required this.section,
@@ -28,7 +26,6 @@ class Pretendance {
     String? id,
     String? name,
     String? description,
-    String? logoPath,
     ListType? listType,
     List<Member>? members,
     Section? section,
@@ -37,7 +34,6 @@ class Pretendance {
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
-      logoPath: logoPath ?? this.logoPath,
       listType: listType ?? this.listType,
       members: members ?? this.members,
       section: section ?? this.section,
@@ -49,7 +45,6 @@ class Pretendance {
       'id': id,
       'name': name,
       'description': description,
-      'logo_path': logoPath,
       'type': capitalize(listType.toString().split('.').last),
       'members': members.map((x) => x.toJson()).toList(),
       'section': section.id,
@@ -61,7 +56,6 @@ class Pretendance {
       id: map['id'],
       name: map['name'],
       description: map['description'],
-      logoPath: map['logo_path'],
       listType: stringToListType(map['type']),
       members:
           List<Member>.from(map['members']?.map((x) => Member.fromJson(x))),
