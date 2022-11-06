@@ -18,6 +18,8 @@ class VoteTextConstants {
   static const String addingError = 'Erreur lors de l\'ajout';
   static const String addPretendance = 'Ajouter une liste de prétendance';
   static const String addSection = 'Ajouter une section';
+  static const String closedVote = 'Votes clos';
+  static const String closeVote = 'Fermer les votes';
   static const String description = 'Description';
   static const String incorrectOrMissingFields =
       'Champs incorrects ou manquants';
@@ -25,9 +27,11 @@ class VoteTextConstants {
   static const String name = 'Nom';
   static const String noPretendanceList = 'Aucune liste de prétendance';
   static const String noSection = 'Aucune section';
+  static const String openVote = 'Ouvrir les votes';
   static const String pretendance = 'Prétendance';
   static const String role = 'Rôle';
   static const String sectionDescription = 'Description de la section';
   static const String sectionName = 'Nom de la section';
   static const String vote = 'Vote';
+  static const String voteNotStarted = 'Vote non ouvert';
 }

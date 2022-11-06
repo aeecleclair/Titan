@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/class/section.dart';
@@ -9,6 +10,7 @@ import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
+import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/tools/functions.dart';
@@ -31,6 +33,10 @@ class AdminPage extends HookConsumerWidget {
         ref.watch(sectionPretendanceProvider.notifier);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final pretendances = ref.watch(pretendanceProvider);
+    final asyncStatus = ref.watch(statusProvider);
+    final statusNotifier = ref.watch(statusProvider.notifier);
+    bool status = false;
+    asyncStatus.whenData((value) => status = value);
     ref.watch(userList);
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayVoteToast(context, type, msg);
@@ -38,6 +44,7 @@ class AdminPage extends HookConsumerWidget {
 
     return VoteRefresher(
       onRefresh: () async {
+        await statusNotifier.loadStatus();
         final loaners = await sectionsNotifier.loadSectionList();
         loaners.whenData((value) {
           List<Pretendance> list = [];
@@ -55,7 +62,8 @@ class AdminPage extends HookConsumerWidget {
                 AsyncValue.data(list
                     .where((element) => element.section.id == l.id)
                     .toList()));
-          }});
+          }
+        });
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 10.0),
@@ -203,21 +211,116 @@ class AdminPage extends HookConsumerWidget {
                                 ));
                               }),
                         const SizedBox(height: 20),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.symmetric(horizontal: 30.0),
                           child: Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(VoteTextConstants.vote,
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 205, 205, 205))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(VoteTextConstants.vote,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(
+                                            255, 205, 205, 205))),
+                                if (status)
+                                  GestureDetector(
+                                    onTap: () {
+                                      tokenExpireWrapper(ref, () async {
+                                        final value = await statusNotifier
+                                            .updateStatus(false);
+                                        if (value) {
+                                          displayVoteToastWithContext(
+                                              TypeMsg.msg, 'Vote is closed');
+                                        } else {
+                                          displayVoteToastWithContext(
+                                              TypeMsg.error, 'Error');
+                                        }
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(8.0),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.black,
+                                      ),
+                                      child: Text(VoteTextConstants.closeVote,
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white)),
+                                    ),
+                                  ),
+                              ],
+                            ),
                           ),
                         ),
                         const SizedBox(height: 20),
                         SizedBox(
-                            height: MediaQuery.of(context).size.height - 530,
-                            child: const VoteBars())
+                            height: MediaQuery.of(context).size.height - 539,
+                            child: status
+                                ? const VoteBars()
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(height: 20),
+                                      const Center(
+                                        child: Text(
+                                          VoteTextConstants.voteNotStarted,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color.fromARGB(
+                                                  255, 205, 205, 205)),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 50),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 30.0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            tokenExpireWrapper(ref, () async {
+                                              final value = await statusNotifier
+                                                  .updateStatus(true);
+                                              if (value) {
+                                                displayVoteToastWithContext(
+                                                    TypeMsg.msg,
+                                                    'Vote started');
+                                              } else {
+                                                displayVoteToastWithContext(
+                                                    TypeMsg.error,
+                                                    'Vote not started');
+                                              }
+                                            });
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.only(
+                                                top: 10, bottom: 12),
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                                color: Colors.black,
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                            child: const Center(
+                                              child: Text(
+                                                VoteTextConstants.openVote,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                    ],
+                                  )),
                       ],
                     ),
                 error: (Object error, StackTrace? stackTrace) {

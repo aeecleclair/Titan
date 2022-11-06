@@ -121,25 +121,6 @@ class PretendanceCard extends HookConsumerWidget {
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                blurRadius: 10,
-                                offset: const Offset(2, 3))
-                          ],
-                        ),
-                        child: const Icon(Icons.calendar_month_outlined,
-                            color: Colors.black),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
@@ -149,7 +130,7 @@ class PretendanceCard extends HookConsumerWidget {
                                 offset: const Offset(2, 3))
                           ],
                         ),
-                        child: const Icon(Icons.check, color: Colors.white),
+                        child: const Icon(Icons.delete, color: Colors.white),
                       ),
                     ),
                   ],
