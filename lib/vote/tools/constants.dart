@@ -32,6 +32,9 @@ class VoteTextConstants {
   static const String role = 'Rôle';
   static const String sectionDescription = 'Description de la section';
   static const String sectionName = 'Nom de la section';
+  static const String showVotes = 'Voir les votes';
   static const String vote = 'Vote';
+  static const String voteError = 'Erreur lors de l\'enregistrement du vote';
   static const String voteNotStarted = 'Vote non ouvert';
+  static const String voteSuccess = 'Vote enregistré';
 }

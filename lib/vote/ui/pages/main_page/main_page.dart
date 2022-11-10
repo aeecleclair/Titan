@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/pretendance.dart';
+import 'package:myecl/vote/class/votes.dart';
+import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
+import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
+import 'package:myecl/vote/providers/votes_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
+import 'package:myecl/vote/tools/functions.dart';
 import 'package:myecl/vote/ui/pages/main_page/list_side_item.dart';
 import 'package:myecl/vote/ui/pages/main_page/pretendance_card.dart';
 import 'package:myecl/vote/ui/pages/main_page/section_title.dart';
@@ -26,11 +33,18 @@ class MainPage extends HookConsumerWidget {
     final pretendances = ref.watch(pretendanceProvider);
     final sectionPretendanceNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
-    final isAdmin = true;
+    final isAdmin = ref.watch(isVoteAdmin);
+    final selectedPretendance = ref.watch(selectedPretendanceProvider);
+    final votesNotifier = ref.watch(votesProvider.notifier);
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 2400),
     );
     final pageOpened = useState(false);
+
+    void displayVoteToastWithContext(TypeMsg type, String msg) {
+      displayVoteToast(context, type, msg);
+  }
+
     if (!pageOpened.value) {
       animation.forward();
       pageOpened.value = true;
@@ -198,7 +212,17 @@ class MainPage extends HookConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 30.0),
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              tokenExpireWrapper(ref, () async {
+                                final votes = Votes(ids: selectedPretendance);
+                                final result = await votesNotifier.addVote(votes);
+                                if (result) {
+                                  displayVoteToastWithContext(TypeMsg.msg, VoteTextConstants.voteSuccess);
+                                } else {
+                                  displayVoteToastWithContext(TypeMsg.error, VoteTextConstants.voteError);
+                                }
+                              });
+                            },
                             child: Container(
                               padding:
                                   const EdgeInsets.only(top: 10, bottom: 12),

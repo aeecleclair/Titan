@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
@@ -10,8 +11,10 @@ import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
+import 'package:myecl/vote/providers/sections_votes_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
+import 'package:myecl/vote/providers/votes_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/tools/functions.dart';
 import 'package:myecl/vote/ui/pages/admin_page/pretendance_card.dart';
@@ -35,6 +38,9 @@ class AdminPage extends HookConsumerWidget {
     final pretendances = ref.watch(pretendanceProvider);
     final asyncStatus = ref.watch(statusProvider);
     final statusNotifier = ref.watch(statusProvider.notifier);
+    final sectionsVotesNotifier = ref.watch(sectionsVotesProvider.notifier);
+    final votesNotifier = ref.watch(votesProvider.notifier);
+    final showVotes = useState(false);
     bool status = false;
     asyncStatus.whenData((value) => status = value);
     ref.watch(userList);
@@ -45,8 +51,8 @@ class AdminPage extends HookConsumerWidget {
     return VoteRefresher(
       onRefresh: () async {
         await statusNotifier.loadStatus();
-        final loaners = await sectionsNotifier.loadSectionList();
-        loaners.whenData((value) {
+        final sections = await sectionsNotifier.loadSectionList();
+        sections.whenData((value) async {
           List<Pretendance> list = [];
           pretendances.when(data: (pretendance) {
             list = pretendance;
@@ -63,6 +69,9 @@ class AdminPage extends HookConsumerWidget {
                     .where((element) => element.section.id == l.id)
                     .toList()));
           }
+          sectionsVotesNotifier.loadTList(value);
+          votesNotifier.getVoteById(section.id);
+          sectionsVotesNotifier.setTData(section, await votesNotifier.copy());
         });
       },
       child: Padding(
@@ -212,18 +221,29 @@ class AdminPage extends HookConsumerWidget {
                               }),
                         const SizedBox(height: 20),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 30.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(VoteTextConstants.vote,
+                                const Text(VoteTextConstants.vote,
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(
                                             255, 205, 205, 205))),
+                                if (showVotes.value && status)
+                                  GestureDetector(
+                                    onTap: () {
+                                      showVotes.value = false;
+                                    },
+                                    child: const HeroIcon(
+                                      HeroIcons.eyeSlash,
+                                      size: 25.0,
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                 if (status)
                                   GestureDetector(
                                     onTap: () {
@@ -240,12 +260,13 @@ class AdminPage extends HookConsumerWidget {
                                       });
                                     },
                                     child: Container(
-                                      padding: EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(8.0),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(8),
                                         color: Colors.black,
                                       ),
-                                      child: Text(VoteTextConstants.closeVote,
+                                      child: const Text(
+                                          VoteTextConstants.closeVote,
                                           style: TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.bold,
@@ -259,68 +280,100 @@ class AdminPage extends HookConsumerWidget {
                         const SizedBox(height: 20),
                         SizedBox(
                             height: MediaQuery.of(context).size.height - 539,
-                            child: status
-                                ? const VoteBars()
-                                : Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(height: 20),
-                                      const Center(
-                                        child: Text(
-                                          VoteTextConstants.voteNotStarted,
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(
-                                                  255, 205, 205, 205)),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 50),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 30.0),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            tokenExpireWrapper(ref, () async {
-                                              final value = await statusNotifier
-                                                  .updateStatus(true);
-                                              if (value) {
-                                                displayVoteToastWithContext(
-                                                    TypeMsg.msg,
-                                                    'Vote started');
-                                              } else {
-                                                displayVoteToastWithContext(
-                                                    TypeMsg.error,
-                                                    'Vote not started');
-                                              }
-                                            });
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.only(
-                                                top: 10, bottom: 12),
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                                color: Colors.black,
-                                                borderRadius:
-                                                    BorderRadius.circular(15)),
-                                            child: const Center(
-                                              child: Text(
-                                                VoteTextConstants.openVote,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.w700),
+                            child: showVotes.value
+                                ? status
+                                    ? const VoteBars()
+                                    : Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(height: 20),
+                                          const Center(
+                                            child: Text(
+                                              VoteTextConstants.voteNotStarted,
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromARGB(
+                                                      255, 205, 205, 205)),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 50),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 30.0),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                tokenExpireWrapper(ref,
+                                                    () async {
+                                                  final value =
+                                                      await statusNotifier
+                                                          .updateStatus(true);
+                                                  if (value) {
+                                                    displayVoteToastWithContext(
+                                                        TypeMsg.msg,
+                                                        'Vote started');
+                                                  } else {
+                                                    displayVoteToastWithContext(
+                                                        TypeMsg.error,
+                                                        'Vote not started');
+                                                  }
+                                                });
+                                              },
+                                              child: Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, bottom: 12),
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15)),
+                                                child: const Center(
+                                                  child: Text(
+                                                    VoteTextConstants.openVote,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                        ],
+                                      )
+                                : GestureDetector(
+                                    onTap: () {
+                                      showVotes.value = true;
+                                    },
+                                    behavior: HitTestBehavior.opaque,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        HeroIcon(
+                                          HeroIcons.eye,
+                                          size: 80.0,
+                                          color: Colors.black,
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                    ],
-                                  )),
+                                        SizedBox(
+                                          height: 40,
+                                        ),
+                                        Text(
+                                          VoteTextConstants.showVotes,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black),
+                                        ),
+                                      ],
+                                    ),
+                                  ))
                       ],
                     ),
                 error: (Object error, StackTrace? stackTrace) {

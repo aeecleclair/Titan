@@ -1,11 +1,10 @@
-import 'dart:math';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
+import 'package:myecl/vote/providers/sections_votes_provider.dart';
 
 class VoteBars extends HookConsumerWidget {
   const VoteBars({super.key});
@@ -15,6 +14,7 @@ class VoteBars extends HookConsumerWidget {
     const Duration animDuration = Duration(milliseconds: 250);
     final sectionsPretendance = ref.watch(sectionPretendanceProvider);
     final section = ref.watch(sectionProvider);
+    final sectionsVotes = ref.watch(sectionsVotesProvider);
     final touchedIndex = useState(-1);
     final isTouched = useState(false);
     final barBackgroundColor = Colors.grey.shade300;
@@ -22,7 +22,27 @@ class VoteBars extends HookConsumerWidget {
 
     List<BarChartGroupData> pretendanceBars = [];
     List<String> sectionNames = [];
-    List<int> voteValue = [];
+    Map<String, int> voteValue = {};
+    sectionsVotes.whenData(
+      (votes) {
+        votes[section]!.whenData(
+          (votes) {
+            for (var vote in votes) {
+              for (String key in vote.ids) {
+                if (voteValue.containsKey(key)) {
+                  voteValue[key] = voteValue[key]! + 1;
+                } else {
+                  voteValue[key] = 1;
+                }
+              }
+            }
+          },
+        );
+      },
+    );
+
+    final Map<int, String> sectionIds = {};
+    int total = 0;
 
     sectionsPretendance.when(
         data: (data) {
@@ -30,13 +50,20 @@ class VoteBars extends HookConsumerWidget {
             data[section]!.when(
                 data: ((data) {
                   sectionNames = data.map((e) => e.name).toList();
-                  voteValue = data.map((e) => Random().nextInt(800)).toList();
+                  sectionIds
+                      .addAll({for (var e in data) data.indexOf(e): e.id});
+                  total = data
+                          .map((e) => voteValue[e.id])
+                          .reduce((value, element) => value! + element!) ??
+                      0;
                   pretendanceBars = data
                       .map((x) => BarChartGroupData(
                             x: data.indexOf(x),
                             barRods: [
                               BarChartRodData(
-                                toY: voteValue[data.indexOf(x)].toDouble(),
+                                toY: (voteValue[sectionIds[data.indexOf(x)]] ??
+                                        0)
+                                    .toDouble(),
                                 color: isTouched.value
                                     ? Colors.grey.shade800
                                     : barColor,
@@ -129,7 +156,7 @@ class VoteBars extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '${(voteValue[value.toInt()] / voteValue.reduce((a, b) => a + b).toInt() * 100).toStringAsFixed(2)}%',
+                          '${(voteValue[value.toInt()] ?? 0 / total * 100).toStringAsFixed(2)}%',
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -140,7 +167,7 @@ class VoteBars extends HookConsumerWidget {
                     ),
                   );
                 },
-                reservedSize: 50,
+                reservedSize: 55,
               ),
             ),
           ),
