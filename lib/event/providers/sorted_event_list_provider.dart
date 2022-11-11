@@ -7,7 +7,8 @@ final sortedEventListProvider = Provider<Map<String, List<Event>>>((ref) {
   final eventList = ref.watch(eventListProvider);
   final sortedEventList = <String, List<Event>>{};
   final dateTitle = <String, DateTime>{};
-  final now = normalizedDate(DateTime.now());
+  final now = DateTime.now();
+  final strNow = normalizedDate(now);
   return eventList.when(
       data: (events) {
         for (final event in events) {
@@ -23,21 +24,23 @@ final sortedEventListProvider = Provider<Map<String, List<Event>>>((ref) {
                     .toList();
           }
           for (final normalizedDate in normalizedDates) {
-            String formatedDelay = formatDelayToToday(normalizedDate, now);
+            String formatedDelay = formatDelayToToday(normalizedDate, strNow);
             final e = event.copyWith(
                 start: mergeDates(normalizedDate, event.start),
                 end: mergeDates(normalizedDate, event.end));
-            dateTitle[formatedDelay] = normalizedDate;
-            if (sortedEventList.containsKey(formatedDelay)) {
-              final index = sortedEventList[formatedDelay]!
-                  .indexWhere((element) => element.start.isAfter(e.start));
-              if (index == -1) {
-                sortedEventList[formatedDelay]!.add(e);
+            if (e.start.isAfter(now)) {
+              dateTitle[formatedDelay] = normalizedDate;
+              if (sortedEventList.containsKey(formatedDelay)) {
+                final index = sortedEventList[formatedDelay]!
+                    .indexWhere((element) => element.start.isAfter(e.start));
+                if (index == -1) {
+                  sortedEventList[formatedDelay]!.add(e);
+                } else {
+                  sortedEventList[formatedDelay]!.insert(index, e);
+                }
               } else {
-                sortedEventList[formatedDelay]!.insert(index, e);
+                sortedEventList[formatedDelay] = [e];
               }
-            } else {
-              sortedEventList[formatedDelay] = [e];
             }
           }
         }
