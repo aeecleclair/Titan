@@ -9,5 +9,5 @@ class EventRefresher extends Refresher {
             key: key,
             onRefresh: onRefresh,
             child: child,
-            col: EventColorConstants.blueGradient1);
+            col: EventColorConstants.background2);
 }

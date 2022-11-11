@@ -9,10 +9,10 @@ void displayEventToast(BuildContext context, TypeMsg type, String text) {
       context,
       type,
       text,
-      EventColorConstants.blueGradient1,
-      EventColorConstants.blueGradient2,
-      EventColorConstants.redGradient1,
-      EventColorConstants.redGradient2,
+      EventColorConstants.gradient1,
+      EventColorConstants.gradient2,
+      EventColorConstants.background2,
+      Colors.black,
       Colors.white);
 }
 

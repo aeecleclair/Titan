@@ -25,7 +25,7 @@ class AddRoomPage extends HookConsumerWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           const Align(
@@ -44,7 +44,7 @@ class AddRoomPage extends HookConsumerWidget {
                 ),
                 TextField(
                   style: const TextStyle(
-                    color: BookingColorConstants.darkBlue,
+                    color: BookingColorConstants.background2,
                   ),
                   controller: name,
                   cursorColor: Colors.black,

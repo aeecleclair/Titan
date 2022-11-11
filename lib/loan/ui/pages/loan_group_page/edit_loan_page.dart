@@ -176,7 +176,7 @@ class EditLoanPage extends HookConsumerWidget {
                   height: 160,
                   child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
-                          LoanColorConstants.orange)),
+                          LoanColorConstants.background2)),
                 );
               }),
               Padding(
@@ -261,7 +261,7 @@ class EditLoanPage extends HookConsumerWidget {
                   }, loading: () {
                     return const CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
-                          LoanColorConstants.orange),
+                          LoanColorConstants.background2),
                     );
                   }),
                   const SizedBox(height: 30),

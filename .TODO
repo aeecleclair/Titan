@@ -13,13 +13,15 @@ En cours :
 
     - Events :
         - Admin page (edit) (API)
-        - event page recurrent event color (2)
 
     - Drawer / Settings:
         - Profile Picture (5)
 
     - Settings :
         - Notification (choisir module + push) (5)
+
+    - Vote :
+        - Logo
 
 Not Found :
     - GET 'bdebooking/user/'
@@ -32,13 +34,7 @@ Créer un compte
 
     autocorrection de l’email .fr -> .de
 
-Pages avec des boutons enregistrer ou valider
-
-    si la page est longue, le bouton valider est initialement caché. Si on clique sur la flèche en haut à gauche, on part donc s’en enregistrer
-
-
 Modules :
-    - Vote (liste prétendance) (1)
     - Cinéma (2)
     - Piston (2)
     - Soli (3)

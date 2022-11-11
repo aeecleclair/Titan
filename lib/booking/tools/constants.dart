@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class BookingColorConstants {
-  static final Color softBlack = Colors.black.withOpacity(0.3);
-  static const Color darkBlue = Color(0xFF013144);
-  static const Color lightBlue = Color(0xFF025468);
-  static const Color veryLightBlue = Color(0xFF096A82);
+  static final Color background = Colors.grey.shade100;
+  static const Color gradient1 = Color(0xFFfb6d10);
+  static const Color gradient2 = Color(0xffeb3e1b);
+  static const Color background2 = Color(0xFF222643);
 }
 
 class BookingTextConstants {

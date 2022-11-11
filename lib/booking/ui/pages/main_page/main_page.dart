@@ -152,7 +152,7 @@ class MainPage extends HookConsumerWidget {
             loading: () {
               return const Center(
                   child: CircularProgressIndicator(
-                color: BookingColorConstants.darkBlue,
+                color: BookingColorConstants.background2,
               ));
             })
       ]),

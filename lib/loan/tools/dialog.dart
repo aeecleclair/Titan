@@ -12,9 +12,9 @@ class LoanDialog extends CustomDialogBox {
           title: title,
           descriptions: descriptions,
           onYes: onYes,
-          titleColor: LoanColorConstants.orange,
-          descriptionColor: LoanColorConstants.lightGrey,
-          yesColor: LoanColorConstants.lightOrange,
-          noColor: LoanColorConstants.lightOrange,
+          titleColor: LoanColorConstants.gradient1,
+          descriptionColor: Colors.black,
+          yesColor: LoanColorConstants.gradient2,
+          noColor: LoanColorConstants.background2,
         );
 }

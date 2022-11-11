@@ -8,10 +8,10 @@ void displayLoanToast(BuildContext context, TypeMsg type, String text) {
       context,
       type,
       text,
-      LoanColorConstants.lightGrey,
-      LoanColorConstants.darkGrey,
-      LoanColorConstants.lightOrange,
-      LoanColorConstants.orange,
+      LoanColorConstants.gradient1,
+      LoanColorConstants.gradient2,
+      LoanColorConstants.background2,
+      Colors.black,
       Colors.white);
 }
 

@@ -11,5 +11,5 @@ class LoanRefresher extends Refresher {
             key: key,
             onRefresh: onRefresh,
             child: child,
-            col: LoanColorConstants.darkGrey);
+            col: LoanColorConstants.background2);
 }

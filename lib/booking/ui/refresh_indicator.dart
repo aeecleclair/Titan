@@ -11,5 +11,5 @@ class BookingRefresher extends Refresher {
             key: key,
             onRefresh: onRefresh,
             child: child,
-            col: BookingColorConstants.lightBlue);
+            col: BookingColorConstants.background2);
 }

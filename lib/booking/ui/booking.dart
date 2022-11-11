@@ -33,9 +33,6 @@ class BookingHomePage extends HookConsumerWidget {
           case BookingPage.addBooking:
             pageNotifier.setBookingPage(BookingPage.main);
             break;
-          case BookingPage.rooms:
-            pageNotifier.setBookingPage(BookingPage.admin);
-            break;
           case BookingPage.addRoom:
             pageNotifier.setBookingPage(BookingPage.admin);
             break;

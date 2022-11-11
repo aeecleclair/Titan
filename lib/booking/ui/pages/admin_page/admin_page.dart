@@ -120,7 +120,7 @@ class AdminPage extends HookConsumerWidget {
             const Center(
               child: Text(BookingTextConstants.noCurrentBooking,
                   style: TextStyle(
-                      color: BookingColorConstants.darkBlue,
+                      color: Colors.black,
                       fontSize: 20,
                       fontWeight: FontWeight.bold)),
             ),

@@ -41,9 +41,6 @@ class TopBar extends HookConsumerWidget {
                           case LoanPage.addItem:
                             pageNotifier.setLoanPage(LoanPage.admin);
                             break;
-                          case LoanPage.groupLoan:
-                            pageNotifier.setLoanPage(LoanPage.admin);
-                            break;
                           case LoanPage.editItem:
                             pageNotifier.setLoanPage(LoanPage.admin);
                             break;
