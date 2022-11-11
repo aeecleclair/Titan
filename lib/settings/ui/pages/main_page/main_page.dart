@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
-import 'package:myecl/settings/ui/refresh_indicator.dart';
+import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 
@@ -17,7 +17,7 @@ class MainPage extends HookConsumerWidget {
     final meNotifier = ref.watch(asyncUserProvider.notifier);
     final pageNotifier = ref.watch(settingsPageProvider.notifier);
     final titanVersion = ref.watch(titanVersionProvider);
-    return SettingsRefresher(
+    return Refresher(
       onRefresh: () async {
         await meNotifier.loadMe();
       },

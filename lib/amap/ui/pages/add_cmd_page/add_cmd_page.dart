@@ -39,8 +39,8 @@ class AddCmdPage extends HookConsumerWidget {
     final selected = ref.watch(selectedListProvider);
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
 
-    void displayAMAPToastWithContext(TypeMsg type, String msg) {
-      displayAMAPToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     products.map((e) {
@@ -212,10 +212,10 @@ class AddCmdPage extends HookConsumerWidget {
                                     if (value) {
                                       pageNotifier.setAmapPage(AmapPage.admin);
                                       await adminNotifier.addT(del);
-                                      displayAMAPToastWithContext(TypeMsg.msg,
+                                      displayToastWithContext(TypeMsg.msg,
                                           AMAPTextConstants.addedCommand);
                                     } else {
-                                      displayAMAPToastWithContext(
+                                      displayToastWithContext(
                                           TypeMsg.error,
                                           AMAPTextConstants
                                               .alreadyExistCommand);
@@ -223,7 +223,7 @@ class AddCmdPage extends HookConsumerWidget {
                                     selectedNotifier.clear();
                                   });
                                 } else {
-                                  displayAMAPToast(context, TypeMsg.error,
+                                  displayToast(context, TypeMsg.error,
                                       AMAPTextConstants.addingError);
                                 }
                               }),

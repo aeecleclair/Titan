@@ -36,15 +36,3 @@ void deleteCmd(WidgetRef ref, int i) {
   indexCmdNotifier.setIndex(-1);
   cmdsNotifier.deleteOrder(cmds.value![i]);
 }
-
-void displayAMAPToast(BuildContext context, TypeMsg type, String text) {
-  return displayToast(
-      context,
-      type,
-      text,
-      AMAPColorConstants.greenGradient1,
-      AMAPColorConstants.greenGradient2,
-      AMAPColorConstants.redGradient1,
-      AMAPColorConstants.redGradient2,
-      AMAPColorConstants.background);
-}

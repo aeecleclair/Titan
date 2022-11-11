@@ -1,20 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-
-void displayBookingToast(BuildContext context, TypeMsg type, String text) {
-  return displayToast(
-      context,
-      type,
-      text,
-      BookingColorConstants.gradient1,
-      BookingColorConstants.gradient2,
-      BookingColorConstants.background2,
-      Colors.black,
-      Colors.white);
-}
 
 Decision stringToDecision(String s) {
   switch (s) {

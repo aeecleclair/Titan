@@ -1,20 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-
-void displayEventToast(BuildContext context, TypeMsg type, String text) {
-  return displayToast(
-      context,
-      type,
-      text,
-      EventColorConstants.gradient1,
-      EventColorConstants.gradient2,
-      EventColorConstants.background2,
-      Colors.black,
-      Colors.white);
-}
 
 String calendarEventTypeToString(CalendarEventType type) {
   switch (type) {

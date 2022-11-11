@@ -39,8 +39,8 @@ class AddEventPage extends HookConsumerWidget {
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
 
-    void displayEventToastWithContext(TypeMsg type, String msg) {
-      displayEventToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Expanded(
@@ -455,7 +455,7 @@ class AddEventPage extends HookConsumerWidget {
                             end.text = now.toString();
                           }
                           if (start.text.compareTo(end.text) > 0) {
-                            displayEventToast(context, TypeMsg.error,
+                            displayToast(context, TypeMsg.error,
                                 EventTextConstants.invalidDates);
                           } else {
                             tokenExpireWrapper(ref, () async {
@@ -505,10 +505,10 @@ class AddEventPage extends HookConsumerWidget {
                                   await eventListNotifier.addEvent(newEvent);
                               if (value) {
                                 pageNotifier.setEventPage(EventPage.main);
-                                displayEventToastWithContext(
+                                displayToastWithContext(
                                     TypeMsg.msg, EventTextConstants.addedEvent);
                               } else {
-                                displayEventToastWithContext(TypeMsg.error,
+                                displayToastWithContext(TypeMsg.error,
                                     EventTextConstants.addingError);
                               }
                             });

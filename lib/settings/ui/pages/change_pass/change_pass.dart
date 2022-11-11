@@ -3,9 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
-import 'package:myecl/settings/tools/dialog.dart';
-import 'package:myecl/settings/tools/functions.dart';
 import 'package:myecl/settings/ui/pages/change_pass/test_entry_style.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -25,8 +24,8 @@ class ChangePassPage extends HookConsumerWidget {
     final hideConfirmPass = useState(true);
     final userNotifier = ref.watch(asyncUserProvider.notifier);
     final user = ref.watch(userProvider);
-    void displaySettingsToastWithContext(TypeMsg type, String msg) {
-      displaySettingsToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return SingleChildScrollView(
@@ -115,7 +114,7 @@ class ChangePassPage extends HookConsumerWidget {
                   if (key.currentState!.validate()) {
                     showDialog(
                         context: context,
-                        builder: (context) => SettignsDialog(
+                        builder: (context) => CustomDialogBox(
                               descriptions:
                                   SettingsTextConstants.changingPassword,
                               onYes: () {
@@ -128,11 +127,10 @@ class ChangePassPage extends HookConsumerWidget {
                                   if (value) {
                                     pageNotifier
                                         .setSettingsPage(SettingsPage.main);
-                                    displaySettingsToastWithContext(TypeMsg.msg,
+                                    displayToastWithContext(TypeMsg.msg,
                                         SettingsTextConstants.passwordChanged);
                                   } else {
-                                    displaySettingsToastWithContext(
-                                        TypeMsg.error,
+                                    displayToastWithContext(TypeMsg.error,
                                         SettingsTextConstants.updatingError);
                                   }
                                 });

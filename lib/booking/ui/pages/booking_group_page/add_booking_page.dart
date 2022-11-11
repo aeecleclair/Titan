@@ -42,8 +42,8 @@ class AddBookingPage extends HookConsumerWidget {
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
     final interval = useTextEditingController(text: "1");
     final recurrenceEndDate = useTextEditingController();
-    void displayBookingToastWithContext(TypeMsg type, String msg) {
-      displayBookingToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Expanded(
@@ -469,10 +469,10 @@ class AddBookingPage extends HookConsumerWidget {
                             end.text = DateTime.now().toString();
                           }
                           if (start.text.compareTo(end.text) > 0) {
-                            displayBookingToast(context, TypeMsg.error,
+                            displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidDates);
                           } else if (room.value.id.isEmpty) {
-                            displayBookingToast(context, TypeMsg.error,
+                            displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidRoom);
                           } else {
                             tokenExpireWrapper(ref, () async {
@@ -513,16 +513,16 @@ class AddBookingPage extends HookConsumerWidget {
                               if (value) {
                                 await bookingsNotifier.addBooking(newBooking);
                                 pageNotifier.setBookingPage(BookingPage.main);
-                                displayBookingToastWithContext(TypeMsg.msg,
+                                displayToastWithContext(TypeMsg.msg,
                                     BookingTextConstants.addedBooking);
                               } else {
-                                displayBookingToastWithContext(TypeMsg.error,
+                                displayToastWithContext(TypeMsg.error,
                                     BookingTextConstants.addingError);
                               }
                             });
                           }
                         } else {
-                          displayBookingToast(context, TypeMsg.error,
+                          displayToast(context, TypeMsg.error,
                               BookingTextConstants.incorrectOrMissingFields);
                         }
                       },

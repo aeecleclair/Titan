@@ -5,10 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
-import 'package:myecl/settings/tools/functions.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart';
-import 'package:myecl/settings/ui/refresh_indicator.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -22,22 +21,19 @@ class EditUserPage extends HookConsumerWidget {
     final key = GlobalKey<FormFieldState>();
     final asyncUserNotifier = ref.watch(asyncUserProvider.notifier);
     final user = ref.watch(userProvider);
-    final dateController = useTextEditingController();
-    dateController.text = processDatePrint(user.birthday);
-    final firstNameController = useTextEditingController();
-    firstNameController.text = user.firstname;
-    final nameController = useTextEditingController();
-    nameController.text = user.name;
-    final nickNameController = useTextEditingController();
-    nickNameController.text = user.nickname;
-    final floorController = useTextEditingController();
-    floorController.text = user.floor.toString();
+    final dateController =
+        useTextEditingController(text: processDatePrint(user.birthday));
+    final firstNameController = useTextEditingController(text: user.firstname);
+    final nameController = useTextEditingController(text: user.name);
+    final nickNameController = useTextEditingController(text: user.nickname);
+    final floorController =
+        useTextEditingController(text: user.floor.toString());
 
-    void displaySettingsToastWithContext(TypeMsg type, String msg) {
-      displaySettingsToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
-    return SettingsRefresher(
+    return Refresher(
         onRefresh: () async {
           await asyncUserNotifier.loadMe();
         },
@@ -183,11 +179,11 @@ class EditUserPage extends HookConsumerWidget {
                         floor: floorController.value.text,
                       ));
                       if (value) {
-                        displaySettingsToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.msg, SettingsTextConstants.updatedProfile);
                         pageNotifier.setSettingsPage(SettingsPage.main);
                       } else {
-                        displaySettingsToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.error, SettingsTextConstants.updatingError);
                       }
                     });

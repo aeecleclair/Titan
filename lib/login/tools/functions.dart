@@ -1,19 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/login/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/login/class/account_type.dart';
-
-void displayLoginToast(BuildContext context, TypeMsg type, String text) {
-  return displayToast(
-      context,
-      type,
-      text,
-      LoginColorConstants.gradient1,
-      LoginColorConstants.gradient2,
-      LoginColorConstants.background,
-      Colors.black,
-      Colors.white);
-}
 
 String accountTypeToID(AccountType type) {
   switch (type) {

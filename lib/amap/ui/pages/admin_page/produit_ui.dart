@@ -6,9 +6,9 @@ import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/modified_product_index_provider.dart';
-import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -21,8 +21,8 @@ class ProductUi extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryId = ref.watch(deliveryIdProvider);
-    void displayAMAPToastWithContext(TypeMsg type, String msg) {
-      displayAMAPToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Container(
@@ -117,7 +117,7 @@ class ProductUi extends ConsumerWidget {
                   onTap: () {
                     showDialog(
                         context: context,
-                        builder: (BuildContext context) => AMAPDialog(
+                        builder: (BuildContext context) => CustomDialogBox(
                             descriptions: AMAPTextConstants.deletingProduct,
                             title: AMAPTextConstants.deleting,
                             onYes: () async {
@@ -127,7 +127,7 @@ class ProductUi extends ConsumerWidget {
                                         deliveryProductListProvider(deliveryId)
                                             .notifier)
                                     .deleteProduct(p);
-                                displayAMAPToastWithContext(TypeMsg.msg,
+                                displayToastWithContext(TypeMsg.msg,
                                     AMAPTextConstants.deletedProduct);
                               });
                             }));

@@ -31,8 +31,8 @@ class EditItemPage extends HookConsumerWidget {
     final lendingDuration = useTextEditingController(
         text: (item.suggestedLendingDuration ~/ (24 * 60 * 60)).toString());
 
-    void displayLoanToastWithContext(TypeMsg type, String msg) {
-      displayLoanToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return SingleChildScrollView(
@@ -127,17 +127,17 @@ class EditItemPage extends HookConsumerWidget {
                                         60));
                         if (value) {
                           pageNotifier.setLoanPage(LoanPage.admin);
-                          displayLoanToastWithContext(
+                          displayToastWithContext(
                               TypeMsg.msg, LoanTextConstants.updatedItem);
                           loanersitemsNotifier.setTData(
                               loaner.value, await itemListNotifier.copy());
                         } else {
-                          displayLoanToastWithContext(
+                          displayToastWithContext(
                               TypeMsg.error, LoanTextConstants.updatingError);
                         }
                       });
                     } else {
-                      displayLoanToast(context, TypeMsg.error,
+                      displayToast(context, TypeMsg.error,
                           LoanTextConstants.incorrectOrMissingFields);
                     }
                   },

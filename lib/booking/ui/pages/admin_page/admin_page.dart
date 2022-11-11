@@ -10,8 +10,8 @@ import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
 import 'package:myecl/booking/ui/pages/main_page/booking_card.dart';
-import 'package:myecl/booking/ui/refresh_indicator.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class AdminPage extends HookConsumerWidget {
         },
         error: (e, s) {},
         loading: () {});
-    return BookingRefresher(
+    return Refresher(
       onRefresh: () async {
         await ref.watch(bookingListProvider.notifier).loadBookings();
       },

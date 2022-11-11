@@ -54,8 +54,8 @@ class ModifProduct extends HookConsumerWidget {
       }
     }).toList();
 
-    void displayAMAPToastWithContext(TypeMsg type, String msg) {
-      displayAMAPToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Column(
@@ -271,12 +271,12 @@ class ModifProduct extends HookConsumerWidget {
                                           final value = await productsNotifier
                                               .updateProduct(newProduct);
                                           if (value) {
-                                            displayAMAPToastWithContext(
+                                            displayToastWithContext(
                                                 TypeMsg.msg,
                                                 AMAPTextConstants
                                                     .updatedProduct);
                                           } else {
-                                            displayAMAPToastWithContext(
+                                            displayToastWithContext(
                                                 TypeMsg.error,
                                                 AMAPTextConstants
                                                     .updatingError);
@@ -304,11 +304,10 @@ class ModifProduct extends HookConsumerWidget {
                                           final value = await productsNotifier
                                               .addProduct(newProduct);
                                           if (value) {
-                                            displayAMAPToastWithContext(
-                                                TypeMsg.msg,
+                                            displayToastWithContext(TypeMsg.msg,
                                                 AMAPTextConstants.addedProduct);
                                           } else {
-                                            displayAMAPToastWithContext(
+                                            displayToastWithContext(
                                                 TypeMsg.error,
                                                 AMAPTextConstants.addingError);
                                           }

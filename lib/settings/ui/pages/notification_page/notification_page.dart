@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
-import 'package:myecl/settings/ui/refresh_indicator.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class NotificationPage extends HookConsumerWidget {
   const NotificationPage({super.key});
@@ -11,7 +12,7 @@ class NotificationPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final groups = ref.watch(allGroupListProvider);
-    return SettingsRefresher(
+    return Refresher(
         onRefresh: () async {},
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -42,12 +43,10 @@ class NotificationPage extends HookConsumerWidget {
                                     style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w700,
-                                        color: SettingsColorConstants
-                                            .background2)),
+                                        color: ColorConstants.background2)),
                                 Switch(
                                     value: true,
-                                    activeColor:
-                                        SettingsColorConstants.gradient1,
+                                    activeColor: ColorConstants.gradient1,
                                     onChanged: (value) {})
                               ],
                             ),
@@ -55,7 +54,7 @@ class NotificationPage extends HookConsumerWidget {
                       .toList()),
               error: (e, s) => Text('Error $e'),
               loading: () => const CircularProgressIndicator(
-                color: SettingsColorConstants.gradient1,
+                color: ColorConstants.gradient1,
               ),
             ),
           ]),

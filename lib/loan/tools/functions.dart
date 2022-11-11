@@ -1,19 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-
-void displayLoanToast(BuildContext context, TypeMsg type, String text) {
-  return displayToast(
-      context,
-      type,
-      text,
-      LoanColorConstants.gradient1,
-      LoanColorConstants.gradient2,
-      LoanColorConstants.background2,
-      Colors.black,
-      Colors.white);
-}
 
 String formatItems(List<Item> items) {
   if (items.length == 2) {

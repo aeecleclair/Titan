@@ -5,9 +5,10 @@ import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/ui/pages/main_page/asso_ui.dart';
-import 'package:myecl/admin/ui/refresh_indicator.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
@@ -24,7 +25,7 @@ class MainPage extends HookConsumerWidget {
     final loans = ref.watch(loanerList);
     final loanListNotifier = ref.watch(loanerListProvider.notifier);
     ref.watch(userList);
-    return AdminRefresher(
+    return Refresher(
       onRefresh: () async {
         await groupsNotifier.loadGroups();
         await loanListNotifier.loadLoanerList();
@@ -39,7 +40,7 @@ class MainPage extends HookConsumerWidget {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: AdminColorConstants.gradient1)),
+                      color: ColorConstants.gradient1)),
             ),
             const SizedBox(
               height: 10,
@@ -67,13 +68,13 @@ class MainPage extends HookConsumerWidget {
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     colors: [
-                      AdminColorConstants.gradient1,
-                      AdminColorConstants.gradient2,
+                      ColorConstants.gradient1,
+                      ColorConstants.gradient2,
                     ],
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: AdminColorConstants.gradient2.withOpacity(0.5),
+                      color: ColorConstants.gradient2.withOpacity(0.5),
                       blurRadius: 5,
                       offset: const Offset(2, 2),
                       spreadRadius: 2,
@@ -104,7 +105,7 @@ class MainPage extends HookConsumerWidget {
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
-                          color: AdminColorConstants.gradient1)),
+                          color: ColorConstants.gradient1)),
                   const SizedBox(height: 10),
                   ...loans
                       .map((x) => AssoUi(
@@ -126,13 +127,13 @@ class MainPage extends HookConsumerWidget {
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     colors: [
-                      AdminColorConstants.gradient1,
-                      AdminColorConstants.gradient2,
+                      ColorConstants.gradient1,
+                      ColorConstants.gradient2,
                     ],
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: AdminColorConstants.gradient2.withOpacity(0.5),
+                      color: ColorConstants.gradient2.withOpacity(0.5),
                       blurRadius: 5,
                       offset: const Offset(2, 2),
                       spreadRadius: 2,
@@ -159,7 +160,7 @@ class MainPage extends HookConsumerWidget {
         }, loading: () {
           return const Center(
               child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation(AdminColorConstants.gradient1),
+            valueColor: AlwaysStoppedAnimation(ColorConstants.gradient1),
           ));
         }),
       ),

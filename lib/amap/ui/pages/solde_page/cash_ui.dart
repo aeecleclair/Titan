@@ -85,10 +85,10 @@ class CashUi extends HookConsumerWidget {
                           .then((value) {
                         if (value) {
                           key.currentState!.reset();
-                          displayAMAPToast(context, TypeMsg.msg,
+                          displayToast(context, TypeMsg.msg,
                               AMAPTextConstants.updatedAmount);
                         } else {
-                          displayAMAPToast(context, TypeMsg.error,
+                          displayToast(context, TypeMsg.error,
                               AMAPTextConstants.updatingError);
                         }
                       });

@@ -6,6 +6,7 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 
 class SignIn extends HookConsumerWidget {
@@ -50,7 +51,7 @@ class SignIn extends HookConsumerWidget {
                         children: [
                           const HeroIcon(
                             HeroIcons.bolt,
-                            color: LoginColorConstants.background,
+                            color: ColorConstants.background2,
                             size: 150,
                           ),
                           SignInBar(
@@ -61,7 +62,7 @@ class SignIn extends HookConsumerWidget {
                               ref.watch(authTokenProvider).when(
                                   data: (token) {},
                                   error: (e, s) {
-                                    displayLoginToast(
+                                    displayToast(
                                         context, TypeMsg.error, e.toString());
                                   },
                                   loading: () {});

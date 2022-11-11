@@ -22,8 +22,8 @@ class ForgetPassword extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final signUpNotifier = ref.watch(signUpProvider.notifier);
     final email = useTextEditingController();
-    void displayLoginToastWithContext(TypeMsg type, String msg) {
-      displayLoginToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Form(
@@ -94,11 +94,11 @@ class ForgetPassword extends HookConsumerWidget {
                       final value =
                           await signUpNotifier.recoverUser(email.text);
                       if (value) {
-                        displayLoginToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.msg, LoginTextConstants.sendedResetMail);
                         email.clear();
                       } else {
-                        displayLoginToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);
                       }
                     },

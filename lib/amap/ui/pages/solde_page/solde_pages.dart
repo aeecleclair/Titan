@@ -7,7 +7,7 @@ import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/solde_page/cash_ui.dart';
-import 'package:myecl/amap/ui/refresh_indicator.dart';
+import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
@@ -104,7 +104,7 @@ class SoldePage extends HookConsumerWidget {
     ref.watch(userList);
     List<Widget> listWidgetCash = buildAll(cash.value, editingController);
 
-    return AmapRefresher(
+    return Refresher(
       onRefresh: () async {
         cash.value = await cashListNotifier.loadCashList();
       },

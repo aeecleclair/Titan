@@ -10,7 +10,7 @@ import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
-import 'package:myecl/loan/ui/refresh_indicator.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -44,7 +44,7 @@ class MainPage extends HookConsumerWidget {
 
     return Stack(
       children: [
-        LoanRefresher(
+        Refresher(
             onRefresh: () async {
               await loanListNotifier.loadLoanList();
             },

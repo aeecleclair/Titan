@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/settings/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
 
 InputDecoration changePassInputDecoration(
     {required String hintText, required ValueNotifier<bool> notifier}) {
@@ -16,13 +16,12 @@ InputDecoration changePassInputDecoration(
         borderSide: BorderSide(color: Color.fromARGB(255, 124, 124, 124)),
       ),
       errorBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: SettingsColorConstants.background2),
+        borderSide: BorderSide(color: ColorConstants.background2),
       ),
       focusedErrorBorder: const UnderlineInputBorder(
-        borderSide:
-            BorderSide(width: 2.0, color: SettingsColorConstants.gradient2),
+        borderSide: BorderSide(width: 2.0, color: ColorConstants.gradient2),
       ),
-      errorStyle: const TextStyle(color: SettingsColorConstants.background2),
+      errorStyle: const TextStyle(color: ColorConstants.background2),
       suffixIcon: IconButton(
         icon: Icon(notifier.value ? Icons.visibility : Icons.visibility_off,
             color: const Color.fromARGB(255, 124, 124, 124)),

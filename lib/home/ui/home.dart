@@ -8,8 +8,8 @@ import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/home/ui/day_list.dart';
 import 'package:myecl/home/ui/days_event.dart';
 import 'package:myecl/home/ui/month_bar.dart';
-import 'package:myecl/home/ui/refresh_indicator.dart';
 import 'package:myecl/home/ui/top_bar.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class HomePage extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -31,7 +31,7 @@ class HomePage extends HookConsumerWidget {
             return false;
           },
           child: SafeArea(
-            child: HomeRefresher(
+            child: Refresher(
               onRefresh: () async {
                 await eventNotifier.loadEventList();
               },

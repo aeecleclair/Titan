@@ -6,8 +6,9 @@ import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/event/tools/dialog.dart';
 import 'package:myecl/event/tools/functions.dart';
+import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 
 class EventUi extends ConsumerWidget {
@@ -20,8 +21,8 @@ class EventUi extends ConsumerWidget {
     final pageNotifier = ref.watch(eventPageProvider.notifier);
     final eventListNotifier = ref.watch(eventListProvider.notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
-    void displayEventToastWithContext(TypeMsg type, String msg) {
-      displayEventToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     final textColor =
@@ -47,8 +48,8 @@ class EventUi extends ConsumerWidget {
                       ]
                     : event.start.compareTo(now) <= 0
                         ? [
-                            EventColorConstants.gradient1,
-                            EventColorConstants.gradient2,
+                            ColorConstants.gradient1,
+                            ColorConstants.gradient2,
                           ]
                         : [
                             Colors.white,
@@ -61,7 +62,7 @@ class EventUi extends ConsumerWidget {
                   color: event.end.compareTo(now) < 0
                       ? Colors.black.withOpacity(0.2)
                       : event.start.compareTo(now) <= 0
-                          ? EventColorConstants.gradient2.withOpacity(0.2)
+                          ? ColorConstants.gradient2.withOpacity(0.2)
                           : Colors.grey.withOpacity(0.2),
                   spreadRadius: 5,
                   blurRadius: 10,
@@ -145,14 +146,14 @@ class EventUi extends ConsumerWidget {
                               color: event.end.compareTo(now) < 0
                                   ? Colors.grey.shade700
                                   : event.start.compareTo(now) <= 0
-                                      ? EventColorConstants.gradient1
+                                      ? ColorConstants.gradient1
                                       : Colors.white,
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
                                   color: event.end.compareTo(now) < 0
                                       ? Colors.grey.shade700
                                       : event.start.compareTo(now) <= 0
-                                          ? EventColorConstants.gradient1
+                                          ? ColorConstants.gradient1
                                           : Colors.grey.shade300)),
                           child: Center(
                             child: Text(
@@ -175,18 +176,17 @@ class EventUi extends ConsumerWidget {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return EventDialog(
+                                return CustomDialogBox(
                                   descriptions:
                                       EventTextConstants.deletingEvent,
                                   onYes: () async {
                                     final value = await eventListNotifier
                                         .deleteEvent(event);
                                     if (value) {
-                                      displayEventToastWithContext(TypeMsg.msg,
+                                      displayToastWithContext(TypeMsg.msg,
                                           EventTextConstants.deletedEvent);
                                     } else {
-                                      displayEventToastWithContext(
-                                          TypeMsg.error,
+                                      displayToastWithContext(TypeMsg.error,
                                           EventTextConstants.deletingError);
                                     }
                                   },
@@ -200,14 +200,14 @@ class EventUi extends ConsumerWidget {
                               color: event.end.compareTo(now) < 0
                                   ? Colors.grey.shade700
                                   : event.start.compareTo(now) <= 0
-                                      ? EventColorConstants.gradient1
+                                      ? ColorConstants.gradient1
                                       : Colors.white,
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
                                   color: event.end.compareTo(now) < 0
                                       ? Colors.grey.shade700
                                       : event.start.compareTo(now) <= 0
-                                          ? EventColorConstants.gradient1
+                                          ? ColorConstants.gradient1
                                           : Colors.grey.shade300)),
                           child: Center(
                             child: Text(

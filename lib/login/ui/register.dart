@@ -24,8 +24,8 @@ class Register extends HookConsumerWidget {
     final signUpNotifier = ref.watch(signUpProvider.notifier);
     final mail = useTextEditingController();
     final hidePass = useState(true);
-    void displayLoginToastWithContext(TypeMsg type, String msg) {
-      displayLoginToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Form(
@@ -91,12 +91,12 @@ class Register extends HookConsumerWidget {
                       final value = await signUpNotifier.createUser(
                           mail.text, AccountType.student);
                       if (value) {
-                        displayLoginToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.msg, LoginTextConstants.sendedMail);
                         hidePass.value = true;
                         mail.clear();
                       } else {
-                        displayLoginToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);
                       }
                     },

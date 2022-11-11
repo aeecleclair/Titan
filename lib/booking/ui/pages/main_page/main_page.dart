@@ -7,10 +7,11 @@ import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/tools/dialog.dart';
 import 'package:myecl/booking/ui/pages/main_page/booking_card.dart';
-import 'package:myecl/booking/ui/refresh_indicator.dart';
 import 'package:myecl/booking/ui/pages/main_page/calendar.dart';
+import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -22,14 +23,14 @@ class MainPage extends HookConsumerWidget {
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final bookings = ref.watch(userBookingListProvider);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
-    return BookingRefresher(
+    return Refresher(
       onRefresh: () async {
         await bookingsNotifier.loadUserBookings();
       },
       child: Column(children: [
         const SizedBox(height: 20),
         SizedBox(
-            height: MediaQuery.of(context).size.height - 400,
+            height: MediaQuery.of(context).size.height - 415,
             child: const Calendar()),
         SizedBox(
           height: (isAdmin) ? 25 : 30,
@@ -133,7 +134,7 @@ class MainPage extends HookConsumerWidget {
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return BookingDialog(
+                                    return CustomDialogBox(
                                       title: BookingTextConstants.deleting,
                                       descriptions:
                                           BookingTextConstants.deletingBooking,
@@ -152,7 +153,7 @@ class MainPage extends HookConsumerWidget {
             loading: () {
               return const Center(
                   child: CircularProgressIndicator(
-                color: BookingColorConstants.background2,
+                color: ColorConstants.background2,
               ));
             })
       ]),

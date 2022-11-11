@@ -34,8 +34,8 @@ class EditBookingPage extends HookConsumerWidget {
     final note = useTextEditingController(text: booking.note);
     final recurring = useState(booking.recurrenceRule);
     final keyRequired = useState(booking.key);
-    void displayBookingToastWithContext(TypeMsg type, String msg) {
-      displayBookingToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Expanded(
@@ -124,10 +124,10 @@ class EditBookingPage extends HookConsumerWidget {
                         }
                         if (key.currentState!.validate()) {
                           if (start.text.compareTo(end.text) >= 0) {
-                            displayBookingToast(context, TypeMsg.error,
+                            displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidDates);
                           } else if (room.value.id.isEmpty) {
-                            displayBookingToast(context, TypeMsg.error,
+                            displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidRoom);
                           } else {
                             tokenExpireWrapper(ref, () async {
@@ -135,8 +135,7 @@ class EditBookingPage extends HookConsumerWidget {
                                   id: booking.id,
                                   reason: motif.text,
                                   start: DateTime.parse(start.text),
-                                  end:
-                                      DateTime.parse(end.text),
+                                  end: DateTime.parse(end.text),
                                   note: note.text,
                                   room: room.value,
                                   key: keyRequired.value,
@@ -148,16 +147,16 @@ class EditBookingPage extends HookConsumerWidget {
                                 await bookingsNotifier
                                     .updateBooking(newBooking);
                                 pageNotifier.setBookingPage(BookingPage.main);
-                                displayBookingToastWithContext(TypeMsg.msg,
+                                displayToastWithContext(TypeMsg.msg,
                                     BookingTextConstants.editedBooking);
                               } else {
-                                displayBookingToastWithContext(TypeMsg.error,
+                                displayToastWithContext(TypeMsg.error,
                                     BookingTextConstants.editionError);
                               }
                             });
                           }
                         } else {
-                          displayBookingToast(context, TypeMsg.error,
+                          displayToast(context, TypeMsg.error,
                               BookingTextConstants.incorrectOrMissingFields);
                         }
                       },

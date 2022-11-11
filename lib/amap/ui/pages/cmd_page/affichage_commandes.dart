@@ -7,8 +7,8 @@ import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/cmd_page/add_button.dart';
 import 'package:myecl/amap/ui/commade_ui.dart';
-import 'package:myecl/amap/ui/refresh_indicator.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class ListeOrders extends HookConsumerWidget {
   const ListeOrders({Key? key}) : super(key: key);
@@ -86,7 +86,7 @@ class ListeOrders extends HookConsumerWidget {
     });
 
     listWidgetOrder.add(const AddButton());
-    return AmapRefresher(
+    return Refresher(
       onRefresh: () async {
         await orderListNotifier.loadOrderList();
         await soldeNotifier.loadCashByUser(userId);

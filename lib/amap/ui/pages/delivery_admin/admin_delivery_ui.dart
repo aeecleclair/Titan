@@ -11,8 +11,8 @@ import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:tuple/tuple.dart';
@@ -34,8 +34,8 @@ class DeliveryAdminUi extends HookConsumerWidget {
     final orderListNotifier = ref.watch(orderListProvider(c.id).notifier);
     final adminNotifier = ref.watch(adminDeliveryOrderList.notifier);
 
-    void displayAMAPToastWithContext(TypeMsg type, String msg) {
-      displayAMAPToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     final Map<Product, int> productQuantityDict = {};
@@ -293,14 +293,14 @@ class DeliveryAdminUi extends HookConsumerWidget {
                             .then((value) {
                           if (value) {
                             if (lastState) {
-                              displayAMAPToast(context, TypeMsg.msg,
+                              displayToast(context, TypeMsg.msg,
                                   AMAPTextConstants.unlockedDelivery);
                             } else {
-                              displayAMAPToast(context, TypeMsg.msg,
+                              displayToast(context, TypeMsg.msg,
                                   AMAPTextConstants.lockedDelivery);
                             }
                           } else {
-                            displayAMAPToast(context, TypeMsg.error,
+                            displayToast(context, TypeMsg.error,
                                 AMAPTextConstants.updatingError);
                           }
                         });
@@ -325,7 +325,7 @@ class DeliveryAdminUi extends HookConsumerWidget {
                       onTap: () {
                         showDialog(
                             context: context,
-                            builder: (BuildContext context) => AMAPDialog(
+                            builder: (BuildContext context) => CustomDialogBox(
                                 descriptions:
                                     AMAPTextConstants.deletingDelivery,
                                 title: AMAPTextConstants.deleting,
@@ -334,10 +334,10 @@ class DeliveryAdminUi extends HookConsumerWidget {
                                     final value = await deliveryListNotifier
                                         .deleteDelivery(c);
                                     if (value) {
-                                      displayAMAPToastWithContext(TypeMsg.msg,
+                                      displayToastWithContext(TypeMsg.msg,
                                           AMAPTextConstants.deletedDelivery);
                                     } else {
-                                      displayAMAPToastWithContext(TypeMsg.error,
+                                      displayToastWithContext(TypeMsg.error,
                                           AMAPTextConstants.deletingError);
                                     }
                                   });

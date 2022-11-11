@@ -1,32 +1,25 @@
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:myecl/tools/constants.dart';
 
 enum TypeMsg { msg, error }
 
-void displayToast(
-    BuildContext context,
-    TypeMsg type,
-    String text,
-    Color msgGradient1,
-    Color msgGradient2,
-    Color errorGradient1,
-    Color errorGradient2,
-    Color textColor) {
+void displayToast(BuildContext context, TypeMsg type, String text) {
   LinearGradient linearGradient;
   HeroIcons icon;
 
   switch (type) {
     case TypeMsg.msg:
-      linearGradient = LinearGradient(
-          colors: [msgGradient1, msgGradient2],
+      linearGradient = const LinearGradient(
+          colors: [ColorConstants.gradient1, ColorConstants.gradient2],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight);
       icon = HeroIcons.check;
       break;
     case TypeMsg.error:
-      linearGradient = LinearGradient(
-          colors: [errorGradient1, errorGradient2],
+      linearGradient = const LinearGradient(
+          colors: [ColorConstants.background2, Colors.black],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight);
       icon = HeroIcons.exclamationTriangle;
@@ -44,7 +37,6 @@ void displayToast(
           alignment: Alignment.topCenter,
           margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
           child: Container(
-            height: 70,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,17 +44,17 @@ void displayToast(
                 Container(
                   width: 40,
                   alignment: Alignment.center,
-                  child: HeroIcon(icon, color: textColor),
+                  child: HeroIcon(icon, color: Colors.white),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width - 120,
                   alignment: Alignment.center,
                   child: Text(
                     text,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
-                        color: textColor),
+                        color: Colors.white),
                   ),
                 ),
               ],
