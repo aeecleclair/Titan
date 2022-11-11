@@ -47,7 +47,7 @@ class BookingCard extends HookConsumerWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
               const SizedBox(height: 5),
-              Text(formatDates(booking.start, booking.end),
+              Text(formatDates(booking.start, booking.end, false),
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,

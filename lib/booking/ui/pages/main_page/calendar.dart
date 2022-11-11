@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
+import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -21,30 +22,33 @@ class Calendar extends HookConsumerWidget {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                  title: Text(appointmentDetails.subject),
+                  title: Text(appointmentDetails.subject,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )),
                   content: SizedBox(
-                    height: 90,
+                    height: 120,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          processDateWithHour(appointmentDetails.startTime),
-                          style: const TextStyle(
+                          formatDates(
+                              appointmentDetails.startTime,
+                              appointmentDetails.endTime,
+                              appointmentDetails.isAllDay),
+                          style: TextStyle(
                             fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          ),
-                        ),
-                        Text(
-                          processDateWithHour(appointmentDetails.endTime),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
+                            color: Colors.grey.shade400,
+                            fontSize: 18,
                           ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         Text(appointmentDetails.notes ?? "",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                                 fontWeight: FontWeight.w400, fontSize: 15)),
                       ],

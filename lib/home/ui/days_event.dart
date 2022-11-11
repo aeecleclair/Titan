@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/event/class/event.dart';
+import 'package:myecl/event/providers/event_page_provider.dart';
+import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/home/tools/constants.dart';
 
-class DaysEvent extends StatelessWidget {
+class DaysEvent extends HookConsumerWidget {
   final DateTime now;
   final String day;
   final List<Event> events;
-  const DaysEvent(
-      {super.key, required this.day, required this.events, required this.now});
+  const DaysEvent({
+    super.key,
+    required this.day,
+    required this.events,
+    required this.now,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pageNotifier = ref.watch(pageProvider.notifier);
+    final eventPageNotifier = ref.watch(eventPageProvider.notifier);
+    final eventNotifier = ref.watch(eventProvider.notifier);
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
         child: Column(
@@ -88,7 +99,12 @@ class DaysEvent extends StatelessWidget {
                                 fontWeight: FontWeight.bold),
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              eventNotifier.setEvent(event);
+                              pageNotifier.setPage(ModuleType.event);
+                              eventPageNotifier.setEventPage(
+                                  EventPage.eventDetailfromCalendar);
+                            },
                             child: HeroIcon(
                               HeroIcons.informationCircle,
                               color: textColor,

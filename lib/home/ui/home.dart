@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
+import 'package:myecl/event/providers/event_page_provider.dart';
+import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/sorted_event_list_provider.dart';
 import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/home/ui/day_list.dart';
@@ -18,7 +21,10 @@ class HomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final eventNotifier = ref.watch(eventListProvider.notifier);
+    final pageNotifier = ref.watch(pageProvider.notifier);
+    final eventPageNotifier = ref.watch(eventPageProvider.notifier);
+    final eventNotifier = ref.watch(eventProvider.notifier);
+    final eventListNotifier = ref.watch(eventListProvider.notifier);
     final sortedEventList = ref.watch(sortedEventListProvider);
     final now = DateTime.now();
     final ScrollController scrollController = useScrollController();
@@ -33,7 +39,7 @@ class HomePage extends HookConsumerWidget {
           child: SafeArea(
             child: Refresher(
               onRefresh: () async {
-                await eventNotifier.loadEventList();
+                await eventListNotifier.loadEventList();
               },
               child: Column(
                 children: [
@@ -73,10 +79,10 @@ class HomePage extends HookConsumerWidget {
                                     .map((key, value) => MapEntry(
                                         key,
                                         DaysEvent(
-                                          day: key,
-                                          now: now,
-                                          events: value,
-                                        )))
+                                            day: key,
+                                            now: now,
+                                            events: value,
+                                            )))
                                     .values
                                     .toList())
                             : const Center(
