@@ -27,17 +27,9 @@ class MainPage extends HookConsumerWidget {
         await bookingsNotifier.loadUserBookings();
       },
       child: Column(children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(BookingTextConstants.booking,
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-          ),
-        ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
         SizedBox(
-            height: MediaQuery.of(context).size.height - 450,
+            height: MediaQuery.of(context).size.height - 400,
             child: const Calendar()),
         SizedBox(
           height: (isAdmin) ? 25 : 30,
@@ -145,8 +137,7 @@ class MainPage extends HookConsumerWidget {
                                       title: BookingTextConstants.deleting,
                                       descriptions:
                                           BookingTextConstants.deletingBooking,
-                                      onYes: () {
-                                      },
+                                      onYes: () {},
                                     );
                                   });
                             },

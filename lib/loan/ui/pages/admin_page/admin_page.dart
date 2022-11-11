@@ -76,15 +76,6 @@ class AdminPage extends HookConsumerWidget {
         padding: const EdgeInsets.only(top: 10.0),
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(LoanTextConstants.admin,
-                    style:
-                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-              ),
-            ),
             const SizedBox(height: 30),
             adminLoanList.when(
                 data: (Map<Loaner, AsyncValue<List<Loan>>> loans) => Column(
@@ -162,7 +153,7 @@ class AdminPage extends HookConsumerWidget {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 50),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 30.0),
                           child: Align(
@@ -174,7 +165,7 @@ class AdminPage extends HookConsumerWidget {
                                     color: Color.fromARGB(255, 205, 205, 205))),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 20),
                         if (loans[loaner] != null)
                           loans[loaner]!.when(
                               data: (List<Loan> data) => SingleChildScrollView(
@@ -325,7 +316,7 @@ class AdminPage extends HookConsumerWidget {
                                   color: Colors.black,
                                 ));
                               }),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 50),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 30.0),
                           child: Align(
@@ -337,7 +328,7 @@ class AdminPage extends HookConsumerWidget {
                                     color: Color.fromARGB(255, 205, 205, 205))),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 20),
                         loanersItems.when(
                           data: (items) {
                             if (items[loaner] != null) {

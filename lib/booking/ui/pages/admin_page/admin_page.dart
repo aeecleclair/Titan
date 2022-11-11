@@ -53,14 +53,6 @@ class AdminPage extends HookConsumerWidget {
       },
       child: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(BookingTextConstants.adminPage,
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-            ),
-          ),
           const SizedBox(height: 30),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0),

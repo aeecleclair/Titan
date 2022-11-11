@@ -26,10 +26,16 @@ class EditRoomPage extends HookConsumerWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(children: [
+          SizedBox(
+            height: 50,
+          ),
           const Align(
               alignment: Alignment.centerLeft,
               child: Text(BookingTextConstants.editRoom,
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold))),
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 205, 205, 205)))),
           Form(
             key: key,
             child: Column(

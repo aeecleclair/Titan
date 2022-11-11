@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum BookingPage { main, admin, addBooking, bookings, rooms, addRoom, editRoom, editBooking }
+enum BookingPage { main, admin, addBooking, rooms, addRoom, editRoom, editBooking }
 
 class BookingPageProvider extends StateNotifier<BookingPage> {
   BookingPageProvider() : super(BookingPage.main);

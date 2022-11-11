@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/tools/constants.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -50,14 +52,23 @@ class TopBar extends HookConsumerWidget {
                             break;
                         }
                       },
-                      icon: FaIcon(
+                      icon: HeroIcon(
                         page == LoanPage.main
-                            ? FontAwesomeIcons.chevronRight
-                            : FontAwesomeIcons.chevronLeft,
-                        color: const Color.fromARGB(255, 0, 0, 0),
+                            ? HeroIcons.bars3BottomLeft
+                            : HeroIcons.chevronLeft,
+                        color: Colors.black,
+                        size: 30,
                       ));
                 },
               ),
+            ),
+            const Text(LoanTextConstants.loan,
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black)),
+            const SizedBox(
+              width: 70,
             ),
           ],
         ),

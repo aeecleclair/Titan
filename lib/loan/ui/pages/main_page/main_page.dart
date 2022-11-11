@@ -42,59 +42,14 @@ class MainPage extends HookConsumerWidget {
       error: (error, s) {},
     );
 
-    return LoanRefresher(
-        onRefresh: () async {
-          await loanListNotifier.loadLoanList();
-        },
-        child: Padding(
-            padding: const EdgeInsets.only(top: 10.0),
+    return Stack(
+      children: [
+        LoanRefresher(
+            onRefresh: () async {
+              await loanListNotifier.loadLoanList();
+            },
             child: Column(children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(LoanTextConstants.loan,
-                          style: TextStyle(
-                              fontSize: 40, fontWeight: FontWeight.bold)),
-                      if (isAdmin)
-                        GestureDetector(
-                          onTap: () {
-                            pageNotifier.setLoanPage(LoanPage.admin);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 8),
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 5))
-                                ]),
-                            child: Row(
-                              children: const [
-                                HeroIcon(HeroIcons.userGroup,
-                                    color: Colors.white),
-                                SizedBox(width: 10),
-                                Text("Admin",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                              ],
-                            ),
-                          ),
-                        )
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
               (dictCateListWidget[0].isNotEmpty)
                   ? Column(children: [
                       const Padding(
@@ -170,6 +125,42 @@ class MainPage extends HookConsumerWidget {
                     ),
                   )
                 ])
-            ])));
+            ])),
+        if (isAdmin)
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: GestureDetector(
+              onTap: () {
+                pageNotifier.setLoanPage(LoanPage.admin);
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5))
+                    ]),
+                child: Row(
+                  children: const [
+                    HeroIcon(HeroIcons.userGroup, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text("Admin",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white)),
+                  ],
+                ),
+              ),
+            ),
+          )
+      ],
+    );
   }
 }

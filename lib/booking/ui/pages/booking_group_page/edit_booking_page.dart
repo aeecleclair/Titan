@@ -44,13 +44,16 @@ class EditBookingPage extends HookConsumerWidget {
           child: Form(
               key: key,
               child: Column(children: [
+                const SizedBox(height: 20),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30),
                   child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(BookingTextConstants.editBooking,
                           style: TextStyle(
-                              fontSize: 40, fontWeight: FontWeight.bold))),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 205, 205, 205)))),
                 ),
                 const SizedBox(height: 20),
                 rooms.when(

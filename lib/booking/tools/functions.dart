@@ -17,21 +17,6 @@ void displayBookingToast(BuildContext context, TypeMsg type, String text) {
       Colors.white);
 }
 
-String getPageTitle(BookingPage i) {
-  switch (i) {
-    case BookingPage.main:
-      return BookingTextConstants.booking;
-    case BookingPage.addBooking:
-      return BookingTextConstants.addBookingPage;
-    case BookingPage.bookings:
-      return BookingTextConstants.booking;
-    case BookingPage.admin:
-      return BookingTextConstants.adminPage;
-    default:
-      return BookingTextConstants.bookingPage;
-  }
-}
-
 Decision stringToDecision(String s) {
   switch (s) {
     case "approved":

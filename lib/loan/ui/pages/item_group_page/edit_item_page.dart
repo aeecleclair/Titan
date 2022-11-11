@@ -40,13 +40,16 @@ class EditItemPage extends HookConsumerWidget {
         child: Form(
           key: key,
           child: Column(children: [
+            const SizedBox(height: 30),
             const Padding(
-              padding: EdgeInsets.only(top: 10, left: 30, right: 30),
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(LoanTextConstants.editItem,
                       style: TextStyle(
-                          fontSize: 40, fontWeight: FontWeight.bold))),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 205, 205, 205)))),
             ),
             const SizedBox(height: 30),
             loaners.when(

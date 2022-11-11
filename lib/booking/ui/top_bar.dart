@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
@@ -37,9 +38,6 @@ class TopBar extends HookConsumerWidget {
                           case BookingPage.addBooking:
                             pageNotifier.setBookingPage(BookingPage.main);
                             break;
-                          case BookingPage.bookings:
-                            pageNotifier.setBookingPage(BookingPage.main);
-                            break;
                           case BookingPage.rooms:
                             pageNotifier.setBookingPage(BookingPage.admin);
                             break;
@@ -54,14 +52,23 @@ class TopBar extends HookConsumerWidget {
                             break;
                         }
                       },
-                      icon: FaIcon(
+                      icon: HeroIcon(
                         page == BookingPage.main
-                            ? FontAwesomeIcons.chevronRight
-                            : FontAwesomeIcons.chevronLeft,
-                        color: BookingColorConstants.darkBlue,
+                            ? HeroIcons.bars3BottomLeft
+                            : HeroIcons.chevronLeft,
+                        color: Colors.black,
+                        size: 30,
                       ));
                 },
               ),
+            ),
+            const Text(BookingTextConstants.booking,
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black)),
+            const SizedBox(
+              width: 70,
             ),
           ],
         ),
