@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
@@ -14,6 +15,19 @@ Decision stringToDecision(String s) {
       return Decision.pending;
     default:
       return Decision.pending;
+  }
+}
+
+String decisionToString(Decision d) {
+  switch (d) {
+    case Decision.approved:
+      return BookingTextConstants.confirmed;
+    case Decision.declined:
+      return BookingTextConstants.declined;
+    case Decision.pending:
+      return BookingTextConstants.pending;
+    default:
+      return BookingTextConstants.pending;
   }
 }
 

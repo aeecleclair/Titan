@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/booking/ui/pages/detail_pages/detail_booking.dart';
 import 'package:myecl/booking/ui/pages/room_pages/add_room_page.dart';
 import 'package:myecl/booking/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/booking/ui/pages/booking_group_page/add_booking_page.dart';
@@ -27,6 +28,10 @@ class PageSwitcher extends ConsumerWidget {
         return const EditRoomPage();
       case BookingPage.editBooking:
         return const EditBookingPage();
+      case BookingPage.detailBookingFromAdmin:
+        return const DetailBookingPage();
+      case BookingPage.detailBookingFromMain:
+        return const DetailBookingPage();
     }
   }
 }

@@ -7,7 +7,7 @@ import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/ui/pages/main_page/booking_card.dart';
+import 'package:myecl/booking/ui/booking_card.dart';
 import 'package:myecl/booking/ui/pages/main_page/calendar.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/dialog.dart';
@@ -141,6 +141,11 @@ class MainPage extends HookConsumerWidget {
                                       onYes: () {},
                                     );
                                   });
+                            },
+                            onInfo: () {
+                              bookingNotifier.setBooking(e);
+                              pageNotifier.setBookingPage(
+                                  BookingPage.detailBookingFromMain);
                             },
                           )),
                       const SizedBox(width: 10),

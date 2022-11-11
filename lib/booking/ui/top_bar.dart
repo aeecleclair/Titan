@@ -46,6 +46,12 @@ class TopBar extends HookConsumerWidget {
                           case BookingPage.editBooking:
                             pageNotifier.setBookingPage(BookingPage.main);
                             break;
+                          case BookingPage.detailBookingFromAdmin:
+                            pageNotifier.setBookingPage(BookingPage.admin);
+                            break;
+                          case BookingPage.detailBookingFromMain:
+                            pageNotifier.setBookingPage(BookingPage.main);
+                            break;
                         }
                       },
                       icon: HeroIcon(

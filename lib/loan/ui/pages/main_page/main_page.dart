@@ -7,6 +7,7 @@ import 'package:myecl/loan/providers/is_loan_admin_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
@@ -19,6 +20,7 @@ class MainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final loanList = ref.watch(loanListProvider);
+    final loanNotifier = ref.watch(loanProvider.notifier);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
     final isAdmin = ref.watch(isLoanAdmin);
     ref.watch(adminLoanListProvider);
@@ -76,6 +78,11 @@ class MainPage extends HookConsumerWidget {
                                   onEdit: () {},
                                   onCalendar: () {},
                                   onReturn: () async {},
+                                  onInfo: () {
+                                    loanNotifier.setLoan(e);
+                                    pageNotifier.setLoanPage(
+                                        LoanPage.detailLoanFromMain);
+                                  },
                                 )),
                             const SizedBox(width: 10),
                           ],
@@ -118,6 +125,11 @@ class MainPage extends HookConsumerWidget {
                                   onEdit: () {},
                                   onCalendar: () {},
                                   onReturn: () async {},
+                                  onInfo: () {
+                                    loanNotifier.setLoan(e);
+                                    pageNotifier.setLoanPage(
+                                        LoanPage.detailLoanFromMain);
+                                  },
                                 ))
                             .toList(),
                         const SizedBox(width: 10),

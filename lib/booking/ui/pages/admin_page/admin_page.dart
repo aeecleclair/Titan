@@ -5,11 +5,12 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
-import 'package:myecl/booking/ui/pages/main_page/booking_card.dart';
+import 'package:myecl/booking/ui/booking_card.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/refresher.dart';
 
@@ -23,6 +24,7 @@ class AdminPage extends HookConsumerWidget {
     final room = ref.watch(roomProvider);
     final roomNotifier = ref.watch(roomProvider.notifier);
     final bookingListNotifier = ref.watch(bookingListProvider.notifier);
+    final bookingNotifier = ref.watch(bookingProvider.notifier);
     final bookings = ref.watch(bookingListProvider);
     final List<Booking> pendingBookings = [],
         confirmedBookings = [],
@@ -155,6 +157,11 @@ class AdminPage extends HookConsumerWidget {
                               bookingListNotifier.toggleConfirmed(
                                   e, Decision.declined);
                             },
+                            onInfo: () {
+                              bookingNotifier.setBooking(e);
+                              pageNotifier.setBookingPage(
+                                  BookingPage.detailBookingFromAdmin);
+                            },
                           )),
                       const SizedBox(width: 10),
                     ],
@@ -190,6 +197,11 @@ class AdminPage extends HookConsumerWidget {
                             onReturn: () {
                               bookingListNotifier.toggleConfirmed(
                                   e, Decision.declined);
+                            },
+                            onInfo: () {
+                              bookingNotifier.setBooking(e);
+                              pageNotifier.setBookingPage(
+                                  BookingPage.detailBookingFromAdmin);
                             },
                           )),
                       const SizedBox(width: 10),
@@ -227,6 +239,11 @@ class AdminPage extends HookConsumerWidget {
                                   e, Decision.approved);
                             },
                             onReturn: () {},
+                            onInfo: () {
+                              bookingNotifier.setBooking(e);
+                              pageNotifier.setBookingPage(
+                                  BookingPage.detailBookingFromAdmin);
+                            },
                           )),
                       const SizedBox(width: 10),
                     ],

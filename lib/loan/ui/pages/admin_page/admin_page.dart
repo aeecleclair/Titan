@@ -17,7 +17,7 @@ import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/delay_dialog.dart';
-import 'package:myecl/loan/ui/pages/admin_page/item_card.dart';
+import 'package:myecl/loan/ui/item_card.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
 import 'package:myecl/loan/ui/loaner_chip.dart';
 import 'package:myecl/tools/dialog.dart';
@@ -153,7 +153,7 @@ class AdminPage extends HookConsumerWidget {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 40),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 30.0),
                           child: Align(
@@ -165,7 +165,7 @@ class AdminPage extends HookConsumerWidget {
                                     color: Color.fromARGB(255, 205, 205, 205))),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 15),
                         if (loans[loaner] != null)
                           loans[loaner]!.when(
                               data: (List<Loan> data) => SingleChildScrollView(
@@ -301,6 +301,12 @@ class AdminPage extends HookConsumerWidget {
                                                       }
                                                     });
                                                   },
+                                                  onInfo: () {
+                                                    loanNotifier.setLoan(e);
+                                                    pageNotifier.setLoanPage(
+                                                        LoanPage
+                                                            .detailLoanFromAdmin);
+                                                  },
                                                 ))
                                             .toList(),
                                         const SizedBox(width: 10),
@@ -316,7 +322,7 @@ class AdminPage extends HookConsumerWidget {
                                   color: Colors.black,
                                 ));
                               }),
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 40),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 30.0),
                           child: Align(
@@ -328,7 +334,7 @@ class AdminPage extends HookConsumerWidget {
                                     color: Color.fromARGB(255, 205, 205, 205))),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 15),
                         loanersItems.when(
                           data: (items) {
                             if (items[loaner] != null) {
@@ -385,6 +391,7 @@ class AdminPage extends HookConsumerWidget {
                                       ),
                                       ...data.map((e) => ItemCard(
                                             item: e,
+                                            showButtons: true,
                                             onDelete: () async {
                                               showDialog(
                                                   context: context,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
@@ -6,13 +7,14 @@ import 'package:myecl/booking/tools/functions.dart';
 
 class BookingCard extends HookConsumerWidget {
   final Booking booking;
-  final Function() onEdit, onReturn;
+  final Function() onEdit, onReturn, onInfo;
   final bool isAdmin;
   const BookingCard(
       {super.key,
       required this.booking,
       required this.onEdit,
       required this.onReturn,
+      required this.onInfo,
       required this.isAdmin});
 
   @override
@@ -41,11 +43,21 @@ class BookingCard extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 15),
-              Text(booking.room.name,
-                  style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(booking.room.name,
+                      style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                  GestureDetector(
+                    onTap: onInfo,
+                    child: const HeroIcon(HeroIcons.informationCircle,
+                        color: Colors.black, size: 25),
+                  )
+                ],
+              ),
               const SizedBox(height: 5),
               Text(formatDates(booking.start, booking.end, false),
                   style: TextStyle(

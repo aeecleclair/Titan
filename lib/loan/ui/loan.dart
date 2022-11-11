@@ -42,6 +42,12 @@ class LoanHomePage extends HookConsumerWidget {
             case LoanPage.admin:
               pageNotifier.setLoanPage(LoanPage.main);
               break;
+            case LoanPage.detailLoanFromMain:
+              pageNotifier.setLoanPage(LoanPage.main);
+              break;
+            case LoanPage.detailLoanFromAdmin:
+              pageNotifier.setLoanPage(LoanPage.admin);
+              break;
           }
           return false;
         },

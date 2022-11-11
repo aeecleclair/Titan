@@ -4,10 +4,12 @@ import 'package:myecl/loan/tools/constants.dart';
 
 class ItemCard extends StatelessWidget {
   final Item item;
+  final bool showButtons;
   final Function() onEdit, onDelete;
   const ItemCard(
       {super.key,
       required this.item,
+      required this.showButtons,
       required this.onEdit,
       required this.onDelete});
 
@@ -18,7 +20,7 @@ class ItemCard extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Container(
         width: 140,
-        height: 160,
+        height: (showButtons) ? 160 : 120,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30),
@@ -59,47 +61,48 @@ class ItemCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
               const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: onEdit,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              blurRadius: 10,
-                              offset: const Offset(2, 3))
-                        ],
+              if (showButtons)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: onEdit,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
+                          ],
+                        ),
+                        child: const Icon(Icons.edit, color: Colors.black),
                       ),
-                      child: const Icon(Icons.edit, color: Colors.black),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: onDelete,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 10,
-                              offset: const Offset(2, 3))
-                        ],
+                    GestureDetector(
+                      onTap: onDelete,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
+                          ],
+                        ),
+                        child: const Icon(Icons.delete, color: Colors.white),
                       ),
-                      child: const Icon(Icons.delete, color: Colors.white),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
               const SizedBox(height: 10),
             ],
           ),
