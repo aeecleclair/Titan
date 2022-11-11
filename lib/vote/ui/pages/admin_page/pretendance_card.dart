@@ -2,27 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/vote/class/pretendance.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
 
 class PretendanceCard extends HookConsumerWidget {
   final Pretendance pretendance;
   final bool isAdmin;
-  final Function() onEdit, onCalendar, onReturn;
+  final Function() onEdit, onDelete;
   const PretendanceCard(
       {super.key,
       required this.pretendance,
       required this.onEdit,
-      required this.onCalendar,
-      required this.onReturn,
+      required this.onDelete,
       required this.isAdmin});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final section = ref.watch(sectionProvider);
-    final sections = ref.watch(sectionsProvider);
-    final selectedPretendanceListNotifier =
-        ref.watch(selectedPretendanceProvider.notifier);
     return Container(
       padding: const EdgeInsets.all(15.0),
       child: Container(
@@ -90,15 +83,7 @@ class PretendanceCard extends HookConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        sections.when(
-                            data: (data) {
-                              selectedPretendanceListNotifier.changeSelection(
-                                  data.indexOf(section), pretendance.id);
-                            },
-                            error: (e, s) {},
-                            loading: () {});
-                      },
+                      onTap: onEdit,
                       child: Container(
                         width: 40,
                         height: 40,
@@ -116,7 +101,7 @@ class PretendanceCard extends HookConsumerWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: onDelete,
                       child: Container(
                         width: 40,
                         height: 40,

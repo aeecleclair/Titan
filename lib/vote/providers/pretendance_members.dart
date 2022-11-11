@@ -19,6 +19,10 @@ class PretendanceMembersProvider extends StateNotifier<List<Member>> {
   void clearMembers() {
     state = [];
   }
+
+  void setMembers(List<Member> members) {
+    state = members;
+  }
 }
 
 final pretendanceMembersProvider =

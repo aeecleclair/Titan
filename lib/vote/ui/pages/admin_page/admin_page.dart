@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
@@ -7,15 +6,19 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/class/section.dart';
+import 'package:myecl/vote/providers/pretendance_list_provider.dart';
+import 'package:myecl/vote/providers/pretendance_members.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/sections_votes_provider.dart';
+import 'package:myecl/vote/providers/show_graph_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/providers/votes_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
+import 'package:myecl/vote/tools/dialog.dart';
 import 'package:myecl/vote/tools/functions.dart';
 import 'package:myecl/vote/ui/pages/admin_page/pretendance_card.dart';
 import 'package:myecl/vote/ui/section_chip.dart';
@@ -28,19 +31,22 @@ class AdminPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sectionPretendance = ref.watch(sectionPretendanceProvider);
+    final membersNotifier = ref.watch(pretendanceMembersProvider.notifier);
     final section = ref.watch(sectionProvider);
     final sectionIdNotifier = ref.watch(sectionIdProvider.notifier);
-    final pretendanceNotifier = ref.watch(pretendanceProvider.notifier);
+    final pretendanceListNotifier = ref.watch(pretendanceListProvider.notifier);
     final pageNotifier = ref.watch(votePageProvider.notifier);
-    final sectionPretendanceNotifier =
+    final sectionPretendanceListNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
-    final pretendances = ref.watch(pretendanceProvider);
+    final pretendances = ref.watch(pretendanceListProvider);
+    final pretendanceNotifier = ref.watch(pretendanceProvider.notifier);
     final asyncStatus = ref.watch(statusProvider);
     final statusNotifier = ref.watch(statusProvider.notifier);
     final sectionsVotesNotifier = ref.watch(sectionsVotesProvider.notifier);
     final votesNotifier = ref.watch(votesProvider.notifier);
-    final showVotes = useState(false);
+    final showVotes = ref.watch(showGraphProvider);
+    final showVotesNotifier = ref.watch(showGraphProvider.notifier);
     bool status = false;
     asyncStatus.whenData((value) => status = value);
     ref.watch(userList);
@@ -61,9 +67,9 @@ class AdminPage extends HookConsumerWidget {
           }, loading: () {
             list = [];
           });
-          sectionPretendanceNotifier.loadTList(value);
+          sectionPretendanceListNotifier.loadTList(value);
           for (final l in value) {
-            sectionPretendanceNotifier.setTData(
+            sectionPretendanceListNotifier.setTData(
                 l,
                 AsyncValue.data(list
                     .where((element) => element.section.id == l.id)
@@ -112,23 +118,53 @@ class AdminPage extends HookConsumerWidget {
                                 ...sections
                                     .map((key, value) => MapEntry(
                                         SectionChip(
-                                          label: capitalize(key.name),
-                                          selected: section.id == key.id,
-                                          onTap: () async {
-                                            sectionIdNotifier.setId(key.id);
-                                            pretendanceNotifier
-                                                .loadPretendanceListBySection(
-                                                    key.id)
-                                                .then((value) {
-                                              pretendanceNotifier
-                                                  .copy()
-                                                  .then((value) {
-                                                sectionPretendanceNotifier
-                                                    .setTData(key, value);
+                                            label: capitalize(key.name),
+                                            selected: section.id == key.id,
+                                            isAdmin: true,
+                                            onTap: () async {
+                                              tokenExpireWrapper(ref, () async {
+                                                sectionIdNotifier.setId(key.id);
+                                                pretendanceListNotifier
+                                                    .loadPretendanceListBySection(
+                                                        key.id)
+                                                    .then((value) {
+                                                  pretendanceListNotifier
+                                                      .copy()
+                                                      .then((value) {
+                                                    sectionPretendanceListNotifier
+                                                        .setTData(key, value);
+                                                  });
+                                                });
                                               });
-                                            });
-                                          },
-                                        ),
+                                            },
+                                            onDelete: () async {
+                                              tokenExpireWrapper(ref, () async {
+                                                await showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        VoteDialog(
+                                                          title:
+                                                              'Supprimer la section',
+                                                          descriptions:
+                                                              'Voulez-vous vraiment supprimer cette section ?',
+                                                          onYes: () async {
+                                                            final result =
+                                                                await sectionsNotifier
+                                                                    .deleteSection(
+                                                                        key);
+                                                            if (result) {
+                                                              displayVoteToastWithContext(
+                                                                  TypeMsg.msg,
+                                                                  'Section supprimée avec succès');
+                                                            } else {
+                                                              displayVoteToastWithContext(
+                                                                  TypeMsg.error,
+                                                                  'Une erreur est survenue');
+                                                            }
+                                                          },
+                                                        ));
+                                              });
+                                            }),
                                         value))
                                     .keys,
                               const SizedBox(width: 15),
@@ -201,9 +237,46 @@ class AdminPage extends HookConsumerWidget {
                                             .map((e) => PretendanceCard(
                                                   pretendance: e,
                                                   isAdmin: true,
-                                                  onEdit: () {},
-                                                  onCalendar: () {},
-                                                  onReturn: () async {},
+                                                  onEdit: () {
+                                                    tokenExpireWrapper(ref,
+                                                        () async {
+                                                      pretendanceNotifier
+                                                          .setId(e);
+                                                      membersNotifier
+                                                          .setMembers(
+                                                              e.members);
+                                                      pageNotifier.setVotePage(
+                                                          VotePage
+                                                              .editPretendance);
+                                                    });
+                                                  },
+                                                  onDelete: () {
+                                                    tokenExpireWrapper(ref,
+                                                        () async {
+                                                      final value =
+                                                          await pretendanceListNotifier
+                                                              .deletePretendance(
+                                                                  e);
+                                                      if (value) {
+                                                        displayVoteToastWithContext(
+                                                            TypeMsg.msg,
+                                                            VoteTextConstants
+                                                                .pretendanceDeleted);
+                                                        pretendanceListNotifier
+                                                            .copy()
+                                                            .then((value) {
+                                                          sectionPretendanceListNotifier
+                                                              .setTData(section,
+                                                                  value);
+                                                        });
+                                                      } else {
+                                                        displayVoteToastWithContext(
+                                                            TypeMsg.error,
+                                                            VoteTextConstants
+                                                                .pretendanceNotDeleted);
+                                                      }
+                                                    });
+                                                  },
                                                 ))
                                             .toList(),
                                         const SizedBox(width: 10),
@@ -233,10 +306,10 @@ class AdminPage extends HookConsumerWidget {
                                         fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(
                                             255, 205, 205, 205))),
-                                if (showVotes.value && status)
+                                if (showVotes && status)
                                   GestureDetector(
                                     onTap: () {
-                                      showVotes.value = false;
+                                      showVotesNotifier.toggle(false);
                                     },
                                     child: const HeroIcon(
                                       HeroIcons.eyeSlash,
@@ -280,7 +353,7 @@ class AdminPage extends HookConsumerWidget {
                         const SizedBox(height: 20),
                         SizedBox(
                             height: MediaQuery.of(context).size.height - 539,
-                            child: showVotes.value
+                            child: showVotes
                                 ? status
                                     ? const VoteBars()
                                     : Column(
@@ -349,7 +422,7 @@ class AdminPage extends HookConsumerWidget {
                                       )
                                 : GestureDetector(
                                     onTap: () {
-                                      showVotes.value = true;
+                                      showVotesNotifier.toggle(true);
                                     },
                                     behavior: HitTestBehavior.opaque,
                                     child: Column(

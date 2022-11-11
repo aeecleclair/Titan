@@ -8,13 +8,13 @@ import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/pretendance_members.dart';
-import 'package:myecl/vote/providers/pretendance_provider.dart';
+import 'package:myecl/vote/providers/pretendance_list_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/tools/functions.dart';
-import 'package:myecl/vote/ui/pages/add_pretendance/member_card.dart';
+import 'package:myecl/vote/ui/pages/pretendance_pages/member_card.dart';
 import 'package:myecl/vote/ui/section_chip.dart';
 import 'package:myecl/vote/ui/text_entry.dart';
 
@@ -28,7 +28,7 @@ class AddPretendancePage extends HookConsumerWidget {
     final addMemberKey = GlobalKey<FormState>();
     final section = useState(ref.watch(sectionProvider));
     final sections = ref.watch(sectionsProvider);
-    final pretendanceListNotifier = ref.watch(pretendanceProvider.notifier);
+    final pretendanceListNotifier = ref.watch(pretendanceListProvider.notifier);
     final sectionsNotifier = ref.watch(sectionPretendanceProvider.notifier);
     final name = useTextEditingController();
     final description = useTextEditingController();
@@ -78,9 +78,11 @@ class AddPretendancePage extends HookConsumerWidget {
                             (e) => SectionChip(
                               label: capitalize(e.name),
                               selected: section.value.id == e.id,
+                              isAdmin: false,
                               onTap: () async {
                                 section.value = e;
                               },
+                              onDelete: () {},
                             ),
                           ),
                           const SizedBox(width: 15),
@@ -118,9 +120,11 @@ class AddPretendancePage extends HookConsumerWidget {
                     (e) => SectionChip(
                       label: capitalize(e.toString().split('.').last),
                       selected: listType.value == e,
+                      isAdmin: false,
                       onTap: () async {
                         listType.value = e;
                       },
+                      onDelete: () {},
                     ),
                   ),
                   const SizedBox(width: 15),

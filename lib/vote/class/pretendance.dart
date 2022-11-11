@@ -62,4 +62,13 @@ class Pretendance {
       section: Section.fromJson(map['section']),
     );
   }
+
+  Pretendance.empty() {
+    id = '';
+    name = '';
+    description = '';
+    listType = ListType.serio;
+    members = [];
+    section = Section.empty();
+  }
 }

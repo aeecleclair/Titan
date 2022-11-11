@@ -7,13 +7,14 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/class/votes.dart';
 import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
-import 'package:myecl/vote/providers/pretendance_provider.dart';
+import 'package:myecl/vote/providers/pretendance_list_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/providers/votes_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
+import 'package:myecl/vote/tools/dialog.dart';
 import 'package:myecl/vote/tools/functions.dart';
 import 'package:myecl/vote/ui/pages/main_page/list_side_item.dart';
 import 'package:myecl/vote/ui/pages/main_page/pretendance_card.dart';
@@ -30,7 +31,7 @@ class MainPage extends HookConsumerWidget {
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final section = ref.watch(sectionProvider);
     final sectionsPretendances = ref.watch(sectionPretendanceProvider);
-    final pretendances = ref.watch(pretendanceProvider);
+    final pretendances = ref.watch(pretendanceListProvider);
     final sectionPretendanceNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
     final isAdmin = ref.watch(isVoteAdmin);
@@ -43,7 +44,7 @@ class MainPage extends HookConsumerWidget {
 
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayVoteToast(context, type, msg);
-  }
+    }
 
     if (!pageOpened.value) {
       animation.forward();
@@ -213,15 +214,31 @@ class MainPage extends HookConsumerWidget {
                           padding: const EdgeInsets.only(right: 30.0),
                           child: GestureDetector(
                             onTap: () {
-                              tokenExpireWrapper(ref, () async {
-                                final votes = Votes(ids: selectedPretendance);
-                                final result = await votesNotifier.addVote(votes);
-                                if (result) {
-                                  displayVoteToastWithContext(TypeMsg.msg, VoteTextConstants.voteSuccess);
-                                } else {
-                                  displayVoteToastWithContext(TypeMsg.error, VoteTextConstants.voteError);
-                                }
-                              });
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return VoteDialog(
+                                      title: VoteTextConstants.vote,
+                                      descriptions:
+                                          VoteTextConstants.confirmVote,
+                                      onYes: () {
+                                        tokenExpireWrapper(ref, () async {
+                                          final result =
+                                              await votesNotifier.addVote(Votes(
+                                                  ids: selectedPretendance));
+                                          if (result) {
+                                            displayVoteToastWithContext(
+                                                TypeMsg.msg,
+                                                VoteTextConstants.voteSuccess);
+                                          } else {
+                                            displayVoteToastWithContext(
+                                                TypeMsg.error,
+                                                VoteTextConstants.voteError);
+                                          }
+                                        });
+                                      },
+                                    );
+                                  });
                             },
                             child: Container(
                               padding:
