@@ -2,6 +2,7 @@ import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 enum TypeMsg { msg, error }
 
@@ -50,14 +51,18 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
                 Container(
                   width: MediaQuery.of(context).size.width - 120,
                   alignment: Alignment.center,
-                  child: FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Text(text,
-                          maxLines: 3,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20))),
+                  child: SizedBox(
+                    width: 200,
+                    height: 140,
+                    child: AutoSizeText(
+                      text,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                      maxLines: 3,
+                    ),
+                  ),
                 ),
               ],
             ),

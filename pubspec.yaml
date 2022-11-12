@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   animations: ^2.0.2
+  auto_size_text: ^3.0.0
   crypto: ^3.0.2
   cupertino_icons: ^1.0.2
   datetime_picker_formfield: ^2.0.1
