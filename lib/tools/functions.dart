@@ -39,7 +39,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
           margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            height: 100,
+            height: 50 + text.length / 30 * 20,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -49,7 +49,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
                   child: HeroIcon(icon, color: Colors.white),
                 ),
                 const SizedBox(
-                  width: 5,
+                  width: 10,
                 ),
                 Expanded(
                   child: Center(
