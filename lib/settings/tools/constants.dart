@@ -8,9 +8,11 @@ class SettingsTextConstants {
   static const String changingPassword =
       "Voulez-vous vraiment changer votre mot de passe ?";
   static const String confirmPassword = "Confirmer le mot de passe";
+  static const String copied = "Copié !";
   static const String darkMode = "Mode sombre";
   static const String darkModeOff = "Désactivé";
   static const String edit = "Modifier";
+  static const String editAccount = "Modifier le compte";
   static const String email = "Email";
   static const String emptyField = "Ce champ ne peut pas être vide";
   static const String expectingDate = "Date de naissance attendue";

@@ -1,5 +1,8 @@
 import 'package:f_logs/f_logs.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:myecl/tools/functions.dart';
 
 class LogCard extends StatelessWidget {
   final Log log;
@@ -22,7 +25,7 @@ class LogCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(
@@ -42,10 +45,27 @@ class LogCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            log.timestamp.toString(),
-            style: const TextStyle(
-                fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                log.timestamp.toString(),
+                style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Clipboard.setData(ClipboardData(text: log.text));
+                  displayToast(context, TypeMsg.msg, log.text.toString());
+                },
+                child: const HeroIcon(
+                  HeroIcons.clipboard,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 10),
           Text(

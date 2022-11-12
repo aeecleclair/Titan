@@ -11,7 +11,7 @@ class LogsProvider extends ListNotifier<Log> {
           LogLevel.ERROR.toString(),
           LogLevel.FATAL.toString(),
           LogLevel.WARNING.toString(),
-        ]));
+        ]).then((value) => value.reversed.toList()));
   }
 }
 

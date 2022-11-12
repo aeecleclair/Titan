@@ -44,7 +44,10 @@ class HelpPage extends HookConsumerWidget {
                 return const Center(
                   child: Text("Error"),
                 );
-              })
+              }),
+              const SizedBox(
+                height: 20,
+              ),
             ])));
   }
 }

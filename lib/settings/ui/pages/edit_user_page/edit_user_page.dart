@@ -42,38 +42,41 @@ class EditUserPage extends HookConsumerWidget {
           child: Form(
               key: key,
               child: Column(children: [
+                const SizedBox(
+                  height: 20,
+                ),
                 const Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(SettingsTextConstants.account,
+                  child: Text(SettingsTextConstants.editAccount,
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 205, 205, 205))),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(100)),
-                  child: HeroIcon(
-                    HeroIcons.user,
-                    size: 100,
-                    color: Colors.grey.shade500,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      SettingsTextConstants.addProfilePicture,
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFFfb6d10)),
-                    )),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                // Container(
+                //   padding: const EdgeInsets.all(20),
+                //   decoration: BoxDecoration(
+                //       color: Colors.grey[200],
+                //       borderRadius: BorderRadius.circular(100)),
+                //   child: HeroIcon(
+                //     HeroIcons.user,
+                //     size: 100,
+                //     color: Colors.grey.shade500,
+                //   ),
+                // ),
+                // const SizedBox(height: 20),
+                // TextButton(
+                //     onPressed: () {},
+                //     child: const Text(
+                //       SettingsTextConstants.addProfilePicture,
+                //       style: TextStyle(
+                //           fontSize: 18,
+                //           fontWeight: FontWeight.w600,
+                //           color: Color(0xFFfb6d10)),
+                //     )),
                 const SizedBox(height: 50),
                 UserFieldModifier(
                     label: SettingsTextConstants.firstname,
@@ -190,7 +193,8 @@ class EditUserPage extends HookConsumerWidget {
                   },
                   child: Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.only(
+                        bottom: 12, top: 8, right: 12, left: 12),
                     decoration: BoxDecoration(
                         gradient: const LinearGradient(
                           colors: [Color(0xFFfb6d10), Color(0xffeb3e1b)],
