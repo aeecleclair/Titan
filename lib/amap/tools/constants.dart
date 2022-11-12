@@ -64,6 +64,7 @@ class AMAPTextConstants {
   static const String name = "Nom";
   static const String noProduct = "Pas de produit";
   static const String noCurrentOrder = "Pas de commande en cours";
+  static const String noMoney = "Pas assez d'argent";
   static const String notEnoughMoney = "Pas assez d'argent";
   static const String notPlannedDelivery = "Pas de livraison planifiée";
   static const String order = "Commander";
