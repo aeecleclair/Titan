@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
+import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
@@ -21,10 +22,13 @@ class MainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isBookingAdmin);
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
+    final confirmedbookingsNotifier =
+        ref.watch(confirmedBookingListProvider.notifier);
     final bookings = ref.watch(userBookingListProvider);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     return Refresher(
       onRefresh: () async {
+        await confirmedbookingsNotifier.loadConfirmedBooking();
         await bookingsNotifier.loadUserBookings();
       },
       child: Column(children: [

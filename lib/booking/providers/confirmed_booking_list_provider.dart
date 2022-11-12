@@ -4,23 +4,23 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/repositories/booking_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 
-class UserBookingListProvider extends ListNotifier<Booking> {
+class ConfirmedBookingListProvider extends ListNotifier<Booking> {
   final BookingRepository _bookingRepository = BookingRepository();
-  UserBookingListProvider({required String token})
+  ConfirmedBookingListProvider({required String token})
       : super(const AsyncValue.loading()) {
     _bookingRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Booking>>> loadUserBookings() async {
+  Future<AsyncValue<List<Booking>>> loadConfirmedBooking() async {
     return await loadList(() async => _bookingRepository.getConfirmedBookingList());
   }
 }
 
 final confirmedBookingListProvider =
-    StateNotifierProvider<UserBookingListProvider, AsyncValue<List<Booking>>>(
+    StateNotifierProvider<ConfirmedBookingListProvider, AsyncValue<List<Booking>>>(
         (ref) {
   final token = ref.watch(tokenProvider);
-  final provider = UserBookingListProvider(token: token);
-  provider.loadUserBookings();
+  final provider = ConfirmedBookingListProvider(token: token);
+  provider.loadConfirmedBooking();
   return provider;
 });
