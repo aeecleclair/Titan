@@ -2,6 +2,7 @@ import 'package:f_logs/f_logs.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 
 class LogCard extends StatelessWidget {
@@ -58,7 +59,8 @@ class LogCard extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   Clipboard.setData(ClipboardData(text: log.text));
-                  displayToast(context, TypeMsg.msg, log.text.toString());
+                  displayToast(
+                      context, TypeMsg.msg, SettingsTextConstants.copied);
                 },
                 child: const HeroIcon(
                   HeroIcons.clipboard,
