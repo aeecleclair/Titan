@@ -57,7 +57,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
-                    maxLines: 4,
+                    maxLines: 8,
                   ),
                 ),
               ],
