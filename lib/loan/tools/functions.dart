@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 
 String formatItems(List<Item> items) {

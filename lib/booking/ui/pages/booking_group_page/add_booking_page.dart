@@ -11,7 +11,6 @@ import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
 import 'package:myecl/booking/ui/pages/booking_group_page/checkbox_entry.dart';
 import 'package:myecl/booking/ui/pages/booking_group_page/date_entry.dart';

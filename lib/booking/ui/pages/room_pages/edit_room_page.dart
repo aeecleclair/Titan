@@ -5,7 +5,6 @@ import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';

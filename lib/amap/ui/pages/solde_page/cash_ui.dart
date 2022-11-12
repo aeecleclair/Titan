@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 
 class CashUi extends HookConsumerWidget {

@@ -11,7 +11,6 @@ import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';

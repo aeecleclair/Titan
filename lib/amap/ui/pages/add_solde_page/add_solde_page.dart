@@ -5,7 +5,6 @@ import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';

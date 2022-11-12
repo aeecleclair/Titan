@@ -4,7 +4,6 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Calendar extends HookConsumerWidget {
@@ -79,6 +78,8 @@ class Calendar extends HookConsumerWidget {
                     shape: BoxShape.rectangle,
                   ),
                   todayHighlightColor: Colors.black,
+                  todayTextStyle: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                   firstDayOfWeek: 1,
                   timeZone: 'Europe/Paris',
                   timeSlotViewSettings: const TimeSlotViewSettings(

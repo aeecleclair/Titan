@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
@@ -6,8 +5,6 @@ import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
 
 void clearCmd(WidgetRef ref) {
   final deliveryId = ref.watch(deliveryIdProvider);

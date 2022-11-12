@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
 import 'package:myecl/login/class/account_type.dart';
 
 String accountTypeToID(AccountType type) {

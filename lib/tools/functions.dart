@@ -28,7 +28,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
 
   showFlash(
       context: context,
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(seconds: 2),
       builder: (context, controller) {
         return Flash.dialog(
           controller: controller,
@@ -38,6 +38,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
           margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            height: 90,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

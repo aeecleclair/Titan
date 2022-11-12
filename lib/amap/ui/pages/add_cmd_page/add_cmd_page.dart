@@ -10,7 +10,6 @@ import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/add_cmd_page/product_ui_check.dart';
 import 'package:myecl/tools/functions.dart';

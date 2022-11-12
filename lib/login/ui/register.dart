@@ -7,7 +7,6 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/class/account_type.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/login/ui/text_from_decoration.dart';
 import 'package:myecl/tools/functions.dart';

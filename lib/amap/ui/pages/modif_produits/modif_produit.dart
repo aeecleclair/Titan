@@ -7,7 +7,6 @@ import 'package:myecl/amap/providers/modified_product_index_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_category_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/modif_produits/text_entry.dart';
 import 'package:myecl/tools/functions.dart';

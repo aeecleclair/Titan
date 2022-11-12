@@ -15,7 +15,6 @@ import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/delay_dialog.dart';
 import 'package:myecl/loan/ui/item_card.dart';
 import 'package:myecl/loan/ui/loan_card.dart';

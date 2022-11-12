@@ -7,7 +7,6 @@ import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/modified_product_index_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';

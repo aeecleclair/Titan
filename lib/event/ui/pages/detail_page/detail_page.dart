@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/providers/event_provider.dart';
-import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/home/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 
 class DetailPage extends HookConsumerWidget {
