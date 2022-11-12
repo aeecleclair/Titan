@@ -20,6 +20,7 @@ class SettingsTextConstants {
   static const String hyperionUrl = "https://hyperion.myecl.fr";
   static const String language = "Langue";
   static const String languageFr = "Français";
+  static const String logs = "Logs";
   static const String name = "Nom";
   static const String newPassword = "Nouveau mot de passe";
   static const String nickname = "Surnom";

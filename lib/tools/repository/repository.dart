@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:myecl/tools/exception.dart';
+import 'package:f_logs/f_logs.dart';
 
 abstract class Repository {
   static const host = "https://hyperion.myecl.fr/";
@@ -9,6 +10,23 @@ abstract class Repository {
     "Content-Type": "application/json",
     "Accept": "application/json",
   };
+  LogsConfig config = FLog.getDefaultConfigurations()
+    ..isDevelopmentDebuggingEnabled = true
+    ..timestampFormat = TimestampFormat.TIME_FORMAT_24_FULL
+    ..formatType = FormatType.FORMAT_CUSTOM
+    ..fieldOrderFormatCustom = [
+      FieldName.TIMESTAMP,
+      FieldName.LOG_LEVEL,
+      FieldName.CLASSNAME,
+      FieldName.METHOD_NAME,
+      FieldName.TEXT,
+      FieldName.EXCEPTION,
+      FieldName.STACKTRACE
+    ];
+
+  void initLogger() {
+    FLog.applyConfigurations(config);
+  }
 
   void setToken(String token) {
     headers["Authorization"] = 'Bearer $token';
@@ -23,11 +41,18 @@ abstract class Repository {
         String resp = utf8.decode(response.body.runes.toList());
         return json.decode(resp);
       } catch (e) {
+        FLog.error(
+            text: "GET ${ext + suffix}\nError while decoding response",
+            exception: e);
         return [];
       }
     } else if (response.statusCode == 403) {
+      FLog.error(
+          text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
       throw AppException(ErrorType.tokenExpire, response.body);
     } else {
+      FLog.error(
+          text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
       throw AppException(ErrorType.notFound, response.body);
     }
   }
@@ -41,11 +66,20 @@ abstract class Repository {
         String resp = utf8.decode(response.body.runes.toList());
         return json.decode(resp);
       } catch (e) {
+        FLog.error(
+            text: "GET ${ext + id + suffix}\nError while decoding response",
+            exception: e);
         return {};
       }
     } else if (response.statusCode == 403) {
+      FLog.error(
+          text:
+              "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}");
       throw AppException(ErrorType.tokenExpire, response.body);
     } else {
+      FLog.error(
+          text:
+              "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}");
       throw AppException(ErrorType.notFound, response.body);
     }
   }
@@ -59,13 +93,22 @@ abstract class Repository {
         String resp = utf8.decode(response.body.runes.toList());
         return json.decode(resp);
       } catch (e) {
+        FLog.error(
+            text: "POST ${ext + suffix}\nError while decoding response",
+            exception: e);
         throw AppException(ErrorType.invalidData, e.toString());
       }
     } else if (response.statusCode == 204) {
       return true;
     } else if (response.statusCode == 403) {
+      FLog.error(
+          text:
+              "POST ${ext + suffix}\n${response.statusCode} ${response.body}");
       throw AppException(ErrorType.tokenExpire, response.body);
     } else {
+      FLog.error(
+          text:
+              "POST ${ext + suffix}\n${response.statusCode} ${response.body}");
       throw AppException(ErrorType.notFound, response.body);
     }
   }
@@ -77,8 +120,14 @@ abstract class Repository {
     if (response.statusCode == 204 || response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
+      FLog.error(
+          text:
+              "PATCH ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
       throw AppException(ErrorType.tokenExpire, response.body);
     } else {
+      FLog.error(
+          text:
+              "PATCH ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
       throw AppException(ErrorType.notFound, response.body);
     }
   }
@@ -90,8 +139,14 @@ abstract class Repository {
     if (response.statusCode == 204) {
       return true;
     } else if (response.statusCode == 403) {
+      FLog.error(
+          text:
+              "DELETE ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
       throw AppException(ErrorType.tokenExpire, response.body);
     } else {
+      FLog.error(
+          text:
+              "DELETE ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
       throw AppException(ErrorType.notFound, response.body);
     }
   }

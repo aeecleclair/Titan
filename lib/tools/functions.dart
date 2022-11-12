@@ -53,6 +53,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
                   child: FittedBox(
                       fit: BoxFit.fitHeight,
                       child: Text(text,
+                          maxLines: 3,
                           style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

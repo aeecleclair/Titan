@@ -90,10 +90,10 @@ class Register extends HookConsumerWidget {
                       final value = await signUpNotifier.createUser(
                           mail.text, AccountType.student);
                       if (value) {
-                        displayToastWithContext(
-                            TypeMsg.msg, LoginTextConstants.sendedMail);
                         hidePass.value = true;
                         mail.clear();
+                        displayToastWithContext(
+                            TypeMsg.msg, LoginTextConstants.sendedMail);
                       } else {
                         displayToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);

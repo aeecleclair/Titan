@@ -141,7 +141,7 @@ class ChangePassPage extends HookConsumerWidget {
                 },
                 child: Container(
                   width: double.infinity,
-                  height: 50,
+                  padding: const EdgeInsets.only(bottom: 16, top: 12),
                   decoration: BoxDecoration(
                       gradient: const LinearGradient(
                         colors: [Color(0xFFfb6d10), Color(0xffeb3e1b)],
