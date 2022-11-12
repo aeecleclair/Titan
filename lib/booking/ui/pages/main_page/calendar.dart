@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
+import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -11,7 +11,7 @@ class Calendar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookings = ref.watch(bookingListProvider);
+    final bookings = ref.watch(confirmedBookingListProvider);
 
     void calendarTapped(CalendarTapDetails details, BuildContext context) {
       if (details.targetElement == CalendarElement.appointment ||
