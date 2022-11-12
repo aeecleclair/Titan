@@ -50,13 +50,13 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
                 Container(
                   width: MediaQuery.of(context).size.width - 120,
                   alignment: Alignment.center,
-                  child: Text(
-                    text,
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                  ),
+                  child: FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: Text(text,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20))),
                 ),
               ],
             ),
