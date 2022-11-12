@@ -39,7 +39,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
           margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            height: 90,
+            height: 100,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -48,16 +48,19 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
                   alignment: Alignment.center,
                   child: HeroIcon(icon, color: Colors.white),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width - 120,
-                  alignment: Alignment.center,
-                  child: AutoSizeText(
-                    text,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                    maxLines: 8,
+                const SizedBox(
+                  width: 5,
+                ),
+                Expanded(
+                  child: Center(
+                    child: AutoSizeText(
+                      text,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                      maxLines: 8,
+                    ),
                   ),
                 ),
               ],
