@@ -8,6 +8,7 @@ enum TypeMsg { msg, error }
 
 void displayToast(BuildContext context, TypeMsg type, String text) {
   LinearGradient linearGradient;
+  int duration;
   HeroIcons icon;
 
   switch (type) {
@@ -17,6 +18,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight);
       icon = HeroIcons.check;
+      duration = 1000;
       break;
     case TypeMsg.error:
       linearGradient = const LinearGradient(
@@ -24,12 +26,13 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight);
       icon = HeroIcons.exclamationTriangle;
+      duration = 3000;
       break;
   }
 
   showFlash(
       context: context,
-      duration: const Duration(seconds: 2),
+      duration: Duration(milliseconds: duration),
       builder: (context, controller) {
         return Flash.dialog(
           controller: controller,
@@ -39,7 +42,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
           margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            height: 50 + text.length / 30 * 20,
+            height: 50 + text.length / 2,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
