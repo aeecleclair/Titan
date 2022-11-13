@@ -4,8 +4,8 @@ import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/ui/pages/detail_pages/detail_booking.dart';
 import 'package:myecl/booking/ui/pages/room_pages/add_room_page.dart';
 import 'package:myecl/booking/ui/pages/admin_page/admin_page.dart';
-import 'package:myecl/booking/ui/pages/booking_group_page/add_booking_page.dart';
-import 'package:myecl/booking/ui/pages/booking_group_page/edit_booking_page.dart';
+import 'package:myecl/booking/ui/pages/booking_pages/add_booking_page.dart';
+import 'package:myecl/booking/ui/pages/booking_pages/edit_booking_page.dart';
 import 'package:myecl/booking/ui/pages/room_pages/edit_room_page.dart';
 import 'package:myecl/booking/ui/pages/main_page/main_page.dart';
 

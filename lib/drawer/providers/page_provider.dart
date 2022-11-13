@@ -8,6 +8,7 @@ enum ModuleType {
   booking,
   admin,
   event,
+  cinema
 }
 
 class PageNotifier extends StateNotifier<ModuleType> {

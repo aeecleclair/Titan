@@ -16,7 +16,7 @@ class TopBar extends HookConsumerWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 25,
+          height: 15,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

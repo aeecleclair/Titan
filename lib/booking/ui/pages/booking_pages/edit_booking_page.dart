@@ -9,9 +9,8 @@ import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
-import 'package:myecl/booking/ui/pages/booking_group_page/checkbox_entry.dart';
-import 'package:myecl/booking/ui/pages/booking_group_page/date_entry.dart';
-import 'package:myecl/booking/ui/pages/booking_group_page/text_entry.dart';
+import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
+import 'package:myecl/booking/ui/pages/booking_pages/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -88,13 +87,6 @@ class EditBookingPage extends HookConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Column(children: [
-                    DateEntry(
-                        title: BookingTextConstants.startDate,
-                        controller: start),
-                    const SizedBox(height: 30),
-                    DateEntry(
-                        title: BookingTextConstants.endDate, controller: end),
-                    const SizedBox(height: 30),
                     TextEntry(
                       keyboardType: TextInputType.text,
                       label: BookingTextConstants.note,

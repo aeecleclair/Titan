@@ -15,7 +15,6 @@ class DayList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final position = useState(0.0);
     final needReload = useState(false);
     final numberDay = ref.watch(numberDayProvider);
     final daySortedEventList = ref.watch(daySortedEventListProvider);
@@ -64,7 +63,6 @@ class DayList extends HookConsumerWidget {
                 : 0,
             index: i - 1,
             onTap: () {
-              position.value = scrollController.position.pixels;
               needReload.value = true;
               daysEventScrollController.animateTo(
                   widgetPositions[formatDelayToToday(day, now)] ?? 0.0,

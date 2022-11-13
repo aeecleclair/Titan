@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/event/providers/event_page_provider.dart';
-import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/home/providers/scrolled_provider.dart';
+import 'package:myecl/cinema/providers/cinema_page_provider.dart';
+import 'package:myecl/cinema/tools/constants.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -13,10 +11,8 @@ class TopBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(eventPageProvider);
-    final pageNotifier = ref.watch(eventPageProvider.notifier);
-    final appPageNotifier = ref.watch(pageProvider.notifier);
-    final hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
+    final page = ref.watch(cinemaPageProvider);
+    final pageNotifier = ref.watch(cinemaPageProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -32,24 +28,28 @@ class TopBar extends HookConsumerWidget {
                   return IconButton(
                       onPressed: () {
                         switch (page) {
-                          case EventPage.main:
+                          case CinemaPage.main:
                             controllerNotifier.toggle();
                             break;
-                          case EventPage.addEvent:
-                            pageNotifier.setEventPage(EventPage.main);
+                          case CinemaPage.admin:
+                            pageNotifier.setCinemaPage(CinemaPage.main);
                             break;
-                          case EventPage.eventDetailfromModule:
-                            pageNotifier.setEventPage(EventPage.main);
+                          case CinemaPage.detailFromMainPage:
+                            pageNotifier.setCinemaPage(CinemaPage.main);
                             break;
-                          case EventPage.eventDetailfromCalendar:
-                            appPageNotifier.setPage(ModuleType.home);
-                            pageNotifier.setEventPage(EventPage.main);
-                            hasScrolledNotifier.setHasScrolled(true);
+                          case CinemaPage.detailFromAdminPage:
+                            pageNotifier.setCinemaPage(CinemaPage.admin);
+                            break;
+                          case CinemaPage.addSession:
+                            pageNotifier.setCinemaPage(CinemaPage.admin);
+                            break;
+                          case CinemaPage.editSession:
+                            pageNotifier.setCinemaPage(CinemaPage.admin);
                             break;
                         }
                       },
                       icon: HeroIcon(
-                        page == EventPage.main
+                        page == CinemaPage.main
                             ? HeroIcons.bars3BottomLeft
                             : HeroIcons.chevronLeft,
                         color: Colors.black,
@@ -58,7 +58,7 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            const Text(EventTextConstants.title,
+            const Text(CinemaTextConstants.cinema,
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
             const SizedBox(
               width: 70,
