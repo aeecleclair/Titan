@@ -2,7 +2,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
-import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -86,7 +86,7 @@ class OpenIdTokenProvider
   final String clientId = "Titan";
   final String tokenKey = "token";
   final String refreshTokenKey = "refresh_token";
-  final String redirectUrl = "titan://validate";
+  final String redirectUrl = "titan";
   final String discoveryUrl =
       "${Repository.host}.well-known/openid-configuration";
   final List<String> scopes = ["API"];
@@ -96,7 +96,7 @@ class OpenIdTokenProvider
     state = const AsyncValue.loading();
     try {
       if (kIsWeb) {
-        final result = await FlutterWebAuth.authenticate(
+        final result = await FlutterWebAuth2.authenticate(
             url:
                 "${Repository.host}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}",
             callbackUrlScheme: redirectUrl);
