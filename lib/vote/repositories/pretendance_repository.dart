@@ -24,10 +24,4 @@ class PretendanceRepository extends Repository {
         .map((e) => Pretendance.fromJson(e))
         .toList();
   }
-
-  Future<List<Pretendance>> getPretendanceList(String sectionId) async {
-    return (await getList(suffix: "sections/$sectionId/lists"))
-        .map((e) => Pretendance.fromJson(e))
-        .toList();
-  }
 }

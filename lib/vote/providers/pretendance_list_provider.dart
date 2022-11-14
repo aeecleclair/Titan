@@ -37,11 +37,7 @@ class PretendanceListNotifier extends ListNotifier<Pretendance> {
         pretendance);
   }
 
-  Future<AsyncValue<List<Pretendance>>> loadPretendanceListBySection(
-      String sectionId) async {
-    return await loadList(
-        () => _pretendanceRepository.getPretendanceList(sectionId));
-  }
+
 
   Future<AsyncValue<List<Pretendance>>> copy() async {
     return state.when(

@@ -124,17 +124,6 @@ class AdminPage extends HookConsumerWidget {
                                             onTap: () async {
                                               tokenExpireWrapper(ref, () async {
                                                 sectionIdNotifier.setId(key.id);
-                                                pretendanceListNotifier
-                                                    .loadPretendanceListBySection(
-                                                        key.id)
-                                                    .then((value) {
-                                                  pretendanceListNotifier
-                                                      .copy()
-                                                      .then((value) {
-                                                    sectionPretendanceListNotifier
-                                                        .setTData(key, value);
-                                                  });
-                                                });
                                               });
                                             },
                                             onDelete: () async {
