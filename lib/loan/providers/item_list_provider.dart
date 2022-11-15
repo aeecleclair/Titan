@@ -46,7 +46,7 @@ class ItemListNotifier extends ListNotifier<Item> {
   Future<AsyncValue<List<Item>>> copy() {
     return state.when(
         data: (d) async => AsyncValue.data(d.sublist(0)),
-        error: (e, s) async => AsyncValue.error(e),
+        error: (e, s) async => AsyncValue.error(e, s),
         loading: () async => const AsyncValue.loading());
   }
 }

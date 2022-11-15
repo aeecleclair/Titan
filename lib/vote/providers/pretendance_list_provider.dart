@@ -37,8 +37,6 @@ class PretendanceListNotifier extends ListNotifier<Pretendance> {
         pretendance);
   }
 
-
-
   Future<AsyncValue<List<Pretendance>>> copy() async {
     return state.when(
       data: (pretendances) async {
@@ -48,15 +46,14 @@ class PretendanceListNotifier extends ListNotifier<Pretendance> {
         return const AsyncValue.loading();
       },
       error: (error, stackTrace) async {
-        return AsyncValue.error(error);
+        return AsyncValue.error(error, stackTrace);
       },
     );
   }
 }
 
-final pretendanceListProvider =
-    StateNotifierProvider<PretendanceListNotifier, AsyncValue<List<Pretendance>>>(
-        (ref) {
+final pretendanceListProvider = StateNotifierProvider<PretendanceListNotifier,
+    AsyncValue<List<Pretendance>>>((ref) {
   final token = ref.watch(tokenProvider);
   final pretendanceListNotifier = PretendanceListNotifier(token: token);
   pretendanceListNotifier.loadPretendanceList();

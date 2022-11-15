@@ -43,11 +43,12 @@ class CashProvider extends ListNotifier<Cash> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           throw error;
         } else {
-          return AsyncValue.error(error);
+          return AsyncValue.error(error, stackTrace);
         }
       },
       loading: () {
-        return const AsyncValue.error("Cannot filter cash while loading");
+        return const AsyncValue.error(
+            "Cannot filter cash while loading", StackTrace.empty);
       },
     );
   }

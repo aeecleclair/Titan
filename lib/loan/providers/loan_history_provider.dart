@@ -33,7 +33,7 @@ class LoanHistoryNotifier extends StateNotifier<
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, StackTrace.empty);
           return false;
         }
       }
@@ -41,11 +41,12 @@ class LoanHistoryNotifier extends StateNotifier<
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, s);
         return false;
       }
     }, loading: () {
-      state = const AsyncValue.error("Cannot add while loading");
+      state =
+          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
       return false;
     });
   }
@@ -62,7 +63,7 @@ class LoanHistoryNotifier extends StateNotifier<
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, StackTrace.empty);
           return false;
         }
       }
@@ -70,11 +71,12 @@ class LoanHistoryNotifier extends StateNotifier<
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, s);
         return false;
       }
     }, loading: () {
-      state = const AsyncValue.error("Cannot add while loading");
+      state =
+          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
       return false;
     });
   }

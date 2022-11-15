@@ -42,13 +42,15 @@ class VoteHomePage extends HookConsumerWidget {
           }
           return false;
         },
-        child: Column(
-          children: [
-            TopBar(
-              controllerNotifier: controllerNotifier,
-            ),
-            const Expanded(child: PageSwitcher()),
-          ],
+        child: SafeArea(
+          child: Column(
+            children: [
+              TopBar(
+                controllerNotifier: controllerNotifier,
+              ),
+              const Expanded(child: PageSwitcher()),
+            ],
+          ),
         ),
       ),
     );

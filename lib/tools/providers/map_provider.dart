@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/exception.dart';
 
-class MapNotifier<T, E> extends StateNotifier<
-    AsyncValue<Map<T, AsyncValue<List<E>>>>> {
+class MapNotifier<T, E>
+    extends StateNotifier<AsyncValue<Map<T, AsyncValue<List<E>>>>> {
   MapNotifier({required String token}) : super(const AsyncLoading());
 
   void loadTList(List<T> tList) async {
@@ -27,8 +27,8 @@ class MapNotifier<T, E> extends StateNotifier<
   void addE(T t, E e) {
     state.when(data: (d) async {
       try {
-        List<E> currentLoans = d[t]!
-            .when(data: (d) => d, error: (e, s) => [], loading: () => []);
+        List<E> currentLoans =
+            d[t]!.when(data: (d) => d, error: (e, s) => [], loading: () => []);
         d[t] = AsyncValue.data(currentLoans + [e]);
         state = AsyncValue.data(d);
         return true;
@@ -37,7 +37,7 @@ class MapNotifier<T, E> extends StateNotifier<
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, StackTrace.empty);
           return false;
         }
       }
@@ -45,11 +45,12 @@ class MapNotifier<T, E> extends StateNotifier<
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, s);
         return false;
       }
     }, loading: () {
-      state = const AsyncValue.error("Cannot add while loading");
+      state =
+          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
       return false;
     });
   }
@@ -65,7 +66,7 @@ class MapNotifier<T, E> extends StateNotifier<
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, StackTrace.empty);
           return false;
         }
       }
@@ -73,11 +74,12 @@ class MapNotifier<T, E> extends StateNotifier<
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, s);
         return false;
       }
     }, loading: () {
-      state = const AsyncValue.error("Cannot add while loading");
+      state =
+          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
       return false;
     });
   }

@@ -31,7 +31,7 @@ class VotesProvider extends ListNotifier<Votes> {
     return state.when(
       data: (listVotes) => AsyncValue.data(listVotes),
       loading: () => const AsyncValue.loading(),
-      error: (error, stackTrace) => AsyncValue.error(error),
+      error: (error, stackTrace) => AsyncValue.error(error, stackTrace),
     );
   }
 }

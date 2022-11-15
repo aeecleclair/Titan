@@ -10,7 +10,7 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
       state = AsyncValue.data(data);
       return state;
     } catch (e) {
-      state = AsyncValue.error(e);
+      state = AsyncValue.error(e, StackTrace.current);
       if (e is AppException && e.type == ErrorType.tokenExpire) {
         rethrow;
       } else {
@@ -31,7 +31,7 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, StackTrace.current);
           return false;
         }
       }
@@ -39,11 +39,12 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, s);
         return false;
       }
     }, loading: () {
-      state = const AsyncValue.error("Cannot add while loading");
+      state =
+          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
       return false;
     });
   }
@@ -61,7 +62,7 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, StackTrace.current);
           return false;
         }
       }
@@ -69,11 +70,12 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, s);
         return false;
       }
     }, loading: () {
-      state = const AsyncValue.error("Cannot update while loading");
+      state = const AsyncValue.error(
+          "Cannot update while loading", StackTrace.empty);
       return false;
     });
   }
@@ -91,7 +93,7 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, StackTrace.current);
           return false;
         }
       }
@@ -99,11 +101,12 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, s);
         return false;
       }
     }, loading: () {
-      state = const AsyncValue.error("Cannot delete while loading");
+      state = const AsyncValue.error(
+          "Cannot delete while loading", StackTrace.empty);
       return false;
     });
   }

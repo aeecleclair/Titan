@@ -20,9 +20,10 @@ class UserCashNotifier extends SingleNotifier<Cash> {
       final newCash = cash.copyWith(balance: cash.balance + amount);
       state = AsyncValue.data(newCash);
     }, error: (error, stackTrace) {
-      state = AsyncValue.error(error);
+      state = AsyncValue.error(error, stackTrace);
     }, loading: () {
-      state = const AsyncValue.error("Cannot update cash while loading");
+      state = const AsyncValue.error(
+          "Cannot update cash while loading", StackTrace.empty);
     });
   }
 }

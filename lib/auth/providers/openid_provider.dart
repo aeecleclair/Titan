@@ -9,9 +9,8 @@ import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:myecl/auth/repository/openid_repository.dart';
 import 'package:myecl/tools/repository/repository.dart';
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
 import 'dart:convert';
+import 'package:universal_html/html.dart' as html;
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
@@ -184,11 +183,11 @@ class OpenIdTokenProvider
             refreshTokenKey: resp.refreshToken!,
           });
         } else {
-          state = const AsyncValue.error("Error");
+          state = const AsyncValue.error("Error", StackTrace.empty);
         }
       }
     } catch (e) {
-      state = AsyncValue.error("Error $e");
+      state = AsyncValue.error("Error $e", StackTrace.empty);
     }
   }
 
@@ -222,16 +221,16 @@ class OpenIdTokenProvider
               });
               storeToken();
             } else {
-              state = const AsyncValue.error("Error");
+              state = const AsyncValue.error("Error", StackTrace.empty);
               // deleteToken();
             }
           }
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.error(e, StackTrace.empty);
           // deleteToken();
         }
       } else {
-        state = const AsyncValue.error("No token found");
+        state = const AsyncValue.error("No token found", StackTrace.empty);
         // deleteToken();
       }
     });
@@ -253,7 +252,7 @@ class OpenIdTokenProvider
           refreshTokenKey: resp.refreshToken!,
         });
       } else {
-        state = const AsyncValue.error("Error");
+        state = const AsyncValue.error("Error", StackTrace.empty);
       }
     });
   }
@@ -279,16 +278,16 @@ class OpenIdTokenProvider
             storeToken();
             return true;
           } else {
-            state = const AsyncValue.error("Error");
+            state = const AsyncValue.error("Error", StackTrace.empty);
             return false;
           }
         } catch (e) {
-          state = AsyncValue.error(e);
+          state = AsyncValue.error(e, StackTrace.empty);
           return false;
         }
       },
       error: (error, stackTrace) {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, stackTrace);
         return false;
       },
       loading: () {
@@ -314,7 +313,7 @@ class OpenIdTokenProvider
       _secureStorage.delete(key: tokenName);
       state = AsyncValue.data({tokenKey: "", refreshTokenKey: ""});
     } catch (e) {
-      state = AsyncValue.error(e);
+      state = AsyncValue.error(e, StackTrace.empty);
     }
   }
 }

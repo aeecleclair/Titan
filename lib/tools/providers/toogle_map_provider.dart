@@ -31,8 +31,7 @@ class ToogleMapNotifier<T, E> extends StateNotifier<
         List<E> currentLoans = d[t]!
             .item1
             .when(data: (d) => d, error: (e, s) => [], loading: () => []);
-        d[t] =
-            Tuple2(AsyncValue.data(currentLoans + [e]), d[t]!.item2);
+        d[t] = Tuple2(AsyncValue.data(currentLoans + [e]), d[t]!.item2);
         state = AsyncValue.data(d);
         return true;
       } catch (error) {
@@ -40,7 +39,7 @@ class ToogleMapNotifier<T, E> extends StateNotifier<
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, StackTrace.empty);
           return false;
         }
       }
@@ -48,17 +47,17 @@ class ToogleMapNotifier<T, E> extends StateNotifier<
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, s);
         return false;
       }
     }, loading: () {
-      state = const AsyncValue.error("Cannot add while loading");
+      state =
+          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
       return false;
     });
   }
 
-  Future<bool> setTData(
-      T t, AsyncValue<List<E>> asyncEList) async {
+  Future<bool> setTData(T t, AsyncValue<List<E>> asyncEList) async {
     return state.when(data: (d) async {
       try {
         d[t] = Tuple2(asyncEList, d[t]!.item2);
@@ -69,7 +68,7 @@ class ToogleMapNotifier<T, E> extends StateNotifier<
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, StackTrace.empty);
           return false;
         }
       }
@@ -77,11 +76,12 @@ class ToogleMapNotifier<T, E> extends StateNotifier<
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, s);
         return false;
       }
     }, loading: () {
-      state = const AsyncValue.error("Cannot add while loading");
+      state =
+          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
       return false;
     });
   }

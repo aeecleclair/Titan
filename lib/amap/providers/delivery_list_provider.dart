@@ -46,10 +46,10 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
         state = AsyncValue.data(deliveries);
       },
       error: (error, stackTrace) {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, stackTrace);
       },
       loading: () {
-        state = const AsyncValue.error("Cannot toggle expanded while loading");
+        state = const AsyncValue.error("Cannot toggle expanded while loading", StackTrace.empty);
       },
     );
   }

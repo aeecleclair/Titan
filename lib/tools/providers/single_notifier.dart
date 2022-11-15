@@ -10,7 +10,7 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
       state = AsyncValue.data(data);
       return state;
     } catch (e) {
-      state = AsyncValue.error(e);
+      state = AsyncValue.error(e, StackTrace.current);
       if (e is AppException && e.type == ErrorType.tokenExpire) {
         rethrow;
       } else {
@@ -30,7 +30,7 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, StackTrace.current);
           return false;
         }
       }
@@ -38,11 +38,12 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, s);
         return false;
       }
     }, loading: () {
-      state = const AsyncValue.error("Cannot add while loading");
+      state =
+          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
       return false;
     });
   }
@@ -58,7 +59,7 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, StackTrace.current);
           return false;
         }
       }
@@ -66,11 +67,12 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, s);
         return false;
       }
     }, loading: () {
-      state = const AsyncValue.error("Cannot update while loading");
+      state = const AsyncValue.error(
+          "Cannot update while loading", StackTrace.empty);
       return false;
     });
   }
@@ -87,7 +89,7 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, StackTrace.current);
           return false;
         }
       }
@@ -95,11 +97,12 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, s);
         return false;
       }
     }, loading: () {
-      state = const AsyncValue.error("Cannot delete while loading");
+      state = const AsyncValue.error(
+          "Cannot delete while loading", StackTrace.empty);
       return false;
     });
   }

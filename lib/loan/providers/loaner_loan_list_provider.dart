@@ -59,7 +59,7 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
     return state.when(
         loading: () => const AsyncValue.loading(),
         data: (loans) => AsyncValue.data(loans.sublist(0)),
-        error: (error, s) => AsyncValue.error(error));
+        error: (error, s) => AsyncValue.error(error, s));
   }
 
   Future<AsyncValue<List<Loan>>> loadHistory(String loanerId) async {
@@ -67,7 +67,7 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
       final data = await _loanrepository.getHistory(loanerId);
       return AsyncValue.data(data);
     } catch (e) {
-      state = AsyncValue.error(e);
+      state = AsyncValue.error(e, StackTrace.current);
       if (e is AppException && e.type == ErrorType.tokenExpire) {
         rethrow;
       } else {
