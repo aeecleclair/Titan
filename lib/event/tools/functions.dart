@@ -157,27 +157,36 @@ String formatRecurrenceRule(
     "Dimanche"
   ];
   final listDayShort = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
-  final days = recurrenceRule.split("BYDAY=")[1].split(";")[0].split(",");
-  final endDay = recurrenceRule.split("UNTIL=")[1].split(";")[0];
-  String res = "";
-  if (days.length > 1) {
-    for (int i = 0; i < days.length - 1; i++) {
-      res += listDay[listDayShort.indexOf(days[i])];
-      if (i != days.length - 2) {
-        res += ", ";
+
+  if (recurrenceRule.isNotEmpty) {
+    final days = recurrenceRule.split("BYDAY=")[1].split(";")[0].split(",");
+    final endDay = recurrenceRule.split("UNTIL=")[1].split(";")[0];
+    String res = "";
+    if (days.length > 1) {
+      for (int i = 0; i < days.length - 1; i++) {
+        res += listDay[listDayShort.indexOf(days[i])];
+        if (i != days.length - 2) {
+          res += ", ";
+        }
       }
+      res += " et ${listDay[listDayShort.indexOf(days[days.length - 1])]}";
+    } else {
+      res += listDay[listDayShort.indexOf(days[0]) - 1];
     }
-    res += " et ${listDay[listDayShort.indexOf(days[days.length - 1])]}";
+    r += "Tous les $res ";
+    if (!allDay) {
+      r += "de ${start[1]} à ${end[1]}";
+    } else {
+      r += "toute la journée";
+    }
+    r += " jusqu'au ${processDate(DateTime.parse(endDay))}";
   } else {
-    res += listDay[listDayShort.indexOf(days[0]) - 1];
+    if (!allDay) {
+      r += "de ${start[1]} à ${end[1]}";
+    } else {
+      r += "toute la journée";
+    }
   }
-  r += "Tous les $res ";
-  if (!allDay) {
-    r += "de ${start[1]} à ${end[1]}";
-  } else {
-    r += "toute la journée";
-  }
-  r += " jusqu'au ${processDate(DateTime.parse(endDay))}";
   return r;
 }
 

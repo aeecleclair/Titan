@@ -6,13 +6,12 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
-import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:myecl/auth/repository/openid_repository.dart';
 import 'package:myecl/tools/repository/repository.dart';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
@@ -196,13 +195,11 @@ class OpenIdTokenProvider
   void getTokenFromStorage() {
     state = const AsyncValue.loading();
     _secureStorage.read(key: tokenName).then((token) async {
-      print(token);
       if (token != null) {
         try {
           if (kIsWeb) {
             final resp = await openIdRepository.getToken(
                 token, clientId, "", "", refreshTokenKey);
-            print(resp);
             final accessToken = resp[tokenKey]!;
             final refreshToken = resp[refreshTokenKey]!;
             await _secureStorage.write(key: tokenName, value: refreshToken);

@@ -14,7 +14,6 @@ import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/tools/functions.dart';
 import 'package:myecl/vote/ui/pages/pretendance_pages/member_card.dart';
 import 'package:myecl/vote/ui/section_chip.dart';
 import 'package:myecl/vote/ui/text_entry.dart';
@@ -46,7 +45,7 @@ class EditPretendancePage extends HookConsumerWidget {
     final membersNotifier = ref.watch(pretendanceMembersProvider.notifier);
     final displayUserSearch = useState(false);
     void displayVoteToastWithContext(TypeMsg type, String msg) {
-      displayVoteToast(context, type, msg);
+      displayToast(context, type, msg);
     }
 
     return SingleChildScrollView(
@@ -351,7 +350,7 @@ class EditPretendancePage extends HookConsumerWidget {
                         }
                       });
                     } else {
-                      displayVoteToast(context, TypeMsg.error,
+                      displayToast(context, TypeMsg.error,
                           VoteTextConstants.incorrectOrMissingFields);
                     }
                   },

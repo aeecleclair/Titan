@@ -33,7 +33,7 @@ class HomePage extends HookConsumerWidget {
           child: SafeArea(
             child: Refresher(
               onRefresh: () async {
-                await eventNotifier.loadEventList();
+                await eventListNotifier.loadEventList();
                 now.value = DateTime.now();
               },
               child: Column(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/pretendance.dart';
@@ -18,12 +20,9 @@ import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/providers/votes_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/tools/dialog.dart';
-import 'package:myecl/vote/tools/functions.dart';
 import 'package:myecl/vote/ui/pages/admin_page/pretendance_card.dart';
 import 'package:myecl/vote/ui/section_chip.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_bars.dart';
-import 'package:myecl/vote/ui/refresh_indicator.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -51,10 +50,10 @@ class AdminPage extends HookConsumerWidget {
     asyncStatus.whenData((value) => status = value);
     ref.watch(userList);
     void displayVoteToastWithContext(TypeMsg type, String msg) {
-      displayVoteToast(context, type, msg);
+      displayToast(context, type, msg);
     }
 
-    return VoteRefresher(
+    return Refresher(
       onRefresh: () async {
         await statusNotifier.loadStatus();
         final sections = await sectionsNotifier.loadSectionList();
@@ -131,7 +130,7 @@ class AdminPage extends HookConsumerWidget {
                                                 await showDialog(
                                                     context: context,
                                                     builder: (context) =>
-                                                        VoteDialog(
+                                                        CustomDialogBox(
                                                           title:
                                                               'Supprimer la section',
                                                           descriptions:

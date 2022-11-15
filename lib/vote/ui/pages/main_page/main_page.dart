@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/class/votes.dart';
@@ -14,12 +16,9 @@ import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/providers/votes_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/tools/dialog.dart';
-import 'package:myecl/vote/tools/functions.dart';
 import 'package:myecl/vote/ui/pages/main_page/list_side_item.dart';
 import 'package:myecl/vote/ui/pages/main_page/pretendance_card.dart';
 import 'package:myecl/vote/ui/pages/main_page/section_title.dart';
-import 'package:myecl/vote/ui/refresh_indicator.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -43,14 +42,14 @@ class MainPage extends HookConsumerWidget {
     final pageOpened = useState(false);
 
     void displayVoteToastWithContext(TypeMsg type, String msg) {
-      displayVoteToast(context, type, msg);
+      displayToast(context, type, msg);
     }
 
     if (!pageOpened.value) {
       animation.forward();
       pageOpened.value = true;
     }
-    return VoteRefresher(
+    return Refresher(
       onRefresh: () async {
         final loaners = await sectionsNotifier.loadSectionList();
         loaners.whenData((value) {
@@ -217,7 +216,7 @@ class MainPage extends HookConsumerWidget {
                               showDialog(
                                   context: context,
                                   builder: (context) {
-                                    return VoteDialog(
+                                    return CustomDialogBox(
                                       title: VoteTextConstants.vote,
                                       descriptions:
                                           VoteTextConstants.confirmVote,

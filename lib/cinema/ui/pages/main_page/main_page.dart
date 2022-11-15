@@ -93,9 +93,9 @@ class MainPage extends HookConsumerWidget {
             const SizedBox(height: 20),
             sessionList.when(data: (data) {
               if (data.isEmpty) {
-                return SizedBox(
+                return const SizedBox(
                   height: 200,
-                  child: const Center(
+                  child: Center(
                     child: Text(CinemaTextConstants.noSession,
                         style: TextStyle(
                             fontSize: 18,

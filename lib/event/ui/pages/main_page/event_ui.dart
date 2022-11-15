@@ -135,93 +135,53 @@ class EventUi extends ConsumerWidget {
                 const SizedBox(
                   height: 15,
                 ),
-                Row(
-                  children: [
-                    // Expanded(
-                    //   child: GestureDetector(
-                    //     onTap: () {},
-                    //     child: Container(
-                    //       padding: const EdgeInsets.symmetric(vertical: 10),
-                    //       decoration: BoxDecoration(
-                    //           color: event.end.compareTo(now) < 0
-                    //               ? Colors.grey.shade700
-                    //               : event.start.compareTo(now) <= 0
-                    //                   ? ColorConstants.gradient1
-                    //                   : Colors.white,
-                    //           borderRadius: BorderRadius.circular(20),
-                    //           border: Border.all(
-                    //               color: event.end.compareTo(now) < 0
-                    //                   ? Colors.grey.shade700
-                    //                   : event.start.compareTo(now) <= 0
-                    //                       ? ColorConstants.gradient1
-                    //                       : Colors.grey.shade300)),
-                    //       child: Center(
-                    //         child: Text(
-                    //           EventTextConstants.edit,
-                    //           style: TextStyle(
-                    //               color: textColor,
-                    //               fontSize: 15,
-                    //               fontWeight: FontWeight.bold),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   width: 20,
-                    // ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return CustomDialogBox(
-                                  descriptions:
-                                      EventTextConstants.deletingEvent,
-                                  onYes: () async {
-                                    final value = await eventListNotifier
-                                        .deleteEvent(event);
-                                    if (value) {
-                                      displayToastWithContext(TypeMsg.msg,
-                                          EventTextConstants.deletedEvent);
-                                    } else {
-                                      displayToastWithContext(TypeMsg.error,
-                                          EventTextConstants.deletingError);
-                                    }
-                                  },
-                                  title: EventTextConstants.deleting,
-                                );
-                              });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(
-                              color: event.end.compareTo(now) < 0
-                                  ? Colors.grey.shade700
-                                  : event.start.compareTo(now) <= 0
-                                      ? ColorConstants.gradient1
-                                      : Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                  color: event.end.compareTo(now) < 0
-                                      ? Colors.grey.shade700
-                                      : event.start.compareTo(now) <= 0
-                                          ? ColorConstants.gradient1
-                                          : Colors.grey.shade300)),
-                          child: Center(
-                            child: Text(
-                              EventTextConstants.delete,
-                              style: TextStyle(
-                                  color: textColor,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CustomDialogBox(
+                            descriptions: EventTextConstants.deletingEvent,
+                            onYes: () async {
+                              final value =
+                                  await eventListNotifier.deleteEvent(event);
+                              if (value) {
+                                displayToastWithContext(TypeMsg.msg,
+                                    EventTextConstants.deletedEvent);
+                              } else {
+                                displayToastWithContext(TypeMsg.error,
+                                    EventTextConstants.deletingError);
+                              }
+                            },
+                            title: EventTextConstants.deleting,
+                          );
+                        });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                        color: event.end.compareTo(now) < 0
+                            ? Colors.grey.shade700
+                            : event.start.compareTo(now) <= 0
+                                ? ColorConstants.gradient1
+                                : Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                            color: event.end.compareTo(now) < 0
+                                ? Colors.grey.shade700
+                                : event.start.compareTo(now) <= 0
+                                    ? ColorConstants.gradient1
+                                    : Colors.grey.shade300)),
+                    child: Center(
+                      child: Text(
+                        EventTextConstants.delete,
+                        style: TextStyle(
+                            color: textColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
-                  ],
+                  ),
                 )
               ],
             ),

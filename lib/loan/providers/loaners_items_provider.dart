@@ -3,10 +3,9 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
-import 'package:myecl/tools/providers/toogle_map_provider.dart';
-import 'package:tuple/tuple.dart';
+import 'package:myecl/tools/providers/map_provider.dart';
 
-class LoanersItems extends ToogleMapNotifier<Loaner, Item> {
+class LoanersItems extends MapNotifier<Loaner, Item> {
   LoanersItems({required String token}) : super(token: token);
 }
 

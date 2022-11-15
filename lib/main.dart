@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:uni_links/uni_links.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/login/ui/auth.dart';
 import 'package:myecl/others/ui/no_internert_page.dart';
@@ -34,9 +32,6 @@ class MyApp extends HookConsumerWidget {
           primarySwatch: Colors.orange,
           textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
               Theme.of(context).textTheme)),
-      // home: const Scaffold(
-      //   body: AppDrawer(),
-      // ));
       home: check.when(
           data: (value) => value
               ? isLoggedIn

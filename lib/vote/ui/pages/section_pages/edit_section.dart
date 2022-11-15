@@ -8,7 +8,6 @@ import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/tools/functions.dart';
 import 'package:myecl/vote/ui/text_entry.dart';
 
 class EditSectionPage extends HookConsumerWidget {
@@ -26,7 +25,7 @@ class EditSectionPage extends HookConsumerWidget {
     final name = useTextEditingController(text: section.name);
     final description = useTextEditingController(text: section.description);
     void displayVoteToastWithContext(TypeMsg type, String msg) {
-      displayVoteToast(context, type, msg);
+      displayToast(context, type, msg);
     }
 
     return Padding(
