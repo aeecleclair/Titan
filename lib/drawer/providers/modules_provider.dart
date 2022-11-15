@@ -57,5 +57,10 @@ final listModuleProvider =
         icon: HeroIcons.envelopeOpen,
         page: ModuleType.vote,
         selected: false),
+    Module(
+        name: "Cinéma",
+        icon: HeroIcons.ticket,
+        page: ModuleType.cinema,
+        selected: false),
   ]);
 });

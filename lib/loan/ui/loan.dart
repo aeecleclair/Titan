@@ -20,11 +20,8 @@ class LoanHomePage extends HookConsumerWidget {
       body: WillPopScope(
         onWillPop: () async {
           switch (page) {
-            case LoanPage.detail:
-              pageNotifier.setLoanPage(LoanPage.main);
-              break;
             case LoanPage.editLoan:
-              pageNotifier.setLoanPage(LoanPage.groupLoan);
+              pageNotifier.setLoanPage(LoanPage.main);
               break;
             case LoanPage.main:
               if (!controller.isCompleted) {
@@ -33,43 +30,36 @@ class LoanHomePage extends HookConsumerWidget {
               } else {
                 return true;
               }
-            case LoanPage.option:
-              pageNotifier.setLoanPage(LoanPage.main);
-              break;
             case LoanPage.addLoan:
-              pageNotifier.setLoanPage(LoanPage.adminLoan);
+              pageNotifier.setLoanPage(LoanPage.admin);
               break;
             case LoanPage.addItem:
-              pageNotifier.setLoanPage(LoanPage.adminItem);
-              break;
-            case LoanPage.history:
-              pageNotifier.setLoanPage(LoanPage.main);
-              break;
-            case LoanPage.historyDetail:
-              pageNotifier.setLoanPage(LoanPage.history);
-              break;
-            case LoanPage.groupLoan:
-              pageNotifier.setLoanPage(LoanPage.adminLoan);
+              pageNotifier.setLoanPage(LoanPage.admin);
               break;
             case LoanPage.editItem:
-              pageNotifier.setLoanPage(LoanPage.adminItem);
+              pageNotifier.setLoanPage(LoanPage.admin);
               break;
-            case LoanPage.adminItem:
-              pageNotifier.setLoanPage(LoanPage.option);
+            case LoanPage.admin:
+              pageNotifier.setLoanPage(LoanPage.main);
               break;
-            case LoanPage.adminLoan:
-              pageNotifier.setLoanPage(LoanPage.option);
+            case LoanPage.detailLoanFromMain:
+              pageNotifier.setLoanPage(LoanPage.main);
+              break;
+            case LoanPage.detailLoanFromAdmin:
+              pageNotifier.setLoanPage(LoanPage.admin);
               break;
           }
           return false;
         },
-        child: Column(
-          children: [
-            TopBar(
-              controllerNotifier: controllerNotifier,
-            ),
-            const Expanded(child: PageSwitcher()),
-          ],
+        child: SafeArea(
+          child: Column(
+            children: [
+              TopBar(
+                controllerNotifier: controllerNotifier,
+              ),
+              const Expanded(child: PageSwitcher()),
+            ],
+          ),
         ),
       ),
     );

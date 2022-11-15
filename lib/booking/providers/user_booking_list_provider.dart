@@ -6,12 +6,18 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 
 class UserBookingListProvider extends ListNotifier<Booking> {
   final UserBookingRepository _userRepository = UserBookingRepository();
-  UserBookingListProvider({required String token})
+  String userId = "";
+  UserBookingListProvider({required String token, required this.userId})
       : super(const AsyncValue.loading()) {
     _userRepository.setToken(token);
+    setId(userId);
   }
 
-  Future<AsyncValue<List<Booking>>> loadUserBookings(String userId) async {
+  void setId(String id) {
+    userId = id;
+  }
+
+  Future<AsyncValue<List<Booking>>> loadUserBookings() async {
     return await loadList(() async => _userRepository.getMyBookingList(userId));
   }
 
@@ -45,7 +51,7 @@ final userBookingListProvider =
         (ref) {
   final token = ref.watch(tokenProvider);
   final userId = ref.watch(idProvider);
-  final provider = UserBookingListProvider(token: token);
-  provider.loadUserBookings(userId);
+  final provider = UserBookingListProvider(token: token, userId: userId);
+  provider.loadUserBookings();
   return provider;
 });

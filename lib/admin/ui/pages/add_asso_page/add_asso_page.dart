@@ -5,7 +5,7 @@ import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/admin/tools/functions.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -19,8 +19,8 @@ class AddAssoPage extends HookConsumerWidget {
     final description = useTextEditingController();
     final pageNotifier = ref.watch(adminPageProvider.notifier);
     final groupListNotifier = ref.watch(allGroupListProvider.notifier);
-    void displayAdminToastWithContext(TypeMsg type, String msg) {
-      displayAdminToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Padding(
@@ -34,22 +34,11 @@ class AddAssoPage extends HookConsumerWidget {
               child: Column(children: [
                 const Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(AdminTextConstants.administration,
-                      style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black)),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                const Align(
-                  alignment: Alignment.centerLeft,
                   child: Text(AdminTextConstants.addAssociation,
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: AdminColorConstants.gradient1)),
+                          color: ColorConstants.gradient1)),
                 ),
                 const SizedBox(
                   height: 30,
@@ -82,7 +71,7 @@ class AddAssoPage extends HookConsumerWidget {
                                 isDense: true,
                                 focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: AdminColorConstants.gradient1))),
+                                        color: ColorConstants.gradient1))),
                             validator: (value) {
                               if (value == null) {
                                 return AdminTextConstants.emptyFieldError;
@@ -122,7 +111,7 @@ class AddAssoPage extends HookConsumerWidget {
                                 isDense: true,
                                 focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: AdminColorConstants.gradient1))),
+                                        color: ColorConstants.gradient1))),
                             validator: (value) {
                               if (value == null) {
                                 return AdminTextConstants.emptyFieldError;
@@ -145,13 +134,13 @@ class AddAssoPage extends HookConsumerWidget {
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
                         colors: [
-                          AdminColorConstants.gradient1,
-                          AdminColorConstants.gradient2,
+                          ColorConstants.gradient1,
+                          ColorConstants.gradient2,
                         ],
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AdminColorConstants.gradient2.withOpacity(0.5),
+                          color: ColorConstants.gradient2.withOpacity(0.5),
                           blurRadius: 5,
                           offset: const Offset(2, 2),
                           spreadRadius: 2,
@@ -177,10 +166,10 @@ class AddAssoPage extends HookConsumerWidget {
                               id: ''));
                       if (value) {
                         pageNotifier.setAdminPage(AdminPage.main);
-                        displayAdminToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.msg, AdminTextConstants.addedAssociation);
                       } else {
-                        displayAdminToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.error, AdminTextConstants.addingError);
                       }
                     });

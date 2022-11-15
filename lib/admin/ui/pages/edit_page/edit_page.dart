@@ -7,9 +7,9 @@ import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/admin/tools/dialog.dart';
-import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/admin/ui/user_ui.dart';
+import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -27,14 +27,14 @@ class EditPage extends HookConsumerWidget {
     final name = useTextEditingController();
     final description = useTextEditingController();
     final pageNotifier = ref.watch(adminPageProvider.notifier);
-    void displayAdminToastWithContext(TypeMsg type, String msg) {
-      displayAdminToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+    return SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: group.when(
             data: (g) {
               name.text = g.name;
@@ -42,22 +42,11 @@ class EditPage extends HookConsumerWidget {
               return Column(children: [
                 const Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(AdminTextConstants.administration,
-                      style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black)),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                const Align(
-                  alignment: Alignment.centerLeft,
                   child: Text(AdminTextConstants.edit,
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: AdminColorConstants.gradient1)),
+                          color: ColorConstants.gradient1)),
                 ),
                 const SizedBox(
                   height: 40,
@@ -86,14 +75,13 @@ class EditPage extends HookConsumerWidget {
                             SizedBox(
                               child: TextFormField(
                                 controller: name,
-                                cursorColor: AdminColorConstants.gradient1,
+                                cursorColor: ColorConstants.gradient1,
                                 decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.all(10),
                                     isDense: true,
                                     focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: AdminColorConstants
-                                                .gradient1))),
+                                            color: ColorConstants.gradient1))),
                                 validator: (value) {
                                   if (value == null) {
                                     return AdminTextConstants.emptyFieldError;
@@ -131,14 +119,13 @@ class EditPage extends HookConsumerWidget {
                             SizedBox(
                               child: TextFormField(
                                 controller: description,
-                                cursorColor: AdminColorConstants.gradient1,
+                                cursorColor: ColorConstants.gradient1,
                                 decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.all(10),
                                     isDense: true,
                                     focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: AdminColorConstants
-                                                .gradient1))),
+                                            color: ColorConstants.gradient1))),
                                 validator: (value) {
                                   if (value == null) {
                                     return AdminTextConstants.emptyFieldError;
@@ -175,14 +162,14 @@ class EditPage extends HookConsumerWidget {
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                   colors: [
-                                    AdminColorConstants.gradient1,
-                                    AdminColorConstants.gradient2
+                                    ColorConstants.gradient1,
+                                    ColorConstants.gradient2
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight),
                               boxShadow: [
                                 BoxShadow(
-                                    color: AdminColorConstants.gradient2
+                                    color: ColorConstants.gradient2
                                         .withOpacity(0.4),
                                     offset: const Offset(2, 3),
                                     blurRadius: 5)
@@ -207,33 +194,35 @@ class EditPage extends HookConsumerWidget {
                         onDelete: () {
                           showDialog(
                               context: context,
-                              builder: (BuildContext context) => AdminDialog(
-                                  descriptions: AdminTextConstants
-                                      .removeAssociationMember,
-                                  title: AdminTextConstants.deleting,
-                                  onYes: () async {
-                                    tokenExpireWrapper(ref, () async {
-                                      Group newGroup = g.copyWith(
-                                          members: g.members
-                                              .where((element) =>
-                                                  element.id != x.id)
-                                              .toList());
-                                      final value = await groupNotifier
-                                          .deleteMember(newGroup, x);
-                                      if (value) {
-                                        pageNotifier
-                                            .setAdminPage(AdminPage.edit);
-                                        displayAdminToastWithContext(
-                                            TypeMsg.msg,
-                                            AdminTextConstants
-                                                .updatedAssociation);
-                                      } else {
-                                        displayAdminToastWithContext(
-                                            TypeMsg.msg,
-                                            AdminTextConstants.updatingError);
-                                      }
-                                    });
-                                  }));
+                              builder: (BuildContext context) =>
+                                  CustomDialogBox(
+                                      descriptions: AdminTextConstants
+                                          .removeAssociationMember,
+                                      title: AdminTextConstants.deleting,
+                                      onYes: () async {
+                                        tokenExpireWrapper(ref, () async {
+                                          Group newGroup = g.copyWith(
+                                              members: g.members
+                                                  .where((element) =>
+                                                      element.id != x.id)
+                                                  .toList());
+                                          final value = await groupNotifier
+                                              .deleteMember(newGroup, x);
+                                          if (value) {
+                                            pageNotifier
+                                                .setAdminPage(AdminPage.edit);
+                                            displayToastWithContext(
+                                                TypeMsg.msg,
+                                                AdminTextConstants
+                                                    .updatedAssociation);
+                                          } else {
+                                            displayToastWithContext(
+                                                TypeMsg.msg,
+                                                AdminTextConstants
+                                                    .updatingError);
+                                          }
+                                        });
+                                      }));
                         })),
                     const SizedBox(
                       height: 20,
@@ -247,14 +236,13 @@ class EditPage extends HookConsumerWidget {
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [
-                              AdminColorConstants.gradient1,
-                              AdminColorConstants.gradient2,
+                              ColorConstants.gradient1,
+                              ColorConstants.gradient2,
                             ],
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: AdminColorConstants.gradient2
-                                  .withOpacity(0.5),
+                              color: ColorConstants.gradient2.withOpacity(0.5),
                               blurRadius: 5,
                               offset: const Offset(2, 2),
                               spreadRadius: 2,
@@ -280,10 +268,10 @@ class EditPage extends HookConsumerWidget {
                               .updateGroup(newGroup.toSimpleGroup());
                           if (value) {
                             pageNotifier.setAdminPage(AdminPage.asso);
-                            displayAdminToastWithContext(TypeMsg.msg,
+                            displayToastWithContext(TypeMsg.msg,
                                 AdminTextConstants.updatedAssociation);
                           } else {
-                            displayAdminToastWithContext(
+                            displayToastWithContext(
                                 TypeMsg.msg, AdminTextConstants.updatingError);
                           }
                         });

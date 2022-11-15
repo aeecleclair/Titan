@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-
 class OthersTextConstants {
+  static const String checkInternetConnection =
+      "Veuillez vérifier votre connexion internet";
+  static const String retry = "Réessayer";
   static const String tooOldVersion =
-      "Votre version de l'application est trop ancienne. Veuillez mettre à jour l'application.";
-}
+      "Votre version de l'application est trop ancienne.\n\nVeuillez mettre à jour l'application.";
+  static const String unableToConnectToServer =
+      "Impossible de se connecter au serveur";
 
-class OthersColorConstants {
-  static const Color darkGrey = Color(0xFF2D2D2D);
 }

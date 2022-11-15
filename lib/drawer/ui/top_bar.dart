@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/drawer/tools/dialog.dart';
-import 'package:myecl/drawer/tools/functions.dart';
+import 'package:myecl/drawer/tools/constants.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
@@ -17,7 +17,7 @@ class TopBar extends ConsumerWidget {
     return Column(
       children: [
         Container(
-          height: 25,
+          height: 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,13 +59,13 @@ class TopBar extends ConsumerWidget {
               onTap: () {
                 showDialog(
                     context: context,
-                    builder: (BuildContext context) => BookingDialog(
-                        descriptions: "Voulez-vous vous déconnecter ?",
-                        title: "Déconnexion",
+                    builder: (BuildContext context) => CustomDialogBox(
+                        descriptions: DrawerTextConstants.logingOut,
+                        title: DrawerTextConstants.logOut,
                         onYes: () {
                           auth.deleteToken();
-                          displayDrawerToast(
-                              context, TypeMsg.msg, "Déconnexion");
+                          displayToast(
+                              context, TypeMsg.msg, DrawerTextConstants.logOut);
                         }));
               },
               child: Column(
@@ -75,18 +75,17 @@ class TopBar extends ConsumerWidget {
                   ),
                   SizedBox(
                     width: 60,
-                    height: 40,
+                    height: 30,
                     child: HeroIcon(
-                      HeroIcons.arrowRightOnRectangle,
+                      HeroIcons.power,
                       color: Colors.grey.shade100,
-                      size: 25,
                     ),
                   ),
                 ],
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }

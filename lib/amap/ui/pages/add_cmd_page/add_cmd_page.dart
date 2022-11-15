@@ -10,7 +10,6 @@ import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/add_cmd_page/product_ui_check.dart';
 import 'package:myecl/tools/functions.dart';
@@ -39,8 +38,8 @@ class AddCmdPage extends HookConsumerWidget {
     final selected = ref.watch(selectedListProvider);
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
 
-    void displayAMAPToastWithContext(TypeMsg type, String msg) {
-      displayAMAPToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     products.map((e) {
@@ -212,10 +211,10 @@ class AddCmdPage extends HookConsumerWidget {
                                     if (value) {
                                       pageNotifier.setAmapPage(AmapPage.admin);
                                       await adminNotifier.addT(del);
-                                      displayAMAPToastWithContext(TypeMsg.msg,
+                                      displayToastWithContext(TypeMsg.msg,
                                           AMAPTextConstants.addedCommand);
                                     } else {
-                                      displayAMAPToastWithContext(
+                                      displayToastWithContext(
                                           TypeMsg.error,
                                           AMAPTextConstants
                                               .alreadyExistCommand);
@@ -223,7 +222,7 @@ class AddCmdPage extends HookConsumerWidget {
                                     selectedNotifier.clear();
                                   });
                                 } else {
-                                  displayAMAPToast(context, TypeMsg.error,
+                                  displayToast(context, TypeMsg.error,
                                       AMAPTextConstants.addingError);
                                 }
                               }),

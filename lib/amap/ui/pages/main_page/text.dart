@@ -23,7 +23,7 @@ class TextPresentation extends StatelessWidget {
                   height: 15,
                 ),
                 const Text(
-                  "Les Orders doivent être passées avant le vendredi 21h et sont livrées sur le campus le mardi de 13h à 13h45 (ou de 18h15 à 18h30 si vous ne pouvez pas passer le midi) dans le hall du M16.",
+                  "Les commandes doivent être passées avant le vendredi 21h et sont livrées sur le campus le mardi de 13h à 13h45 (ou de 18h15 à 18h30 si vous ne pouvez pas passer le midi) dans le hall du M16.",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
                 Container(

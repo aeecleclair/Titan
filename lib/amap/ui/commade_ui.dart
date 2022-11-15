@@ -12,9 +12,9 @@ import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
-import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 
 class OrderUi extends ConsumerWidget {
@@ -232,7 +232,7 @@ class OrderUi extends ConsumerWidget {
                       onTap: () {
                         showDialog(
                             context: context,
-                            builder: (BuildContext context) => AMAPDialog(
+                            builder: (BuildContext context) => CustomDialogBox(
                                 descriptions: AMAPTextConstants.deletingOrder,
                                 title: AMAPTextConstants.deleting,
                                 onYes: () {
@@ -242,7 +242,7 @@ class OrderUi extends ConsumerWidget {
                                       .reduce(
                                           (value, element) => value + element);
                                   userAmountNotifier.updateCash(price);
-                                  displayAMAPToast(context, TypeMsg.msg,
+                                  displayToast(context, TypeMsg.msg,
                                       AMAPTextConstants.deletedOrder);
                                 }));
                       },

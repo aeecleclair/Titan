@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:myecl/others/tools/constants.dart';
 
 class UpdatePage extends StatelessWidget {
@@ -7,15 +7,33 @@ class UpdatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        OthersTextConstants.tooOldVersion,
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w400,
-          color: Color.fromARGB(255, 158, 158, 158),
+    return Scaffold(
+        body: Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.75,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              HeroIcon(
+                HeroIcons.bellAlert,
+                size: 100,
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Center(
+                child: Text(
+                  OthersTextConstants.tooOldVersion,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    );
+    ));
   }
 }

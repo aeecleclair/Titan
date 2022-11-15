@@ -35,10 +35,11 @@ class SelectedListProvider extends StateNotifier<List<bool>> {
   SelectedListProvider(List<dynamic> p)
       : super(List.generate(p.length, (index) => false));
 
-  void toggle(int i) {
+  Future<List<bool>> toggle(int i) async {
     var copy = state.toList();
     copy[i] = !copy[i];
     state = copy;
+    return state;
   }
 
   void initWithLoan(List<Item> products, Loan loan) {

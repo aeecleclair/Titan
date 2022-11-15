@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
-import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/booking/ui/page_switcher.dart';
 import 'package:myecl/booking/ui/top_bar.dart';
@@ -34,43 +33,36 @@ class BookingHomePage extends HookConsumerWidget {
           case BookingPage.addBooking:
             pageNotifier.setBookingPage(BookingPage.main);
             break;
-          case BookingPage.bookings:
-            pageNotifier.setBookingPage(BookingPage.main);
-            break;
-          case BookingPage.rooms:
+          case BookingPage.addRoom:
             pageNotifier.setBookingPage(BookingPage.admin);
             break;
-          case BookingPage.addRoom:
-            pageNotifier.setBookingPage(BookingPage.rooms);
-            break;
           case BookingPage.editRoom:
-            pageNotifier.setBookingPage(BookingPage.rooms);
+            pageNotifier.setBookingPage(BookingPage.admin);
             break;
           case BookingPage.editBooking:
-            pageNotifier.setBookingPage(BookingPage.bookings);
+            pageNotifier.setBookingPage(BookingPage.main);
+            break;
+          case BookingPage.detailBookingFromAdmin:
+            pageNotifier.setBookingPage(BookingPage.admin);
+            break;
+          case BookingPage.detailBookingFromMain:
+            pageNotifier.setBookingPage(BookingPage.main);
             break;
         }
         return false;
       },
       child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              BookingColorConstants.darkBlue,
-              BookingColorConstants.lightBlue,
+        color: Colors.white,
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              TopBar(
+                controllerNotifier: controllerNotifier,
+              ),
+              const PageSwitcher()
             ],
           ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            TopBar(
-              controllerNotifier: controllerNotifier,
-            ),
-            const PageSwitcher()
-          ],
         ),
       ),
     ));

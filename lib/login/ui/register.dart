@@ -7,24 +7,24 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/class/account_type.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/login/ui/text_from_decoration.dart';
 import 'package:myecl/tools/functions.dart';
 
 class Register extends HookConsumerWidget {
-  const Register({Key? key, required this.onSignInPressed}) : super(key: key);
+  const Register(
+      {Key? key, required this.onSignInPressed, required this.onMailRecieved})
+      : super(key: key);
 
-  final VoidCallback onSignInPressed;
+  final VoidCallback onSignInPressed, onMailRecieved;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final signUpNotifier = ref.watch(signUpProvider.notifier);
     final mail = useTextEditingController();
-    final password = useTextEditingController();
     final hidePass = useState(true);
-    void displayLoginToastWithContext(TypeMsg type, String msg) {
-      displayLoginToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Form(
@@ -35,7 +35,7 @@ class Register extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.centerLeft,
               child: GestureDetector(
                 onTap: onSignInPressed,
                 child: const HeroIcon(
@@ -64,75 +64,83 @@ class Register extends HookConsumerWidget {
               flex: 5,
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const Spacer(),
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: TextFormField(
-                          controller: mail,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                          decoration: signInRegisterInputDecoration(
-                              isSignIn: false,
-                              hintText: LoginTextConstants.email))),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: TextFormField(
-                      controller: password,
-                      obscureText: hidePass.value,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                      decoration: signInRegisterInputDecoration(
-                          isSignIn: false,
-                          hintText: LoginTextConstants.password,
-                          notifier: hidePass),
-                    ),
-                  ),
+                      child: AutofillGroup(
+                          child: TextFormField(
+                        controller: mail,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                        decoration: signInRegisterInputDecoration(
+                            isSignIn: false,
+                            hintText: LoginTextConstants.email),
+                        keyboardType: TextInputType.emailAddress,
+                        autofillHints: const [AutofillHints.email],
+                      ))),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   SignUpBar(
                     label: LoginTextConstants.create,
                     isLoading: ref.watch(loadingrovider),
                     onPressed: () async {
                       final value = await signUpNotifier.createUser(
-                          mail.text, password.text, AccountType.student);
+                          mail.text, AccountType.student);
                       if (value) {
-                        displayLoginToastWithContext(
-                            TypeMsg.msg, LoginTextConstants.sendedMail);
                         hidePass.value = true;
                         mail.clear();
-                        password.clear();
-                        onSignInPressed();
+                        displayToastWithContext(
+                            TypeMsg.msg, LoginTextConstants.sendedMail);
                       } else {
-                        displayLoginToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);
                       }
                     },
                   ),
                   const Spacer(),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: InkWell(
-                      splashColor: Colors.white,
-                      onTap: () {
-                        onSignInPressed();
-                      },
-                      child: const Text(
-                        LoginTextConstants.signIn,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                          decoration: TextDecoration.underline,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                            onTap: () {
+                              onSignInPressed();
+                            },
+                            child: const Text(
+                              LoginTextConstants.signIn,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
+                              ),
+                            ),
+                          )),
+                      Container(
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                            onTap: () {
+                              onMailRecieved();
+                            },
+                            child: const Text(
+                              LoginTextConstants.recievedMail,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
+                              ),
+                            ),
+                          )),
+                    ],
                   ),
                 ],
               ),

@@ -1,12 +1,3 @@
-import 'package:flutter/material.dart';
-
-class AdminColorConstants {
-  static final Color background = Colors.grey.shade100;
-  static const Color gradient1 = Color(0xFFfb6d10);
-  static const Color gradient2 = Color(0xffeb3e1b);
-  static const Color background2 = Color(0xFF222643);
-}
-
 class AdminTextConstants {
   static const String add = "Ajouter";
   static const String addAssociation = "Ajouter une association";
@@ -30,6 +21,7 @@ class AdminTextConstants {
   static const String looking = "Recherche";
   static const String members = "Membres";
   static const String name = "Nom";
+  static const String noMoreLoaner = "Aucun prêteur n'est disponible";
   static const String removeAssociationMember =
       "Supprimer le membre de l'association ?";
   static const String updatedAssociation = "Association modifiée";

@@ -12,10 +12,10 @@ import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
-import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -38,8 +38,8 @@ class Boutons extends HookConsumerWidget {
     final userAmount = ref.watch(userAmountProvider);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);
-    void displayAMAPToastWithContext(TypeMsg type, String msg) {
-      displayAMAPToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     final products = [];
@@ -66,7 +66,7 @@ class Boutons extends HookConsumerWidget {
                       "${AMAPTextConstants.confirm} (${price.toStringAsFixed(2)}€)"),
               onTap: () {
                 if (price == 0.0) {
-                  displayAMAPToast(
+                  displayToast(
                       context, TypeMsg.error, AMAPTextConstants.noProduct);
                 } else if (indexCmd == -1 && price < b) {
                   List<Product> prod = [];
@@ -91,12 +91,12 @@ class Boutons extends HookConsumerWidget {
                     if (value) {
                       pageNotifier.setAmapPage(AmapPage.main);
                       userAmountNotifier.updateCash(-price);
-                      displayAMAPToastWithContext(
+                      displayToastWithContext(
                           TypeMsg.msg, AMAPTextConstants.addedOrder);
                       clearCmd(ref);
                     } else {
                       pageNotifier.setAmapPage(AmapPage.main);
-                      displayAMAPToastWithContext(
+                      displayToastWithContext(
                           TypeMsg.error, AMAPTextConstants.addingError);
                     }
                   });
@@ -124,17 +124,17 @@ class Boutons extends HookConsumerWidget {
                       if (value) {
                         pageNotifier.setAmapPage(AmapPage.main);
                         userAmountNotifier.updateCash(lastPrice - price);
-                        displayAMAPToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.msg, AMAPTextConstants.updatedOrder);
                       } else {
                         pageNotifier.setAmapPage(AmapPage.main);
-                        displayAMAPToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.error, AMAPTextConstants.updatingError);
                       }
                     });
                     clearCmd(ref);
                   } else {
-                    displayAMAPToast(context, TypeMsg.error,
+                    displayToast(context, TypeMsg.error,
                         AMAPTextConstants.notEnoughMoney);
                   }
                 }
@@ -167,7 +167,7 @@ class Boutons extends HookConsumerWidget {
               if (price != 0.0 || indexCmd != -1) {
                 showDialog(
                     context: context,
-                    builder: (BuildContext context) => AMAPDialog(
+                    builder: (BuildContext context) => CustomDialogBox(
                         descriptions: AMAPTextConstants.deletingOrder,
                         title: AMAPTextConstants.deleting,
                         onYes: () {

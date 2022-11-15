@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/tools/constants.dart';
 
 class CustomDialogBox extends StatefulWidget {
   final String title, descriptions;
-  final Color titleColor, descriptionColor, yesColor, noColor;
+  final Color titleColor = ColorConstants.gradient1;
+  final Color descriptionColor = Colors.black;
+  final Color yesColor = ColorConstants.gradient2;
+  final Color noColor = ColorConstants.background2;
 
   final Function() onYes;
 
@@ -15,11 +19,7 @@ class CustomDialogBox extends StatefulWidget {
       {Key? key,
       required this.title,
       required this.descriptions,
-      required this.onYes,
-      required this.titleColor,
-      required this.descriptionColor,
-      required this.yesColor,
-      required this.noColor})
+      required this.onYes})
       : super(key: key);
 
   @override

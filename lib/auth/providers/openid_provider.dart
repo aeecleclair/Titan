@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:myecl/tools/repository/repository.dart';
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
@@ -83,9 +84,11 @@ class OpenIdTokenProvider
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
   final String tokenName = "my_ecl_auth_token";
   final String clientId = "Titan";
-  static const String redirectUrl = "titan://myecl.fr/account/activate";
+  final String tokenKey = "token";
+  final String refreshTokenKey = "refresh_token";
+  final String redirectUrl = "titan://validate";
   final String discoveryUrl =
-      "https://hyperion.myecl.fr/.well-known/openid-configuration";
+      "${Repository.host}.well-known/openid-configuration";
   final List<String> scopes = ["API"];
   OpenIdTokenProvider() : super(const AsyncValue.loading());
 
@@ -95,11 +98,18 @@ class OpenIdTokenProvider
       if (kIsWeb) {
         final result = await FlutterWebAuth.authenticate(
             url:
-                "https://hyperion.myecl.fr/auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}",
+                "${Repository.host}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}",
             callbackUrlScheme: redirectUrl);
-        final token = Uri.parse(result).queryParameters['token'];
+        final token = Uri.parse(result).queryParameters[tokenKey];
+        final refreshToken = Uri.parse(result).queryParameters[refreshTokenKey];
+        await _secureStorage.write(key: tokenName, value: refreshToken);
+        state = AsyncValue.data({
+          tokenKey: token!,
+          refreshTokenKey: refreshToken!,
+        });
       } else {
-        await appAuth.authorizeAndExchangeCode(
+        AuthorizationTokenResponse? resp =
+            await appAuth.authorizeAndExchangeCode(
           AuthorizationTokenRequest(
             clientId,
             redirectUrl,
@@ -107,23 +117,15 @@ class OpenIdTokenProvider
             scopes: scopes,
           ),
         );
-      }
-      AuthorizationTokenResponse? resp = await appAuth.authorizeAndExchangeCode(
-        AuthorizationTokenRequest(
-          clientId,
-          redirectUrl,
-          discoveryUrl: discoveryUrl,
-          scopes: scopes,
-        ),
-      );
-      if (resp != null) {
-        await _secureStorage.write(key: tokenName, value: resp.refreshToken);
-        state = AsyncValue.data({
-          "token": resp.accessToken!,
-          "refreshToken": resp.refreshToken!,
-        });
-      } else {
-        state = const AsyncValue.error("Error");
+        if (resp != null) {
+          await _secureStorage.write(key: tokenName, value: resp.refreshToken);
+          state = AsyncValue.data({
+            tokenKey: resp.accessToken!,
+            refreshTokenKey: resp.refreshToken!,
+          });
+        } else {
+          state = const AsyncValue.error("Error");
+        }
       }
     } catch (e) {
       state = AsyncValue.error("Error $e");
@@ -135,31 +137,30 @@ class OpenIdTokenProvider
     _secureStorage.read(key: tokenName).then((token) async {
       if (token != null) {
         try {
-          appAuth
-              .token(TokenRequest(
+          final resp = await appAuth.token(TokenRequest(
             clientId,
             redirectUrl,
             discoveryUrl: discoveryUrl,
             scopes: scopes,
             refreshToken: token,
-          ))
-              .then((resp) {
-            if (resp != null) {
-              state = AsyncValue.data({
-                "token": resp.accessToken!,
-                "refreshToken": resp.refreshToken!,
-              });
-              storeToken();
-            } else {
-              state = const AsyncValue.error("Error");
-            }
-          });
+          ));
+          if (resp != null) {
+            state = AsyncValue.data({
+              tokenKey: resp.accessToken!,
+              refreshTokenKey: resp.refreshToken!,
+            });
+            storeToken();
+          } else {
+            state = const AsyncValue.error("Error");
+            deleteToken();
+          }
         } catch (e) {
           state = AsyncValue.error(e);
+          deleteToken();
         }
       } else {
-        deleteToken();
         state = const AsyncValue.error("No token found");
+        deleteToken();
       }
     });
   }
@@ -176,8 +177,8 @@ class OpenIdTokenProvider
         .then((resp) {
       if (resp != null) {
         state = AsyncValue.data({
-          "token": resp.accessToken!,
-          "refreshToken": resp.refreshToken!,
+          tokenKey: resp.accessToken!,
+          refreshTokenKey: resp.refreshToken!,
         });
       } else {
         state = const AsyncValue.error("Error");
@@ -195,13 +196,13 @@ class OpenIdTokenProvider
               redirectUrl,
               discoveryUrl: discoveryUrl,
               scopes: scopes,
-              refreshToken: token["refreshToken"] as String,
+              refreshToken: token[refreshTokenKey] as String,
             ),
           );
           if (resp != null) {
             state = AsyncValue.data({
-              "token": resp.accessToken!,
-              "refreshToken": resp.refreshToken!,
+              tokenKey: resp.accessToken!,
+              refreshTokenKey: resp.refreshToken!,
             });
             storeToken();
             return true;
@@ -226,8 +227,8 @@ class OpenIdTokenProvider
 
   void storeToken() {
     state.when(
-        data: (tokens) =>
-            _secureStorage.write(key: tokenName, value: tokens["refreshToken"]),
+        data: (tokens) => _secureStorage.write(
+            key: tokenName, value: tokens[refreshTokenKey]),
         error: (e, s) {
           throw e;
         },
@@ -239,7 +240,7 @@ class OpenIdTokenProvider
   void deleteToken() {
     try {
       _secureStorage.delete(key: tokenName);
-      state = const AsyncValue.data({"token": "", "refreshToken": ""});
+      state = AsyncValue.data({tokenKey: "", refreshTokenKey: ""});
     } catch (e) {
       state = AsyncValue.error(e);
     }

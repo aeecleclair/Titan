@@ -9,10 +9,12 @@ environment:
 
 dependencies:
   animations: ^2.0.2
+  auto_size_text: ^3.0.0
   crypto: ^3.0.2
   cupertino_icons: ^1.0.2
   datetime_picker_formfield: ^2.0.1
   fl_chart: ^0.55.2
+  f_logs: ^2.0.1
   flash: ^2.0.3+2
   flutter:
     sdk: flutter
@@ -26,6 +28,7 @@ dependencies:
   heroicons: ^0.7.0
   hooks_riverpod: ^1.0.3
   http: ^0.13.4
+  im_stepper: ^1.0.1+1
   intl: ^0.17.0
   jwt_decoder: ^2.0.1
   numberpicker: ^2.1.1

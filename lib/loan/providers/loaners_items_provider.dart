@@ -11,7 +11,7 @@ class LoanersItems extends ToogleMapNotifier<Loaner, Item> {
 }
 
 final loanersItemsProvider = StateNotifierProvider<LoanersItems,
-    AsyncValue<Map<Loaner, Tuple2<AsyncValue<List<Item>>, bool>>>>((ref) {
+    AsyncValue<Map<Loaner, AsyncValue<List<Item>>>>>((ref) {
   final token = ref.watch(tokenProvider);
   final loaners = ref.watch(loanerList);
   LoanersItems loanerLoanListNotifier = LoanersItems(token: token);

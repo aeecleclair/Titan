@@ -7,7 +7,7 @@ import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/solde_page/cash_ui.dart';
-import 'package:myecl/amap/ui/refresh_indicator.dart';
+import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
@@ -104,71 +104,65 @@ class SoldePage extends HookConsumerWidget {
     ref.watch(userList);
     List<Widget> listWidgetCash = buildAll(cash.value, editingController);
 
-    return AmapRefresher(
+    return Refresher(
       onRefresh: () async {
         cash.value = await cashListNotifier.loadCashList();
       },
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics(),
-        ),
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height - 90,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 30,
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height - 90,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (value) {
+                  focus.value = true;
+                  tokenExpireWrapper(ref, () async {
+                    final value = await cashListNotifier
+                        .filterCashList(editingController.text);
+                    cash.value = value;
+                  });
+                },
+                controller: editingController,
+                autofocus: focus.value,
+                decoration: const InputDecoration(
+                    labelText: AMAPTextConstants.looking,
+                    hintText: AMAPTextConstants.looking,
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(25.0)))),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  onChanged: (value) {
-                    focus.value = true;
-                    tokenExpireWrapper(ref, () async {
-                      final value = await cashListNotifier
-                          .filterCashList(editingController.text);
-                      cash.value = value;
-                    });
-                  },
-                  controller: editingController,
-                  autofocus: focus.value,
-                  decoration: const InputDecoration(
-                      labelText: AMAPTextConstants.looking,
-                      hintText: AMAPTextConstants.looking,
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(25.0)))),
+            ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: AMAPColorConstants.background2.withOpacity(0.5)),
+                child: Column(
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: listWidgetCash.length,
+                      itemBuilder: (context, index) {
+                        return listWidgetCash[index];
+                      },
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    GestureDetector(
+                      child: const GreenBtn(text: AMAPTextConstants.addUser),
+                      onTap: () {
+                        pageNotifier.setAmapPage(AmapPage.addSolde);
+                      },
+                    )
+                  ],
                 ),
               ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: AMAPColorConstants.background2.withOpacity(0.5)),
-                  child: Column(
-                    children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: listWidgetCash.length,
-                        itemBuilder: (context, index) {
-                          return listWidgetCash[index];
-                        },
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      GestureDetector(
-                        child: const GreenBtn(text: AMAPTextConstants.addUser),
-                        onTap: () {
-                          pageNotifier.setAmapPage(AmapPage.addSolde);
-                        },
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

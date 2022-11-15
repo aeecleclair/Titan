@@ -36,6 +36,9 @@ class SettingsHomePage extends ConsumerWidget {
           case SettingsPage.notification:
             pageNotifier.setSettingsPage(SettingsPage.main);
             break;
+          case SettingsPage.help:
+            pageNotifier.setSettingsPage(SettingsPage.main);
+            break;
         }
         return false;
       },
@@ -43,14 +46,16 @@ class SettingsHomePage extends ConsumerWidget {
         decoration: const BoxDecoration(
           color: Colors.white,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            TopBar(
-              controllerNotifier: controllerNotifier,
-            ),
-            const Expanded(child: PageSwitcher()),
-          ],
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              TopBar(
+                controllerNotifier: controllerNotifier,
+              ),
+              const Expanded(child: PageSwitcher()),
+            ],
+          ),
         ),
       ),
     ));

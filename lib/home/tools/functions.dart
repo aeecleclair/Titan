@@ -14,6 +14,8 @@ String doubleToTime(double d) {
 
 String getMonth(int m) {
   switch (m) {
+    case 0:
+      return "Décembre";
     case 1:
       return "Janvier";
     case 2:
@@ -107,9 +109,16 @@ DateTime correctAfterDate(DateTime end) {
   return end;
 }
 
+List<DateTime> getDateInRecurrence(String recurrenceRule, DateTime start) {
+  return SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
+}
+
 bool isDateInReccurence(String recurrenceRule, String strNow, DateTime start) {
-  final rrule =
-      SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
+  final rrule = getDateInRecurrence(recurrenceRule, start);
   final dates = rrule.map((e) => processDateToAPIWitoutHour(e)).toList();
   return dates.contains(strNow);
+}
+
+DateTime normalizedDate(DateTime date) {
+  return DateTime(date.year, date.month, date.day, 0, 0, 0, 0, 0);
 }

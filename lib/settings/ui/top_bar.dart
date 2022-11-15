@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
+import 'package:myecl/settings/tools/constants.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -15,7 +16,7 @@ class TopBar extends HookConsumerWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 25,
+          height: 15,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,25 +40,34 @@ class TopBar extends HookConsumerWidget {
                           case SettingsPage.notification:
                             pageNotifier.setSettingsPage(SettingsPage.main);
                             break;
+                          case SettingsPage.help:
+                            pageNotifier.setSettingsPage(SettingsPage.main);
+                            break;
                         }
                       },
-                      icon: FaIcon(
+                      icon: HeroIcon(
                         page == SettingsPage.main
-                            ? FontAwesomeIcons.chevronRight
-                            : FontAwesomeIcons.chevronLeft,
+                            ? HeroIcons.bars3BottomLeft
+                            : HeroIcons.chevronLeft,
                         color: const Color.fromARGB(255, 0, 0, 0),
+                        size: 30,
                       ));
                 },
               ),
             ),
+            const Text(SettingsTextConstants.settings,
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black)),
             const SizedBox(
-              width: 100,
+              width: 70,
             ),
           ],
         ),
         const SizedBox(
           height: 20,
-        ),
+        )
       ],
     );
   }

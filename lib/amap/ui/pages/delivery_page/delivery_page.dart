@@ -4,7 +4,7 @@ import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/delivery_page/delivery_ui.dart';
-import 'package:myecl/amap/ui/refresh_indicator.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class DeliveryPage extends HookConsumerWidget {
   const DeliveryPage({Key? key}) : super(key: key);
@@ -104,15 +104,11 @@ class DeliveryPage extends HookConsumerWidget {
       },
     );
 
-    return AmapRefresher(
-        onRefresh: () async {
-          await deliveryListNotifier.loadDeliveriesList();
-        },
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics(),
-          ),
-          child: Column(children: listWidgetOrder),
-        ));
+    return Refresher(
+      onRefresh: () async {
+        await deliveryListNotifier.loadDeliveriesList();
+      },
+      child: Column(children: listWidgetOrder),
+    );
   }
 }

@@ -1,13 +1,3 @@
-import 'package:flutter/material.dart';
-
-class EventColorConstants {
-  static const Color redGradient1 = Color(0xFFc72c41);
-  static const Color redGradient2 = Color(0xFF801336);
-  static const Color darkBlue = Color(0xFF004a59);
-  static const Color blueGradient2 = Color(0xFF027184);
-  static const Color blueGradient1 = Color(0xFF0193a5);
-}
-
 class EventTextConstants {
   static const String add = "Ajouter";
   static const String addEvent = "Ajouter un événement";
@@ -16,19 +6,25 @@ class EventTextConstants {
   static const String allDay = "Toute la journée";
   static const String confirmation = "Confirmation";
   static const String dates = "Dates";
+  static const String delete = "Supprimer";
   static const String deletedEvent = "Événement supprimé";
   static const String deleting = "Suppression";
+  static const String deletingError = "Erreur lors de la suppression";
   static const String deletingEvent = "Supprimer l'événement ?";
   static const String description = "Description";
+  static const String edit = "Modifier";
   static const String endDate = "Date de fin";
+  static const String endHour = "Heure de fin";
   static const String eventList = "Liste des événements";
   static const String eventType = "Type d'événement";
+  static const String every = "Tous les";
   static const String incorrectOrMissingFields =
       "Certains champs sont incorrects ou manquants";
   static const String interval = "Intervalle";
   static const String invalidDates =
       "La date de fin doit être après la date de début";
-  static const String invalidIntervalError = "Veuillez entrer un intervalle valide";
+  static const String invalidIntervalError =
+      "Veuillez entrer un intervalle valide";
   static const String name = "Nom";
   static const String next = "Suivant";
   static const String no = "Non";
@@ -47,8 +43,19 @@ class EventTextConstants {
   static const String recurrenceEndDate = "Date de fin de la récurrence";
   static const String recurrenceRule = "Règle de récurrence";
   static const String startDate = "Date de début";
+  static const String startHour = "Heure de début";
   static const String title = "Événements";
   static const String yes = "Oui";
   static const String eventEvery = "Toutes les";
   static const String weeks = "semaines";
+
+  static const List<String> dayList = [
+    'Lundi',
+    'Mardi',
+    'Mercredi',
+    'Jeudi',
+    'Vendredi',
+    'Samedi',
+    'Dimanche'
+  ];
 }

@@ -10,23 +10,23 @@ class AssoUi extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 50),
-              child: Text(
-                capitalize(name),
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-              ),
-            ),
-            GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: onTap,
-                child: Container(
+    return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 50),
+                  child: Text(
+                    capitalize(name),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       color: Colors.grey[200],
@@ -36,8 +36,8 @@ class AssoUi extends HookConsumerWidget {
                     size: 25,
                     color: Colors.black,
                   ),
-                ))
-          ],
-        ));
+                ),
+              ],
+            )));
   }
 }

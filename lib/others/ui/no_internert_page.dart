@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/others/ui/refresh_indicator.dart';
+import 'package:myecl/others/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
 
 class NoInternetPage extends HookConsumerWidget {
@@ -11,7 +13,7 @@ class NoInternetPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final versionVerifierNotifier = ref.watch(versionVerifierProvider.notifier);
     return Scaffold(
-      body: OthersRefresher(
+      body: Refresher(
         onRefresh: () async {
           await versionVerifierNotifier.loadVersion();
         },
@@ -29,14 +31,18 @@ class NoInternetPage extends HookConsumerWidget {
                   height: 20,
                 ),
                 const Center(
-                  child: Text('Impossible de se connecter au serveur',
-                      style: TextStyle(fontSize: 20)),
+                  child: Text(
+                    OthersTextConstants.unableToConnectToServer,
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 const Center(
-                  child: Text('Veuillez vérifier votre connexion internet'),
+                  child: Text(
+                    OthersTextConstants.checkInternetConnection,
+                  ),
                 ),
                 const SizedBox(
                   height: 40,
@@ -49,10 +55,16 @@ class NoInternetPage extends HookConsumerWidget {
                     padding: const EdgeInsets.all(10),
                     width: 250,
                     decoration: BoxDecoration(
-                        color: Colors.blue,
+                        gradient: const LinearGradient(
+                            colors: [
+                              ColorConstants.gradient1,
+                              ColorConstants.gradient2
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight),
                         boxShadow: [
                           BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
+                              color: ColorConstants.gradient1.withOpacity(0.2),
                               blurRadius: 10,
                               offset: const Offset(0, 5))
                         ],
@@ -65,7 +77,7 @@ class NoInternetPage extends HookConsumerWidget {
                           size: 25,
                           color: Colors.white,
                         ),
-                        Text('Réessayer',
+                        Text(OthersTextConstants.retry,
                             style: TextStyle(
                                 fontSize: 25,
                                 color: Colors.white,
