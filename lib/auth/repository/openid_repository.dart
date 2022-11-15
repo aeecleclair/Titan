@@ -13,9 +13,9 @@ class OpenIdRepository extends Repository {
       "redirect_uri": redirectUri.toString(),
       "code_verifier": codeVerifier,
       "grant_type": grantType,
+      "refresh_token": token,
     };
 
-    print(body);
     final Map<String, String> headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
       "Accept": "application/json",
@@ -26,12 +26,9 @@ class OpenIdRepository extends Repository {
               headers: headers, body: body)
           .timeout(const Duration(seconds: 5));
       if (response.statusCode == 200) {
-        print(response.body);
         final token = jsonDecode(response.body)["access_token"];
-        print('token $token');
         final refreshToken = jsonDecode(response.body)["refresh_token"];
-        print('refreshToken $refreshToken');
-        return {"token": token, "refreshToken": refreshToken};
+        return {"token": token, "refresh_token": refreshToken};
       } else {
         throw Exception('Empty token');
       }

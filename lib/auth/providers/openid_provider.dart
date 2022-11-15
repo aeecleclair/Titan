@@ -8,6 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:myecl/auth/repository/openid_repository.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'dart:html' as html;
 import 'dart:convert';
@@ -90,6 +91,7 @@ class OpenIdTokenProvider
   FlutterAppAuth appAuth = const FlutterAppAuth();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
   final Base64Codec base64 = const Base64Codec.urlSafe();
+  final OpenIdRepository openIdRepository = OpenIdRepository();
   final String tokenName = "my_ecl_auth_token";
   final String clientId = "Titan";
   final String tokenKey = "token";
@@ -101,20 +103,19 @@ class OpenIdTokenProvider
   final List<String> scopes = ["API"];
   OpenIdTokenProvider() : super(const AsyncValue.loading());
 
+  String generateRandomString(int len) {
+    var r = Random.secure();
+    const chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
+  }
+
+  String hash(String data) {
+    return base64.encode(sha256.convert(utf8.encode(data)).bytes);
+  }
+
   Future getTokenFromRequest() async {
     html.WindowBase? popupWin;
-
-    String generateRandomString(int len) {
-      var r = Random.secure();
-      const chars =
-          'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-      return List.generate(len, (index) => chars[r.nextInt(chars.length)])
-          .join();
-    }
-
-    String hash(String data) {
-      return base64.encode(sha256.convert(utf8.encode(data)).bytes);
-    }
 
     final currentUri = Uri.base;
 
@@ -138,43 +139,23 @@ class OpenIdTokenProvider
         void login(String data) async {
           final receivedUri = Uri.parse(data);
           final token = receivedUri.queryParameters["code"];
-          print('token $token');
           if (popupWin != null) {
             popupWin!.close();
             popupWin = null;
           }
-          var body = {
-            "client_id": clientId,
-            "code": token,
-            "redirect_uri": redirectUri.toString(),
-            "code_verifier": codeVerifier,
-            "grant_type": "authorization_code",
-          };
-          print('codeVerifier: $codeVerifier');
-          print("hash: ${hash(codeVerifier)}");
-          final Map<String, String> headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            "Accept": "application/json",
-          };
           try {
             if (token != null && token.isNotEmpty) {
-              final response = await http
-                  .post(Uri.parse("${Repository.host}auth/token"),
-                      headers: headers, body: body)
-                  .timeout(const Duration(seconds: 5));
-              if (response.statusCode == 200) {
-                final token = jsonDecode(response.body)["access_token"];
-                final refreshToken = jsonDecode(response.body)["refresh_token"];
-                await _secureStorage.write(key: tokenName, value: refreshToken);
-                state = AsyncValue.data({
-                  tokenKey: token,
-                  refreshTokenKey: refreshToken,
-                });
-              } else {
-                throw Exception('Wrong credentials');
-              }
+              final resp = await openIdRepository.getToken(token, clientId,
+                  redirectUri.toString(), codeVerifier, "authorization_code");
+              final accessToken = resp[tokenKey]!;
+              final refreshToken = resp[refreshTokenKey]!;
+              await _secureStorage.write(key: tokenName, value: refreshToken);
+              state = AsyncValue.data({
+                tokenKey: accessToken,
+                refreshTokenKey: refreshToken,
+              });
             } else {
-              print("empty token");
+              throw Exception('Wrong credentials');
             }
           } on TimeoutException catch (_) {
             throw Exception('No response from server');
@@ -183,9 +164,7 @@ class OpenIdTokenProvider
           }
         }
 
-        /// Listen to message send with `postMessage`.
         html.window.onMessage.listen((event) {
-          /// If the event contains the token it means the user is authenticated.
           if (event.data.toString().contains('code=')) {
             login(event.data);
           }
@@ -218,32 +197,46 @@ class OpenIdTokenProvider
   void getTokenFromStorage() {
     state = const AsyncValue.loading();
     _secureStorage.read(key: tokenName).then((token) async {
+      print(token);
       if (token != null) {
         try {
-          final resp = await appAuth.token(TokenRequest(
-            clientId,
-            redirectUrl,
-            discoveryUrl: discoveryUrl,
-            scopes: scopes,
-            refreshToken: token,
-          ));
-          if (resp != null) {
+          if (kIsWeb) {
+            final resp = await openIdRepository.getToken(
+                token, clientId, "", "", refreshTokenKey);
+            print(resp);
+            final accessToken = resp[tokenKey]!;
+            final refreshToken = resp[refreshTokenKey]!;
+            await _secureStorage.write(key: tokenName, value: refreshToken);
             state = AsyncValue.data({
-              tokenKey: resp.accessToken!,
-              refreshTokenKey: resp.refreshToken!,
+              tokenKey: accessToken,
+              refreshTokenKey: refreshToken,
             });
-            storeToken();
           } else {
-            state = const AsyncValue.error("Error");
-            deleteToken();
+            final resp = await appAuth.token(TokenRequest(
+              clientId,
+              redirectUrl,
+              discoveryUrl: discoveryUrl,
+              scopes: scopes,
+              refreshToken: token,
+            ));
+            if (resp != null) {
+              state = AsyncValue.data({
+                tokenKey: resp.accessToken!,
+                refreshTokenKey: resp.refreshToken!,
+              });
+              storeToken();
+            } else {
+              state = const AsyncValue.error("Error");
+              // deleteToken();
+            }
           }
         } catch (e) {
           state = AsyncValue.error(e);
-          deleteToken();
+          // deleteToken();
         }
       } else {
         state = const AsyncValue.error("No token found");
-        deleteToken();
+        // deleteToken();
       }
     });
   }
