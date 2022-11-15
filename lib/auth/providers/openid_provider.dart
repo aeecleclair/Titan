@@ -1,10 +1,17 @@
+import 'dart:async';
+import 'dart:math';
+
+import 'package:crypto/crypto.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
-import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
+import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:myecl/tools/repository/repository.dart';
+import 'dart:html' as html;
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
@@ -82,30 +89,106 @@ class OpenIdTokenProvider
     extends StateNotifier<AsyncValue<Map<String, String>>> {
   FlutterAppAuth appAuth = const FlutterAppAuth();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
+  final Base64Codec base64 = const Base64Codec.urlSafe();
   final String tokenName = "my_ecl_auth_token";
   final String clientId = "Titan";
   final String tokenKey = "token";
   final String refreshTokenKey = "refresh_token";
-  final String redirectUrl = "titan";
+  final String titanRedirectUrl = "titan://myecl.fr/account/activate";
+  final String redirectUrl = "http://localhost:54383/static.html";
   final String discoveryUrl =
       "${Repository.host}.well-known/openid-configuration";
   final List<String> scopes = ["API"];
   OpenIdTokenProvider() : super(const AsyncValue.loading());
 
   Future getTokenFromRequest() async {
+    html.WindowBase? popupWin;
+
+    String generateRandomString(int len) {
+      var r = Random.secure();
+      const chars =
+          'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+      return List.generate(len, (index) => chars[r.nextInt(chars.length)])
+          .join();
+    }
+
+    String hash(String data) {
+      return base64.encode(sha256.convert(utf8.encode(data)).bytes);
+    }
+
+    final currentUri = Uri.base;
+
+    final redirectUri = Uri(
+      host: currentUri.host,
+      scheme: currentUri.scheme,
+      port: currentUri.port,
+      path: '/static.html',
+    );
+    final codeVerifier = generateRandomString(128);
+
+    final authUrl =
+        "${Repository.host}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectUri&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
+
     state = const AsyncValue.loading();
     try {
       if (kIsWeb) {
-        final result = await FlutterWebAuth2.authenticate(
-            url:
-                "${Repository.host}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}",
-            callbackUrlScheme: redirectUrl);
-        final token = Uri.parse(result).queryParameters[tokenKey];
-        final refreshToken = Uri.parse(result).queryParameters[refreshTokenKey];
-        await _secureStorage.write(key: tokenName, value: refreshToken);
-        state = AsyncValue.data({
-          tokenKey: token!,
-          refreshTokenKey: refreshToken!,
+        popupWin = html.window
+            .open(authUrl, "Hyperion", "width=800, height=900, scrollbars=yes");
+
+        void login(String data) async {
+          final receivedUri = Uri.parse(data);
+          final token = receivedUri.queryParameters["code"];
+          print('token $token');
+          if (popupWin != null) {
+            popupWin!.close();
+            popupWin = null;
+          }
+          var body = {
+            "client_id": clientId,
+            "code": token,
+            "redirect_uri": redirectUri.toString(),
+            "code_verifier": codeVerifier,
+            "grant_type": "authorization_code",
+          };
+          print('codeVerifier: $codeVerifier');
+          print("hash: ${hash(codeVerifier)}");
+          final Map<String, String> headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            "Accept": "application/json",
+          };
+          try {
+            if (token != null && token.isNotEmpty) {
+              final response = await http
+                  .post(Uri.parse("${Repository.host}auth/token"),
+                      headers: headers, body: body)
+                  .timeout(const Duration(seconds: 5));
+              if (response.statusCode == 200) {
+                final token = jsonDecode(response.body)["access_token"];
+                final refreshToken = jsonDecode(response.body)["refresh_token"];
+                await _secureStorage.write(key: tokenName, value: refreshToken);
+                state = AsyncValue.data({
+                  tokenKey: token,
+                  refreshTokenKey: refreshToken,
+                });
+              } else {
+                throw Exception('Wrong credentials');
+              }
+            } else {
+              print("empty token");
+            }
+          } on TimeoutException catch (_) {
+            throw Exception('No response from server');
+          } catch (e) {
+            rethrow;
+          }
+        }
+
+        /// Listen to message send with `postMessage`.
+        html.window.onMessage.listen((event) {
+          /// If the event contains the token it means the user is authenticated.
+          if (event.data.toString().contains('code=')) {
+            login(event.data);
+          }
         });
       } else {
         AuthorizationTokenResponse? resp =
