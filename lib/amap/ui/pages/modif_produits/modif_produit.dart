@@ -7,7 +7,6 @@ import 'package:myecl/amap/providers/modified_product_index_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_category_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/modif_produits/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
@@ -54,8 +53,8 @@ class ModifProduct extends HookConsumerWidget {
       }
     }).toList();
 
-    void displayAMAPToastWithContext(TypeMsg type, String msg) {
-      displayAMAPToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Column(
@@ -271,12 +270,12 @@ class ModifProduct extends HookConsumerWidget {
                                           final value = await productsNotifier
                                               .updateProduct(newProduct);
                                           if (value) {
-                                            displayAMAPToastWithContext(
+                                            displayToastWithContext(
                                                 TypeMsg.msg,
                                                 AMAPTextConstants
                                                     .updatedProduct);
                                           } else {
-                                            displayAMAPToastWithContext(
+                                            displayToastWithContext(
                                                 TypeMsg.error,
                                                 AMAPTextConstants
                                                     .updatingError);
@@ -304,11 +303,10 @@ class ModifProduct extends HookConsumerWidget {
                                           final value = await productsNotifier
                                               .addProduct(newProduct);
                                           if (value) {
-                                            displayAMAPToastWithContext(
-                                                TypeMsg.msg,
+                                            displayToastWithContext(TypeMsg.msg,
                                                 AMAPTextConstants.addedProduct);
                                           } else {
-                                            displayAMAPToastWithContext(
+                                            displayToastWithContext(
                                                 TypeMsg.error,
                                                 AMAPTextConstants.addingError);
                                           }

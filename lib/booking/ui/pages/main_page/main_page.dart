@@ -4,13 +4,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
+import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/tools/dialog.dart';
-import 'package:myecl/booking/ui/pages/main_page/booking_card.dart';
-import 'package:myecl/booking/ui/refresh_indicator.dart';
+import 'package:myecl/booking/ui/booking_card.dart';
 import 'package:myecl/booking/ui/pages/main_page/calendar.dart';
+import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -20,24 +22,19 @@ class MainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isBookingAdmin);
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
+    final confirmedbookingsNotifier =
+        ref.watch(confirmedBookingListProvider.notifier);
     final bookings = ref.watch(userBookingListProvider);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
-    return BookingRefresher(
+    return Refresher(
       onRefresh: () async {
+        await confirmedbookingsNotifier.loadConfirmedBooking();
         await bookingsNotifier.loadUserBookings();
       },
       child: Column(children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(BookingTextConstants.booking,
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-          ),
-        ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
         SizedBox(
-            height: MediaQuery.of(context).size.height - 450,
+            height: MediaQuery.of(context).size.height - 415,
             child: const Calendar()),
         SizedBox(
           height: (isAdmin) ? 25 : 30,
@@ -141,14 +138,18 @@ class MainPage extends HookConsumerWidget {
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return BookingDialog(
+                                    return CustomDialogBox(
                                       title: BookingTextConstants.deleting,
                                       descriptions:
                                           BookingTextConstants.deletingBooking,
-                                      onYes: () {
-                                      },
+                                      onYes: () {},
                                     );
                                   });
+                            },
+                            onInfo: () {
+                              bookingNotifier.setBooking(e);
+                              pageNotifier.setBookingPage(
+                                  BookingPage.detailBookingFromMain);
                             },
                           )),
                       const SizedBox(width: 10),
@@ -161,7 +162,7 @@ class MainPage extends HookConsumerWidget {
             loading: () {
               return const Center(
                   child: CircularProgressIndicator(
-                color: BookingColorConstants.darkBlue,
+                color: ColorConstants.background2,
               ));
             })
       ]),

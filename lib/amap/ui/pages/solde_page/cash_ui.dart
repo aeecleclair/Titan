@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 
 class CashUi extends HookConsumerWidget {
@@ -85,10 +84,10 @@ class CashUi extends HookConsumerWidget {
                           .then((value) {
                         if (value) {
                           key.currentState!.reset();
-                          displayAMAPToast(context, TypeMsg.msg,
+                          displayToast(context, TypeMsg.msg,
                               AMAPTextConstants.updatedAmount);
                         } else {
-                          displayAMAPToast(context, TypeMsg.error,
+                          displayToast(context, TypeMsg.error,
                               AMAPTextConstants.updatingError);
                         }
                       });

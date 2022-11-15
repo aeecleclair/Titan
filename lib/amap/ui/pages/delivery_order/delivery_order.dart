@@ -5,7 +5,7 @@ import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/commade_ui.dart';
-import 'package:myecl/amap/ui/refresh_indicator.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class DeliveryOrderPage extends HookConsumerWidget {
   const DeliveryOrderPage({Key? key}) : super(key: key);
@@ -81,7 +81,7 @@ class DeliveryOrderPage extends HookConsumerWidget {
       ));
     });
 
-    return AmapRefresher(
+    return Refresher(
         onRefresh: () async {
           await orderListNotifier.loadOrderList();
         },

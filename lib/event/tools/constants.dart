@@ -1,15 +1,3 @@
-import 'package:flutter/material.dart';
-
-class EventColorConstants {
-  static const Color gradient1 = Color(0xFFfb6d10);
-  static const Color gradient2 = Color(0xffeb3e1b);
-  static const Color redGradient1 = Color(0xFFc72c41);
-  static const Color redGradient2 = Color(0xFF801336);
-  static const Color darkBlue = Color(0xFF004a59);
-  static const Color blueGradient2 = Color(0xFF027184);
-  static const Color blueGradient1 = Color(0xFF0193a5);
-}
-
 class EventTextConstants {
   static const String add = "Ajouter";
   static const String addEvent = "Ajouter un événement";

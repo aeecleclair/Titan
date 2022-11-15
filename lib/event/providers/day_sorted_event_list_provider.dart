@@ -5,6 +5,7 @@ import 'package:myecl/event/tools/functions.dart';
 
 final daySortedEventListProvider = Provider<Map<DateTime, List<Event>>>((ref) {
   final eventList = ref.watch(eventListProvider);
+  final now = DateTime.now();
   final sortedEventList = <DateTime, List<Event>>{};
   return eventList.when(
       data: (events) {
@@ -24,16 +25,18 @@ final daySortedEventListProvider = Provider<Map<DateTime, List<Event>>>((ref) {
             final e = event.copyWith(
                 start: mergeDates(normalizedDate, event.start),
                 end: mergeDates(normalizedDate, event.end));
-            if (sortedEventList.containsKey(normalizedDate)) {
-              final index = sortedEventList[normalizedDate]!
-                  .indexWhere((element) => element.start.isAfter(e.start));
-              if (index == -1) {
-                sortedEventList[normalizedDate]!.add(e);
+            if (e.start.isAfter(now)) {
+              if (sortedEventList.containsKey(normalizedDate)) {
+                final index = sortedEventList[normalizedDate]!
+                    .indexWhere((element) => element.start.isAfter(e.start));
+                if (index == -1) {
+                  sortedEventList[normalizedDate]!.add(e);
+                } else {
+                  sortedEventList[normalizedDate]!.insert(index, e);
+                }
               } else {
-                sortedEventList[normalizedDate]!.insert(index, e);
+                sortedEventList[normalizedDate] = [e];
               }
-            } else {
-              sortedEventList[normalizedDate] = [e];
             }
           }
         }

@@ -5,9 +5,8 @@ import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
-import 'package:myecl/amap/ui/refresh_indicator.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
@@ -21,11 +20,11 @@ class AddSoldePage extends HookConsumerWidget {
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final editingController = useTextEditingController();
     final focus = useState(false);
-    void displayAMAPToastWithContext(TypeMsg type, String msg) {
-      displayAMAPToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
-    return AmapRefresher(
+    return Refresher(
         onRefresh: () async {
           users.value = await usersNotifier.filterUsers(" ");
         },
@@ -83,11 +82,10 @@ class AddSoldePage extends HookConsumerWidget {
                                       final value = await cashListNotifier
                                           .addCash(Cash(balance: 0.0, user: e));
                                       if (value) {
-                                        displayAMAPToastWithContext(TypeMsg.msg,
+                                        displayToastWithContext(TypeMsg.msg,
                                             AMAPTextConstants.addedUser);
                                       } else {
-                                        displayAMAPToastWithContext(
-                                            TypeMsg.error,
+                                        displayToastWithContext(TypeMsg.error,
                                             AMAPTextConstants.addingError);
                                       }
                                       pageNotifier.setAmapPage(AmapPage.solde);

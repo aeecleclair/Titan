@@ -7,10 +7,11 @@ import 'package:myecl/loan/providers/is_loan_admin_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
-import 'package:myecl/loan/ui/refresh_indicator.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class MainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final loanList = ref.watch(loanListProvider);
+    final loanNotifier = ref.watch(loanProvider.notifier);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
     final isAdmin = ref.watch(isLoanAdmin);
     ref.watch(adminLoanListProvider);
@@ -42,59 +44,14 @@ class MainPage extends HookConsumerWidget {
       error: (error, s) {},
     );
 
-    return LoanRefresher(
-        onRefresh: () async {
-          await loanListNotifier.loadLoanList();
-        },
-        child: Padding(
-            padding: const EdgeInsets.only(top: 10.0),
+    return Stack(
+      children: [
+        Refresher(
+            onRefresh: () async {
+              await loanListNotifier.loadLoanList();
+            },
             child: Column(children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(LoanTextConstants.loan,
-                          style: TextStyle(
-                              fontSize: 40, fontWeight: FontWeight.bold)),
-                      if (isAdmin)
-                        GestureDetector(
-                          onTap: () {
-                            pageNotifier.setLoanPage(LoanPage.admin);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 8),
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 5))
-                                ]),
-                            child: Row(
-                              children: const [
-                                HeroIcon(HeroIcons.userGroup,
-                                    color: Colors.white),
-                                SizedBox(width: 10),
-                                Text("Admin",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                              ],
-                            ),
-                          ),
-                        )
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
               (dictCateListWidget[0].isNotEmpty)
                   ? Column(children: [
                       const Padding(
@@ -121,6 +78,11 @@ class MainPage extends HookConsumerWidget {
                                   onEdit: () {},
                                   onCalendar: () {},
                                   onReturn: () async {},
+                                  onInfo: () {
+                                    loanNotifier.setLoan(e);
+                                    pageNotifier.setLoanPage(
+                                        LoanPage.detailLoanFromMain);
+                                  },
                                 )),
                             const SizedBox(width: 10),
                           ],
@@ -163,6 +125,11 @@ class MainPage extends HookConsumerWidget {
                                   onEdit: () {},
                                   onCalendar: () {},
                                   onReturn: () async {},
+                                  onInfo: () {
+                                    loanNotifier.setLoan(e);
+                                    pageNotifier.setLoanPage(
+                                        LoanPage.detailLoanFromMain);
+                                  },
                                 ))
                             .toList(),
                         const SizedBox(width: 10),
@@ -170,6 +137,42 @@ class MainPage extends HookConsumerWidget {
                     ),
                   )
                 ])
-            ])));
+            ])),
+        if (isAdmin)
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: GestureDetector(
+              onTap: () {
+                pageNotifier.setLoanPage(LoanPage.admin);
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5))
+                    ]),
+                child: Row(
+                  children: const [
+                    HeroIcon(HeroIcons.userGroup, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text("Admin",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white)),
+                  ],
+                ),
+              ),
+            ),
+          )
+      ],
+    );
   }
 }

@@ -8,7 +8,6 @@ import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/loaner_chip.dart';
 import 'package:myecl/loan/ui/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
@@ -28,8 +27,8 @@ class AddItemPage extends HookConsumerWidget {
     final name = useTextEditingController();
     final caution = useTextEditingController();
     final lendingDuration = useTextEditingController();
-    void displayLoanToastWithContext(TypeMsg type, String msg) {
-      displayLoanToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return SingleChildScrollView(
@@ -37,13 +36,16 @@ class AddItemPage extends HookConsumerWidget {
         child: Form(
           key: key,
           child: Column(children: [
+            const SizedBox(height: 30),
             const Padding(
-              padding: EdgeInsets.only(top: 10, left: 30, right: 30),
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(LoanTextConstants.addObject,
                       style: TextStyle(
-                          fontSize: 40, fontWeight: FontWeight.bold))),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 205, 205, 205)))),
             ),
             const SizedBox(height: 30),
             loaners.when(
@@ -124,15 +126,15 @@ class AddItemPage extends HookConsumerWidget {
                           pageNotifier.setLoanPage(LoanPage.admin);
                           await loanersitemsNotifier.setTData(
                               loaner.value, await itemListNotifier.copy());
-                          displayLoanToastWithContext(
+                          displayToastWithContext(
                               TypeMsg.msg, LoanTextConstants.addedObject);
                         } else {
-                          displayLoanToastWithContext(
+                          displayToastWithContext(
                               TypeMsg.error, LoanTextConstants.addingError);
                         }
                       });
                     } else {
-                      displayLoanToast(context, TypeMsg.error,
+                      displayToast(context, TypeMsg.error,
                           LoanTextConstants.incorrectOrMissingFields);
                     }
                   },

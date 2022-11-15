@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/settings/providers/logs_provider.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
-import 'package:myecl/settings/ui/refresh_indicator.dart';
+import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 
@@ -17,7 +18,8 @@ class MainPage extends HookConsumerWidget {
     final meNotifier = ref.watch(asyncUserProvider.notifier);
     final pageNotifier = ref.watch(settingsPageProvider.notifier);
     final titanVersion = ref.watch(titanVersionProvider);
-    return SettingsRefresher(
+    ref.watch(logsProvider.notifier).getLogs();
+    return Refresher(
       onRefresh: () async {
         await meNotifier.loadMe();
       },
@@ -70,20 +72,20 @@ class MainPage extends HookConsumerWidget {
                     fontWeight: FontWeight.w700,
                     color: Colors.black)),
           ),
-          const SizedBox(
-            height: 30,
-          ),
-          SettingsItem(
-            icon: HeroIcons.bell,
-            onTap: () {
-              pageNotifier.setSettingsPage(SettingsPage.notification);
-            },
-            child: const Text(SettingsTextConstants.notifications,
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.black)),
-          ),
+          // const SizedBox(
+          //   height: 30,
+          // ),
+          // SettingsItem(
+          //   icon: HeroIcons.bell,
+          //   onTap: () {
+          //     pageNotifier.setSettingsPage(SettingsPage.notification);
+          //   },
+          //   child: const Text(SettingsTextConstants.notifications,
+          //       style: TextStyle(
+          //           fontSize: 15,
+          //           fontWeight: FontWeight.w800,
+          //           color: Colors.black)),
+          // ),
           const SizedBox(
             height: 30,
           ),
@@ -98,62 +100,64 @@ class MainPage extends HookConsumerWidget {
                     fontWeight: FontWeight.w800,
                     color: Colors.black)),
           ),
-          const SizedBox(
-            height: 30,
-          ),
-          SettingsItem(
-            icon: HeroIcons.moon,
-            onTap: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(SettingsTextConstants.darkMode,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.black)),
-                Padding(
-                  padding: const EdgeInsets.only(right: 30),
-                  child: Text(SettingsTextConstants.darkModeOff,
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey[500])),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          SettingsItem(
-            icon: HeroIcons.language,
-            onTap: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(SettingsTextConstants.language,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.black)),
-                Padding(
-                  padding: const EdgeInsets.only(right: 30),
-                  child: Text(SettingsTextConstants.languageFr,
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey[500])),
-                ),
-              ],
-            ),
-          ),
+          // const SizedBox(
+          //   height: 30,
+          // ),
+          // SettingsItem(
+          //   icon: HeroIcons.moon,
+          //   onTap: () {},
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       const Text(SettingsTextConstants.darkMode,
+          //           style: TextStyle(
+          //               fontSize: 15,
+          //               fontWeight: FontWeight.w800,
+          //               color: Colors.black)),
+          //       Padding(
+          //         padding: const EdgeInsets.only(right: 30),
+          //         child: Text(SettingsTextConstants.darkModeOff,
+          //             style: TextStyle(
+          //                 fontSize: 15,
+          //                 fontWeight: FontWeight.w500,
+          //                 color: Colors.grey[500])),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // const SizedBox(
+          //   height: 30,
+          // ),
+          // SettingsItem(
+          //   icon: HeroIcons.language,
+          //   onTap: () {},
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       const Text(SettingsTextConstants.language,
+          //           style: TextStyle(
+          //               fontSize: 15,
+          //               fontWeight: FontWeight.w800,
+          //               color: Colors.black)),
+          //       Padding(
+          //         padding: const EdgeInsets.only(right: 30),
+          //         child: Text(SettingsTextConstants.languageFr,
+          //             style: TextStyle(
+          //                 fontSize: 15,
+          //                 fontWeight: FontWeight.w500,
+          //                 color: Colors.grey[500])),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           const SizedBox(
             height: 30,
           ),
           SettingsItem(
             icon: HeroIcons.lifebuoy,
-            onTap: () {},
+            onTap: () {
+              pageNotifier.setSettingsPage(SettingsPage.help);
+            },
             child: const Text(SettingsTextConstants.help,
                 style: TextStyle(
                     fontSize: 15,

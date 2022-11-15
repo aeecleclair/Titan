@@ -5,7 +5,7 @@ import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -19,17 +19,23 @@ class EditRoomPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final room = ref.watch(roomProvider);
     final name = useTextEditingController(text: room.name);
-    void displayBookingToastWithContext(TypeMsg type, String msg) {
-      displayBookingToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(children: [
+          const SizedBox(
+            height: 50,
+          ),
           const Align(
               alignment: Alignment.centerLeft,
               child: Text(BookingTextConstants.editRoom,
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold))),
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 205, 205, 205)))),
           Form(
             key: key,
             child: Column(
@@ -39,7 +45,7 @@ class EditRoomPage extends HookConsumerWidget {
                 ),
                 TextField(
                   style: const TextStyle(
-                    color: BookingColorConstants.darkBlue,
+                    color: ColorConstants.background2,
                   ),
                   controller: name,
                   cursorColor: Colors.black,
@@ -70,8 +76,7 @@ class EditRoomPage extends HookConsumerWidget {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 5,
                             blurRadius: 10,
-                            offset: const Offset(
-                                3, 3),
+                            offset: const Offset(3, 3),
                           ),
                         ],
                       ),
@@ -85,11 +90,11 @@ class EditRoomPage extends HookConsumerWidget {
                       final value = await roomListNotifier
                           .updateRoom(room.copyWith(name: name.text));
                       if (value) {
-                        pageNotifier.setBookingPage(BookingPage.rooms);
-                        displayBookingToastWithContext(
+                        pageNotifier.setBookingPage(BookingPage.admin);
+                        displayToastWithContext(
                             TypeMsg.msg, BookingTextConstants.editedRoom);
                       } else {
-                        displayBookingToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.error, BookingTextConstants.editionError);
                       }
                     });

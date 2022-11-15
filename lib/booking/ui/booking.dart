@@ -33,12 +33,6 @@ class BookingHomePage extends HookConsumerWidget {
           case BookingPage.addBooking:
             pageNotifier.setBookingPage(BookingPage.main);
             break;
-          case BookingPage.bookings:
-            pageNotifier.setBookingPage(BookingPage.main);
-            break;
-          case BookingPage.rooms:
-            pageNotifier.setBookingPage(BookingPage.admin);
-            break;
           case BookingPage.addRoom:
             pageNotifier.setBookingPage(BookingPage.admin);
             break;
@@ -46,6 +40,12 @@ class BookingHomePage extends HookConsumerWidget {
             pageNotifier.setBookingPage(BookingPage.admin);
             break;
           case BookingPage.editBooking:
+            pageNotifier.setBookingPage(BookingPage.main);
+            break;
+          case BookingPage.detailBookingFromAdmin:
+            pageNotifier.setBookingPage(BookingPage.admin);
+            break;
+          case BookingPage.detailBookingFromMain:
             pageNotifier.setBookingPage(BookingPage.main);
             break;
         }

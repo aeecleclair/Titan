@@ -15,14 +15,13 @@ import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/tools/dialog.dart';
-import 'package:myecl/loan/tools/functions.dart';
-import 'package:myecl/loan/ui/pages/detail_page/delay_dialog.dart';
-import 'package:myecl/loan/ui/pages/admin_page/item_card.dart';
+import 'package:myecl/loan/ui/pages/loan_group_page/delay_dialog.dart';
+import 'package:myecl/loan/ui/item_card.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
 import 'package:myecl/loan/ui/loaner_chip.dart';
-import 'package:myecl/loan/ui/refresh_indicator.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
@@ -43,8 +42,8 @@ class AdminPage extends HookConsumerWidget {
     final loanNotifier = ref.watch(loanProvider.notifier);
     final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
     final itemNotifier = ref.watch(itemProvider.notifier);
-    void displayLoanToastWithContext(TypeMsg type, String msg) {
-      displayLoanToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     if (!loaded.value) {
@@ -64,7 +63,7 @@ class AdminPage extends HookConsumerWidget {
       );
       loaded.value = true;
     }
-    return LoanRefresher(
+    return Refresher(
       onRefresh: () async {
         itemListNotifier.setId(loaner.id);
         itemListNotifier.loadItemList();
@@ -76,15 +75,6 @@ class AdminPage extends HookConsumerWidget {
         padding: const EdgeInsets.only(top: 10.0),
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(LoanTextConstants.admin,
-                    style:
-                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-              ),
-            ),
             const SizedBox(height: 30),
             adminLoanList.when(
                 data: (Map<Loaner, AsyncValue<List<Loan>>> loans) => Column(
@@ -162,7 +152,7 @@ class AdminPage extends HookConsumerWidget {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 40),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 30.0),
                           child: Align(
@@ -174,7 +164,7 @@ class AdminPage extends HookConsumerWidget {
                                     color: Color.fromARGB(255, 205, 205, 205))),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 15),
                         if (loans[loaner] != null)
                           loans[loaner]!.when(
                               data: (List<Loan> data) => SingleChildScrollView(
@@ -266,13 +256,13 @@ class AdminPage extends HookConsumerWidget {
                                                                           loaner,
                                                                           await loanListNotifier
                                                                               .copy());
-                                                                  displayLoanToastWithContext(
+                                                                  displayToastWithContext(
                                                                       TypeMsg
                                                                           .msg,
                                                                       LoanTextConstants
                                                                           .extendedLoan);
                                                                 } else {
-                                                                  displayLoanToastWithContext(
+                                                                  displayToastWithContext(
                                                                       TypeMsg
                                                                           .error,
                                                                       LoanTextConstants
@@ -298,17 +288,23 @@ class AdminPage extends HookConsumerWidget {
                                                                 loaner,
                                                                 await loanListNotifier
                                                                     .copy());
-                                                        displayLoanToastWithContext(
+                                                        displayToastWithContext(
                                                             TypeMsg.msg,
                                                             LoanTextConstants
                                                                 .returnedLoan);
                                                       } else {
-                                                        displayLoanToastWithContext(
+                                                        displayToastWithContext(
                                                             TypeMsg.msg,
                                                             LoanTextConstants
                                                                 .returningError);
                                                       }
                                                     });
+                                                  },
+                                                  onInfo: () {
+                                                    loanNotifier.setLoan(e);
+                                                    pageNotifier.setLoanPage(
+                                                        LoanPage
+                                                            .detailLoanFromAdmin);
                                                   },
                                                 ))
                                             .toList(),
@@ -325,7 +321,7 @@ class AdminPage extends HookConsumerWidget {
                                   color: Colors.black,
                                 ));
                               }),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 40),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 30.0),
                           child: Align(
@@ -337,7 +333,7 @@ class AdminPage extends HookConsumerWidget {
                                     color: Color.fromARGB(255, 205, 205, 205))),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 15),
                         loanersItems.when(
                           data: (items) {
                             if (items[loaner] != null) {
@@ -394,12 +390,13 @@ class AdminPage extends HookConsumerWidget {
                                       ),
                                       ...data.map((e) => ItemCard(
                                             item: e,
+                                            showButtons: true,
                                             onDelete: () async {
                                               showDialog(
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) {
-                                                    return LoanDialog(
+                                                    return CustomDialogBox(
                                                         descriptions:
                                                             LoanTextConstants
                                                                 .deletingItem,
@@ -416,12 +413,12 @@ class AdminPage extends HookConsumerWidget {
                                                                       loaner,
                                                                       await itemListNotifier
                                                                           .copy());
-                                                              displayLoanToastWithContext(
+                                                              displayToastWithContext(
                                                                   TypeMsg.msg,
                                                                   LoanTextConstants
                                                                       .deletedItem);
                                                             } else {
-                                                              displayLoanToastWithContext(
+                                                              displayToastWithContext(
                                                                   TypeMsg.error,
                                                                   LoanTextConstants
                                                                       .deletingError);

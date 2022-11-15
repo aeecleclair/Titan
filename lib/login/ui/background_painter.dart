@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/login/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
 
 class Point {
   final double x;
@@ -165,13 +165,13 @@ class BackgroundPainter extends CustomPainter {
       )
     ]);
 
-    var colors = [LoginColorConstants.gradient1, LoginColorConstants.gradient2];
+    var colors = [ColorConstants.gradient1, ColorConstants.gradient2];
 
     Rect rectShape = Rect.fromLTWH(0, 0, w, h);
     final Gradient gradient = LinearGradient(
         colors: colors, begin: Alignment.topLeft, end: Alignment.topRight);
 
-    paint = Paint()..color = LoginColorConstants.background;
+    paint = Paint()..color = ColorConstants.background2;
 
     paint2 = Paint()..shader = gradient.createShader(rectShape);
     paint3 = Paint()..shader = gradient.createShader(rectShape);
@@ -180,7 +180,7 @@ class BackgroundPainter extends CustomPainter {
     canvas.drawPath(path, paint);
 
     canvas.drawShadow(
-        path, LoginColorConstants.background.withAlpha(125), 10.0, false);
+        path, ColorConstants.background2.withAlpha(125), 10.0, false);
     canvas.drawPath(path2, paint2);
     canvas.drawPath(path4, paint4);
   }

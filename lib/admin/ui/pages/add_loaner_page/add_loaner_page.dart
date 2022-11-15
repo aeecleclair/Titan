@@ -4,9 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -20,8 +20,8 @@ class AddLoanerPage extends HookConsumerWidget {
     final loaners = ref.watch(loanerList);
     final associations = ref.watch(allGroupListProvider);
     final loanersId = loaners.map((x) => x.groupManagerId).toList();
-    void displayAdminToastWithContext(TypeMsg type, String msg) {
-      displayAdminToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Padding(
@@ -40,7 +40,7 @@ class AddLoanerPage extends HookConsumerWidget {
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: AdminColorConstants.gradient1)),
+                          color: ColorConstants.gradient1)),
                 ),
                 const SizedBox(
                   height: 30,
@@ -64,12 +64,10 @@ class AddLoanerPage extends HookConsumerWidget {
                                         if (value) {
                                           pageNotifier
                                               .setAdminPage(AdminPage.main);
-                                          displayAdminToastWithContext(
-                                              TypeMsg.msg,
+                                          displayToastWithContext(TypeMsg.msg,
                                               AdminTextConstants.addedLoaner);
                                         } else {
-                                          displayAdminToastWithContext(
-                                              TypeMsg.error,
+                                          displayToastWithContext(TypeMsg.error,
                                               AdminTextConstants.addingError);
                                         }
                                       });
@@ -94,7 +92,8 @@ class AddLoanerPage extends HookConsumerWidget {
                                     ),
                                   ))
                               .toList())
-                      : const Center(child: Text(AdminTextConstants.noMoreLoaner));
+                      : const Center(
+                          child: Text(AdminTextConstants.noMoreLoaner));
                 }, error: (Object error, StackTrace? stackTrace) {
                   return Text(error.toString());
                 }, loading: () {

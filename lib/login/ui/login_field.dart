@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/login/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
 
 class CreateAccountField extends HookConsumerWidget {
   final TextEditingController controller;
@@ -38,7 +39,7 @@ class CreateAccountField extends HookConsumerWidget {
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: LoginColorConstants.background,
+                color: ColorConstants.background2,
               )),
         ),
         const SizedBox(
@@ -77,8 +78,7 @@ class CreateAccountField extends HookConsumerWidget {
                     },
                   ),
                   enabledBorder: const UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: LoginColorConstants.background)),
+                      borderSide: BorderSide(color: ColorConstants.background2)),
                   focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(
                     color: Colors.white,
@@ -90,8 +90,7 @@ class CreateAccountField extends HookConsumerWidget {
                   errorStyle: const TextStyle(color: Colors.white))
               : const InputDecoration(
                   enabledBorder: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: LoginColorConstants.background)),
+                      borderSide: BorderSide(color: ColorConstants.background2)),
                   focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                     color: Colors.white,

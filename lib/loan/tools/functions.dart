@@ -1,19 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-
-void displayLoanToast(BuildContext context, TypeMsg type, String text) {
-  return displayToast(
-      context,
-      type,
-      text,
-      LoanColorConstants.lightGrey,
-      LoanColorConstants.darkGrey,
-      LoanColorConstants.lightOrange,
-      LoanColorConstants.orange,
-      Colors.white);
-}
 
 String formatItems(List<Item> items) {
   if (items.length == 2) {
@@ -44,5 +32,15 @@ String formatNumberItems(int n) {
     return "$n ${LoanTextConstants.itemSelected} ";
   } else {
     return LoanTextConstants.noItemSelected;
+  }
+}
+
+String formatDatesOnlyDay(DateTime dateStart, DateTime dateEnd) {
+  final start = parseDate(dateStart);
+  final end = parseDate(dateEnd);
+  if (start[0] == end[0]) {
+    return "Le ${start[0].substring(0, start[0].length - 5)}";
+  } else {
+    return "Du ${start[0].substring(0, start[0].length - 5)} au ${end[0].substring(0, end[0].length - 5)}";
   }
 }

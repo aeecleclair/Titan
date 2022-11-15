@@ -6,7 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/login/ui/text_from_decoration.dart';
 import 'package:myecl/tools/functions.dart';
@@ -22,8 +21,8 @@ class ForgetPassword extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final signUpNotifier = ref.watch(signUpProvider.notifier);
     final email = useTextEditingController();
-    void displayLoginToastWithContext(TypeMsg type, String msg) {
-      displayLoginToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Form(
@@ -94,11 +93,11 @@ class ForgetPassword extends HookConsumerWidget {
                       final value =
                           await signUpNotifier.recoverUser(email.text);
                       if (value) {
-                        displayLoginToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.msg, LoginTextConstants.sendedResetMail);
                         email.clear();
                       } else {
-                        displayLoginToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);
                       }
                     },

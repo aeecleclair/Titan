@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/others/tools/constants.dart';
-import 'package:myecl/others/ui/refresh_indicator.dart';
+import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
 
 class NoInternetPage extends HookConsumerWidget {
@@ -12,7 +13,7 @@ class NoInternetPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final versionVerifierNotifier = ref.watch(versionVerifierProvider.notifier);
     return Scaffold(
-      body: OthersRefresher(
+      body: Refresher(
         onRefresh: () async {
           await versionVerifierNotifier.loadVersion();
         },
@@ -56,15 +57,14 @@ class NoInternetPage extends HookConsumerWidget {
                     decoration: BoxDecoration(
                         gradient: const LinearGradient(
                             colors: [
-                              OthersColorConstants.gradient1,
-                              OthersColorConstants.gradient2
+                              ColorConstants.gradient1,
+                              ColorConstants.gradient2
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight),
                         boxShadow: [
                           BoxShadow(
-                              color: OthersColorConstants.gradient1
-                                  .withOpacity(0.2),
+                              color: ColorConstants.gradient1.withOpacity(0.2),
                               blurRadius: 10,
                               offset: const Offset(0, 5))
                         ],

@@ -8,7 +8,7 @@ import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/admin_page/produit_ui.dart';
-import 'package:myecl/amap/ui/refresh_indicator.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({Key? key}) : super(key: key);
@@ -86,7 +86,7 @@ class AdminPage extends HookConsumerWidget {
           ];
     }
 
-    return AmapRefresher(
+    return Refresher(
       onRefresh: () async {
         await productsListNotifier.loadProductList();
       },

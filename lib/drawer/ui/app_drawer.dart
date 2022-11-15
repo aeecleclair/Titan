@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/booking/ui/booking.dart';
+import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
@@ -11,6 +12,7 @@ import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/home/ui/home.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/settings/ui/settings.dart';
+import 'package:myecl/vote/ui/vote.dart';
 
 class AppDrawer extends HookConsumerWidget {
   static Duration duration = const Duration(milliseconds: 200);
@@ -43,6 +45,12 @@ class AppDrawer extends HookConsumerWidget {
             controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.event:
         return EventHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
+      case ModuleType.vote:
+        return VoteHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
+      case ModuleType.cinema:
+        return CinemaHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
     }
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/tools/constants.dart';
 
-class AMAPColorConstants {
+class AMAPColorConstants extends ColorConstants {
   static final Color background = Colors.grey.shade100;
   static final Color background2 = Colors.grey.shade200;
   static final Color background3 = Colors.grey.shade300;
@@ -63,6 +64,7 @@ class AMAPTextConstants {
   static const String name = "Nom";
   static const String noProduct = "Pas de produit";
   static const String noCurrentOrder = "Pas de commande en cours";
+  static const String noMoney = "Pas assez d'argent";
   static const String notEnoughMoney = "Pas assez d'argent";
   static const String notPlannedDelivery = "Pas de livraison planifiée";
   static const String order = "Commander";

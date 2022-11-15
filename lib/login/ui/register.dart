@@ -7,7 +7,6 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/class/account_type.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/login/ui/text_from_decoration.dart';
 import 'package:myecl/tools/functions.dart';
@@ -24,8 +23,8 @@ class Register extends HookConsumerWidget {
     final signUpNotifier = ref.watch(signUpProvider.notifier);
     final mail = useTextEditingController();
     final hidePass = useState(true);
-    void displayLoginToastWithContext(TypeMsg type, String msg) {
-      displayLoginToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Form(
@@ -91,12 +90,12 @@ class Register extends HookConsumerWidget {
                       final value = await signUpNotifier.createUser(
                           mail.text, AccountType.student);
                       if (value) {
-                        displayLoginToastWithContext(
-                            TypeMsg.msg, LoginTextConstants.sendedMail);
                         hidePass.value = true;
                         mail.clear();
+                        displayToastWithContext(
+                            TypeMsg.msg, LoginTextConstants.sendedMail);
                       } else {
-                        displayLoginToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);
                       }
                     },

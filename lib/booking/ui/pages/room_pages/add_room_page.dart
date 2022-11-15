@@ -5,7 +5,7 @@ import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -18,17 +18,23 @@ class AddRoomPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();
-    void displayBookingToastWithContext(TypeMsg type, String msg) {
-      displayBookingToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(children: [
+          const SizedBox(
+            height: 50,
+          ),
           const Align(
               alignment: Alignment.centerLeft,
               child: Text(BookingTextConstants.addRoom,
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold))),
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 205, 205, 205)))),
           Form(
             key: key,
             child: Column(
@@ -38,7 +44,7 @@ class AddRoomPage extends HookConsumerWidget {
                 ),
                 TextField(
                   style: const TextStyle(
-                    color: BookingColorConstants.darkBlue,
+                    color: ColorConstants.background2,
                   ),
                   controller: name,
                   cursorColor: Colors.black,
@@ -85,10 +91,10 @@ class AddRoomPage extends HookConsumerWidget {
                           .addRoom(Room(name: name.text, id: ''));
                       if (value) {
                         pageNotifier.setBookingPage(BookingPage.admin);
-                        displayBookingToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.msg, BookingTextConstants.addedRoom);
                       } else {
-                        displayBookingToastWithContext(
+                        displayToastWithContext(
                             TypeMsg.error, BookingTextConstants.addingError);
                       }
                     });

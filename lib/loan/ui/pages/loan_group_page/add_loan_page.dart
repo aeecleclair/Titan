@@ -16,6 +16,7 @@ import 'package:myecl/loan/ui/loaner_chip.dart';
 import 'package:myecl/loan/ui/text_entry.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/check_item_card.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/date_entry.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/class/list_users.dart';
@@ -47,8 +48,8 @@ class AddLoanPage extends HookConsumerWidget {
     final borrower = useState(SimpleUser.empty());
     final numberSelected = useState(0);
     final displayUserSearch = useState(false);
-    void displayLoanToastWithContext(TypeMsg type, String msg) {
-      displayLoanToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     return SingleChildScrollView(
@@ -56,13 +57,16 @@ class AddLoanPage extends HookConsumerWidget {
         child: Form(
             key: key,
             child: Column(children: [
+              const SizedBox(height: 30),
               const Padding(
-                padding: EdgeInsets.only(top: 10, left: 30, right: 30),
+                padding: EdgeInsets.symmetric(horizontal: 30),
                 child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(LoanTextConstants.addLoan,
                         style: TextStyle(
-                            fontSize: 40, fontWeight: FontWeight.bold))),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 205, 205, 205)))),
               ),
               const SizedBox(height: 30),
               associations.when(
@@ -173,7 +177,7 @@ class AddLoanPage extends HookConsumerWidget {
                   height: 160,
                   child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
-                          LoanColorConstants.orange)),
+                          ColorConstants.background2)),
                 );
               }),
               Padding(
@@ -258,7 +262,7 @@ class AddLoanPage extends HookConsumerWidget {
                   }, loading: () {
                     return const CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
-                          LoanColorConstants.orange),
+                          ColorConstants.background2),
                     );
                   }),
                   const SizedBox(height: 30),
@@ -293,7 +297,7 @@ class AddLoanPage extends HookConsumerWidget {
                         if (processDateBack(start.text)
                                 .compareTo(processDateBack(end.text)) >=
                             0) {
-                          displayLoanToast(context, TypeMsg.error,
+                          displayToast(context, TypeMsg.error,
                               LoanTextConstants.invalidDates);
                         } else {
                           items.value.when(
@@ -326,30 +330,30 @@ class AddLoanPage extends HookConsumerWidget {
                                         asso.value,
                                         await loanListNotifier.copy());
                                     pageNotifier.setLoanPage(LoanPage.admin);
-                                    displayLoanToastWithContext(TypeMsg.msg,
+                                    displayToastWithContext(TypeMsg.msg,
                                         LoanTextConstants.addedLoan);
                                   } else {
-                                    displayLoanToastWithContext(TypeMsg.error,
+                                    displayToastWithContext(TypeMsg.error,
                                         LoanTextConstants.addingError);
                                   }
                                 } else {
-                                  displayLoanToastWithContext(TypeMsg.error,
+                                  displayToastWithContext(TypeMsg.error,
                                       LoanTextConstants.noItemSelected);
                                 }
                               });
                             },
                             error: (error, s) {
-                              displayLoanToast(
+                              displayToast(
                                   context, TypeMsg.error, error.toString());
                             },
                             loading: () {
-                              displayLoanToast(context, TypeMsg.error,
+                              displayToast(context, TypeMsg.error,
                                   LoanTextConstants.addingError);
                             },
                           );
                         }
                       } else {
-                        displayLoanToast(context, TypeMsg.error,
+                        displayToast(context, TypeMsg.error,
                             LoanTextConstants.incorrectOrMissingFields);
                       }
                     },

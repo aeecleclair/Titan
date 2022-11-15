@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class UserUi extends HookConsumerWidget {
@@ -30,13 +30,13 @@ class UserUi extends HookConsumerWidget {
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [AdminColorConstants.background2, Colors.black],
+                    colors: [ColorConstants.background2, Colors.black],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   boxShadow: [
                     BoxShadow(
-                        color: AdminColorConstants.background2.withOpacity(0.4),
+                        color: ColorConstants.background2.withOpacity(0.4),
                         offset: const Offset(2, 3),
                         blurRadius: 5)
                   ],

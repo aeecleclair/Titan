@@ -5,13 +5,14 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
-import 'package:myecl/booking/ui/pages/main_page/booking_card.dart';
-import 'package:myecl/booking/ui/refresh_indicator.dart';
+import 'package:myecl/booking/ui/booking_card.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class AdminPage extends HookConsumerWidget {
     final room = ref.watch(roomProvider);
     final roomNotifier = ref.watch(roomProvider.notifier);
     final bookingListNotifier = ref.watch(bookingListProvider.notifier);
+    final bookingNotifier = ref.watch(bookingProvider.notifier);
     final bookings = ref.watch(bookingListProvider);
     final List<Booking> pendingBookings = [],
         confirmedBookings = [],
@@ -47,20 +49,12 @@ class AdminPage extends HookConsumerWidget {
         },
         error: (e, s) {},
         loading: () {});
-    return BookingRefresher(
+    return Refresher(
       onRefresh: () async {
         await ref.watch(bookingListProvider.notifier).loadBookings();
       },
       child: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(BookingTextConstants.adminPage,
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-            ),
-          ),
           const SizedBox(height: 30),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
@@ -128,7 +122,7 @@ class AdminPage extends HookConsumerWidget {
             const Center(
               child: Text(BookingTextConstants.noCurrentBooking,
                   style: TextStyle(
-                      color: BookingColorConstants.darkBlue,
+                      color: Colors.black,
                       fontSize: 20,
                       fontWeight: FontWeight.bold)),
             ),
@@ -162,6 +156,11 @@ class AdminPage extends HookConsumerWidget {
                             onReturn: () {
                               bookingListNotifier.toggleConfirmed(
                                   e, Decision.declined);
+                            },
+                            onInfo: () {
+                              bookingNotifier.setBooking(e);
+                              pageNotifier.setBookingPage(
+                                  BookingPage.detailBookingFromAdmin);
                             },
                           )),
                       const SizedBox(width: 10),
@@ -199,6 +198,11 @@ class AdminPage extends HookConsumerWidget {
                               bookingListNotifier.toggleConfirmed(
                                   e, Decision.declined);
                             },
+                            onInfo: () {
+                              bookingNotifier.setBooking(e);
+                              pageNotifier.setBookingPage(
+                                  BookingPage.detailBookingFromAdmin);
+                            },
                           )),
                       const SizedBox(width: 10),
                     ],
@@ -235,6 +239,11 @@ class AdminPage extends HookConsumerWidget {
                                   e, Decision.approved);
                             },
                             onReturn: () {},
+                            onInfo: () {
+                              bookingNotifier.setBooking(e);
+                              pageNotifier.setBookingPage(
+                                  BookingPage.detailBookingFromAdmin);
+                            },
                           )),
                       const SizedBox(width: 10),
                     ],

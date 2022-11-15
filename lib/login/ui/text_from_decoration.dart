@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/login/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
 
 InputDecoration signInRegisterInputDecoration(
     {required String hintText,
@@ -26,18 +26,19 @@ InputDecoration signInRegisterInputDecoration(
                   : Colors.white),
         ),
         errorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: LoginColorConstants.gradient2),
+          borderSide: BorderSide(color: ColorConstants.gradient2),
         ),
         focusedErrorBorder: const UnderlineInputBorder(
-          borderSide:
-              BorderSide(width: 2.0, color: LoginColorConstants.gradient2),
+          borderSide: BorderSide(width: 2.0, color: ColorConstants.gradient2),
         ),
         errorStyle: TextStyle(
-            color: isSignIn ? LoginColorConstants.gradient2 : Colors.white),
+            color: isSignIn ? ColorConstants.gradient2 : Colors.white),
         suffixIcon: IconButton(
           icon: Icon(
             notifier.value ? Icons.visibility : Icons.visibility_off,
-            color: isSignIn ? const Color.fromARGB(255, 124, 124, 124) : Colors.white,
+            color: isSignIn
+                ? const Color.fromARGB(255, 124, 124, 124)
+                : Colors.white,
           ),
           onPressed: () {
             notifier.value = !notifier.value;
@@ -64,13 +65,12 @@ InputDecoration signInRegisterInputDecoration(
                   : Colors.white),
         ),
         errorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: LoginColorConstants.gradient2),
+          borderSide: BorderSide(color: ColorConstants.gradient2),
         ),
         focusedErrorBorder: const UnderlineInputBorder(
-          borderSide:
-              BorderSide(width: 2.0, color: LoginColorConstants.gradient2),
+          borderSide: BorderSide(width: 2.0, color: ColorConstants.gradient2),
         ),
         errorStyle: TextStyle(
-            color: isSignIn ? LoginColorConstants.gradient2 : Colors.white));
+            color: isSignIn ? ColorConstants.gradient2 : Colors.white));
   }
 }

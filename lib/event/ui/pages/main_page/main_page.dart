@@ -5,7 +5,7 @@ import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/pages/main_page/event_ui.dart';
-import 'package:myecl/event/ui/refresh_indicator.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class MainPage extends HookConsumerWidget {
     final eventNotifier = ref.watch(eventListProvider.notifier);
     final events = ref.watch(eventListProvider);
     return Expanded(
-        child: EventRefresher(
+        child: Refresher(
       onRefresh: () async {
         await eventNotifier.loadEventList();
       },

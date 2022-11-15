@@ -8,9 +8,9 @@ import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/login/class/recover_request.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/login/ui/login_field.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -28,8 +28,8 @@ class RecoverPasswordPage extends HookConsumerWidget {
     final password = useTextEditingController();
     final currentPage = useState(0);
     final pageController = usePageController();
-    void displayLoginToastWithContext(TypeMsg type, String msg) {
-      displayLoginToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     List<Widget> steps = [
@@ -59,17 +59,17 @@ class RecoverPasswordPage extends HookConsumerWidget {
             );
             final value = await signUpNotifier.resetPassword(recoverRequest);
             if (value) {
-              displayLoginToastWithContext(
+              displayToastWithContext(
                   TypeMsg.msg, LoginTextConstants.resetedPassword);
               pageNotifier.setPage(ModuleType.home);
               authTokenNotifier.deleteToken();
               onActivationPressed();
             } else {
-              displayLoginToastWithContext(
+              displayToastWithContext(
                   TypeMsg.error, LoginTextConstants.errorResetPassword);
             }
           } else {
-            displayLoginToastWithContext(
+            displayToastWithContext(
                 TypeMsg.error, LoginTextConstants.fillAllFields);
           }
         },
@@ -164,7 +164,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
                   controller: pageController,
                   count: len,
                   effect: const WormEffect(
-                      dotColor: LoginColorConstants.background,
+                      dotColor: ColorConstants.background2,
                       activeDotColor: Colors.white,
                       dotWidth: 12,
                       dotHeight: 12),

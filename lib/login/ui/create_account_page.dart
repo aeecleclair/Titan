@@ -8,9 +8,9 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/class/create_account.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/login/ui/login_field.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -34,8 +34,8 @@ class CreateAccountPage extends HookConsumerWidget {
     final floor = useTextEditingController();
     final currentPage = useState(0);
     final pageController = usePageController();
-    void displayLoginToastWithContext(TypeMsg type, String msg) {
-      displayLoginToast(context, type, msg);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     List<Widget> steps = [
@@ -90,7 +90,7 @@ class CreateAccountPage extends HookConsumerWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: LoginColorConstants.background,
+                color: ColorConstants.background2,
               )),
         ),
         GestureDetector(
@@ -111,7 +111,7 @@ class CreateAccountPage extends HookConsumerWidget {
                       color: Colors.white, size: 30),
                   enabledBorder: UnderlineInputBorder(
                       borderSide:
-                          BorderSide(color: LoginColorConstants.background)),
+                          BorderSide(color: ColorConstants.background2)),
                   focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                     color: Colors.white,
@@ -183,19 +183,19 @@ class CreateAccountPage extends HookConsumerWidget {
               final value =
                   await signUpNotifier.activateUser(finalcreateAccount);
               if (value) {
-                displayLoginToastWithContext(
-                    TypeMsg.msg, LoginTextConstants.accountActivated);
                 authTokenNotifier.deleteToken();
                 onActivationPressed();
+                displayToastWithContext(
+                    TypeMsg.msg, LoginTextConstants.accountActivated);
               } else {
-                displayLoginToastWithContext(
+                displayToastWithContext(
                     TypeMsg.error, LoginTextConstants.accountNotActivated);
               }
             } catch (e) {
-              displayLoginToastWithContext(TypeMsg.error, e.toString());
+              displayToastWithContext(TypeMsg.error, e.toString());
             }
           } else {
-            displayLoginToastWithContext(
+            displayToastWithContext(
                 TypeMsg.error, LoginTextConstants.fillAllFields);
           }
         },
@@ -290,7 +290,7 @@ class CreateAccountPage extends HookConsumerWidget {
                   controller: pageController,
                   count: len,
                   effect: const WormEffect(
-                      dotColor: LoginColorConstants.background,
+                      dotColor: ColorConstants.background2,
                       activeDotColor: Colors.white,
                       dotWidth: 12,
                       dotHeight: 12),
