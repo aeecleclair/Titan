@@ -8,28 +8,35 @@ final sortedEventListProvider = Provider<Map<String, List<Event>>>((ref) {
   final sortedEventList = <String, List<Event>>{};
   final dateTitle = <String, DateTime>{};
   final now = DateTime.now();
-  final strNow = normalizedDate(now);
+  final normalizedNow = normalizedDate(now);
   return eventList.when(
       data: (events) {
         for (final event in events) {
           List<DateTime> normalizedDates = [];
+          List<int> deltaDays = [];
           if (event.recurrenceRule.isEmpty) {
             normalizedDates.add(normalizedDate(event.start));
+            deltaDays.add(event.end.difference(event.start).inDays);
           } else {
-            normalizedDates =
-                getDateInRecurrence(event.recurrenceRule, event.start)
-                    .map(
-                      (x) => normalizedDate(x),
-                    )
-                    .toList();
+            for (final date
+                in getDateInRecurrence(event.recurrenceRule, event.start)) {
+              normalizedDates.add(normalizedDate(date));
+              deltaDays.add(event.end.difference(event.start).inDays);
+            }
           }
-          for (final normalizedDate in normalizedDates) {
-            String formatedDelay = formatDelayToToday(normalizedDate, strNow);
+          for (int i = 0; i < normalizedDates.length; i++) {
+            final DateTime maxDate =
+                normalizedNow.compareTo(normalizedDates[i]) <= 0
+                    ? normalizedDates[i]
+                    : normalizedNow;
+            String formatedDelay = formatDelayToToday(maxDate, normalizedNow);
             final e = event.copyWith(
-                start: mergeDates(normalizedDate, event.start),
-                end: mergeDates(normalizedDate, event.end));
-            if (e.start.isAfter(now)) {
-              dateTitle[formatedDelay] = normalizedDate;
+                start: mergeDates(normalizedDates[i], event.start),
+                end: mergeDates(
+                    normalizedDates[i].add(Duration(days: deltaDays[i])),
+                    event.end));
+            if (e.end.isAfter(now)) {
+              dateTitle[formatedDelay] = normalizedDates[i];
               if (sortedEventList.containsKey(formatedDelay)) {
                 final index = sortedEventList[formatedDelay]!
                     .indexWhere((element) => element.start.isAfter(e.start));

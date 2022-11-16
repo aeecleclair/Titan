@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/repositories/session_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';

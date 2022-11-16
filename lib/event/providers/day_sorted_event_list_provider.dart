@@ -6,40 +6,50 @@ import 'package:myecl/event/tools/functions.dart';
 final daySortedEventListProvider = Provider<Map<DateTime, List<Event>>>((ref) {
   final eventList = ref.watch(eventListProvider);
   final now = DateTime.now();
+  final normalizedNow = normalizedDate(now);
   final sortedEventList = <DateTime, List<Event>>{};
   return eventList.when(
       data: (events) {
         for (final event in events) {
           List<DateTime> normalizedDates = [];
+          List<int> deltaDays = [];
           if (event.recurrenceRule.isEmpty) {
             normalizedDates.add(normalizedDate(event.start));
+            deltaDays.add(event.end.difference(event.start).inDays);
           } else {
-            normalizedDates =
-                getDateInRecurrence(event.recurrenceRule, event.start)
-                    .map(
-                      (x) => normalizedDate(x),
-                    )
-                    .toList();
+            for (final date
+                in getDateInRecurrence(event.recurrenceRule, event.start)) {
+              normalizedDates.add(normalizedDate(date));
+              deltaDays.add(event.end.difference(event.start).inDays);
+            }
           }
-          for (final normalizedDate in normalizedDates) {
+          for (int i = 0; i < normalizedDates.length; i++) {
+            final DateTime maxDate =
+                normalizedNow.compareTo(normalizedDates[i]) <= 0
+                    ? normalizedDates[i]
+                    : normalizedNow;
             final e = event.copyWith(
-                start: mergeDates(normalizedDate, event.start),
-                end: mergeDates(normalizedDate, event.end));
-            if (e.start.isAfter(now)) {
-              if (sortedEventList.containsKey(normalizedDate)) {
-                final index = sortedEventList[normalizedDate]!
+                start: mergeDates(normalizedDates[i], event.start),
+                end: mergeDates(
+                    normalizedDates[i].add(Duration(days: deltaDays[i])),
+                    event.end));
+            print(e.end);
+            if (e.end.isAfter(now)) {
+              if (sortedEventList.containsKey(maxDate)) {
+                final index = sortedEventList[maxDate]!
                     .indexWhere((element) => element.start.isAfter(e.start));
                 if (index == -1) {
-                  sortedEventList[normalizedDate]!.add(e);
+                  sortedEventList[maxDate]!.add(e);
                 } else {
-                  sortedEventList[normalizedDate]!.insert(index, e);
+                  sortedEventList[maxDate]!.insert(index, e);
                 }
               } else {
-                sortedEventList[normalizedDate] = [e];
+                sortedEventList[maxDate] = [e];
               }
             }
           }
         }
+        print(sortedEventList);
         final sortedkeys = sortedEventList.keys.toList(growable: false)
           ..sort((k1, k2) => k1.compareTo(k2));
         return {for (var k in sortedkeys) k: sortedEventList[k]!};
