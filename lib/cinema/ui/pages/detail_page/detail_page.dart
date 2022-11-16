@@ -15,118 +15,161 @@ class DetailPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(cinemaPageProvider.notifier);
     return Stack(
       children: [
+        Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10,
+                  spreadRadius: 7,
+                  offset: Offset(0, 5),
+                ),
+              ]),
+              height: 550,
+              child: Image.network(
+                session.posterUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ],
+        ),
         SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              SizedBox(
-                height: 550,
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                      child: Image.network(
-                        session.posterUrl,
-                        fit: BoxFit.cover,
+              const SizedBox(
+                height: 45,
+              ),
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (page == CinemaPage.detailFromMainPage) {
+                        pageNotifier.setCinemaPage(CinemaPage.main);
+                      } else {
+                        pageNotifier.setCinemaPage(CinemaPage.admin);
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.9),
+                          borderRadius: BorderRadius.circular(18),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.white.withOpacity(0.3),
+                              blurRadius: 10,
+                              spreadRadius: 7,
+                              offset: const Offset(0, 5),
+                            ),
+                          ]),
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.black,
                       ),
                     ),
-                    Column(
-                      children: [
-                        const SizedBox(
-                          height: 45,
-                        ),
-                        Row(
-                          children: [
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                if (page == CinemaPage.detailFromMainPage) {
-                                  pageNotifier.setCinemaPage(CinemaPage.main);
-                                } else {
-                                  pageNotifier.setCinemaPage(CinemaPage.admin);
-                                }
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.9),
-                                  borderRadius: BorderRadius.circular(18),
-                                ),
-                                child: const Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 12),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.9),
-                                  borderRadius: BorderRadius.circular(18),
-                                ),
-                                child: Row(
-                                  children: [
-                                    const HeroIcon(
-                                      HeroIcons.clock,
-                                      size: 20,
-                                    ),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
-                                    Text(formatDuration(session.duration),
-                                        style: const TextStyle(fontSize: 16)),
-                                  ],
-                                )),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Container(
-                          width: double.infinity,
-                          height: 250,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                const Color.fromARGB(0, 255, 255, 255),
-                                Colors.grey.shade50.withOpacity(0.85),
-                                Colors.grey.shade50,
-                              ],
-                              stops: const [0.0, 0.65, 1.0],
-                            ),
+                  ),
+                  const Spacer(),
+                  Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.9),
+                        borderRadius: BorderRadius.circular(18),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white.withOpacity(0.3),
+                            blurRadius: 10,
+                            spreadRadius: 7,
+                            offset: const Offset(0, 5),
                           ),
-                          child: Column(
-                            children: [
-                              const Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 30.0),
-                                child: Text(
-                                  session.name,
-                                  style: const TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          const HeroIcon(
+                            HeroIcons.clock,
+                            size: 20,
                           ),
-                        )
-                      ],
-                    ),
-                  ],
+                          const SizedBox(
+                            width: 7,
+                          ),
+                          Text(formatDuration(session.duration),
+                              style: const TextStyle(fontSize: 16)),
+                        ],
+                      )),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 140,
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.3),
+                        blurRadius: 10,
+                        spreadRadius: 7,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: const HeroIcon(
+                    HeroIcons.play,
+                    size: 30,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: double.infinity,
+                height: 250,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      const Color.fromARGB(0, 255, 255, 255),
+                      Colors.grey.shade50.withOpacity(0.85),
+                      Colors.grey.shade50,
+                    ],
+                    stops: const [0.0, 0.65, 1.0],
+                  ),
                 ),
               ),
               Container(
+                color: Colors.grey.shade50,
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Column(
                   children: [
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        session.name,
+                        style: const TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                     const SizedBox(
                       height: 15,
                     ),
@@ -163,7 +206,7 @@ class DetailPage extends HookConsumerWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
