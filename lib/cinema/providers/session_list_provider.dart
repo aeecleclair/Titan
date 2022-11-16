@@ -38,7 +38,8 @@ class SessionListNotifier extends ListNotifier<Session> {
 final sessionListProvider =
     StateNotifierProvider<SessionListNotifier, AsyncValue<List<Session>>>(
         (ref) {
-  SessionListNotifier notifier = SessionListNotifier(token: "");
+  final token = ref.watch(tokenProvider);
+  SessionListNotifier notifier = SessionListNotifier(token: token);
   notifier.loadSessions();
   return notifier;
 });
