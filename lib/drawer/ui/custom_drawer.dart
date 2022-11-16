@@ -34,7 +34,7 @@ class CustomDrawer extends StatelessWidget {
                   Expanded(
                       child: SizedBox(
                           width: 200,
-                          height: MediaQuery.of(context).size.height * 4.5 / 10,
+                          height: MediaQuery.of(context).size.height * 4.8 / 10,
                           child: ListModule(
                               controllerNotifier: controllerNotifier))),
                   const FakePage(),

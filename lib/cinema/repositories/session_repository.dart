@@ -15,14 +15,14 @@ class SessionRepository extends Repository {
   }
 
   Future<Session> addSession(Session session) async {
-    return await create(session.toJson());
+    return Session.fromJson(await create(session.toJson()));
   }
 
   Future<bool> updateSession(Session session) async {
-    return await update(session.toJson(), session.id);
+    return await update(session.toJson(), "/${session.id}");
   }
 
   Future<bool> deleteSession(String id) async {
-    return await delete(id);
+    return await delete("/$id");
   }
 }

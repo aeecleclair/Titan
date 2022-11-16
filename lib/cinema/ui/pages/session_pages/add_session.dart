@@ -184,6 +184,7 @@ class AddSessionPage extends HookConsumerWidget {
                               tagline: '',
                             ),
                           );
+                          print(value);
                           if (value) {
                             pageNotifier.setCinemaPage(CinemaPage.admin);
                             displayToastWithContext(
@@ -259,7 +260,7 @@ _selectOnlyDayDate(
 
 _selectOnlyHour(
     BuildContext context, TextEditingController dateController) async {
-  final TimeOfDay now = TimeOfDay.now();
+  const TimeOfDay now = TimeOfDay(hour: 0, minute: 0);
   final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: now,

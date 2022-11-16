@@ -21,6 +21,7 @@ class EditSessionPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(cinemaPageProvider.notifier);
     final session = ref.watch(sessionProvider);
+    print(session.toJson());
     final key = GlobalKey<FormState>();
     final sessionListNotifier = ref.watch(sessionListProvider.notifier);
     final name = useTextEditingController(text: session.name);
@@ -170,12 +171,12 @@ class EditSessionPage extends HookConsumerWidget {
                     }
                     if (key.currentState!.validate()) {
                       tokenExpireWrapper(ref, () async {
-                        final value = await sessionListNotifier.addSession(
+                        final value = await sessionListNotifier.updateSession(
                           Session(
                             name: name.text,
                             duration: parseDuration(duration.text),
                             genre: genre.text,
-                            id: '',
+                            id: session.id,
                             overview: overview.text,
                             posterUrl: posterUrl.text,
                             start: DateTime.parse(processDateBack(start.text)),
@@ -185,10 +186,10 @@ class EditSessionPage extends HookConsumerWidget {
                         if (value) {
                           pageNotifier.setCinemaPage(CinemaPage.admin);
                           displayToastWithContext(
-                              TypeMsg.msg, CinemaTextConstants.addedSession);
+                              TypeMsg.msg, CinemaTextConstants.editedSession);
                         } else {
                           displayToastWithContext(
-                              TypeMsg.error, CinemaTextConstants.addingError);
+                              TypeMsg.error, CinemaTextConstants.editingError);
                         }
                       });
                     } else {
@@ -213,7 +214,7 @@ class EditSessionPage extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      child: const Text(CinemaTextConstants.add,
+                      child: const Text(CinemaTextConstants.edit,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 25,
@@ -256,7 +257,7 @@ _selectOnlyDayDate(
 
 _selectOnlyHour(
     BuildContext context, TextEditingController dateController) async {
-  final TimeOfDay now = TimeOfDay.now();
+  const TimeOfDay now = TimeOfDay(hour: 0, minute: 0);
   final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: now,
