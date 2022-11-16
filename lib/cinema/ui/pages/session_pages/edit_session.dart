@@ -21,7 +21,6 @@ class EditSessionPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(cinemaPageProvider.notifier);
     final session = ref.watch(sessionProvider);
-    print(session.toJson());
     final key = GlobalKey<FormState>();
     final sessionListNotifier = ref.watch(sessionListProvider.notifier);
     final name = useTextEditingController(text: session.name);

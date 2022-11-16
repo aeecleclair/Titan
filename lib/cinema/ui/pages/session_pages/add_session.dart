@@ -184,7 +184,6 @@ class AddSessionPage extends HookConsumerWidget {
                               tagline: '',
                             ),
                           );
-                          print(value);
                           if (value) {
                             pageNotifier.setCinemaPage(CinemaPage.admin);
                             displayToastWithContext(
