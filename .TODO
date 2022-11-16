@@ -14,6 +14,15 @@ En cours :
 
     - Vote :
         - Logo
+        - Card
+    
+    - Logo :
+
+
+
+PB API :
+
+    - POST amap/users/{user_id}/cash : Return CashComplete
 
 Not Found :
     - GET 'bdebooking/user/'

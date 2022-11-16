@@ -33,7 +33,6 @@ final daySortedEventListProvider = Provider<Map<DateTime, List<Event>>>((ref) {
                 end: mergeDates(
                     normalizedDates[i].add(Duration(days: deltaDays[i])),
                     event.end));
-            print(e.end);
             if (e.end.isAfter(now)) {
               if (sortedEventList.containsKey(maxDate)) {
                 final index = sortedEventList[maxDate]!
@@ -49,7 +48,6 @@ final daySortedEventListProvider = Provider<Map<DateTime, List<Event>>>((ref) {
             }
           }
         }
-        print(sortedEventList);
         final sortedkeys = sortedEventList.keys.toList(growable: false)
           ..sort((k1, k2) => k1.compareTo(k2));
         return {for (var k in sortedkeys) k: sortedEventList[k]!};
