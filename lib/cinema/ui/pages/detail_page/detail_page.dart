@@ -18,6 +18,7 @@ class DetailPage extends HookConsumerWidget {
         Stack(
           children: [
             Container(
+              width: double.infinity,
               decoration: const BoxDecoration(boxShadow: [
                 BoxShadow(
                   color: Colors.black26,
@@ -26,7 +27,6 @@ class DetailPage extends HookConsumerWidget {
                   offset: Offset(0, 5),
                 ),
               ]),
-              height: 550,
               child: Image.network(
                 session.posterUrl,
                 fit: BoxFit.cover,

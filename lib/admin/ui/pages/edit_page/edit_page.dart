@@ -27,6 +27,7 @@ class EditPage extends HookConsumerWidget {
     final name = useTextEditingController();
     final description = useTextEditingController();
     final pageNotifier = ref.watch(adminPageProvider.notifier);
+    final usersNotifier = ref.watch(userList.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -155,6 +156,8 @@ class EditPage extends HookConsumerWidget {
                         ),
                         GestureDetector(
                           onTap: () {
+                            usersNotifier.filterUsers(" ",
+                                excludeGroup: [g.toSimpleGroup()]);
                             pageNotifier.setAdminPage(AdminPage.addMember);
                           },
                           child: Container(
