@@ -11,6 +11,8 @@ class SettingsTextConstants {
   static const String copied = "Copié !";
   static const String darkMode = "Mode sombre";
   static const String darkModeOff = "Désactivé";
+  static const String deleteLogs = "Supprimer les logs ?";
+  static const String deleting = "Suppresion";
   static const String edit = "Modifier";
   static const String editAccount = "Modifier le compte";
   static const String email = "Email";

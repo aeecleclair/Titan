@@ -13,6 +13,13 @@ class LogsProvider extends ListNotifier<Log> {
           LogLevel.WARNING.toString(),
         ]).then((value) => value.reversed.toList()));
   }
+
+  Future<bool> deleteLogs() async {
+    return await delete((id) async => true, (listT, t) {
+      FLog.clearLogs();
+      return [];
+    }, "", Log());
+  }
 }
 
 final logsProvider =
