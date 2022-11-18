@@ -23,12 +23,14 @@ class Register extends HookConsumerWidget {
     final signUpNotifier = ref.watch(signUpProvider.notifier);
     final mail = useTextEditingController();
     final hidePass = useState(true);
+    final key = GlobalKey<FormState>();
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      key: key,
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
@@ -79,6 +81,17 @@ class Register extends HookConsumerWidget {
                             hintText: LoginTextConstants.email),
                         keyboardType: TextInputType.emailAddress,
                         autofillHints: const [AutofillHints.email],
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return LoginTextConstants.emailEmpty;
+                          }
+                          RegExp regExp = RegExp(
+                              r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.ec-lyon.fr');
+                          if (!regExp.hasMatch(value)) {
+                            return LoginTextConstants.emailInvalid;
+                          }
+                          return null;
+                        },
                       ))),
                   const SizedBox(
                     height: 30,

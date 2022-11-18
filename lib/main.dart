@@ -32,6 +32,7 @@ class MyApp extends HookConsumerWidget {
         (value) => value.minimalTitanVersion.compareTo(titanVersion) < 0);
     final isLoggedIn = ref.watch(isLoggedInProvider);
 
+
     print("check: $check");
 
     return MaterialApp(
