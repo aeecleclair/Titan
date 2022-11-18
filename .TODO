@@ -1,48 +1,74 @@
-En cours :
+# Bugs
 
-    - Loan :
-        - available (API -> number ?)
+OK :
 
-    - Events :
-        - Admin page (edit) (API)
+- pas de message d'erreur lors de l'insertion d'une adresse email n'étant pas de centrale => OK
+- Etage on met un selecteur ça evitera beaucoup de problèmes => OK
+- Sélection de module qu'on peut désactiver => OK
+- Mode avion partiel déconnexion lors de l'utilisation => (garder refresh token si hors ligne)
 
-    - Drawer / Settings:
-        - Profile Picture (5)
+HYPERION :
 
-    - Settings :
-        - Notification (choisir module + push) (5)
+- Mettre le numero de promo grâce au mail pas besoin de le rentré => HYPERION
 
-    - Vote :
-        - Logo
-        - Card
+A VOIR :
+
+- Aide ? ? => FAQ logs => A VOIR
+- page d'accueil calendrier ? => A VOIR
+- TROP de polices différentes => A VOIR
+- Sécurité juste changer de mot de passe => A VOIR
+- popup utilisateur quand tu cliques en haut => A VOIR
+- Pas de bouton eteindre, le mettre dans sécurité => A VOIR
+
+SSO :
+
+- adapter ecran en fonction de la resolution pour le login oauth => SSO
+- possibilité de mettre la page en français si on a un user agent anglais => SSO
+- Account Successfully created <= majuscule consistance avec un icone validé + titre dans la barre en haut => SSO
+
+API :
+
+- POST amap/users/{user_id}/cash => Return CashComplete
+- GET 'bdebooking/user/' Not Found
+- GET 'bdebooking/rooms' Not Found
+- GET 'calendar/events' Not Found
+- PB Notifications => groups non accessible pr non admin
     
-    - Logo :
+
+# DEV :
+
+Loan :
+
+- available (API -> number ?)
+
+Events :
+
+- Admin page (edit) (API)
+
+Drawer / Settings:
+
+- Profile Picture (5)
+
+Settings :
+    
+- Notification (choisir module + push) (5)
+
+Vote :
+
+- Logo
+- Card
+
+- Logo :
 
 
-
-PB API :
-
-    - POST amap/users/{user_id}/cash : Return CashComplete
-
-Not Found :
-    - GET 'bdebooking/user/'
-    - GET 'bdebooking/rooms'
-    - GET 'calendar/events'
-
-PB Notifications : groups non accessible pr non admin
-
-Créer un compte
-
-    autocorrection de l’email .fr -> .de
-
-Modules :
+# Modules :
     - Piston (2)
     - Soli (3)
     - JE (4)
-    ...
     - Messagerie (5)
 
-Questions :
+
+# Questions :
 
     authentifiaction bio pour admin ?
     QrCode avec uni_link (pour PC/mobile et mobile/mobile)
