@@ -3,7 +3,6 @@
 OK :
 
 - pas de message d'erreur lors de l'insertion d'une adresse email n'étant pas de centrale => OK
-- Etage on met un selecteur ça evitera beaucoup de problèmes => OK
 - Sélection de module qu'on peut désactiver => OK
 - Mode avion partiel déconnexion lors de l'utilisation => (garder refresh token si hors ligne)
 

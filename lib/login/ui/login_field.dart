@@ -52,10 +52,10 @@ class CreateAccountField extends HookConsumerWidget {
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
-          autofocus: true,
           keyboardType: keyboardType,
           autofillHints: autofillHints,
           onFieldSubmitted: (_) {
+            FocusScope.of(context).requestFocus(FocusNode());
             pageController.animateToPage(index,
                 duration: const Duration(milliseconds: 500),
                 curve: Curves.decelerate);
@@ -78,7 +78,8 @@ class CreateAccountField extends HookConsumerWidget {
                     },
                   ),
                   enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: ColorConstants.background2)),
+                      borderSide:
+                          BorderSide(color: ColorConstants.background2)),
                   focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(
                     color: Colors.white,
@@ -90,7 +91,8 @@ class CreateAccountField extends HookConsumerWidget {
                   errorStyle: const TextStyle(color: Colors.white))
               : const InputDecoration(
                   enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: ColorConstants.background2)),
+                      borderSide:
+                          BorderSide(color: ColorConstants.background2)),
                   focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                     color: Colors.white,

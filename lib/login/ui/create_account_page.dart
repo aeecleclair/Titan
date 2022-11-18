@@ -68,6 +68,8 @@ class CreateAccountPage extends HookConsumerWidget {
             ))
         .toList();
 
+    floor.text = items[0].value.toString();
+
     List<Widget> steps = [
       CreateAccountField(
         controller: activationCode,
@@ -178,13 +180,6 @@ class CreateAccountPage extends HookConsumerWidget {
         keyboardType: TextInputType.phone,
         autofillHints: const [AutofillHints.telephoneNumber],
       ),
-      // CreateAccountField(
-      //   controller: floor,
-      //   label: LoginTextConstants.floor,
-      //   index: 9,
-      //   pageController: pageController,
-      //   currentPage: currentPage,
-      // ),
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -333,6 +328,7 @@ class CreateAccountPage extends HookConsumerWidget {
                         scrollDirection: Axis.horizontal,
                         controller: pageController,
                         onPageChanged: (index) {
+                          FocusScope.of(context).requestFocus(FocusNode());
                           currentPage.value = index;
                         },
                         physics: const BouncingScrollPhysics(),
