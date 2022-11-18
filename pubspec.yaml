@@ -10,7 +10,9 @@ environment:
 dependencies:
   animations: ^2.0.2
   auto_size_text: ^3.0.0
+  connectivity_plus: ^3.0.2
   crypto: ^3.0.2
+  data_connection_checker: ^0.3.4
   datetime_picker_formfield: ^2.0.1
   f_logs: ^2.0.1
   fl_chart: ^0.55.2

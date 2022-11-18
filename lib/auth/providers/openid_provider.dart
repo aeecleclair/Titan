@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:myecl/auth/providers/is_connected_provider.dart';
 import 'package:myecl/auth/repository/openid_repository.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'dart:convert';
@@ -20,21 +21,36 @@ final authTokenProvider =
   return oauth2TokenRepository;
 });
 
-final isLoggedInProvider = Provider((ref) {
+class IsLoggedInProvider extends StateNotifier<bool> {
+  IsLoggedInProvider(bool b) : super(b);
+
+  void refresh(AsyncValue<Map<String, String>> token) {
+    state = token.when(
+      data: (tokens) {
+        return tokens["token"] == ""
+            ? false
+            : !JwtDecoder.isExpired(tokens["token"] as String);
+      },
+      error: (e, s) {
+        return false;
+      },
+      loading: () {
+        return false;
+      },
+    );
+  }
+}
+
+final isLoggedInProvider =
+    StateNotifierProvider<IsLoggedInProvider, bool>((ref) {
   // return true;
-  return ref.watch(authTokenProvider).when(
-    data: (tokens) {
-      return tokens["token"] == ""
-          ? false
-          : !JwtDecoder.isExpired(tokens["token"] as String);
-    },
-    error: (e, s) {
-      return false;
-    },
-    loading: () {
-      return false;
-    },
-  );
+  final IsLoggedInProvider isLoggedInProvider = IsLoggedInProvider(false);
+  final isConnected = ref.watch(isConnectedProvider);
+  final authToken = ref.watch(authTokenProvider);
+  if (isConnected) {
+    isLoggedInProvider.refresh(authToken);
+  }
+  return isLoggedInProvider;
 });
 
 final loadingrovider = Provider((ref) {
@@ -191,7 +207,7 @@ class OpenIdTokenProvider
     }
   }
 
-  void getTokenFromStorage() {
+  Future getTokenFromStorage() async {
     state = const AsyncValue.loading();
     _secureStorage.read(key: tokenName).then((token) async {
       if (token != null) {

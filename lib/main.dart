@@ -1,3 +1,5 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,6 +31,8 @@ class MyApp extends HookConsumerWidget {
     final check = versionVerifier.whenData(
         (value) => value.minimalTitanVersion.compareTo(titanVersion) < 0);
     final isLoggedIn = ref.watch(isLoggedInProvider);
+
+    print("check: $check");
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

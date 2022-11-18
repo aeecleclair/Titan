@@ -38,7 +38,7 @@ class MainPage extends HookConsumerWidget {
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 205, 205, 205))),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   SizedBox(

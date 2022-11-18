@@ -35,6 +35,7 @@ class EditUserPage extends HookConsumerWidget {
 
     List<DropdownMenuItem> items = [
       "Adoma",
+      "Exté",
       "T1",
       "T2",
       "T3",
