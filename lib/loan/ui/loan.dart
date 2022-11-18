@@ -52,13 +52,16 @@ class LoanHomePage extends HookConsumerWidget {
           return false;
         },
         child: SafeArea(
-          child: Column(
-            children: [
-              TopBar(
-                controllerNotifier: controllerNotifier,
-              ),
-              const Expanded(child: PageSwitcher()),
-            ],
+          child: IgnorePointer(
+            ignoring: controller.isCompleted,
+            child: Column(
+              children: [
+                TopBar(
+                  controllerNotifier: controllerNotifier,
+                ),
+                const Expanded(child: PageSwitcher()),
+              ],
+            ),
           ),
         ),
       ),

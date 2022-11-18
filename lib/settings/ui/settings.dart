@@ -47,14 +47,17 @@ class SettingsHomePage extends ConsumerWidget {
           color: Colors.white,
         ),
         child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              TopBar(
-                controllerNotifier: controllerNotifier,
-              ),
-              const Expanded(child: PageSwitcher()),
-            ],
+          child: IgnorePointer(
+            ignoring: controller.isCompleted,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                TopBar(
+                  controllerNotifier: controllerNotifier,
+                ),
+                const Expanded(child: PageSwitcher()),
+              ],
+            ),
           ),
         ),
       ),

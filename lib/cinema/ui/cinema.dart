@@ -47,18 +47,22 @@ class CinemaHomePage extends ConsumerWidget {
       },
       child: (page != CinemaPage.detailFromAdminPage &&
               page != CinemaPage.detailFromMainPage)
-          ? SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  TopBar(
-                    controllerNotifier: controllerNotifier,
-                  ),
-                  const PageSwitcher()
-                ],
+          ? IgnorePointer(
+              ignoring: controller.isCompleted,
+              child: SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    TopBar(
+                      controllerNotifier: controllerNotifier,
+                    ),
+                    const PageSwitcher()
+                  ],
+                ),
               ),
             )
-          : const PageSwitcher(),
+          : IgnorePointer(
+              ignoring: controller.isCompleted, child: const PageSwitcher()),
     ));
   }
 }

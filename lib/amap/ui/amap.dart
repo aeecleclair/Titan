@@ -70,13 +70,16 @@ class AmapHomePage extends HookConsumerWidget {
             ),
           ),
           child: SafeArea(
-            child: Column(
-              children: [
-                TopBar(
-                  controllerNotifier: controllerNotifier,
-                ),
-                const Expanded(child: PageSwitcher()),
-              ],
+            child: IgnorePointer(
+              ignoring: controller.isCompleted,
+              child: Column(
+                children: [
+                  TopBar(
+                    controllerNotifier: controllerNotifier,
+                  ),
+                  const Expanded(child: PageSwitcher()),
+                ],
+              ),
             ),
           ),
         ),

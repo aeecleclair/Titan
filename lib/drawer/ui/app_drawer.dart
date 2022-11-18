@@ -30,7 +30,7 @@ class AppDrawer extends HookConsumerWidget {
         return SettingsHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.home:
-        return HomePage(controllerNotifier: controllerNotifier);
+        return HomePage(controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.booking:
         return BookingHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
@@ -84,19 +84,16 @@ class AppDrawer extends HookConsumerWidget {
                         ..translate(translateVal)
                         ..scale(scaleVal),
                       child: GestureDetector(
-                          onTap: () {
-                            if (controller.isCompleted) {
-                              controllerNotifier.close();
-                            }
-                          },
-                          child: IgnorePointer(
-                            ignoring: controller.isCompleted,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(cornerval),
-                              child:
-                                  getPage(page, controllerNotifier, controller),
-                            ),
-                          )))
+                        onTap: () {
+                          if (controller.isCompleted) {
+                            controllerNotifier.close();
+                          }
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(cornerval),
+                          child: getPage(page, controllerNotifier, controller),
+                        ),
+                      ))
                 ],
               );
             }));
