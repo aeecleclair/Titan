@@ -38,6 +38,36 @@ class CreateAccountPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    List<DropdownMenuItem> items = [
+      "Adoma",
+      "T1",
+      "T2",
+      "T3",
+      "T4",
+      "T56",
+      "U1",
+      "U2",
+      "U3",
+      "U4",
+      "U56",
+      "V1",
+      "V2",
+      "V3",
+      "V45",
+      "V6",
+      "X1",
+      "X2",
+      "X3",
+      "X4",
+      "X5",
+      "X6",
+    ]
+        .map((e) => DropdownMenuItem(
+              value: e,
+              child: Text(e),
+            ))
+        .toList();
+
     List<Widget> steps = [
       CreateAccountField(
         controller: activationCode,
@@ -148,12 +178,70 @@ class CreateAccountPage extends HookConsumerWidget {
         keyboardType: TextInputType.phone,
         autofillHints: const [AutofillHints.telephoneNumber],
       ),
-      CreateAccountField(
-        controller: floor,
-        label: LoginTextConstants.floor,
-        index: 9,
-        pageController: pageController,
-        currentPage: currentPage,
+      // CreateAccountField(
+      //   controller: floor,
+      //   label: LoginTextConstants.floor,
+      //   index: 9,
+      //   pageController: pageController,
+      //   currentPage: currentPage,
+      // ),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 9,
+          ),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(LoginTextConstants.floor,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: ColorConstants.background2,
+                )),
+          ),
+          const SizedBox(
+            height: 14,
+          ),
+          AutofillGroup(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 120,
+                  child: Text(
+                    LoginTextConstants.floor,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey.shade500),
+                  ),
+                ),
+                Expanded(
+                  child: DropdownButtonFormField(
+                    items: items,
+                    value: floor.text,
+                    hint: Text(
+                      LoginTextConstants.floor,
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey.shade500),
+                    ),
+                    onChanged: (value) {
+                      floor.text = value.toString();
+                    },
+                    style: TextStyle(fontSize: 20, color: Colors.grey.shade800),
+                    decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.all(10),
+                        isDense: true,
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFFfb6d10)))),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
       SignUpBar(
         label: LoginTextConstants.endActivation,

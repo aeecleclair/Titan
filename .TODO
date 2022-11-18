@@ -33,7 +33,7 @@ API :
 - GET 'bdebooking/rooms' Not Found
 - GET 'calendar/events' Not Found
 - PB Notifications => groups non accessible pr non admin
-    
+
 
 # DEV :
 
@@ -50,7 +50,7 @@ Drawer / Settings:
 - Profile Picture (5)
 
 Settings :
-    
+
 - Notification (choisir module + push) (5)
 
 Vote :
@@ -62,13 +62,13 @@ Vote :
 
 
 # Modules :
-    - Piston (2)
-    - Soli (3)
-    - JE (4)
-    - Messagerie (5)
+
+- Piston (2)
+- Soli (3)
+- JE (4)
+- Messagerie (5)
 
 
 # Questions :
 
-    authentifiaction bio pour admin ?
-    QrCode avec uni_link (pour PC/mobile et mobile/mobile)
+- authentifiaction bio pour admin ?

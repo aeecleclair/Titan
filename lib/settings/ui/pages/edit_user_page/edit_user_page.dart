@@ -33,6 +33,36 @@ class EditUserPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    List<DropdownMenuItem> items = [
+      "Adoma",
+      "T1",
+      "T2",
+      "T3",
+      "T4",
+      "T56",
+      "U1",
+      "U2",
+      "U3",
+      "U4",
+      "U56",
+      "V1",
+      "V2",
+      "V3",
+      "V45",
+      "V6",
+      "X1",
+      "X2",
+      "X3",
+      "X4",
+      "X5",
+      "X6",
+    ]
+        .map((e) => DropdownMenuItem(
+              value: e,
+              child: Text(e),
+            ))
+        .toList();
+
     return Refresher(
         onRefresh: () async {
           await asyncUserNotifier.loadMe();
@@ -53,30 +83,6 @@ class EditUserPage extends HookConsumerWidget {
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 205, 205, 205))),
                 ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                // Container(
-                //   padding: const EdgeInsets.all(20),
-                //   decoration: BoxDecoration(
-                //       color: Colors.grey[200],
-                //       borderRadius: BorderRadius.circular(100)),
-                //   child: HeroIcon(
-                //     HeroIcons.user,
-                //     size: 100,
-                //     color: Colors.grey.shade500,
-                //   ),
-                // ),
-                // const SizedBox(height: 20),
-                // TextButton(
-                //     onPressed: () {},
-                //     child: const Text(
-                //       SettingsTextConstants.addProfilePicture,
-                //       style: TextStyle(
-                //           fontSize: 18,
-                //           fontWeight: FontWeight.w600,
-                //           color: Color(0xFFfb6d10)),
-                //     )),
                 const SizedBox(height: 50),
                 UserFieldModifier(
                     label: SettingsTextConstants.firstname,
@@ -165,10 +171,44 @@ class EditUserPage extends HookConsumerWidget {
                           ))),
                 ]),
                 const SizedBox(height: 50),
-                UserFieldModifier(
-                    label: SettingsTextConstants.floor,
-                    keyboardType: TextInputType.text,
-                    controller: floorController),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 120,
+                      child: Text(
+                        SettingsTextConstants.floor,
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey.shade500),
+                      ),
+                    ),
+                    Expanded(
+                      child: DropdownButtonFormField(
+                        items: items,
+                        value: floorController.text,
+                        hint: Text(
+                          SettingsTextConstants.floor,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey.shade500),
+                        ),
+                        onChanged: (value) {
+                          floorController.text = value.toString();
+                        },
+                        style: TextStyle(
+                            fontSize: 20, color: Colors.grey.shade800),
+                        decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.all(10),
+                            isDense: true,
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Color(0xFFfb6d10)))),
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 50),
                 GestureDetector(
                   onTap: () {
