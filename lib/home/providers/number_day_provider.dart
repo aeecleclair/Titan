@@ -5,7 +5,7 @@ final numberDayProvider = StateNotifierProvider<NumberDay, int>((ref) {
 });
 
 class NumberDay extends StateNotifier<int> {
-  NumberDay() : super(15);
+  NumberDay() : super(30);
 
   void add(int i) {
     state += i;

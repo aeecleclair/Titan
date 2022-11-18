@@ -14,15 +14,15 @@ class MonthBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final numberDayNotifier = ref.watch(numberDayProvider.notifier);
-    final currentMonth =
-        useState(DateTime.now().add(const Duration(days: 1)).month);
+    final currentDay = useState(DateTime.now().add(const Duration(days: 1)));
+    final currentMonth = useState(currentDay.value.month);
     final days = ref.watch(daysProvider);
 
     scrollController.addListener(() {
-      int m =
-          days[(scrollController.position.pixels - 15 + width / 2) ~/ 86].month;
-      if (m != currentMonth.value) {
-        currentMonth.value = m;
+      currentDay.value =
+          days[(scrollController.position.pixels - 15 + width / 2) ~/ 86];
+      if (currentDay.value.month != currentMonth.value) {
+        currentMonth.value = currentDay.value.month;
       }
       if (scrollController.position.pixels >
           scrollController.position.maxScrollExtent - 50) {
@@ -38,11 +38,26 @@ class MonthBar extends HookConsumerWidget {
             const SizedBox(
               width: 30,
             ),
-            Text(getMonth((currentMonth.value - 1) % 12),
-                style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 205, 205, 205))),
+            GestureDetector(
+              onTap: () {
+                final deltaDay = DateTime(currentDay.value.year,
+                            currentDay.value.month - 1, 0)
+                        .day -
+                    currentDay.value.day;
+                scrollController.animateTo(
+                    scrollController.position.pixels -
+                        deltaDay * 86 -
+                        15 -
+                        width / 2,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut);
+              },
+              child: Text(getMonth((currentMonth.value - 1) % 12),
+                  style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 205, 205, 205))),
+            ),
           ],
         ),
         Text(
@@ -52,11 +67,26 @@ class MonthBar extends HookConsumerWidget {
         ),
         Row(
           children: [
-            Text(getMonth((currentMonth.value + 1) % 12),
-                style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 205, 205, 205))),
+            GestureDetector(
+              onTap: () {
+                final deltaDay = DateTime(currentDay.value.year,
+                            currentDay.value.month + 1, 0)
+                        .day -
+                    currentDay.value.day;
+                scrollController.animateTo(
+                    scrollController.position.pixels +
+                        deltaDay * 86 -
+                        15 +
+                        width / 2,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut);
+              },
+              child: Text(getMonth((currentMonth.value + 1) % 12),
+                  style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 205, 205, 205))),
+            ),
             const SizedBox(
               width: 30,
             ),
