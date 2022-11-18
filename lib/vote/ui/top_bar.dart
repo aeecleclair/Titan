@@ -50,6 +50,7 @@ class TopBar extends HookConsumerWidget {
                             ? HeroIcons.bars3BottomLeft
                             : HeroIcons.chevronLeft,
                         color: const Color.fromARGB(255, 0, 0, 0),
+                        size: 30,
                       ));
                 },
               ),

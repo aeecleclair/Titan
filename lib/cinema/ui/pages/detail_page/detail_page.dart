@@ -133,9 +133,6 @@ class DetailPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
               Container(
                 width: double.infinity,
                 height: 250,

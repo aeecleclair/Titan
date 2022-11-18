@@ -39,11 +39,13 @@ class MainPage extends HookConsumerWidget {
                             color: Color.fromARGB(255, 205, 205, 205))),
                   ),
                   SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
                     height: MediaQuery.of(context).size.height - 106,
                     child: ListView.builder(
-                        shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
-                        itemCount: events.length + 1,
+                        itemCount: events.length + 2,
                         itemBuilder: (context, index) {
                           if (index == 0) {
                             return GestureDetector(
@@ -79,6 +81,10 @@ class MainPage extends HookConsumerWidget {
                                     size: 40,
                                     color: Colors.grey.shade500,
                                   ))),
+                            );
+                          } else if (index == events.length + 1) {
+                            return Container(
+                              height: 80,
                             );
                           }
                           return EventUi(event: events[index - 1]);
