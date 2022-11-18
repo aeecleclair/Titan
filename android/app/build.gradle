@@ -57,8 +57,9 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
         manifestPlaceholders += [
-            'appAuthRedirectScheme': 'titan'
+            'appAuthRedirectScheme': 'fr.myecl.titan'
         ]
     }
 
