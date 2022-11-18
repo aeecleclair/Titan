@@ -86,7 +86,7 @@ class Register extends HookConsumerWidget {
                             return LoginTextConstants.emailEmpty;
                           }
                           RegExp regExp = RegExp(
-                              r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.ec-lyon.fr');
+                              r'^[\w\-.]*@(ecl\d{2})|(alternance\d{4})?.ec-lyon.fr$');
                           if (!regExp.hasMatch(value)) {
                             return LoginTextConstants.emailInvalid;
                           }
