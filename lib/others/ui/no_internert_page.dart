@@ -17,17 +17,16 @@ class NoInternetPage extends HookConsumerWidget {
     final authTokenNotifier = ref.watch(authTokenProvider.notifier);
     final authToken = ref.watch(authTokenProvider);
     final isLoggedInNotifier = ref.watch(isLoggedInProvider.notifier);
+    final isConnected = ref.watch(isConnectedProvider);
+    final isConnectedNotifier = ref.watch(isConnectedProvider.notifier);
     return Scaffold(
       body: Refresher(
         onRefresh: () async {
-          final isConnected = ref.watch(isConnectedProvider);
-          final isConnectedNotifier = ref.watch(isConnectedProvider.notifier);
           isConnectedNotifier.isInternet();
-          final authToken = ref.watch(authTokenProvider);
           if (isConnected) {
+            await versionVerifierNotifier.loadVersion();
             await authTokenNotifier.getTokenFromStorage();
             isLoggedInNotifier.refresh(authToken);
-            await versionVerifierNotifier.loadVersion();
           }
         },
         child: Container(
@@ -64,15 +63,11 @@ class NoInternetPage extends HookConsumerWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    final isConnected = ref.watch(isConnectedProvider);
-                    final isConnectedNotifier =
-                        ref.watch(isConnectedProvider.notifier);
                     isConnectedNotifier.isInternet();
-                    final authToken = ref.watch(authTokenProvider);
                     if (isConnected) {
+                      await versionVerifierNotifier.loadVersion();
                       await authTokenNotifier.getTokenFromStorage();
                       isLoggedInNotifier.refresh(authToken);
-                      await versionVerifierNotifier.loadVersion();
                     }
                   },
                   child: Container(
