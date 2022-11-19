@@ -10,7 +10,6 @@ environment:
 dependencies:
   animations: ^2.0.2
   auto_size_text: ^3.0.0
-  connectivity_plus: ^3.0.2
   crypto: ^3.0.2
   datetime_picker_formfield: ^2.0.1
   f_logs: ^2.0.1
@@ -27,6 +26,7 @@ dependencies:
   heroicons: ^0.7.0
   hooks_riverpod: ^2.1.1
   http: ^0.13.4
+  image_picker: ^0.8.6
   intl: ^0.17.0
   jwt_decoder: ^2.0.1
   numberpicker: ^2.1.1

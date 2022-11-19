@@ -108,8 +108,8 @@ class EditUserPage extends HookConsumerWidget {
                             ],
                           ),
                           child: CircleAvatar(
-                            radius: 60,
-                            backgroundImage: FileImage(profile),
+                            radius: 70,
+                            backgroundImage: profile.image,
                           ),
                         ),
                         Positioned(
@@ -118,13 +118,10 @@ class EditUserPage extends HookConsumerWidget {
                           child: InkWell(
                             onTap: () async {
                               final file = await profilePictureNotifier
-                                  .setProfilePicture(File(""));
-                              if (file is AsyncData) {
+                                  .setProfilePicture();
+                              if (file != null) {
                                 displayToastWithContext(
                                     TypeMsg.msg, "Photo de profil changée");
-                              } else {
-                                displayToastWithContext(
-                                    TypeMsg.error, "Erreur lors du changement");
                               }
                             },
                             child: Container(

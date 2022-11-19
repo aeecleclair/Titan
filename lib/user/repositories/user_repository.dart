@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:f_logs/model/flog/flog.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/user.dart';
@@ -49,52 +51,67 @@ class UserRepository extends Repository {
     }
   }
 
-  Future<File> getProfilePicture(String userId) async {
+  Future<Image> getProfilePicture(String userId) async {
+    print("${Repository.host}$ext$userId/profile-picture/");
     final response = await http.get(
-        Uri.parse("${Repository.host}${ext}me/profile-picture/"),
+        Uri.parse("${Repository.host}$ext$userId/profile-picture/"),
         headers: headers);
     if (response.statusCode == 200) {
       try {
-        return File.fromRawPath(response.bodyBytes);
+        return Image.memory(response.bodyBytes);
       } catch (e) {
         FLog.error(
-            text: "GET ${ext}me/profile-picture/\nError while decoding response",
+            text:
+                "GET $ext$userId/profile-picture/\nError while decoding response",
             exception: e);
         rethrow;
       }
     } else if (response.statusCode == 403) {
       FLog.error(
           text:
-              "GET ${ext}me/profile-picture/\n${response.statusCode} ${response.body}");
+              "GET $ext$userId/profile-picture/\n${response.statusCode} ${response.body}");
       throw AppException(ErrorType.tokenExpire, response.body);
     } else {
       FLog.error(
           text:
-              "GET ${ext}me/profile-picture/\n${response.statusCode} ${response.body}");
+              "GET $ext$userId/profile-picture/\n${response.statusCode} ${response.body}");
       throw AppException(ErrorType.notFound, response.body);
     }
   }
 
-  Future<File> addProfilePicture(File file) async {
+  Future<Image> addProfilePicture(String path) async {
+    final file = File(path);
+    final image = Image.file(file);
     final request = http.MultipartRequest(
-        'POST', Uri.parse("${Repository.host}${ext}me/profile-picture/"));
+        'POST', Uri.parse("${Repository.host}${ext}me/profile-picture"));
     request.files.add(http.MultipartFile.fromBytes(
-        'picture', file.readAsBytesSync(),
-        filename: file.path.split("/").last));
+        'file', file.readAsBytesSync(),
+        filename: 'profile_picture.png'));
     final response = await request.send();
     response.stream.transform(utf8.decoder).listen((value) async {
+      print(value);
       if (response.statusCode == 201) {
         try {
           return json.decode(value)["success"];
         } catch (e) {
+          FLog.error(
+              text:
+                  "POST ${ext}me/profile-picture\nError while decoding response",
+              exception: e);
           throw AppException(ErrorType.invalidData, e.toString());
         }
       } else if (response.statusCode == 403) {
+        FLog.error(
+            text:
+                "POST ${ext}me/profile-picture\n${response.statusCode} ${response.reasonPhrase}");
         throw AppException(ErrorType.tokenExpire, value);
       } else {
+        FLog.error(
+            text:
+                "POST ${ext}me/profile-picture\n${response.statusCode} ${response.reasonPhrase}");
         throw AppException(ErrorType.notFound, value);
       }
     });
-    return file;
+    return image;
   }
 }

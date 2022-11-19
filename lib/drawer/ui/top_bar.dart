@@ -37,7 +37,7 @@ class TopBar extends ConsumerWidget {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.white.withOpacity(0.2),
+                              color: Colors.black.withOpacity(0.1),
                               spreadRadius: 5,
                               blurRadius: 10,
                               offset: const Offset(0, 3),
@@ -45,7 +45,9 @@ class TopBar extends ConsumerWidget {
                           ],
                         ),
                         child: CircleAvatar(
-                            radius: 20, backgroundImage: FileImage(file)),
+                          radius: 23,
+                          backgroundImage: file.image,
+                        ),
                       ),
                       const SizedBox(
                         width: 15,
