@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -6,11 +8,13 @@ import 'package:intl/intl.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myecl/user/repositories/profile_picture_repository.dart';
 
 class EditUserPage extends HookConsumerWidget {
   const EditUserPage({Key? key}) : super(key: key);
@@ -21,6 +25,8 @@ class EditUserPage extends HookConsumerWidget {
     final key = GlobalKey<FormFieldState>();
     final asyncUserNotifier = ref.watch(asyncUserProvider.notifier);
     final user = ref.watch(userProvider);
+    final profilePicture = ref.watch(profilePictureProvider);
+    final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
     final dateController =
         useTextEditingController(text: processDatePrint(user.birthday));
     final firstNameController = useTextEditingController(text: user.firstname);
@@ -84,6 +90,86 @@ class EditUserPage extends HookConsumerWidget {
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 205, 205, 205))),
                 ),
+                const SizedBox(height: 40),
+                profilePicture.when(data: (profile) {
+                  return Center(
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                spreadRadius: 5,
+                                blurRadius: 10,
+                                offset: const Offset(2, 3),
+                              ),
+                            ],
+                          ),
+                          child: CircleAvatar(
+                            radius: 60,
+                            backgroundImage: FileImage(profile),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: InkWell(
+                            onTap: () async {
+                              final file = await profilePictureNotifier
+                                  .setProfilePicture(File(""));
+                              if (file is AsyncData) {
+                                displayToastWithContext(
+                                    TypeMsg.msg, "Photo de profil changée");
+                              } else {
+                                displayToastWithContext(
+                                    TypeMsg.error, "Erreur lors du changement");
+                              }
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    ColorConstants.gradient1,
+                                    ColorConstants.gradient2,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: ColorConstants.gradient2
+                                        .withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 4,
+                                    offset: const Offset(2, 3),
+                                  ),
+                                ],
+                              ),
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }, loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }, error: (e, s) {
+                  return const Center(
+                    child:
+                        Text("Erreur lors du chargement de la photo de profil"),
+                  );
+                }),
                 const SizedBox(height: 50),
                 UserFieldModifier(
                     label: SettingsTextConstants.firstname,

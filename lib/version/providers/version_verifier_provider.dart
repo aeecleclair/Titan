@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/version/class/version.dart';

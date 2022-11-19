@@ -1,5 +1,3 @@
-import 'package:flutter/src/widgets/framework.dart';
-
 class LoginTextConstants {
   static const String accountActivated = 'Compte activé';
   static const String accountNotActivated = 'Compte non activé';

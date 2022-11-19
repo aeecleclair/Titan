@@ -6,6 +6,7 @@ import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myecl/user/repositories/profile_picture_repository.dart';
 
 class TopBar extends ConsumerWidget {
   const TopBar({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class TopBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
     final auth = ref.watch(authTokenProvider.notifier);
+    final profilePicture = ref.watch(profilePictureProvider);
     return Column(
       children: [
         Container(
@@ -26,6 +28,39 @@ class TopBar extends ConsumerWidget {
               children: [
                 Container(
                   width: 25,
+                ),
+                profilePicture.when(
+                  data: (file) => Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.white.withOpacity(0.2),
+                              spreadRadius: 5,
+                              blurRadius: 10,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: CircleAvatar(
+                            radius: 20, backgroundImage: FileImage(file)),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                    ],
+                  ),
+                  loading: () => Row(
+                    children: const [
+                      CircularProgressIndicator(),
+                      SizedBox(
+                        width: 15,
+                      ),
+                    ],
+                  ),
+                  error: (error, stack) => Container(),
                 ),
                 Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

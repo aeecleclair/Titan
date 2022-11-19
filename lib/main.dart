@@ -30,10 +30,6 @@ class MyApp extends HookConsumerWidget {
     final check = versionVerifier.whenData(
         (value) => value.minimalTitanVersion.compareTo(titanVersion) < 0);
 
-
-    print("check: $check");
-    print("isLoggedIn: $isLoggedIn");
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MyECL',
