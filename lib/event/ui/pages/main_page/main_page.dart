@@ -16,27 +16,28 @@ class MainPage extends HookConsumerWidget {
     final eventNotifier = ref.watch(eventListProvider.notifier);
     final events = ref.watch(eventListProvider);
     return Expanded(
-        child: Refresher(
-      onRefresh: () async {
-        await eventNotifier.loadEventList();
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      child: Refresher(
+        onRefresh: () async {
+          await eventNotifier.loadEventList();
+        },
         child: Column(
           children: [
             events.when(data: (events) {
               return Column(
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        events.isEmpty
-                            ? EventTextConstants.noEvent
-                            : EventTextConstants.eventList,
-                        style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 205, 205, 205))),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                          events.isEmpty
+                              ? EventTextConstants.noEvent
+                              : EventTextConstants.eventList,
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 205, 205, 205))),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -54,7 +55,7 @@ class MainPage extends HookConsumerWidget {
                               },
                               child: Container(
                                   margin: const EdgeInsets.only(
-                                      bottom: 10, top: 20, left: 10, right: 10),
+                                      bottom: 10, top: 20, left: 40, right: 40),
                                   width: double.infinity,
                                   height: 100,
                                   decoration: BoxDecoration(
@@ -106,6 +107,6 @@ class MainPage extends HookConsumerWidget {
           ],
         ),
       ),
-    ));
+    );
   }
 }

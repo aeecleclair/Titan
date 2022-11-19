@@ -35,7 +35,7 @@ class EventUi extends ConsumerWidget {
           pageNotifier.setEventPage(EventPage.eventDetailfromModule);
         },
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 10),
           width: double.infinity,
           decoration: BoxDecoration(
               gradient: LinearGradient(
