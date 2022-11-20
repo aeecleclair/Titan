@@ -24,11 +24,12 @@ class TopBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
     final profilePicture = ref.watch(profilePictureProvider);
-    final isToggled = useState(false);
     final page = ref.watch(pageProvider);
     final pageNotifier = ref.watch(pageProvider.notifier);
     final hasScrolled = ref.watch(hasScrolledProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
+    final animation = useAnimationController(
+        duration: const Duration(milliseconds: 250), initialValue: 0.0);
     return Column(children: [
       Container(
         height: 20,
@@ -44,7 +45,11 @@ class TopBar extends HookConsumerWidget {
               GestureDetector(
                 onTap: () {
                   if (isAdmin) {
-                    isToggled.value = !isToggled.value;
+                    if (animation.isDismissed) {
+                      animation.forward();
+                    } else {
+                      animation.reverse();
+                    }
                   } else {
                     pageNotifier.setPage(ModuleType.settings);
                     controllerNotifier.toggle();
@@ -161,79 +166,89 @@ class TopBar extends HookConsumerWidget {
           ),
         ],
       ),
-      if (isToggled.value)
-        Padding(
-          padding: const EdgeInsets.only(left: 25, top: 20),
-          child: Column(
-            children: [
-              GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  pageNotifier.setPage(ModuleType.settings);
-                  controllerNotifier.toggle();
-                  hasScrolled.setHasScrolled(false);
-                },
-                child: Row(
+      AnimatedBuilder(
+        builder: (context, child) {
+          return Opacity(
+            opacity: animation.value,
+            child: Transform.translate(
+              offset: Offset(0, -10 * (1 - animation.value)),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 25, top: 15),
+                child: Column(
                   children: [
-                    HeroIcon(
-                      HeroIcons.cog,
-                      color: page == ModuleType.settings
-                          ? DrawerColorConstants.selectedText
-                          : DrawerColorConstants.lightText,
-                      size: 25,
+                    GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {
+                        pageNotifier.setPage(ModuleType.settings);
+                        controllerNotifier.toggle();
+                        hasScrolled.setHasScrolled(false);
+                      },
+                      child: Row(
+                        children: [
+                          HeroIcon(
+                            HeroIcons.cog,
+                            color: page == ModuleType.settings
+                                ? DrawerColorConstants.selectedText
+                                : DrawerColorConstants.lightText,
+                            size: 25,
+                          ),
+                          Container(
+                            width: 15,
+                          ),
+                          Text(DrawerTextConstants.settings,
+                              style: TextStyle(
+                                color: page == ModuleType.settings
+                                    ? DrawerColorConstants.selectedText
+                                    : DrawerColorConstants.lightText,
+                                fontSize: 15,
+                              ))
+                        ],
+                      ),
                     ),
-                    Container(
-                      width: 15,
+                    const SizedBox(
+                      height: 10,
                     ),
-                    Text(DrawerTextConstants.settings,
-                        style: TextStyle(
-                          color: page == ModuleType.settings
-                              ? DrawerColorConstants.selectedText
-                              : DrawerColorConstants.lightText,
-                          fontSize: 15,
-                        ))
+                    if (isAdmin)
+                      GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () {
+                          pageNotifier.setPage(ModuleType.admin);
+                          controllerNotifier.toggle();
+                          hasScrolled.setHasScrolled(false);
+                        },
+                        child: Row(
+                          children: [
+                            HeroIcon(
+                              HeroIcons.userGroup,
+                              color: page == ModuleType.admin
+                                  ? DrawerColorConstants.selectedText
+                                  : DrawerColorConstants.lightText,
+                              size: 25,
+                            ),
+                            Container(
+                              width: 15,
+                            ),
+                            Text(DrawerTextConstants.admin,
+                                style: TextStyle(
+                                  color: page == ModuleType.admin
+                                      ? DrawerColorConstants.selectedText
+                                      : DrawerColorConstants.lightText,
+                                  fontSize: 15,
+                                )),
+                            Container(
+                              width: 25,
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              if (isAdmin)
-                GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    pageNotifier.setPage(ModuleType.admin);
-                    controllerNotifier.toggle();
-                    hasScrolled.setHasScrolled(false);
-                  },
-                  child: Row(
-                    children: [
-                      HeroIcon(
-                        HeroIcons.userGroup,
-                        color: page == ModuleType.admin
-                            ? DrawerColorConstants.selectedText
-                            : DrawerColorConstants.lightText,
-                        size: 25,
-                      ),
-                      Container(
-                        width: 15,
-                      ),
-                      Text(DrawerTextConstants.admin,
-                          style: TextStyle(
-                            color: page == ModuleType.admin
-                                ? DrawerColorConstants.selectedText
-                                : DrawerColorConstants.lightText,
-                            fontSize: 15,
-                          )),
-                      Container(
-                        width: 25,
-                      ),
-                    ],
-                  ),
-                ),
-            ],
-          ),
-        )
+            ),
+          );
+        },
+        animation: animation,
+      )
     ]);
   }
 }
