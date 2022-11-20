@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:f_logs/model/flog/flog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/user.dart';
@@ -83,13 +83,13 @@ class UserRepository extends Repository {
     final file = File(path);
     final image = Image.file(file);
     final request = http.MultipartRequest(
-        'POST', Uri.parse("${Repository.host}${ext}me/profile-picture"));
-    request.files.add(http.MultipartFile.fromBytes(
-        'file', file.readAsBytesSync(),
-        filename: 'profile_picture.png'));
+        'POST', Uri.parse("${Repository.host}${ext}me/profile-picture"))
+      ..headers.addAll(headers)
+      ..files.add(await http.MultipartFile.fromPath('image', path,
+      contentType: MediaType('image', 'jpeg')));
+    print(request.fields);
     final response = await request.send();
     response.stream.transform(utf8.decoder).listen((value) async {
-      print(value);
       if (response.statusCode == 201) {
         try {
           return json.decode(value)["success"];

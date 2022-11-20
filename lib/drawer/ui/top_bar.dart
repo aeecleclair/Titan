@@ -45,7 +45,7 @@ class TopBar extends ConsumerWidget {
                           ],
                         ),
                         child: CircleAvatar(
-                          radius: 23,
+                          radius: 25,
                           backgroundImage: file.image,
                         ),
                       ),

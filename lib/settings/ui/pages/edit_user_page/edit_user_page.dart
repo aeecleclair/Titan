@@ -108,7 +108,7 @@ class EditUserPage extends HookConsumerWidget {
                             ],
                           ),
                           child: CircleAvatar(
-                            radius: 70,
+                            radius: 80,
                             backgroundImage: profile.image,
                           ),
                         ),
@@ -117,12 +117,10 @@ class EditUserPage extends HookConsumerWidget {
                           right: 0,
                           child: InkWell(
                             onTap: () async {
-                              final file = await profilePictureNotifier
+                              await profilePictureNotifier
                                   .setProfilePicture();
-                              if (file != null) {
                                 displayToastWithContext(
                                     TypeMsg.msg, "Photo de profil changée");
-                              }
                             },
                             child: Container(
                               height: 40,
