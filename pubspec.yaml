@@ -26,8 +26,10 @@ dependencies:
   heroicons: ^0.7.0
   hooks_riverpod: ^2.1.1
   http: ^0.13.4
+  http_parser: ^4.0.2
   image_picker: ^0.8.6
   intl: ^0.17.0
+  just_the_tooltip: ^0.0.12
   jwt_decoder: ^2.0.1
   numberpicker: ^2.1.1
   package_info_plus: ^3.0.2

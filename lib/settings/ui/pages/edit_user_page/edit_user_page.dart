@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -115,7 +113,7 @@ class EditUserPage extends HookConsumerWidget {
                         Positioned(
                           bottom: 0,
                           right: 0,
-                          child: InkWell(
+                          child: GestureDetector(
                             onTap: () async {
                               await profilePictureNotifier
                                   .setProfilePicture();

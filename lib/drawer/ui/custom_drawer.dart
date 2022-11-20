@@ -25,24 +25,33 @@ class CustomDrawer extends StatelessWidget {
               DrawerColorConstants.darkBlue,
             ])),
         child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const TopBar(),
-              Row(
-                children: [
-                  Expanded(
-                      child: SizedBox(
-                          width: 200,
-                          height: MediaQuery.of(context).size.height * 4.4 / 10,
-                          child: ListModule(
-                              controllerNotifier: controllerNotifier))),
-                  const FakePage(),
-                ],
-              ),
-              BottomBar(controllerNotifier: controllerNotifier),
-            ],
-          ),
+          child: Stack(children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TopBar(controllerNotifier: controllerNotifier),
+                BottomBar(controllerNotifier: controllerNotifier),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                        child: SizedBox(
+                            width: 200,
+                            height:
+                                MediaQuery.of(context).size.height * 4.4 / 10,
+                            child: ListModule(
+                                controllerNotifier: controllerNotifier))),
+                    const FakePage(),
+                  ],
+                ),
+              ],
+            ),
+          ]),
         ),
       ),
     );

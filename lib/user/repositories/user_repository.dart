@@ -52,7 +52,6 @@ class UserRepository extends Repository {
   }
 
   Future<Image> getProfilePicture(String userId) async {
-    print("${Repository.host}$ext$userId/profile-picture/");
     final response = await http.get(
         Uri.parse("${Repository.host}$ext$userId/profile-picture/"),
         headers: headers);
@@ -87,7 +86,6 @@ class UserRepository extends Repository {
       ..headers.addAll(headers)
       ..files.add(await http.MultipartFile.fromPath('image', path,
       contentType: MediaType('image', 'jpeg')));
-    print(request.fields);
     final response = await request.send();
     response.stream.transform(utf8.decoder).listen((value) async {
       if (response.statusCode == 201) {

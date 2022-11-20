@@ -7,6 +7,7 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
 import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myecl/user/repositories/profile_picture_repository.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 
 class MainPage extends HookConsumerWidget {
@@ -18,6 +19,7 @@ class MainPage extends HookConsumerWidget {
     final meNotifier = ref.watch(asyncUserProvider.notifier);
     final pageNotifier = ref.watch(settingsPageProvider.notifier);
     final titanVersion = ref.watch(titanVersionProvider);
+    final profilePicture = ref.watch(profilePictureProvider);
     ref.watch(logsProvider.notifier).getLogs();
     return Refresher(
       onRefresh: () async {

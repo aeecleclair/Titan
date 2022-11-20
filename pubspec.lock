@@ -318,7 +318,7 @@ packages:
     source: hosted
     version: "0.13.5"
   http_parser:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http_parser
       url: "https://pub.dartlang.org"
@@ -394,6 +394,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.7.0"
+  just_the_tooltip:
+    dependency: "direct main"
+    description:
+      name: just_the_tooltip
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.12"
   jwt_decoder:
     dependency: "direct main"
     description:

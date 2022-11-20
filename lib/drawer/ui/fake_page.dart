@@ -9,7 +9,7 @@ class FakePage extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 10, bottom: 50),
       width: MediaQuery.of(context).size.width - 220,
-      height: 400,
+      height: 420,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         boxShadow: const [
