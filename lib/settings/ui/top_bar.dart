@@ -31,16 +31,16 @@ class TopBar extends HookConsumerWidget {
                           case SettingsPage.main:
                             controllerNotifier.toggle();
                             break;
-                          case SettingsPage.info:
+                          case SettingsPage.edit:
                             pageNotifier.setSettingsPage(SettingsPage.main);
                             break;
-                          case SettingsPage.security:
+                          case SettingsPage.changePassword:
                             pageNotifier.setSettingsPage(SettingsPage.main);
                             break;
                           case SettingsPage.notification:
                             pageNotifier.setSettingsPage(SettingsPage.main);
                             break;
-                          case SettingsPage.help:
+                          case SettingsPage.logs:
                             pageNotifier.setSettingsPage(SettingsPage.main);
                             break;
                         }

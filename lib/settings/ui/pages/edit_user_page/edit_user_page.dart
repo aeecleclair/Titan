@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
@@ -92,6 +93,7 @@ class EditUserPage extends HookConsumerWidget {
                 profilePicture.when(data: (profile) {
                   return Center(
                     child: Stack(
+                      clipBehavior: Clip.none,
                       children: [
                         Container(
                           decoration: BoxDecoration(
@@ -112,17 +114,25 @@ class EditUserPage extends HookConsumerWidget {
                         ),
                         Positioned(
                           bottom: 0,
-                          right: 0,
+                          left: 0,
                           child: GestureDetector(
                             onTap: () async {
-                              await profilePictureNotifier
-                                  .setProfilePicture();
-                                displayToastWithContext(
-                                    TypeMsg.msg, "Photo de profil changée");
+                              final value = await profilePictureNotifier
+                                  .setProfilePicture(ImageSource.gallery);
+                              if (value != null) {
+                                if (value) {
+                                  displayToastWithContext(
+                                      TypeMsg.msg, "Photo de profil changée");
+                                } else {
+                                  displayToastWithContext(TypeMsg.error,
+                                      "Erreur lors du changement de photo de profil");
+                                }
+                              }
                             },
                             child: Container(
                               height: 40,
                               width: 40,
+                              padding: const EdgeInsets.all(7),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 gradient: const LinearGradient(
@@ -143,13 +153,110 @@ class EditUserPage extends HookConsumerWidget {
                                   ),
                                 ],
                               ),
-                              child: const Icon(
-                                Icons.edit,
+                              child: const HeroIcon(
+                                HeroIcons.photo,
                                 color: Colors.white,
                               ),
                             ),
                           ),
                         ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () async {
+                              final value = await profilePictureNotifier
+                                  .setProfilePicture(ImageSource.camera);
+                              if (value != null) {
+                                if (value) {
+                                  displayToastWithContext(
+                                      TypeMsg.msg, "Photo de profil changée");
+                                } else {
+                                  displayToastWithContext(TypeMsg.error,
+                                      "Erreur lors du changement de photo de profil");
+                                }
+                              }
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              padding: const EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    ColorConstants.gradient1,
+                                    ColorConstants.gradient2,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: ColorConstants.gradient2
+                                        .withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 4,
+                                    offset: const Offset(2, 3),
+                                  ),
+                                ],
+                              ),
+                              child: const HeroIcon(
+                                HeroIcons.camera,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: -20,
+                          right: 60,
+                          child: GestureDetector(
+                            onTap: () async {
+                              // final value = await profilePictureNotifier
+                              //     .setProfilePicture(ImageSource.camera);
+                              // if (value != null) {
+                              //   if (value) {
+                              //     displayToastWithContext(
+                              //         TypeMsg.msg, "Photo de profil changée");
+                              //   } else {
+                              //     displayToastWithContext(TypeMsg.error,
+                              //         "Erreur lors du changement de photo de profil");
+                              //   }
+                              // }
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              padding: const EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    ColorConstants.gradient1,
+                                    ColorConstants.gradient2,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: ColorConstants.gradient2
+                                        .withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 4,
+                                    offset: const Offset(2, 3),
+                                  ),
+                                ],
+                              ),
+                              child: const HeroIcon(
+                                HeroIcons.sparkles,
+                                color: Colors.white,
+                                size: 10,
+                              ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   );

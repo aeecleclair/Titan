@@ -88,7 +88,8 @@ class MainPage extends HookConsumerWidget {
                               height: 80,
                             );
                           }
-                          return EventUi(event: events[index - 1]);
+                          return EventUi(
+                              event: events[index - 1], isDetailPage: false);
                         }),
                   ),
                 ],

@@ -13,7 +13,9 @@ import 'package:myecl/tools/functions.dart';
 
 class EventUi extends ConsumerWidget {
   final Event event;
-  const EventUi({Key? key, required this.event}) : super(key: key);
+  final bool isDetailPage;
+  const EventUi({Key? key, required this.event, required this.isDetailPage})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -84,17 +86,18 @@ class EventUi extends ConsumerWidget {
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        eventNotifier.setEvent(event);
-                        pageNotifier
-                            .setEventPage(EventPage.eventDetailfromModule);
-                      },
-                      child: HeroIcon(
-                        HeroIcons.informationCircle,
-                        color: textColor,
+                    if (!isDetailPage)
+                      GestureDetector(
+                        onTap: () {
+                          eventNotifier.setEvent(event);
+                          pageNotifier
+                              .setEventPage(EventPage.eventDetailfromModule);
+                        },
+                        child: HeroIcon(
+                          HeroIcons.informationCircle,
+                          color: textColor,
+                        ),
                       ),
-                    ),
                   ],
                 ),
                 const SizedBox(
@@ -132,57 +135,63 @@ class EventUi extends ConsumerWidget {
                   style: TextStyle(
                       color: textColor.withOpacity(0.7), fontSize: 13),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return CustomDialogBox(
-                            descriptions: EventTextConstants.deletingEvent,
-                            onYes: () async {
-                              final value =
-                                  await eventListNotifier.deleteEvent(event);
-                              if (value) {
-                                displayToastWithContext(TypeMsg.msg,
-                                    EventTextConstants.deletedEvent);
-                              } else {
-                                displayToastWithContext(TypeMsg.error,
-                                    EventTextConstants.deletingError);
-                              }
-                            },
-                            title: EventTextConstants.deleting,
-                          );
-                        });
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    decoration: BoxDecoration(
-                        color: event.end.compareTo(now) < 0
-                            ? Colors.grey.shade700
-                            : event.start.compareTo(now) <= 0
-                                ? ColorConstants.gradient1
-                                : Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                            color: event.end.compareTo(now) < 0
-                                ? Colors.grey.shade700
-                                : event.start.compareTo(now) <= 0
-                                    ? ColorConstants.gradient1
-                                    : Colors.grey.shade300)),
-                    child: Center(
-                      child: Text(
-                        EventTextConstants.delete,
-                        style: TextStyle(
-                            color: textColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold),
+                if (!isDetailPage)
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 15,
                       ),
-                    ),
-                  ),
-                )
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return CustomDialogBox(
+                                  descriptions:
+                                      EventTextConstants.deletingEvent,
+                                  onYes: () async {
+                                    final value = await eventListNotifier
+                                        .deleteEvent(event);
+                                    if (value) {
+                                      displayToastWithContext(TypeMsg.msg,
+                                          EventTextConstants.deletedEvent);
+                                    } else {
+                                      displayToastWithContext(TypeMsg.error,
+                                          EventTextConstants.deletingError);
+                                    }
+                                  },
+                                  title: EventTextConstants.deleting,
+                                );
+                              });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          decoration: BoxDecoration(
+                              color: event.end.compareTo(now) < 0
+                                  ? Colors.grey.shade700
+                                  : event.start.compareTo(now) <= 0
+                                      ? ColorConstants.gradient1
+                                      : Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                  color: event.end.compareTo(now) < 0
+                                      ? Colors.grey.shade700
+                                      : event.start.compareTo(now) <= 0
+                                          ? ColorConstants.gradient1
+                                          : Colors.grey.shade300)),
+                          child: Center(
+                            child: Text(
+                              EventTextConstants.delete,
+                              style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
               ],
             ),
           ),

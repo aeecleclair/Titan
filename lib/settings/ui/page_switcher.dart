@@ -16,13 +16,13 @@ class PageSwitcher extends ConsumerWidget {
     switch (page) {
       case SettingsPage.main:
         return const MainPage();
-      case SettingsPage.info:
+      case SettingsPage.edit:
         return const EditUserPage();
-      case SettingsPage.security:
+      case SettingsPage.changePassword:
         return const ChangePassPage();
       case SettingsPage.notification:
         return const NotificationPage();
-      case SettingsPage.help:
+      case SettingsPage.logs:
         return const HelpPage();
     }
   }

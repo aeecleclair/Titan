@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:myecl/tools/constants.dart';
 
 class SettingsItem extends StatelessWidget {
   final Widget child;
-  final Widget icon;
+  final HeroIcons icon;
   final void Function() onTap;
 
   const SettingsItem({
@@ -23,18 +24,37 @@ class SettingsItem extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(right: 20),
-            child: icon
+            child: HeroIcon(
+              icon,
+              size: 30,
+              color: Colors.black,
+            ),
           ),
           Expanded(child: child),
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: Colors.grey[200],
+                gradient: const LinearGradient(
+                  colors: [
+                    ColorConstants.gradient1,
+                    ColorConstants.gradient2,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: ColorConstants.gradient2.withOpacity(0.3),
+                    spreadRadius: 2,
+                    blurRadius: 4,
+                    offset: const Offset(1, 2),
+                  ),
+                ],
                 borderRadius: BorderRadius.circular(10)),
             child: const HeroIcon(
               HeroIcons.chevronRight,
               size: 25,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
         ],

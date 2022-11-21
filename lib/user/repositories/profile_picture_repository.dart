@@ -20,14 +20,18 @@ class ProfilePictureNotifier extends SingleNotifier<Image> {
     return await load(() async => _userRepository.getProfilePicture("me"));
   }
 
-  Future<AsyncValue<Image>> setProfilePicture() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+  Future<bool?> setProfilePicture(ImageSource source) async {
+    final XFile? image = await _picker.pickImage(source: source);
     if (image != null) {
-      return state =
+      try {
+      state =
           AsyncValue.data(await _userRepository.addProfilePicture(image.path));
-    } else {
-      return AsyncError(Exception("No image selected"), StackTrace.empty);
+      return true;
+      } catch (e) {
+        return false;
+      }
     }
+    return null;
   }
 }
 

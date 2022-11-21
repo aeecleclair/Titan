@@ -2,8 +2,10 @@ class SettingsTextConstants {
   static const String account = "Compte";
   static const String addProfilePicture = "Ajouter une photo";
   static const String admin = "Administrateur";
+  static const String askHelp = "Demander de l'aide";
   static const String association = "Association";
   static const String birthday = "Date de naissance";
+  static const String bugs = "Bugs";
   static const String changePassword = "Changer de mot de passe";
   static const String changingPassword =
       "Voulez-vous vraiment changer votre mot de passe ?";
@@ -15,6 +17,7 @@ class SettingsTextConstants {
   static const String deleting = "Suppresion";
   static const String edit = "Modifier";
   static const String editAccount = "Modifier le compte";
+  static const String editPassword = "Modifier le mot de passe";
   static const String email = "Email";
   static const String emptyField = "Ce champ ne peut pas être vide";
   static const String expectingDate = "Date de naissance attendue";
@@ -43,4 +46,6 @@ class SettingsTextConstants {
   static const String updatingError =
       "Erreur lors de la modification du profil";
   static const String version = "Version";
+
+  static const String repportBug = "Signaler un bug";
 }
