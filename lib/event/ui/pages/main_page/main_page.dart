@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/event/ui/pages/main_page/event_ui.dart';
+import 'package:myecl/event/ui/event_ui.dart';
 import 'package:myecl/tools/refresher.dart';
 
 class MainPage extends HookConsumerWidget {

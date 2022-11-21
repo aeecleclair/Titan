@@ -3,7 +3,7 @@ import 'package:heroicons/heroicons.dart';
 
 class SettingsItem extends StatelessWidget {
   final Widget child;
-  final HeroIcons icon;
+  final Widget icon;
   final void Function() onTap;
 
   const SettingsItem({
@@ -23,11 +23,7 @@ class SettingsItem extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(right: 20),
-            child: HeroIcon(
-              icon,
-              size: 30,
-              color: Colors.black,
-            ),
+            child: icon
           ),
           Expanded(child: child),
           Container(

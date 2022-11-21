@@ -40,7 +40,18 @@ class MainPage extends HookConsumerWidget {
             height: 30,
           ),
           SettingsItem(
-            icon: HeroIcons.user,
+            icon: profilePicture.when(
+              data: (profil) => CircleAvatar(
+                backgroundImage: profil.image,
+                radius: 25,
+              ),
+              loading: () => const CircularProgressIndicator(),
+              error: (error, stackTrace) => const HeroIcon(
+                HeroIcons.user,
+                size: 30,
+                color: Colors.black,
+              ),
+            ),
             onTap: () {
               pageNotifier.setSettingsPage(SettingsPage.info);
             },
@@ -92,7 +103,11 @@ class MainPage extends HookConsumerWidget {
             height: 30,
           ),
           SettingsItem(
-            icon: HeroIcons.shieldCheck,
+            icon: const HeroIcon(
+              HeroIcons.shieldCheck,
+              size: 30,
+              color: Colors.black,
+            ),
             onTap: () {
               pageNotifier.setSettingsPage(SettingsPage.security);
             },
@@ -156,7 +171,11 @@ class MainPage extends HookConsumerWidget {
             height: 30,
           ),
           SettingsItem(
-            icon: HeroIcons.lifebuoy,
+            icon: const HeroIcon(
+              HeroIcons.lifebuoy,
+              size: 30,
+              color: Colors.black,
+            ),
             onTap: () {
               pageNotifier.setSettingsPage(SettingsPage.help);
             },
