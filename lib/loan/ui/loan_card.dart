@@ -7,7 +7,7 @@ import 'package:myecl/tools/functions.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;
-  final bool isAdmin;
+  final bool isAdmin, isDetail;
   final Function() onEdit, onCalendar, onReturn, onInfo;
   const LoanCard(
       {super.key,
@@ -16,7 +16,8 @@ class LoanCard extends StatelessWidget {
       required this.onCalendar,
       required this.onReturn,
       required this.onInfo,
-      required this.isAdmin});
+      required this.isAdmin,
+      required this.isDetail});
 
   @override
   Widget build(BuildContext context) {
@@ -63,11 +64,15 @@ class LoanCard extends StatelessWidget {
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black)),
-                        GestureDetector(
-                          onTap: onInfo,
-                          child: const HeroIcon(HeroIcons.informationCircle,
-                              color: Colors.black, size: 25),
-                        )
+                        !isDetail
+                            ? GestureDetector(
+                                onTap: onInfo,
+                                child: const HeroIcon(
+                                    HeroIcons.informationCircle,
+                                    color: Colors.black,
+                                    size: 25),
+                              )
+                            : Container(width: 25),
                       ],
                     ),
                     const SizedBox(height: 5),
@@ -78,16 +83,19 @@ class LoanCard extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
+                const SizedBox(height: 5),
                 Text(formatItems(loan.items),
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey.shade400)),
+                const SizedBox(height: 5),
                 Text(loan.caution,
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
+                const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

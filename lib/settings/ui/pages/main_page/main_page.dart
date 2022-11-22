@@ -54,8 +54,8 @@ class MainPage extends HookConsumerWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: -65,
-                    right: -MediaQuery.of(context).size.width * 0.3,
+                    bottom: -60,
+                    right: -MediaQuery.of(context).size.width / 2 + 70,
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
@@ -75,7 +75,7 @@ class MainPage extends HookConsumerWidget {
                             Column(
                               children: [
                                 const SizedBox(
-                                  height: 5,
+                                  height: 10,
                                 ),
                                 Text(
                                   me.nickname,

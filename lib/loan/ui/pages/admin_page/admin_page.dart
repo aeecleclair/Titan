@@ -217,6 +217,7 @@ class AdminPage extends HookConsumerWidget {
                                             .map((e) => LoanCard(
                                                   loan: e,
                                                   isAdmin: true,
+                                                  isDetail: false,
                                                   onEdit: () {
                                                     loanNotifier
                                                         .setLoan(e)

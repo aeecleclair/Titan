@@ -75,6 +75,7 @@ class MainPage extends HookConsumerWidget {
                             ...dictCateListWidget[0].map((e) => LoanCard(
                                   loan: e,
                                   isAdmin: false,
+                                  isDetail: false,
                                   onEdit: () {},
                                   onCalendar: () {},
                                   onReturn: () async {},
@@ -122,6 +123,7 @@ class MainPage extends HookConsumerWidget {
                             .map((e) => LoanCard(
                                   loan: e,
                                   isAdmin: false,
+                                  isDetail: false,
                                   onEdit: () {},
                                   onCalendar: () {},
                                   onReturn: () async {},

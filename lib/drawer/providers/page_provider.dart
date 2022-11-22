@@ -13,7 +13,7 @@ enum ModuleType {
 }
 
 class PageNotifier extends StateNotifier<ModuleType> {
-  PageNotifier() : super(ModuleType.home);
+  PageNotifier() : super(ModuleType.loan);
 
   void setPage(ModuleType i) {
     state = i;

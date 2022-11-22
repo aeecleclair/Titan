@@ -20,7 +20,7 @@ class ItemCard extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Container(
         width: 140,
-        height: (showButtons) ? 160 : 120,
+        height: (showButtons) ? 160 : 105,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30),
@@ -103,7 +103,7 @@ class ItemCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              const SizedBox(height: 10),
+              if (showButtons) const SizedBox(height: 10),
             ],
           ),
         ),

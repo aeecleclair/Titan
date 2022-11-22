@@ -8,14 +8,15 @@ import 'package:myecl/booking/tools/functions.dart';
 class BookingCard extends HookConsumerWidget {
   final Booking booking;
   final Function() onEdit, onReturn, onInfo;
-  final bool isAdmin;
+  final bool isAdmin, isDetail;
   const BookingCard(
       {super.key,
       required this.booking,
       required this.onEdit,
       required this.onReturn,
       required this.onInfo,
-      required this.isAdmin});
+      required this.isAdmin,
+      required this.isDetail});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +24,7 @@ class BookingCard extends HookConsumerWidget {
       padding: const EdgeInsets.all(15.0),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.7,
-        height: 180,
+        // height: 180,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30),
@@ -51,11 +52,12 @@ class BookingCard extends HookConsumerWidget {
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black)),
-                  GestureDetector(
-                    onTap: onInfo,
-                    child: const HeroIcon(HeroIcons.informationCircle,
-                        color: Colors.black, size: 25),
-                  )
+                  if (!isDetail)
+                    GestureDetector(
+                      onTap: onInfo,
+                      child: const HeroIcon(HeroIcons.informationCircle,
+                          color: Colors.black, size: 25),
+                    )
                 ],
               ),
               const SizedBox(height: 5),
@@ -92,66 +94,68 @@ class BookingCard extends HookConsumerWidget {
                           color: Colors.grey.shade400)),
                 ],
               ),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: onEdit,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(
-                            color: isAdmin
-                                ? booking.decision == Decision.approved
-                                    ? Colors.black
-                                    : Colors.transparent
-                                : Colors.transparent,
-                            width: 2),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              blurRadius: 10,
-                              offset: const Offset(2, 3))
-                        ],
-                      ),
-                      child: Icon(isAdmin ? Icons.check : Icons.edit,
-                          color: Colors.black),
-                    ),
-                  ),
-                  if (isAdmin) const Spacer(),
-                  if (isAdmin)
+              // const Spacer(),
+              const SizedBox(height: 20),
+              if (!isDetail)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     GestureDetector(
-                      onTap: onReturn,
+                      onTap: onEdit,
                       child: Container(
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: Colors.grey.shade200,
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(
                               color: isAdmin
-                                  ? booking.decision == Decision.declined
-                                      ? Colors.white
+                                  ? booking.decision == Decision.approved
+                                      ? Colors.black
                                       : Colors.transparent
                                   : Colors.transparent,
                               width: 2),
                           boxShadow: [
                             BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
+                                color: Colors.grey.withOpacity(0.2),
                                 blurRadius: 10,
                                 offset: const Offset(2, 3))
                           ],
                         ),
-                        child: const Icon(Icons.clear, color: Colors.white),
+                        child: Icon(isAdmin ? Icons.check : Icons.edit,
+                            color: Colors.black),
                       ),
                     ),
-                ],
-              ),
-              const SizedBox(height: 10),
+                    if (isAdmin) const Spacer(),
+                    if (isAdmin)
+                      GestureDetector(
+                        onTap: onReturn,
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                                color: isAdmin
+                                    ? booking.decision == Decision.declined
+                                        ? Colors.white
+                                        : Colors.transparent
+                                    : Colors.transparent,
+                                width: 2),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: const Offset(2, 3))
+                            ],
+                          ),
+                          child: const Icon(Icons.clear, color: Colors.white),
+                        ),
+                      ),
+                  ],
+                ),
+              if (!isDetail) const SizedBox(height: 10),
             ],
           ),
         ),

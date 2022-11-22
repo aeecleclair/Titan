@@ -149,6 +149,7 @@ class AdminPage extends HookConsumerWidget {
                       ...pendingBookings.map((e) => BookingCard(
                             booking: e,
                             isAdmin: true,
+                            isDetail: false,
                             onEdit: () {
                               bookingListNotifier.toggleConfirmed(
                                   e, Decision.approved);
@@ -193,6 +194,7 @@ class AdminPage extends HookConsumerWidget {
                       ...confirmedBookings.map((e) => BookingCard(
                             booking: e,
                             isAdmin: true,
+                            isDetail: false,
                             onEdit: () {},
                             onReturn: () {
                               bookingListNotifier.toggleConfirmed(
@@ -234,6 +236,7 @@ class AdminPage extends HookConsumerWidget {
                       ...canceledBookings.map((e) => BookingCard(
                             booking: e,
                             isAdmin: true,
+                            isDetail: false,
                             onEdit: () {
                               bookingListNotifier.toggleConfirmed(
                                   e, Decision.approved);

@@ -129,6 +129,7 @@ class MainPage extends HookConsumerWidget {
                       ...data.map((e) => BookingCard(
                             booking: e,
                             isAdmin: false,
+                            isDetail: false,
                             onEdit: () {
                               bookingNotifier.setBooking(e);
                               pageNotifier
