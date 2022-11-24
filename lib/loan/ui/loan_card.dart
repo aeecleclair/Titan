@@ -83,19 +83,17 @@ class LoanCard extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
-                const SizedBox(height: 5),
+                const SizedBox(height: 3),
                 Text(formatItems(loan.items),
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey.shade400)),
-                const SizedBox(height: 5),
                 Text(loan.caution,
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
-                const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
