@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -8,6 +12,8 @@ import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/pretendance.dart';
+import 'package:myecl/vote/providers/logo_provider.dart';
+import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_members.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
@@ -29,6 +35,7 @@ class AddPretendancePage extends HookConsumerWidget {
     final section = useState(ref.watch(sectionProvider));
     final sections = ref.watch(sectionsProvider);
     final pretendanceListNotifier = ref.watch(pretendanceListProvider.notifier);
+    final pretendanceList = ref.watch(pretendanceListProvider);
     final sectionsNotifier = ref.watch(sectionPretendanceProvider.notifier);
     final name = useTextEditingController();
     final description = useTextEditingController();
@@ -42,6 +49,12 @@ class AddPretendancePage extends HookConsumerWidget {
     final member = useState(SimpleUser.empty());
     final members = ref.watch(pretendanceMembersProvider);
     final membersNotifier = ref.watch(pretendanceMembersProvider.notifier);
+    final pretendanceLogosNotifier =
+        ref.watch(pretendanceLogosProvider.notifier);
+    final logoNotifier = ref.watch(logoProvider.notifier);
+    final logo = useState<String?>(null);
+    final ImagePicker picker = ImagePicker();
+
     final displayUserSearch = useState(false);
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -97,7 +110,175 @@ class AddPretendancePage extends HookConsumerWidget {
                         color: Colors.blue,
                       ),
                     )),
-            const SizedBox(height: 30),
+            const SizedBox(height: 50),
+            Center(
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset: const Offset(2, 3),
+                        ),
+                      ],
+                    ),
+                    child: logo.value != null
+                        ? CircleAvatar(
+                            radius: 80,
+                            backgroundImage: Image.file(
+                              File(logo.value!),
+                              fit: BoxFit.cover,
+                            ).image,
+                          )
+                        : const HeroIcon(
+                            HeroIcons.userCircle,
+                            size: 160,
+                            color: Colors.grey,
+                          ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    child: GestureDetector(
+                      onTap: () async {
+                        final XFile? image = await picker.pickImage(
+                            source: ImageSource.gallery);
+                        if (image != null) {
+                          logo.value = image.path;
+                        }
+                      },
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        padding: const EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: const LinearGradient(
+                            colors: [
+                              ColorConstants.gradient1,
+                              ColorConstants.gradient2,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorConstants.gradient2.withOpacity(0.3),
+                              spreadRadius: 2,
+                              blurRadius: 4,
+                              offset: const Offset(2, 3),
+                            ),
+                          ],
+                        ),
+                        child: const HeroIcon(
+                          HeroIcons.photo,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () async {
+                        final XFile? image =
+                            await picker.pickImage(source: ImageSource.camera);
+                        if (image != null) {
+                          logo.value = image.path;
+                        }
+                      },
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        padding: const EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: const LinearGradient(
+                            colors: [
+                              ColorConstants.gradient1,
+                              ColorConstants.gradient2,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorConstants.gradient2.withOpacity(0.3),
+                              spreadRadius: 2,
+                              blurRadius: 4,
+                              offset: const Offset(2, 3),
+                            ),
+                          ],
+                        ),
+                        child: const HeroIcon(
+                          HeroIcons.camera,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (logo.value != null)
+                    Positioned(
+                      bottom: -20,
+                      right: 60,
+                      child: GestureDetector(
+                        onTap: () async {
+                          // final value = await profilePictureNotifier
+                          //     .setProfilePicture(ImageSource.camera);
+                          // if (value != null) {
+                          //   if (value) {
+                          //     displayToastWithContext(
+                          //         TypeMsg.msg, "Photo de profil changée");
+                          //   } else {
+                          //     displayToastWithContext(TypeMsg.error,
+                          //         "Erreur lors du changement de photo de profil");
+                          //   }
+                          // }
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: const LinearGradient(
+                              colors: [
+                                ColorConstants.gradient1,
+                                ColorConstants.gradient2,
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color:
+                                    ColorConstants.gradient2.withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 4,
+                                offset: const Offset(2, 3),
+                              ),
+                            ],
+                          ),
+                          child: const HeroIcon(
+                            HeroIcons.sparkles,
+                            color: Colors.white,
+                            size: 10,
+                          ),
+                        ),
+                      ),
+                    )
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: TextEntry(
@@ -337,6 +518,24 @@ class AddPretendancePage extends HookConsumerWidget {
                           ),
                         );
                         if (value) {
+                          pretendanceList.when(
+                              data: (list) {
+                                final newPretendance = list.last;
+                                if (logo.value != null) {
+                                  logoNotifier.updateLogo(
+                                      newPretendance.id, logo.value!);
+                                  pretendanceLogosNotifier.setTData(
+                                      newPretendance,
+                                      AsyncData([
+                                        Image.file(
+                                          File(logo.value!),
+                                          fit: BoxFit.cover,
+                                        )
+                                      ]));
+                                }
+                              },
+                              error: (error, s) {},
+                              loading: () {});
                           pageNotifier.setVotePage(VotePage.admin);
                           membersNotifier.clearMembers();
                           await sectionsNotifier.setTData(section.value,
