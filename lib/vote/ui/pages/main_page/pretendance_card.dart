@@ -4,7 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/vote/class/pretendance.dart';
+import 'package:myecl/vote/providers/logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
+import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
@@ -23,12 +25,16 @@ class PretendanceCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(votePageProvider.notifier);
-    final pretendanceNotifier=  ref.watch(pretendanceProvider.notifier);
+    final pretendanceNotifier = ref.watch(pretendanceProvider.notifier);
     final section = ref.watch(sectionProvider);
     final sections = ref.watch(sectionsProvider);
     final selectedPretendanceList = ref.watch(selectedPretendanceProvider);
     final selectedPretendanceListNotifier =
         ref.watch(selectedPretendanceProvider.notifier);
+    final pretendanceLogos = ref.watch(pretendanceLogosProvider);
+    final pretendanceLogosNotifier =
+        ref.watch(pretendanceLogosProvider.notifier);
+    final logoNotifier = ref.watch(logoProvider.notifier);
     return SlideTransition(
       position: Tween<Offset>(
         begin: const Offset(1, 0),
@@ -63,11 +69,50 @@ class PretendanceCard extends HookConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    HeroIcon(
-                      HeroIcons.cubeTransparent,
-                      color: Colors.grey.shade500,
-                      size: 30,
-                    ),
+                    pretendanceLogos.when(
+                        data: (data) {
+                          if (data[pretendance] != null) {
+                            return data[pretendance]!.when(data: (data) {
+                              if (data.isNotEmpty) {
+                                return CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: data.first.image,
+                                );
+                              } else {
+                                logoNotifier
+                                    .getLogo(pretendance.id)
+                                    .then((value) {
+                                  pretendanceLogosNotifier.setTData(
+                                      pretendance, AsyncData([value]));
+                                });
+                                return const HeroIcon(
+                                  HeroIcons.userCircle,
+                                  size: 40,
+                                );
+                              }
+                            }, loading: () {
+                              return const SizedBox(
+                                height: 50,
+                                width: 50,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            }, error: (error, stack) {
+                              return const SizedBox(
+                                height: 50,
+                                width: 50,
+                                child: Center(
+                                  child: Icon(Icons.error),
+                                ),
+                              );
+                            });
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        },
+                        loading: () => const CircularProgressIndicator(),
+                        error: (error, stack) => const Text('Error')),
                     Column(
                       children: [
                         Text(pretendance.name,

@@ -3,6 +3,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/vote/class/pretendance.dart';
+import 'package:myecl/vote/providers/logo_provider.dart';
+import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
@@ -28,6 +30,10 @@ class PretendanceCard extends HookConsumerWidget {
           loading: () => Status.waiting,
           error: (error, stackTrace) => Status.waiting,
         );
+    final pretendanceLogos = ref.watch(pretendanceLogosProvider);
+    final pretendanceLogosNotifier =
+        ref.watch(pretendanceLogosProvider.notifier);
+    final logoNotifier = ref.watch(logoProvider.notifier);
     return Container(
       padding: const EdgeInsets.all(15.0),
       child: Container(
@@ -58,11 +64,50 @@ class PretendanceCard extends HookConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    HeroIcon(
-                      HeroIcons.cubeTransparent,
-                      color: Colors.grey.shade500,
-                      size: 30,
-                    ),
+                    pretendanceLogos.when(
+                        data: (data) {
+                          if (data[pretendance] != null) {
+                            return data[pretendance]!.when(data: (data) {
+                              if (data.isNotEmpty) {
+                                return CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: data.first.image,
+                                );
+                              } else {
+                                logoNotifier
+                                    .getLogo(pretendance.id)
+                                    .then((value) {
+                                  pretendanceLogosNotifier.setTData(
+                                      pretendance, AsyncData([value]));
+                                });
+                                return const HeroIcon(
+                                  HeroIcons.userCircle,
+                                  size: 40,
+                                );
+                              }
+                            }, loading: () {
+                              return const SizedBox(
+                                height: 50,
+                                width: 50,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            }, error: (error, stack) {
+                              return const SizedBox(
+                                height: 50,
+                                width: 50,
+                                child: Center(
+                                  child: Icon(Icons.error),
+                                ),
+                              );
+                            });
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        },
+                        loading: () => const CircularProgressIndicator(),
+                        error: (error, stack) => const Text('Error')),
                     Column(
                       children: [
                         Text(pretendance.name,

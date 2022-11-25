@@ -9,7 +9,9 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/class/votes.dart';
 import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
+import 'package:myecl/vote/providers/logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
+import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
@@ -31,7 +33,6 @@ class MainPage extends HookConsumerWidget {
     final status = ref.watch(statusProvider);
     final statusNotifier = ref.watch(statusProvider.notifier);
     final isAdmin = ref.watch(isVoteAdmin);
-    print(status);
     return status.when(data: (s) {
       if (s == Status.open) {
         final sections = ref.watch(sectionsProvider);
@@ -43,6 +44,9 @@ class MainPage extends HookConsumerWidget {
             ref.watch(sectionPretendanceProvider.notifier);
         final selectedPretendance = ref.watch(selectedPretendanceProvider);
         final votesNotifier = ref.watch(votesProvider.notifier)..getVotes();
+        final pretendanceLogosNotifier =
+            ref.watch(pretendanceLogosProvider.notifier);
+        final logosNotifier = ref.watch(logoProvider.notifier);
         final animation = useAnimationController(
           duration: const Duration(milliseconds: 2400),
         );
@@ -71,12 +75,18 @@ class MainPage extends HookConsumerWidget {
                 list = [];
               });
               sectionPretendanceNotifier.loadTList(value);
+              pretendanceLogosNotifier.loadTList(list);
               for (final l in value) {
                 sectionPretendanceNotifier.setTData(
                     l,
                     AsyncValue.data(list
                         .where((element) => element.section.id == l.id)
                         .toList()));
+              }
+              for (final l in list) {
+                logosNotifier.getLogo(l.id).then((value) =>
+                    pretendanceLogosNotifier.setTData(
+                        l, AsyncValue.data([value])));
               }
             });
           },
