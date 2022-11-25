@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/is_admin.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/dialog.dart';
-import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/repositories/profile_picture_repository.dart';
-import 'package:just_the_tooltip/just_the_tooltip.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;

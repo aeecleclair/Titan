@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
-import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
-import 'package:myecl/tools/functions.dart';
 
 class DetailBookingPage extends HookConsumerWidget {
   const DetailBookingPage({Key? key}) : super(key: key);

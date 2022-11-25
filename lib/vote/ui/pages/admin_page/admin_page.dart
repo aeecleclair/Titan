@@ -141,6 +141,8 @@ class AdminPage extends HookConsumerWidget {
                                                                     .deleteSection(
                                                                         key);
                                                             if (result) {
+                                                              sectionPretendanceListNotifier
+                                                                  .deleteT(key);
                                                               displayVoteToastWithContext(
                                                                   TypeMsg.msg,
                                                                   'Section supprimée avec succès');

@@ -55,6 +55,35 @@ class MapNotifier<T, E>
     });
   }
 
+  Future<bool> deleteT(T t) {
+    return state.when(data: (d) async {
+      try {
+        d.remove(t);
+        state = AsyncValue.data(d);
+        return true;
+      } catch (error) {
+        state = AsyncValue.data(d);
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          rethrow;
+        } else {
+          state = AsyncValue.error(error, StackTrace.empty);
+          return false;
+        }
+      }
+    }, error: (error, s) async {
+      if (error is AppException && error.type == ErrorType.tokenExpire) {
+        throw error;
+      } else {
+        state = AsyncValue.error(error, s);
+        return false;
+      }
+    }, loading: () async {
+      state = const AsyncValue.error(
+          "Cannot delete while loading", StackTrace.empty);
+      return false;
+    });
+  }
+
   Future<bool> setTData(T t, AsyncValue<List<E>> asyncEList) async {
     return state.when(data: (d) async {
       try {

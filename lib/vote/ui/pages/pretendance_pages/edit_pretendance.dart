@@ -330,7 +330,7 @@ class EditPretendancePage extends HookConsumerWidget {
                             await pretendanceListNotifier.updatePretendance(
                           Pretendance(
                             name: name.text,
-                            id: '',
+                            id: pretendance.id,
                             description: description.text,
                             listType: listType.value,
                             members: members,

@@ -17,34 +17,40 @@ class SectionChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Chip(
-            label: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text(
-                    label,
-                    style: TextStyle(
-                        color: selected ? Colors.white : Colors.black,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  if (isAdmin && selected)
-                    Container(
-                      margin: const EdgeInsets.only(left: 10.0),
-                      child: GestureDetector(
-                        onTap: onDelete,
-                        child: const Icon(
-                          Icons.close,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
-                ],
-              ),
+        margin: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+          color: selected ? Colors.black : Colors.grey.shade200,
+        ),
+        child: Row(
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                  color: selected ? Colors.white : Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0),
             ),
-            backgroundColor: selected ? Colors.black : Colors.grey.shade200,
-          )),
+            if (isAdmin && selected)
+              Container(
+                margin: const EdgeInsets.only(left: 10.0),
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    print('delete');
+                    onDelete();
+                  },
+                  child: const Icon(
+                    Icons.close,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+              )
+          ],
+        ),
+      ),
     );
   }
 }

@@ -92,12 +92,11 @@ class AddSectionPage extends HookConsumerWidget {
                               fontWeight: FontWeight.bold))),
                   onTap: () {
                     tokenExpireWrapper(ref, () async {
-                      Section newSection = Section(
-                          name: name.text,
-                          id: '',
-                          description: description.text);
-                      final value =
-                          await sectionListNotifier.addSection(newSection);
+                      final value = await sectionListNotifier.addSection(
+                          Section(
+                              name: name.text,
+                              id: '',
+                              description: description.text));
                       if (value) {
                         pageNotifier.setVotePage(VotePage.admin);
                         sections.whenData((value) {

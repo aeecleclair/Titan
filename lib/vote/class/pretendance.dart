@@ -47,7 +47,7 @@ class Pretendance {
       'description': description,
       'type': capitalize(listType.toString().split('.').last),
       'members': members.map((x) => x.toJson()).toList(),
-      'section': section.id,
+      'section_id': section.id,
     };
   }
 

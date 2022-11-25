@@ -39,5 +39,7 @@ class VotesProvider extends ListNotifier<Votes> {
 final votesProvider =
     StateNotifierProvider<VotesProvider, AsyncValue<List<Votes>>>((ref) {
   final token = ref.watch(tokenProvider);
-  return VotesProvider(token: token);
+  VotesProvider votesProvider = VotesProvider(token: token);
+  votesProvider.getVotes();
+  return votesProvider;
 });
