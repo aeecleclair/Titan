@@ -308,7 +308,7 @@ class AdminPage extends HookConsumerWidget {
                                       color: Colors.black,
                                     ),
                                   ),
-                                if (status == Status.open) // TODO
+                                if (status == Status.counting)
                                   GestureDetector(
                                     onTap: () {
                                       tokenExpireWrapper(ref, () async {
@@ -344,100 +344,292 @@ class AdminPage extends HookConsumerWidget {
                         const SizedBox(height: 20),
                         SizedBox(
                             height: MediaQuery.of(context).size.height - 539,
-                            child: showVotes
-                                ? status == Status.open
-                                    ? const VoteBars()
-                                    : Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          const SizedBox(height: 20),
-                                          const Center(
-                                            child: Text(
-                                              VoteTextConstants.voteNotStarted,
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Color.fromARGB(
-                                                      255, 205, 205, 205)),
+                            child: Column(
+                              children: [
+                                if (status == Status.counting)
+                                  showVotes
+                                      ? const VoteBars()
+                                      : Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(height: 20),
+                                            const Center(
+                                              child: Text(
+                                                VoteTextConstants
+                                                    .voteNotStarted,
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromARGB(
+                                                        255, 205, 205, 205)),
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(height: 50),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 30.0),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                tokenExpireWrapper(ref,
-                                                    () async {
-                                                  final value =
-                                                      await statusNotifier
-                                                          .updateStatus(Status.open);
-                                                  if (value) {
-                                                    displayVoteToastWithContext(
-                                                        TypeMsg.msg,
-                                                        'Vote started');
-                                                  } else {
-                                                    displayVoteToastWithContext(
-                                                        TypeMsg.error,
-                                                        'Vote not started');
-                                                  }
-                                                });
-                                              },
-                                              child: Container(
-                                                padding: const EdgeInsets.only(
-                                                    top: 10, bottom: 12),
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.black,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15)),
-                                                child: const Center(
-                                                  child: Text(
-                                                    VoteTextConstants.openVote,
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.w700),
+                                            const SizedBox(height: 50),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 30.0),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  tokenExpireWrapper(ref,
+                                                      () async {
+                                                    final value =
+                                                        await statusNotifier
+                                                            .updateStatus(
+                                                                Status.open);
+                                                    if (value) {
+                                                      displayVoteToastWithContext(
+                                                          TypeMsg.msg,
+                                                          'Vote started');
+                                                    } else {
+                                                      displayVoteToastWithContext(
+                                                          TypeMsg.error,
+                                                          'Vote not started');
+                                                    }
+                                                  });
+                                                },
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 10, bottom: 12),
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.black,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15)),
+                                                  child: const Center(
+                                                    child: Text(
+                                                      VoteTextConstants
+                                                          .openVote,
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                          ],
+                                        ),
+                                if (status == Status.closed)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 30.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        tokenExpireWrapper(ref, () async {
+                                          final value = await statusNotifier
+                                              .updateStatus(Status.counting);
+                                          if (value) {
+                                            displayVoteToastWithContext(
+                                                TypeMsg.msg, 'Votes counted');
+                                          } else {
+                                            displayVoteToastWithContext(
+                                                TypeMsg.error,
+                                                'Vote not counted');
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.only(
+                                            top: 10, bottom: 12),
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        child: const Center(
+                                          child: Text(
+                                            VoteTextConstants.openVote,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700),
                                           ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                        ],
-                                      )
-                                : GestureDetector(
-                                    onTap: () {
-                                      showVotesNotifier.toggle(true);
-                                    },
-                                    behavior: HitTestBehavior.opaque,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: const [
-                                        HeroIcon(
-                                          HeroIcons.eye,
-                                          size: 80.0,
-                                          color: Colors.black,
                                         ),
-                                        SizedBox(
-                                          height: 40,
-                                        ),
-                                        Text(
-                                          VoteTextConstants.showVotes,
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black),
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  ))
+                                  ),
+                                if (status == Status.open)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 30.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        tokenExpireWrapper(ref, () async {
+                                          final value = await statusNotifier
+                                              .updateStatus(Status.closed);
+                                          if (value) {
+                                            displayVoteToastWithContext(
+                                                TypeMsg.msg, 'Vote is closed');
+                                          } else {
+                                            displayVoteToastWithContext(
+                                                TypeMsg.error, 'Error');
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.only(
+                                            top: 10, bottom: 12),
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        child: const Center(
+                                          child: Text(
+                                            VoteTextConstants.closeVote,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                if (status == Status.waiting)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 30.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        tokenExpireWrapper(ref, () async {
+                                          final value = await statusNotifier
+                                              .updateStatus(Status.open);
+                                          if (value) {
+                                            displayVoteToastWithContext(
+                                                TypeMsg.msg, 'Vote is open');
+                                          } else {
+                                            displayVoteToastWithContext(
+                                                TypeMsg.error, 'Error');
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.only(
+                                            top: 10, bottom: 12),
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        child: const Center(
+                                          child: Text(
+                                            VoteTextConstants.closeVote,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            )
+                            // child: showVotes
+                            //     ? status == Status.open
+                            //         ? const VoteBars()
+                            //         : Column(
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.start,
+                            //             children: [
+                            //               const SizedBox(height: 20),
+                            //               const Center(
+                            //                 child: Text(
+                            //                   VoteTextConstants.voteNotStarted,
+                            //                   style: TextStyle(
+                            //                       fontSize: 20,
+                            //                       fontWeight: FontWeight.bold,
+                            //                       color: Color.fromARGB(
+                            //                           255, 205, 205, 205)),
+                            //                 ),
+                            //               ),
+                            //               const SizedBox(height: 50),
+                            //               Padding(
+                            //                 padding: const EdgeInsets.symmetric(
+                            //                     horizontal: 30.0),
+                            //                 child: GestureDetector(
+                            //                   onTap: () {
+                            //                     tokenExpireWrapper(ref,
+                            //                         () async {
+                            //                       final value =
+                            //                           await statusNotifier
+                            //                               .updateStatus(Status.open);
+                            //                       if (value) {
+                            //                         displayVoteToastWithContext(
+                            //                             TypeMsg.msg,
+                            //                             'Vote started');
+                            //                       } else {
+                            //                         displayVoteToastWithContext(
+                            //                             TypeMsg.error,
+                            //                             'Vote not started');
+                            //                       }
+                            //                     });
+                            //                   },
+                            //                   child: Container(
+                            //                     padding: const EdgeInsets.only(
+                            //                         top: 10, bottom: 12),
+                            //                     width: double.infinity,
+                            //                     decoration: BoxDecoration(
+                            //                         color: Colors.black,
+                            //                         borderRadius:
+                            //                             BorderRadius.circular(
+                            //                                 15)),
+                            //                     child: const Center(
+                            //                       child: Text(
+                            //                         VoteTextConstants.openVote,
+                            //                         style: TextStyle(
+                            //                             color: Colors.white,
+                            //                             fontSize: 20,
+                            //                             fontWeight:
+                            //                                 FontWeight.w700),
+                            //                       ),
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //               ),
+                            //               const SizedBox(
+                            //                 height: 20,
+                            //               ),
+                            //             ],
+                            //           )
+                            //     : GestureDetector(
+                            //         onTap: () {
+                            //           showVotesNotifier.toggle(true);
+                            //         },
+                            //         behavior: HitTestBehavior.opaque,
+                            //         child: Column(
+                            //           mainAxisAlignment:
+                            //               MainAxisAlignment.center,
+                            //           children: const [
+                            //             HeroIcon(
+                            //               HeroIcons.eye,
+                            //               size: 80.0,
+                            //               color: Colors.black,
+                            //             ),
+                            //             SizedBox(
+                            //               height: 40,
+                            //             ),
+                            //             Text(
+                            //               VoteTextConstants.showVotes,
+                            //               style: TextStyle(
+                            //                   fontSize: 20,
+                            //                   fontWeight: FontWeight.bold,
+                            //                   color: Colors.black),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ),
+                            )
                       ],
                     ),
                 error: (Object error, StackTrace? stackTrace) {
