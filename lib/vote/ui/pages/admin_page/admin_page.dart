@@ -19,6 +19,7 @@ import 'package:myecl/vote/providers/show_graph_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/providers/votes_provider.dart';
+import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/pages/admin_page/pretendance_card.dart';
 import 'package:myecl/vote/ui/section_chip.dart';
@@ -46,7 +47,7 @@ class AdminPage extends HookConsumerWidget {
     final votesNotifier = ref.watch(votesProvider.notifier);
     final showVotes = ref.watch(showGraphProvider);
     final showVotesNotifier = ref.watch(showGraphProvider.notifier);
-    bool status = false;
+    Status status = Status.open;
     asyncStatus.whenData((value) => status = value);
     ref.watch(userList);
     void displayVoteToastWithContext(TypeMsg type, String msg) {
@@ -296,7 +297,7 @@ class AdminPage extends HookConsumerWidget {
                                         fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(
                                             255, 205, 205, 205))),
-                                if (showVotes && status)
+                                if (showVotes && status == Status.counting)
                                   GestureDetector(
                                     onTap: () {
                                       showVotesNotifier.toggle(false);
@@ -307,12 +308,12 @@ class AdminPage extends HookConsumerWidget {
                                       color: Colors.black,
                                     ),
                                   ),
-                                if (status)
+                                if (status == Status.open) // TODO
                                   GestureDetector(
                                     onTap: () {
                                       tokenExpireWrapper(ref, () async {
                                         final value = await statusNotifier
-                                            .updateStatus(false);
+                                            .updateStatus(Status.closed);
                                         if (value) {
                                           displayVoteToastWithContext(
                                               TypeMsg.msg, 'Vote is closed');
@@ -344,7 +345,7 @@ class AdminPage extends HookConsumerWidget {
                         SizedBox(
                             height: MediaQuery.of(context).size.height - 539,
                             child: showVotes
-                                ? status
+                                ? status == Status.open
                                     ? const VoteBars()
                                     : Column(
                                         mainAxisAlignment:
@@ -371,7 +372,7 @@ class AdminPage extends HookConsumerWidget {
                                                     () async {
                                                   final value =
                                                       await statusNotifier
-                                                          .updateStatus(true);
+                                                          .updateStatus(Status.open);
                                                   if (value) {
                                                     displayVoteToastWithContext(
                                                         TypeMsg.msg,

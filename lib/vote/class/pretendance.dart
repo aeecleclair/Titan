@@ -3,7 +3,7 @@ import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/tools/functions.dart';
 
-enum ListType { serio, pipo }
+enum ListType { serio, pipo, blank }
 
 class Pretendance {
   late String id;
