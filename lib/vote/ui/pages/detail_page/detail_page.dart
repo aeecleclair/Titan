@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/vote/providers/logo_provider.dart';
+import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/ui/member_card.dart';
 import 'package:myecl/vote/ui/pretendance_card.dart';
@@ -9,7 +12,11 @@ class DetailPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final pretendanceLogos = ref.watch(pretendanceLogosProvider);
     final pretendance = ref.watch(pretendanceProvider);
+    final pretendanceLogosNotifier =
+        ref.watch(pretendanceLogosProvider.notifier);
+    final logoNotifier = ref.watch(logoProvider.notifier);
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Stack(
@@ -40,11 +47,64 @@ class DetailPage extends HookConsumerWidget {
                         height: 50,
                       ),
                       Container(
-                        padding: const EdgeInsets.all(30.0),
-                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        alignment: Alignment.center,
+                        width: double.infinity,
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            pretendanceLogos.when(
+                                data: (data) {
+                                  if (data[pretendance] != null) {
+                                    return data[pretendance]!.when(
+                                        data: (data) {
+                                      if (data.isNotEmpty) {
+                                        return CircleAvatar(
+                                          radius: 70,
+                                          backgroundImage: data.first.image,
+                                        );
+                                      } else {
+                                        logoNotifier
+                                            .getLogo(pretendance.id)
+                                            .then((value) {
+                                          pretendanceLogosNotifier.setTData(
+                                              pretendance, AsyncData([value]));
+                                        });
+                                        return const HeroIcon(
+                                          HeroIcons.userCircle,
+                                          size: 40,
+                                        );
+                                      }
+                                    }, loading: () {
+                                      return const SizedBox(
+                                        height: 50,
+                                        width: 50,
+                                        child: Center(
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      );
+                                    }, error: (error, stack) {
+                                      return const SizedBox(
+                                        height: 50,
+                                        width: 50,
+                                        child: Center(
+                                          child: Icon(Icons.error),
+                                        ),
+                                      );
+                                    });
+                                  } else {
+                                    return const SizedBox.shrink();
+                                  }
+                                },
+                                loading: () =>
+                                    const CircularProgressIndicator(),
+                                error: (error, stack) => const Text('Error')),
+                            const SizedBox(
+                              height: 20,
+                            ),
                             Text(
                               pretendance.section.name,
                               style: const TextStyle(
@@ -53,17 +113,20 @@ class DetailPage extends HookConsumerWidget {
                               ),
                             ),
                             const SizedBox(
-                              height: 10,
+                              height: 15,
                             ),
-                            Text(
-                              pretendance.description,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                pretendance.description,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                             const SizedBox(
-                              height: 10,
+                              height: 20,
                             ),
                           ],
                         ),
@@ -102,6 +165,7 @@ class DetailPage extends HookConsumerWidget {
                 onEdit: () {},
                 isAdmin: false,
                 onDelete: () {},
+                isDetail: true,
               ),
             ),
           )

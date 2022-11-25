@@ -233,6 +233,7 @@ class AdminPage extends HookConsumerWidget {
                                             .map((e) => PretendanceCard(
                                                   pretendance: e,
                                                   isAdmin: true,
+                                                  isDetail: false,
                                                   onEdit: () {
                                                     tokenExpireWrapper(ref,
                                                         () async {

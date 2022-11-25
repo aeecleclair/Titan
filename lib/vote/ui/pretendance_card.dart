@@ -12,14 +12,15 @@ import 'package:myecl/vote/repositories/status_repository.dart';
 
 class PretendanceCard extends HookConsumerWidget {
   final Pretendance pretendance;
-  final bool isAdmin;
+  final bool isAdmin, isDetail;
   final Function() onEdit, onDelete;
   const PretendanceCard(
       {super.key,
       required this.pretendance,
       required this.onEdit,
       required this.onDelete,
-      required this.isAdmin});
+      required this.isAdmin,
+      required this.isDetail});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -129,17 +130,22 @@ class PretendanceCard extends HookConsumerWidget {
                         ),
                       ],
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        pretendanceNotifier.setId(pretendance);
-                        pageNotifier.setVotePage(VotePage.detailPageFromAdmin);
-                      },
-                      child: HeroIcon(
-                        HeroIcons.informationCircle,
-                        color: Colors.black,
-                        size: 25,
-                      ),
-                    ),
+                    isDetail
+                        ? Container(
+                            width: 30,
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              pretendanceNotifier.setId(pretendance);
+                              pageNotifier
+                                  .setVotePage(VotePage.detailPageFromAdmin);
+                            },
+                            child: const HeroIcon(
+                              HeroIcons.informationCircle,
+                              color: Colors.black,
+                              size: 25,
+                            ),
+                          ),
                   ],
                 ),
                 Center(

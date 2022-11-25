@@ -11,7 +11,6 @@ class VotesRepository extends Repository {
   }
 
   Future<Votes> addVote(Votes votes) async {
-    print(votes.toJson());
     return Votes.fromJson(await create(votes.toJson()));
   }
 

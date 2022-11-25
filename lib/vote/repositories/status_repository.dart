@@ -14,7 +14,6 @@ class StatusRepository extends Repository {
 
   Future<bool> openVote(Status status) async {
     try {
-      print(await create({}, suffix: '/open'));
       return true;
     } catch (e) {
       return false;

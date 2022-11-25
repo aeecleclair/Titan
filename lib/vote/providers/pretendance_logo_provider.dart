@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
 import 'package:myecl/vote/class/pretendance.dart';
-import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
 
 class PretendanceLogoNotifier extends MapNotifier<Pretendance, Image> {
