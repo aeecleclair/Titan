@@ -11,7 +11,8 @@ class VotesRepository extends Repository {
   }
 
   Future<Votes> addVote(Votes votes) async {
-    return await create(votes);
+    print(votes.toJson());
+    return Votes.fromJson(await create(votes.toJson()));
   }
 
   Future<bool> removeVote() async {
@@ -31,6 +32,6 @@ class VotesRepository extends Repository {
   }
 
   Future<bool> countVote() async {
-    return await create({}, suffix: "/count");
+    return await create({}, suffix: "/counting");
   }
 }

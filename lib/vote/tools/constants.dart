@@ -9,6 +9,7 @@ class VoteTextConstants {
   static const String closedVote = 'Votes clos';
   static const String closeVote = 'Fermer les votes';
   static const String confirmVote = 'Confirmer le vote';
+  static const String countVote = 'Dépouiller les votes';
   static const String description = 'Description';
   static const String edit = 'Modifier';
   static const String editedPretendance = 'Liste de prétendance modifiée';
@@ -35,4 +36,5 @@ class VoteTextConstants {
   static const String voteError = 'Erreur lors de l\'enregistrement du vote';
   static const String voteNotStarted = 'Vote non ouvert';
   static const String voteSuccess = 'Vote enregistré';
+
 }

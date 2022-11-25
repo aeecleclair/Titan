@@ -40,6 +40,6 @@ final votesProvider =
     StateNotifierProvider<VotesProvider, AsyncValue<List<Votes>>>((ref) {
   final token = ref.watch(tokenProvider);
   VotesProvider votesProvider = VotesProvider(token: token);
-  votesProvider.getVotes();
+  // votesProvider.getVotes();
   return votesProvider;
 });

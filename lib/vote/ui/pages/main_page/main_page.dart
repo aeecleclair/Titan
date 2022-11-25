@@ -31,6 +31,7 @@ class MainPage extends HookConsumerWidget {
     final status = ref.watch(statusProvider);
     final statusNotifier = ref.watch(statusProvider.notifier);
     final isAdmin = ref.watch(isVoteAdmin);
+    print(status);
     return status.when(data: (s) {
       if (s == Status.open) {
         final sections = ref.watch(sectionsProvider);
@@ -41,7 +42,7 @@ class MainPage extends HookConsumerWidget {
         final sectionPretendanceNotifier =
             ref.watch(sectionPretendanceProvider.notifier);
         final selectedPretendance = ref.watch(selectedPretendanceProvider);
-        final votesNotifier = ref.watch(votesProvider.notifier);
+        final votesNotifier = ref.watch(votesProvider.notifier)..getVotes();
         final animation = useAnimationController(
           duration: const Duration(milliseconds: 2400),
         );
@@ -58,6 +59,7 @@ class MainPage extends HookConsumerWidget {
         return Refresher(
           onRefresh: () async {
             await statusNotifier.loadStatus();
+            await votesNotifier.getVotes();
             final loaners = await sectionsNotifier.loadSectionList();
             loaners.whenData((value) {
               List<Pretendance> list = [];

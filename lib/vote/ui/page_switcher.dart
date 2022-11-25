@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
+import 'package:myecl/vote/ui/pages/detail_page/detail_page.dart';
 import 'package:myecl/vote/ui/pages/pretendance_pages/add_pretendance.dart';
 import 'package:myecl/vote/ui/pages/pretendance_pages/edit_pretendance.dart';
 import 'package:myecl/vote/ui/pages/section_pages/add_section.dart';
@@ -24,6 +25,10 @@ class PageSwitcher extends ConsumerWidget {
         return const AddPretendancePage();
       case VotePage.editPretendance:
         return const EditPretendancePage();
+      case VotePage.detailPageFromMain:
+        return const DetailPage();
+      case VotePage.detailPageFromAdmin:
+        return const DetailPage();
     }
   }
 }

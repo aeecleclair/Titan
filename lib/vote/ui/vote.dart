@@ -39,6 +39,12 @@ class VoteHomePage extends HookConsumerWidget {
             case VotePage.editPretendance:
               pageNotifier.setVotePage(VotePage.admin);
               break;
+            case VotePage.detailPageFromMain:
+              pageNotifier.setVotePage(VotePage.main);
+              break;
+            case VotePage.detailPageFromAdmin:
+              pageNotifier.setVotePage(VotePage.admin);
+              break;
           }
           return false;
         },

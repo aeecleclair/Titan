@@ -29,3 +29,18 @@ Status stringToStatus(String status) {
       return Status.waiting;
   }
 }
+
+String statusToString(Status status) {
+  switch (status) {
+    case Status.waiting:
+      return 'Waiting';
+    case Status.open:
+      return 'Open';
+    case Status.closed:
+      return 'Closed';
+    case Status.counting:
+      return 'Counting';
+    default:
+      return 'Waiting';
+  }
+}

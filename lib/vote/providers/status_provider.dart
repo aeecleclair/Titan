@@ -13,8 +13,20 @@ class StatusNotifier extends SingleNotifier<Status> {
     return await load(statusRepository.getStatus);
   }
 
-  Future<bool> updateStatus(Status status) async {
-    return await update(statusRepository.updateStatus, status);
+  Future<bool> openVote() async {
+    return await update(statusRepository.openVote, Status.open);
+  }
+
+  Future<bool> closeVote() async {
+    return await update(statusRepository.closeVote, Status.closed);
+  }
+
+  Future<bool> countVote() async {
+    return await update(statusRepository.countVote, Status.counting);
+  }
+
+  Future<bool> resetVote() async {
+    return await update(statusRepository.resetVote, Status.waiting);
   }
 }
 

@@ -12,7 +12,39 @@ class StatusRepository extends Repository {
     return stringToStatus((await getOne(''))['status']);
   }
 
-  Future<bool> updateStatus(Status status) async {
-    return await update({'status': status.toString().split('.')[0]}, '');
+  Future<bool> openVote(Status status) async {
+    try {
+      print(await create({}, suffix: '/open'));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> closeVote(Status status) async {
+    try {
+      await create({}, suffix: '/close');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> countVote(Status status) async {
+    try {
+      await create({}, suffix: '/count');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> resetVote(Status status) async {
+    try {
+      await create({}, suffix: '/reset');
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

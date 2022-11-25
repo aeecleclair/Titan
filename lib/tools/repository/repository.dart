@@ -86,8 +86,10 @@ abstract class Repository {
 
   /// POST ext/suffix
   Future<dynamic> create(dynamic t, {String suffix = ""}) async {
+    print(host + ext + suffix);
     final response = await http.post(Uri.parse(host + ext + suffix),
         headers: headers, body: json.encode(t));
+    print(response.body);
     if (response.statusCode == 201) {
       try {
         String resp = utf8.decode(response.body.runes.toList());

@@ -4,11 +4,13 @@ import 'package:myecl/vote/class/members.dart';
 class MemberCard extends StatelessWidget {
   final Member member;
   final Function() onEdit, onDelete;
+  final bool isAdmin;
   const MemberCard(
       {super.key,
       required this.member,
       required this.onEdit,
-      required this.onDelete});
+      required this.onDelete,
+      this.isAdmin = true});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class MemberCard extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Container(
         width: 140,
-        height: 160,
+        height: isAdmin ? 160 : 130,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30),
@@ -36,13 +38,13 @@ class MemberCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               Text(member.nickname.isEmpty ? member.firstname : member.nickname,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
-              const SizedBox(height: 5),
+              const SizedBox(height: 3),
               Text(
                   member.nickname.isEmpty
                       ? member.name
@@ -51,55 +53,57 @@ class MemberCard extends StatelessWidget {
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey.shade400)),
-              const SizedBox(height: 5),
+              const SizedBox(height: 3),
+              if (!isAdmin) const Spacer(),
               Text(member.role,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: onEdit,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              blurRadius: 10,
-                              offset: const Offset(2, 3))
-                        ],
+              if (isAdmin) const Spacer(),
+              if (isAdmin)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: onEdit,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
+                          ],
+                        ),
+                        child: const Icon(Icons.edit, color: Colors.black),
                       ),
-                      child: const Icon(Icons.edit, color: Colors.black),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: onDelete,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 10,
-                              offset: const Offset(2, 3))
-                        ],
+                    GestureDetector(
+                      onTap: onDelete,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
+                          ],
+                        ),
+                        child: const Icon(Icons.delete, color: Colors.white),
                       ),
-                      child: const Icon(Icons.delete, color: Colors.white),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
+                  ],
+                ),
+              SizedBox(height: isAdmin ? 10 : 15),
             ],
           ),
         ),
