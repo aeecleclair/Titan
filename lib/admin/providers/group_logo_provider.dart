@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/admin/repositories/group_logo_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/vote/repositories/pretendance_logo_repository.dart';
 
 class GroupLogoNotifier extends SingleNotifier<Image> {
-  final repository = PretendanceLogoRepository();
-  GroupLogoNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+  final repository = GroupLogoRepository();
+  GroupLogoNotifier({required String token}) : super(const AsyncValue.loading()) {
     repository.setToken(token);
   }
 

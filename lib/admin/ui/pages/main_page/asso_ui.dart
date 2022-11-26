@@ -194,71 +194,23 @@ class AssoUi extends HookConsumerWidget {
                   ),
                 ),
               ),
-              // Column(
-              //   children: [
-              //     SizedBox(
-              //       height: 110,
-              //     ),
-              //     Align(
-              //       alignment: Alignment.center,
-              //       child: Text(
-              //         capitalize(group.name),
-              //         style: const TextStyle(
-              //             fontSize: 20,
-              //             fontWeight: FontWeight.w700,
-              //             color: Colors.black),
-              //       ),
-              //     ),
-              //   ],
-              // )
             ]),
             const SizedBox(
               height: 15,
             ),
-            Container(
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  capitalize(group.name),
-                  style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black),
-                ),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                capitalize(group.name),
+                style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black),
               ),
             ),
           ],
         ),
       ),
     );
-    // return GestureDetector(
-    //     behavior: HitTestBehavior.opaque,
-    //     onTap: onTap,
-    //     child: Container(
-    //         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
-    //         child: Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //           children: [
-    //             Padding(
-    //               padding: const EdgeInsets.only(right: 50),
-    //               child: Text(
-    //                 capitalize(group),
-    //                 style: const TextStyle(
-    //                     fontSize: 20, fontWeight: FontWeight.w500),
-    //               ),
-    //             ),
-    //             Container(
-    //               padding: const EdgeInsets.all(10),
-    //               decoration: BoxDecoration(
-    //                   color: Colors.grey[200],
-    //                   borderRadius: BorderRadius.circular(10)),
-    //               child: const HeroIcon(
-    //                 HeroIcons.chevronRight,
-    //                 size: 25,
-    //                 color: Colors.black,
-    //               ),
-    //             ),
-    //           ],
-    //         )));
   }
 }

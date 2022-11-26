@@ -22,5 +22,5 @@ class LogoNotifier extends SingleNotifier<Image> {
 final logoProvider = StateNotifierProvider<LogoNotifier, AsyncValue<Image>>(
     (ref) {
   final token = ref.watch(tokenProvider);
-  return LogoNotifier(token: token);;
+  return LogoNotifier(token: token);
 });

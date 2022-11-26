@@ -13,7 +13,7 @@ import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/tools/providers/logo_provider.dart';
-import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
+import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
 import 'package:myecl/vote/providers/pretendance_members.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';

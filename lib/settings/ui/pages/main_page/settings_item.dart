@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/constants.dart';
 
 class SettingsItem extends StatelessWidget {
   final Widget child;

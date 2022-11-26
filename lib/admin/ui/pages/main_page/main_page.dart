@@ -72,13 +72,13 @@ class MainPage extends HookConsumerWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Container(
-                              padding: EdgeInsets.all(30),
+                              padding: const EdgeInsets.all(30),
                               decoration: BoxDecoration(
-                                  color: Colors.grey.shade50,
+                                  color: Colors.white,
                                   boxShadow: [
                                     BoxShadow(
                                       color:
@@ -112,15 +112,15 @@ class MainPage extends HookConsumerWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Stack(
                               children: [
                                 Container(
-                                  padding: EdgeInsets.all(30),
+                                  padding: const EdgeInsets.all(30),
                                   decoration: BoxDecoration(
-                                      color: Colors.grey.shade50,
+                                      color: Colors.white,
                                       boxShadow: [
                                         BoxShadow(
                                           color: Colors.grey.shade300
@@ -136,10 +136,10 @@ class MainPage extends HookConsumerWidget {
                                     size: 60,
                                   ),
                                 ),
-                                Positioned(
+                                const Positioned(
                                   right: 22,
                                   top: 22,
-                                  child: const HeroIcon(
+                                  child: HeroIcon(
                                     HeroIcons.plus,
                                     size: 25,
                                   ),

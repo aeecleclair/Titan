@@ -5,7 +5,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/tools/providers/logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
-import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
+import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
