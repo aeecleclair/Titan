@@ -12,7 +12,7 @@ import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/pretendance.dart';
-import 'package:myecl/vote/providers/logo_provider.dart';
+import 'package:myecl/tools/providers/logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_members.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
@@ -118,6 +118,7 @@ class AddPretendancePage extends HookConsumerWidget {
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
+                      color: Colors.white,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
@@ -128,12 +129,19 @@ class AddPretendancePage extends HookConsumerWidget {
                       ],
                     ),
                     child: logo.value != null
-                        ? CircleAvatar(
-                            radius: 80,
-                            backgroundImage: Image.file(
-                              File(logo.value!),
-                              fit: BoxFit.cover,
-                            ).image,
+                        ? Container(
+                            width: 160,
+                            height: 160,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: Image.file(
+                                  File(logo.value!),
+                                  fit: BoxFit.cover,
+                                ).image,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           )
                         : const HeroIcon(
                             HeroIcons.userCircle,
@@ -146,8 +154,8 @@ class AddPretendancePage extends HookConsumerWidget {
                     left: 0,
                     child: GestureDetector(
                       onTap: () async {
-                        final XFile? image = await picker.pickImage(
-                            source: ImageSource.gallery);
+                        final XFile? image =
+                            await picker.pickImage(source: ImageSource.gallery);
                         if (image != null) {
                           logo.value = image.path;
                         }

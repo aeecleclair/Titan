@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/vote/repositories/logo_repository.dart';
+import 'package:myecl/tools/repository/logo_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 
 class LogoNotifier extends SingleNotifier<Image> {
@@ -22,6 +22,5 @@ class LogoNotifier extends SingleNotifier<Image> {
 final logoProvider = StateNotifierProvider<LogoNotifier, AsyncValue<Image>>(
     (ref) {
   final token = ref.watch(tokenProvider);
-  LogoNotifier logoNotifier = LogoNotifier(token: token);
-  return logoNotifier;
+  return LogoNotifier(token: token);;
 });

@@ -12,7 +12,7 @@ import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/pretendance.dart';
-import 'package:myecl/vote/providers/logo_provider.dart';
+import 'package:myecl/tools/providers/logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_members.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
@@ -130,6 +130,7 @@ class EditPretendancePage extends HookConsumerWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
+                      color: Colors.white,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
@@ -141,14 +142,22 @@ class EditPretendancePage extends HookConsumerWidget {
                       ],
                     ),
                     child: logoFile.value != null
-                        ? CircleAvatar(
-                            radius: 80,
-                            backgroundImage: logo.value != null
-                                ? Image.file(
-                                    File(logo.value!),
-                                    fit: BoxFit.cover,
-                                  ).image
-                                : logoFile.value!.image)
+                        ? Container(
+                            width: 160,
+                            height: 160,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: logo.value != null
+                                    ? Image.file(
+                                        File(logo.value!),
+                                        fit: BoxFit.cover,
+                                      ).image
+                                    : logoFile.value!.image,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
                         : const HeroIcon(
                             HeroIcons.userCircle,
                             size: 160,

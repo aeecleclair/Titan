@@ -3,7 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/vote/class/pretendance.dart';
-import 'package:myecl/vote/providers/logo_provider.dart';
+import 'package:myecl/tools/providers/logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
@@ -73,9 +73,16 @@ class PretendanceCard extends HookConsumerWidget {
                           if (data[pretendance] != null) {
                             return data[pretendance]!.when(data: (data) {
                               if (data.isNotEmpty) {
-                                return CircleAvatar(
-                                  radius: 20,
-                                  backgroundImage: data.first.image,
+                                return Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: data.first.image,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 );
                               } else {
                                 logoNotifier

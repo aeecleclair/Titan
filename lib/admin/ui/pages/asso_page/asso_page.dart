@@ -65,104 +65,104 @@ class AssoPage extends HookConsumerWidget {
                     child: Text(capitalize(x.getName()),
                         style: const TextStyle(fontSize: 18)))),
                 const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        child: Container(
-                            margin: const EdgeInsets.only(top: 20, right: 10),
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                colors: [
-                                  ColorConstants.gradient1,
-                                  ColorConstants.gradient2,
-                                ],
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      ColorConstants.gradient2.withOpacity(0.5),
-                                  blurRadius: 5,
-                                  offset: const Offset(2, 2),
-                                  spreadRadius: 2,
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: const HeroIcon(
-                              HeroIcons.pencilSquare,
-                              color: Colors.white,
-                              size: 30,
-                            )),
-                        onTap: () {
-                          pageNotifier.setAdminPage(AdminPage.edit);
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        child: Container(
-                            margin: const EdgeInsets.only(top: 20, left: 10),
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                colors: [
-                                  ColorConstants.gradient1,
-                                  ColorConstants.gradient2,
-                                ],
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      ColorConstants.gradient2.withOpacity(0.5),
-                                  blurRadius: 5,
-                                  offset: const Offset(2, 2),
-                                  spreadRadius: 2,
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: const HeroIcon(
-                              HeroIcons.xMark,
-                              color: Colors.white,
-                              size: 30,
-                            )),
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  CustomDialogBox(
-                                      descriptions:
-                                          AdminTextConstants.deleteAssociation,
-                                      title: AdminTextConstants.deleting,
-                                      onYes: () async {
-                                        tokenExpireWrapper(ref, () async {
-                                          final value = await groupsNotifier
-                                              .deleteGroup(g.toSimpleGroup());
-                                          if (value) {
-                                            pageNotifier
-                                                .setAdminPage(AdminPage.main);
-                                            displayToastWithContext(
-                                                TypeMsg.msg,
-                                                AdminTextConstants
-                                                    .deletedAssociation);
-                                          } else {
-                                            displayToastWithContext(
-                                                TypeMsg.error,
-                                                AdminTextConstants
-                                                    .deletingError);
-                                          }
-                                        });
-                                      }));
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     Expanded(
+                //       child: GestureDetector(
+                //         child: Container(
+                //             margin: const EdgeInsets.only(top: 20, right: 10),
+                //             padding: const EdgeInsets.symmetric(vertical: 15),
+                //             alignment: Alignment.center,
+                //             decoration: BoxDecoration(
+                //               gradient: const LinearGradient(
+                //                 colors: [
+                //                   ColorConstants.gradient1,
+                //                   ColorConstants.gradient2,
+                //                 ],
+                //               ),
+                //               boxShadow: [
+                //                 BoxShadow(
+                //                   color:
+                //                       ColorConstants.gradient2.withOpacity(0.5),
+                //                   blurRadius: 5,
+                //                   offset: const Offset(2, 2),
+                //                   spreadRadius: 2,
+                //                 ),
+                //               ],
+                //               borderRadius: BorderRadius.circular(15),
+                //             ),
+                //             child: const HeroIcon(
+                //               HeroIcons.pencilSquare,
+                //               color: Colors.white,
+                //               size: 30,
+                //             )),
+                //         onTap: () {
+                //           pageNotifier.setAdminPage(AdminPage.edit);
+                //         },
+                //       ),
+                //     ),
+                //     Expanded(
+                //       child: GestureDetector(
+                //         child: Container(
+                //             margin: const EdgeInsets.only(top: 20, left: 10),
+                //             padding: const EdgeInsets.symmetric(vertical: 15),
+                //             alignment: Alignment.center,
+                //             decoration: BoxDecoration(
+                //               gradient: const LinearGradient(
+                //                 colors: [
+                //                   ColorConstants.gradient1,
+                //                   ColorConstants.gradient2,
+                //                 ],
+                //               ),
+                //               boxShadow: [
+                //                 BoxShadow(
+                //                   color:
+                //                       ColorConstants.gradient2.withOpacity(0.5),
+                //                   blurRadius: 5,
+                //                   offset: const Offset(2, 2),
+                //                   spreadRadius: 2,
+                //                 ),
+                //               ],
+                //               borderRadius: BorderRadius.circular(15),
+                //             ),
+                //             child: const HeroIcon(
+                //               HeroIcons.xMark,
+                //               color: Colors.white,
+                //               size: 30,
+                //             )),
+                //         onTap: () {
+                //           showDialog(
+                //               context: context,
+                //               builder: (BuildContext context) =>
+                //                   CustomDialogBox(
+                //                       descriptions:
+                //                           AdminTextConstants.deleteAssociation,
+                //                       title: AdminTextConstants.deleting,
+                //                       onYes: () async {
+                //                         tokenExpireWrapper(ref, () async {
+                //                           final value = await groupsNotifier
+                //                               .deleteGroup(g.toSimpleGroup());
+                //                           if (value) {
+                //                             pageNotifier
+                //                                 .setAdminPage(AdminPage.main);
+                //                             displayToastWithContext(
+                //                                 TypeMsg.msg,
+                //                                 AdminTextConstants
+                //                                     .deletedAssociation);
+                //                           } else {
+                //                             displayToastWithContext(
+                //                                 TypeMsg.error,
+                //                                 AdminTextConstants
+                //                                     .deletingError);
+                //                           }
+                //                         });
+                //                       }));
+                //         },
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 const SizedBox(height: 20),
               ],
             ));
