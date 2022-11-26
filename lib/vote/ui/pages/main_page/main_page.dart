@@ -33,20 +33,20 @@ class MainPage extends HookConsumerWidget {
     final status = ref.watch(statusProvider);
     final statusNotifier = ref.watch(statusProvider.notifier);
     final isAdmin = ref.watch(isVoteAdmin);
+    final sections = ref.watch(sectionsProvider);
+    final sectionsNotifier = ref.watch(sectionsProvider.notifier);
+    final section = ref.watch(sectionProvider);
+    final sectionsPretendances = ref.watch(sectionPretendanceProvider);
+    final pretendances = ref.watch(pretendanceListProvider);
+    final sectionPretendanceNotifier =
+        ref.watch(sectionPretendanceProvider.notifier);
+    final selectedPretendance = ref.watch(selectedPretendanceProvider);
+    final votesNotifier = ref.watch(votesProvider.notifier)..getVotes();
+    final pretendanceLogosNotifier =
+        ref.watch(pretendanceLogosProvider.notifier);
+    final logosNotifier = ref.watch(logoProvider.notifier);
     return status.when(data: (s) {
       if (s == Status.open) {
-        final sections = ref.watch(sectionsProvider);
-        final sectionsNotifier = ref.watch(sectionsProvider.notifier);
-        final section = ref.watch(sectionProvider);
-        final sectionsPretendances = ref.watch(sectionPretendanceProvider);
-        final pretendances = ref.watch(pretendanceListProvider);
-        final sectionPretendanceNotifier =
-            ref.watch(sectionPretendanceProvider.notifier);
-        final selectedPretendance = ref.watch(selectedPretendanceProvider);
-        final votesNotifier = ref.watch(votesProvider.notifier)..getVotes();
-        final pretendanceLogosNotifier =
-            ref.watch(pretendanceLogosProvider.notifier);
-        final logosNotifier = ref.watch(logoProvider.notifier);
         final animation = useAnimationController(
           duration: const Duration(milliseconds: 2400),
         );
@@ -90,280 +90,419 @@ class MainPage extends HookConsumerWidget {
               }
             });
           },
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics()),
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height - 100,
-              child: Padding(
-                  padding: const EdgeInsets.only(left: 30.0),
-                  child: Column(children: [
-                    SizedBox(
-                      height: isAdmin ? 10 : 15,
-                    ),
-                    sections.when(
-                      data: (sectionList) => Column(
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height -
-                                (isAdmin ? 215 : 220),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                ListSideItem(
-                                    sectionList: sectionList,
-                                    animation: animation),
-                                Expanded(
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    child: sectionsPretendances.when(
-                                      data: (pretendanceList) =>
-                                          Column(children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SectionTitle(
-                                                sectionList: sectionList),
-                                            if (isAdmin)
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                    right: 20),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    pageNotifier.setVotePage(
-                                                        VotePage.admin);
-                                                  },
-                                                  child: Container(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 12,
-                                                        vertical: 8),
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.black,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        boxShadow: [
-                                                          BoxShadow(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height - 100,
+            child: Padding(
+                padding: const EdgeInsets.only(left: 30.0),
+                child: Column(children: [
+                  SizedBox(
+                    height: isAdmin ? 10 : 15,
+                  ),
+                  sections.when(
+                    data: (sectionList) => Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height -
+                              (isAdmin ? 215 : 220),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              ListSideItem(
+                                  sectionList: sectionList,
+                                  animation: animation),
+                              Expanded(
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: sectionsPretendances.when(
+                                    data: (pretendanceList) =>
+                                        Column(children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SectionTitle(
+                                              sectionList: sectionList),
+                                          if (isAdmin)
+                                            Container(
+                                              margin: const EdgeInsets.only(
+                                                  right: 20),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  pageNotifier.setVotePage(
+                                                      VotePage.admin);
+                                                },
+                                                child: Container(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 8),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.black,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                            color: Colors.black
+                                                                .withOpacity(
+                                                                    0.2),
+                                                            blurRadius: 10,
+                                                            offset:
+                                                                const Offset(
+                                                                    0, 5))
+                                                      ]),
+                                                  child: Row(
+                                                    children: const [
+                                                      HeroIcon(
+                                                          HeroIcons.userGroup,
+                                                          color: Colors.white),
+                                                      SizedBox(width: 10),
+                                                      Text("Admin",
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
                                                               color: Colors
-                                                                  .black
-                                                                  .withOpacity(
-                                                                      0.2),
-                                                              blurRadius: 10,
-                                                              offset:
-                                                                  const Offset(
-                                                                      0, 5))
-                                                        ]),
-                                                    child: Row(
-                                                      children: const [
-                                                        HeroIcon(
-                                                            HeroIcons.userGroup,
-                                                            color:
-                                                                Colors.white),
-                                                        SizedBox(width: 10),
-                                                        Text("Admin",
-                                                            style: TextStyle(
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .white)),
-                                                      ],
-                                                    ),
+                                                                  .white)),
+                                                    ],
                                                   ),
                                                 ),
-                                              )
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-                                        Expanded(
-                                          child: SingleChildScrollView(
-                                            physics:
-                                                const BouncingScrollPhysics(),
-                                            child: pretendanceList.isNotEmpty
-                                                ? Column(
-                                                    children: pretendanceList[
-                                                            section]!
-                                                        .when(
-                                                    data: (pretendance) =>
-                                                        pretendance.map((e) {
-                                                      final index = pretendance
-                                                          .indexOf(e);
-                                                      return PretendanceCard(
-                                                          index: index,
-                                                          pretendance: e,
-                                                          animation: animation);
-                                                    }).toList(),
-                                                    loading: () => const [
-                                                      Center(
-                                                        child:
-                                                            CircularProgressIndicator(),
-                                                      )
-                                                    ],
-                                                    error: (error, stack) =>
-                                                        const [
-                                                      Center(
-                                                        child: Text(
-                                                            "Error occured"),
-                                                      )
-                                                    ],
-                                                  ))
-                                                : const SizedBox(
-                                                    height: 150,
-                                                    child: Center(
-                                                      child: Text(
-                                                          VoteTextConstants
-                                                              .noPretendanceList),
-                                                    ),
+                                              ),
+                                            )
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      Expanded(
+                                        child: SingleChildScrollView(
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          child: pretendanceList.isNotEmpty
+                                              ? Column(
+                                                  children:
+                                                      pretendanceList[section]!
+                                                          .when(
+                                                  data: (pretendance) =>
+                                                      pretendance.map((e) {
+                                                    final index =
+                                                        pretendance.indexOf(e);
+                                                    return PretendanceCard(
+                                                        index: index,
+                                                        pretendance: e,
+                                                        animation: animation);
+                                                  }).toList(),
+                                                  loading: () => const [
+                                                    Center(
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    )
+                                                  ],
+                                                  error: (error, stack) =>
+                                                      const [
+                                                    Center(
+                                                      child:
+                                                          Text("Error occured"),
+                                                    )
+                                                  ],
+                                                ))
+                                              : const SizedBox(
+                                                  height: 150,
+                                                  child: Center(
+                                                    child: Text(
+                                                        VoteTextConstants
+                                                            .noPretendanceList),
                                                   ),
-                                          ),
+                                                ),
                                         ),
-                                      ]),
-                                      loading: () => const Center(
-                                        child: CircularProgressIndicator(),
                                       ),
-                                      error: (error, stack) => const Center(
-                                        child: Text('Error'),
-                                      ),
+                                    ]),
+                                    loading: () => const Center(
+                                      child: CircularProgressIndicator(),
                                     ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          if (sectionList.isNotEmpty)
-                            Padding(
-                              padding: const EdgeInsets.only(right: 30.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return CustomDialogBox(
-                                          title: VoteTextConstants.vote,
-                                          descriptions:
-                                              VoteTextConstants.confirmVote,
-                                          onYes: () {
-                                            tokenExpireWrapper(ref, () async {
-                                              final result = await votesNotifier
-                                                  .addVote(Votes(
-                                                      ids:
-                                                          selectedPretendance));
-                                              if (result) {
-                                                displayVoteToastWithContext(
-                                                    TypeMsg.msg,
-                                                    VoteTextConstants
-                                                        .voteSuccess);
-                                              } else {
-                                                displayVoteToastWithContext(
-                                                    TypeMsg.error,
-                                                    VoteTextConstants
-                                                        .voteError);
-                                              }
-                                            });
-                                          },
-                                        );
-                                      });
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                      top: 10, bottom: 12),
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: const Center(
-                                    child: Text(
-                                      VoteTextConstants.vote,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700),
+                                    error: (error, stack) => const Center(
+                                      child: Text('Error'),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          const SizedBox(
-                            height: 20,
+                            ],
                           ),
-                        ],
-                      ),
-                      loading: () =>
-                          const Center(child: CircularProgressIndicator()),
-                      error: (error, stack) =>
-                          const Center(child: Text('Error')),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        if (sectionList.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(right: 30.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return CustomDialogBox(
+                                        title: VoteTextConstants.vote,
+                                        descriptions:
+                                            VoteTextConstants.confirmVote,
+                                        onYes: () {
+                                          tokenExpireWrapper(ref, () async {
+                                            final result = await votesNotifier
+                                                .addVote(Votes(
+                                                    ids: selectedPretendance));
+                                            if (result) {
+                                              displayVoteToastWithContext(
+                                                  TypeMsg.msg,
+                                                  VoteTextConstants
+                                                      .voteSuccess);
+                                            } else {
+                                              displayVoteToastWithContext(
+                                                  TypeMsg.error,
+                                                  VoteTextConstants.voteError);
+                                            }
+                                          });
+                                        },
+                                      );
+                                    });
+                              },
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 12),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: const Center(
+                                  child: Text(
+                                    VoteTextConstants.vote,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
-                  ])),
-            ),
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
+                    error: (error, stack) => const Center(child: Text('Error')),
+                  ),
+                ])),
           ),
         );
       } else {
         return Refresher(
           onRefresh: () async {
             await statusNotifier.loadStatus();
+            await votesNotifier.getVotes();
+            final loaners = await sectionsNotifier.loadSectionList();
+            loaners.whenData((value) {
+              List<Pretendance> list = [];
+              pretendances.when(data: (pretendance) {
+                list = pretendance;
+              }, error: (error, stackTrace) {
+                list = [];
+              }, loading: () {
+                list = [];
+              });
+              sectionPretendanceNotifier.loadTList(value);
+              for (final l in value) {
+                sectionPretendanceNotifier.setTData(
+                    l,
+                    AsyncValue.data(list
+                        .where((element) => element.section.id == l.id)
+                        .toList()));
+              }
+            });
           },
           child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 100,
-                ),
-                const Center(
-                  child: Text(VoteTextConstants.notOpenedVote),
-                ),
-                const SizedBox(
-                  height: 100,
-                ),
-                if (isAdmin)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 20),
-                        child: GestureDetector(
-                          onTap: () {
-                            pageNotifier.setVotePage(VotePage.admin);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 8),
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 5))
-                                ]),
-                            child: Row(
-                              children: const [
-                                HeroIcon(HeroIcons.userGroup,
-                                    color: Colors.white),
-                                SizedBox(width: 10),
-                                Text("Admin",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                              ],
+            height: MediaQuery.of(context).size.height - 100,
+            child: Column(children: [
+              SizedBox(
+                height: isAdmin ? 10 : 15,
+              ),
+              sections.when(
+                data: (sectionList) => Column(children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height -
+                        (isAdmin ? 215 : 220),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 30.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            sectionsPretendances.when(
+                              data: (pretendanceList) => Column(children: [
+                                Row(
+                                  children: [
+                                    const Text(
+                                      VoteTextConstants.section,
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width -
+                                          243,
+                                    ),
+                                    isAdmin
+                                        ? Container(
+                                            margin: const EdgeInsets.only(
+                                                right: 20),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                pageNotifier.setVotePage(
+                                                    VotePage.admin);
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12,
+                                                        vertical: 8),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                          color: Colors.black
+                                                              .withOpacity(0.2),
+                                                          blurRadius: 10,
+                                                          offset: const Offset(
+                                                              0, 5))
+                                                    ]),
+                                                child: Row(
+                                                  children: const [
+                                                    HeroIcon(
+                                                        HeroIcons.userGroup,
+                                                        color: Colors.white),
+                                                    SizedBox(width: 10),
+                                                    Text("Admin",
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.white)),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        : Container(),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 50,
+                                ),
+                                Text(
+                                  s == Status.waiting
+                                      ? VoteTextConstants.notOpenedVote
+                                      : s == Status.closed ?VoteTextConstants.closedVote:
+                                      VoteTextConstants.onGoingCount,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(
+                                  height: 50,
+                                ),
+                                ...pretendanceList
+                                    .map((key, value) => MapEntry(
+                                          key,
+                                          value.when(
+                                            data: (pretendance) => Align(
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    60,
+                                                margin: const EdgeInsets.only(
+                                                    right: 30, bottom: 30),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15)),
+                                                child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 20,
+                                                        vertical: 10),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          key.name,
+                                                          style: const TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700),
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Text(
+                                                              pretendance.length
+                                                                  .toString(),
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    )),
+                                              ),
+                                            ),
+                                            loading: () => const Center(
+                                                child:
+                                                    CircularProgressIndicator()),
+                                            error: (error, stack) =>
+                                                const Center(
+                                                    child: Text('Error')),
+                                          ),
+                                        ))
+                                    .values
+                              ]),
+                              error: (Object error, StackTrace stackTrace) {
+                                return Center(child: Text('Error $error'));
+                              },
+                              loading: () {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              },
                             ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-              ],
-            ),
+                          ]),
+                    ),
+                  ),
+                ]),
+                error: (Object error, StackTrace stackTrace) {
+                  return Center(child: Text('Error $error'));
+                },
+                loading: () {
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
+            ]),
           ),
         );
       }

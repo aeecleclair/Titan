@@ -23,12 +23,14 @@ class VoteTextConstants {
   static const String noSection = 'Aucune section';
   static const String noSectionList = 'Aucune section';
   static const String notOpenedVote = 'Vote non ouvert';
+  static const String onGoingCount = 'Dépouillement en cours';
   static const String openVote = 'Ouvrir les votes';
   static const String pretendance = 'Prétendance';
   static const String pretendanceDeleted = 'Prétendance supprimée';
   static const String pretendanceNotDeleted = 'Erreur lors de la suppression';
   static const String role = 'Rôle';
   static const String sectionDescription = 'Description de la section';
+  static const String section = 'Section';
   static const String sectionName = 'Nom de la section';
   static const String selected = 'Sélectionné';
   static const String showVotes = 'Voir les votes';
@@ -36,5 +38,4 @@ class VoteTextConstants {
   static const String voteError = 'Erreur lors de l\'enregistrement du vote';
   static const String voteNotStarted = 'Vote non ouvert';
   static const String voteSuccess = 'Vote enregistré';
-
 }

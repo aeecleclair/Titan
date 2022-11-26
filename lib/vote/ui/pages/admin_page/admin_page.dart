@@ -349,7 +349,9 @@ class AdminPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 20),
                         SizedBox(
-                            height: MediaQuery.of(context).size.height - 539,
+                            height: MediaQuery.of(context).size.height -
+                                539 +
+                                (status == Status.waiting ? 0 : 50),
                             child: Column(
                               children: [
                                 if (status == Status.counting)
