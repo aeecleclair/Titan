@@ -63,34 +63,30 @@ class DetailLoanPage extends HookConsumerWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            loan.items.isNotEmpty
-                                ? GridView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: loan.items.length,
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            crossAxisSpacing: 10,
-                                            mainAxisSpacing: 10,
-                                            childAspectRatio: 1.45),
-                                    itemBuilder: (context, index) {
-                                      return ItemCard(
-                                        item: loan.items[index],
-                                        showButtons: false,
-                                        onDelete: () {},
-                                        onEdit: () {},
-                                      );
-                                    },
-                                  )
-                                : const SizedBox(),
                           ],
                         ),
                       ),
+                      loan.items.isNotEmpty
+                          ? GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: loan.items.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      childAspectRatio: 1),
+                              itemBuilder: (context, index) {
+                                return ItemCard(
+                                  item: loan.items[index],
+                                  showButtons: false,
+                                  onDelete: () {},
+                                  onEdit: () {},
+                                );
+                              },
+                            )
+                          : const SizedBox(),
                     ],
                   ),
                 ),

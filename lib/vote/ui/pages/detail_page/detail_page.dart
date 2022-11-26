@@ -62,9 +62,26 @@ class DetailPage extends HookConsumerWidget {
                                     return data[pretendance]!.when(
                                         data: (data) {
                                       if (data.isNotEmpty) {
-                                        return CircleAvatar(
-                                          radius: 70,
-                                          backgroundImage: data.first.image,
+                                        return Container(
+                                          height: 140,
+                                          width: 140,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.grey.shade50,
+                                            image: DecorationImage(
+                                              image: data.first.image,
+                                              fit: BoxFit.cover,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.2),
+                                                blurRadius: 10,
+                                                spreadRadius: 5,
+                                                offset: const Offset(0, 5),
+                                              ),
+                                            ],
+                                          ),
                                         );
                                       } else {
                                         logoNotifier
