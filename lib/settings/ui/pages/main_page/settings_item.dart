@@ -34,27 +34,21 @@ class SettingsItem extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                color: Colors.white,
+                border: Border.all(color: Colors.black),
                 boxShadow: [
                   BoxShadow(
-                    color: ColorConstants.gradient2.withOpacity(0.3),
+                    color: Colors.grey.shade400.withOpacity(0.3),
                     spreadRadius: 2,
-                    blurRadius: 4,
-                    offset: const Offset(1, 2),
+                    blurRadius: 5,
+                    offset: const Offset(2, 3),
                   ),
                 ],
                 borderRadius: BorderRadius.circular(10)),
             child: const HeroIcon(
               HeroIcons.chevronRight,
               size: 25,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ],

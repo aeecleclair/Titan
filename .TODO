@@ -29,33 +29,8 @@ API :
 - GET 'bdebooking/user/' Not Found
 - GET 'bdebooking/rooms' Not Found
 - GET 'calendar/events' Not Found
-- PB Notifications => groups non accessible pr non admin
-
-
-# DEV :
-
-Loan :
-
-- available (API -> number ?)
-
-Events :
-
-- Admin page (edit) (API)
-
-Drawer / Settings:
-
-- Profile Picture (5)
-
-Settings :
-
-- Notification (choisir module + push) (5)
-
-Vote :
-
-- Logo
-- Card
-
-- Logo :
+- PATCH available on edit
+- PATCH events
 
 
 # Modules :
