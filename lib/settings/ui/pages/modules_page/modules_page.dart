@@ -64,14 +64,24 @@ class ModulesPage extends HookConsumerWidget {
                     textAlign: TextAlign.left,
                   ),
                   const Spacer(),
-                  Switch(
+                  // Switch(
+                  //   value: modules.contains(module),
+                  //   activeColor: Colors.grey.shade700,
+                  //   onChanged: (bool value) {
+                  //     modulesNotifier.toggleModule(module);
+                  //   },
+                  // ),
+                  Checkbox(
                     value: modules.contains(module),
                     activeColor: Colors.grey.shade700,
-                    onChanged: (bool value) {
+                    onChanged: (bool? value) {
                       modulesNotifier.toggleModule(module);
                     },
                   ),
-                  const HeroIcon(HeroIcons.chevronUpDown)
+                  const HeroIcon(
+                    HeroIcons.chevronUpDown,
+                    size: 30,
+                  )
                 ],
               ),
             ),

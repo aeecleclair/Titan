@@ -95,8 +95,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
       if (allmodulesName.contains(name)) {
         Module module = allModules[allModulesName.indexOf(name)];
         if (types.contains(module.page)) {
-          if (canSee[
-              types.indexOf(module.page)]) {
+          if (canSee[types.indexOf(module.page)]) {
             modules.add(module);
           }
         } else {
@@ -105,6 +104,16 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
       }
     }
     state = modules;
+  }
+
+  void sortModules() {
+    final allmodulesName = allModules.map((e) => e.page.toString()).toList();
+    final sorted = state.sublist(0)
+      ..sort((a, b) => allmodulesName
+          .indexOf(a.page.toString())
+          .compareTo(allmodulesName.indexOf(b.page.toString())));
+    state = sorted;
+    saveModules();
   }
 
   ModuleType getFirstPage() {
@@ -134,6 +143,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
       r.add(m);
     }
     state = r;
+    sortModules();
     saveModules();
   }
 }
