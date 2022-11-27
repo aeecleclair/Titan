@@ -453,7 +453,7 @@ class MainPage extends HookConsumerWidget {
                                                         ),
                                                         Column(
                                                           children: [
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 5,
                                                             ),
                                                             Text(
