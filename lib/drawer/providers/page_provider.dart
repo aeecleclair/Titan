@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/settings/providers/module_list_provider.dart';
+import 'package:myecl/settings/providers/first_page_provider.dart';
 
 
 class PageNotifier extends StateNotifier<ModuleType> {

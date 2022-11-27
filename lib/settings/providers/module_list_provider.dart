@@ -13,14 +13,6 @@ final modulesProvider =
   return modulesNotifier;
 });
 
-final firstPageProvider = Provider<ModuleType>((ref) {
-  final modules = ref.watch(modulesProvider);
-  if (modules.isNotEmpty) {
-    return modules.first.page;
-  } else {
-    return ModuleType.home;
-  }
-});
 class ModulesNotifier extends StateNotifier<List<Module>> {
   String dbModule = "modules";
   String dbAllModules = "allModules";
@@ -85,44 +77,42 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     List<String> modulesName = prefs.getStringList(dbModule) ?? [];
     List<String> allModulesName = prefs.getStringList(dbAllModules) ?? [];
     final allmodulesName = allModules.map((e) => e.page.toString()).toList();
+    if (modulesName.isEmpty) {
+      modulesName = allmodulesName;
+      prefs.setStringList(dbModule, modulesName);
+    }
     if (allModulesName.isEmpty || !eq.equals(allModulesName, allmodulesName)) {
       prefs.setStringList(dbAllModules, allmodulesName);
     } else {
       allModules.sort((a, b) => allModulesName
           .indexOf(a.page.toString())
           .compareTo(allModulesName.indexOf(b.page.toString())));
-    }
-    if (modulesName.isEmpty) {
-      modulesName = allmodulesName;
-      prefs.setStringList(dbModule, modulesName);
+      modulesName.sort((a, b) =>
+          allModulesName.indexOf(a).compareTo(allModulesName.indexOf(b)));
     }
     List<Module> modules = [];
     for (String name in modulesName) {
       if (allmodulesName.contains(name)) {
-        if (types.contains(ModuleType.values[allmodulesName.indexOf(name)])) {
+        Module module = allModules[allModulesName.indexOf(name)];
+        if (types.contains(module.page)) {
           if (canSee[
-              types.indexOf(ModuleType.values[allmodulesName.indexOf(name)])]) {
-            modules.add(allModules[allmodulesName.indexOf(name)]);
+              types.indexOf(module.page)]) {
+            modules.add(module);
           }
         } else {
-          modules.add(allModules[allmodulesName.indexOf(name)]);
+          modules.add(module);
         }
       }
-    }
-    if (state.isNotEmpty) {
-      modules[0].selected = true;
     }
     state = modules;
   }
 
-  void filterModules(ModuleType type, bool canSee) {
-    List<Module> r = state.sublist(0);
-    for (Module m in r) {
-      if (m.page == type && !canSee) {
-        r.remove(m);
-      }
+  ModuleType getFirstPage() {
+    if (state.isNotEmpty) {
+      return state[0].page;
+    } else {
+      return ModuleType.home;
     }
-    state = r;
   }
 
   void reorderModules(int oldIndex, int newIndex) {
