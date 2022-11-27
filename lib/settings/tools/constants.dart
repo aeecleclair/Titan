@@ -28,6 +28,7 @@ class SettingsTextConstants {
   static const String language = "Langue";
   static const String languageFr = "Français";
   static const String logs = "Logs";
+  static const String modules = "Modules";
   static const String name = "Nom";
   static const String newPassword = "Nouveau mot de passe";
   static const String nickname = "Surnom";
@@ -36,8 +37,10 @@ class SettingsTextConstants {
   static const String passwordChanged = "Mot de passe changé";
   static const String passwordsNotMatch =
       "Les mots de passe ne correspondent pas";
+  static const String personalisation = "Personnalisation";
   static const String profilePicture = "Photo de profil";
   static const String promo = "Promotion";
+  static const String repportBug = "Signaler un bug";
   static const String save = "Enregistrer";
   static const String security = "Sécurité";
   static const String settings = "Paramètres";
@@ -46,6 +49,4 @@ class SettingsTextConstants {
   static const String updatingError =
       "Erreur lors de la modification du profil";
   static const String version = "Version";
-
-  static const String repportBug = "Signaler un bug";
 }

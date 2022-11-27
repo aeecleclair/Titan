@@ -405,8 +405,9 @@ class MainPage extends HookConsumerWidget {
                                 Text(
                                   s == Status.waiting
                                       ? VoteTextConstants.notOpenedVote
-                                      : s == Status.closed ?VoteTextConstants.closedVote:
-                                      VoteTextConstants.onGoingCount,
+                                      : s == Status.closed
+                                          ? VoteTextConstants.closedVote
+                                          : VoteTextConstants.onGoingCount,
                                   style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500),
@@ -441,20 +442,27 @@ class MainPage extends HookConsumerWidget {
                                                           MainAxisAlignment
                                                               .spaceBetween,
                                                       children: [
-                                                        Text(
-                                                          key.name,
-                                                          style: const TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700),
+                                                        Column(
+                                                          children: [
+                                                            Text(
+                                                              key.name,
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700),
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 3,
+                                                            ),
+                                                          ],
                                                         ),
                                                         Column(
                                                           children: [
                                                             const SizedBox(
-                                                              height: 5,
+                                                              height: 3,
                                                             ),
                                                             Text(
                                                               pretendance.length

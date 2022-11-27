@@ -39,6 +39,9 @@ class SettingsHomePage extends ConsumerWidget {
           case SettingsPage.logs:
             pageNotifier.setSettingsPage(SettingsPage.main);
             break;
+          case SettingsPage.modules:
+            pageNotifier.setSettingsPage(SettingsPage.main);
+            break;
         }
         return false;
       },

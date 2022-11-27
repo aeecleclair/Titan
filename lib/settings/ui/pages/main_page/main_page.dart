@@ -236,6 +236,50 @@ class MainPage extends HookConsumerWidget {
                       style: TextStyle(fontSize: 16, color: Colors.black)),
                 ),
                 const SizedBox(
+                  height: 50,
+                ),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(SettingsTextConstants.personalisation,
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black)),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                SettingsItem(
+                  icon: HeroIcons.bellAlert,
+                  onTap: () {
+                    // pageNotifier.setSettingsPage(SettingsPage.help);
+                  },
+                  child: const Text(SettingsTextConstants.notifications,
+                      style: TextStyle(fontSize: 16, color: Colors.black)),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                SettingsItem(
+                  icon: HeroIcons.moon,
+                  onTap: () {
+                    // pageNotifier.setSettingsPage(SettingsPage.help);
+                  },
+                  child: const Text(SettingsTextConstants.darkMode,
+                      style: TextStyle(fontSize: 16, color: Colors.black)),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                SettingsItem(
+                  icon: HeroIcons.queueList,
+                  onTap: () {
+                    pageNotifier.setSettingsPage(SettingsPage.modules);
+                  },
+                  child: const Text(SettingsTextConstants.modules,
+                      style: TextStyle(fontSize: 16, color: Colors.black)),
+                ),
+                const SizedBox(
                   height: 60,
                 ),
                 Row(

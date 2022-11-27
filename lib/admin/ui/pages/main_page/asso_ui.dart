@@ -62,10 +62,28 @@ class AssoUi extends HookConsumerWidget {
                               groupLogosNotifier.setTData(
                                   group, AsyncData([value]));
                             });
-                            return const HeroIcon(
-                              HeroIcons.userCircle,
-                              size: 120,
-                            );
+                            return Container(
+                                width: 120,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Colors.grey.shade300.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: const Offset(0, 3),
+                                    ),
+                                  ],
+                                  shape: BoxShape.circle,
+                                  image:
+                                      DecorationImage(image: data.first.image),
+                                ),
+                                child: const HeroIcon(
+                                  HeroIcons.userCircle,
+                                  size: 120,
+                                ));
                           }
                         }, loading: () {
                           return const SizedBox(
