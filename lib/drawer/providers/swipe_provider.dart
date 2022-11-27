@@ -6,7 +6,7 @@ class SwipeControllerNotifier extends StateNotifier<AnimationController> {
 
   static const double maxSlide = 255;
   static const dragRigthStartVal = 60;
-  static const dragLeftStartVal = maxSlide - 20;
+  static const dragLeftStartVal = maxSlide - 30;
   static bool shouldDrag = false;
 
   void close() {

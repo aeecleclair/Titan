@@ -1,6 +1,18 @@
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 
+enum ModuleType {
+  home,
+  settings,
+  amap,
+  loan,
+  booking,
+  admin,
+  event,
+  vote,
+  cinema
+}
+
 class Module {
   String name;
   HeroIcons icon;
