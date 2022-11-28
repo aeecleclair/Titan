@@ -17,13 +17,13 @@ ListType stringToListType(String type) {
 
 Status stringToStatus(String status) {
   switch (status) {
-    case 'Waiting':
+    case 'waiting':
       return Status.waiting;
-    case 'Open':
+    case 'open':
       return Status.open;
-    case 'Closed':
+    case 'closed':
       return Status.closed;
-    case 'Counting':
+    case 'counting':
       return Status.counting;
     default:
       return Status.waiting;

@@ -38,6 +38,7 @@ class AssoUi extends HookConsumerWidget {
                     data: (data) {
                       if (data[group] != null) {
                         return data[group]!.when(data: (data) {
+                          print(data);
                           if (data.isNotEmpty) {
                             return Container(
                                 width: 120,
@@ -77,8 +78,6 @@ class AssoUi extends HookConsumerWidget {
                                     ),
                                   ],
                                   shape: BoxShape.circle,
-                                  image:
-                                      DecorationImage(image: data.first.image),
                                 ),
                                 child: const HeroIcon(
                                   HeroIcons.userCircle,

@@ -22,7 +22,7 @@ class NoInternetPage extends HookConsumerWidget {
     return Scaffold(
       body: Refresher(
         onRefresh: () async {
-          isConnectedNotifier.isInternet();
+          await isConnectedNotifier.isInternet();
           if (isConnected) {
             await versionVerifierNotifier.loadVersion();
             await authTokenNotifier.getTokenFromStorage();

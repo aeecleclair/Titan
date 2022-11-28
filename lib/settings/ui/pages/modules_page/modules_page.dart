@@ -13,7 +13,7 @@ class ModulesPage extends HookConsumerWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: ReorderableListView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         proxyDecorator: (child, index, animation) {
           return Material(
             child: FadeTransition(

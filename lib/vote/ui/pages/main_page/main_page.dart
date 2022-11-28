@@ -64,8 +64,8 @@ class MainPage extends HookConsumerWidget {
           onRefresh: () async {
             await statusNotifier.loadStatus();
             await votesNotifier.getVotes();
-            final loaners = await sectionsNotifier.loadSectionList();
-            loaners.whenData((value) {
+            final sections = await sectionsNotifier.loadSectionList();
+            sections.whenData((value) {
               List<Pretendance> list = [];
               pretendances.when(data: (pretendance) {
                 list = pretendance;
@@ -301,8 +301,8 @@ class MainPage extends HookConsumerWidget {
           onRefresh: () async {
             await statusNotifier.loadStatus();
             await votesNotifier.getVotes();
-            final loaners = await sectionsNotifier.loadSectionList();
-            loaners.whenData((value) {
+            final sections = await sectionsNotifier.loadSectionList();
+            sections.whenData((value) {
               List<Pretendance> list = [];
               pretendances.when(data: (pretendance) {
                 list = pretendance;

@@ -14,26 +14,42 @@ class StatusNotifier extends SingleNotifier<Status> {
   }
 
   Future<bool> openVote() async {
-    return await update(statusRepository.openVote, Status.open);
+    if (await statusRepository.openVote()) {
+      state = const AsyncData(Status.open);
+      return true;
+    }
+    return false;
   }
 
   Future<bool> closeVote() async {
-    return await update(statusRepository.closeVote, Status.closed);
+    if (await statusRepository.closeVote()) {
+      state = const AsyncData(Status.closed);
+      return true;
+    }
+    return false;
   }
 
   Future<bool> countVote() async {
-    return await update(statusRepository.countVote, Status.counting);
+    if (await statusRepository.countVote()) {
+      state = const AsyncData(Status.counting);
+      return true;
+    }
+    return false;
   }
 
   Future<bool> resetVote() async {
-    return await update(statusRepository.resetVote, Status.waiting);
+    if (await statusRepository.resetVote()) {
+      state = const AsyncData(Status.waiting);
+      return true;
+    }
+    return false;
   }
 }
 
 final statusProvider =
     StateNotifierProvider<StatusNotifier, AsyncValue<Status>>((ref) {
   final token = ref.watch(tokenProvider);
-  final statusNotifier =  StatusNotifier(token: token);
+  final statusNotifier = StatusNotifier(token: token);
   statusNotifier.loadStatus();
   return statusNotifier;
 });

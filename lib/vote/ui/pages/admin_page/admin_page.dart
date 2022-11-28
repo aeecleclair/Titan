@@ -321,6 +321,7 @@ class AdminPage extends HookConsumerWidget {
                                         final value =
                                             await statusNotifier.resetVote();
                                         if (value) {
+                                          showVotesNotifier.toggle(false);
                                           displayVoteToastWithContext(
                                               TypeMsg.msg, 'Vote is closed');
                                         } else {

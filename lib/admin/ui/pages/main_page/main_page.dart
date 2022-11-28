@@ -170,7 +170,10 @@ class MainPage extends HookConsumerWidget {
                     },
                     onEdit: () {
                       groupIdNotifier.setId(group.id);
-                      pageNotifier.setAdminPage(AdminPage.edit);
+                      tokenExpireWrapper(ref, () async {
+                        await groupNotifier.loadGroup(group.id);
+                        pageNotifier.setAdminPage(AdminPage.edit);
+                      });
                     },
                     onDelete: () {
                       showDialog(

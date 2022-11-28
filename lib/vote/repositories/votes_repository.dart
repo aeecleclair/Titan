@@ -21,16 +21,4 @@ class VotesRepository extends Repository {
   Future<List<Votes>> getVote(String id) async {
     return (await getOne(id)).map((x) => Votes.fromJson(x)).toList();
   }
-
-  Future<bool> openVote() async {
-    return await create({}, suffix: "/open");
-  }
-
-  Future<bool> closeVote() async {
-    return await create({}, suffix: "/close");
-  }
-
-  Future<bool> countVote() async {
-    return await create({}, suffix: "/counting");
-  }
 }
