@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
@@ -11,6 +12,7 @@ import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/refresher.dart';
 
@@ -151,12 +153,32 @@ class AdminPage extends HookConsumerWidget {
                             isAdmin: true,
                             isDetail: false,
                             onEdit: () {
-                              bookingListNotifier.toggleConfirmed(
-                                  e, Decision.approved);
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomDialogBox(
+                                        title: BookingTextConstants.confirm,
+                                        descriptions:
+                                            BookingTextConstants.confirmBooking,
+                                        onYes: () async {
+                                          bookingListNotifier.toggleConfirmed(
+                                              e, Decision.approved);
+                                        });
+                                  });
                             },
                             onReturn: () {
-                              bookingListNotifier.toggleConfirmed(
-                                  e, Decision.declined);
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomDialogBox(
+                                        title: BookingTextConstants.decline,
+                                        descriptions:
+                                            BookingTextConstants.declineBooking,
+                                        onYes: () async {
+                                          bookingListNotifier.toggleConfirmed(
+                                              e, Decision.declined);
+                                        });
+                                  });
                             },
                             onInfo: () {
                               bookingNotifier.setBooking(e);
@@ -197,8 +219,18 @@ class AdminPage extends HookConsumerWidget {
                             isDetail: false,
                             onEdit: () {},
                             onReturn: () {
-                              bookingListNotifier.toggleConfirmed(
-                                  e, Decision.declined);
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomDialogBox(
+                                        title: BookingTextConstants.decline,
+                                        descriptions:
+                                            BookingTextConstants.declineBooking,
+                                        onYes: () async {
+                                          bookingListNotifier.toggleConfirmed(
+                                              e, Decision.declined);
+                                        });
+                                  });
                             },
                             onInfo: () {
                               bookingNotifier.setBooking(e);
@@ -238,8 +270,18 @@ class AdminPage extends HookConsumerWidget {
                             isAdmin: true,
                             isDetail: false,
                             onEdit: () {
-                              bookingListNotifier.toggleConfirmed(
-                                  e, Decision.approved);
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomDialogBox(
+                                        title: BookingTextConstants.confirm,
+                                        descriptions:
+                                            BookingTextConstants.confirmBooking,
+                                        onYes: () async {
+                                          bookingListNotifier.toggleConfirmed(
+                                              e, Decision.approved);
+                                        });
+                                  });
                             },
                             onReturn: () {},
                             onInfo: () {

@@ -14,9 +14,13 @@ class BookingTextConstants {
   static const String bookingNote = "Note de la réservation";
   static const String bookingPage = "Réservation";
   static const String bookingReason = "Motif de la réservation";
+  static const String confirm = "Confirmer";
   static const String confirmation = "Confirmation";
+  static const String confirmBooking = "Confirmer la réservation ?";
   static const String confirmed = "Validée";
   static const String dates = "Dates";
+  static const String decline = "Refuser";
+  static const String declineBooking = "Refuser la réservation ?";
   static const String declined = "Refusée";
   static const String deleting = "Suppression";
   static const String deletedBooking = "Réservation supprimée";
