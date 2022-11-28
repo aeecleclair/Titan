@@ -10,6 +10,7 @@ environment:
 dependencies:
   animations: ^2.0.2
   auto_size_text: ^3.0.0
+  collection: ^1.16.0
   crypto: ^3.0.2
   datetime_picker_formfield: ^2.0.1
   f_logs: ^2.0.1
@@ -29,7 +30,6 @@ dependencies:
   http_parser: ^4.0.2
   image_picker: ^0.8.6
   intl: ^0.17.0
-  just_the_tooltip: ^0.0.12
   jwt_decoder: ^2.0.1
   numberpicker: ^2.1.1
   package_info_plus: ^3.0.2

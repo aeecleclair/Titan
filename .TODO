@@ -1,31 +1,25 @@
 # Bugs
 
-OK :
+TITAN :
 
-- Sélection de module qu'on peut désactiver => OK
+- Calendar
 
 HYPERION :
 
-- Mettre le numero de promo grâce au mail pas besoin de le rentré => HYPERION
+- Mettre le numero de promo grâce au mail pas besoin de le rentrer
 
 A VOIR :
 
-- Aide ? ? => FAQ logs => A VOIR
-- page d'accueil calendrier ? => A VOIR
-- TROP de polices différentes => A VOIR
-- Sécurité juste changer de mot de passe => A VOIR
-- popup utilisateur quand tu cliques en haut => A VOIR
-- Pas de bouton eteindre, le mettre dans sécurité => A VOIR
+- TROP de polices différentes
 
 SSO :
 
-- adapter ecran en fonction de la resolution pour le login oauth => SSO
-- possibilité de mettre la page en français si on a un user agent anglais => SSO
-- Account Successfully created <= majuscule consistance avec un icone validé + titre dans la barre en haut => SSO
+- adapter ecran en fonction de la resolution pour le login oauth
+- possibilité de mettre la page en français si on a un user agent anglais
+- Account Successfully created <= majuscule consistance avec un icone validé + titre dans la barre en haut
 
 API :
 
-- POST amap/users/{user_id}/cash => Return CashComplete
 - GET 'bdebooking/user/' Not Found
 - GET 'bdebooking/rooms' Not Found
 - GET 'calendar/events' Not Found
@@ -35,13 +29,16 @@ API :
 
 # Modules :
 
-- Piston (2)
-- Soli (3)
-- JE (4)
+- Piston (1) discuter après la sortie
+- Soli (2) discuter après la sortie
+- BDS (3) cahier des charges
+- Payement (4) en discuter avec DBE
+- JE (?) cahier des charges
 - Messagerie (5)
 
 
 # Questions :
 
 - authentifiaction bio pour admin ?
+- Gestions des admins (qui, cmt les delete, cmt les add)
 - Afficher votes pr tlm ?

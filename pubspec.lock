@@ -72,7 +72,7 @@ packages:
     source: hosted
     version: "1.1.1"
   collection:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: collection
       url: "https://pub.dartlang.org"
@@ -394,13 +394,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.7.0"
-  just_the_tooltip:
-    dependency: "direct main"
-    description:
-      name: just_the_tooltip
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.12"
   jwt_decoder:
     dependency: "direct main"
     description:
@@ -797,7 +790,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   xdg_directories:
     dependency: transitive
     description:
