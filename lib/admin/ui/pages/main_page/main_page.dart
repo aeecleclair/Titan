@@ -54,248 +54,327 @@ class MainPage extends HookConsumerWidget {
             // const SizedBox(
             //   height: 20,
             // ),
-            GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: g.length + 2,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: .7),
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return GestureDetector(
-                        onTap: () {
-                          pageNotifier.setAdminPage(AdminPage.addAsso);
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
+            // GridView.builder(
+            //     shrinkWrap: true,
+            //     physics: const NeverScrollableScrollPhysics(),
+            //     itemCount: g.length + 2,
+            //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            //         crossAxisCount: 2,
+            //         crossAxisSpacing: 10,
+            //         mainAxisSpacing: 10,
+            //         childAspectRatio: .7),
+            //     itemBuilder: (context, index) {
+            //       if (index == 0) {
+            //         return GestureDetector(
+            //             onTap: () {
+            //               pageNotifier.setAdminPage(AdminPage.addAsso);
+            //             },
+            //             child: Column(
+            //               mainAxisAlignment: MainAxisAlignment.start,
+            //               children: [
+            //                 const SizedBox(
+            //                   height: 10,
+            //                 ),
+            //                 Container(
+            //                   padding: const EdgeInsets.all(30),
+            //                   decoration: BoxDecoration(
+            //                       color: Colors.white,
+            //                       boxShadow: [
+            //                         BoxShadow(
+            //                           color:
+            //                               Colors.grey.shade300.withOpacity(0.5),
+            //                           spreadRadius: 5,
+            //                           blurRadius: 7,
+            //                           offset: const Offset(0, 3),
+            //                         ),
+            //                       ],
+            //                       borderRadius: BorderRadius.circular(100)),
+            //                   child: const HeroIcon(
+            //                     HeroIcons.plus,
+            //                     size: 60,
+            //                   ),
+            //                 ),
+            //                 const SizedBox(
+            //                   height: 15,
+            //                 ),
+            //                 const Text(
+            //                   AdminTextConstants.add,
+            //                   style: TextStyle(
+            //                       fontSize: 20, fontWeight: FontWeight.w700),
+            //                 ),
+            //               ],
+            //             ));
+            //       } else if (index == 1) {
+            //         return GestureDetector(
+            //             onTap: () {
+            //               pageNotifier.setAdminPage(AdminPage.addLoaner);
+            //             },
+            //             child: Column(
+            //               mainAxisAlignment: MainAxisAlignment.start,
+            //               children: [
+            //                 const SizedBox(
+            //                   height: 10,
+            //                 ),
+            //                 Stack(
+            //                   children: [
+            //                     Container(
+            //                       padding: const EdgeInsets.all(30),
+            //                       decoration: BoxDecoration(
+            //                           color: Colors.white,
+            //                           boxShadow: [
+            //                             BoxShadow(
+            //                               color: Colors.grey.shade300
+            //                                   .withOpacity(0.5),
+            //                               spreadRadius: 5,
+            //                               blurRadius: 7,
+            //                               offset: const Offset(0, 3),
+            //                             ),
+            //                           ],
+            //                           borderRadius: BorderRadius.circular(100)),
+            //                       child: const HeroIcon(
+            //                         HeroIcons.buildingLibrary,
+            //                         size: 60,
+            //                       ),
+            //                     ),
+            //                     const Positioned(
+            //                       right: 22,
+            //                       top: 22,
+            //                       child: HeroIcon(
+            //                         HeroIcons.plus,
+            //                         size: 25,
+            //                       ),
+            //                     )
+            //                   ],
+            //                 ),
+            //                 const SizedBox(
+            //                   height: 15,
+            //                 ),
+            //                 const Text(
+            //                   AdminTextConstants.add,
+            //                   style: TextStyle(
+            //                       fontSize: 20, fontWeight: FontWeight.w700),
+            //                 ),
+            //               ],
+            //             ));
+            //       }
+            //       final group = g[index - 2];
+            //       return AssoUi(
+            //         group: group,
+            //         isLoaner: loanersId.contains(group.id),
+            //         onTap: () async {
+            //           groupIdNotifier.setId(group.id);
+            //           tokenExpireWrapper(ref, () async {
+            //             await groupNotifier.loadGroup(group.id);
+            //             pageNotifier.setAdminPage(AdminPage.asso);
+            //           });
+            //         },
+            //         onEdit: () {
+            //           groupIdNotifier.setId(group.id);
+            //           tokenExpireWrapper(ref, () async {
+            //             await groupNotifier.loadGroup(group.id);
+            //             pageNotifier.setAdminPage(AdminPage.edit);
+            //           });
+            //         },
+            //         onDelete: () {
+            //           showDialog(
+            //               context: context,
+            //               builder: (context) {
+            //                 return CustomDialogBox(
+            //                   title: AdminTextConstants.deleting,
+            //                   descriptions:
+            //                       AdminTextConstants.deleteAssociation,
+            //                   onYes: () async {
+            //                     tokenExpireWrapper(ref, () async {
+            //                       final value =
+            //                           await groupsNotifier.deleteGroup(group);
+            //                       if (value) {
+            //                         displayToastWithContext(TypeMsg.msg,
+            //                             AdminTextConstants.deletedAssociation);
+            //                       } else {
+            //                         displayToastWithContext(TypeMsg.error,
+            //                             AdminTextConstants.deletingError);
+            //                       }
+            //                     });
+            //                   },
+            //                 );
+            //               });
+            //         },
+            //       );
+            //     }),
+            Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    pageNotifier.setAdminPage(AdminPage.addAsso);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              blurRadius: 5,
+                              spreadRadius: 2)
+                        ]),
+                    child: Row(
+                      children: [
+                        Spacer(),
+                        HeroIcon(
+                          HeroIcons.plus,
+                          color: Colors.grey.shade700,
+                          size: 40,
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    pageNotifier.setAdminPage(AdminPage.addLoaner);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              blurRadius: 5,
+                              spreadRadius: 2)
+                        ]),
+                    child: Row(
+                      children: [
+                        Spacer(),
+                        Stack(
+                          clipBehavior: Clip.none,
                           children: [
-                            const SizedBox(
-                              height: 10,
+                            HeroIcon(
+                              HeroIcons.buildingLibrary,
+                              color: Colors.grey.shade700,
+                              size: 40,
                             ),
-                            Container(
-                              padding: const EdgeInsets.all(30),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color:
-                                          Colors.grey.shade300.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(100)),
-                              child: const HeroIcon(
+                            Positioned(
+                              right: -2,
+                              top: -2,
+                              child: HeroIcon(
                                 HeroIcons.plus,
-                                size: 60,
+                                size: 15,
+                                color: Colors.grey.shade700,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            const Text(
-                              AdminTextConstants.add,
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w700),
-                            ),
+                            )
                           ],
-                        ));
-                  } else if (index == 1) {
-                    return GestureDetector(
-                        onTap: () {
-                          pageNotifier.setAdminPage(AdminPage.addLoaner);
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Stack(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(30),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.shade300
-                                              .withOpacity(0.5),
-                                          spreadRadius: 5,
-                                          blurRadius: 7,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                      borderRadius: BorderRadius.circular(100)),
-                                  child: const HeroIcon(
-                                    HeroIcons.buildingLibrary,
-                                    size: 60,
-                                  ),
-                                ),
-                                const Positioned(
-                                  right: 22,
-                                  top: 22,
-                                  child: HeroIcon(
-                                    HeroIcons.plus,
-                                    size: 25,
-                                  ),
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            const Text(
-                              AdminTextConstants.add,
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w700),
-                            ),
-                          ],
-                        ));
-                  }
-                  final group = g[index - 2];
-                  return AssoUi(
-                    group: group,
-                    isLoaner: loanersId.contains(group.id),
-                    onTap: () async {
-                      groupIdNotifier.setId(group.id);
-                      tokenExpireWrapper(ref, () async {
-                        await groupNotifier.loadGroup(group.id);
-                        pageNotifier.setAdminPage(AdminPage.asso);
-                      });
-                    },
-                    onEdit: () {
-                      groupIdNotifier.setId(group.id);
-                      tokenExpireWrapper(ref, () async {
-                        await groupNotifier.loadGroup(group.id);
-                        pageNotifier.setAdminPage(AdminPage.edit);
-                      });
-                    },
-                    onDelete: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return CustomDialogBox(
-                              title: AdminTextConstants.deleting,
-                              descriptions:
-                                  AdminTextConstants.deleteAssociation,
-                              onYes: () async {
-                                tokenExpireWrapper(ref, () async {
-                                  final value =
-                                      await groupsNotifier.deleteGroup(group);
-                                  if (value) {
-                                    displayToastWithContext(TypeMsg.msg,
-                                        AdminTextConstants.deletedAssociation);
-                                  } else {
-                                    displayToastWithContext(TypeMsg.error,
-                                        AdminTextConstants.deletingError);
-                                  }
+                        ),
+                        Spacer()
+                      ],
+                    ),
+                    // const SizedBox(
+                    //   width: 15,
+                    // ),
+                    // const Expanded(
+                    //   child: Text(
+                    //     AdminTextConstants.addLoaningAssociation,
+                    //     style: TextStyle(
+                    //         color: Colors.black,
+                    //         fontSize: 20,
+                    //         fontWeight: FontWeight.bold),
+                    //   ),
+                    // ),
+                  ),
+                ),
+                // child: Column(
+                //   mainAxisAlignment: MainAxisAlignment.start,
+                //   children: [
+                //     const SizedBox(
+                //       height: 10,
+                //     ),
+                //     Container(
+                //       padding: const EdgeInsets.all(30),
+                //       decoration: BoxDecoration(
+                //           color: Colors.white,
+                //           boxShadow: [
+                //             BoxShadow(
+                //               color: Colors.grey.shade300.withOpacity(0.5),
+                //               spreadRadius: 5,
+                //               blurRadius: 7,
+                //               offset: const Offset(0, 3),
+                //             ),
+                //           ],
+                //           borderRadius: BorderRadius.circular(100)),
+                //       child: const HeroIcon(
+                //         HeroIcons.plus,
+                //         size: 60,
+                //       ),
+                //     ),
+                //     const SizedBox(
+                //       height: 15,
+                //     ),
+                //     const Text(
+                //       AdminTextConstants.add,
+                //       style: TextStyle(
+                //           fontSize: 20, fontWeight: FontWeight.w700),
+                //     ),
+                //   ],
+                // ),
+                // )),
+                ...g
+                    .map((group) => AssoUi(
+                          group: group,
+                          isLoaner: loanersId.contains(group.id),
+                          onTap: () async {
+                            groupIdNotifier.setId(group.id);
+                            tokenExpireWrapper(ref, () async {
+                              await groupNotifier.loadGroup(group.id);
+                              pageNotifier.setAdminPage(AdminPage.asso);
+                            });
+                          },
+                          onEdit: () {
+                            groupIdNotifier.setId(group.id);
+                            tokenExpireWrapper(ref, () async {
+                              await groupNotifier.loadGroup(group.id);
+                              pageNotifier.setAdminPage(AdminPage.edit);
+                            });
+                          },
+                          onDelete: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CustomDialogBox(
+                                    title: AdminTextConstants.deleting,
+                                    descriptions:
+                                        AdminTextConstants.deleteAssociation,
+                                    onYes: () async {
+                                      tokenExpireWrapper(ref, () async {
+                                        final value = await groupsNotifier
+                                            .deleteGroup(group);
+                                        if (value) {
+                                          displayToastWithContext(
+                                              TypeMsg.msg,
+                                              AdminTextConstants
+                                                  .deletedAssociation);
+                                        } else {
+                                          displayToastWithContext(TypeMsg.error,
+                                              AdminTextConstants.deletingError);
+                                        }
+                                      });
+                                    },
+                                  );
                                 });
-                              },
-                            );
-                          });
-                    },
-                  );
-                }),
-            // GestureDetector(
-            //   child: Container(
-            //     width: double.infinity,
-            //     margin: const EdgeInsets.symmetric(vertical: 20),
-            //     padding: const EdgeInsets.symmetric(vertical: 15),
-            //     alignment: Alignment.center,
-            //     decoration: BoxDecoration(
-            //       gradient: const LinearGradient(
-            //         colors: [
-            //           ColorConstants.gradient1,
-            //           ColorConstants.gradient2,
-            //         ],
-            //       ),
-            //       boxShadow: [
-            //         BoxShadow(
-            //           color: ColorConstants.gradient2.withOpacity(0.5),
-            //           blurRadius: 5,
-            //           offset: const Offset(2, 2),
-            //           spreadRadius: 2,
-            //         ),
-            //       ],
-            //       borderRadius: BorderRadius.circular(15),
-            //     ),
-            //     child: const Text(
-            //       AdminTextConstants.addAssociation,
-            //       style: TextStyle(
-            //         fontSize: 18,
-            //         fontWeight: FontWeight.w600,
-            //         color: Color.fromARGB(255, 255, 255, 255),
-            //       ),
-            //     ),
-            //   ),
-            //   onTap: () {
-            //     pageNotifier.setAdminPage(AdminPage.addAsso);
-            //   },
-            // ),
-            // if (loans.isNotEmpty)
-            //   Column(
-            //     children: [
-            //       const SizedBox(
-            //         height: 20,
-            //       ),
-            //       const Text(AdminTextConstants.loaningAssociation,
-            //           style: TextStyle(
-            //               fontSize: 25,
-            //               fontWeight: FontWeight.bold,
-            //               color: ColorConstants.gradient1)),
-            //       const SizedBox(height: 10),
-            //       ...loans
-            //           .map((x) => AssoUi(
-            //               group: x.,
-            //               onTap: () async {
-            //                 groupIdNotifier.setId(x.groupManagerId);
-            //                 await groupNotifier.loadGroup(x.groupManagerId);
-            //                 pageNotifier.setAdminPage(AdminPage.asso);
-            //               }))
-            //           .toList(),
-            //     ],
-            //   ),
-            // GestureDetector(
-            //   child: Container(
-            //     width: double.infinity,
-            //     margin: const EdgeInsets.symmetric(vertical: 20),
-            //     padding: const EdgeInsets.symmetric(vertical: 15),
-            //     alignment: Alignment.center,
-            //     decoration: BoxDecoration(
-            //       gradient: const LinearGradient(
-            //         colors: [
-            //           ColorConstants.gradient1,
-            //           ColorConstants.gradient2,
-            //         ],
-            //       ),
-            //       boxShadow: [
-            //         BoxShadow(
-            //           color: ColorConstants.gradient2.withOpacity(0.5),
-            //           blurRadius: 5,
-            //           offset: const Offset(2, 2),
-            //           spreadRadius: 2,
-            //         ),
-            //       ],
-            //       borderRadius: BorderRadius.circular(15),
-            //     ),
-            //     child: const Text(
-            //       AdminTextConstants.addLoaningAssociation,
-            //       style: TextStyle(
-            //         fontSize: 18,
-            //         fontWeight: FontWeight.w600,
-            //         color: Color.fromARGB(255, 255, 255, 255),
-            //       ),
-            //     ),
-            //   ),
-            //   onTap: () {
-            //     pageNotifier.setAdminPage(AdminPage.addLoaner);
-            //   },
-            // )
+                          },
+                        ))
+                    .toList(),
+                SizedBox(
+                  height: 20,
+                )
+              ],
+            ),
           ]);
         }, error: (e, s) {
           return Text(e.toString());

@@ -21,137 +21,59 @@ class AssoUi extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final groupLogos = ref.watch(allgroupLogosProvider);
-    final groupLogosNotifier = ref.watch(allgroupLogosProvider.notifier);
-    final logoNotifier = ref.watch(logoProvider.notifier);
+    // final groupLogos = ref.watch(allgroupLogosProvider);
+    // final groupLogosNotifier = ref.watch(allgroupLogosProvider.notifier);
+    // final logoNotifier = ref.watch(logoProvider.notifier);
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.all(10),
-        width: double.infinity,
-        child: Column(
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  blurRadius: 5,
+                  spreadRadius: 2)
+            ]),
+        child: Row(
           children: [
-            Stack(children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: groupLogos.when(
-                    data: (data) {
-                      if (data[group] != null) {
-                        return data[group]!.when(data: (data) {
-                          print(data);
-                          if (data.isNotEmpty) {
-                            return Container(
-                                width: 120,
-                                height: 120,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color:
-                                          Colors.grey.shade300.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                  shape: BoxShape.circle,
-                                  image:
-                                      DecorationImage(image: data.first.image),
-                                ));
-                          } else {
-                            logoNotifier.getLogo(group.id).then((value) {
-                              groupLogosNotifier.setTData(
-                                  group, AsyncData([value]));
-                            });
-                            return Container(
-                                width: 120,
-                                height: 120,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color:
-                                          Colors.grey.shade300.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const HeroIcon(
-                                  HeroIcons.userCircle,
-                                  size: 120,
-                                ));
-                          }
-                        }, loading: () {
-                          return const SizedBox(
-                            height: 60,
-                            width: 60,
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          );
-                        }, error: (error, stack) {
-                          return const SizedBox(
-                            height: 60,
-                            width: 60,
-                            child: Center(
-                              child: Icon(Icons.error),
-                            ),
-                          );
-                        });
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                    loading: () => const CircularProgressIndicator(),
-                    error: (error, stack) => const Text('Error')),
-              ),
-              if (isLoaner)
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Container(
-                    height: 35,
-                    width: 35,
-                    padding: const EdgeInsets.all(7),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.white,
-                          Colors.grey.shade50,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade300.withOpacity(0.3),
-                          spreadRadius: 2,
-                          blurRadius: 4,
-                          offset: const Offset(2, 3),
-                        ),
-                      ],
-                    ),
-                    child: const HeroIcon(
-                      HeroIcons.buildingLibrary,
-                      color: Colors.black,
-                    ),
+            const SizedBox(
+              width: 10,
+            ),
+            if (isLoaner)
+              Row(
+                children: [
+                  HeroIcon(
+                    HeroIcons.buildingLibrary,
+                    color: Colors.grey.shade700,
                   ),
-                ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                child: GestureDetector(
+                  const SizedBox(
+                    width: 15,
+                  ),
+                ],
+              ),
+            Expanded(
+              child: Text(
+                capitalize(group.name),
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Row(
+              children: [
+                GestureDetector(
                   onTap: onEdit,
                   child: Container(
-                    height: 35,
-                    width: 35,
-                    padding: const EdgeInsets.all(7),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      shape: BoxShape.circle,
                       gradient: LinearGradient(
                         colors: [
                           Colors.grey.shade800,
@@ -168,6 +90,7 @@ class AssoUi extends HookConsumerWidget {
                           offset: const Offset(2, 3),
                         ),
                       ],
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: const HeroIcon(
                       HeroIcons.pencil,
@@ -175,18 +98,14 @@ class AssoUi extends HookConsumerWidget {
                     ),
                   ),
                 ),
-              ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: GestureDetector(
+                const SizedBox(
+                  width: 10,
+                ),
+                GestureDetector(
                   onTap: onDelete,
                   child: Container(
-                    height: 35,
-                    width: 35,
-                    padding: const EdgeInsets.all(7),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      shape: BoxShape.circle,
                       gradient: const LinearGradient(
                         colors: [
                           ColorConstants.gradient1,
@@ -203,6 +122,7 @@ class AssoUi extends HookConsumerWidget {
                           offset: const Offset(2, 3),
                         ),
                       ],
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: const HeroIcon(
                       HeroIcons.xMark,
@@ -210,24 +130,216 @@ class AssoUi extends HookConsumerWidget {
                     ),
                   ),
                 ),
-              ),
-            ]),
-            const SizedBox(
-              height: 15,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                capitalize(group.name),
-                style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black),
-              ),
-            ),
+              ],
+            )
           ],
         ),
       ),
     );
+    // return GestureDetector(
+    //   onTap: onTap,
+    //   child: Container(
+    //     margin: const EdgeInsets.all(10),
+    //     width: double.infinity,
+    //     child: Column(
+    //       children: [
+    //         Stack(children: [
+    //           Align(
+    //             alignment: Alignment.topCenter,
+    //             child: groupLogos.when(
+    //                 data: (data) {
+    //                   if (data[group] != null) {
+    //                     return data[group]!.when(data: (data) {
+    //                       print(data);
+    //                       if (data.isNotEmpty) {
+    //                         return Container(
+    //                             width: 120,
+    //                             height: 120,
+    //                             decoration: BoxDecoration(
+    //                               color: Colors.white,
+    //                               boxShadow: [
+    //                                 BoxShadow(
+    //                                   color:
+    //                                       Colors.grey.shade300.withOpacity(0.5),
+    //                                   spreadRadius: 5,
+    //                                   blurRadius: 7,
+    //                                   offset: const Offset(0, 3),
+    //                                 ),
+    //                               ],
+    //                               shape: BoxShape.circle,
+    //                               image:
+    //                                   DecorationImage(image: data.first.image),
+    //                             ));
+    //                       } else {
+    //                         logoNotifier.getLogo(group.id).then((value) {
+    //                           groupLogosNotifier.setTData(
+    //                               group, AsyncData([value]));
+    //                         });
+    //                         return Container(
+    //                             width: 120,
+    //                             height: 120,
+    //                             decoration: BoxDecoration(
+    //                               color: Colors.white,
+    //                               boxShadow: [
+    //                                 BoxShadow(
+    //                                   color:
+    //                                       Colors.grey.shade300.withOpacity(0.5),
+    //                                   spreadRadius: 5,
+    //                                   blurRadius: 7,
+    //                                   offset: const Offset(0, 3),
+    //                                 ),
+    //                               ],
+    //                               shape: BoxShape.circle,
+    //                             ),
+    //                             child: const HeroIcon(
+    //                               HeroIcons.userCircle,
+    //                               size: 120,
+    //                             ));
+    //                       }
+    //                     }, loading: () {
+    //                       return const SizedBox(
+    //                         height: 60,
+    //                         width: 60,
+    //                         child: Center(
+    //                           child: CircularProgressIndicator(),
+    //                         ),
+    //                       );
+    //                     }, error: (error, stack) {
+    //                       return const SizedBox(
+    //                         height: 60,
+    //                         width: 60,
+    //                         child: Center(
+    //                           child: Icon(Icons.error),
+    //                         ),
+    //                       );
+    //                     });
+    //                   } else {
+    //                     return const SizedBox.shrink();
+    //                   }
+    //                 },
+    //                 loading: () => const CircularProgressIndicator(),
+    //                 error: (error, stack) => const Text('Error')),
+    //           ),
+    //           if (isLoaner)
+    //             Positioned(
+    //               top: 0,
+    //               right: 0,
+    //               child: Container(
+    //                 height: 35,
+    //                 width: 35,
+    //                 padding: const EdgeInsets.all(7),
+    //                 decoration: BoxDecoration(
+    //                   shape: BoxShape.circle,
+    //                   gradient: LinearGradient(
+    //                     colors: [
+    //                       Colors.white,
+    //                       Colors.grey.shade50,
+    //                     ],
+    //                     begin: Alignment.topLeft,
+    //                     end: Alignment.bottomRight,
+    //                   ),
+    //                   boxShadow: [
+    //                     BoxShadow(
+    //                       color: Colors.grey.shade300.withOpacity(0.3),
+    //                       spreadRadius: 2,
+    //                       blurRadius: 4,
+    //                       offset: const Offset(2, 3),
+    //                     ),
+    //                   ],
+    //                 ),
+    //                 child: const HeroIcon(
+    //                   HeroIcons.buildingLibrary,
+    //                   color: Colors.black,
+    //                 ),
+    //               ),
+    //             ),
+    //           Positioned(
+    //             bottom: 0,
+    //             left: 0,
+    //             child: GestureDetector(
+    //               onTap: onEdit,
+    //               child: Container(
+    //                 height: 35,
+    //                 width: 35,
+    //                 padding: const EdgeInsets.all(7),
+    //                 decoration: BoxDecoration(
+    //                   shape: BoxShape.circle,
+    //                   gradient: LinearGradient(
+    //                     colors: [
+    //                       Colors.grey.shade800,
+    //                       Colors.grey.shade900,
+    //                     ],
+    //                     begin: Alignment.topLeft,
+    //                     end: Alignment.bottomRight,
+    //                   ),
+    //                   boxShadow: [
+    //                     BoxShadow(
+    //                       color: Colors.grey.shade900.withOpacity(0.3),
+    //                       spreadRadius: 2,
+    //                       blurRadius: 4,
+    //                       offset: const Offset(2, 3),
+    //                     ),
+    //                   ],
+    //                 ),
+    //                 child: const HeroIcon(
+    //                   HeroIcons.pencil,
+    //                   color: Colors.white,
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //           Positioned(
+    //             bottom: 0,
+    //             right: 0,
+    //             child: GestureDetector(
+    //               onTap: onDelete,
+    //               child: Container(
+    //                 height: 35,
+    //                 width: 35,
+    //                 padding: const EdgeInsets.all(7),
+    //                 decoration: BoxDecoration(
+    //                   shape: BoxShape.circle,
+    //                   gradient: const LinearGradient(
+    //                     colors: [
+    //                       ColorConstants.gradient1,
+    //                       ColorConstants.gradient2,
+    //                     ],
+    //                     begin: Alignment.topLeft,
+    //                     end: Alignment.bottomRight,
+    //                   ),
+    //                   boxShadow: [
+    //                     BoxShadow(
+    //                       color: ColorConstants.gradient2.withOpacity(0.3),
+    //                       spreadRadius: 2,
+    //                       blurRadius: 4,
+    //                       offset: const Offset(2, 3),
+    //                     ),
+    //                   ],
+    //                 ),
+    //                 child: const HeroIcon(
+    //                   HeroIcons.xMark,
+    //                   color: Colors.white,
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         ]),
+    //         const SizedBox(
+    //           height: 15,
+    //         ),
+    //         Align(
+    //           alignment: Alignment.center,
+    //           child: Text(
+    //             capitalize(group.name),
+    //             style: const TextStyle(
+    //                 fontSize: 20,
+    //                 fontWeight: FontWeight.w700,
+    //                 color: Colors.black),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }
