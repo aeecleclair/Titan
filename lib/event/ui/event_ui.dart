@@ -33,8 +33,10 @@ class EventUi extends ConsumerWidget {
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
+          if (!isDetailPage) {
           eventNotifier.setEvent(event);
           pageNotifier.setEventPage(EventPage.eventDetailfromModule);
+          }
         },
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 10),
