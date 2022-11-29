@@ -68,75 +68,80 @@ class Boutons extends HookConsumerWidget {
                 if (price == 0.0) {
                   displayToast(
                       context, TypeMsg.error, AMAPTextConstants.noProduct);
-                } else if (indexCmd == -1 && price < b) {
-                  List<Product> prod = [];
-                  for (var p in products) {
-                    if (p.quantity != 0) {
-                      prod.add(p.copyWith());
-                    }
-                  }
-                  Order newOrder = Order(
-                      user: me.toSimpleUser(),
-                      products: prod,
-                      deliveryDate: delList
-                          .firstWhere((d) => d.id == deliveryId)
-                          .deliveryDate,
-                      id: const Uuid().v4(),
-                      amount: price,
-                      deliveryId: deliveryId,
-                      productsIds: prod.map((e) => e.id).toList(),
-                      collectionSlot: collectionSlotNotifier.getText());
-                  tokenExpireWrapper(ref, () async {
-                    final value = await cmdsNotifier.addOrder(newOrder);
-                    if (value) {
-                      pageNotifier.setAmapPage(AmapPage.main);
-                      userAmountNotifier.updateCash(-price);
-                      displayToastWithContext(
-                          TypeMsg.msg, AMAPTextConstants.addedOrder);
-                      clearCmd(ref);
-                    } else {
-                      pageNotifier.setAmapPage(AmapPage.main);
-                      displayToastWithContext(
-                          TypeMsg.error, AMAPTextConstants.addingError);
-                    }
-                  });
-                } else {
-                  var lastPrice = 0.0;
-                  cmds.when(
-                    data: (c) {
-                      for (var p in c[indexCmd].products) {
-                        lastPrice += p.price * p.quantity;
-                      }
-                    },
-                    error: (Object error, StackTrace? stackTrace) {},
-                    loading: () {},
-                  );
-                  if (price < b + lastPrice) {
+                } else if (price < b) {
+                  if (indexCmd == -1) {
                     List<Product> prod = [];
                     for (var p in products) {
                       if (p.quantity != 0) {
                         prod.add(p.copyWith());
                       }
                     }
+                    Order newOrder = Order(
+                        user: me.toSimpleUser(),
+                        products: prod,
+                        deliveryDate: delList
+                            .firstWhere((d) => d.id == deliveryId)
+                            .deliveryDate,
+                        id: const Uuid().v4(),
+                        amount: price,
+                        deliveryId: deliveryId,
+                        productsIds: prod.map((e) => e.id).toList(),
+                        collectionSlot: collectionSlotNotifier.getText());
                     tokenExpireWrapper(ref, () async {
-                      final value =
-                          await cmdsNotifier.setProducts(indexCmd, prod);
+                      final value = await cmdsNotifier.addOrder(newOrder);
                       if (value) {
                         pageNotifier.setAmapPage(AmapPage.main);
-                        userAmountNotifier.updateCash(lastPrice - price);
+                        userAmountNotifier.updateCash(-price);
                         displayToastWithContext(
-                            TypeMsg.msg, AMAPTextConstants.updatedOrder);
+                            TypeMsg.msg, AMAPTextConstants.addedOrder);
+                        clearCmd(ref);
                       } else {
                         pageNotifier.setAmapPage(AmapPage.main);
                         displayToastWithContext(
-                            TypeMsg.error, AMAPTextConstants.updatingError);
+                            TypeMsg.error, AMAPTextConstants.addingError);
                       }
                     });
-                    clearCmd(ref);
                   } else {
-                    displayToast(context, TypeMsg.error,
-                        AMAPTextConstants.notEnoughMoney);
+                    var lastPrice = 0.0;
+                    cmds.when(
+                      data: (c) {
+                        for (var p in c[indexCmd].products) {
+                          lastPrice += p.price * p.quantity;
+                        }
+                      },
+                      error: (Object error, StackTrace? stackTrace) {},
+                      loading: () {},
+                    );
+                    if (price < b + lastPrice) {
+                      List<Product> prod = [];
+                      for (var p in products) {
+                        if (p.quantity != 0) {
+                          prod.add(p.copyWith());
+                        }
+                      }
+                      tokenExpireWrapper(ref, () async {
+                        final value =
+                            await cmdsNotifier.setProducts(indexCmd, prod);
+                        if (value) {
+                          pageNotifier.setAmapPage(AmapPage.main);
+                          userAmountNotifier.updateCash(lastPrice - price);
+                          displayToastWithContext(
+                              TypeMsg.msg, AMAPTextConstants.updatedOrder);
+                        } else {
+                          pageNotifier.setAmapPage(AmapPage.main);
+                          displayToastWithContext(
+                              TypeMsg.error, AMAPTextConstants.updatingError);
+                        }
+                      });
+                      clearCmd(ref);
+                    } else {
+                      displayToast(context, TypeMsg.error,
+                          AMAPTextConstants.notEnoughMoney);
+                    }
                   }
+                } else {
+                  displayToast(
+                      context, TypeMsg.error, AMAPTextConstants.notEnoughMoney);
                 }
               }),
           GestureDetector(

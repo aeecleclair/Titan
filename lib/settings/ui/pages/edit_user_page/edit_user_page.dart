@@ -119,7 +119,6 @@ class EditUserPage extends HookConsumerWidget {
                             onTap: () async {
                               final value = await profilePictureNotifier
                                   .setProfilePicture(ImageSource.gallery);
-                              print(value);
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
