@@ -2,11 +2,13 @@
 
 TITAN :
 
-- Calendar
+- Calendar (add "could not validate cred")
+- Vote (pas student)
 
 HYPERION :
 
 - Mettre le numero de promo grâce au mail pas besoin de le rentrer
+- Add user -> student
 
 A VOIR :
 
@@ -41,4 +43,3 @@ API :
 
 - authentifiaction bio pour admin ?
 - Gestions des admins (qui, cmt les delete, cmt les add)
-- Afficher votes pr tlm ?
