@@ -43,7 +43,7 @@ class TopBar extends HookConsumerWidget {
                             pageNotifier.setEventPage(EventPage.main);
                             break;
                           case EventPage.eventDetailfromCalendar:
-                            appPageNotifier.setPage(ModuleType.home);
+                            appPageNotifier.setPage(ModuleType.calendar);
                             pageNotifier.setEventPage(EventPage.main);
                             hasScrolledNotifier.setHasScrolled(true);
                             break;

@@ -50,253 +50,255 @@ class AdminPage extends HookConsumerWidget {
         },
         error: (e, s) {},
         loading: () {});
-    return Refresher(
-      onRefresh: () async {
-        await ref.watch(bookingListProvider.notifier).loadBookings();
-      },
-      child: Column(
-        children: [
-          const SizedBox(height: 30),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(BookingTextConstants.room,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 205, 205, 205))),
-            ),
-          ),
-          const SizedBox(height: 10),
-          roomList.when(
-            data: (List<Room> data) => SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(width: 15),
-                  GestureDetector(
-                    onTap: () {
-                      pageNotifier.setBookingPage(BookingPage.addRoom);
-                    },
-                    child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Chip(
-                          label: const Padding(
-                            padding: EdgeInsets.all(6.0),
-                            child: HeroIcon(
-                              HeroIcons.plus,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                          ),
-                          backgroundColor: Colors.grey.shade200,
-                        )),
-                  ),
-                  ...data.map(
-                    (e) => RoomChip(
-                      label: capitalize(e.name),
-                      selected: room.id == e.id,
-                      onTap: () {
-                        roomNotifier.setRoom(e);
-                        pageNotifier.setBookingPage(BookingPage.editRoom);
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 15),
-                ],
+    return Expanded(
+      child: Refresher(
+        onRefresh: () async {
+          await ref.watch(bookingListProvider.notifier).loadBookings();
+        },
+        child: Column(
+          children: [
+            const SizedBox(height: 30),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(BookingTextConstants.room,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 205, 205, 205))),
               ),
             ),
-            error: (Object error, StackTrace? stackTrace) {
-              return Center(child: Text('Error $error'));
-            },
-            loading: () {
-              return const Center(child: CircularProgressIndicator());
-            },
-          ),
-          const SizedBox(height: 30),
-          if (pendingBookings.isEmpty &&
-              confirmedBookings.isEmpty &&
-              canceledBookings.isEmpty)
-            const Center(
-              child: Text(BookingTextConstants.noCurrentBooking,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)),
-            ),
-          if (pendingBookings.isNotEmpty)
-            Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(BookingTextConstants.pending,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 205, 205, 205))),
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 10),
-                      ...pendingBookings.map((e) => BookingCard(
-                            booking: e,
-                            isAdmin: true,
-                            isDetail: false,
-                            onEdit: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return CustomDialogBox(
-                                        title: BookingTextConstants.confirm,
-                                        descriptions:
-                                            BookingTextConstants.confirmBooking,
-                                        onYes: () async {
-                                          bookingListNotifier.toggleConfirmed(
-                                              e, Decision.approved);
-                                        });
-                                  });
-                            },
-                            onReturn: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return CustomDialogBox(
-                                        title: BookingTextConstants.decline,
-                                        descriptions:
-                                            BookingTextConstants.declineBooking,
-                                        onYes: () async {
-                                          bookingListNotifier.toggleConfirmed(
-                                              e, Decision.declined);
-                                        });
-                                  });
-                            },
-                            onInfo: () {
-                              bookingNotifier.setBooking(e);
-                              pageNotifier.setBookingPage(
-                                  BookingPage.detailBookingFromAdmin);
-                            },
+            const SizedBox(height: 10),
+            roomList.when(
+              data: (List<Room> data) => SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(width: 15),
+                    GestureDetector(
+                      onTap: () {
+                        pageNotifier.setBookingPage(BookingPage.addRoom);
+                      },
+                      child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Chip(
+                            label: const Padding(
+                              padding: EdgeInsets.all(6.0),
+                              child: HeroIcon(
+                                HeroIcons.plus,
+                                color: Colors.black,
+                                size: 20,
+                              ),
+                            ),
+                            backgroundColor: Colors.grey.shade200,
                           )),
-                      const SizedBox(width: 10),
-                    ],
-                  ),
+                    ),
+                    ...data.map(
+                      (e) => RoomChip(
+                        label: capitalize(e.name),
+                        selected: room.id == e.id,
+                        onTap: () {
+                          roomNotifier.setRoom(e);
+                          pageNotifier.setBookingPage(BookingPage.editRoom);
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 15),
+                  ],
                 ),
-                const SizedBox(height: 30),
-              ],
+              ),
+              error: (Object error, StackTrace? stackTrace) {
+                return Center(child: Text('Error $error'));
+              },
+              loading: () {
+                return const Center(child: CircularProgressIndicator());
+              },
             ),
-          if (confirmedBookings.isNotEmpty)
-            Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(BookingTextConstants.confirmed,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 205, 205, 205))),
+            const SizedBox(height: 30),
+            if (pendingBookings.isEmpty &&
+                confirmedBookings.isEmpty &&
+                canceledBookings.isEmpty)
+              const Center(
+                child: Text(BookingTextConstants.noCurrentBooking,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+              ),
+            if (pendingBookings.isNotEmpty)
+              Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(BookingTextConstants.pending,
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 205, 205, 205))),
+                    ),
                   ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 10),
-                      ...confirmedBookings.map((e) => BookingCard(
-                            booking: e,
-                            isAdmin: true,
-                            isDetail: false,
-                            onEdit: () {},
-                            onReturn: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return CustomDialogBox(
-                                        title: BookingTextConstants.decline,
-                                        descriptions:
-                                            BookingTextConstants.declineBooking,
-                                        onYes: () async {
-                                          bookingListNotifier.toggleConfirmed(
-                                              e, Decision.declined);
-                                        });
-                                  });
-                            },
-                            onInfo: () {
-                              bookingNotifier.setBooking(e);
-                              pageNotifier.setBookingPage(
-                                  BookingPage.detailBookingFromAdmin);
-                            },
-                          )),
-                      const SizedBox(width: 10),
-                    ],
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 10),
+                        ...pendingBookings.map((e) => BookingCard(
+                              booking: e,
+                              isAdmin: true,
+                              isDetail: false,
+                              onEdit: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return CustomDialogBox(
+                                          title: BookingTextConstants.confirm,
+                                          descriptions:
+                                              BookingTextConstants.confirmBooking,
+                                          onYes: () async {
+                                            bookingListNotifier.toggleConfirmed(
+                                                e, Decision.approved);
+                                          });
+                                    });
+                              },
+                              onReturn: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return CustomDialogBox(
+                                          title: BookingTextConstants.decline,
+                                          descriptions:
+                                              BookingTextConstants.declineBooking,
+                                          onYes: () async {
+                                            bookingListNotifier.toggleConfirmed(
+                                                e, Decision.declined);
+                                          });
+                                    });
+                              },
+                              onInfo: () {
+                                bookingNotifier.setBooking(e);
+                                pageNotifier.setBookingPage(
+                                    BookingPage.detailBookingFromAdmin);
+                              },
+                            )),
+                        const SizedBox(width: 10),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 30),
-              ],
-            ),
-          if (canceledBookings.isNotEmpty)
-            Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(BookingTextConstants.declined,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 205, 205, 205))),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            if (confirmedBookings.isNotEmpty)
+              Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(BookingTextConstants.confirmed,
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 205, 205, 205))),
+                    ),
                   ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 10),
-                      ...canceledBookings.map((e) => BookingCard(
-                            booking: e,
-                            isAdmin: true,
-                            isDetail: false,
-                            onEdit: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return CustomDialogBox(
-                                        title: BookingTextConstants.confirm,
-                                        descriptions:
-                                            BookingTextConstants.confirmBooking,
-                                        onYes: () async {
-                                          bookingListNotifier.toggleConfirmed(
-                                              e, Decision.approved);
-                                        });
-                                  });
-                            },
-                            onReturn: () {},
-                            onInfo: () {
-                              bookingNotifier.setBooking(e);
-                              pageNotifier.setBookingPage(
-                                  BookingPage.detailBookingFromAdmin);
-                            },
-                          )),
-                      const SizedBox(width: 10),
-                    ],
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 10),
+                        ...confirmedBookings.map((e) => BookingCard(
+                              booking: e,
+                              isAdmin: true,
+                              isDetail: false,
+                              onEdit: () {},
+                              onReturn: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return CustomDialogBox(
+                                          title: BookingTextConstants.decline,
+                                          descriptions:
+                                              BookingTextConstants.declineBooking,
+                                          onYes: () async {
+                                            bookingListNotifier.toggleConfirmed(
+                                                e, Decision.declined);
+                                          });
+                                    });
+                              },
+                              onInfo: () {
+                                bookingNotifier.setBooking(e);
+                                pageNotifier.setBookingPage(
+                                    BookingPage.detailBookingFromAdmin);
+                              },
+                            )),
+                        const SizedBox(width: 10),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 30),
-              ],
-            )
-        ],
+                  const SizedBox(height: 30),
+                ],
+              ),
+            if (canceledBookings.isNotEmpty)
+              Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(BookingTextConstants.declined,
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 205, 205, 205))),
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 10),
+                        ...canceledBookings.map((e) => BookingCard(
+                              booking: e,
+                              isAdmin: true,
+                              isDetail: false,
+                              onEdit: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return CustomDialogBox(
+                                          title: BookingTextConstants.confirm,
+                                          descriptions:
+                                              BookingTextConstants.confirmBooking,
+                                          onYes: () async {
+                                            bookingListNotifier.toggleConfirmed(
+                                                e, Decision.approved);
+                                          });
+                                    });
+                              },
+                              onReturn: () {},
+                              onInfo: () {
+                                bookingNotifier.setBooking(e);
+                                pageNotifier.setBookingPage(
+                                    BookingPage.detailBookingFromAdmin);
+                              },
+                            )),
+                        const SizedBox(width: 10),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              )
+          ],
+        ),
       ),
     );
   }

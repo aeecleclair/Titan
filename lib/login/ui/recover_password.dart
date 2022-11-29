@@ -62,7 +62,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
             if (value) {
               displayToastWithContext(
                   TypeMsg.msg, LoginTextConstants.resetedPassword);
-              pageNotifier.setPage(ModuleType.home);
+              pageNotifier.setPage(ModuleType.calendar);
               authTokenNotifier.deleteToken();
               onActivationPressed();
             } else {

@@ -21,7 +21,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     Module(
         name: "Calendrier",
         icon: HeroIcons.calendarDays,
-        page: ModuleType.home,
+        page: ModuleType.calendar,
         selected: false),
     Module(
         name: "Réservation",
@@ -123,7 +123,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     if (state.isNotEmpty) {
       return state[0].page;
     } else {
-      return ModuleType.home;
+      return ModuleType.calendar;
     }
   }
 

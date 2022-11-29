@@ -30,7 +30,7 @@ class AppDrawer extends HookConsumerWidget {
       case ModuleType.settings:
         return SettingsHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
-      case ModuleType.home:
+      case ModuleType.calendar:
         return HomePage(
             controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.booking:
