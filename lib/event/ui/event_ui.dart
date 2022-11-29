@@ -34,8 +34,8 @@ class EventUi extends ConsumerWidget {
         behavior: HitTestBehavior.opaque,
         onTap: () {
           if (!isDetailPage) {
-          eventNotifier.setEvent(event);
-          pageNotifier.setEventPage(EventPage.eventDetailfromModule);
+            eventNotifier.setEvent(event);
+            pageNotifier.setEventPage(EventPage.eventDetailfromModule);
           }
         },
         child: Container(
