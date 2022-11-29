@@ -21,13 +21,16 @@ class ProfilePictureNotifier extends SingleNotifier<Image> {
   }
 
   Future<bool?> setProfilePicture(ImageSource source) async {
+    final previousState = state;
+    state = const AsyncLoading();
     final XFile? image = await _picker.pickImage(source: source);
     if (image != null) {
       try {
-      state =
-          AsyncValue.data(await _userRepository.addProfilePicture(image.path));
-      return true;
+        final i = await _userRepository.addProfilePicture(image.path);
+        state = AsyncValue.data(i);
+        return true;
       } catch (e) {
+        state = previousState;
         return false;
       }
     }

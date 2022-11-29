@@ -119,14 +119,18 @@ class EditUserPage extends HookConsumerWidget {
                             onTap: () async {
                               final value = await profilePictureNotifier
                                   .setProfilePicture(ImageSource.gallery);
+                              print(value);
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
                                       TypeMsg.msg, "Photo de profil changée");
                                 } else {
                                   displayToastWithContext(TypeMsg.error,
-                                      "Erreur lors du changement de photo de profil");
+                                      "L'image est trop lourde (max 4Mo)");
                                 }
+                              } else {
+                                displayToastWithContext(TypeMsg.error,
+                                    "Erreur lors du changement de photo de profil");
                               }
                             },
                             child: Container(
@@ -208,55 +212,55 @@ class EditUserPage extends HookConsumerWidget {
                         //     ),
                         //   ),
                         // ),
-                        Positioned(
-                          bottom: -20,
-                          right: 60,
-                          child: GestureDetector(
-                            onTap: () async {
-                              // final value = await profilePictureNotifier
-                              //     .setProfilePicture(ImageSource.camera);
-                              // if (value != null) {
-                              //   if (value) {
-                              //     displayToastWithContext(
-                              //         TypeMsg.msg, "Photo de profil changée");
-                              //   } else {
-                              //     displayToastWithContext(TypeMsg.error,
-                              //         "Erreur lors du changement de photo de profil");
-                              //   }
-                              // }
-                            },
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              padding: const EdgeInsets.all(7),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    ColorConstants.gradient1,
-                                    ColorConstants.gradient2,
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: ColorConstants.gradient2
-                                        .withOpacity(0.3),
-                                    spreadRadius: 2,
-                                    blurRadius: 4,
-                                    offset: const Offset(2, 3),
-                                  ),
-                                ],
-                              ),
-                              child: const HeroIcon(
-                                HeroIcons.sparkles,
-                                color: Colors.white,
-                                size: 10,
-                              ),
-                            ),
-                          ),
-                        )
+                        // Positioned(
+                        //   bottom: -20,
+                        //   right: 60,
+                        //   child: GestureDetector(
+                        //     onTap: () async {
+                        //       // final value = await profilePictureNotifier
+                        //       //     .setProfilePicture(ImageSource.camera);
+                        //       // if (value != null) {
+                        //       //   if (value) {
+                        //       //     displayToastWithContext(
+                        //       //         TypeMsg.msg, "Photo de profil changée");
+                        //       //   } else {
+                        //       //     displayToastWithContext(TypeMsg.error,
+                        //       //         "Erreur lors du changement de photo de profil");
+                        //       //   }
+                        //       // }
+                        //     },
+                        //     child: Container(
+                        //       height: 40,
+                        //       width: 40,
+                        //       padding: const EdgeInsets.all(7),
+                        //       decoration: BoxDecoration(
+                        //         shape: BoxShape.circle,
+                        //         gradient: const LinearGradient(
+                        //           colors: [
+                        //             ColorConstants.gradient1,
+                        //             ColorConstants.gradient2,
+                        //           ],
+                        //           begin: Alignment.topLeft,
+                        //           end: Alignment.bottomRight,
+                        //         ),
+                        //         boxShadow: [
+                        //           BoxShadow(
+                        //             color: ColorConstants.gradient2
+                        //                 .withOpacity(0.3),
+                        //             spreadRadius: 2,
+                        //             blurRadius: 4,
+                        //             offset: const Offset(2, 3),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       child: const HeroIcon(
+                        //         HeroIcons.sparkles,
+                        //         color: Colors.white,
+                        //         size: 10,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // )
                       ],
                     ),
                   );
