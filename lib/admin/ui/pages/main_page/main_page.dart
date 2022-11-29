@@ -222,13 +222,13 @@ class MainPage extends HookConsumerWidget {
                         ]),
                     child: Row(
                       children: [
-                        Spacer(),
+                        const Spacer(),
                         HeroIcon(
                           HeroIcons.plus,
                           color: Colors.grey.shade700,
                           size: 40,
                         ),
-                        Spacer(),
+                        const Spacer(),
                       ],
                     ),
                   ),
@@ -252,7 +252,7 @@ class MainPage extends HookConsumerWidget {
                         ]),
                     child: Row(
                       children: [
-                        Spacer(),
+                        const Spacer(),
                         Stack(
                           clipBehavior: Clip.none,
                           children: [
@@ -272,7 +272,7 @@ class MainPage extends HookConsumerWidget {
                             )
                           ],
                         ),
-                        Spacer()
+                        const Spacer()
                       ],
                     ),
                     // const SizedBox(
@@ -370,7 +370,7 @@ class MainPage extends HookConsumerWidget {
                           },
                         ))
                     .toList(),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 )
               ],

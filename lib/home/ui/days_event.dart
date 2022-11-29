@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -92,12 +93,18 @@ class DaysEvent extends HookConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            event.name,
-                            style: TextStyle(
-                                color: textColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
+                          Expanded(
+                            child: AutoSizeText(
+                              event.name,
+                              maxLines: 1,
+                              style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
                           ),
                           GestureDetector(
                             onTap: () {
