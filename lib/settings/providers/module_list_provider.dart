@@ -74,6 +74,8 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
 
   Future loadModules(List<ModuleType> types, List<bool> canSee) async {
     final prefs = await SharedPreferences.getInstance();
+    prefs.setStringList(dbModule, []);
+    prefs.setStringList(dbAllModules, []);
     List<String> modulesName = prefs.getStringList(dbModule) ?? [];
     List<String> allModulesName = prefs.getStringList(dbAllModules) ?? [];
     final allmodulesName = allModules.map((e) => e.page.toString()).toList();
@@ -82,6 +84,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
       prefs.setStringList(dbModule, modulesName);
     }
     if (allModulesName.isEmpty || !eq.equals(allModulesName, allmodulesName)) {
+      allModulesName = allmodulesName;
       prefs.setStringList(dbAllModules, allmodulesName);
     } else {
       allModules.sort((a, b) => allModulesName
