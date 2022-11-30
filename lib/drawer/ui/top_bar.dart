@@ -166,13 +166,13 @@ class TopBar extends HookConsumerWidget {
         builder: (context, child) {
           return Opacity(
             opacity: animation.value,
-            child: Transform.translate(
-              offset: Offset(0, -10 * (1 - animation.value)),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 25, top: 15),
-                child: Column(
-                  children: [
-                    GestureDetector(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 25, top: 15),
+              child: Column(
+                children: [
+                  Transform.translate(
+                    offset: Offset(0, -10 * (1 - animation.value)),
+                    child: GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
                         pageNotifier.setPage(ModuleType.settings);
@@ -201,11 +201,14 @@ class TopBar extends HookConsumerWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    if (isAdmin)
-                      GestureDetector(
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  if (isAdmin)
+                    Transform.translate(
+                      offset: Offset(0, -15 * (1 - animation.value)),
+                      child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: () {
                           pageNotifier.setPage(ModuleType.admin);
@@ -237,8 +240,8 @@ class TopBar extends HookConsumerWidget {
                           ],
                         ),
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
             ),
           );
