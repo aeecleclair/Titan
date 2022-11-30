@@ -25,7 +25,7 @@ class MonthBar extends HookConsumerWidget {
       }
       if (scrollController.position.pixels >
           scrollController.position.maxScrollExtent - 50) {
-        numberDayNotifier.add(7);
+        numberDayNotifier.add(1);
       }
     });
 
