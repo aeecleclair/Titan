@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 
 class SignIn extends HookConsumerWidget {
@@ -46,17 +44,11 @@ class SignIn extends HookConsumerWidget {
                     Expanded(
                       flex: 2,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // const HeroIcon(
-                          //   HeroIcons.bolt,
-                          //   color: ColorConstants.background2,
-                          //   size: 150,
-                          // ),
-                          Image(
-                            image: AssetImage('assets/images/logo.png'),
-                            height: 150,
-                            width: 150,
+                          const Image(
+                            image: AssetImage('assets/images/logo2.png'),
+                            height: 200,
+                            width: 200,
                           ),
                           SignInBar(
                             isLoading: ref.watch(loadingrovider),

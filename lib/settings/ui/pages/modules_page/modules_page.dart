@@ -58,7 +58,6 @@ class ModulesPage extends HookConsumerWidget {
                     style: const TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),
                       fontSize: 20,
-                      fontFamily: 'Roboto',
                       fontWeight: FontWeight.w500,
                     ),
                     textAlign: TextAlign.left,

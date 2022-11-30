@@ -64,9 +64,7 @@ class SignInBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: SizedBox(
+    return SizedBox(
           height: 50,
           child: GestureDetector(
             onTap: onPressed,
@@ -95,6 +93,6 @@ class SignInBar extends StatelessWidget {
               ],
             ),
           ),
-        ));
+        );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/loan/class/loaner.dart';
+import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
 import 'package:myecl/loan/repositories/loaner_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 
@@ -47,7 +48,7 @@ final loanerListProvider =
 );
 
 final loanerList = Provider<List<Loaner>>((ref) {
-  final deliveryProvider = ref.watch(loanerListProvider);
+  final deliveryProvider = ref.watch(userLoanerListProvider);
   return deliveryProvider.when(data: (loans) {
     return loans;
   }, error: (error, stackTrace) {
