@@ -14,19 +14,27 @@ class MonthBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final numberDayNotifier = ref.watch(numberDayProvider.notifier);
-    final currentDay = useState(DateTime.now().add(const Duration(days: 1)));
+    final numberDay = ref.watch(numberDayProvider);
+    final currentDay = useState(DateTime.now());
     final currentMonth = useState(currentDay.value.month);
     final days = ref.watch(daysProvider);
+    final addedDays = useState(false);
+    final lastNumberDay = useState(numberDay);
 
     scrollController.addListener(() {
-      currentDay.value =
-          days[(scrollController.position.pixels - 15 + width / 2) ~/ 86];
+      int currentDayIndex = (scrollController.position.pixels - 15) ~/ 86;
+      currentDay.value = days[currentDayIndex];
       if (currentDay.value.month != currentMonth.value) {
         currentMonth.value = currentDay.value.month;
       }
-      if (scrollController.position.pixels >
-          scrollController.position.maxScrollExtent - 50) {
-        numberDayNotifier.add(7);
+      if (currentDayIndex > numberDay - 20 && !addedDays.value) {
+        numberDayNotifier.add(1);
+        addedDays.value = true;
+        lastNumberDay.value = numberDay;
+      }
+      if (lastNumberDay.value < numberDay && addedDays.value) {
+        addedDays.value = false;
+        lastNumberDay.value = numberDay;
       }
     });
 
@@ -45,10 +53,7 @@ class MonthBar extends HookConsumerWidget {
                         .day -
                     currentDay.value.day;
                 scrollController.animateTo(
-                    scrollController.position.pixels -
-                        deltaDay * 86 -
-                        15 -
-                        width / 2,
+                    scrollController.position.pixels - deltaDay * 86 - 15,
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOut);
               },
@@ -74,10 +79,7 @@ class MonthBar extends HookConsumerWidget {
                         .day -
                     currentDay.value.day;
                 scrollController.animateTo(
-                    scrollController.position.pixels +
-                        deltaDay * 86 -
-                        15 +
-                        width / 2,
+                    scrollController.position.pixels + deltaDay * 86 - 15,
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOut);
               },
