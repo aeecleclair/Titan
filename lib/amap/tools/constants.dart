@@ -56,9 +56,9 @@ class AMAPTextConstants {
   static const String fillField = "Veuillez remplir ce champ";
   static const String handlingAccount = "Gérer les comptes";
   static const String loading = "Chargement...";
-  static const String lock = "Vérouiller";
-  static const String lockedDelivery = "Livraison vérrouillée";
-  static const String lockedOrder = "Commande vérouillée";
+  static const String lock = "Verouiller";
+  static const String lockedDelivery = "Livraison verrouillée";
+  static const String lockedOrder = "Commande verouillée";
   static const String looking = "Rechercher";
   static const String myOrders = "Mes commandes";
   static const String name = "Nom";
