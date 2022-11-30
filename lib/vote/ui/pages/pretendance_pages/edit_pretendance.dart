@@ -470,6 +470,9 @@ class EditPretendancePage extends HookConsumerWidget {
                                 if (addMemberKey.currentState == null) {
                                   return;
                                 }
+                                if (member.value.id == '' || role.text == '') {
+                                  return;
+                                }
                                 if (addMemberKey.currentState!.validate()) {
                                   membersNotifier.addMember(
                                       Member.fromSimpleUser(

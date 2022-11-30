@@ -48,10 +48,15 @@ class SignIn extends HookConsumerWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const HeroIcon(
-                            HeroIcons.bolt,
-                            color: ColorConstants.background2,
-                            size: 150,
+                          // const HeroIcon(
+                          //   HeroIcons.bolt,
+                          //   color: ColorConstants.background2,
+                          //   size: 150,
+                          // ),
+                          Image(
+                            image: AssetImage('assets/images/logo.png'),
+                            height: 150,
+                            width: 150,
                           ),
                           SignInBar(
                             isLoading: ref.watch(loadingrovider),

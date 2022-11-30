@@ -50,6 +50,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/test3.jpg
+    - assets/images/logo.png
 
   uses-material-design: true
 
