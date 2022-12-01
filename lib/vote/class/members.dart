@@ -32,7 +32,7 @@ class Member extends SimpleUser {
     return Member(
       name: user['name'],
       firstname: user['firstname'],
-      nickname: user['nickname'],
+      nickname: user['nickname'] ?? "",
       id: user['id'],
       role: map['role'],
     );

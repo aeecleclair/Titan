@@ -90,13 +90,13 @@ class MainPage extends HookConsumerWidget {
           height: (isAdmin) ? 0 : 10,
         ),
         bookings.when(
-            data: (List<Booking> data) => SingleChildScrollView(
+            data: (List<Booking> data) => ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 10),
-                      GestureDetector(
+                  itemCount: data.length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == 1) {
+                      return GestureDetector(
                         onTap: () {
                           pageNotifier.setBookingPage(BookingPage.addBooking);
                         },
@@ -125,37 +125,37 @@ class MainPage extends HookConsumerWidget {
                             )),
                           ),
                         ),
-                      ),
-                      ...data.map((e) => BookingCard(
-                            booking: e,
-                            isAdmin: false,
-                            isDetail: false,
-                            onEdit: () {
-                              bookingNotifier.setBooking(e);
-                              pageNotifier
-                                  .setBookingPage(BookingPage.editBooking);
-                            },
-                            onReturn: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return CustomDialogBox(
-                                      title: BookingTextConstants.deleting,
-                                      descriptions:
-                                          BookingTextConstants.deletingBooking,
-                                      onYes: () {},
-                                    );
-                                  });
-                            },
-                            onInfo: () {
-                              bookingNotifier.setBooking(e);
-                              pageNotifier.setBookingPage(
-                                  BookingPage.detailBookingFromMain);
-                            },
-                          )),
-                      const SizedBox(width: 10),
-                    ],
-                  ),
+                      );
+                    } else {
+                      final e = data[index - 1];
+                      return BookingCard(
+                        booking: e,
+                        isAdmin: false,
+                        isDetail: false,
+                        onEdit: () {
+                          bookingNotifier.setBooking(e);
+                          pageNotifier.setBookingPage(BookingPage.editBooking);
+                        },
+                        onReturn: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return CustomDialogBox(
+                                  title: BookingTextConstants.deleting,
+                                  descriptions:
+                                      BookingTextConstants.deletingBooking,
+                                  onYes: () {},
+                                );
+                              });
+                        },
+                        onInfo: () {
+                          bookingNotifier.setBooking(e);
+                          pageNotifier.setBookingPage(
+                              BookingPage.detailBookingFromMain);
+                        },
+                      );
+                    }
+                  },
                 ),
             error: (Object error, StackTrace? stackTrace) {
               return Center(child: Text("Error $error"));
