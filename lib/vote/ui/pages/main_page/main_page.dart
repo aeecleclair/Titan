@@ -38,7 +38,6 @@ class MainPage extends HookConsumerWidget {
     final section = ref.watch(sectionProvider);
     final sectionsPretendances = ref.watch(sectionPretendanceProvider);
     final pretendances = ref.watch(pretendanceListProvider);
-    print(pretendances);
     final sectionPretendanceNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
     final selectedPretendance = ref.watch(selectedPretendanceProvider);

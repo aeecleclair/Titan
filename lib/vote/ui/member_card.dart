@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/vote/class/members.dart';
 
@@ -39,20 +40,23 @@ class MemberCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
-              Text(member.nickname.isEmpty ? member.firstname : member.nickname,
+              AutoSizeText(
+                  member.nickname.isEmpty
+                      ? '${member.firstname} ${member.name}'
+                      : member.nickname,
+                  maxLines: 1,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
               const SizedBox(height: 3),
-              Text(
-                  member.nickname.isEmpty
-                      ? member.name
-                      : '${member.firstname} ${member.name}',
-                  style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade400)),
+              if (member.nickname.isNotEmpty)
+                AutoSizeText('${member.firstname} ${member.name}',
+                    maxLines: 2,
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey.shade400)),
               const SizedBox(height: 3),
               if (!isAdmin) const Spacer(),
               Text(member.role,
