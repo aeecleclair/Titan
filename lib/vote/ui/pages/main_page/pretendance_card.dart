@@ -25,10 +25,9 @@ class PretendanceCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(votePageProvider.notifier);
     final pretendanceNotifier = ref.watch(pretendanceProvider.notifier);
-    final section = ref.watch(sectionProvider);
     final sections = ref.watch(sectionsProvider);
-    final selectedPretendanceList = ref.watch(selectedPretendanceProvider);
-    final selectedPretendanceListNotifier =
+    final selectedPretendance = ref.watch(selectedPretendanceProvider);
+    final selectedPretendanceNotifier =
         ref.watch(selectedPretendanceProvider.notifier);
     final pretendanceLogos = ref.watch(pretendanceLogosProvider);
     final pretendanceLogosNotifier =
@@ -166,14 +165,14 @@ class PretendanceCard extends HookConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    !selectedPretendanceList.contains(pretendance.id)
+                    selectedPretendance.id != pretendance.id
                         ? GestureDetector(
                             onTap: () {
                               sections.when(
                                   data: (data) {
-                                    selectedPretendanceListNotifier
-                                        .changeSelection(data.indexOf(section),
-                                            pretendance.id);
+                                    selectedPretendanceNotifier
+                                        .changeSelection(
+                                            pretendance);
                                   },
                                   error: (e, s) {},
                                   loading: () {});

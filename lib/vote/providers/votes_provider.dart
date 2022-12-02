@@ -10,16 +10,13 @@ class VotesProvider extends ListNotifier<Votes> {
     votesRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Votes>>> getVotes() async {
-    return await loadList(votesRepository.getVotes);
-  }
-
-  Future<AsyncValue<List<Votes>>> getVoteById(String id) async {
-    return await loadList(() async => votesRepository.getVote(id));
-  }
-
   Future<bool> addVote(Votes votes) async {
-    return await add(votesRepository.addVote, votes);
+    try {
+      await votesRepository.addVote(votes);
+      return true;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<bool> removeVote() async {
@@ -40,6 +37,5 @@ final votesProvider =
     StateNotifierProvider<VotesProvider, AsyncValue<List<Votes>>>((ref) {
   final token = ref.watch(tokenProvider);
   VotesProvider votesProvider = VotesProvider(token: token);
-  // votesProvider.getVotes();
   return votesProvider;
 });

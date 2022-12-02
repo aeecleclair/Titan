@@ -17,6 +17,7 @@ import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
+import 'package:myecl/vote/providers/voted_section_provider.dart';
 import 'package:myecl/vote/providers/votes_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/tools/constants.dart';
@@ -40,17 +41,29 @@ class MainPage extends HookConsumerWidget {
     final pretendances = ref.watch(pretendanceListProvider);
     final sectionPretendanceNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
-    final selectedPretendance = ref.watch(selectedPretendanceProvider);
-    final votesNotifier = ref.watch(votesProvider.notifier)..getVotes();
-    final pretendanceLogosNotifier =
-        ref.watch(pretendanceLogosProvider.notifier);
-    final logosNotifier = ref.watch(logoProvider.notifier);
+    final votesNotifier = ref.watch(votesProvider.notifier);
     return status.when(data: (s) {
       if (s == Status.open) {
+        final selectedPretendance = ref.watch(selectedPretendanceProvider);
+        final selectedPretendanceNotifier =
+            ref.watch(selectedPretendanceProvider.notifier);
+        final logosNotifier = ref.watch(logoProvider.notifier);
+        final votedSection = ref.watch(votedSectionProvider);
+        final votedSectionNotifier = ref.watch(votedSectionProvider.notifier);
+        final pretendanceLogosNotifier =
+            ref.watch(pretendanceLogosProvider.notifier);
         final animation = useAnimationController(
           duration: const Duration(milliseconds: 2400),
         );
         final pageOpened = useState(false);
+
+        List<String> alreadyVotedSection = [];
+        votedSection.when(
+            data: (voted) {
+              alreadyVotedSection = voted;
+            },
+            error: (error, stackTrace) {},
+            loading: () {});
 
         void displayVoteToastWithContext(TypeMsg type, String msg) {
           displayToast(context, type, msg);
@@ -63,7 +76,7 @@ class MainPage extends HookConsumerWidget {
         return Refresher(
           onRefresh: () async {
             await statusNotifier.loadStatus();
-            await votesNotifier.getVotes();
+            await votedSectionNotifier.getVotedSections();
             final sections = await sectionsNotifier.loadSectionList();
             sections.whenData((value) {
               List<Pretendance> list = [];
@@ -77,11 +90,13 @@ class MainPage extends HookConsumerWidget {
               sectionPretendanceNotifier.loadTList(value);
               pretendanceLogosNotifier.loadTList(list);
               for (final l in value) {
-                sectionPretendanceNotifier.setTData(
-                    l,
-                    AsyncValue.data(list
-                        .where((element) => element.section.id == l.id)
-                        .toList()));
+                if (!alreadyVotedSection.contains(l.id)) {
+                  sectionPretendanceNotifier.setTData(
+                      l,
+                      AsyncValue.data(list
+                          .where((element) => element.section.id == l.id)
+                          .toList()));
+                }
               }
               for (final l in list) {
                 logosNotifier.getLogo(l.id).then((value) =>
@@ -180,33 +195,38 @@ class MainPage extends HookConsumerWidget {
                                           physics:
                                               const BouncingScrollPhysics(),
                                           child: pretendanceList.isNotEmpty
-                                              ? Column(
-                                                  children:
-                                                      pretendanceList[section]!
+                                              ? alreadyVotedSection
+                                                      .contains(section.id)
+                                                  ? const Text(VoteTextConstants.alreadyVoted)
+                                                  : Column(
+                                                      children: pretendanceList[
+                                                              section]!
                                                           .when(
-                                                  data: (pretendance) =>
-                                                      pretendance.map((e) {
-                                                    final index =
-                                                        pretendance.indexOf(e);
-                                                    return PretendanceCard(
-                                                        index: index,
-                                                        pretendance: e,
-                                                        animation: animation);
-                                                  }).toList(),
-                                                  loading: () => const [
-                                                    Center(
-                                                      child:
-                                                          CircularProgressIndicator(),
-                                                    )
-                                                  ],
-                                                  error: (error, stack) =>
-                                                      const [
-                                                    Center(
-                                                      child:
-                                                          Text("Error occured"),
-                                                    )
-                                                  ],
-                                                ))
+                                                      data: (pretendance) =>
+                                                          pretendance.map((e) {
+                                                        final index =
+                                                            pretendance
+                                                                .indexOf(e);
+                                                        return PretendanceCard(
+                                                            index: index,
+                                                            pretendance: e,
+                                                            animation:
+                                                                animation);
+                                                      }).toList(),
+                                                      loading: () => const [
+                                                        Center(
+                                                          child:
+                                                              CircularProgressIndicator(),
+                                                        )
+                                                      ],
+                                                      error: (error, stack) =>
+                                                          const [
+                                                        Center(
+                                                          child: Text(
+                                                              "Error occured"),
+                                                        )
+                                                      ],
+                                                    ))
                                               : const SizedBox(
                                                   height: 150,
                                                   child: Center(
@@ -238,32 +258,40 @@ class MainPage extends HookConsumerWidget {
                             padding: const EdgeInsets.only(right: 30.0),
                             child: GestureDetector(
                               onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return CustomDialogBox(
-                                        title: VoteTextConstants.vote,
-                                        descriptions:
-                                            VoteTextConstants.confirmVote,
-                                        onYes: () {
-                                          tokenExpireWrapper(ref, () async {
-                                            final result = await votesNotifier
-                                                .addVote(Votes(
-                                                    ids: selectedPretendance));
-                                            if (result) {
-                                              displayVoteToastWithContext(
-                                                  TypeMsg.msg,
-                                                  VoteTextConstants
-                                                      .voteSuccess);
-                                            } else {
-                                              displayVoteToastWithContext(
-                                                  TypeMsg.error,
-                                                  VoteTextConstants.voteError);
-                                            }
-                                          });
-                                        },
-                                      );
-                                    });
+                                if (selectedPretendance.id != "") {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return CustomDialogBox(
+                                          title: VoteTextConstants.vote,
+                                          descriptions:
+                                              VoteTextConstants.confirmVote,
+                                          onYes: () {
+                                            tokenExpireWrapper(ref, () async {
+                                              final result = await votesNotifier
+                                                  .addVote(Votes(
+                                                      id: selectedPretendance
+                                                          .id));
+                                              if (result) {
+                                                votedSectionNotifier
+                                                    .addVote(section.id);
+                                                selectedPretendanceNotifier
+                                                    .clear();
+                                                displayVoteToastWithContext(
+                                                    TypeMsg.msg,
+                                                    VoteTextConstants
+                                                        .voteSuccess);
+                                              } else {
+                                                displayVoteToastWithContext(
+                                                    TypeMsg.error,
+                                                    VoteTextConstants
+                                                        .voteError);
+                                              }
+                                            });
+                                          },
+                                        );
+                                      });
+                                }
                               },
                               child: Container(
                                 padding:
@@ -272,10 +300,13 @@ class MainPage extends HookConsumerWidget {
                                 decoration: BoxDecoration(
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(15)),
-                                child: const Center(
+                                child: Center(
                                   child: Text(
-                                    VoteTextConstants.vote,
-                                    style: TextStyle(
+                                    selectedPretendance.id != ""
+                                        ? VoteTextConstants.voteFor +
+                                            selectedPretendance.name
+                                        : VoteTextConstants.chooseList,
+                                    style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.w700),
@@ -300,7 +331,6 @@ class MainPage extends HookConsumerWidget {
         return Refresher(
           onRefresh: () async {
             await statusNotifier.loadStatus();
-            await votesNotifier.getVotes();
             final sections = await sectionsNotifier.loadSectionList();
             sections.whenData((value) {
               List<Pretendance> list = [];

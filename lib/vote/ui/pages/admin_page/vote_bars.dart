@@ -93,7 +93,7 @@ class VoteBars extends HookConsumerWidget {
                 tooltipBgColor: Colors.grey.shade200,
                 getTooltipItem: (group, groupIndex, rod, rodIndex) {
                   return BarTooltipItem(
-                    (rod.toY.toInt() - 1).toString(),
+                    rod.toY.toInt().toString(),
                     const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -147,7 +147,8 @@ class VoteBars extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '${(voteValue[value.toInt()] ?? 0 / total * 100).toStringAsFixed(2)}%',
+                            '${((voteValue[sectionIds[value.toInt()]] ??
+                                         0) / total * 100).toStringAsFixed(2)}%',
                             style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,

@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 
 final selectedPretendanceProvider =
-    StateNotifierProvider<SelectedPretendanceProvider, List<String>>((ref) {
+    StateNotifierProvider<SelectedPretendanceProvider, Pretendance>((ref) {
   final pretendanceList = ref.watch(sectionsProvider);
   final prentedances = [];
   pretendanceList.when(
@@ -13,17 +14,14 @@ final selectedPretendanceProvider =
   return SelectedPretendanceProvider(prentedances);
 });
 
-class SelectedPretendanceProvider extends StateNotifier<List<String>> {
-  SelectedPretendanceProvider(List<dynamic> p)
-      : super(List.generate(p.length, (index) => ""));
+class SelectedPretendanceProvider extends StateNotifier<Pretendance> {
+  SelectedPretendanceProvider(List<dynamic> p) : super(Pretendance.empty());
 
-  void changeSelection(int i, String s) {
-    var copy = state.toList();
-    copy[i] = s;
-    state = copy;
+  void changeSelection(Pretendance s) {
+    state = s;
   }
 
   void clear() {
-    state = List.generate(state.length, (index) => "");
+    state = Pretendance.empty();
   }
 }

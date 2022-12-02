@@ -4,12 +4,13 @@ import 'package:myecl/vote/class/section.dart';
 
 class SideItem extends HookConsumerWidget {
   final Section section;
-  final bool isSelected;
+  final bool isSelected, alreadyVoted;
   final void Function() onTap;
   const SideItem(
       {super.key,
       required this.section,
       required this.isSelected,
+      required this.alreadyVoted,
       required this.onTap});
 
   @override
@@ -27,7 +28,9 @@ class SideItem extends HookConsumerWidget {
                   style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: isSelected ? Colors.black : Colors.grey.shade500)),
+                      color: !alreadyVoted || isSelected
+                          ? Colors.black
+                          : Colors.grey.shade500)),
               const SizedBox(
                 height: 7,
               ),

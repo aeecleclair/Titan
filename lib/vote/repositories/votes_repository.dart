@@ -6,19 +6,12 @@ class VotesRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'campaign/votes';
 
-  Future<List<Votes>> getVotes() async {
-    return (await getList()).map((x) => Votes.fromJson(x)).toList();
-  }
-
   Future<Votes> addVote(Votes votes) async {
-    return Votes.fromJson(await create(votes.toJson()));
+    await create(votes.toJson());
+    return votes;
   }
 
   Future<bool> removeVote() async {
     return await delete("");
-  }
-
-  Future<List<Votes>> getVote(String id) async {
-    return (await getOne(id)).map((x) => Votes.fromJson(x)).toList();
   }
 }

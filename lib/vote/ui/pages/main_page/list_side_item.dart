@@ -3,7 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/selected_pretendance_index_provider.dart';
+import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
+import 'package:myecl/vote/providers/voted_section_provider.dart';
 import 'package:myecl/vote/ui/pages/main_page/side_item.dart';
 
 class ListSideItem extends HookConsumerWidget {
@@ -15,9 +16,13 @@ class ListSideItem extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sectionIdNotifier = ref.watch(sectionIdProvider.notifier);
-    final selectedPretendanceIndexNotifier =
-        ref.watch(selectedPretendanceIndexProvider.notifier);
+    final selectedPretendanceNotifier =
+        ref.watch(selectedPretendanceProvider.notifier);
     final section = ref.watch(sectionProvider);
+    List<String> votedSections = [];
+    ref.watch(votedSectionProvider).whenData((value) {
+      votedSections = value;
+    });
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -25,9 +30,10 @@ class ListSideItem extends HookConsumerWidget {
           return SideItem(
             section: e,
             isSelected: e.id == section.id,
+            alreadyVoted: votedSections.contains(e.id),
             onTap: () async {
+              selectedPretendanceNotifier.clear();
               animation.forward(from: 0);
-              selectedPretendanceIndexNotifier.setSelectedPretendance(-1);
               sectionIdNotifier.setId(e.id);
             },
           );
