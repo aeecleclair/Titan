@@ -280,6 +280,34 @@ class MainPage extends HookConsumerWidget {
                       style: TextStyle(fontSize: 16, color: Colors.black)),
                 ),
                 const SizedBox(
+                  height: 50,
+                ),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(SettingsTextConstants.personalData,
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black)),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                SettingsItem(
+                  icon: HeroIcons.circleStack,
+                  onTap: () async {
+                    final value = await meNotifier.deletePersonal();
+                    if (value) {
+                      displayToast(context, TypeMsg.msg, SettingsTextConstants.sendedDemand);
+                    } else {
+                      displayToast(context, TypeMsg.error,
+                          SettingsTextConstants.errorSendingDemand);
+                    }
+                  },
+                  child: const Text(SettingsTextConstants.detelePersonalData,
+                      style: TextStyle(fontSize: 16, color: Colors.black)),
+                ),
+                const SizedBox(
                   height: 60,
                 ),
                 Row(

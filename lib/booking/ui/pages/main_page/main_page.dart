@@ -89,83 +89,94 @@ class MainPage extends HookConsumerWidget {
         SizedBox(
           height: (isAdmin) ? 0 : 10,
         ),
-        bookings.when(
-            data: (List<Booking> data) => ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: data.length + 1,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index == 1) {
-                      return GestureDetector(
-                        onTap: () {
-                          pageNotifier.setBookingPage(BookingPage.addBooking);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Container(
-                            width: 120,
-                            height: 180,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.shade200.withOpacity(0.5),
-                                  spreadRadius: 5,
-                                  blurRadius: 10,
-                                  offset: const Offset(3, 3),
+        SizedBox(
+          height: 220,
+          child: bookings.when(
+              data: (List<Booking> data) => ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: data.length + 2,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == 0) {
+                        return Container(
+                          margin: const EdgeInsets.only(left: 15),
+                          child: GestureDetector(
+                            onTap: () {
+                              pageNotifier
+                                  .setBookingPage(BookingPage.addBooking);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Container(
+                                width: 120,
+                                height: 180,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Colors.grey.shade200.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 10,
+                                      offset: const Offset(3, 3),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                                child: const Center(
+                                    child: HeroIcon(
+                                  HeroIcons.plus,
+                                  size: 40.0,
+                                  color: Colors.black,
+                                )),
+                              ),
                             ),
-                            child: const Center(
-                                child: HeroIcon(
-                              HeroIcons.plus,
-                              size: 40.0,
-                              color: Colors.black,
-                            )),
                           ),
-                        ),
-                      );
-                    } else {
-                      final e = data[index - 1];
-                      return BookingCard(
-                        booking: e,
-                        isAdmin: false,
-                        isDetail: false,
-                        onEdit: () {
-                          bookingNotifier.setBooking(e);
-                          pageNotifier.setBookingPage(BookingPage.editBooking);
-                        },
-                        onReturn: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return CustomDialogBox(
-                                  title: BookingTextConstants.deleting,
-                                  descriptions:
-                                      BookingTextConstants.deletingBooking,
-                                  onYes: () {},
-                                );
-                              });
-                        },
-                        onInfo: () {
-                          bookingNotifier.setBooking(e);
-                          pageNotifier.setBookingPage(
-                              BookingPage.detailBookingFromMain);
-                        },
-                      );
-                    }
-                  },
-                ),
-            error: (Object error, StackTrace? stackTrace) {
-              return Center(child: Text("Error $error"));
-            },
-            loading: () {
-              return const Center(
-                  child: CircularProgressIndicator(
-                color: ColorConstants.background2,
-              ));
-            })
+                        );
+                      } else if (index == data.length + 1) {
+                        return const SizedBox(width: 15);
+                      } else {
+                        final e = data[index - 1];
+                        return BookingCard(
+                          booking: e,
+                          isAdmin: false,
+                          isDetail: false,
+                          onEdit: () {
+                            bookingNotifier.setBooking(e);
+                            pageNotifier
+                                .setBookingPage(BookingPage.editBooking);
+                          },
+                          onReturn: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return CustomDialogBox(
+                                    title: BookingTextConstants.deleting,
+                                    descriptions:
+                                        BookingTextConstants.deletingBooking,
+                                    onYes: () {},
+                                  );
+                                });
+                          },
+                          onInfo: () {
+                            bookingNotifier.setBooking(e);
+                            pageNotifier.setBookingPage(
+                                BookingPage.detailBookingFromMain);
+                          },
+                        );
+                      }
+                    },
+                  ),
+              error: (Object error, StackTrace? stackTrace) {
+                return Center(child: Text("Error $error"));
+              },
+              loading: () {
+                return const Center(
+                    child: CircularProgressIndicator(
+                  color: ColorConstants.background2,
+                ));
+              }),
+        )
       ]),
     );
   }

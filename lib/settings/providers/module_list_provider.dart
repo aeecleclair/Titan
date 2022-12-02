@@ -3,15 +3,22 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/event/providers/is_admin.dart';
 import 'package:collection/collection.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final modulesProvider =
     StateNotifierProvider<ModulesNotifier, List<Module>>((ref) {
   final eventAdmin = ref.watch(isEventAdmin);
+  final me = ref.watch(userProvider);
+  final isStudent = me.groups
+      .map((e) => e.id)
+      .contains("39691052-2ae5-4e12-99d0-7a9f5f2b0136");
   ModulesNotifier modulesNotifier = ModulesNotifier();
-  modulesNotifier.loadModules([ModuleType.event], [eventAdmin]);
+  modulesNotifier.loadModules(
+      [ModuleType.event, ModuleType.vote], [eventAdmin, isStudent]);
   return modulesNotifier;
 });
+
 
 class ModulesNotifier extends StateNotifier<List<Module>> {
   String dbModule = "modules";

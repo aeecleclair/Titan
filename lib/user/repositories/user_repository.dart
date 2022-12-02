@@ -84,7 +84,7 @@ class UserRepository extends Repository {
         'POST', Uri.parse("${Repository.host}${ext}me/profile-picture"))
       ..headers.addAll(headers)
       ..files.add(await http.MultipartFile.fromPath('image', path,
-      contentType: MediaType('image', 'jpeg')));
+          contentType: MediaType('image', 'jpeg')));
     final response = await request.send();
     if (response.statusCode == 200) {
       return image;
@@ -92,36 +92,20 @@ class UserRepository extends Repository {
       FLog.error(
           text:
               "POST {ext}me/profile-picture/\n${response.statusCode} ${response.reasonPhrase}");
-      throw AppException(ErrorType.tokenExpire, response.reasonPhrase??"");
+      throw AppException(ErrorType.tokenExpire, response.reasonPhrase ?? "");
     } else {
       FLog.error(
           text:
               "POST $ext{ext}me/profile-picture/\n${response.statusCode} ${response.reasonPhrase}");
-      throw AppException(ErrorType.notFound, response.reasonPhrase??"");
+      throw AppException(ErrorType.notFound, response.reasonPhrase ?? "");
     }
-    // response.stream.transform(utf8.decoder).listen((value) async {
-    //   if (response.statusCode == 201) {
-    //     try {
-    //       return json.decode(value)["success"];
-    //     } catch (e) {
-    //       FLog.error(
-    //           text:
-    //               "POST ${ext}me/profile-picture\nError while decoding response",
-    //           exception: e);
-    //       throw AppException(ErrorType.invalidData, e.toString());
-    //     }
-    //   } else if (response.statusCode == 403) {
-    //     FLog.error(
-    //         text:
-    //             "POST ${ext}me/profile-picture\n${response.statusCode} ${response.reasonPhrase}");
-    //     throw AppException(ErrorType.tokenExpire, value);
-    //   } else {
-    //     FLog.error(
-    //         text:
-    //             "POST ${ext}me/profile-picture\n${response.statusCode} ${response.reasonPhrase}");
-    //     throw AppException(ErrorType.notFound, value);
-    //   }
-    // });
-    // return image;
+  }
+
+  Future<bool> deletePersonalData() async {
+    try {
+      return await create({}, suffix: "me/ask-deletion");
+    } catch (e) {
+      return false;
+    }
   }
 }

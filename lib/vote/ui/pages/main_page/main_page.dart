@@ -197,7 +197,14 @@ class MainPage extends HookConsumerWidget {
                                           child: pretendanceList.isNotEmpty
                                               ? alreadyVotedSection
                                                       .contains(section.id)
-                                                  ? const Text(VoteTextConstants.alreadyVoted)
+                                                  ? SizedBox(
+                                                      height: 300,
+                                                      child: Center(
+                                                        child: const Text(
+                                                            VoteTextConstants
+                                                                .alreadyVoted),
+                                                      ),
+                                                    )
                                                   : Column(
                                                       children: pretendanceList[
                                                               section]!
@@ -298,16 +305,38 @@ class MainPage extends HookConsumerWidget {
                                     const EdgeInsets.only(top: 10, bottom: 12),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(15)),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: selectedPretendance.id == ""
+                                          ? [
+                                              Colors.white,
+                                              Colors.grey.shade50,
+                                            ]
+                                          : [
+                                              Colors.grey.shade900,
+                                              Colors.black
+                                            ],
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        spreadRadius: 5,
+                                        blurRadius: 10,
+                                        offset: const Offset(3, 3),
+                                      )
+                                    ]),
                                 child: Center(
                                   child: Text(
                                     selectedPretendance.id != ""
                                         ? VoteTextConstants.voteFor +
                                             selectedPretendance.name
                                         : VoteTextConstants.chooseList,
-                                    style: const TextStyle(
-                                        color: Colors.white,
+                                    style: TextStyle(
+                                        color: selectedPretendance.id == ""
+                                            ? Colors.black
+                                            : Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.w700),
                                   ),

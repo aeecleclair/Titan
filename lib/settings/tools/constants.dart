@@ -14,12 +14,15 @@ class SettingsTextConstants {
   static const String darkMode = "Mode sombre";
   static const String darkModeOff = "Désactivé";
   static const String deleteLogs = "Supprimer les logs ?";
+  static const String detelePersonalData = "Supprimer mes données personnelles";
   static const String deleting = "Suppresion";
   static const String edit = "Modifier";
   static const String editAccount = "Modifier le compte";
   static const String editPassword = "Modifier le mot de passe";
   static const String email = "Email";
   static const String emptyField = "Ce champ ne peut pas être vide";
+  static const String errorSendingDemand =
+      "Erreur lors de l'envoi de la demande";
   static const String expectingDate = "Date de naissance attendue";
   static const String firstname = "Prénom";
   static const String floor = "Étage";
@@ -37,12 +40,14 @@ class SettingsTextConstants {
   static const String passwordChanged = "Mot de passe changé";
   static const String passwordsNotMatch =
       "Les mots de passe ne correspondent pas";
+  static const String personalData = "Données personnelles";
   static const String personalisation = "Personnalisation";
   static const String profilePicture = "Photo de profil";
   static const String promo = "Promotion";
   static const String repportBug = "Signaler un bug";
   static const String save = "Enregistrer";
   static const String security = "Sécurité";
+  static const String sendedDemand = "Demande envoyée";
   static const String settings = "Paramètres";
   static const String updatedProfile = "Profil modifié";
   static const String updateNotification = "Mettre à jour les notifications";
