@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -111,17 +112,27 @@ class AdminPage extends HookConsumerWidget {
                     if (status == Status.counting)
                       GestureDetector(
                         onTap: () {
-                          tokenExpireWrapper(ref, () async {
-                            final value = await statusNotifier.resetVote();
-                            if (value) {
-                              showVotesNotifier.toggle(false);
-                              displayVoteToastWithContext(
-                                  TypeMsg.msg, 'Vote is closed');
-                            } else {
-                              displayVoteToastWithContext(
-                                  TypeMsg.error, 'Error');
-                            }
-                          });
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CustomDialogBox(
+                                    title: VoteTextConstants.closeVote,
+                                    descriptions: "",
+                                    onYes: () async {
+                                      tokenExpireWrapper(ref, () async {
+                                        final value =
+                                            await statusNotifier.resetVote();
+                                        if (value) {
+                                          showVotesNotifier.toggle(false);
+                                          displayVoteToastWithContext(
+                                              TypeMsg.msg, 'Vote is closed');
+                                        } else {
+                                          displayVoteToastWithContext(
+                                              TypeMsg.error, 'Error');
+                                        }
+                                      });
+                                    });
+                              });
                         },
                         child: Container(
                           padding: const EdgeInsets.all(8.0),
@@ -129,7 +140,7 @@ class AdminPage extends HookConsumerWidget {
                             borderRadius: BorderRadius.circular(8),
                             color: Colors.black,
                           ),
-                          child: const Text(VoteTextConstants.closeVote,
+                          child: const Text(VoteTextConstants.clear,
                               style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,

@@ -2,7 +2,7 @@
 
 TITAN :
 
-- fixing list (rebuid)
+- animation btn (shrinking) :
 - dark mode
 - ask help
 - TokenExpireWrapper on provider load
