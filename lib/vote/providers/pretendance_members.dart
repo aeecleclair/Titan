@@ -4,10 +4,16 @@ import 'package:myecl/vote/class/members.dart';
 class PretendanceMembersProvider extends StateNotifier<List<Member>> {
   PretendanceMembersProvider() : super([]);
 
-  void addMember(Member m) {
+  Future<bool> addMember(Member m) async {
     var copy = state.toList();
-    copy.add(m);
-    state = copy;
+    print(copy);
+    print(copy.contains(m));
+    if (!copy.contains(m)) {
+      copy.add(m);
+      state = copy;
+      return true;
+    }
+    return false;
   }
 
   void removeMember(Member m) {

@@ -6,6 +6,7 @@ class VoteTextConstants {
   static const String addingError = 'Erreur lors de l\'ajout';
   static const String addPretendance = 'Ajouter une liste de prétendance';
   static const String addSection = 'Ajouter une section';
+  static const String alreadyAddedMember = 'Membre déjà ajouté';
   static const String alreadyVoted = "Already Voted";
   static const String closedVote = 'Votes clos';
   static const String closeVote = 'Fermer les votes';

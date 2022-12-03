@@ -190,97 +190,97 @@ class AddPretendancePage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () async {
-                        final XFile? image =
-                            await picker.pickImage(source: ImageSource.camera);
-                        if (image != null) {
-                          logo.value = image.path;
-                        }
-                      },
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        padding: const EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: const LinearGradient(
-                            colors: [
-                              ColorConstants.gradient1,
-                              ColorConstants.gradient2,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorConstants.gradient2.withOpacity(0.3),
-                              spreadRadius: 2,
-                              blurRadius: 4,
-                              offset: const Offset(2, 3),
-                            ),
-                          ],
-                        ),
-                        child: const HeroIcon(
-                          HeroIcons.camera,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  if (logo.value != null)
-                    Positioned(
-                      bottom: -20,
-                      right: 60,
-                      child: GestureDetector(
-                        onTap: () async {
-                          // final value = await profilePictureNotifier
-                          //     .setProfilePicture(ImageSource.camera);
-                          // if (value != null) {
-                          //   if (value) {
-                          //     displayToastWithContext(
-                          //         TypeMsg.msg, "Photo de profil changée");
-                          //   } else {
-                          //     displayToastWithContext(TypeMsg.error,
-                          //         "Erreur lors du changement de photo de profil");
-                          //   }
-                          // }
-                        },
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          padding: const EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              colors: [
-                                ColorConstants.gradient1,
-                                ColorConstants.gradient2,
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color:
-                                    ColorConstants.gradient2.withOpacity(0.3),
-                                spreadRadius: 2,
-                                blurRadius: 4,
-                                offset: const Offset(2, 3),
-                              ),
-                            ],
-                          ),
-                          child: const HeroIcon(
-                            HeroIcons.sparkles,
-                            color: Colors.white,
-                            size: 10,
-                          ),
-                        ),
-                      ),
-                    )
+                  // Positioned(
+                  //   bottom: 0,
+                  //   right: 0,
+                  //   child: GestureDetector(
+                  //     onTap: () async {
+                  //       final XFile? image =
+                  //           await picker.pickImage(source: ImageSource.camera);
+                  //       if (image != null) {
+                  //         logo.value = image.path;
+                  //       }
+                  //     },
+                  //     child: Container(
+                  //       height: 40,
+                  //       width: 40,
+                  //       padding: const EdgeInsets.all(7),
+                  //       decoration: BoxDecoration(
+                  //         shape: BoxShape.circle,
+                  //         gradient: const LinearGradient(
+                  //           colors: [
+                  //             ColorConstants.gradient1,
+                  //             ColorConstants.gradient2,
+                  //           ],
+                  //           begin: Alignment.topLeft,
+                  //           end: Alignment.bottomRight,
+                  //         ),
+                  //         boxShadow: [
+                  //           BoxShadow(
+                  //             color: ColorConstants.gradient2.withOpacity(0.3),
+                  //             spreadRadius: 2,
+                  //             blurRadius: 4,
+                  //             offset: const Offset(2, 3),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       child: const HeroIcon(
+                  //         HeroIcons.camera,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // if (logo.value != null)
+                  //   Positioned(
+                  //     bottom: -20,
+                  //     right: 60,
+                  //     child: GestureDetector(
+                  //       onTap: () async {
+                  //         // final value = await profilePictureNotifier
+                  //         //     .setProfilePicture(ImageSource.camera);
+                  //         // if (value != null) {
+                  //         //   if (value) {
+                  //         //     displayToastWithContext(
+                  //         //         TypeMsg.msg, "Photo de profil changée");
+                  //         //   } else {
+                  //         //     displayToastWithContext(TypeMsg.error,
+                  //         //         "Erreur lors du changement de photo de profil");
+                  //         //   }
+                  //         // }
+                  //       },
+                  //       child: Container(
+                  //         height: 40,
+                  //         width: 40,
+                  //         padding: const EdgeInsets.all(7),
+                  //         decoration: BoxDecoration(
+                  //           shape: BoxShape.circle,
+                  //           gradient: const LinearGradient(
+                  //             colors: [
+                  //               ColorConstants.gradient1,
+                  //               ColorConstants.gradient2,
+                  //             ],
+                  //             begin: Alignment.topLeft,
+                  //             end: Alignment.bottomRight,
+                  //           ),
+                  //           boxShadow: [
+                  //             BoxShadow(
+                  //               color:
+                  //                   ColorConstants.gradient2.withOpacity(0.3),
+                  //               spreadRadius: 2,
+                  //               blurRadius: 4,
+                  //               offset: const Offset(2, 3),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //         child: const HeroIcon(
+                  //           HeroIcons.sparkles,
+                  //           color: Colors.white,
+                  //           size: 10,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   )
                 ],
               ),
             ),
@@ -451,7 +451,7 @@ class AddPretendancePage extends HookConsumerWidget {
                                 keyboardType: TextInputType.text),
                             const SizedBox(height: 30),
                             GestureDetector(
-                              onTap: () {
+                              onTap: () async {
                                 if (addMemberKey.currentState == null) {
                                   return;
                                 }
@@ -459,11 +459,17 @@ class AddPretendancePage extends HookConsumerWidget {
                                   return;
                                 }
                                 if (addMemberKey.currentState!.validate()) {
-                                  membersNotifier.addMember(
+                                  final value = await membersNotifier.addMember(
                                       Member.fromSimpleUser(
                                           member.value, role.text));
-                                  role.text = '';
-                                  member.value = SimpleUser.empty();
+                                  if (value) {
+                                    role.text = '';
+                                    member.value = SimpleUser.empty();
+                                    queryController.text = '';
+                                  } else {
+                                    displayVoteToastWithContext(TypeMsg.error,
+                                        VoteTextConstants.alreadyAddedMember);
+                                  }
                                 }
                               },
                               child: Container(

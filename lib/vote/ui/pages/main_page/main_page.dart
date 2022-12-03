@@ -358,220 +358,208 @@ class MainPage extends HookConsumerWidget {
         );
       } else {
         return Refresher(
-          onRefresh: () async {
-            await statusNotifier.loadStatus();
-            final sections = await sectionsNotifier.loadSectionList();
-            sections.whenData((value) {
-              List<Pretendance> list = [];
-              pretendances.when(data: (pretendance) {
-                list = pretendance;
-              }, error: (error, stackTrace) {
-                list = [];
-              }, loading: () {
-                list = [];
+            onRefresh: () async {
+              await statusNotifier.loadStatus();
+              final sections = await sectionsNotifier.loadSectionList();
+              sections.whenData((value) {
+                List<Pretendance> list = [];
+                pretendances.when(data: (pretendance) {
+                  list = pretendance;
+                }, error: (error, stackTrace) {
+                  list = [];
+                }, loading: () {
+                  list = [];
+                });
+                sectionPretendanceNotifier.loadTList(value);
+                for (final l in value) {
+                  sectionPretendanceNotifier.setTData(
+                      l,
+                      AsyncValue.data(list
+                          .where((element) => element.section.id == l.id)
+                          .toList()));
+                }
               });
-              sectionPretendanceNotifier.loadTList(value);
-              for (final l in value) {
-                sectionPretendanceNotifier.setTData(
-                    l,
-                    AsyncValue.data(list
-                        .where((element) => element.section.id == l.id)
-                        .toList()));
-              }
-            });
-          },
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height - 100,
-            child: Column(children: [
-              SizedBox(
-                height: isAdmin ? 10 : 15,
-              ),
-              sections.when(
-                data: (sectionList) => Column(children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height -
-                        (isAdmin ? 215 : 220),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 30.0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            sectionsPretendances.when(
-                              data: (pretendanceList) => Column(children: [
-                                Row(
-                                  children: [
-                                    const Text(
-                                      VoteTextConstants.section,
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width -
-                                          243,
-                                    ),
-                                    isAdmin
-                                        ? Container(
-                                            margin: const EdgeInsets.only(
-                                                right: 20),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                pageNotifier.setVotePage(
-                                                    VotePage.admin);
-                                              },
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 12,
-                                                        vertical: 8),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.black,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                          color: Colors.black
-                                                              .withOpacity(0.2),
-                                                          blurRadius: 10,
-                                                          offset: const Offset(
-                                                              0, 5))
-                                                    ]),
-                                                child: Row(
-                                                  children: const [
-                                                    HeroIcon(
-                                                        HeroIcons.userGroup,
-                                                        color: Colors.white),
-                                                    SizedBox(width: 10),
-                                                    Text("Admin",
-                                                        style: TextStyle(
-                                                            fontSize: 20,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color:
-                                                                Colors.white)),
-                                                  ],
-                                                ),
+            },
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height - 100,
+              child: Column(children: [
+                SizedBox(
+                  height: isAdmin ? 10 : 15,
+                ),
+                sections.when(
+                  data: (sectionList) => Padding(
+                    padding: const EdgeInsets.only(left: 30.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          sectionsPretendances.when(
+                            data: (pretendanceList) => Column(children: [
+                              Row(
+                                children: [
+                                  const Text(
+                                    VoteTextConstants.section,
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width - 243,
+                                  ),
+                                  isAdmin
+                                      ? Container(
+                                          margin:
+                                              const EdgeInsets.only(right: 20),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              pageNotifier
+                                                  .setVotePage(VotePage.admin);
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 8),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.black,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.black
+                                                            .withOpacity(0.2),
+                                                        blurRadius: 10,
+                                                        offset:
+                                                            const Offset(0, 5))
+                                                  ]),
+                                              child: Row(
+                                                children: const [
+                                                  HeroIcon(HeroIcons.userGroup,
+                                                      color: Colors.white),
+                                                  SizedBox(width: 10),
+                                                  Text("Admin",
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white)),
+                                                ],
                                               ),
                                             ),
-                                          )
-                                        : Container(),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                Text(
-                                  s == Status.waiting
-                                      ? VoteTextConstants.notOpenedVote
-                                      : s == Status.closed
-                                          ? VoteTextConstants.closedVote
-                                          : VoteTextConstants.onGoingCount,
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                ...pretendanceList
-                                    .map((key, value) => MapEntry(
-                                          key,
-                                          value.when(
-                                            data: (pretendance) => Align(
-                                              child: Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width -
-                                                    60,
-                                                margin: const EdgeInsets.only(
-                                                    right: 30, bottom: 30),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.black,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15)),
-                                                child: Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 20,
-                                                        vertical: 10),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Column(
-                                                          children: [
-                                                            Text(
-                                                              key.name,
-                                                              style: const TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 20,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 3,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Column(
-                                                          children: [
-                                                            const SizedBox(
-                                                              height: 3,
-                                                            ),
-                                                            Text(
-                                                              pretendance.length
-                                                                  .toString(),
-                                                              style: const TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 20,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    )),
-                                              ),
-                                            ),
-                                            loading: () => const Center(
-                                                child:
-                                                    CircularProgressIndicator()),
-                                            error: (error, stack) =>
-                                                const Center(
-                                                    child: Text('Error')),
                                           ),
-                                        ))
-                                    .values
-                              ]),
-                              error: (Object error, StackTrace stackTrace) {
-                                return Center(child: Text('Error $error'));
-                              },
-                              loading: () {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              },
-                            ),
-                          ]),
-                    ),
+                                        )
+                                      : Container(),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              Text(
+                                s == Status.waiting
+                                    ? VoteTextConstants.notOpenedVote
+                                    : s == Status.closed
+                                        ? VoteTextConstants.closedVote
+                                        : VoteTextConstants.onGoingCount,
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              ...pretendanceList
+                                  .map((key, value) => MapEntry(
+                                        key,
+                                        value.when(
+                                          data: (pretendance) => Align(
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width -
+                                                  60,
+                                              margin: const EdgeInsets.only(
+                                                  right: 30, bottom: 30),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.black,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              child: Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 10),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Column(
+                                                        children: [
+                                                          Text(
+                                                            key.name,
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 3,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        children: [
+                                                          const SizedBox(
+                                                            height: 3,
+                                                          ),
+                                                          Text(
+                                                            pretendance.length
+                                                                .toString(),
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  )),
+                                            ),
+                                          ),
+                                          loading: () => const Center(
+                                              child:
+                                                  CircularProgressIndicator()),
+                                          error: (error, stack) => const Center(
+                                              child: Text('Error')),
+                                        ),
+                                      ))
+                                  .values
+                            ]),
+                            error: (Object error, StackTrace stackTrace) {
+                              return Center(child: Text('Error $error'));
+                            },
+                            loading: () {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            },
+                          ),
+                        ]),
                   ),
-                ]),
-                error: (Object error, StackTrace stackTrace) {
-                  return Center(child: Text('Error $error'));
-                },
-                loading: () {
-                  return const Center(child: CircularProgressIndicator());
-                },
-              ),
-            ]),
-          ),
-        );
+                  error: (Object error, StackTrace stackTrace) {
+                    return Center(child: Text('Error $error'));
+                  },
+                  loading: () {
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
+              ]),
+            ));
       }
     }, error: (Object error, StackTrace stackTrace) {
       return const Center(
