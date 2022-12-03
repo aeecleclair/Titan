@@ -15,8 +15,9 @@ class LogoRepository extends Repository {
   final ext = 'campaign/';
 
   Future<Image> getLogo(String id, {String suffix = ""}) async {
+    print(ext + id);
     final response = await http.get(
-        Uri.parse("${Repository.host}$ext$id/logo"),
+        Uri.parse("${Repository.host}$ext$id$suffix"),
         headers: headers);
     if (response.statusCode == 200) {
       try {
