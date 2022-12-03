@@ -455,9 +455,13 @@ class AddBookingPage extends HookConsumerWidget {
                             start.text = DateTime.now()
                                 .subtract(const Duration(minutes: 1))
                                 .toString();
+                          } else if (!start.text.contains("-")){
+                            start.text = DateFormat('HH:mm').parse(start.text).toString();
                           }
                           if (end.text == "") {
                             end.text = DateTime.now().toString();
+                          } else if (!end.text.contains("-")){
+                            end.text = DateFormat('HH:mm').parse(end.text).toString();
                           }
                           if (start.text.compareTo(end.text) > 0) {
                             displayToast(context, TypeMsg.error,

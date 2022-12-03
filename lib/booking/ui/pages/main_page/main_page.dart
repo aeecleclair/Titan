@@ -90,7 +90,7 @@ class MainPage extends HookConsumerWidget {
           height: (isAdmin) ? 0 : 10,
         ),
         SizedBox(
-          height: 220,
+          height: 226,
           child: bookings.when(
               data: (List<Booking> data) => ListView.builder(
                     scrollDirection: Axis.horizontal,

@@ -22,9 +22,9 @@ class BookingCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: const EdgeInsets.all(15.0),
+      height: 226,
       child: Container(
         width: MediaQuery.of(context).size.width * 0.7,
-        // height: 180,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30),
@@ -60,19 +60,21 @@ class BookingCard extends HookConsumerWidget {
                     )
                 ],
               ),
-              const SizedBox(height: 5),
-              Text(formatDates(booking.start, booking.end, false),
+              const SizedBox(height: 3),
+              Text(
+                  formatRecurrenceRule(booking.start, booking.end,
+                      booking.recurrenceRule, false),
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey.shade400)),
-              const SizedBox(height: 3),
+              const SizedBox(height: 1),
               Text(booking.reason,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
-              const SizedBox(height: 3),
+              const SizedBox(height: 1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -94,8 +96,7 @@ class BookingCard extends HookConsumerWidget {
                           color: Colors.grey.shade400)),
                 ],
               ),
-              // const Spacer(),
-              const SizedBox(height: 20),
+              const Spacer(),
               if (!isDetail)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
