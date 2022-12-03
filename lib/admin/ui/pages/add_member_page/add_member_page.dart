@@ -25,8 +25,7 @@ class AddMemberPage extends HookConsumerWidget {
     final groupNotifier = ref.watch(groupProvider.notifier);
     return Refresher(
         onRefresh: () async {
-          users.value = await usersNotifier
-              .filterUsers(" ", excludeGroup: [group.value!.toSimpleGroup()]);
+          usersNotifier.clear();
         },
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -50,10 +49,15 @@ class AddMemberPage extends HookConsumerWidget {
                         onChanged: (value) {
                           focus.value = true;
                           tokenExpireWrapper(ref, () async {
-                            final value = await usersNotifier.filterUsers(
-                                editingController.text,
-                                excludeGroup: [group.value!.toSimpleGroup()]);
-                            users.value = value;
+                            if (editingController.text.isNotEmpty) {
+                              final value = await usersNotifier.filterUsers(
+                                  editingController.text,
+                                  excludeGroup: [group.value!.toSimpleGroup()]);
+                              users.value = value;
+                            } else {
+                              usersNotifier.clear();
+                              users.value = const AsyncData([]);
+                            }
                           });
                         },
                         controller: editingController,

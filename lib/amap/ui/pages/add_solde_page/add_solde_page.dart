@@ -26,7 +26,7 @@ class AddSoldePage extends HookConsumerWidget {
 
     return Refresher(
         onRefresh: () async {
-          users.value = await usersNotifier.filterUsers(" ");
+          usersNotifier.clear();
         },
         child: users.value.when(data: (u) {
           return SizedBox(
@@ -41,9 +41,14 @@ class AddSoldePage extends HookConsumerWidget {
                   onChanged: (value) {
                     focus.value = true;
                     tokenExpireWrapper(ref, () async {
-                      final value = await usersNotifier
-                          .filterUsers(editingController.text);
-                      users.value = value;
+                      if (editingController.text.isNotEmpty) {
+                        final value = await usersNotifier
+                            .filterUsers(editingController.text);
+                        users.value = value;
+                      } else {
+                        usersNotifier.clear();
+                        users.value = const AsyncData([]);
+                      }
                     });
                   },
                   controller: editingController,
@@ -60,46 +65,55 @@ class AddSoldePage extends HookConsumerWidget {
               const SizedBox(
                 height: 20,
               ),
-              ...u
-                  .map((e) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: 20,
-                          ),
-                          Expanded(
-                            child: Text(
-                              e.getName(),
-                              style: const TextStyle(fontSize: 13),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Row(
+              Container(
+                decoration: BoxDecoration(
+                    color: AMAPColorConstants.background2.withOpacity(0.5)),
+                child: Column(
+                  children: u
+                      .map((e) => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              IconButton(
-                                  onPressed: () {
-                                    tokenExpireWrapper(ref, () async {
-                                      final value = await cashListNotifier
-                                          .addCash(Cash(balance: 0.0, user: e));
-                                      if (value) {
-                                        displayToastWithContext(TypeMsg.msg,
-                                            AMAPTextConstants.addedUser);
-                                      } else {
-                                        displayToastWithContext(TypeMsg.error,
-                                            AMAPTextConstants.addingError);
-                                      }
-                                      pageNotifier.setAmapPage(AmapPage.solde);
-                                    });
-                                  },
-                                  icon: const Icon(Icons.add))
+                              Container(
+                                width: 20,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  e.getName(),
+                                  style: const TextStyle(fontSize: 13),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        tokenExpireWrapper(ref, () async {
+                                          final value =
+                                              await cashListNotifier.addCash(
+                                                  Cash(balance: 0.0, user: e));
+                                          if (value) {
+                                            displayToastWithContext(TypeMsg.msg,
+                                                AMAPTextConstants.addedUser);
+                                          } else {
+                                            displayToastWithContext(
+                                                TypeMsg.error,
+                                                AMAPTextConstants.addingError);
+                                          }
+                                          pageNotifier
+                                              .setAmapPage(AmapPage.solde);
+                                        });
+                                      },
+                                      icon: const Icon(Icons.add))
+                                ],
+                              ),
+                              Container(
+                                width: 15,
+                              ),
                             ],
-                          ),
-                          Container(
-                            width: 15,
-                          ),
-                        ],
-                      ))
-                  .toList(),
+                          ))
+                      .toList(),
+                ),
+              )
             ]),
           );
         }, error: (e, s) {

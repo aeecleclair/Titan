@@ -19,6 +19,10 @@ class UserListNotifier extends ListNotifier<SimpleUser> {
         includeId: includeGroup?.map((e) => e.id).toList(),
         excludeId: excludeGroup?.map((e) => e.id).toList()));
   }
+
+  void clear() {
+    state = const AsyncValue.data([]);
+  }
 }
 
 final userList =
@@ -26,7 +30,7 @@ final userList =
   (ref) {
     final token = ref.watch(tokenProvider);
     UserListNotifier userListNotifier = UserListNotifier(token: token);
-    userListNotifier.filterUsers(" ");
+    userListNotifier.clear();
     return userListNotifier;
   },
 );

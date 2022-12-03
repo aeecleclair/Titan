@@ -197,10 +197,10 @@ class MainPage extends HookConsumerWidget {
                                           child: pretendanceList.isNotEmpty
                                               ? alreadyVotedSection
                                                       .contains(section.id)
-                                                  ? SizedBox(
+                                                  ? const SizedBox(
                                                       height: 300,
                                                       child: Center(
-                                                        child: const Text(
+                                                        child: Text(
                                                             VoteTextConstants
                                                                 .alreadyVoted),
                                                       ),

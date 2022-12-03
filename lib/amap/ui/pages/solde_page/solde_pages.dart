@@ -108,62 +108,58 @@ class SoldePage extends HookConsumerWidget {
       onRefresh: () async {
         cash.value = await cashListNotifier.loadCashList();
       },
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height - 90,
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 30,
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 30,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: (value) {
+                focus.value = true;
+                tokenExpireWrapper(ref, () async {
+                  final value = await cashListNotifier
+                      .filterCashList(editingController.text);
+                  cash.value = value;
+                });
+              },
+              controller: editingController,
+              autofocus: focus.value,
+              decoration: const InputDecoration(
+                  labelText: AMAPTextConstants.looking,
+                  hintText: AMAPTextConstants.looking,
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(25.0)))),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                onChanged: (value) {
-                  focus.value = true;
-                  tokenExpireWrapper(ref, () async {
-                    final value = await cashListNotifier
-                        .filterCashList(editingController.text);
-                    cash.value = value;
-                  });
-                },
-                controller: editingController,
-                autofocus: focus.value,
-                decoration: const InputDecoration(
-                    labelText: AMAPTextConstants.looking,
-                    hintText: AMAPTextConstants.looking,
-                    prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25.0)))),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                    color: AMAPColorConstants.background2.withOpacity(0.5)),
-                child: Column(
-                  children: [
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: listWidgetCash.length,
-                      itemBuilder: (context, index) {
-                        return listWidgetCash[index];
-                      },
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    GestureDetector(
-                      child: const GreenBtn(text: AMAPTextConstants.addUser),
-                      onTap: () {
-                        pageNotifier.setAmapPage(AmapPage.addSolde);
-                      },
-                    )
-                  ],
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: AMAPColorConstants.background2.withOpacity(0.5)),
+            child: Column(
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    children: listWidgetCash,
+                  ),
                 ),
-              ),
+                const SizedBox(
+                  height: 30,
+                ),
+                GestureDetector(
+                  child: const GreenBtn(text: AMAPTextConstants.addUser),
+                  onTap: () {
+                    pageNotifier.setAmapPage(AmapPage.addSolde);
+                  },
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

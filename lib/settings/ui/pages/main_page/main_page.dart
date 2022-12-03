@@ -22,6 +22,10 @@ class MainPage extends HookConsumerWidget {
     final titanVersion = ref.watch(titanVersionProvider);
     final profilePicture = ref.watch(profilePictureProvider);
     ref.watch(logsProvider.notifier).getLogs();
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
     return Refresher(
         onRefresh: () async {
           await meNotifier.loadMe();
@@ -298,9 +302,9 @@ class MainPage extends HookConsumerWidget {
                   onTap: () async {
                     final value = await meNotifier.deletePersonal();
                     if (value) {
-                      displayToast(context, TypeMsg.msg, SettingsTextConstants.sendedDemand);
+                      displayToastWithContext(TypeMsg.msg, SettingsTextConstants.sendedDemand);
                     } else {
-                      displayToast(context, TypeMsg.error,
+                      displayToastWithContext(TypeMsg.error,
                           SettingsTextConstants.errorSendingDemand);
                     }
                   },

@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
-import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
@@ -11,6 +10,7 @@ import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/loaner_chip.dart';
@@ -31,7 +31,7 @@ class EditLoanPage extends HookConsumerWidget {
     final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
     final asso = useState(ref.watch(loanerProvider));
     final key = GlobalKey<FormState>();
-    final associations = ref.watch(loanerListProvider);
+    final associations = ref.watch(userLoanerListProvider);
     final items = useState(ref.watch(itemListProvider));
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final selectedItems = ref.watch(editSelectedListProvider);
@@ -195,10 +195,15 @@ class EditLoanPage extends HookConsumerWidget {
                           focus.value = true;
                           if (value.isNotEmpty) {
                             tokenExpireWrapper(ref, () async {
-                              final value = await usersNotifier
-                                  .filterUsers(queryController.text);
-                              users.value = value;
-                              displayUserSearch.value = true;
+                              if (queryController.text.isNotEmpty) {
+                                final value = await usersNotifier
+                                    .filterUsers(queryController.text);
+                                users.value = value;
+                                displayUserSearch.value = true;
+                              } else {
+                                users.value = const AsyncData([]);
+                                displayUserSearch.value = false;
+                              }
                             });
                           }
                         },
