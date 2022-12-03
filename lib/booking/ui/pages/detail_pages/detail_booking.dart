@@ -86,58 +86,5 @@ class DetailBookingPage extends HookConsumerWidget {
         ],
       ),
     );
-    // return Padding(
-    //     padding: const EdgeInsets.symmetric(horizontal: 30.0),
-    //     child: Column(children: [
-    //       const SizedBox(
-    //         height: 40,
-    //       ),
-    //       Text(
-    //         capitalize(booking.room.name),
-    //         style: const TextStyle(
-    //           fontSize: 35,
-    //           fontWeight: FontWeight.bold,
-    //         ),
-    //       ),
-    //       const SizedBox(
-    //         height: 20,
-    //       ),
-    //       Text(
-    //         formatDates(booking.start, booking.end, false),
-    //         style: const TextStyle(
-    //           fontSize: 18,
-    //         ),
-    //       ),
-    //       const SizedBox(
-    //         height: 15,
-    //       ),
-    //       Text(
-    //         decisionToString(booking.decision),
-    //         style: const TextStyle(
-    //           fontSize: 30,
-    //           fontWeight: FontWeight.bold,
-    //         ),
-    //       ),
-    //       const SizedBox(
-    //         height: 15,
-    //       ),
-    //       Text(
-    //         booking.key
-    //             ? BookingTextConstants.keys
-    //             : BookingTextConstants.noKeys,
-    //         style: const TextStyle(
-    //           fontSize: 20,
-    //         ),
-    //       ),
-    //       const SizedBox(
-    //         height: 30,
-    //       ),
-    //       Text(
-    //         booking.note,
-    //         style: const TextStyle(
-    //           fontSize: 18,
-    //         ),
-    //       ),
-    //     ]));
   }
 }
