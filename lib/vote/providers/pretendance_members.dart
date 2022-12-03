@@ -6,8 +6,6 @@ class PretendanceMembersProvider extends StateNotifier<List<Member>> {
 
   Future<bool> addMember(Member m) async {
     var copy = state.toList();
-    print(copy);
-    print(copy.contains(m));
     if (!copy.contains(m)) {
       copy.add(m);
       state = copy;

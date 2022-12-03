@@ -10,12 +10,8 @@ import 'package:http/http.dart' as http;
 
 
 class LogoRepository extends Repository {
-  @override
-  // ignore: overridden_fields
-  final ext = 'campaign/';
 
   Future<Image> getLogo(String id, {String suffix = ""}) async {
-    print(ext + id);
     final response = await http.get(
         Uri.parse("${Repository.host}$ext$id$suffix"),
         headers: headers);

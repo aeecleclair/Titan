@@ -3,7 +3,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
 import 'package:myecl/vote/providers/pretendance_members.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
