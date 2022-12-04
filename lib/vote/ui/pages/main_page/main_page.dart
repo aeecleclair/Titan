@@ -9,8 +9,8 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/class/votes.dart';
 import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
-import 'package:myecl/tools/providers/logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
+import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
@@ -47,7 +47,7 @@ class MainPage extends HookConsumerWidget {
         final selectedPretendance = ref.watch(selectedPretendanceProvider);
         final selectedPretendanceNotifier =
             ref.watch(selectedPretendanceProvider.notifier);
-        final logosNotifier = ref.watch(logoProvider.notifier);
+        final logosNotifier = ref.watch(pretendenceLogoProvider.notifier);
         final votedSection = ref.watch(votedSectionProvider);
         final votedSectionNotifier = ref.watch(votedSectionProvider.notifier);
         final pretendanceLogosNotifier =

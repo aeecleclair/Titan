@@ -12,7 +12,7 @@ import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/pretendance.dart';
-import 'package:myecl/tools/providers/logo_provider.dart';
+import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
 import 'package:myecl/vote/providers/pretendance_members.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
@@ -51,7 +51,7 @@ class AddPretendancePage extends HookConsumerWidget {
     final membersNotifier = ref.watch(pretendanceMembersProvider.notifier);
     final pretendanceLogosNotifier =
         ref.watch(pretendanceLogosProvider.notifier);
-    final logoNotifier = ref.watch(logoProvider.notifier);
+    final logoNotifier = ref.watch(pretendenceLogoProvider.notifier);
     final logo = useState<String?>(null);
     final ImagePicker picker = ImagePicker();
 

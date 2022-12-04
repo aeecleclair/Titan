@@ -1,10 +1,10 @@
 class VoteTextConstants {
   static const String add = 'Ajouter';
   static const String addMember = 'Ajouter un membre';
-  static const String addedPretendance = 'Liste de prétendance ajoutée';
+  static const String addedPretendance = 'Liste ajoutée';
   static const String addedSection = 'Section ajoutée';
   static const String addingError = 'Erreur lors de l\'ajout';
-  static const String addPretendance = 'Ajouter une liste de prétendance';
+  static const String addPretendance = 'Ajouter une liste';
   static const String addSection = 'Ajouter une section';
   static const String alreadyAddedMember = 'Membre déjà ajouté';
   static const String alreadyVoted = "Already Voted";
@@ -15,7 +15,7 @@ class VoteTextConstants {
   static const String countVote = 'Dépouiller les votes';
   static const String description = 'Description';
   static const String edit = 'Modifier';
-  static const String editedPretendance = 'Liste de prétendance modifiée';
+  static const String editedPretendance = 'Liste modifiée';
   static const String editedSection = 'Section modifiée';
   static const String editingError = 'Erreur lors de la modification';
   static const String incorrectOrMissingFields =
@@ -28,7 +28,7 @@ class VoteTextConstants {
   static const String notOpenedVote = 'Vote non ouvert';
   static const String onGoingCount = 'Dépouillement en cours';
   static const String openVote = 'Ouvrir les votes';
-  static const String pretendance = 'Prétendance';
+  static const String pretendance = 'Listes';
   static const String pretendanceDeleted = 'Prétendance supprimée';
   static const String pretendanceNotDeleted = 'Erreur lors de la suppression';
   static const String role = 'Rôle';

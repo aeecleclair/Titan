@@ -267,10 +267,10 @@ class CreateAccountPage extends HookConsumerWidget {
               final value =
                   await signUpNotifier.activateUser(finalcreateAccount);
               if (value) {
-                authTokenNotifier.deleteToken();
-                onActivationPressed();
                 displayToastWithContext(
                     TypeMsg.msg, LoginTextConstants.accountActivated);
+                authTokenNotifier.deleteToken();
+                onActivationPressed();
               } else {
                 displayToastWithContext(
                     TypeMsg.error, LoginTextConstants.accountNotActivated);

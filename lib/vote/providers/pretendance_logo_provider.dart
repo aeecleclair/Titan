@@ -4,9 +4,9 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/vote/repositories/pretendance_logo_repository.dart';
 
-class GroupLogoNotifier extends SingleNotifier<Image> {
+class PretendenceLogoProovider extends SingleNotifier<Image> {
   final repository = PretendanceLogoRepository();
-  GroupLogoNotifier({required String token})
+  PretendenceLogoProovider({required String token})
       : super(const AsyncValue.loading()) {
     repository.setToken(token);
   }
@@ -20,8 +20,8 @@ class GroupLogoNotifier extends SingleNotifier<Image> {
   }
 }
 
-final groupLogoProvider =
-    StateNotifierProvider<GroupLogoNotifier, AsyncValue<Image>>((ref) {
+final pretendenceLogoProvider =
+    StateNotifierProvider<PretendenceLogoProovider, AsyncValue<Image>>((ref) {
   final token = ref.watch(tokenProvider);
-  return GroupLogoNotifier(token: token);
+  return PretendenceLogoProovider(token: token);
 });

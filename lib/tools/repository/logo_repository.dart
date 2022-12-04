@@ -9,7 +9,7 @@ import 'package:myecl/tools/repository/repository.dart';
 import 'package:http/http.dart' as http;
 
 
-class LogoRepository extends Repository {
+abstract class LogoRepository extends Repository {
 
   Future<Image> getLogo(String id, {String suffix = ""}) async {
     final response = await http.get(

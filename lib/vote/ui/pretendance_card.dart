@@ -3,7 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/vote/class/pretendance.dart';
-import 'package:myecl/tools/providers/logo_provider.dart';
+import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
@@ -34,7 +34,7 @@ class PretendanceCard extends HookConsumerWidget {
     final pretendanceLogos = ref.watch(pretendanceLogosProvider);
     final pretendanceLogosNotifier =
         ref.watch(pretendanceLogosProvider.notifier);
-    final logoNotifier = ref.watch(logoProvider.notifier);
+    final logoNotifier = ref.watch(pretendenceLogoProvider.notifier);
     return Container(
       padding: const EdgeInsets.all(15.0),
       child: Container(

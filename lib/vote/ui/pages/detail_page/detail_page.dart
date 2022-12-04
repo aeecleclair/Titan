@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/providers/logo_provider.dart';
+import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/ui/member_card.dart';
@@ -16,7 +16,7 @@ class DetailPage extends HookConsumerWidget {
     final pretendance = ref.watch(pretendanceProvider);
     final pretendanceLogosNotifier =
         ref.watch(pretendanceLogosProvider.notifier);
-    final logoNotifier = ref.watch(logoProvider.notifier);
+    final logoNotifier = ref.watch(pretendenceLogoProvider.notifier);
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Stack(
