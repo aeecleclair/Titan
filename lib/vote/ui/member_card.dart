@@ -41,22 +41,22 @@ class MemberCard extends StatelessWidget {
             children: [
               const SizedBox(height: 10),
               AutoSizeText(
-                  member.nickname.isEmpty
-                      ? '${member.firstname} ${member.name}'
-                      : member.nickname,
+                  member.nickname.isEmpty ? member.firstname : member.nickname,
                   maxLines: 1,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
               const SizedBox(height: 3),
-              if (member.nickname.isNotEmpty)
-                AutoSizeText('${member.firstname} ${member.name}',
-                    maxLines: 2,
-                    style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey.shade400)),
+              AutoSizeText(
+                  member.nickname.isNotEmpty
+                      ? '${member.firstname} ${member.name}'
+                      : member.name,
+                  maxLines: 2,
+                  style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade400)),
               const SizedBox(height: 3),
               if (!isAdmin) const Spacer(),
               Text(member.role,

@@ -12,7 +12,9 @@ class PretendanceListNotifier extends ListNotifier<Pretendance> {
   }
 
   Future<AsyncValue<List<Pretendance>>> loadPretendanceList() async {
-    return await loadList(_pretendanceRepository.getPretendances);
+    await loadList(_pretendanceRepository.getPretendances);
+    shuffle();
+    return state;
   }
 
   Future<bool> addPretendance(Pretendance pretendance) async {
@@ -48,6 +50,31 @@ class PretendanceListNotifier extends ListNotifier<Pretendance> {
       error: (error, stackTrace) async {
         return AsyncValue.error(error, stackTrace);
       },
+    );
+  }
+
+  void shuffle() {
+    state.when(
+      data: (pretendances) {
+        final serio = [];
+        final pipo = [];
+        final blank = [];
+        for (var pretendance in pretendances) {
+          if (pretendance.listType == ListType.serio) {
+            serio.add(pretendance);
+          } else if (pretendance.listType == ListType.pipo) {
+            pipo.add(pretendance);
+          } else {
+            blank.add(pretendance);
+          }
+        }
+        serio.shuffle();
+        pipo.shuffle();
+        blank.shuffle();
+        state = AsyncValue.data([...pipo, ...serio, ...blank]);
+      },
+      loading: () {},
+      error: (error, stackTrace) {},
     );
   }
 }

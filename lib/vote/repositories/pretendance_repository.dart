@@ -19,7 +19,6 @@ class PretendanceRepository extends Repository {
   }
 
   Future<List<Pretendance>> getPretendances() async {
-    return (await getList()).map((e) => Pretendance.fromJson(e)).toList()
-      ..shuffle();
+    return (await getList()).map((e) => Pretendance.fromJson(e)).toList();
   }
 }
