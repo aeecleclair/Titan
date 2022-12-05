@@ -25,7 +25,9 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final versionVerifier = ref.watch(versionVerifierProvider);
+    print(versionVerifier.whenData((value) => value.minimalTitanVersion));
     final titanVersion = ref.watch(titanVersionProvider);
+    print(titanVersion);
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final check = versionVerifier.whenData(
         (value) => value.minimalTitanVersion.compareTo(titanVersion) <= 0);

@@ -3,7 +3,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 class TitanVersionNotfier extends StateNotifier<String> {
   late PackageInfo packageInfo;
-  TitanVersionNotfier() : super('1.0.0');
+  TitanVersionNotfier() : super('0.0.0');
 
   Future<String> loadVersionFromStorage() async {
     packageInfo = await PackageInfo.fromPlatform();
