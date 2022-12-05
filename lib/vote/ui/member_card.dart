@@ -59,7 +59,8 @@ class MemberCard extends StatelessWidget {
                       color: Colors.grey.shade400)),
               const SizedBox(height: 3),
               if (!isAdmin) const Spacer(),
-              Text(member.role,
+              AutoSizeText(member.role,
+                  maxLines: 1,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

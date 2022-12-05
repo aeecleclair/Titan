@@ -17,7 +17,7 @@ class SignUpRepository extends Repository {
       }, suffix: "create");
       return value["success"];
     } catch (e) {
-      rethrow;
+      return false;
     }
   }
 
@@ -44,7 +44,7 @@ class SignUpRepository extends Repository {
       await create(createAccount.toJson(), suffix: "activate");
       return true;
     } catch (e) {
-      rethrow;
+      return false;
     }
   }
 

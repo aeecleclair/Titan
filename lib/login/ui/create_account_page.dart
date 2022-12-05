@@ -197,44 +197,33 @@ class CreateAccountPage extends HookConsumerWidget {
                 )),
           ),
           const SizedBox(
-            height: 14,
+            height: 19,
           ),
           AutofillGroup(
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 120,
-                  child: Text(
-                    LoginTextConstants.floor,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey.shade500),
-                  ),
-                ),
-                Expanded(
-                  child: DropdownButtonFormField(
-                    items: items,
-                    value: floor.text,
-                    hint: Text(
-                      LoginTextConstants.floor,
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey.shade500),
-                    ),
-                    onChanged: (value) {
-                      floor.text = value.toString();
-                    },
-                    style: TextStyle(fontSize: 20, color: Colors.grey.shade800),
-                    decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.all(10),
-                        isDense: true,
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFFfb6d10)))),
-                  ),
-                ),
-              ],
+            child: DropdownButtonFormField(
+              items: items,
+              value: floor.text,
+              onChanged: (value) {
+                floor.text = value.toString();
+              },
+              dropdownColor: ColorConstants.background2,
+              iconEnabledColor: Colors.grey.shade100.withOpacity(.8),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
+              decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(vertical: 10),
+                  isDense: true,
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: ColorConstants.background2)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                    color: Colors.white,
+                  )),
+                  errorBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                    color: Colors.white,
+                  )),
+                  errorStyle: TextStyle(color: Colors.white)),
             ),
           ),
         ],

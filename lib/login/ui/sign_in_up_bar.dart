@@ -22,6 +22,7 @@ class SignUpBar extends StatelessWidget {
             height: 50,
             alignment: Alignment.centerLeft,
             child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
               onTap: onPressed,
               child: Row(
                 children: [
@@ -65,34 +66,35 @@ class SignInBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-          height: 50,
-          child: GestureDetector(
-            onTap: onPressed,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  label,
-                  style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w800,
-                      color: ColorConstants.background2),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 20),
-                  child: isLoading
-                      ? const CircularProgressIndicator(
-                          color: ColorConstants.gradient2,
-                        )
-                      : const Icon(
-                          FontAwesomeIcons.rightLong,
-                          color: ColorConstants.gradient2,
-                          size: 24.0,
-                        ),
-                ),
-              ],
+      height: 50,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onPressed,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              label,
+              style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                  color: ColorConstants.background2),
             ),
-          ),
-        );
+            Container(
+              margin: const EdgeInsets.only(left: 20),
+              child: isLoading
+                  ? const CircularProgressIndicator(
+                      color: ColorConstants.gradient2,
+                    )
+                  : const Icon(
+                      FontAwesomeIcons.rightLong,
+                      color: ColorConstants.gradient2,
+                      size: 24.0,
+                    ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

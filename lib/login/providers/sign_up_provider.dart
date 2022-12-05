@@ -9,11 +9,7 @@ class SignUpProvider extends StateNotifier {
   final SignUpRepository _repository = SignUpRepository();
 
   Future<bool> createUser(String email, AccountType accountType) async {
-    try {
-      return await _repository.createUser(email, accountType);
-    } catch (e) {
-      rethrow;
-    }
+    return await _repository.createUser(email, accountType);
   }
 
   Future<bool> recoverUser(String email) async {
@@ -21,11 +17,7 @@ class SignUpProvider extends StateNotifier {
   }
 
   Future<bool> activateUser(CreateAccount createAccount) async {
-    try {
-      return await _repository.activateUser(createAccount);
-    } catch (e) {
-      rethrow;
-    }
+    return await _repository.activateUser(createAccount);
   }
 
   Future<bool> resetPassword(RecoverRequest recoverRequest) async {
