@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -97,16 +98,16 @@ class PretendanceCard extends HookConsumerWidget {
                               }
                             }, loading: () {
                               return const SizedBox(
-                                height: 50,
-                                width: 50,
+                                height: 40,
+                                width: 40,
                                 child: Center(
                                   child: CircularProgressIndicator(),
                                 ),
                               );
                             }, error: (error, stack) {
                               return const SizedBox(
-                                height: 50,
-                                width: 50,
+                                height: 40,
+                                width: 40,
                                 child: Center(
                                   child: Icon(Icons.error),
                                 ),
@@ -118,26 +119,35 @@ class PretendanceCard extends HookConsumerWidget {
                         },
                         loading: () => const CircularProgressIndicator(),
                         error: (error, stack) => const Text('Error')),
-                    Column(
-                      children: [
-                        Text(pretendance.name,
-                            style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black)),
-                        Text(
-                            capitalize(pretendance.listType
-                                .toString()
-                                .split('.')
-                                .last),
-                            style: const TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black)),
-                        const SizedBox(
-                          height: 3,
-                        ),
-                      ],
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          AutoSizeText(pretendance.name,
+                              maxLines: 1,
+                              style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black)),
+                          Text(
+                              capitalize(pretendance.listType
+                                  .toString()
+                                  .split('.')
+                                  .last),
+                              style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black)),
+                          const SizedBox(
+                            height: 3,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -171,8 +181,7 @@ class PretendanceCard extends HookConsumerWidget {
                               sections.when(
                                   data: (data) {
                                     selectedPretendanceNotifier
-                                        .changeSelection(
-                                            pretendance);
+                                        .changeSelection(pretendance);
                                   },
                                   error: (e, s) {},
                                   loading: () {});
