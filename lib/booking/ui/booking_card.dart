@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -61,15 +62,17 @@ class BookingCard extends HookConsumerWidget {
                 ],
               ),
               const SizedBox(height: 3),
-              Text(
+              AutoSizeText(
                   formatRecurrenceRule(booking.start, booking.end,
                       booking.recurrenceRule, false),
+                  maxLines: 2,
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey.shade400)),
               const SizedBox(height: 1),
-              Text(booking.reason,
+              AutoSizeText(booking.reason,
+                  maxLines: 1,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
