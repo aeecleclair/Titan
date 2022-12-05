@@ -80,7 +80,7 @@ class VoteBars extends HookConsumerWidget {
 
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.only(top: 10, bottom: 25),
+        padding: const EdgeInsets.only(top: 10),
         child: BarChart(
           BarChartData(
             gridData: FlGridData(show: false),
@@ -147,8 +147,16 @@ class VoteBars extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '${((voteValue[sectionIds[value.toInt()]] ??
-                                         0) / total * 100).toStringAsFixed(2)}%',
+                            '${((voteValue[sectionIds[value.toInt()]] ?? 0) / total * 100).toStringAsFixed(2)}%',
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '${voteValue[sectionIds[value.toInt()]] ?? 0} Voix',
                             style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -159,7 +167,7 @@ class VoteBars extends HookConsumerWidget {
                       ),
                     );
                   },
-                  reservedSize: 55,
+                  reservedSize: 75,
                 ),
               ),
             ),

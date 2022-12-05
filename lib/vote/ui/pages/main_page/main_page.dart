@@ -217,12 +217,34 @@ class MainPage extends HookConsumerWidget {
                                               child: pretendanceList.isNotEmpty
                                                   ? alreadyVotedSection
                                                           .contains(section.id)
-                                                      ? const SizedBox(
-                                                          height: 300,
+                                                      ? SizedBox(
+                                                          height: 350,
+                                                          width: 200,
                                                           child: Center(
-                                                            child: Text(
-                                                                VoteTextConstants
-                                                                    .alreadyVoted),
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: const [
+                                                                HeroIcon(
+                                                                    HeroIcons
+                                                                        .checkCircle,
+                                                                    color: ColorConstants
+                                                                        .background2,
+                                                                    size: 100),
+                                                                SizedBox(
+                                                                  height: 30,
+                                                                ),
+                                                                Text(
+                                                                    VoteTextConstants
+                                                                        .alreadyVoted,
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.bold)),
+                                                              ],
+                                                            ),
                                                           ),
                                                         )
                                                       : Column(
@@ -279,7 +301,7 @@ class MainPage extends HookConsumerWidget {
                                                           hideAnimation
                                                               .animateTo(0);
                                                           scrollController.animateTo(
-                                                              h,
+                                                              h + 25,
                                                               duration:
                                                                   const Duration(
                                                                       milliseconds:
