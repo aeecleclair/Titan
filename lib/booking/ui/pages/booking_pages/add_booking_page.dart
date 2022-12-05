@@ -25,7 +25,6 @@ class AddBookingPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
-    final bookingListNotifier = ref.watch(userBookingListProvider.notifier);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final room = useState(Room.empty());
     final start = useTextEditingController();
@@ -502,7 +501,7 @@ class AddBookingPage extends HookConsumerWidget {
                                   key: keyRequired.value,
                                   decision: Decision.pending,
                                   recurrenceRule: recurrenceRule);
-                              final value = await bookingListNotifier
+                              final value = await bookingsNotifier
                                   .addBooking(newBooking);
                               if (value) {
                                 await bookingsNotifier.addBooking(newBooking);

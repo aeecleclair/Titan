@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
@@ -22,7 +21,6 @@ class EditBookingPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
-    final bookingListNotifier = ref.watch(bookingListProvider.notifier);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final booking = ref.watch(bookingProvider);
     final room = useState(booking.room);
@@ -132,7 +130,7 @@ class EditBookingPage extends HookConsumerWidget {
                                   key: keyRequired.value,
                                   decision: Decision.pending,
                                   recurrenceRule: recurring.value);
-                              final value = await bookingListNotifier
+                              final value = await bookingsNotifier
                                   .updateBooking(newBooking);
                               if (value) {
                                 await bookingsNotifier
