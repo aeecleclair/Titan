@@ -19,7 +19,6 @@ final modulesProvider =
   return modulesNotifier;
 });
 
-
 class ModulesNotifier extends StateNotifier<List<Module>> {
   String dbModule = "modules";
   String dbAllModules = "allModules";
@@ -81,8 +80,6 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
 
   Future loadModules(List<ModuleType> types, List<bool> canSee) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(dbModule, []);
-    prefs.setStringList(dbAllModules, []);
     List<String> modulesName = prefs.getStringList(dbModule) ?? [];
     List<String> allModulesName = prefs.getStringList(dbAllModules) ?? [];
     final allmodulesName = allModules.map((e) => e.page.toString()).toList();
@@ -101,17 +98,23 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
           allModulesName.indexOf(a).compareTo(allModulesName.indexOf(b)));
     }
     List<Module> modules = [];
+    List<Module> toDelete = [];
     for (String name in modulesName) {
       if (allmodulesName.contains(name)) {
         Module module = allModules[allModulesName.indexOf(name)];
         if (types.contains(module.page)) {
           if (canSee[types.indexOf(module.page)]) {
             modules.add(module);
+          } else {
+            toDelete.add(module);
           }
         } else {
           modules.add(module);
         }
       }
+    }
+    for (Module module in toDelete) {
+      allModules.remove(module);
     }
     state = modules;
   }
