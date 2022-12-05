@@ -552,12 +552,11 @@ class EditPretendancePage extends HookConsumerWidget {
                         if (value) {
                           pretendanceList.when(
                               data: (list) {
-                                final newPretendance = list.last;
                                 if (logo.value != null) {
                                   logoNotifier.updateLogo(
-                                      newPretendance.id, logo.value!);
+                                      pretendance.id, logo.value!);
                                   pretendanceLogosNotifier.setTData(
-                                      newPretendance,
+                                      pretendance,
                                       AsyncData([
                                         Image.file(
                                           File(logo.value!),
