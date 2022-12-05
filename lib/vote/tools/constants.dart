@@ -35,6 +35,7 @@ class VoteTextConstants {
   static const String sectionDescription = 'Description de la section';
   static const String section = 'Section';
   static const String sectionName = 'Nom de la section';
+  static const String seeMore = 'Voir plus';
   static const String selected = 'Sélectionné';
   static const String showVotes = 'Voir les votes';
   static const String vote = 'Vote';
