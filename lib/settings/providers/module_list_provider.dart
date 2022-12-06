@@ -10,12 +10,12 @@ final modulesProvider =
     StateNotifierProvider<ModulesNotifier, List<Module>>((ref) {
   final eventAdmin = ref.watch(isEventAdmin);
   final me = ref.watch(userProvider);
-  final isStudent = me.groups
+  final isAEMember = me.groups
       .map((e) => e.id)
-      .contains("39691052-2ae5-4e12-99d0-7a9f5f2b0136");
+      .contains("45649735-866a-49df-b04b-a13c74fd5886");
   ModulesNotifier modulesNotifier = ModulesNotifier();
   modulesNotifier.loadModules(
-      [ModuleType.event, ModuleType.vote], [eventAdmin, isStudent]);
+      [ModuleType.event, ModuleType.vote], [eventAdmin, isAEMember]);
   return modulesNotifier;
 });
 
@@ -29,21 +29,21 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
         icon: HeroIcons.calendarDays,
         page: ModuleType.calendar,
         selected: false),
-    Module(
-        name: "Réservation",
-        icon: HeroIcons.tableCells,
-        page: ModuleType.booking,
-        selected: false),
+    // Module(
+    //     name: "Réservation",
+    //     icon: HeroIcons.tableCells,
+    //     page: ModuleType.booking,
+    //     selected: false),
     Module(
         name: "Prêt",
         icon: HeroIcons.buildingLibrary,
         page: ModuleType.loan,
         selected: false),
-    Module(
-        name: "Amap",
-        icon: HeroIcons.shoppingCart,
-        page: ModuleType.amap,
-        selected: false),
+    // Module(
+    //     name: "Amap",
+    //     icon: HeroIcons.shoppingCart,
+    //     page: ModuleType.amap,
+    //     selected: false),
     Module(
         name: "Évenements",
         icon: HeroIcons.calendar,

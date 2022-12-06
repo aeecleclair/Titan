@@ -206,28 +206,28 @@ class MainPage extends HookConsumerWidget {
                           fontWeight: FontWeight.w700,
                           color: Colors.black)),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
-                SettingsItem(
-                  icon: HeroIcons.chatBubbleLeftRight,
-                  onTap: () {
-                    // pageNotifier.setSettingsPage(SettingsPage.help);
-                  },
-                  child: const Text(SettingsTextConstants.askHelp,
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                SettingsItem(
-                  icon: HeroIcons.bugAnt,
-                  onTap: () {
-                    // pageNotifier.setSettingsPage(SettingsPage.help);
-                  },
-                  child: const Text(SettingsTextConstants.repportBug,
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
-                ),
+                // const SizedBox(
+                //   height: 30,
+                // ),
+                // SettingsItem(
+                //   icon: HeroIcons.chatBubbleLeftRight,
+                //   onTap: () {
+                //     // pageNotifier.setSettingsPage(SettingsPage.help);
+                //   },
+                //   child: const Text(SettingsTextConstants.askHelp,
+                //       style: TextStyle(fontSize: 16, color: Colors.black)),
+                // ),
+                // const SizedBox(
+                //   height: 30,
+                // ),
+                // SettingsItem(
+                //   icon: HeroIcons.bugAnt,
+                //   onTap: () {
+                //     // pageNotifier.setSettingsPage(SettingsPage.help);
+                //   },
+                //   child: const Text(SettingsTextConstants.repportBug,
+                //       style: TextStyle(fontSize: 16, color: Colors.black)),
+                // ),
                 const SizedBox(
                   height: 30,
                 ),
@@ -250,28 +250,28 @@ class MainPage extends HookConsumerWidget {
                           fontWeight: FontWeight.w700,
                           color: Colors.black)),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
-                SettingsItem(
-                  icon: HeroIcons.bellAlert,
-                  onTap: () {
-                    // pageNotifier.setSettingsPage(SettingsPage.help);
-                  },
-                  child: const Text(SettingsTextConstants.notifications,
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                SettingsItem(
-                  icon: HeroIcons.moon,
-                  onTap: () {
-                    // pageNotifier.setSettingsPage(SettingsPage.help);
-                  },
-                  child: const Text(SettingsTextConstants.darkMode,
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
-                ),
+                // const SizedBox(
+                //   height: 30,
+                // ),
+                // SettingsItem(
+                //   icon: HeroIcons.bellAlert,
+                //   onTap: () {
+                //     // pageNotifier.setSettingsPage(SettingsPage.help);
+                //   },
+                //   child: const Text(SettingsTextConstants.notifications,
+                //       style: TextStyle(fontSize: 16, color: Colors.black)),
+                // ),
+                // const SizedBox(
+                //   height: 30,
+                // ),
+                // SettingsItem(
+                //   icon: HeroIcons.moon,
+                //   onTap: () {
+                //     // pageNotifier.setSettingsPage(SettingsPage.help);
+                //   },
+                //   child: const Text(SettingsTextConstants.darkMode,
+                //       style: TextStyle(fontSize: 16, color: Colors.black)),
+                // ),
                 const SizedBox(
                   height: 30,
                 ),

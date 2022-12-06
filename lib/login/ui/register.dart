@@ -97,23 +97,26 @@ class Register extends HookConsumerWidget {
                     height: 30,
                   ),
                   SignUpBar(
-                    label: LoginTextConstants.create,
-                    isLoading: ref.watch(loadingrovider),
-                    onPressed: () async {
-                      final value = await signUpNotifier.createUser(
-                          mail.text, AccountType.student);
-                      if (value) {
-                        hidePass.value = true;
-                        mail.clear();
-                        onMailRecieved();
-                        displayToastWithContext(
-                            TypeMsg.msg, LoginTextConstants.sendedMail);
-                      } else {
-                        displayToastWithContext(
-                            TypeMsg.error, LoginTextConstants.mailSendingError);
-                      }
-                    },
-                  ),
+                      label: LoginTextConstants.create,
+                      isLoading: ref.watch(loadingrovider),
+                      onPressed: () async {
+                        if (key.currentState!.validate()) {
+                          final value = await signUpNotifier.createUser(
+                              mail.text, AccountType.student);
+                          if (value) {
+                            hidePass.value = true;
+                            mail.clear();
+                            onMailRecieved();
+                            displayToastWithContext(
+                                TypeMsg.msg, LoginTextConstants.sendedMail);
+                          } else {
+                            displayToastWithContext(TypeMsg.error,
+                                LoginTextConstants.mailSendingError);
+                          }
+                        } else {
+                            displayToastWithContext(TypeMsg.error,
+                                LoginTextConstants.emailInvalid);}
+                      }),
                   const Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
