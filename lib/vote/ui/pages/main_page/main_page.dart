@@ -2,30 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/dialog.dart';
-import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/pretendance.dart';
-import 'package:myecl/vote/class/votes.dart';
 import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
-import 'package:myecl/vote/providers/scroll_controller_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/providers/voted_section_provider.dart';
-import 'package:myecl/vote/providers/votes_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/tools/constants.dart';
+import 'package:myecl/vote/ui/pages/main_page/list_pretendence_card.dart';
 import 'package:myecl/vote/ui/pages/main_page/list_side_item.dart';
-import 'package:myecl/vote/ui/pages/main_page/pretendance_card.dart';
 import 'package:myecl/vote/ui/pages/main_page/section_title.dart';
+import 'package:myecl/vote/ui/pages/main_page/vote_button.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -38,17 +31,12 @@ class MainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isVoteAdmin);
     final sections = ref.watch(sectionsProvider);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
-    final section = ref.watch(sectionProvider);
     final sectionsPretendances = ref.watch(sectionPretendanceProvider);
     final pretendances = ref.watch(pretendanceListProvider);
     final sectionPretendanceNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
-    final votesNotifier = ref.watch(votesProvider.notifier);
     return status.when(data: (s) {
       if (s == Status.open) {
-        final selectedPretendance = ref.watch(selectedPretendanceProvider);
-        final selectedPretendanceNotifier =
-            ref.watch(selectedPretendanceProvider.notifier);
         final logosNotifier = ref.watch(pretendenceLogoProvider.notifier);
         final votedSection = ref.watch(votedSectionProvider);
         final votedSectionNotifier = ref.watch(votedSectionProvider.notifier);
@@ -57,22 +45,6 @@ class MainPage extends HookConsumerWidget {
         final animation = useAnimationController(
           duration: const Duration(milliseconds: 2400),
         );
-        final hideAnimation = useAnimationController(
-            duration: const Duration(milliseconds: 200), initialValue: 1);
-
-        double h = 0;
-        sectionsPretendances
-            .whenData((pretendanceList) => pretendanceList[section]!.whenData(
-                  (pretendance) {
-                    h = pretendance.length * 180 -
-                        MediaQuery.of(context).size.height +
-                        250;
-                  },
-                ));
-
-        final scrollController =
-            ref.watch(scrollControllerProvider(hideAnimation));
-        final pageOpened = useState(false);
 
         List<String> alreadyVotedSection = [];
         votedSection.when(
@@ -82,14 +54,6 @@ class MainPage extends HookConsumerWidget {
             error: (error, stackTrace) {},
             loading: () {});
 
-        void displayVoteToastWithContext(TypeMsg type, String msg) {
-          displayToast(context, type, msg);
-        }
-
-        if (!pageOpened.value) {
-          animation.forward();
-          pageOpened.value = true;
-        }
         return Refresher(
           onRefresh: () async {
             await statusNotifier.loadStatus();
@@ -208,203 +172,9 @@ class MainPage extends HookConsumerWidget {
                                         height: 15,
                                       ),
                                       Expanded(
-                                        child: Stack(
-                                          children: [
-                                            SingleChildScrollView(
-                                              controller: scrollController,
-                                              physics:
-                                                  const BouncingScrollPhysics(),
-                                              child: pretendanceList.isNotEmpty
-                                                  ? alreadyVotedSection
-                                                          .contains(section.id)
-                                                      ? SizedBox(
-                                                          height: 350,
-                                                          width: 200,
-                                                          child: Center(
-                                                            child: Column(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: const [
-                                                                HeroIcon(
-                                                                    HeroIcons
-                                                                        .checkCircle,
-                                                                    color: ColorConstants
-                                                                        .background2,
-                                                                    size: 100),
-                                                                SizedBox(
-                                                                  height: 30,
-                                                                ),
-                                                                Text(
-                                                                    VoteTextConstants
-                                                                        .alreadyVoted,
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        fontWeight:
-                                                                            FontWeight.bold)),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : Column(
-                                                          children:
-                                                              pretendanceList[
-                                                                      section]!
-                                                                  .when(
-                                                          data: (pretendance) =>
-                                                              pretendance
-                                                                  .map((e) {
-                                                            final index =
-                                                                pretendance
-                                                                    .indexOf(e);
-                                                            return PretendanceCard(
-                                                                index: index,
-                                                                pretendance: e,
-                                                                animation:
-                                                                    animation);
-                                                          }).toList(),
-                                                          loading: () => const [
-                                                            Center(
-                                                              child:
-                                                                  CircularProgressIndicator(),
-                                                            )
-                                                          ],
-                                                          error:
-                                                              (error, stack) =>
-                                                                  const [
-                                                            Center(
-                                                              child: Text(
-                                                                  "Error occured"),
-                                                            )
-                                                          ],
-                                                        ))
-                                                  : const SizedBox(
-                                                      height: 150,
-                                                      child: Center(
-                                                        child: Text(
-                                                            VoteTextConstants
-                                                                .noPretendanceList),
-                                                      ),
-                                                    ),
-                                            ),
-                                            if (h > 0)
-                                              Positioned(
-                                                  bottom: 10,
-                                                  right: 70,
-                                                  child: FadeTransition(
-                                                    opacity: hideAnimation,
-                                                    child: ScaleTransition(
-                                                      scale: hideAnimation,
-                                                      child: GestureDetector(
-                                                        onTap: (() {
-                                                          hideAnimation
-                                                              .animateTo(0);
-                                                          scrollController.animateTo(
-                                                              h + 25,
-                                                              duration:
-                                                                  const Duration(
-                                                                      milliseconds:
-                                                                          350),
-                                                              curve: Curves
-                                                                  .decelerate);
-                                                        }),
-                                                        child: SlideTransition(
-                                                          position: Tween<
-                                                              Offset>(
-                                                            begin: const Offset(
-                                                                2, 0),
-                                                            end: const Offset(
-                                                                0, 0),
-                                                          ).animate(CurvedAnimation(
-                                                              parent: animation,
-                                                              curve: const Interval(
-                                                                  0.2, 0.4,
-                                                                  curve: Curves
-                                                                      .easeOut))),
-                                                          child: Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        15,
-                                                                    vertical:
-                                                                        8),
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              gradient: LinearGradient(
-                                                                  colors: [
-                                                                    ColorConstants
-                                                                        .background2
-                                                                        .withOpacity(
-                                                                            0.8),
-                                                                    Colors.black
-                                                                        .withOpacity(
-                                                                            0.8)
-                                                                  ],
-                                                                  begin: Alignment
-                                                                      .topLeft,
-                                                                  end: Alignment
-                                                                      .bottomRight),
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                    color: ColorConstants
-                                                                        .background2
-                                                                        .withOpacity(
-                                                                            0.4),
-                                                                    offset:
-                                                                        const Offset(
-                                                                            2,
-                                                                            3),
-                                                                    blurRadius:
-                                                                        5)
-                                                              ],
-                                                              borderRadius:
-                                                                  const BorderRadius
-                                                                          .all(
-                                                                      Radius.circular(
-                                                                          25)),
-                                                            ),
-                                                            alignment: Alignment
-                                                                .center,
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceEvenly,
-                                                              children: [
-                                                                HeroIcon(
-                                                                  HeroIcons
-                                                                      .chevronDoubleDown,
-                                                                  size: 15,
-                                                                  color: Colors
-                                                                      .grey
-                                                                      .shade100,
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 10,
-                                                                ),
-                                                                Text(
-                                                                  VoteTextConstants
-                                                                      .seeMore,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        18,
-                                                                    color: Colors
-                                                                        .grey
-                                                                        .shade100,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ))
-                                          ],
-                                        ),
-                                      ),
+                                          child: ListPretendenceCard(
+                                        animation: animation,
+                                      ))
                                     ]),
                                     loading: () => const Center(
                                       child: CircularProgressIndicator(),
@@ -421,90 +191,7 @@ class MainPage extends HookConsumerWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        if (sectionList.isNotEmpty)
-                          Padding(
-                            padding: const EdgeInsets.only(right: 30.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                if (selectedPretendance.id != "") {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return CustomDialogBox(
-                                          title: VoteTextConstants.vote,
-                                          descriptions:
-                                              VoteTextConstants.confirmVote,
-                                          onYes: () {
-                                            tokenExpireWrapper(ref, () async {
-                                              final result = await votesNotifier
-                                                  .addVote(Votes(
-                                                      id: selectedPretendance
-                                                          .id));
-                                              if (result) {
-                                                votedSectionNotifier
-                                                    .addVote(section.id);
-                                                selectedPretendanceNotifier
-                                                    .clear();
-                                                displayVoteToastWithContext(
-                                                    TypeMsg.msg,
-                                                    VoteTextConstants
-                                                        .voteSuccess);
-                                              } else {
-                                                displayVoteToastWithContext(
-                                                    TypeMsg.error,
-                                                    VoteTextConstants
-                                                        .voteError);
-                                              }
-                                            });
-                                          },
-                                        );
-                                      });
-                                }
-                              },
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 12),
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: selectedPretendance.id == ""
-                                          ? [
-                                              Colors.white,
-                                              Colors.grey.shade50,
-                                            ]
-                                          : [
-                                              Colors.grey.shade900,
-                                              Colors.black
-                                            ],
-                                    ),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        spreadRadius: 5,
-                                        blurRadius: 10,
-                                        offset: const Offset(3, 3),
-                                      )
-                                    ]),
-                                child: Center(
-                                  child: Text(
-                                    selectedPretendance.id != ""
-                                        ? VoteTextConstants.voteFor +
-                                            selectedPretendance.name
-                                        : VoteTextConstants.chooseList,
-                                    style: TextStyle(
-                                        color: selectedPretendance.id == ""
-                                            ? Colors.black
-                                            : Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                        if (sectionList.isNotEmpty) const VoteButton(),
                         const SizedBox(
                           height: 20,
                         ),
