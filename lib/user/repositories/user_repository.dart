@@ -86,12 +86,12 @@ class UserRepository extends Repository {
       ..files.add(await http.MultipartFile.fromPath('image', path,
           contentType: MediaType('image', 'jpeg')));
     final response = await request.send();
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       return image;
     } else if (response.statusCode == 403) {
       FLog.error(
           text:
-              "POST {ext}me/profile-picture/\n${response.statusCode} ${response.reasonPhrase}");
+              "POST ${ext}me/profile-picture/\n${response.statusCode} ${response.reasonPhrase}");
       throw AppException(ErrorType.tokenExpire, response.reasonPhrase ?? "");
     } else {
       FLog.error(
