@@ -58,6 +58,10 @@ flutter build appbundle
 
 ## Export APKs
 
+```bash
+flutter build apk --split-per-abi
+```
+
 ## Advanced
 
 ### Change the OAuth 2.0 client id
