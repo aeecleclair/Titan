@@ -171,6 +171,7 @@ class CreateAccountPage extends HookConsumerWidget {
         pageController: pageController,
         currentPage: currentPage,
         keyboardType: TextInputType.number,
+        hint: "20",
       ),
       CreateAccountField(
         controller: phone,

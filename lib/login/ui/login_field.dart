@@ -12,6 +12,7 @@ class CreateAccountField extends HookConsumerWidget {
   final ValueNotifier<int> currentPage;
   final TextInputType keyboardType;
   final List<String> autofillHints;
+  final String hint;
   const CreateAccountField({
     super.key,
     required this.controller,
@@ -21,6 +22,7 @@ class CreateAccountField extends HookConsumerWidget {
     required this.currentPage,
     this.keyboardType = TextInputType.text,
     this.autofillHints = const [],
+    this.hint = '',
   });
 
   @override
@@ -47,6 +49,7 @@ class CreateAccountField extends HookConsumerWidget {
         ),
         AutofillGroup(
             child: TextFormField(
+            
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -66,6 +69,7 @@ class CreateAccountField extends HookConsumerWidget {
           cursorColor: Colors.white,
           decoration: (keyboardType == TextInputType.visiblePassword)
               ? InputDecoration(
+                hintText: hint,
                   suffixIcon: IconButton(
                     icon: Icon(
                       hidePassword.value
@@ -89,7 +93,8 @@ class CreateAccountField extends HookConsumerWidget {
                     color: Colors.white,
                   )),
                   errorStyle: const TextStyle(color: Colors.white))
-              : const InputDecoration(
+              : InputDecoration(
+                  hintText: hint,
                   enabledBorder: UnderlineInputBorder(
                       borderSide:
                           BorderSide(color: ColorConstants.background2)),

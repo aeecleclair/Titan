@@ -33,6 +33,7 @@ class LoginTextConstants {
   static const String recievedMail = 'J\'ai reçu le mail';
   static const String recover = 'Réinitialiser';
   static const String resetedPassword = 'Mot de passe réinitialisé';
+  static const String resetPasswordTitle = 'Réinitialiser\nle mot de passe';
   static const String username = 'Surnom';
   static const String welcomeBack = 'Bienvenue';
 }

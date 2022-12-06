@@ -99,7 +99,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                LoginTextConstants.createAccountTitle,
+                LoginTextConstants.resetPasswordTitle,
                 style: GoogleFonts.elMessiri(
                     textStyle: const TextStyle(
                   fontSize: 30,
