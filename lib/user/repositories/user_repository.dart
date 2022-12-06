@@ -38,12 +38,12 @@ class UserRepository extends Repository {
   }
 
   Future<bool> changePassword(
-      String oldPassword, String newPassword, String userId) async {
+      String oldPassword, String newPassword, String mail) async {
     try {
       return (await create({
         "old_password": oldPassword,
         "new_password": newPassword,
-        "user_id": userId
+        "email": mail
       }, suffix: "change-password"))["success"];
     } catch (e) {
       return false;
