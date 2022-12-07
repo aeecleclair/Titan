@@ -314,80 +314,91 @@ class MainPage extends HookConsumerWidget {
                               const SizedBox(
                                 height: 50,
                               ),
-                              ...pretendanceList
-                                  .map((key, value) => MapEntry(
-                                        key,
-                                        value.when(
-                                          data: (pretendance) => Align(
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  60,
-                                              margin: const EdgeInsets.only(
-                                                  right: 30, bottom: 30),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.black,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15)),
-                                              child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 20,
-                                                      vertical: 10),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Column(
-                                                        children: [
-                                                          Text(
-                                                            key.name,
-                                                            style: const TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 3,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Column(
-                                                        children: [
-                                                          const SizedBox(
-                                                            height: 3,
-                                                          ),
-                                                          Text(
-                                                            pretendance.length
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  )),
-                                            ),
-                                          ),
-                                          loading: () => const Center(
-                                              child:
-                                                  CircularProgressIndicator()),
-                                          error: (error, stack) => const Center(
-                                              child: Text('Error')),
-                                        ),
-                                      ))
-                                  .values
+                              Expanded(
+                                  child: Column(
+                                      children: pretendanceList
+                                          .map((key, value) => MapEntry(
+                                                key,
+                                                value.when(
+                                                  data: (pretendance) => Align(
+                                                    child: Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width -
+                                                              60,
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                              right: 30,
+                                                              bottom: 30),
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.black,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15)),
+                                                      child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      20,
+                                                                  vertical: 10),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Column(
+                                                                children: [
+                                                                  Text(
+                                                                    key.name,
+                                                                    style: const TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            20,
+                                                                        fontWeight:
+                                                                            FontWeight.w700),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 3,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              Column(
+                                                                children: [
+                                                                  const SizedBox(
+                                                                    height: 3,
+                                                                  ),
+                                                                  Text(
+                                                                    pretendance
+                                                                        .length
+                                                                        .toString(),
+                                                                    style: const TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            20,
+                                                                        fontWeight:
+                                                                            FontWeight.w700),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          )),
+                                                    ),
+                                                  ),
+                                                  loading: () => const Center(
+                                                      child:
+                                                          CircularProgressIndicator()),
+                                                  error: (error, stack) =>
+                                                      const Center(
+                                                          child: Text('Error')),
+                                                ),
+                                              ))
+                                          .values
+                                          .toList()))
                             ]),
                             error: (Object error, StackTrace stackTrace) {
                               return Center(child: Text('Error $error'));
