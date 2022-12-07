@@ -16,6 +16,7 @@ import 'package:myecl/vote/providers/show_graph_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/tools/constants.dart';
+import 'package:myecl/vote/ui/pages/admin_page/open_excel.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_bar.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_pretendence_items.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_bars.dart';
@@ -105,6 +106,17 @@ class AdminPage extends HookConsumerWidget {
                         },
                         child: const HeroIcon(
                           HeroIcons.eyeSlash,
+                          size: 25.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                    if (showVotes && status == Status.counting)
+                      GestureDetector(
+                        onTap: () {
+                          openExcel(ref);
+                        },
+                        child: const HeroIcon(
+                          HeroIcons.tableCells,
                           size: 25.0,
                           color: Colors.black,
                         ),

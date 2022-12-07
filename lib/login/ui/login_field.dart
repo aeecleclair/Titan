@@ -95,18 +95,18 @@ class CreateAccountField extends HookConsumerWidget {
                   errorStyle: const TextStyle(color: Colors.white))
               : InputDecoration(
                   hintText: hint,
-                  enabledBorder: UnderlineInputBorder(
+                  enabledBorder: const UnderlineInputBorder(
                       borderSide:
                           BorderSide(color: ColorConstants.background2)),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(
                     color: Colors.white,
                   )),
-                  errorBorder: UnderlineInputBorder(
+                  errorBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(
                     color: Colors.white,
                   )),
-                  errorStyle: TextStyle(color: Colors.white)),
+                  errorStyle: const TextStyle(color: Colors.white)),
           validator: (value) {
             if (value == null || value.isEmpty) {
               return LoginTextConstants.emptyFieldError;
