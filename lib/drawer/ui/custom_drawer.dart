@@ -60,11 +60,11 @@ class CustomDrawer extends StatelessWidget {
               Positioned(
                 top: 40,
                 left: 0,
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Center(
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 220),
+                      margin: const EdgeInsets.symmetric(horizontal: 220),
                       alignment: Alignment.center,
                       padding: const EdgeInsets.symmetric(
                           vertical: 12, horizontal: 15),
