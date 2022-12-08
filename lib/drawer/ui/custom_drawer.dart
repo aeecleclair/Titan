@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ class CustomDrawer extends StatelessWidget {
   final SwipeControllerNotifier controllerNotifier;
   const CustomDrawer({Key? key, required this.controllerNotifier})
       : super(key: key);
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(

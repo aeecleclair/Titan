@@ -5,6 +5,7 @@ import 'package:myecl/settings/providers/logs_provider.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -26,6 +27,7 @@ class MainPage extends HookConsumerWidget {
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
+
     return Refresher(
         onRefresh: () async {
           await meNotifier.loadMe();
@@ -300,13 +302,25 @@ class MainPage extends HookConsumerWidget {
                 SettingsItem(
                   icon: HeroIcons.circleStack,
                   onTap: () async {
-                    final value = await meNotifier.deletePersonal();
-                    if (value) {
-                      displayToastWithContext(TypeMsg.msg, SettingsTextConstants.sendedDemand);
-                    } else {
-                      displayToastWithContext(TypeMsg.error,
-                          SettingsTextConstants.errorSendingDemand);
-                    }
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CustomDialogBox(
+                            title: SettingsTextConstants.detelePersonalData,
+                            descriptions:
+                                SettingsTextConstants.detelePersonalDataDesc,
+                            onYes: () async {
+                              final value = await meNotifier.deletePersonal();
+                              if (value) {
+                                displayToastWithContext(TypeMsg.msg,
+                                    SettingsTextConstants.sendedDemand);
+                              } else {
+                                displayToastWithContext(TypeMsg.error,
+                                    SettingsTextConstants.errorSendingDemand);
+                              }
+                            },
+                          );
+                        });
                   },
                   child: const Text(SettingsTextConstants.detelePersonalData,
                       style: TextStyle(fontSize: 16, color: Colors.black)),
