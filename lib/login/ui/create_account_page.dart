@@ -31,13 +31,6 @@ class CreateAccountPage extends HookConsumerWidget {
     final birthday = useTextEditingController();
     final promo = useTextEditingController();
     final phone = useTextEditingController();
-    final floor = useTextEditingController();
-    final currentPage = useState(0);
-    final pageController = usePageController();
-    void displayToastWithContext(TypeMsg type, String msg) {
-      displayToast(context, type, msg);
-    }
-
     List<DropdownMenuItem> items = [
       "Adoma",
       "Exté",
@@ -69,7 +62,12 @@ class CreateAccountPage extends HookConsumerWidget {
             ))
         .toList();
 
-    floor.text = items[0].value.toString();
+    final floor = useTextEditingController(text: items[0].value.toString());
+    final currentPage = useState(0);
+    final pageController = usePageController();
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     List<Widget> steps = [
       CreateAccountField(
@@ -206,6 +204,7 @@ class CreateAccountPage extends HookConsumerWidget {
               value: floor.text,
               onChanged: (value) {
                 floor.text = value.toString();
+                print(floor.text);
               },
               dropdownColor: ColorConstants.background2,
               iconEnabledColor: Colors.grey.shade100.withOpacity(.8),
