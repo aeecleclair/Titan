@@ -48,7 +48,6 @@ class MainPage extends HookConsumerWidget {
     });
 
     final isAEMember = ref.watch(isAEMemberProvider);
-    final isAEMemberNotifier = ref.watch(isAEMemberProvider.notifier);
 
     if (isAEMember) {
       return Refresher(

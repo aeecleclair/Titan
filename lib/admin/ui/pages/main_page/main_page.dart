@@ -25,14 +25,17 @@ class MainPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(adminPageProvider.notifier);
     final groupNotifier = ref.watch(groupProvider.notifier);
     final groupIdNotifier = ref.watch(groupIdProvider.notifier);
-    final loans = ref.watch(loanerList);
+    final loans = ref.watch(loanerListProvider);
     final loanListNotifier = ref.watch(loanerListProvider.notifier);
     ref.watch(userList);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
-    final loanersId = loans.map((e) => e.groupManagerId).toList();
+    final loanersId = [];
+
+    loans.whenData(
+        (value) => loanersId.addAll(value.map((e) => e.groupManagerId)));
 
     return Refresher(
       onRefresh: () async {
