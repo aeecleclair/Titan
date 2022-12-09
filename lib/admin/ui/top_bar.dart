@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class TopBar extends HookConsumerWidget {
@@ -32,7 +33,9 @@ class TopBar extends HookConsumerWidget {
                         switch (page) {
                           case AdminPage.main:
                             controllerNotifier.toggle();
-                            await meNotifier.loadMe();
+                            tokenExpireWrapper(ref, () async {
+                              await meNotifier.loadMe();
+                            });
                             break;
                           case AdminPage.asso:
                             pageNotifier.setAdminPage(AdminPage.main);
