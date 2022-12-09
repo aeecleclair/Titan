@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/vote/class/pretendance.dart';
+import 'package:myecl/vote/providers/is_ae_member_provider.dart';
 import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
@@ -42,152 +43,166 @@ class MainPage extends HookConsumerWidget {
         ref.watch(pretendanceLogosProvider.notifier);
 
     List<String> alreadyVotedSection = [];
-    votedSection.when(
-        data: (voted) {
-          alreadyVotedSection = voted;
-        },
-        error: (error, stackTrace) {},
-        loading: () {});
+    votedSection.whenData((voted) {
+      alreadyVotedSection = voted;
+    });
 
-    return Refresher(
-      onRefresh: () async {
-        await statusNotifier.loadStatus();
-        await votedSectionNotifier.getVotedSections();
-        final sections = await sectionsNotifier.loadSectionList();
-        sections.whenData((value) {
-          List<Pretendance> list = [];
-          pretendances.when(data: (pretendance) {
-            list = pretendance;
-          }, error: (error, stackTrace) {
-            list = [];
-          }, loading: () {
-            list = [];
-          });
-          sectionPretendanceNotifier.loadTList(value);
-          pretendanceLogosNotifier.loadTList(list);
-          for (final l in value) {
-            if (!alreadyVotedSection.contains(l.id)) {
-              sectionPretendanceNotifier.setTData(
-                  l,
-                  AsyncValue.data(list
-                      .where((element) => element.section.id == l.id)
-                      .toList()));
+    final isAEMember = ref.watch(isAEMemberProvider);
+    final isAEMemberNotifier = ref.watch(isAEMemberProvider.notifier);
+
+    if (isAEMember) {
+      return Refresher(
+        onRefresh: () async {
+          await statusNotifier.loadStatus();
+          await votedSectionNotifier.getVotedSections();
+          final sections = await sectionsNotifier.loadSectionList();
+          sections.whenData((value) {
+            List<Pretendance> list = [];
+            pretendances.whenData((pretendance) {
+              list = pretendance;
+            });
+            sectionPretendanceNotifier.loadTList(value);
+            pretendanceLogosNotifier.loadTList(list);
+            for (final l in value) {
+              if (!alreadyVotedSection.contains(l.id)) {
+                sectionPretendanceNotifier.setTData(
+                    l,
+                    AsyncValue.data(list
+                        .where((element) => element.section.id == l.id)
+                        .toList()));
+              }
             }
-          }
-          for (final l in list) {
-            logosNotifier.getLogo(l.id).then((value) =>
-                pretendanceLogosNotifier.setTData(l, AsyncValue.data([value])));
-          }
-        });
-      },
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height - 100,
-        child: Padding(
-            padding: const EdgeInsets.only(left: 30.0),
-            child: Column(children: [
-              SizedBox(
-                height: isAdmin ? 10 : 15,
-              ),
-              sections.when(
-                data: (sectionList) => Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height -
-                          (isAdmin ? 215 : 220),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          ListSideItem(
-                              sectionList: sectionList, animation: animation),
-                          Expanded(
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: sectionsPretendances.when(
-                                data: (pretendanceList) => Column(children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      SectionTitle(sectionList: sectionList),
-                                      if (isAdmin)
-                                        Container(
-                                          margin:
-                                              const EdgeInsets.only(right: 20),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              pageNotifier
-                                                  .setVotePage(VotePage.admin);
-                                            },
-                                            child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12,
-                                                      vertical: 8),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.black,
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                        color: Colors.black
-                                                            .withOpacity(0.2),
-                                                        blurRadius: 10,
-                                                        offset:
-                                                            const Offset(0, 5))
-                                                  ]),
-                                              child: Row(
-                                                children: const [
-                                                  HeroIcon(HeroIcons.userGroup,
-                                                      color: Colors.white),
-                                                  SizedBox(width: 10),
-                                                  Text("Admin",
-                                                      style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.white)),
-                                                ],
+            for (final l in list) {
+              logosNotifier.getLogo(l.id).then((value) =>
+                  pretendanceLogosNotifier.setTData(
+                      l, AsyncValue.data([value])));
+            }
+          });
+        },
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height - 100,
+          child: Padding(
+              padding: const EdgeInsets.only(left: 30.0),
+              child: Column(children: [
+                SizedBox(
+                  height: isAdmin ? 10 : 15,
+                ),
+                sections.when(
+                  data: (sectionList) => Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height -
+                            (isAdmin ? 215 : 220),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            ListSideItem(
+                                sectionList: sectionList, animation: animation),
+                            Expanded(
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: sectionsPretendances.when(
+                                  data: (pretendanceList) => Column(children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SectionTitle(sectionList: sectionList),
+                                        if (isAdmin)
+                                          Container(
+                                            margin: const EdgeInsets.only(
+                                                right: 20),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                pageNotifier.setVotePage(
+                                                    VotePage.admin);
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12,
+                                                        vertical: 8),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                          color: Colors.black
+                                                              .withOpacity(0.2),
+                                                          blurRadius: 10,
+                                                          offset: const Offset(
+                                                              0, 5))
+                                                    ]),
+                                                child: Row(
+                                                  children: const [
+                                                    HeroIcon(
+                                                        HeroIcons.userGroup,
+                                                        color: Colors.white),
+                                                    SizedBox(width: 10),
+                                                    Text("Admin",
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.white)),
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        )
-                                    ],
+                                          )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    Expanded(
+                                        child: ListPretendenceCard(
+                                      animation: animation,
+                                    ))
+                                  ]),
+                                  loading: () => const Center(
+                                    child: CircularProgressIndicator(),
                                   ),
-                                  const SizedBox(
-                                    height: 15,
+                                  error: (error, stack) => const Center(
+                                    child: Text('Error'),
                                   ),
-                                  Expanded(
-                                      child: ListPretendenceCard(
-                                    animation: animation,
-                                  ))
-                                ]),
-                                loading: () => const Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                                error: (error, stack) => const Center(
-                                  child: Text('Error'),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    if (sectionList.isNotEmpty) const VoteButton(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      if (sectionList.isNotEmpty) const VoteButton(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (error, stack) => const Center(child: Text('Error')),
                 ),
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, stack) => const Center(child: Text('Error')),
-              ),
-            ])),
-      ),
-    );
+              ])),
+        ),
+      );
+    } else {
+      return SizedBox(
+          height: MediaQuery.of(context).size.height - 100,
+          child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Center(
+                child: const Text(
+                  "Vous n'êtes pas membre de l'AE",
+                  style: TextStyle(fontSize: 20),
+                ),
+              )));
+    }
   }
 }
       // } else {

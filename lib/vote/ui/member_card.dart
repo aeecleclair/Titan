@@ -47,7 +47,7 @@ class MemberCard extends StatelessWidget {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
-              const SizedBox(height: 3),
+              const SizedBox(height: 2),
               AutoSizeText(
                   member.nickname.isNotEmpty
                       ? '${member.firstname} ${member.name}'
@@ -57,10 +57,12 @@ class MemberCard extends StatelessWidget {
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey.shade400)),
-              const SizedBox(height: 3),
+              const SizedBox(height: 2),
               if (!isAdmin) const Spacer(),
               AutoSizeText(member.role,
                   maxLines: 1,
+                  minFontSize: 10,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
