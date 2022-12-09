@@ -1,4 +1,5 @@
 import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class User {
@@ -26,9 +27,9 @@ class User {
   late final List<SimpleGroup> groups;
 
   User.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    firstname = json['firstname'];
-    nickname = json['nickname'] ?? "";
+    name = capitaliseAll(json['name']);
+    firstname = capitaliseAll(json['firstname']);
+    nickname = capitaliseAll(json['nickname'] ?? "");
     id = json['id'];
     email = json['email'];
     birthday = json['birthday'];

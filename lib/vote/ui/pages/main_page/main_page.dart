@@ -194,10 +194,10 @@ class MainPage extends HookConsumerWidget {
     } else {
       return SizedBox(
           height: MediaQuery.of(context).size.height - 100,
-          child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
               child: Center(
-                child: const Text(
+                child: Text(
                   "Vous n'êtes pas membre de l'AE",
                   style: TextStyle(fontSize: 20),
                 ),
