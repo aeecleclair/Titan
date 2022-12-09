@@ -24,20 +24,20 @@ class ListPretendenceCard extends HookConsumerWidget {
         duration: const Duration(milliseconds: 200), initialValue: 1);
 
     final status = ref.watch(statusProvider);
+    final s = status.when(
+        data: (value) => value,
+        loading: () => Status.closed,
+        error: (error, stack) => Status.closed);
 
     double h = 0;
-    status.whenData((s) {
-      if (s == Status.open) {
-        sectionsPretendances
-            .whenData((pretendanceList) => pretendanceList[section]!.whenData(
-                  (pretendance) {
-                    h = pretendance.length * 180 -
-                        MediaQuery.of(context).size.height +
-                        250;
-                  },
-                ));
-      }
-    });
+    sectionsPretendances
+        .whenData((pretendanceList) => pretendanceList[section]!.whenData(
+              (pretendance) {
+                h = pretendance.length * (s == Status.open ? 180 : 140) -
+                    MediaQuery.of(context).size.height +
+                    250;
+              },
+            ));
 
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
     final votedSection = ref.watch(votedSectionProvider);

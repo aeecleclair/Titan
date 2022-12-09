@@ -6,8 +6,10 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/votes.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
+import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/voted_section_provider.dart';
 import 'package:myecl/vote/providers/votes_provider.dart';
+import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/tools/constants.dart';
 
 class VoteButton extends HookConsumerWidget {
@@ -22,6 +24,12 @@ class VoteButton extends HookConsumerWidget {
         ref.watch(selectedPretendanceProvider.notifier);
     final votedSectionNotifier = ref.watch(votedSectionProvider.notifier);
 
+    final status = ref.watch(statusProvider);
+    final s = status.when(
+        data: (value) => value,
+        loading: () => Status.closed,
+        error: (error, stack) => Status.closed);
+
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -30,7 +38,7 @@ class VoteButton extends HookConsumerWidget {
       padding: const EdgeInsets.only(right: 30.0),
       child: GestureDetector(
         onTap: () {
-          if (selectedPretendance.id != "") {
+          if (selectedPretendance.id != "" && s == Status.open) {
             showDialog(
                 context: context,
                 builder: (context) {
@@ -63,7 +71,7 @@ class VoteButton extends HookConsumerWidget {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: selectedPretendance.id == ""
+                colors: selectedPretendance.id == "" && s != Status.open
                     ? [
                         Colors.white,
                         Colors.grey.shade50,
@@ -83,9 +91,15 @@ class VoteButton extends HookConsumerWidget {
             child: Text(
               selectedPretendance.id != ""
                   ? VoteTextConstants.voteFor + selectedPretendance.name
-                  : VoteTextConstants.chooseList,
+                  : s == Status.open
+                      ? VoteTextConstants.chooseList
+                      : s == Status.waiting
+                          ? VoteTextConstants.notOpenedVote
+                          : s == Status.closed
+                              ? VoteTextConstants.closedVote
+                              : VoteTextConstants.onGoingCount,
               style: TextStyle(
-                  color: selectedPretendance.id == ""
+                  color: selectedPretendance.id == "" && s != Status.open
                       ? Colors.black
                       : Colors.white,
                   fontSize: 20,

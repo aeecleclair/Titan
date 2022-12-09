@@ -9,7 +9,9 @@ import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
+import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
+import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/tools/constants.dart';
 
 class PretendanceCard extends HookConsumerWidget {
@@ -34,6 +36,11 @@ class PretendanceCard extends HookConsumerWidget {
     final pretendanceLogosNotifier =
         ref.watch(pretendanceLogosProvider.notifier);
     final logoNotifier = ref.watch(pretendenceLogoProvider.notifier);
+    final status = ref.watch(statusProvider);
+    final s = status.when(
+        data: (value) => value,
+        loading: () => Status.closed,
+        error: (error, stack) => Status.closed);
     return SlideTransition(
       position: Tween<Offset>(
         begin: const Offset(1, 0),
@@ -45,7 +52,7 @@ class PretendanceCard extends HookConsumerWidget {
       child: Container(
           padding: const EdgeInsets.all(10.0),
           margin: const EdgeInsets.only(bottom: 15, left: 10),
-          height: 160,
+          height: s == Status.open ? 160 : 120,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: const BorderRadius.only(
@@ -172,46 +179,47 @@ class PretendanceCard extends HookConsumerWidget {
                           color: Colors.grey.shade400)),
                 ),
                 const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    selectedPretendance.id != pretendance.id
-                        ? GestureDetector(
-                            onTap: () {
-                              sections.when(
-                                  data: (data) {
-                                    selectedPretendanceNotifier
-                                        .changeSelection(pretendance);
-                                  },
-                                  error: (e, s) {},
-                                  loading: () {});
-                            },
-                            child: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(30),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 3))
-                                ],
+                if (s == Status.open)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      selectedPretendance.id != pretendance.id
+                          ? GestureDetector(
+                              onTap: () {
+                                sections.when(
+                                    data: (data) {
+                                      selectedPretendanceNotifier
+                                          .changeSelection(pretendance);
+                                    },
+                                    error: (e, s) {},
+                                    loading: () {});
+                              },
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(30),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        blurRadius: 10,
+                                        offset: const Offset(2, 3))
+                                  ],
+                                ),
+                                child: const Icon(Icons.how_to_vote,
+                                    color: Colors.white),
                               ),
-                              child: const Icon(Icons.how_to_vote,
-                                  color: Colors.white),
-                            ),
-                          )
-                        : const Text(
-                            VoteTextConstants.selected,
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          )
-                  ],
-                ),
+                            )
+                          : const Text(
+                              VoteTextConstants.selected,
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            )
+                    ],
+                  ),
               ],
             ),
           )),
