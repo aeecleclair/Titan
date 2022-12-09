@@ -106,82 +106,74 @@ class MainPage extends HookConsumerWidget {
                               ListSideItem(
                                   sectionList: sectionList,
                                   animation: animation),
-                              Expanded(
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: sectionsPretendances.when(
-                                    data: (pretendanceList) =>
-                                        Column(children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SectionTitle(
-                                              sectionList: sectionList),
-                                          if (isAdmin)
-                                            Container(
-                                              margin: const EdgeInsets.only(
-                                                  right: 20),
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  pageNotifier.setVotePage(
-                                                      VotePage.admin);
-                                                },
-                                                child: Container(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 12,
-                                                      vertical: 8),
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.black,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                            color: Colors.black
-                                                                .withOpacity(
-                                                                    0.2),
-                                                            blurRadius: 10,
-                                                            offset:
-                                                                const Offset(
-                                                                    0, 5))
-                                                      ]),
-                                                  child: Row(
-                                                    children: const [
-                                                      HeroIcon(
-                                                          HeroIcons.userGroup,
-                                                          color: Colors.white),
-                                                      SizedBox(width: 10),
-                                                      Text("Admin",
-                                                          style: TextStyle(
-                                                              fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Colors
-                                                                  .white)),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      Expanded(
-                                          child: ListPretendenceCard(
-                                        animation: animation,
-                                      ))
-                                    ]),
-                                    loading: () => const Center(
-                                      child: CircularProgressIndicator(),
+                              SizedBox(
+                                width: double.infinity,
+                                child: sectionsPretendances.when(
+                                  data: (pretendanceList) => Column(children: [
+                                    // Row(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.spaceBetween,
+                                    //   children: [
+                                    //     SectionTitle(sectionList: sectionList),
+                                    //     if (isAdmin)
+                                    //       Container(
+                                    //         margin: const EdgeInsets.only(
+                                    //             right: 20),
+                                    //         child: GestureDetector(
+                                    //           onTap: () {
+                                    //             pageNotifier.setVotePage(
+                                    //                 VotePage.admin);
+                                    //           },
+                                    //           child: Container(
+                                    //             padding:
+                                    //                 const EdgeInsets.symmetric(
+                                    //                     horizontal: 12,
+                                    //                     vertical: 8),
+                                    //             decoration: BoxDecoration(
+                                    //                 color: Colors.black,
+                                    //                 borderRadius:
+                                    //                     BorderRadius.circular(
+                                    //                         10),
+                                    //                 boxShadow: [
+                                    //                   BoxShadow(
+                                    //                       color: Colors.black
+                                    //                           .withOpacity(0.2),
+                                    //                       blurRadius: 10,
+                                    //                       offset: const Offset(
+                                    //                           0, 5))
+                                    //                 ]),
+                                    //             child: Row(
+                                    //               children: const [
+                                    //                 HeroIcon(
+                                    //                     HeroIcons.userGroup,
+                                    //                     color: Colors.white),
+                                    //                 SizedBox(width: 10),
+                                    //                 Text("Admin",
+                                    //                     style: TextStyle(
+                                    //                         fontSize: 20,
+                                    //                         fontWeight:
+                                    //                             FontWeight.bold,
+                                    //                         color:
+                                    //                             Colors.white)),
+                                    //               ],
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       )
+                                    //   ],
+                                    // ),
+                                    const SizedBox(
+                                      height: 15,
                                     ),
-                                    error: (error, stack) => const Center(
-                                      child: Text('Error'),
-                                    ),
+                                    ListPretendenceCard(
+                                      animation: animation,
+                                    )
+                                  ]),
+                                  loading: () => const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  error: (error, stack) => const Center(
+                                    child: Text('Error'),
                                   ),
                                 ),
                               ),
