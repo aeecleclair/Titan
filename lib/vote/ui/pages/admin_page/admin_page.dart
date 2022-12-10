@@ -128,7 +128,7 @@ class AdminPage extends HookConsumerWidget {
                               context: context,
                               builder: (context) {
                                 return CustomDialogBox(
-                                    title: VoteTextConstants.closeVote,
+                                    title: VoteTextConstants.resetVote,
                                     descriptions: "",
                                     onYes: () async {
                                       tokenExpireWrapper(ref, () async {

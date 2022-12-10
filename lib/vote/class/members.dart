@@ -1,3 +1,4 @@
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class Member extends SimpleUser {
@@ -30,9 +31,9 @@ class Member extends SimpleUser {
   factory Member.fromJson(Map<String, dynamic> map) {
     final user = map['user'];
     return Member(
-      name: user['name'],
-      firstname: user['firstname'],
-      nickname: user['nickname'] ?? "",
+      name: capitaliseAll(user['name']),
+      firstname: capitaliseAll(user['firstname']),
+      nickname: capitaliseAll(user['nickname'] ?? ""),
       id: user['id'],
       role: map['role'],
     );

@@ -34,6 +34,7 @@ class VoteTextConstants {
   static const String pretendance = 'Listes';
   static const String pretendanceDeleted = 'Prétendance supprimée';
   static const String pretendanceNotDeleted = 'Erreur lors de la suppression';
+  static const String resetVote = 'Réinitialiser les votes';
   static const String role = 'Rôle';
   static const String sectionDescription = 'Description de la section';
   static const String section = 'Section';
