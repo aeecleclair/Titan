@@ -2,26 +2,12 @@
 
 TITAN :
 
-- route
 - animation btn (shrinking) :
 - dark mode
 - ask help
 - TokenExpireWrapper on provider load
 - opti day list
 
-HYPERION :
-
-- Mettre le numero de promo grâce au mail pas besoin de le rentrer
-
-A VOIR :
-
-- TROP de polices différentes
-
-SSO :
-
-- adapter ecran en fonction de la resolution pour le login oauth
-- possibilité de mettre la page en français si on a un user agent anglais
-- Account Successfully created <= majuscule consistance avec un icone validé + titre dans la barre en haut
 
 API :
 

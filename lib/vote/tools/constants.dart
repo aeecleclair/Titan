@@ -13,6 +13,9 @@ class VoteTextConstants {
   static const String closeVote = 'Fermer les votes';
   static const String confirmVote = 'Confirmer le vote';
   static const String countVote = 'Dépouiller les votes';
+  static const String deletePretendance = 'Supprimer la liste';
+  static const String deletePretendanceDesc =
+      'Voulez-vous vraiment supprimer cette liste ?';
   static const String description = 'Description';
   static const String edit = 'Modifier';
   static const String editedPretendance = 'Liste modifiée';

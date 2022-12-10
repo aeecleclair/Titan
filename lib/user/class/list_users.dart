@@ -1,3 +1,5 @@
+import 'package:myecl/tools/functions.dart';
+
 class SimpleUser {
   SimpleUser({
     required this.name,
@@ -11,13 +13,9 @@ class SimpleUser {
   late final String id;
 
   SimpleUser.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    firstname = json['firstname'];
-    if (json['nickname'] != null) {
-      nickname = json['nickname'];
-    } else {
-      nickname = "";
-    }
+    name = capitaliseAll(json['name']);
+    firstname = capitaliseAll(json['firstname']);
+    nickname = capitaliseAll(json['nickname'] ?? "");
     id = json['id'];
   }
 

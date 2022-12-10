@@ -12,7 +12,7 @@ final modulesProvider =
   final me = ref.watch(userProvider);
   final isAEMember = me.groups
       .map((e) => e.id)
-      .contains("45649735-866a-49df-b04b-a13c74fd5886");
+      .contains("39691052-2ae5-4e12-99d0-7a9f5f2b0136");
   ModulesNotifier modulesNotifier = ModulesNotifier();
   modulesNotifier.loadModules(
       [ModuleType.event, ModuleType.vote], [eventAdmin, isAEMember]);
@@ -29,11 +29,11 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
         icon: HeroIcons.calendarDays,
         page: ModuleType.calendar,
         selected: false),
-    // Module(
-    //     name: "Réservation",
-    //     icon: HeroIcons.tableCells,
-    //     page: ModuleType.booking,
-    //     selected: false),
+    Module(
+        name: "Réservation",
+        icon: HeroIcons.tableCells,
+        page: ModuleType.booking,
+        selected: false),
     Module(
         name: "Prêt",
         icon: HeroIcons.buildingLibrary,

@@ -13,6 +13,7 @@ import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/loaner_chip.dart';
+import 'package:myecl/loan/ui/pages/loan_group_page/search_result.dart';
 import 'package:myecl/loan/ui/text_entry.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/check_item_card.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/date_entry.dart';
@@ -34,7 +35,6 @@ class AddLoanPage extends HookConsumerWidget {
     final associations = ref.watch(userLoanerListProvider);
     final items = useState(ref.watch(itemListProvider));
     final itemListNotifier = ref.watch(itemListProvider.notifier);
-    final users = useState(ref.watch(userList));
     final usersNotifier = ref.watch(userList.notifier);
     final selectedItems = ref.watch(selectedListProvider);
     final selectedItemsNotifier = ref.watch(selectedListProvider.notifier);
@@ -44,9 +44,9 @@ class AddLoanPage extends HookConsumerWidget {
     final note = useTextEditingController();
     final queryController = useTextEditingController();
     final caution = useTextEditingController();
-    final focus = useState(false);
     final borrower = useState(SimpleUser.empty());
     final numberSelected = useState(0);
+    final focus = useState(false);
     final displayUserSearch = useState(false);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -188,88 +188,46 @@ class AddLoanPage extends HookConsumerWidget {
                     formatNumberItems(numberSelected.value),
                   ),
                   const SizedBox(height: 20),
-                  users.value.when(data: (u) {
-                    return Column(children: <Widget>[
-                      TextFormField(
-                        onChanged: (value) {
-                          focus.value = true;
-                          if (value.isNotEmpty) {
-                            tokenExpireWrapper(ref, () async {
-                              if (queryController.text.isNotEmpty) {
-                                final value = await usersNotifier
-                                    .filterUsers(queryController.text);
-                                users.value = value;
-                                displayUserSearch.value = true;
-                              } else {
-                                displayUserSearch.value = false;
-                                users.value = const AsyncData([]);
-                              }
-                            });
+                  Column(children: <Widget>[
+                    TextFormField(
+                      onChanged: (value) {
+                        tokenExpireWrapper(ref, () async {
+                          if (queryController.text.isNotEmpty) {
+                            await usersNotifier
+                                .filterUsers(queryController.text);
+                            displayUserSearch.value = true;
+                            focus.value = true;
+                          } else {
+                            displayUserSearch.value = false;
+                            usersNotifier.clear();
                           }
-                        },
-                        cursorColor: Colors.black,
-                        controller: queryController,
-                        autofocus: focus.value,
-                        decoration: const InputDecoration(
-                          labelText: LoanTextConstants.borrower,
-                          floatingLabelStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 2.0),
-                          ),
+                        });
+                      },
+                      cursorColor: Colors.black,
+                      autofocus: focus.value,
+                      controller: queryController,
+                      decoration: const InputDecoration(
+                        labelText: LoanTextConstants.borrower,
+                        floatingLabelStyle: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.black, width: 2.0),
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      if (displayUserSearch.value)
-                        ...u.map(
-                          (e) => GestureDetector(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        width: 20,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          e.getName(),
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight:
-                                                (borrower.value.id == e.id)
-                                                    ? FontWeight.bold
-                                                    : FontWeight.w400,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ]),
-                              ),
-                              onTap: () {
-                                borrower.value = e;
-                                queryController.text = e.getName();
-                                focus.value = false;
-                                displayUserSearch.value = false;
-                              }),
-                        )
-                    ]);
-                  }, error: (error, s) {
-                    return Text(error.toString(),
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500));
-                  }, loading: () {
-                    return const CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          ColorConstants.background2),
-                    );
-                  }),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    if (displayUserSearch.value)
+                      SearchResult(
+                          borrower: borrower,
+                          queryController: queryController,
+                          displayUserSearch: displayUserSearch,
+                          focus: focus),
+                  ]),
                   const SizedBox(height: 30),
                   DateEntry(
                       title: LoanTextConstants.beginDate, controller: start),

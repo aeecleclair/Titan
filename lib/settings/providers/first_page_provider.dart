@@ -17,7 +17,6 @@ class FirstPageNotifier extends StateNotifier<ModuleType> {
       for (ModuleType x in ModuleType.values) x.toString(): x
     };
     if (allModulesName.isEmpty) {
-    } else {
       modulesName.sort((a, b) =>
           allModulesName.indexOf(a).compareTo(allModulesName.indexOf(b)));
     }

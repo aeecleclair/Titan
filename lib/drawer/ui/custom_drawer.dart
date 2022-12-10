@@ -14,7 +14,7 @@ class CustomDrawer extends StatelessWidget {
   final SwipeControllerNotifier controllerNotifier;
   const CustomDrawer({Key? key, required this.controllerNotifier})
       : super(key: key);
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

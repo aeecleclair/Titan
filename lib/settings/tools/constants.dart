@@ -25,6 +25,7 @@ class SettingsTextConstants {
   static const String emptyField = "Ce champ ne peut pas être vide";
   static const String errorSendingDemand =
       "Erreur lors de l'envoi de la demande";
+  static const String eventsIcal = "Lien Ical des événements";
   static const String expectingDate = "Date de naissance attendue";
   static const String firstname = "Prénom";
   static const String floor = "Étage";
@@ -34,6 +35,7 @@ class SettingsTextConstants {
   static const String languageFr = "Français";
   static const String logs = "Logs";
   static const String modules = "Modules";
+  static const String myIcs = "Mon lien Ical";
   static const String name = "Nom";
   static const String newPassword = "Nouveau mot de passe";
   static const String nickname = "Surnom";

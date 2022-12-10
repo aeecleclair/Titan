@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_id_provider.dart';
-import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/ui/pages/main_page/asso_ui.dart';
@@ -23,16 +22,18 @@ class MainPage extends HookConsumerWidget {
     final groups = ref.watch(allGroupListProvider);
     final groupsNotifier = ref.watch(allGroupListProvider.notifier);
     final pageNotifier = ref.watch(adminPageProvider.notifier);
-    final groupNotifier = ref.watch(groupProvider.notifier);
     final groupIdNotifier = ref.watch(groupIdProvider.notifier);
-    final loans = ref.watch(loanerList);
+    final loans = ref.watch(loanerListProvider);
     final loanListNotifier = ref.watch(loanerListProvider.notifier);
     ref.watch(userList);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
-    final loanersId = loans.map((e) => e.groupManagerId).toList();
+    final loanersId = [];
+
+    loans.whenData(
+        (value) => loanersId.addAll(value.map((e) => e.groupManagerId)));
 
     return Refresher(
       onRefresh: () async {
@@ -125,16 +126,16 @@ class MainPage extends HookConsumerWidget {
                           isLoaner: loanersId.contains(group.id),
                           onTap: () async {
                             groupIdNotifier.setId(group.id);
-                            tokenExpireWrapper(ref, () async {
-                              await groupNotifier.loadGroup(group.id);
-                            });
+                            // tokenExpireWrapper(ref, () async {
+                            //   await groupNotifier.loadGroup(group.id);
+                            // });
                             pageNotifier.setAdminPage(AdminPage.asso);
                           },
                           onEdit: () {
                             groupIdNotifier.setId(group.id);
-                            tokenExpireWrapper(ref, () async {
-                              await groupNotifier.loadGroup(group.id);
-                            });
+                            // tokenExpireWrapper(ref, () async {
+                            //   await groupNotifier.loadGroup(group.id);
+                            // });
                             pageNotifier.setAdminPage(AdminPage.edit);
                           },
                           onDelete: () {

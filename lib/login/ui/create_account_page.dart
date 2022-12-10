@@ -204,7 +204,6 @@ class CreateAccountPage extends HookConsumerWidget {
               value: floor.text,
               onChanged: (value) {
                 floor.text = value.toString();
-                print(floor.text);
               },
               dropdownColor: ColorConstants.background2,
               iconEnabledColor: Colors.grey.shade100.withOpacity(.8),

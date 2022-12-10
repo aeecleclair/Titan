@@ -109,7 +109,7 @@ class EditUserPage extends HookConsumerWidget {
                           ),
                           child: CircleAvatar(
                             radius: 80,
-                            backgroundImage: profile.image,
+                            backgroundImage: Image.memory(profile).image,
                           ),
                         ),
                         Positioned(
@@ -163,103 +163,106 @@ class EditUserPage extends HookConsumerWidget {
                             ),
                           ),
                         ),
-                        // Positioned(
-                        //   bottom: 0,
-                        //   right: 0,
-                        //   child: GestureDetector(
-                        //     onTap: () async {
-                        //       final value = await profilePictureNotifier
-                        //           .setProfilePicture(ImageSource.camera);
-                        //       if (value != null) {
-                        //         if (value) {
-                        //           displayToastWithContext(
-                        //               TypeMsg.msg, "Photo de profil changée");
-                        //         } else {
-                        //           displayToastWithContext(TypeMsg.error,
-                        //               "Erreur lors du changement de photo de profil");
-                        //         }
-                        //       }
-                        //     },
-                        //     child: Container(
-                        //       height: 40,
-                        //       width: 40,
-                        //       padding: const EdgeInsets.all(7),
-                        //       decoration: BoxDecoration(
-                        //         shape: BoxShape.circle,
-                        //         gradient: const LinearGradient(
-                        //           colors: [
-                        //             ColorConstants.gradient1,
-                        //             ColorConstants.gradient2,
-                        //           ],
-                        //           begin: Alignment.topLeft,
-                        //           end: Alignment.bottomRight,
-                        //         ),
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: ColorConstants.gradient2
-                        //                 .withOpacity(0.3),
-                        //             spreadRadius: 2,
-                        //             blurRadius: 4,
-                        //             offset: const Offset(2, 3),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       child: const HeroIcon(
-                        //         HeroIcons.camera,
-                        //         color: Colors.white,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                        // Positioned(
-                        //   bottom: -20,
-                        //   right: 60,
-                        //   child: GestureDetector(
-                        //     onTap: () async {
-                        //       // final value = await profilePictureNotifier
-                        //       //     .setProfilePicture(ImageSource.camera);
-                        //       // if (value != null) {
-                        //       //   if (value) {
-                        //       //     displayToastWithContext(
-                        //       //         TypeMsg.msg, "Photo de profil changée");
-                        //       //   } else {
-                        //       //     displayToastWithContext(TypeMsg.error,
-                        //       //         "Erreur lors du changement de photo de profil");
-                        //       //   }
-                        //       // }
-                        //     },
-                        //     child: Container(
-                        //       height: 40,
-                        //       width: 40,
-                        //       padding: const EdgeInsets.all(7),
-                        //       decoration: BoxDecoration(
-                        //         shape: BoxShape.circle,
-                        //         gradient: const LinearGradient(
-                        //           colors: [
-                        //             ColorConstants.gradient1,
-                        //             ColorConstants.gradient2,
-                        //           ],
-                        //           begin: Alignment.topLeft,
-                        //           end: Alignment.bottomRight,
-                        //         ),
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: ColorConstants.gradient2
-                        //                 .withOpacity(0.3),
-                        //             spreadRadius: 2,
-                        //             blurRadius: 4,
-                        //             offset: const Offset(2, 3),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       child: const HeroIcon(
-                        //         HeroIcons.sparkles,
-                        //         color: Colors.white,
-                        //         size: 10,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // )
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () async {
+                              final value = await profilePictureNotifier
+                                  .setProfilePicture(ImageSource.camera);
+                              if (value != null) {
+                                if (value) {
+                                  displayToastWithContext(
+                                      TypeMsg.msg, "Photo de profil changée");
+                                } else {
+                                  displayToastWithContext(TypeMsg.error,
+                                      "L'image est trop lourde (max 4Mo)");
+                                }
+                              } else {
+                                displayToastWithContext(TypeMsg.error,
+                                    "Erreur lors du changement de photo de profil");
+                              }
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              padding: const EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    ColorConstants.gradient1,
+                                    ColorConstants.gradient2,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: ColorConstants.gradient2
+                                        .withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 4,
+                                    offset: const Offset(2, 3),
+                                  ),
+                                ],
+                              ),
+                              child: const HeroIcon(
+                                HeroIcons.camera,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: -20,
+                          right: 60,
+                          child: GestureDetector(
+                            onTap: () async {
+                              final value = await profilePictureNotifier
+                                  .cropImage();
+                              if (value != null) {
+                                if (value) {
+                                  displayToastWithContext(
+                                      TypeMsg.msg, "Photo de profil changée");
+                                } else {
+                                  displayToastWithContext(TypeMsg.error,
+                                      "Erreur lors du changement de photo de profil");
+                                }
+                              }
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              padding: const EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    ColorConstants.gradient1,
+                                    ColorConstants.gradient2,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: ColorConstants.gradient2
+                                        .withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 4,
+                                    offset: const Offset(2, 3),
+                                  ),
+                                ],
+                              ),
+                              child: const HeroIcon(
+                                HeroIcons.sparkles,
+                                color: Colors.white,
+                                size: 10,
+                              ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   );

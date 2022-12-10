@@ -77,7 +77,18 @@ String capitalize(String s) {
   if (s.isEmpty) {
     return s;
   }
-  return s[0].toUpperCase() + s.substring(1);
+  return s[0].toUpperCase() + s.substring(1).toLowerCase();
+}
+
+String capitaliseAll(String s) {
+  final splitters = [' ', '-', '_'];
+  if (s.isEmpty) {
+    return s;
+  }
+  return s
+      .splitMapJoin(RegExp('(${splitters.join('|')})'),
+          onMatch: (m) => m.group(0) ?? '', onNonMatch: (n) => capitalize(n))
+      .trim();
 }
 
 String processDate(DateTime date) {
