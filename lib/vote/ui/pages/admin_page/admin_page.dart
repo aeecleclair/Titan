@@ -20,6 +20,7 @@ import 'package:myecl/vote/ui/pages/admin_page/open_excel.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_bar.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_pretendence_items.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_bars.dart';
+import 'package:myecl/vote/ui/pages/admin_page/vote_count.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -314,7 +315,9 @@ class AdminPage extends HookConsumerWidget {
                           onTap: () {
                             tokenExpireWrapper(ref, () async {
                               final value = await statusNotifier.openVote();
-                              ref.watch(pretendanceListProvider.notifier).loadPretendanceList();
+                              ref
+                                  .watch(pretendanceListProvider.notifier)
+                                  .loadPretendanceList();
                               if (value) {
                                 displayVoteToastWithContext(
                                     TypeMsg.msg, 'Vote is open');
@@ -359,6 +362,8 @@ class AdminPage extends HookConsumerWidget {
                           ),
                         ),
                       ),
+                      if (status == Status.open)
+                        const VoteCount()
                   ],
                 ))
           ],
