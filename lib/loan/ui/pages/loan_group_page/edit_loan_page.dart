@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/amap/ui/pages/add_solde_page/search_result.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
@@ -192,20 +193,17 @@ class EditLoanPage extends HookConsumerWidget {
                     return Column(children: <Widget>[
                       TextField(
                         onChanged: (value) {
-                          focus.value = true;
-                          if (value.isNotEmpty) {
-                            tokenExpireWrapper(ref, () async {
-                              if (queryController.text.isNotEmpty) {
-                                final value = await usersNotifier
-                                    .filterUsers(queryController.text);
-                                users.value = value;
-                                displayUserSearch.value = true;
-                              } else {
-                                users.value = const AsyncData([]);
-                                displayUserSearch.value = false;
-                              }
-                            });
+                          tokenExpireWrapper(ref, () async {
+                          if (queryController.text.isNotEmpty) {
+                            await usersNotifier
+                                .filterUsers(queryController.text);
+                            displayUserSearch.value = true;
+                            focus.value = true;
+                          } else {
+                            displayUserSearch.value = false;
+                            usersNotifier.clear();
                           }
+                        });
                         },
                         cursorColor: Colors.black,
                         controller: queryController,
@@ -226,39 +224,7 @@ class EditLoanPage extends HookConsumerWidget {
                         height: 10,
                       ),
                       if (displayUserSearch.value)
-                        ...u.map(
-                          (e) => GestureDetector(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        width: 20,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          e.getName(),
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight:
-                                                (borrower.value.id == e.id)
-                                                    ? FontWeight.bold
-                                                    : FontWeight.w400,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ]),
-                              ),
-                              onTap: () {
-                                borrower.value = e;
-                                queryController.text = e.getName();
-                                focus.value = false;
-                                displayUserSearch.value = false;
-                              }),
-                        )
+                        const SearchResult()
                     ]);
                   }, error: (error, s) {
                     return Text(error.toString(),

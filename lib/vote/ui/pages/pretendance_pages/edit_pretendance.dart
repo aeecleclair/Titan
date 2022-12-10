@@ -22,6 +22,7 @@ import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/member_card.dart';
+import 'package:myecl/vote/ui/pages/pretendance_pages/search_result.dart';
 import 'package:myecl/vote/ui/section_chip.dart';
 import 'package:myecl/vote/ui/text_entry.dart';
 
@@ -42,12 +43,10 @@ class EditPretendancePage extends HookConsumerWidget {
     final name = useTextEditingController(text: pretendance.name);
     final description = useTextEditingController(text: pretendance.description);
     final listType = useState(pretendance.listType);
-    final users = useState(ref.watch(userList));
     final usersNotifier = ref.watch(userList.notifier);
     final focus = useState(false);
     final queryController = useTextEditingController();
     final role = useTextEditingController();
-    final lastQuery = useState('');
     final member = useState(SimpleUser.empty());
     final members = ref.watch(pretendanceMembersProvider);
     final membersNotifier = ref.watch(pretendanceMembersProvider.notifier);
@@ -390,138 +389,99 @@ class EditPretendancePage extends HookConsumerWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: users.value.when(data: (u) {
-                          return Column(children: <Widget>[
-                            TextFormField(
-                              onChanged: (newQuery) {
-                                if (newQuery.isNotEmpty &&
-                                    newQuery != lastQuery.value) {
-                                  tokenExpireWrapper(ref, () async {
-                                    final value = await usersNotifier
-                                        .filterUsers(queryController.text);
-                                    users.value = value;
-                                    displayUserSearch.value = true;
-                                    focus.value = true;
-                                    lastQuery.value = newQuery;
-                                  });
+                        child: Column(children: <Widget>[
+                          TextFormField(
+                            onChanged: (newQuery) {
+                              tokenExpireWrapper(ref, () async {
+                                if (queryController.text.isNotEmpty) {
+                                  await usersNotifier
+                                      .filterUsers(queryController.text);
+                                  displayUserSearch.value = true;
+                                  focus.value = true;
+                                } else {
+                                  displayUserSearch.value = false;
+                                  usersNotifier.clear();
                                 }
-                              },
-                              cursorColor: Colors.black,
-                              controller: queryController,
-                              autofocus: focus.value,
-                              decoration: const InputDecoration(
-                                labelText: VoteTextConstants.members,
-                                floatingLabelStyle: TextStyle(
+                              });
+                            },
+                            cursorColor: Colors.black,
+                            controller: queryController,
+                            autofocus: focus.value,
+                            decoration: const InputDecoration(
+                              labelText: VoteTextConstants.members,
+                              floatingLabelStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.black, width: 2.0),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          if (displayUserSearch.value)
+                            SearchResult(
+                                borrower: member,
+                                queryController: queryController,
+                                displayUserSearch: displayUserSearch,
+                                focus: focus),
+                          TextEntry(
+                              label: VoteTextConstants.role,
+                              suffix: '',
+                              isInt: false,
+                              controller: role,
+                              keyboardType: TextInputType.text),
+                          const SizedBox(height: 30),
+                          GestureDetector(
+                            onTap: () async {
+                              if (addMemberKey.currentState == null) {
+                                return;
+                              }
+                              if (member.value.id == '' || role.text == '') {
+                                return;
+                              }
+                              if (addMemberKey.currentState!.validate()) {
+                                final value = await membersNotifier.addMember(
+                                    Member.fromSimpleUser(
+                                        member.value, role.text));
+                                if (value) {
+                                  role.text = '';
+                                  member.value = SimpleUser.empty();
+                                  queryController.text = '';
+                                } else {
+                                  displayVoteToastWithContext(TypeMsg.error,
+                                      VoteTextConstants.alreadyAddedMember);
+                                }
+                              }
+                            },
+                            child: Container(
+                                width: double.infinity,
+                                padding:
+                                    const EdgeInsets.only(top: 8, bottom: 12),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
                                   color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 2.0),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            if (displayUserSearch.value)
-                              ...u.map(
-                                (e) => GestureDetector(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              width: 20,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                e.getName(),
-                                                style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontWeight:
-                                                      (member.value.id == e.id)
-                                                          ? FontWeight.bold
-                                                          : FontWeight.w400,
-                                                ),
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                          ]),
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 10,
+                                      offset: const Offset(
+                                          3, 3), // changes position of shadow
                                     ),
-                                    onTap: () {
-                                      member.value = e;
-                                      queryController.text = e.getName();
-                                      focus.value = false;
-                                      displayUserSearch.value = false;
-                                    }),
-                              ),
-                            TextEntry(
-                                label: VoteTextConstants.role,
-                                suffix: '',
-                                isInt: false,
-                                controller: role,
-                                keyboardType: TextInputType.text),
-                            const SizedBox(height: 30),
-                            GestureDetector(
-                              onTap: () async {
-                                if (addMemberKey.currentState == null) {
-                                  return;
-                                }
-                                if (member.value.id == '' || role.text == '') {
-                                  return;
-                                }
-                                if (addMemberKey.currentState!.validate()) {
-                                  final value = await membersNotifier.addMember(
-                                      Member.fromSimpleUser(
-                                          member.value, role.text));
-                                  if (value) {
-                                    role.text = '';
-                                    member.value = SimpleUser.empty();
-                                    queryController.text = '';
-                                  } else {
-                                    displayVoteToastWithContext(TypeMsg.error,
-                                        VoteTextConstants.alreadyAddedMember);
-                                  }
-                                }
-                              },
-                              child: Container(
-                                  width: double.infinity,
-                                  padding:
-                                      const EdgeInsets.only(top: 8, bottom: 12),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 10,
-                                        offset: const Offset(
-                                            3, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
-                                  child: const Text(VoteTextConstants.add,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold))),
-                            )
-                          ]);
-                        }, error: (error, s) {
-                          return Text(error.toString(),
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w500));
-                        }, loading: () {
-                          return const CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                ColorConstants.background2),
-                          );
-                        }),
+                                  ],
+                                ),
+                                child: const Text(VoteTextConstants.add,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold))),
+                          )
+                        ]),
                       ),
                     ],
                   ),

@@ -52,6 +52,8 @@ class AMAPTextConstants {
   static const String deliveryHistory = "Historique des livraisons";
   static const String deliveryList = "Liste des livraisons";
   static const String deliveryOn = "Livraison le";
+  static const String errorLoadingUser =
+      "Erreur lors du chargement des utilisateurs";
   static const String expectingNumber = "Veuillez entrer un nombre";
   static const String fillField = "Veuillez remplir ce champ";
   static const String handlingAccount = "Gérer les comptes";

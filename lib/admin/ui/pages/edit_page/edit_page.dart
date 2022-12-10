@@ -186,8 +186,7 @@ class EditPage extends HookConsumerWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                usersNotifier.filterUsers(" ",
-                                    excludeGroup: [g[0].toSimpleGroup()]);
+                                usersNotifier.clear();
                                 pageNotifier.setAdminPage(AdminPage.addMember);
                               },
                               child: Container(
