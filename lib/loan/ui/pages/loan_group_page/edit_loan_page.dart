@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/ui/pages/add_solde_page/search_result.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
@@ -17,6 +16,7 @@ import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/loaner_chip.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/check_item_card.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/date_entry.dart';
+import 'package:myecl/loan/ui/pages/loan_group_page/search_result.dart';
 import 'package:myecl/loan/ui/text_entry.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
@@ -50,8 +50,6 @@ class EditLoanPage extends HookConsumerWidget {
         useTextEditingController(text: loan.borrower.getName());
 
     final numberSelected = useState(loan.items.length);
-    final displayUserSearch = useState(false);
-    final focus = useState(false);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -194,20 +192,16 @@ class EditLoanPage extends HookConsumerWidget {
                       TextField(
                         onChanged: (value) {
                           tokenExpireWrapper(ref, () async {
-                          if (queryController.text.isNotEmpty) {
-                            await usersNotifier
-                                .filterUsers(queryController.text);
-                            displayUserSearch.value = true;
-                            focus.value = true;
-                          } else {
-                            displayUserSearch.value = false;
-                            usersNotifier.clear();
-                          }
-                        });
+                            if (queryController.text.isNotEmpty) {
+                              await usersNotifier
+                                  .filterUsers(queryController.text);
+                            } else {
+                              usersNotifier.clear();
+                            }
+                          });
                         },
                         cursorColor: Colors.black,
                         controller: queryController,
-                        autofocus: focus.value,
                         decoration: const InputDecoration(
                           labelText: LoanTextConstants.borrower,
                           floatingLabelStyle: TextStyle(
@@ -223,8 +217,8 @@ class EditLoanPage extends HookConsumerWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      if (displayUserSearch.value)
-                        const SearchResult()
+                      SearchResult(
+                          borrower: borrower, queryController: queryController)
                     ]);
                   }, error: (error, s) {
                     return Text(error.toString(),

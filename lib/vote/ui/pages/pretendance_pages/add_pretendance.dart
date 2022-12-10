@@ -53,7 +53,6 @@ class AddPretendancePage extends HookConsumerWidget {
     final logo = useState<String?>(null);
     final ImagePicker picker = ImagePicker();
 
-    final displayUserSearch = useState(false);
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -348,17 +347,13 @@ class AddPretendancePage extends HookConsumerWidget {
                                 if (queryController.text.isNotEmpty) {
                                   await usersNotifier
                                       .filterUsers(queryController.text);
-                                  displayUserSearch.value = true;
-                                  focus.value = true;
                                 } else {
-                                  displayUserSearch.value = false;
                                   usersNotifier.clear();
                                 }
                               });
                             },
                             cursorColor: Colors.black,
                             controller: queryController,
-                            autofocus: focus.value,
                             decoration: const InputDecoration(
                               labelText: VoteTextConstants.members,
                               floatingLabelStyle: TextStyle(
@@ -374,12 +369,9 @@ class AddPretendancePage extends HookConsumerWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                          if (displayUserSearch.value)
                             SearchResult(
                                 borrower: member,
-                                queryController: queryController,
-                                displayUserSearch: displayUserSearch,
-                                focus: focus),
+                                queryController: queryController,),
                           TextEntry(
                               label: VoteTextConstants.role,
                               suffix: '',

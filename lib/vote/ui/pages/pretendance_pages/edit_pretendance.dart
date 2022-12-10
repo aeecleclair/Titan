@@ -43,7 +43,6 @@ class EditPretendancePage extends HookConsumerWidget {
     final description = useTextEditingController(text: pretendance.description);
     final listType = useState(pretendance.listType);
     final usersNotifier = ref.watch(userList.notifier);
-    final focus = useState(false);
     final queryController = useTextEditingController();
     final role = useTextEditingController();
     final member = useState(SimpleUser.empty());
@@ -65,7 +64,6 @@ class EditPretendancePage extends HookConsumerWidget {
     });
     final ImagePicker picker = ImagePicker();
 
-    final displayUserSearch = useState(false);
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -362,17 +360,13 @@ class EditPretendancePage extends HookConsumerWidget {
                                 if (queryController.text.isNotEmpty) {
                                   await usersNotifier
                                       .filterUsers(queryController.text);
-                                  displayUserSearch.value = true;
-                                  focus.value = true;
                                 } else {
-                                  displayUserSearch.value = false;
                                   usersNotifier.clear();
                                 }
                               });
                             },
                             cursorColor: Colors.black,
                             controller: queryController,
-                            autofocus: focus.value,
                             decoration: const InputDecoration(
                               labelText: VoteTextConstants.members,
                               floatingLabelStyle: TextStyle(
@@ -388,12 +382,9 @@ class EditPretendancePage extends HookConsumerWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                          if (displayUserSearch.value)
                             SearchResult(
                                 borrower: member,
-                                queryController: queryController,
-                                displayUserSearch: displayUserSearch,
-                                focus: focus),
+                                queryController: queryController),
                           TextEntry(
                               label: VoteTextConstants.role,
                               suffix: '',

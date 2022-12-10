@@ -6,13 +6,10 @@ import 'package:myecl/user/providers/user_list_provider.dart';
 class SearchResult extends HookConsumerWidget {
   final ValueNotifier<SimpleUser> borrower;
   final TextEditingController queryController;
-  final ValueNotifier<bool> displayUserSearch, focus;
   const SearchResult(
       {super.key,
       required this.borrower,
-      required this.queryController,
-      required this.displayUserSearch,
-      required this.focus});
+      required this.queryController});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -47,8 +44,6 @@ class SearchResult extends HookConsumerWidget {
                       onTap: () {
                         borrower.value = e;
                         queryController.text = e.getName();
-                        displayUserSearch.value = false;
-                        focus.value = false;
                       }))
                   .toList());
         },

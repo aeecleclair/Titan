@@ -46,8 +46,6 @@ class AddLoanPage extends HookConsumerWidget {
     final caution = useTextEditingController();
     final borrower = useState(SimpleUser.empty());
     final numberSelected = useState(0);
-    final focus = useState(false);
-    final displayUserSearch = useState(false);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -195,16 +193,12 @@ class AddLoanPage extends HookConsumerWidget {
                           if (queryController.text.isNotEmpty) {
                             await usersNotifier
                                 .filterUsers(queryController.text);
-                            displayUserSearch.value = true;
-                            focus.value = true;
                           } else {
-                            displayUserSearch.value = false;
                             usersNotifier.clear();
                           }
                         });
                       },
                       cursorColor: Colors.black,
-                      autofocus: focus.value,
                       controller: queryController,
                       decoration: const InputDecoration(
                         labelText: LoanTextConstants.borrower,
@@ -221,12 +215,9 @@ class AddLoanPage extends HookConsumerWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    if (displayUserSearch.value)
                       SearchResult(
                           borrower: borrower,
-                          queryController: queryController,
-                          displayUserSearch: displayUserSearch,
-                          focus: focus),
+                          queryController: queryController),
                   ]),
                   const SizedBox(height: 30),
                   DateEntry(
