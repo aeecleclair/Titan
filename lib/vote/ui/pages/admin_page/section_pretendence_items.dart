@@ -51,6 +51,7 @@ class SectionPretendenceItems extends HookConsumerWidget {
                           if (status == Status.waiting)
                             GestureDetector(
                               onTap: () {
+                                membersNotifier.setMembers([]);
                                 pageNotifier
                                     .setVotePage(VotePage.addPretendance);
                               },

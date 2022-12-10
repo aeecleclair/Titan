@@ -34,7 +34,6 @@ class AddPretendancePage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final addMemberKey = GlobalKey<FormState>();
     final section = useState(ref.watch(sectionProvider));
-    final sections = ref.watch(sectionsProvider);
     final pretendanceListNotifier = ref.watch(pretendanceListProvider.notifier);
     final pretendanceList = ref.watch(pretendanceListProvider);
     final sectionsNotifier = ref.watch(sectionPretendanceProvider.notifier);
@@ -77,38 +76,6 @@ class AddPretendancePage extends HookConsumerWidget {
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 205, 205, 205)))),
             ),
-            const SizedBox(height: 30),
-            sections.when(
-                data: (data) => SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 15),
-                          ...data.map(
-                            (e) => SectionChip(
-                              label: capitalize(e.name),
-                              selected: section.value.id == e.id,
-                              isAdmin: false,
-                              onTap: () async {
-                                section.value = e;
-                              },
-                              onDelete: () {},
-                            ),
-                          ),
-                          const SizedBox(width: 15),
-                        ],
-                      ),
-                    ),
-                error: (Object error, StackTrace? stackTrace) => Center(
-                      child: Text("Error : $error"),
-                    ),
-                loading: () => const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.blue,
-                      ),
-                    )),
             const SizedBox(height: 50),
             Center(
               child: Stack(
