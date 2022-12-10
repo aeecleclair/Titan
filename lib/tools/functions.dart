@@ -81,10 +81,14 @@ String capitalize(String s) {
 }
 
 String capitaliseAll(String s) {
+  final splitters = [' ', '-', '_'];
   if (s.isEmpty) {
     return s;
   }
-  return s.trim().split(" ").map((str) => capitalize(str)).join(" ");
+  return s
+      .splitMapJoin(RegExp('(${splitters.join('|')})'),
+          onMatch: (m) => m.group(0) ?? '', onNonMatch: (n) => capitalize(n))
+      .trim();
 }
 
 String processDate(DateTime date) {
