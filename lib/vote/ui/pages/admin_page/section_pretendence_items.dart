@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
@@ -101,28 +102,42 @@ class SectionPretendenceItems extends HookConsumerWidget {
                                       });
                                     },
                                     onDelete: () {
-                                      tokenExpireWrapper(ref, () async {
-                                        final value =
-                                            await pretendanceListNotifier
-                                                .deletePretendance(e);
-                                        if (value) {
-                                          displayVoteToastWithContext(
-                                              TypeMsg.msg,
-                                              VoteTextConstants
-                                                  .pretendanceDeleted);
-                                          pretendanceListNotifier
-                                              .copy()
-                                              .then((value) {
-                                            sectionPretendanceListNotifier
-                                                .setTData(section, value);
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return CustomDialogBox(
+                                                title: VoteTextConstants
+                                                    .deletePretendance,
+                                                descriptions: VoteTextConstants
+                                                    .deletePretendanceDesc,
+                                                onYes: () {
+                                                  tokenExpireWrapper(ref,
+                                                      () async {
+                                                    final value =
+                                                        await pretendanceListNotifier
+                                                            .deletePretendance(
+                                                                e);
+                                                    if (value) {
+                                                      displayVoteToastWithContext(
+                                                          TypeMsg.msg,
+                                                          VoteTextConstants
+                                                              .pretendanceDeleted);
+                                                      pretendanceListNotifier
+                                                          .copy()
+                                                          .then((value) {
+                                                        sectionPretendanceListNotifier
+                                                            .setTData(
+                                                                section, value);
+                                                      });
+                                                    } else {
+                                                      displayVoteToastWithContext(
+                                                          TypeMsg.error,
+                                                          VoteTextConstants
+                                                              .pretendanceNotDeleted);
+                                                    }
+                                                  });
+                                                });
                                           });
-                                        } else {
-                                          displayVoteToastWithContext(
-                                              TypeMsg.error,
-                                              VoteTextConstants
-                                                  .pretendanceNotDeleted);
-                                        }
-                                      });
                                     },
                                   ))
                               .toList(),
@@ -142,8 +157,7 @@ class SectionPretendenceItems extends HookConsumerWidget {
           } else {
             return const SizedBox(
               height: 200,
-              child: Center(
-                  child: Text(VoteTextConstants.noPretendanceList)),
+              child: Center(child: Text(VoteTextConstants.noPretendanceList)),
             );
           }
         },
