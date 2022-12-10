@@ -29,11 +29,11 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
         icon: HeroIcons.calendarDays,
         page: ModuleType.calendar,
         selected: false),
-    // Module(
-    //     name: "Réservation",
-    //     icon: HeroIcons.tableCells,
-    //     page: ModuleType.booking,
-    //     selected: false),
+    Module(
+        name: "Réservation",
+        icon: HeroIcons.tableCells,
+        page: ModuleType.booking,
+        selected: false),
     Module(
         name: "Prêt",
         icon: HeroIcons.buildingLibrary,
