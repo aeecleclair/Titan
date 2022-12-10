@@ -31,6 +31,7 @@ class CreateAccountPage extends HookConsumerWidget {
     final birthday = useTextEditingController();
     final promo = useTextEditingController();
     final phone = useTextEditingController();
+    final lastIndex = useState(0);
     List<DropdownMenuItem> items = [
       "Adoma",
       "Exté",
@@ -69,6 +70,17 @@ class CreateAccountPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    List<GlobalKey<FormState>> formKeys = [
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+    ];
+
     List<Widget> steps = [
       CreateAccountField(
         controller: activationCode,
@@ -76,6 +88,7 @@ class CreateAccountPage extends HookConsumerWidget {
         index: 1,
         pageController: pageController,
         currentPage: currentPage,
+        formKey: formKeys[0],
       ),
       CreateAccountField(
         controller: password,
@@ -83,6 +96,7 @@ class CreateAccountPage extends HookConsumerWidget {
         index: 2,
         pageController: pageController,
         currentPage: currentPage,
+        formKey: formKeys[1],
         keyboardType: TextInputType.visiblePassword,
       ),
       CreateAccountField(
@@ -91,6 +105,7 @@ class CreateAccountPage extends HookConsumerWidget {
         index: 3,
         pageController: pageController,
         currentPage: currentPage,
+        formKey: formKeys[2],
         keyboardType: TextInputType.name,
         autofillHints: const [AutofillHints.familyName],
       ),
@@ -100,6 +115,7 @@ class CreateAccountPage extends HookConsumerWidget {
         index: 4,
         pageController: pageController,
         currentPage: currentPage,
+        formKey: formKeys[3],
         keyboardType: TextInputType.name,
         autofillHints: const [AutofillHints.givenName],
       ),
@@ -109,6 +125,7 @@ class CreateAccountPage extends HookConsumerWidget {
         index: 5,
         pageController: pageController,
         currentPage: currentPage,
+        formKey: formKeys[4],
         keyboardType: TextInputType.name,
       ),
       Column(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -129,35 +146,38 @@ class CreateAccountPage extends HookConsumerWidget {
             _selectDate(context, birthday);
           },
           child: AbsorbPointer(
-            child: TextFormField(
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+            child: Form(
+              key: formKeys[5],
+              child: TextFormField(
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                controller: birthday,
+                cursorColor: Colors.white,
+                decoration: const InputDecoration(
+                    suffix: HeroIcon(HeroIcons.calendar,
+                        color: Colors.white, size: 30),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: ColorConstants.background2)),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.white,
+                    )),
+                    errorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.white,
+                    )),
+                    errorStyle: TextStyle(color: Colors.white)),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return LoginTextConstants.emptyFieldError;
+                  }
+                  return null;
+                },
               ),
-              controller: birthday,
-              cursorColor: Colors.white,
-              decoration: const InputDecoration(
-                  suffix: HeroIcon(HeroIcons.calendar,
-                      color: Colors.white, size: 30),
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: ColorConstants.background2)),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Colors.white,
-                  )),
-                  errorBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Colors.white,
-                  )),
-                  errorStyle: TextStyle(color: Colors.white)),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return LoginTextConstants.emptyFieldError;
-                }
-                return null;
-              },
             ),
           ),
         ),
@@ -168,6 +188,7 @@ class CreateAccountPage extends HookConsumerWidget {
         index: 7,
         pageController: pageController,
         currentPage: currentPage,
+        formKey: formKeys[6],
         keyboardType: TextInputType.number,
         hint: "20",
       ),
@@ -177,6 +198,7 @@ class CreateAccountPage extends HookConsumerWidget {
         index: 8,
         pageController: pageController,
         currentPage: currentPage,
+        formKey: formKeys[7],
         keyboardType: TextInputType.phone,
         autofillHints: const [AutofillHints.telephoneNumber],
       ),
@@ -196,7 +218,7 @@ class CreateAccountPage extends HookConsumerWidget {
                 )),
           ),
           const SizedBox(
-            height: 19,
+            height: 21,
           ),
           AutofillGroup(
             child: DropdownButtonFormField(
@@ -223,6 +245,12 @@ class CreateAccountPage extends HookConsumerWidget {
                     color: Colors.white,
                   )),
                   errorStyle: TextStyle(color: Colors.white)),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return LoginTextConstants.emptyFieldError;
+                }
+                return null;
+              },
             ),
           ),
         ],
@@ -314,13 +342,20 @@ class CreateAccountPage extends HookConsumerWidget {
                 Expanded(
                     flex: 4,
                     child: PageView(
+                        physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         controller: pageController,
                         onPageChanged: (index) {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          currentPage.value = index;
+                          if (index < lastIndex.value ||
+                              index == steps.length - 2 ||
+                              formKeys[lastIndex.value]
+                                  .currentState!
+                                  .validate()) {
+                            currentPage.value = index;
+                            lastIndex.value = index;
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          }
                         },
-                        physics: const BouncingScrollPhysics(),
                         children: steps)),
                 const SizedBox(
                   height: 20,
@@ -331,10 +366,12 @@ class CreateAccountPage extends HookConsumerWidget {
                     currentPage.value != 0
                         ? GestureDetector(
                             onTap: (() {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              currentPage.value--;
+                              lastIndex.value = currentPage.value;
                               pageController.previousPage(
                                   duration: const Duration(milliseconds: 500),
                                   curve: Curves.decelerate);
-                              currentPage.value--;
                             }),
                             child: const HeroIcon(
                               HeroIcons.arrowLeft,
@@ -345,10 +382,18 @@ class CreateAccountPage extends HookConsumerWidget {
                     currentPage.value != len - 1
                         ? GestureDetector(
                             onTap: (() {
-                              pageController.nextPage(
-                                  duration: const Duration(milliseconds: 500),
-                                  curve: Curves.decelerate);
-                              currentPage.value++;
+                              if (currentPage.value == steps.length - 2 ||
+                                  formKeys[lastIndex.value]
+                                      .currentState!
+                                      .validate()) {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                pageController.nextPage(
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.decelerate);
+                                currentPage.value++;
+                                lastIndex.value = currentPage.value;
+                              }
                             }),
                             child: const HeroIcon(
                               HeroIcons.arrowRight,
@@ -368,9 +413,16 @@ class CreateAccountPage extends HookConsumerWidget {
                       dotWidth: 12,
                       dotHeight: 12),
                   onDotClicked: (index) {
-                    pageController.animateToPage(index,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.decelerate);
+                    if (index < lastIndex.value ||
+                        index == steps.length - 2 ||
+                        formKeys[lastIndex.value].currentState!.validate()) {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      currentPage.value = index;
+                      lastIndex.value = index;
+                      pageController.animateToPage(index,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.decelerate);
+                    }
                   },
                 ),
                 const SizedBox(

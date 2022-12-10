@@ -33,6 +33,11 @@ class RecoverPasswordPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    List<GlobalKey<FormState>> formKeys = [
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+    ];
+
     List<Widget> steps = [
       CreateAccountField(
         controller: activationCode,
@@ -40,6 +45,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
         index: 1,
         pageController: pageController,
         currentPage: currentPage,
+        formKey: formKeys[0],
       ),
       CreateAccountField(
         controller: password,
@@ -47,6 +53,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
         index: 2,
         pageController: pageController,
         currentPage: currentPage,
+        formKey: formKeys[1],
         keyboardType: TextInputType.visiblePassword,
       ),
       SignUpBar(

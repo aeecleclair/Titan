@@ -22,6 +22,7 @@ class AuthScreen extends HookConsumerWidget {
     AnimationController controller =
         useAnimationController(duration: const Duration(seconds: 2));
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           SizedBox.expand(
