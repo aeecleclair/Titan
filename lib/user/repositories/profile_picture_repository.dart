@@ -10,6 +10,8 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../tools/constants.dart';
+
 class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
   final UserRepository _userRepository = UserRepository();
   final ImagePicker _picker = ImagePicker();
@@ -28,7 +30,7 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
   Future<bool?> setProfilePicture(ImageSource source) async {
     final previousState = state;
     state = const AsyncLoading();
-    final XFile? image = await _picker.pickImage(source: source);
+    final XFile? image = await _picker.pickImage(source: source, imageQuality: 20);
     if (image != null) {
       try {
         final i = await _userRepository.addProfilePicture(image.path);
@@ -47,28 +49,28 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
     final previousState = state;
     state.whenData((value) async {
       Directory tempDir = await getTemporaryDirectory();
-      String tempPath = tempDir.path;
-      File file =
-          await File('$tempPath/${DateTime.now().millisecondsSinceEpoch}.png')
-              .create();
-
-      // copies data byte by byte
+      File file = await File(
+              '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png')
+          .create();
       final File newImage = await file.writeAsBytes(value);
-
       CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: newImage.path,
         aspectRatioPresets: [
           CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio3x2,
+          CropAspectRatioPreset.original,
+          CropAspectRatioPreset.ratio4x3,
+          CropAspectRatioPreset.ratio16x9
         ],
         uiSettings: [
           AndroidUiSettings(
-              toolbarTitle: 'Cropper',
-              toolbarColor: Colors.deepOrange,
-              toolbarWidgetColor: Colors.white,
+              toolbarTitle: 'Recadrer',
+              toolbarColor: ColorConstants.gradient1,
+              toolbarWidgetColor: Colors.grey[100],
               initAspectRatio: CropAspectRatioPreset.original,
               lockAspectRatio: false),
           IOSUiSettings(
-            title: 'Cropper',
+            title: 'Recadrer',
           ),
         ],
       );
