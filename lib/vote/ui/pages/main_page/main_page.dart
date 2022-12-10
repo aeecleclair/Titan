@@ -31,6 +31,7 @@ class MainPage extends HookConsumerWidget {
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final sectionsPretendances = ref.watch(sectionPretendanceProvider);
     final pretendances = ref.watch(pretendanceListProvider);
+    final pretendancesNotifier = ref.watch(pretendanceListProvider.notifier);
     final sectionPretendanceNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
     final animation = useAnimationController(
@@ -41,8 +42,6 @@ class MainPage extends HookConsumerWidget {
     final pretendanceLogosNotifier =
         ref.watch(pretendanceLogosProvider.notifier);
 
-
-
     final isAEMember = ref.watch(isAEMemberProvider);
 
     if (isAEMember) {
@@ -50,6 +49,7 @@ class MainPage extends HookConsumerWidget {
         onRefresh: () async {
           await statusNotifier.loadStatus();
           await votedSectionNotifier.getVotedSections();
+          await pretendancesNotifier.loadPretendanceList();
           final sections = await sectionsNotifier.loadSectionList();
           sections.whenData((value) {
             List<Pretendance> list = [];
@@ -59,11 +59,11 @@ class MainPage extends HookConsumerWidget {
             sectionPretendanceNotifier.loadTList(value);
             pretendanceLogosNotifier.loadTList(list);
             for (final l in value) {
-                sectionPretendanceNotifier.setTData(
-                    l,
-                    AsyncValue.data(list
-                        .where((element) => element.section.id == l.id)
-                        .toList()));
+              sectionPretendanceNotifier.setTData(
+                  l,
+                  AsyncValue.data(list
+                      .where((element) => element.section.id == l.id)
+                      .toList()));
             }
             for (final l in list) {
               logosNotifier.getLogo(l.id).then((value) =>
