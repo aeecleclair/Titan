@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/providers/logs_provider.dart';
@@ -8,6 +9,7 @@ import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/repositories/profile_picture_repository.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
@@ -173,6 +175,22 @@ class MainPage extends HookConsumerWidget {
                     pageNotifier.setSettingsPage(SettingsPage.edit);
                   },
                   child: const Text(SettingsTextConstants.editAccount,
+                      style: TextStyle(fontSize: 16, color: Colors.black)),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                SettingsItem(
+                  icon: HeroIcons.calendarDays,
+                  onTap: () {
+                    Clipboard.setData(const ClipboardData(
+                            text: "${Repository.host}calendar/ical"))
+                        .then((value) {
+                      displayToastWithContext(
+                          TypeMsg.msg, "Le lien Ical a été copiée");
+                    });
+                  },
+                  child: const Text(SettingsTextConstants.eventsIcal,
                       style: TextStyle(fontSize: 16, color: Colors.black)),
                 ),
                 const SizedBox(
