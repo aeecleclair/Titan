@@ -73,7 +73,7 @@ class TopBar extends HookConsumerWidget {
                               ),
                               child: CircleAvatar(
                                 radius: 25,
-                                backgroundImage: file.image,
+                                backgroundImage: Image.memory(file).image,
                               ),
                             ),
                             if (isAdmin)

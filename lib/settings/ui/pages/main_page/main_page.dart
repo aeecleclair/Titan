@@ -55,7 +55,7 @@ class MainPage extends HookConsumerWidget {
                     ),
                     child: CircleAvatar(
                       radius: 70,
-                      backgroundImage: profile.image,
+                      backgroundImage: Image.memory(profile).image,
                     ),
                   ),
                   Positioned(

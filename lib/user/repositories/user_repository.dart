@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:f_logs/model/flog/flog.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -50,13 +50,13 @@ class UserRepository extends Repository {
     }
   }
 
-  Future<Image> getProfilePicture(String userId) async {
+  Future<Uint8List> getProfilePicture(String userId) async {
     final response = await http.get(
         Uri.parse("${Repository.host}$ext$userId/profile-picture/"),
         headers: headers);
     if (response.statusCode == 200) {
       try {
-        return Image.memory(response.bodyBytes);
+        return response.bodyBytes;
       } catch (e) {
         FLog.error(
             text:
@@ -77,9 +77,8 @@ class UserRepository extends Repository {
     }
   }
 
-  Future<Image> addProfilePicture(String path) async {
-    final file = File(path);
-    final image = Image.file(file);
+  Future<Uint8List> addProfilePicture(String path) async {
+    final bytes = await File(path).readAsBytes();
     final request = http.MultipartRequest(
         'POST', Uri.parse("${Repository.host}${ext}me/profile-picture"))
       ..headers.addAll(headers)
@@ -87,7 +86,7 @@ class UserRepository extends Repository {
           contentType: MediaType('image', 'jpeg')));
     final response = await request.send();
     if (response.statusCode == 201) {
-      return image;
+      return bytes.buffer.asUint8List();
     } else if (response.statusCode == 403) {
       FLog.error(
           text:
