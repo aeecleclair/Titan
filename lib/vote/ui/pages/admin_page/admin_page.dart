@@ -134,10 +134,14 @@ class AdminPage extends HookConsumerWidget {
                                       tokenExpireWrapper(ref, () async {
                                         final value =
                                             await statusNotifier.resetVote();
+                                        ref
+                                            .watch(pretendanceListProvider
+                                                .notifier)
+                                            .loadPretendanceList();
                                         if (value) {
                                           showVotesNotifier.toggle(false);
                                           displayVoteToastWithContext(
-                                              TypeMsg.msg, 'Vote is closed');
+                                              TypeMsg.msg, 'Vote is reset');
                                         } else {
                                           displayVoteToastWithContext(
                                               TypeMsg.error, 'Error');
@@ -310,6 +314,7 @@ class AdminPage extends HookConsumerWidget {
                           onTap: () {
                             tokenExpireWrapper(ref, () async {
                               final value = await statusNotifier.openVote();
+                              ref.watch(pretendanceListProvider.notifier).loadPretendanceList();
                               if (value) {
                                 displayVoteToastWithContext(
                                     TypeMsg.msg, 'Vote is open');
