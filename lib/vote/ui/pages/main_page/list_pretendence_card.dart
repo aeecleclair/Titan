@@ -62,48 +62,28 @@ class ListPretendenceCard extends HookConsumerWidget {
                   controller: scrollController,
                   physics: const BouncingScrollPhysics(),
                   child: pretendanceList.isNotEmpty
-                      ? alreadyVotedSection.contains(section.id)
-                          ? SizedBox(
-                              height: 350,
-                              width: 200,
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    HeroIcon(HeroIcons.checkCircle,
-                                        color: ColorConstants.background2,
-                                        size: 100),
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                    Text(VoteTextConstants.alreadyVoted,
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold)),
-                                  ],
-                                ),
-                              ),
+                      ? Column(
+                          children: pretendanceList[section]!.when(
+                          data: (pretendance) => pretendance.map((e) {
+                            final index = pretendance.indexOf(e);
+                            return PretendanceCard(
+                                index: index,
+                                pretendance: e,
+                                animation: animation,
+                                enableVote:
+                                    !alreadyVotedSection.contains(section.id));
+                          }).toList(),
+                          loading: () => const [
+                            Center(
+                              child: CircularProgressIndicator(),
                             )
-                          : Column(
-                              children: pretendanceList[section]!.when(
-                              data: (pretendance) => pretendance.map((e) {
-                                final index = pretendance.indexOf(e);
-                                return PretendanceCard(
-                                    index: index,
-                                    pretendance: e,
-                                    animation: animation);
-                              }).toList(),
-                              loading: () => const [
-                                Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              ],
-                              error: (error, stack) => const [
-                                Center(
-                                  child: Text("Error occured"),
-                                )
-                              ],
-                            ))
+                          ],
+                          error: (error, stack) => const [
+                            Center(
+                              child: Text("Error occured"),
+                            )
+                          ],
+                        ))
                       : const SizedBox(
                           height: 150,
                           child: Center(

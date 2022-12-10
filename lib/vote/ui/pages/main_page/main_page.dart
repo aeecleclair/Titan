@@ -37,15 +37,11 @@ class MainPage extends HookConsumerWidget {
       duration: const Duration(milliseconds: 2400),
     );
     final logosNotifier = ref.watch(pretendenceLogoProvider.notifier);
-    final votedSection = ref.watch(votedSectionProvider);
     final votedSectionNotifier = ref.watch(votedSectionProvider.notifier);
     final pretendanceLogosNotifier =
         ref.watch(pretendanceLogosProvider.notifier);
 
-    List<String> alreadyVotedSection = [];
-    votedSection.whenData((voted) {
-      alreadyVotedSection = voted;
-    });
+
 
     final isAEMember = ref.watch(isAEMemberProvider);
 
@@ -63,13 +59,11 @@ class MainPage extends HookConsumerWidget {
             sectionPretendanceNotifier.loadTList(value);
             pretendanceLogosNotifier.loadTList(list);
             for (final l in value) {
-              if (!alreadyVotedSection.contains(l.id)) {
                 sectionPretendanceNotifier.setTData(
                     l,
                     AsyncValue.data(list
                         .where((element) => element.section.id == l.id)
                         .toList()));
-              }
             }
             for (final l in list) {
               logosNotifier.getLogo(l.id).then((value) =>

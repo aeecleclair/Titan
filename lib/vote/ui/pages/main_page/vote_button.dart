@@ -23,6 +23,14 @@ class VoteButton extends HookConsumerWidget {
     final selectedPretendanceNotifier =
         ref.watch(selectedPretendanceProvider.notifier);
     final votedSectionNotifier = ref.watch(votedSectionProvider.notifier);
+    final votedSection = ref.watch(votedSectionProvider);
+    List<String> alreadyVotedSection = [];
+    votedSection.when(
+        data: (voted) {
+          alreadyVotedSection = voted;
+        },
+        error: (error, stackTrace) {},
+        loading: () {});
 
     final status = ref.watch(statusProvider);
     final s = status.when(
@@ -38,7 +46,9 @@ class VoteButton extends HookConsumerWidget {
       padding: const EdgeInsets.only(right: 30.0),
       child: GestureDetector(
         onTap: () {
-          if (selectedPretendance.id != "" && s == Status.open) {
+          if (selectedPretendance.id != "" &&
+              s == Status.open &&
+              !alreadyVotedSection.contains(section.id)) {
             showDialog(
                 context: context,
                 builder: (context) {
@@ -71,7 +81,8 @@ class VoteButton extends HookConsumerWidget {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: selectedPretendance.id == "" && s != Status.open
+                colors: (selectedPretendance.id == "" && s != Status.open) ||
+                        alreadyVotedSection.contains(section.id)
                     ? [
                         Colors.white,
                         Colors.grey.shade50,
@@ -91,15 +102,18 @@ class VoteButton extends HookConsumerWidget {
             child: Text(
               selectedPretendance.id != ""
                   ? VoteTextConstants.voteFor + selectedPretendance.name
-                  : s == Status.open
-                      ? VoteTextConstants.chooseList
-                      : s == Status.waiting
-                          ? VoteTextConstants.notOpenedVote
-                          : s == Status.closed
-                              ? VoteTextConstants.closedVote
-                              : VoteTextConstants.onGoingCount,
+                  : alreadyVotedSection.contains(section.id)
+                      ? VoteTextConstants.alreadyVoted
+                      : s == Status.open
+                          ? VoteTextConstants.chooseList
+                          : s == Status.waiting
+                              ? VoteTextConstants.notOpenedVote
+                              : s == Status.closed
+                                  ? VoteTextConstants.closedVote
+                                  : VoteTextConstants.onGoingCount,
               style: TextStyle(
-                  color: selectedPretendance.id == "" && s != Status.open
+                  color: (selectedPretendance.id == "" && s != Status.open) ||
+                          alreadyVotedSection.contains(section.id)
                       ? Colors.black
                       : Colors.white,
                   fontSize: 20,

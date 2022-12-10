@@ -18,11 +18,13 @@ class PretendanceCard extends HookConsumerWidget {
   final Pretendance pretendance;
   final AnimationController animation;
   final int index;
+  final bool enableVote;
   const PretendanceCard(
       {super.key,
       required this.pretendance,
       required this.animation,
-      required this.index});
+      required this.index,
+      required this.enableVote});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -52,7 +54,7 @@ class PretendanceCard extends HookConsumerWidget {
       child: Container(
           padding: const EdgeInsets.all(10.0),
           margin: const EdgeInsets.only(bottom: 15, left: 10),
-          height: s == Status.open ? 160 : 120,
+          height: (s == Status.open && enableVote) ? 160 : 120,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: const BorderRadius.only(
@@ -179,7 +181,7 @@ class PretendanceCard extends HookConsumerWidget {
                           color: Colors.grey.shade400)),
                 ),
                 const Spacer(),
-                if (s == Status.open)
+                if (s == Status.open && enableVote)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
