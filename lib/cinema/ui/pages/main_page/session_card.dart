@@ -78,15 +78,8 @@ class SessionCard extends HookConsumerWidget {
                 const SizedBox(
                   width: 7,
                 ),
-                Column(
-                  children: [
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(formatDate(session.start),
-                        style: const TextStyle(fontSize: 16)),
-                  ],
-                ),
+                Text(formatDate(session.start),
+                    style: const TextStyle(fontSize: 16)),
                 const SizedBox(
                   width: 25,
                 ),

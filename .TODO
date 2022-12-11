@@ -5,6 +5,7 @@ TITAN :
 - animation btn (shrinking) :
 - dark mode
 - ask help
+- refractor add / edit pages
 - TokenExpireWrapper on provider load
 - opti day list
 

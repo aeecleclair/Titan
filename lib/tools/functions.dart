@@ -115,6 +115,14 @@ String processDateBack(String d) {
   return "${e[2].toString().padLeft(2, "0")}-${e[1].toString().padLeft(2, "0")}-${e[0]}";
 }
 
+String processDateBackWithHour(String d) {
+  if (d == "") {
+    return "";
+  }
+  List<String> e = d.split(" ");
+  return "${processDateBack(e[0])} ${e[1]}";
+}
+
 String processDateToAPI(DateTime date) {
   return date.toIso8601String();
 }

@@ -41,7 +41,6 @@ class AddPretendancePage extends HookConsumerWidget {
     final description = useTextEditingController();
     final listType = useState(ListType.serio);
     final usersNotifier = ref.watch(userList.notifier);
-    final focus = useState(false);
     final queryController = useTextEditingController();
     final role = useTextEditingController();
     final member = useState(SimpleUser.empty());

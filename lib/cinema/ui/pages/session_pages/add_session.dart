@@ -83,7 +83,7 @@ class AddSessionPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 30),
                   GestureDetector(
-                    onTap: () => _selectOnlyDayDate(context, start),
+                    onTap: () => _selectDate(context, start),
                     child: SizedBox(
                       child: AbsorbPointer(
                         child: TextFormField(
@@ -180,7 +180,8 @@ class AddSessionPage extends HookConsumerWidget {
                               overview: overview.text,
                               posterUrl: posterUrl.text,
                               start:
-                                  DateTime.parse(processDateBack(start.text)),
+                                  DateTime.parse(
+                                  processDateBackWithHour(start.text)),
                               tagline: '',
                             ),
                           );
@@ -230,8 +231,7 @@ class AddSessionPage extends HookConsumerWidget {
   }
 }
 
-_selectOnlyDayDate(
-    BuildContext context, TextEditingController dateController) async {
+_selectDate(BuildContext context, TextEditingController dateController) async {
   final DateTime now = DateTime.now();
   final DateTime? picked = await showDatePicker(
       context: context,
@@ -252,9 +252,29 @@ _selectOnlyDayDate(
           child: child!,
         );
       });
-
-  dateController.text = DateFormat('dd/MM/yyyy')
-      .format(picked ?? now.add(const Duration(hours: 1)));
+  if (picked != null) {
+    final time = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(picked),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: const ColorScheme.light(
+                primary: Color.fromARGB(255, 10, 153, 172),
+                onPrimary: Colors.white,
+                surface: Colors.white,
+                onSurface: Colors.black,
+              ),
+              dialogBackgroundColor: Colors.white,
+            ),
+            child: child!,
+          );
+        });
+    dateController.text = DateFormat('yyyy-MM-dd HH:mm')
+        .format(DateTimeField.combine(picked, time));
+  } else {
+    dateController.text = DateFormat('yyyy-MM-dd HH:mm').format(now);
+  }
 }
 
 _selectOnlyHour(
