@@ -1,7 +1,7 @@
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/vote/tools/functions.dart';
 
-enum Status { waiting, open, closed, counting }
+enum Status { waiting, open, closed, counting, published }
 
 class StatusRepository extends Repository {
   @override
@@ -42,6 +42,15 @@ class StatusRepository extends Repository {
   Future<bool> resetVote() async {
     try {
       await create({}, suffix: '/reset');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> publishVote() async {
+    try {
+      await create({}, suffix: '/publish');
       return true;
     } catch (e) {
       return false;

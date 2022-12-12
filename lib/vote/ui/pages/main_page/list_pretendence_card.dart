@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/vote/class/result.dart';
+import 'package:myecl/vote/providers/result_provider.dart';
 import 'package:myecl/vote/providers/scroll_controller_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
@@ -29,13 +31,37 @@ class ListPretendenceCard extends HookConsumerWidget {
         loading: () => Status.closed,
         error: (error, stack) => Status.closed);
 
+    List<Result> results = [];
+    if (s == Status.published) {
+      ref.watch(resultProvider).whenData((data) {
+        results = data;
+      });
+    }
+
+    print('results: $results');
+
+    int totalVotes = 0;
+    List<double> votesPercent = [];
+
     double h = 0;
     sectionsPretendances
         .whenData((pretendanceList) => pretendanceList[section]!.whenData(
               (pretendance) {
-                h = pretendance.length * (s == Status.open ? 180 : 140) -
+                print(pretendance.length);
+                h = pretendance.length *
+                        ((s == Status.open || s == Status.published)
+                            ? 180
+                            : 140) -
                     MediaQuery.of(context).size.height +
                     250;
+                final numberVotes = results
+                    .where((element) => element.id == section.id)
+                    .map((e) => e.count)
+                    .toList();
+                totalVotes =
+                    numberVotes.reduce((value, element) => value + element);
+
+                votesPercent = numberVotes.map((e) => e / totalVotes).toList();
               },
             ));
 
@@ -55,121 +81,119 @@ class ListPretendenceCard extends HookConsumerWidget {
       animation.forward();
       pageOpened.value = true;
     }
-    return sectionsPretendances.when(
-        data: (pretendanceList) => Stack(
-              children: [
-                SingleChildScrollView(
-                  controller: scrollController,
-                  physics: const BouncingScrollPhysics(),
-                  child: pretendanceList.isNotEmpty
-                      ? Column(
-                          children: pretendanceList[section]!.when(
-                          data: (pretendance) => pretendance.map((e) {
-                            final index = pretendance.indexOf(e);
-                            return PretendanceCard(
-                                index: index,
-                                pretendance: e,
-                                animation: animation,
-                                enableVote:
-                                    !alreadyVotedSection.contains(section.id));
-                          }).toList(),
-                          loading: () => const [
-                            Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          ],
-                          error: (error, stack) => const [
-                            Center(
-                              child: Text("Error occured"),
-                            )
-                          ],
-                        ))
-                      : const SizedBox(
-                          height: 150,
-                          child: Center(
-                            child: Text(VoteTextConstants.noPretendanceList),
+    return sectionsPretendances.when(data: (pretendanceList) {
+      return Stack(
+        children: [
+          SingleChildScrollView(
+            controller: scrollController,
+            physics: const BouncingScrollPhysics(),
+            child: pretendanceList.isNotEmpty
+                ? Column(
+                    children: pretendanceList[section]!.when(
+                    data: (pretendance) => pretendance.map((e) {
+                      final index = pretendance.indexOf(e);
+                      return PretendanceCard(
+                        index: index,
+                        pretendance: e,
+                        animation: animation,
+                        enableVote: !alreadyVotedSection.contains(section.id),
+                        votesPercent: votesPercent[index],
+                      );
+                    }).toList(),
+                    loading: () => const [
+                      Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    ],
+                    error: (error, stack) => const [
+                      Center(
+                        child: Text("Error occured"),
+                      )
+                    ],
+                  ))
+                : const SizedBox(
+                    height: 150,
+                    child: Center(
+                      child: Text(VoteTextConstants.noPretendanceList),
+                    ),
+                  ),
+          ),
+          if (h > 0)
+            Positioned(
+                bottom: 10,
+                right: MediaQuery.of(context).size.width / 2 - 100,
+                child: FadeTransition(
+                  opacity: hideAnimation,
+                  child: ScaleTransition(
+                    scale: hideAnimation,
+                    child: GestureDetector(
+                      onTap: (() {
+                        hideAnimation.animateTo(0);
+                        scrollController.animateTo(h + 25,
+                            duration: const Duration(milliseconds: 350),
+                            curve: Curves.decelerate);
+                      }),
+                      child: SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(2, 0),
+                          end: const Offset(0, 0),
+                        ).animate(CurvedAnimation(
+                            parent: animation,
+                            curve: const Interval(0.2, 0.4,
+                                curve: Curves.easeOut))),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 8),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [
+                                  ColorConstants.background2.withOpacity(0.8),
+                                  Colors.black.withOpacity(0.8)
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: ColorConstants.background2
+                                      .withOpacity(0.4),
+                                  offset: const Offset(2, 3),
+                                  blurRadius: 5)
+                            ],
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(25)),
                           ),
-                        ),
-                ),
-                if (h > 0)
-                  Positioned(
-                      bottom: 10,
-                      right: MediaQuery.of(context).size.width / 2 - 100,
-                      child: FadeTransition(
-                        opacity: hideAnimation,
-                        child: ScaleTransition(
-                          scale: hideAnimation,
-                          child: GestureDetector(
-                            onTap: (() {
-                              hideAnimation.animateTo(0);
-                              scrollController.animateTo(h + 25,
-                                  duration: const Duration(milliseconds: 350),
-                                  curve: Curves.decelerate);
-                            }),
-                            child: SlideTransition(
-                              position: Tween<Offset>(
-                                begin: const Offset(2, 0),
-                                end: const Offset(0, 0),
-                              ).animate(CurvedAnimation(
-                                  parent: animation,
-                                  curve: const Interval(0.2, 0.4,
-                                      curve: Curves.easeOut))),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 8),
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [
-                                        ColorConstants.background2
-                                            .withOpacity(0.8),
-                                        Colors.black.withOpacity(0.8)
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: ColorConstants.background2
-                                            .withOpacity(0.4),
-                                        offset: const Offset(2, 3),
-                                        blurRadius: 5)
-                                  ],
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(25)),
-                                ),
-                                alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    HeroIcon(
-                                      HeroIcons.chevronDoubleDown,
-                                      size: 15,
-                                      color: Colors.grey.shade100,
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      VoteTextConstants.seeMore,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.grey.shade100,
-                                      ),
-                                    ),
-                                  ],
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              HeroIcon(
+                                HeroIcons.chevronDoubleDown,
+                                size: 15,
+                                color: Colors.grey.shade100,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                VoteTextConstants.seeMore,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.grey.shade100,
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
-                      ))
-              ],
-            ),
-        error: (Object error, StackTrace stackTrace) {
-          return const Center(child: Text("Error occured"));
-        },
-        loading: () {
-          return const Center(child: CircularProgressIndicator());
-        });
+                      ),
+                    ),
+                  ),
+                ))
+        ],
+      );
+    }, error: (Object error, StackTrace stackTrace) {
+      return const Center(child: Text("Error occured"));
+    }, loading: () {
+      return const Center(child: CircularProgressIndicator());
+    });
   }
 }

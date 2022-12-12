@@ -5,7 +5,7 @@ import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/ui/member_card.dart';
-import 'package:myecl/vote/ui/pretendance_card.dart';
+import 'package:myecl/vote/ui/pages/admin_page/pretendance_card.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});

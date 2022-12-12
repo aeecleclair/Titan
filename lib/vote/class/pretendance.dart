@@ -12,6 +12,7 @@ class Pretendance {
   late ListType listType;
   late List<Member> members;
   late Section section;
+  late String program;
 
   Pretendance({
     required this.id,
@@ -20,6 +21,7 @@ class Pretendance {
     required this.listType,
     required this.members,
     required this.section,
+    required this.program,
   });
 
   Pretendance copyWith({
@@ -29,6 +31,7 @@ class Pretendance {
     ListType? listType,
     List<Member>? members,
     Section? section,
+    String? program,
   }) {
     return Pretendance(
       id: id ?? this.id,
@@ -37,6 +40,7 @@ class Pretendance {
       listType: listType ?? this.listType,
       members: members ?? this.members,
       section: section ?? this.section,
+      program: program ?? this.program,
     );
   }
 
@@ -48,6 +52,7 @@ class Pretendance {
       'type': capitalize(listType.toString().split('.').last),
       'members': members.map((x) => x.toJson()).toList(),
       'section_id': section.id,
+      'program': program,
     };
   }
 
@@ -60,6 +65,7 @@ class Pretendance {
       members:
           List<Member>.from(map['members']?.map((x) => Member.fromJson(x))),
       section: Section.fromJson(map['section']),
+      program: map['program'],
     );
   }
 
@@ -70,5 +76,6 @@ class Pretendance {
     listType = ListType.serio;
     members = [];
     section = Section.empty();
+    program = '';
   }
 }

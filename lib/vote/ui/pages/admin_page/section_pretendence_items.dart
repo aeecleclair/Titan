@@ -13,7 +13,7 @@ import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/pretendance_card.dart';
+import 'package:myecl/vote/ui/pages/admin_page/pretendance_card.dart';
 
 class SectionPretendenceItems extends HookConsumerWidget {
   const SectionPretendenceItems({super.key});

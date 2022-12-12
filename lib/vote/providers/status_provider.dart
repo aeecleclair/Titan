@@ -44,6 +44,14 @@ class StatusNotifier extends SingleNotifier<Status> {
     }
     return false;
   }
+
+  Future<bool> publishVote() async {
+    if (await statusRepository.publishVote()) {
+      state = const AsyncData(Status.published);
+      return true;
+    }
+    return false;
+  }
 }
 
 final statusProvider =

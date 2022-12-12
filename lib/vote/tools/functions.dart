@@ -40,6 +40,8 @@ String statusToString(Status status) {
       return 'Closed';
     case Status.counting:
       return 'Counting';
+    case Status.published:
+      return 'Published';
     default:
       return 'Waiting';
   }

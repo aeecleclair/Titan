@@ -100,29 +100,51 @@ class AdminPage extends HookConsumerWidget {
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 205, 205, 205))),
-                    if (showVotes && status == Status.counting)
-                      GestureDetector(
-                        onTap: () {
-                          showVotesNotifier.toggle(false);
-                        },
-                        child: const HeroIcon(
-                          HeroIcons.eyeSlash,
-                          size: 25.0,
-                          color: Colors.black,
+                    if (showVotes && (status == Status.counting))
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              showVotesNotifier.toggle(false);
+                            },
+                            child: const HeroIcon(
+                              HeroIcons.eyeSlash,
+                              size: 25.0,
+                              color: Colors.black,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              statusNotifier.publishVote();
+                            },
+                            child: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.black,
+                          ),
+                          child: const Text(VoteTextConstants.publish,
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
                         ),
+                          ),
+                        ],
                       ),
-                    if (showVotes && status == Status.counting)
-                      GestureDetector(
-                        onTap: () {
-                          openExcel(ref);
-                        },
-                        child: const HeroIcon(
-                          HeroIcons.tableCells,
-                          size: 25.0,
-                          color: Colors.black,
-                        ),
-                      ),
-                    if (status == Status.counting)
+                    // if (showVotes && (status == Status.counting || status == Status.published))
+                    //   GestureDetector(
+                    //     onTap: () {
+                    //       openExcel(ref);
+                    //     },
+                    //     child: const HeroIcon(
+                    //       HeroIcons.tableCells,
+                    //       size: 25.0,
+                    //       color: Colors.black,
+                    //     ),
+                    //   ),
+                    if (status == Status.counting || status == Status.published)
                       GestureDetector(
                         onTap: () {
                           showDialog(
@@ -207,6 +229,8 @@ class AdminPage extends HookConsumerWidget {
                                 ],
                               ),
                             ),
+                    if (status == Status.published)
+                      const VoteBars(),
                     if (status == Status.closed)
                       Padding(
                         padding: const EdgeInsets.symmetric(

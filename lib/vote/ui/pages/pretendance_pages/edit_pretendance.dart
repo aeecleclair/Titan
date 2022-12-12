@@ -464,6 +464,7 @@ class EditPretendancePage extends HookConsumerWidget {
                             listType: listType.value,
                             members: members,
                             section: section.value,
+                            program: '',
                           ),
                         );
                         if (value) {

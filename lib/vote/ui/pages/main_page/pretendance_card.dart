@@ -19,12 +19,14 @@ class PretendanceCard extends HookConsumerWidget {
   final AnimationController animation;
   final int index;
   final bool enableVote;
+  final double votesPercent;
   const PretendanceCard(
       {super.key,
       required this.pretendance,
       required this.animation,
       required this.index,
-      required this.enableVote});
+      required this.enableVote,
+      required this.votesPercent});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -51,180 +53,218 @@ class PretendanceCard extends HookConsumerWidget {
           parent: animation,
           curve: Interval(0.05 + 0.05 * index, 0.25 + 0.05 * index,
               curve: Curves.easeOut))),
-      child: Container(
-          padding: const EdgeInsets.all(10.0),
-          margin: const EdgeInsets.only(bottom: 15, left: 10),
-          height: (s == Status.open && enableVote) ? 160 : 120,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade200.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 10,
-                offset: const Offset(3, 3),
+      child: Stack(
+        children: [
+          if (s == Status.published)
+            Container(
+              padding: const EdgeInsets.all(10.0),
+              margin: const EdgeInsets.only(bottom: 15, left: 10),
+              height: 160,
+              width: votesPercent * MediaQuery.of(context).size.width * 0.7,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    bottomLeft: Radius.circular(20)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade800.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 10,
+                    offset: const Offset(3, 3),
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Text(
+                  '${votesPercent.toStringAsFixed(2)}%',
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          Container(
+              padding: const EdgeInsets.all(10.0),
+              margin: const EdgeInsets.only(bottom: 15, left: 10),
+              height: (s == Status.open && enableVote) ? 160 : 120,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    bottomLeft: Radius.circular(20)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade200.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 10,
+                    offset: const Offset(3, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    pretendanceLogos.when(
-                        data: (data) {
-                          if (data[pretendance] != null) {
-                            return data[pretendance]!.when(data: (data) {
-                              if (data.isNotEmpty) {
-                                return Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image: data.first.image,
-                                      fit: BoxFit.cover,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        pretendanceLogos.when(
+                            data: (data) {
+                              if (data[pretendance] != null) {
+                                return data[pretendance]!.when(data: (data) {
+                                  if (data.isNotEmpty) {
+                                    return Container(
+                                      width: 40,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          image: data.first.image,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    logoNotifier
+                                        .getLogo(pretendance.id)
+                                        .then((value) {
+                                      pretendanceLogosNotifier.setTData(
+                                          pretendance, AsyncData([value]));
+                                    });
+                                    return const HeroIcon(
+                                      HeroIcons.userCircle,
+                                      size: 40,
+                                    );
+                                  }
+                                }, loading: () {
+                                  return const SizedBox(
+                                    height: 40,
+                                    width: 40,
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
                                     ),
-                                  ),
-                                );
-                              } else {
-                                logoNotifier
-                                    .getLogo(pretendance.id)
-                                    .then((value) {
-                                  pretendanceLogosNotifier.setTData(
-                                      pretendance, AsyncData([value]));
+                                  );
+                                }, error: (error, stack) {
+                                  return const SizedBox(
+                                    height: 40,
+                                    width: 40,
+                                    child: Center(
+                                      child: Icon(Icons.error),
+                                    ),
+                                  );
                                 });
-                                return const HeroIcon(
-                                  HeroIcons.userCircle,
-                                  size: 40,
-                                );
+                              } else {
+                                return const SizedBox.shrink();
                               }
-                            }, loading: () {
-                              return const SizedBox(
-                                height: 40,
-                                width: 40,
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
-                            }, error: (error, stack) {
-                              return const SizedBox(
-                                height: 40,
-                                width: 40,
-                                child: Center(
-                                  child: Icon(Icons.error),
-                                ),
-                              );
-                            });
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        },
-                        loading: () => const CircularProgressIndicator(),
-                        error: (error, stack) => const Text('Error')),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          AutoSizeText(pretendance.name,
-                              maxLines: 1,
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
-                          Text(
-                              capitalize(pretendance.listType
-                                  .toString()
-                                  .split('.')
-                                  .last),
-                              style: const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
-                          const SizedBox(
-                            height: 3,
+                            },
+                            loading: () => const CircularProgressIndicator(),
+                            error: (error, stack) => const Text('Error')),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              AutoSizeText(pretendance.name,
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black)),
+                              Text(
+                                  capitalize(pretendance.listType
+                                      .toString()
+                                      .split('.')
+                                      .last),
+                                  style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black)),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                            ],
                           ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            pretendanceNotifier.setId(pretendance);
+                            pageNotifier
+                                .setVotePage(VotePage.detailPageFromMain);
+                          },
+                          child: const HeroIcon(
+                            HeroIcons.informationCircle,
+                            color: Colors.black,
+                            size: 25,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Center(
+                      child: Text(pretendance.description,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey.shade400)),
+                    ),
+                    const Spacer(),
+                    if (s == Status.open && enableVote)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          selectedPretendance.id != pretendance.id
+                              ? GestureDetector(
+                                  onTap: () {
+                                    sections.when(
+                                        data: (data) {
+                                          selectedPretendanceNotifier
+                                              .changeSelection(pretendance);
+                                        },
+                                        error: (e, s) {},
+                                        loading: () {});
+                                  },
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(30),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.2),
+                                            blurRadius: 10,
+                                            offset: const Offset(2, 3))
+                                      ],
+                                    ),
+                                    child: const Icon(Icons.how_to_vote,
+                                        color: Colors.white),
+                                  ),
+                                )
+                              : const Text(
+                                  VoteTextConstants.selected,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                )
                         ],
                       ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        pretendanceNotifier.setId(pretendance);
-                        pageNotifier.setVotePage(VotePage.detailPageFromMain);
-                      },
-                      child: const HeroIcon(
-                        HeroIcons.informationCircle,
-                        color: Colors.black,
-                        size: 25,
-                      ),
-                    ),
                   ],
                 ),
-                Center(
-                  child: Text(pretendance.description,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey.shade400)),
-                ),
-                const Spacer(),
-                if (s == Status.open && enableVote)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      selectedPretendance.id != pretendance.id
-                          ? GestureDetector(
-                              onTap: () {
-                                sections.when(
-                                    data: (data) {
-                                      selectedPretendanceNotifier
-                                          .changeSelection(pretendance);
-                                    },
-                                    error: (e, s) {},
-                                    loading: () {});
-                              },
-                              child: Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(30),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
-                                        blurRadius: 10,
-                                        offset: const Offset(2, 3))
-                                  ],
-                                ),
-                                child: const Icon(Icons.how_to_vote,
-                                    color: Colors.white),
-                              ),
-                            )
-                          : const Text(
-                              VoteTextConstants.selected,
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            )
-                    ],
-                  ),
-              ],
-            ),
-          )),
+              )),
+        ],
+      ),
     );
   }
 }
