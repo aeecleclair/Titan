@@ -62,7 +62,7 @@ class SectionBar extends HookConsumerWidget {
               return sections
                   .map((key, value) => MapEntry(
                       SectionChip(
-                          label: capitalize(key.name),
+                          label: key.name,
                           selected: section.id == key.id,
                           isAdmin: status == Status.waiting,
                           onTap: () async {

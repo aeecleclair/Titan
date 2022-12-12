@@ -45,48 +45,87 @@ class PretendanceCard extends HookConsumerWidget {
         data: (value) => value,
         loading: () => Status.closed,
         error: (error, stack) => Status.closed);
-    return SlideTransition(
-      position: Tween<Offset>(
-        begin: const Offset(1, 0),
-        end: const Offset(0, 0),
-      ).animate(CurvedAnimation(
-          parent: animation,
-          curve: Interval(0.05 + 0.05 * index, 0.25 + 0.05 * index,
-              curve: Curves.easeOut))),
-      child: Stack(
-        children: [
-          if (s == Status.published)
-            Container(
-              padding: const EdgeInsets.all(10.0),
-              margin: const EdgeInsets.only(bottom: 15, left: 10),
-              height: 160,
-              width: votesPercent * MediaQuery.of(context).size.width * 0.7,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    bottomLeft: Radius.circular(20)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade800.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 10,
-                    offset: const Offset(3, 3),
-                  ),
-                ],
-              ),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: Text(
-                  '${votesPercent.toStringAsFixed(2)}%',
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+    return Stack(
+      children: [
+        if (s == Status.published)
+          SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1, 0),
+              end: const Offset(0, 0),
+            ).animate(CurvedAnimation(
+                parent: animation,
+                curve: Interval(0.08 + 0.05 * index, 0.28 + 0.05 * index,
+                    curve: Curves.easeOut))),
+            child: SizedBox(
+              height: 175,
+              child: Row(children: [
+                Expanded(
+                  child: (votesPercent) < 0.3
+                      ? Container(
+                          padding: const EdgeInsets.all(10.0),
+                          margin: const EdgeInsets.only(bottom: 15),
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: Text(
+                              '${(votesPercent * 100).toStringAsFixed(1)}%',
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ))
+                      : Container(),
                 ),
-              ),
+                Column(
+                  children: [
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.all(10.0),
+                      margin: const EdgeInsets.only(bottom: 15),
+                      height: 70,
+                      width: (MediaQuery.of(context).size.width - 92) *
+                          votesPercent,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            bottomLeft: Radius.circular(20)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade500.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 10,
+                            offset: const Offset(3, 3),
+                          ),
+                        ],
+                      ),
+                      child: (votesPercent >= 0.3)
+                          ? Align(
+                              alignment: Alignment.bottomRight,
+                              child: Text(
+                                '${(votesPercent * 100).toStringAsFixed(1)}%',
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            )
+                          : const SizedBox(),
+                    ),
+                  ],
+                ),
+              ]),
             ),
-          Container(
+          ),
+        SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(1, 0),
+            end: const Offset(0, 0),
+          ).animate(CurvedAnimation(
+              parent: animation,
+              curve: Interval(0.05 + 0.05 * index, 0.25 + 0.05 * index,
+                  curve: Curves.easeOut))),
+          child: Container(
               padding: const EdgeInsets.all(10.0),
               margin: const EdgeInsets.only(bottom: 15, left: 10),
               height: (s == Status.open && enableVote) ? 160 : 120,
@@ -97,7 +136,7 @@ class PretendanceCard extends HookConsumerWidget {
                     bottomLeft: Radius.circular(20)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.shade200.withOpacity(0.5),
+                    color: Colors.grey.shade500.withOpacity(0.1),
                     spreadRadius: 5,
                     blurRadius: 10,
                     offset: const Offset(3, 3),
@@ -113,57 +152,64 @@ class PretendanceCard extends HookConsumerWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        pretendanceLogos.when(
-                            data: (data) {
-                              if (data[pretendance] != null) {
-                                return data[pretendance]!.when(data: (data) {
-                                  if (data.isNotEmpty) {
-                                    return Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          image: data.first.image,
-                                          fit: BoxFit.cover,
+                        pretendance.listType != ListType.blank
+                            ? pretendanceLogos.when(
+                                data: (data) {
+                                  if (data[pretendance] != null) {
+                                    return data[pretendance]!.when(
+                                        data: (data) {
+                                      if (data.isNotEmpty) {
+                                        return Container(
+                                          width: 40,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              image: data.first.image,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        logoNotifier
+                                            .getLogo(pretendance.id)
+                                            .then((value) {
+                                          pretendanceLogosNotifier.setTData(
+                                              pretendance, AsyncData([value]));
+                                        });
+                                        return const HeroIcon(
+                                          HeroIcons.userCircle,
+                                          size: 40,
+                                        );
+                                      }
+                                    }, loading: () {
+                                      return const SizedBox(
+                                        height: 40,
+                                        width: 40,
+                                        child: Center(
+                                          child: CircularProgressIndicator(),
                                         ),
-                                      ),
-                                    );
-                                  } else {
-                                    logoNotifier
-                                        .getLogo(pretendance.id)
-                                        .then((value) {
-                                      pretendanceLogosNotifier.setTData(
-                                          pretendance, AsyncData([value]));
+                                      );
+                                    }, error: (error, stack) {
+                                      return const SizedBox(
+                                        height: 40,
+                                        width: 40,
+                                        child: Center(
+                                          child: Icon(Icons.error),
+                                        ),
+                                      );
                                     });
-                                    return const HeroIcon(
-                                      HeroIcons.userCircle,
-                                      size: 40,
-                                    );
+                                  } else {
+                                    return const SizedBox.shrink();
                                   }
-                                }, loading: () {
-                                  return const SizedBox(
-                                    height: 40,
-                                    width: 40,
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  );
-                                }, error: (error, stack) {
-                                  return const SizedBox(
-                                    height: 40,
-                                    width: 40,
-                                    child: Center(
-                                      child: Icon(Icons.error),
-                                    ),
-                                  );
-                                });
-                              } else {
-                                return const SizedBox.shrink();
-                              }
-                            },
-                            loading: () => const CircularProgressIndicator(),
-                            error: (error, stack) => const Text('Error')),
+                                },
+                                loading: () =>
+                                    const CircularProgressIndicator(),
+                                error: (error, stack) => const Text('Error'))
+                            : const HeroIcon(
+                                HeroIcons.cubeTransparent,
+                                size: 40,
+                              ),
                         const SizedBox(
                           width: 10,
                         ),
@@ -263,8 +309,8 @@ class PretendanceCard extends HookConsumerWidget {
                   ],
                 ),
               )),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

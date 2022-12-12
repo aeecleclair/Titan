@@ -43,6 +43,7 @@ class AddPretendancePage extends HookConsumerWidget {
     final usersNotifier = ref.watch(userList.notifier);
     final queryController = useTextEditingController();
     final role = useTextEditingController();
+    final program = useTextEditingController();
     final member = useState(SimpleUser.empty());
     final members = ref.watch(pretendanceMembersProvider);
     final membersNotifier = ref.watch(pretendanceMembersProvider.notifier);
@@ -154,97 +155,6 @@ class AddPretendancePage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  // Positioned(
-                  //   bottom: 0,
-                  //   right: 0,
-                  //   child: GestureDetector(
-                  //     onTap: () async {
-                  //       final XFile? image =
-                  //           await picker.pickImage(source: ImageSource.camera);
-                  //       if (image != null) {
-                  //         logo.value = image.path;
-                  //       }
-                  //     },
-                  //     child: Container(
-                  //       height: 40,
-                  //       width: 40,
-                  //       padding: const EdgeInsets.all(7),
-                  //       decoration: BoxDecoration(
-                  //         shape: BoxShape.circle,
-                  //         gradient: const LinearGradient(
-                  //           colors: [
-                  //             ColorConstants.gradient1,
-                  //             ColorConstants.gradient2,
-                  //           ],
-                  //           begin: Alignment.topLeft,
-                  //           end: Alignment.bottomRight,
-                  //         ),
-                  //         boxShadow: [
-                  //           BoxShadow(
-                  //             color: ColorConstants.gradient2.withOpacity(0.3),
-                  //             spreadRadius: 2,
-                  //             blurRadius: 4,
-                  //             offset: const Offset(2, 3),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       child: const HeroIcon(
-                  //         HeroIcons.camera,
-                  //         color: Colors.white,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // if (logo.value != null)
-                  //   Positioned(
-                  //     bottom: -20,
-                  //     right: 60,
-                  //     child: GestureDetector(
-                  //       onTap: () async {
-                  //         // final value = await profilePictureNotifier
-                  //         //     .setProfilePicture(ImageSource.camera);
-                  //         // if (value != null) {
-                  //         //   if (value) {
-                  //         //     displayToastWithContext(
-                  //         //         TypeMsg.msg, "Photo de profil changée");
-                  //         //   } else {
-                  //         //     displayToastWithContext(TypeMsg.error,
-                  //         //         "Erreur lors du changement de photo de profil");
-                  //         //   }
-                  //         // }
-                  //       },
-                  //       child: Container(
-                  //         height: 40,
-                  //         width: 40,
-                  //         padding: const EdgeInsets.all(7),
-                  //         decoration: BoxDecoration(
-                  //           shape: BoxShape.circle,
-                  //           gradient: const LinearGradient(
-                  //             colors: [
-                  //               ColorConstants.gradient1,
-                  //               ColorConstants.gradient2,
-                  //             ],
-                  //             begin: Alignment.topLeft,
-                  //             end: Alignment.bottomRight,
-                  //           ),
-                  //           boxShadow: [
-                  //             BoxShadow(
-                  //               color:
-                  //                   ColorConstants.gradient2.withOpacity(0.3),
-                  //               spreadRadius: 2,
-                  //               blurRadius: 4,
-                  //               offset: const Offset(2, 3),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //         child: const HeroIcon(
-                  //           HeroIcons.sparkles,
-                  //           color: Colors.white,
-                  //           size: 10,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   )
                 ],
               ),
             ),
@@ -288,7 +198,7 @@ class AddPretendancePage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: TextEntry(
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.multiline,
                 controller: description,
                 isInt: false,
                 label: VoteTextConstants.description,
@@ -368,9 +278,10 @@ class AddPretendancePage extends HookConsumerWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                            SearchResult(
-                                borrower: member,
-                                queryController: queryController,),
+                          SearchResult(
+                            borrower: member,
+                            queryController: queryController,
+                          ),
                           TextEntry(
                               label: VoteTextConstants.role,
                               suffix: '',
@@ -433,6 +344,17 @@ class AddPretendancePage extends HookConsumerWidget {
             ),
             const SizedBox(height: 50),
             Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: TextEntry(
+                keyboardType: TextInputType.multiline,
+                label: VoteTextConstants.program,
+                suffix: '',
+                isInt: false,
+                controller: program,
+              ),
+            ),
+            const SizedBox(height: 50),
+            Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: GestureDetector(
                   onTap: () {
@@ -450,10 +372,13 @@ class AddPretendancePage extends HookConsumerWidget {
                             listType: listType.value,
                             members: members,
                             section: section.value,
-                            program: ''
+                            program: program.text,
                           ),
                         );
                         if (value) {
+                          displayVoteToastWithContext(
+                              TypeMsg.msg, VoteTextConstants.addedPretendance);
+                          pageNotifier.setVotePage(VotePage.admin);
                           pretendanceList.when(
                               data: (list) {
                                 final newPretendance = list.last;
@@ -472,12 +397,9 @@ class AddPretendancePage extends HookConsumerWidget {
                               },
                               error: (error, s) {},
                               loading: () {});
-                          pageNotifier.setVotePage(VotePage.admin);
                           membersNotifier.clearMembers();
                           await sectionsNotifier.setTData(section.value,
                               await pretendanceListNotifier.copy());
-                          displayVoteToastWithContext(
-                              TypeMsg.msg, VoteTextConstants.addedPretendance);
                         } else {
                           displayVoteToastWithContext(
                               TypeMsg.error, VoteTextConstants.addingError);

@@ -16,7 +16,6 @@ import 'package:myecl/vote/providers/show_graph_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/pages/admin_page/open_excel.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_bar.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_pretendence_items.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_bars.dart';
@@ -35,7 +34,6 @@ class AdminPage extends HookConsumerWidget {
     final statusNotifier = ref.watch(statusProvider.notifier);
     final showVotes = ref.watch(showGraphProvider);
     final showVotesNotifier = ref.watch(showGraphProvider.notifier);
-    final resultsNotifier = ref.watch(resultProvider.notifier);
     Status status = Status.open;
     asyncStatus.whenData((value) => status = value);
     ref.watch(userList);
@@ -46,7 +44,9 @@ class AdminPage extends HookConsumerWidget {
     return Refresher(
       onRefresh: () async {
         await statusNotifier.loadStatus();
-        await resultsNotifier.loadResult();
+        if (status == Status.counting || status == Status.published) {
+          await ref.watch(resultProvider.notifier).loadResult();
+        }
         final sections = await sectionsNotifier.loadSectionList();
         sections.whenData((value) async {
           List<Pretendance> list = [];
@@ -100,50 +100,52 @@ class AdminPage extends HookConsumerWidget {
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 205, 205, 205))),
-                    if (showVotes && (status == Status.counting))
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              showVotesNotifier.toggle(false);
-                            },
-                            child: const HeroIcon(
-                              HeroIcons.eyeSlash,
-                              size: 25.0,
-                              color: Colors.black,
+                    if (showVotes && status == Status.counting)
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                showVotesNotifier.toggle(false);
+                              },
+                              child: const HeroIcon(
+                                HeroIcons.eyeSlash,
+                                size: 25.0,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              statusNotifier.publishVote();
-                            },
-                            child: Container(
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.black,
-                          ),
-                          child: const Text(VoteTextConstants.publish,
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogBox(
+                                        title: VoteTextConstants.publish,
+                                        descriptions: VoteTextConstants
+                                            .publishVoteDescription,
+                                        onYes: () {
+                                          statusNotifier.publishVote();
+                                          ref
+                                              .watch(resultProvider.notifier)
+                                              .loadResult();
+                                        }));
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Colors.black,
+                                ),
+                                child: const Text(VoteTextConstants.publish,
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)),
+                              ),
+                            ),
+                          ],
                         ),
-                          ),
-                        ],
                       ),
-                    // if (showVotes && (status == Status.counting || status == Status.published))
-                    //   GestureDetector(
-                    //     onTap: () {
-                    //       openExcel(ref);
-                    //     },
-                    //     child: const HeroIcon(
-                    //       HeroIcons.tableCells,
-                    //       size: 25.0,
-                    //       color: Colors.black,
-                    //     ),
-                    //   ),
                     if (status == Status.counting || status == Status.published)
                       GestureDetector(
                         onTap: () {
@@ -229,8 +231,7 @@ class AdminPage extends HookConsumerWidget {
                                 ],
                               ),
                             ),
-                    if (status == Status.published)
-                      const VoteBars(),
+                    if (status == Status.published) const VoteBars(),
                     if (status == Status.closed)
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -386,8 +387,7 @@ class AdminPage extends HookConsumerWidget {
                           ),
                         ),
                       ),
-                      if (status == Status.open)
-                        const VoteCount()
+                    if (status == Status.open) const VoteCount()
                   ],
                 ))
           ],

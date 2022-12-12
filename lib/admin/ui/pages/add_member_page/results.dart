@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
+import 'package:myecl/admin/providers/simple_groups_groups_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
@@ -18,6 +19,8 @@ class MemberResults extends HookConsumerWidget {
     final pageNotifier = ref.watch(adminPageProvider.notifier);
     final groupNotifier = ref.watch(groupProvider.notifier);
     final users = ref.watch(userList);
+    final simplegroupGroupsNotifier =
+        ref.watch(simpleGroupsGroupsProvider.notifier);
     return users.when(
         data: (value) {
           return Column(
@@ -46,6 +49,9 @@ class MemberResults extends HookConsumerWidget {
                                             .addMember(newGroup, e)
                                             .then((value) {
                                           if (value) {
+                                            simplegroupGroupsNotifier.setTData(
+                                                newGroup.id,
+                                                AsyncData([newGroup]));
                                             pageNotifier
                                                 .setAdminPage(AdminPage.edit);
                                             displayToast(context, TypeMsg.msg,

@@ -45,6 +45,7 @@ class EditPretendancePage extends HookConsumerWidget {
     final usersNotifier = ref.watch(userList.notifier);
     final queryController = useTextEditingController();
     final role = useTextEditingController();
+    final program = useTextEditingController(text: pretendance.program);
     final member = useState(SimpleUser.empty());
     final members = ref.watch(pretendanceMembersProvider);
     final membersNotifier = ref.watch(pretendanceMembersProvider.notifier);
@@ -302,7 +303,7 @@ class EditPretendancePage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: TextEntry(
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.multiline,
                 controller: description,
                 isInt: false,
                 label: VoteTextConstants.description,
@@ -382,9 +383,9 @@ class EditPretendancePage extends HookConsumerWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                            SearchResult(
-                                borrower: member,
-                                queryController: queryController),
+                          SearchResult(
+                              borrower: member,
+                              queryController: queryController),
                           TextEntry(
                               label: VoteTextConstants.role,
                               suffix: '',
@@ -447,6 +448,17 @@ class EditPretendancePage extends HookConsumerWidget {
             ),
             const SizedBox(height: 50),
             Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: TextEntry(
+                keyboardType: TextInputType.multiline,
+                label: VoteTextConstants.program,
+                suffix: '',
+                isInt: false,
+                controller: program,
+              ),
+            ),
+            const SizedBox(height: 50),
+            Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: GestureDetector(
                   onTap: () {
@@ -464,10 +476,13 @@ class EditPretendancePage extends HookConsumerWidget {
                             listType: listType.value,
                             members: members,
                             section: section.value,
-                            program: '',
+                            program: program.text,
                           ),
                         );
                         if (value) {
+                          displayVoteToastWithContext(
+                              TypeMsg.msg, VoteTextConstants.editedPretendance);
+                          pageNotifier.setVotePage(VotePage.admin);
                           pretendanceList.when(
                               data: (list) {
                                 if (logo.value != null) {
@@ -485,12 +500,9 @@ class EditPretendancePage extends HookConsumerWidget {
                               },
                               error: (error, s) {},
                               loading: () {});
-                          pageNotifier.setVotePage(VotePage.admin);
                           membersNotifier.clearMembers();
                           await sectionsNotifier.setTData(section.value,
                               await pretendanceListNotifier.copy());
-                          displayVoteToastWithContext(
-                              TypeMsg.msg, VoteTextConstants.editedPretendance);
                         } else {
                           displayVoteToastWithContext(
                               TypeMsg.error, VoteTextConstants.editingError);

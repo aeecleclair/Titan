@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/vote/class/result.dart';
 import 'package:myecl/vote/providers/result_provider.dart';
 import 'package:myecl/vote/providers/scroll_controller_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
@@ -31,37 +30,34 @@ class ListPretendenceCard extends HookConsumerWidget {
         loading: () => Status.closed,
         error: (error, stack) => Status.closed);
 
-    List<Result> results = [];
+    Map<String, int> results = {};
     if (s == Status.published) {
       ref.watch(resultProvider).whenData((data) {
-        results = data;
+        for (var i = 0; i < data.length; i++) {
+          results[data[i].id] = data[i].count;
+        }
       });
     }
 
-    print('results: $results');
-
     int totalVotes = 0;
-    List<double> votesPercent = [];
+    Map<String, double> votesPercent = {};
 
     double h = 0;
     sectionsPretendances
         .whenData((pretendanceList) => pretendanceList[section]!.whenData(
               (pretendance) {
-                print(pretendance.length);
                 h = pretendance.length *
                         ((s == Status.open || s == Status.published)
                             ? 180
                             : 140) -
                     MediaQuery.of(context).size.height +
                     250;
-                final numberVotes = results
-                    .where((element) => element.id == section.id)
-                    .map((e) => e.count)
-                    .toList();
+                final numberVotes = results.values.map((e) => e).toList();
                 totalVotes =
                     numberVotes.reduce((value, element) => value + element);
-
-                votesPercent = numberVotes.map((e) => e / totalVotes).toList();
+                for (var i = 0; i < numberVotes.length; i++) {
+                  votesPercent[pretendance[i].id] = numberVotes[i] / totalVotes;
+                }
               },
             ));
 
@@ -97,7 +93,9 @@ class ListPretendenceCard extends HookConsumerWidget {
                         pretendance: e,
                         animation: animation,
                         enableVote: !alreadyVotedSection.contains(section.id),
-                        votesPercent: votesPercent[index],
+                        votesPercent: votesPercent.keys.contains(e.id)
+                            ? votesPercent[e.id]!
+                            : 0,
                       );
                     }).toList(),
                     loading: () => const [

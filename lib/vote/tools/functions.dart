@@ -25,6 +25,8 @@ Status stringToStatus(String status) {
       return Status.closed;
     case 'counting':
       return Status.counting;
+    case 'published':
+      return Status.published;
     default:
       return Status.waiting;
   }

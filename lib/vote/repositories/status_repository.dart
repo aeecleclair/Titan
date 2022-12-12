@@ -50,7 +50,7 @@ class StatusRepository extends Repository {
 
   Future<bool> publishVote() async {
     try {
-      await create({}, suffix: '/publish');
+      await create({}, suffix: '/published');
       return true;
     } catch (e) {
       return false;

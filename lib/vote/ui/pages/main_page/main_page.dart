@@ -14,6 +14,7 @@ import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/providers/voted_section_provider.dart';
+import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/ui/pages/main_page/list_pretendence_card.dart';
 import 'package:myecl/vote/ui/pages/main_page/list_side_item.dart';
 import 'package:myecl/vote/ui/pages/main_page/section_title.dart';
@@ -37,8 +38,16 @@ class MainPage extends HookConsumerWidget {
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 2400),
     );
+    final status = ref.watch(statusProvider);
+    final s = status.when(
+      data: (value) => value,
+      loading: () => Status.closed,
+      error: (e, s) => Status.closed,
+    );
+    if (s == Status.open) {
+      ref.watch(votedSectionProvider.notifier).getVotedSections();
+    }
     final logosNotifier = ref.watch(pretendenceLogoProvider.notifier);
-    final votedSectionNotifier = ref.watch(votedSectionProvider.notifier);
     final pretendanceLogosNotifier =
         ref.watch(pretendanceLogosProvider.notifier);
 
@@ -48,7 +57,9 @@ class MainPage extends HookConsumerWidget {
       return Refresher(
         onRefresh: () async {
           await statusNotifier.loadStatus();
-          await votedSectionNotifier.getVotedSections();
+          if (s == Status.open) {
+            await ref.watch(votedSectionProvider.notifier).getVotedSections();
+          }
           await pretendancesNotifier.loadPretendanceList();
           final sections = await sectionsNotifier.loadSectionList();
           sections.whenData((value) {

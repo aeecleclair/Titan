@@ -65,7 +65,7 @@ class Pretendance {
       members:
           List<Member>.from(map['members']?.map((x) => Member.fromJson(x))),
       section: Section.fromJson(map['section']),
-      program: map['program'],
+      program: map['program'] ?? '',
     );
   }
 

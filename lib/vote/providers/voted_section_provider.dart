@@ -29,6 +29,5 @@ final votedSectionProvider =
         (ref) {
   final token = ref.watch(tokenProvider);
   VotedSectionProvider votesProvider = VotedSectionProvider(token: token);
-  votesProvider.getVotedSections();
   return votesProvider;
 });

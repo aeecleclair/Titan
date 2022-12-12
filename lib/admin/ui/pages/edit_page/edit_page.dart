@@ -33,6 +33,8 @@ class EditPage extends HookConsumerWidget {
     final simplegroupsGroupsNotifier =
         ref.watch(simpleGroupsGroupsProvider.notifier);
     final simplegroupsGroups = ref.watch(simpleGroupsGroupsProvider);
+    final simplegroupGroupsNotifier =
+        ref.watch(simpleGroupsGroupsProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -242,6 +244,9 @@ class EditPage extends HookConsumerWidget {
                                               final value = await groupNotifier
                                                   .deleteMember(newGroup, x);
                                               if (value) {
+                                                simplegroupGroupsNotifier
+                                                    .setTData(newGroup.id,
+                                                        AsyncData([newGroup]));
                                                 pageNotifier.setAdminPage(
                                                     AdminPage.edit);
                                                 displayToastWithContext(

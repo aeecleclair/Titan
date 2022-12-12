@@ -35,7 +35,7 @@ class Member extends SimpleUser {
       firstname: capitaliseAll(user['firstname']),
       nickname: capitaliseAll(user['nickname'] ?? ""),
       id: user['id'],
-      role: map['role'],
+      role: capitaliseAll(map['role']),
     );
   }
 

@@ -20,6 +20,7 @@ class TextEntry extends StatelessWidget {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
+      maxLines: null,
       cursorColor: Colors.black,
       decoration: InputDecoration(
         labelText: label,
