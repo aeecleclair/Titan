@@ -6,6 +6,8 @@
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The photo library is used to let you change a profile picture</string>
+	<key>NSCameraUsageDescription</key>
+	<string>The photo library is used to let you change a profile picture</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
