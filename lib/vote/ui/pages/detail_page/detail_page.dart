@@ -176,8 +176,7 @@ class DetailPage extends HookConsumerWidget {
                         child: Text(
                           pretendance.program,
                           style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
                           ),
                         ),
                       ),

@@ -12,6 +12,7 @@ import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/pretendance.dart';
+import 'package:myecl/vote/providers/display_results.dart';
 import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
 import 'package:myecl/vote/providers/pretendance_members.dart';
@@ -50,6 +51,7 @@ class AddPretendancePage extends HookConsumerWidget {
     final pretendanceLogosNotifier =
         ref.watch(pretendanceLogosProvider.notifier);
     final logoNotifier = ref.watch(pretendenceLogoProvider.notifier);
+    final showNotifier = ref.watch(displayResult.notifier);
     final logo = useState<String?>(null);
     final ImagePicker picker = ImagePicker();
 
@@ -252,6 +254,7 @@ class AddPretendancePage extends HookConsumerWidget {
                         child: Column(children: <Widget>[
                           TextFormField(
                             onChanged: (newQuery) {
+                              showNotifier.setId(true);
                               tokenExpireWrapper(ref, () async {
                                 if (queryController.text.isNotEmpty) {
                                   await usersNotifier
