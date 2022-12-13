@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:myecl/auth/providers/is_connected_provider.dart';
 import 'package:myecl/auth/repository/openid_repository.dart';
 import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
 
@@ -17,7 +18,12 @@ final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
         (ref) {
   OpenIdTokenProvider oauth2TokenRepository = OpenIdTokenProvider();
-  oauth2TokenRepository.getTokenFromStorage();
+  tokenExpireWrapperAuth(ref, () async {
+    final isConnected = ref.watch(isConnectedProvider);
+    if (isConnected) {
+      await oauth2TokenRepository.getTokenFromStorage();
+    }
+  });
   return oauth2TokenRepository;
 });
 
@@ -43,7 +49,6 @@ class IsLoggedInProvider extends StateNotifier<bool> {
 
 final isLoggedInProvider =
     StateNotifierProvider<IsLoggedInProvider, bool>((ref) {
-  // return true;
   final IsLoggedInProvider isLoggedInProvider = IsLoggedInProvider(false);
   final isConnected = ref.watch(isConnectedProvider);
   final authToken = ref.watch(authTokenProvider);
@@ -54,7 +59,6 @@ final isLoggedInProvider =
 });
 
 final loadingrovider = Provider((ref) {
-  // return false;
   return ref.watch(authTokenProvider).when(
     data: (tokens) {
       return tokens["token"] != "" && ref.watch(isLoggedInProvider);
@@ -69,7 +73,6 @@ final loadingrovider = Provider((ref) {
 });
 
 final idProvider = Provider((ref) {
-  // return "";
   return ref.watch(authTokenProvider).when(
     data: (tokens) {
       return tokens["token"] == ""
@@ -86,7 +89,6 @@ final idProvider = Provider((ref) {
 });
 
 final tokenProvider = Provider((ref) {
-  // return "dxfcgvhjk";
   return ref.watch(authTokenProvider).when(
     data: (tokens) {
       return tokens["token"] as String;

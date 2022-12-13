@@ -90,9 +90,10 @@ class LoanersItems extends HookConsumerWidget {
                                         final value = await itemListNotifier
                                             .deleteItem(e);
                                         if (value) {
-                                          await loanersitemsNotifier.setTData(
-                                              loaner,
-                                              await itemListNotifier.copy());
+                                          itemListNotifier.copy().then((value) {
+                                            loanersitemsNotifier.setTData(
+                                                loaner, value);
+                                          });
                                           displayToastWithContext(TypeMsg.msg,
                                               LoanTextConstants.deletedItem);
                                         } else {

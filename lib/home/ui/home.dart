@@ -22,7 +22,7 @@ class HomePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final eventListNotifier = ref.watch(eventListProvider.notifier);
     final sortedEventList = ref.watch(sortedEventListProvider);
-    final now = useState(DateTime.now());
+    DateTime now = DateTime.now();
     final ScrollController scrollController = useScrollController();
     final daysEventScrollController = useScrollController();
 
@@ -38,7 +38,7 @@ class HomePage extends HookConsumerWidget {
               child: Refresher(
                 onRefresh: () async {
                   await eventListNotifier.loadEventList();
-                  now.value = DateTime.now();
+                  now = DateTime.now();
                 },
                 child: Column(
                   children: [
@@ -79,7 +79,7 @@ class HomePage extends HookConsumerWidget {
                                           key,
                                           DaysEvent(
                                             day: key,
-                                            now: now.value,
+                                            now: now,
                                             events: value,
                                           )))
                                       .values

@@ -13,12 +13,9 @@ class ItemListNotifier extends ListNotifier<Item> {
     _itemrepository.setToken(token);
   }
 
-  void setId(String id) {
-    loanerId = id;
-  }
 
-  Future<AsyncValue<List<Item>>> loadItemList() async {
-    return await loadList(() async => _itemrepository.getItemList(loanerId));
+  Future<AsyncValue<List<Item>>> loadItemList(String id) async {
+    return await loadList(() async => _itemrepository.getItemList(id));
   }
 
   Future<bool> addItem(Item item) async {
@@ -42,11 +39,11 @@ class ItemListNotifier extends ListNotifier<Item> {
         item);
   }
 
-  Future<AsyncValue<List<Item>>> copy() {
+  Future<AsyncValue<List<Item>>> copy() async {
     return state.when(
-        data: (d) async => AsyncValue.data(d.sublist(0)),
-        error: (e, s) async => AsyncValue.error(e, s),
-        loading: () async => const AsyncValue.loading());
+        data: (d) => AsyncValue.data(d.sublist(0)),
+        error: (e, s) => AsyncValue.error(e, s),
+        loading: () => const AsyncValue.loading());
   }
 }
 
@@ -56,8 +53,7 @@ final itemListProvider =
   ItemListNotifier itemListNotifier = ItemListNotifier(token: token);
   final loanerId = ref.watch(loanerIdProvider);
   if (loanerId != "") {
-    itemListNotifier.setId(loanerId);
-    itemListNotifier.loadItemList();
+    itemListNotifier.loadItemList(loanerId);
   }
   return itemListNotifier;
 });

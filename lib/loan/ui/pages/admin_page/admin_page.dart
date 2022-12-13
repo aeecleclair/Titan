@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
@@ -11,7 +10,6 @@ import 'package:myecl/loan/ui/pages/admin_page/loaners_bar.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loaners_items.dart';
 import 'package:myecl/loan/ui/pages/admin_page/on_going_loan.dart';
 import 'package:myecl/tools/refresher.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -22,30 +20,11 @@ class AdminPage extends HookConsumerWidget {
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
-    final loaded = useState(false);
     final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
 
-    if (!loaded.value) {
-      ref.watch(userList);
-      itemListNotifier.setId(loaner.id);
-      itemListNotifier.loadItemList();
-      itemListNotifier.copy().then(
-        (value) {
-          loanersitemsNotifier.setTData(loaner, value);
-        },
-      );
-      loanListNotifier.loadLoan(loaner.id);
-      loanListNotifier.copy().then(
-        (value) {
-          adminLoanListNotifier.setTData(loaner, value);
-        },
-      );
-      loaded.value = true;
-    }
     return Refresher(
       onRefresh: () async {
-        itemListNotifier.setId(loaner.id);
-        itemListNotifier.loadItemList();
+        itemListNotifier.loadItemList(loaner.id);
         loanersitemsNotifier.setTData(loaner, await itemListNotifier.copy());
         loanListNotifier.loadLoan(loaner.id);
         adminLoanListNotifier.setTData(loaner, await loanListNotifier.copy());

@@ -82,9 +82,8 @@ class AddLoanPage extends HookConsumerWidget {
                                 onTap: () async {
                                   asso.value = e;
                                   tokenExpireWrapper(ref, () async {
-                                    itemListNotifier.setId(e.id);
                                     items.value =
-                                        await itemListNotifier.loadItemList();
+                                        await itemListNotifier.loadItemList(e.id);
                                   });
                                 },
                               ),

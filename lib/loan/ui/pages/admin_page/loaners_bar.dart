@@ -42,15 +42,13 @@ class LoanersBar extends HookConsumerWidget {
                             if (value[key] != null) {
                               value[key]!.whenData((value) async {
                                 if (value.isEmpty) {
-                                  itemListNotifier.setId(key.id);
-                                  itemListNotifier.loadItemList();
+                                  itemListNotifier.loadItemList(key.id);
                                   loanersitemsNotifier.setTData(
                                       key, await itemListNotifier.copy());
                                 }
                               });
                             } else {
-                              itemListNotifier.setId(key.id);
-                              itemListNotifier.loadItemList();
+                              itemListNotifier.loadItemList(key.id);
                               loanersitemsNotifier.setTData(
                                   key, await itemListNotifier.copy());
                             }
