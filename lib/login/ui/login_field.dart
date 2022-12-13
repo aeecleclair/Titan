@@ -34,9 +34,6 @@ class CreateAccountField extends HookConsumerWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 9,
-        ),
         Align(
           alignment: Alignment.centerLeft,
           child: Text(label,
@@ -46,8 +43,8 @@ class CreateAccountField extends HookConsumerWidget {
                 color: ColorConstants.background2,
               )),
         ),
-        SizedBox(
-          height: (isPassword) ? 14 : 16,
+        const SizedBox(
+          height: 12,
         ),
         AutofillGroup(
             child: Form(

@@ -141,6 +141,9 @@ class CreateAccountPage extends HookConsumerWidget {
                 color: ColorConstants.background2,
               )),
         ),
+        const SizedBox(
+          height: 1,
+        ),
         GestureDetector(
           onTap: () {
             _selectDate(context, birthday);
@@ -157,8 +160,6 @@ class CreateAccountPage extends HookConsumerWidget {
                 controller: birthday,
                 cursorColor: Colors.white,
                 decoration: const InputDecoration(
-                    suffix: HeroIcon(HeroIcons.calendar,
-                        color: Colors.white, size: 30),
                     enabledBorder: UnderlineInputBorder(
                         borderSide:
                             BorderSide(color: ColorConstants.background2)),
@@ -218,7 +219,7 @@ class CreateAccountPage extends HookConsumerWidget {
                 )),
           ),
           const SizedBox(
-            height: 21,
+            height: 8,
           ),
           AutofillGroup(
             child: DropdownButtonFormField(
@@ -340,7 +341,7 @@ class CreateAccountPage extends HookConsumerWidget {
               children: [
                 const Spacer(),
                 Expanded(
-                    flex: 4,
+                    flex: 5,
                     child: PageView(
                         physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -426,7 +427,7 @@ class CreateAccountPage extends HookConsumerWidget {
                   },
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 12,
                 ),
               ],
             ),
@@ -440,7 +441,7 @@ class CreateAccountPage extends HookConsumerWidget {
       BuildContext context, TextEditingController dateController) async {
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
+        initialDate: DateTime.now().subtract(const Duration(days: 365 * 21)),
         firstDate: DateTime(1900),
         lastDate: DateTime.now(),
         builder: (BuildContext context, Widget? child) {
