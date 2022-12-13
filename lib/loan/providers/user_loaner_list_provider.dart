@@ -14,6 +14,26 @@ class UserLoanerListNotifier extends ListNotifier<Loaner> {
   Future<AsyncValue<List<Loaner>>> loadMyLoanerList() async {
     return await loadList(_loanerRepository.getMyLoaner);
   }
+
+    Future<bool> addLoaner(Loaner loaner) async {
+    return await add(_loanerRepository.createLoaner, loaner);
+  }
+
+  Future<bool> updateLoaner(Loaner loaner) async {
+    return await update(
+        _loanerRepository.updateLoaner,
+        (loaners, loaner) =>
+            loaners..[loaners.indexWhere((i) => i.id == loaner.id)] = loaner,
+        loaner);
+  }
+
+  Future<bool> deleteLoaner(Loaner loaner) async {
+    return await delete(
+        _loanerRepository.deleteLoaner,
+        (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
+        loaner.id,
+        loaner);
+  }
 }
 
 final userLoanerListProvider =
