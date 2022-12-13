@@ -66,6 +66,7 @@ class BookingCard extends HookConsumerWidget {
                   formatRecurrenceRule(booking.start, booking.end,
                       booking.recurrenceRule, false),
                   maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -73,6 +74,7 @@ class BookingCard extends HookConsumerWidget {
               const SizedBox(height: 1),
               AutoSizeText(booking.reason,
                   maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

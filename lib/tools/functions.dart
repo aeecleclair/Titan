@@ -58,6 +58,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
                   child: Center(
                     child: AutoSizeText(
                       text,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,

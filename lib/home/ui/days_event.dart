@@ -97,6 +97,7 @@ class DaysEvent extends HookConsumerWidget {
                             child: AutoSizeText(
                               event.name,
                               maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: textColor,
                                   fontSize: 20,

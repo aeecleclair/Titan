@@ -218,6 +218,7 @@ class PretendanceCard extends HookConsumerWidget {
                             children: [
                               AutoSizeText(pretendance.name,
                                   maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,

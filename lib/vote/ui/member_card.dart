@@ -43,6 +43,7 @@ class MemberCard extends StatelessWidget {
               AutoSizeText(
                   member.nickname.isEmpty ? member.firstname : member.nickname,
                   maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -53,6 +54,7 @@ class MemberCard extends StatelessWidget {
                       ? '${member.firstname} ${member.name}'
                       : member.name,
                   maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
