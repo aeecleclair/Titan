@@ -1,19 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-class TitanVersionNotfier extends StateNotifier<String> {
+class TitanVersionNotfier extends StateNotifier<int> {
   late PackageInfo packageInfo;
-  TitanVersionNotfier() : super('0.0.0');
+  TitanVersionNotfier() : super(0);
 
-  Future<String> loadVersionFromStorage() async {
+  Future<int> loadVersionFromStorage() async {
     packageInfo = await PackageInfo.fromPlatform();
-    state = packageInfo.version;
+    state = int.parse(packageInfo.buildNumber);
     return state;
   }
 }
 
 final titanVersionProvider =
-    StateNotifierProvider<TitanVersionNotfier, String>((ref) {
+    StateNotifierProvider<TitanVersionNotfier, int>((ref) {
   final notifier = TitanVersionNotfier();
   notifier.loadVersionFromStorage();
   return notifier;
