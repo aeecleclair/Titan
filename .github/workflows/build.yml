@@ -2,6 +2,8 @@ name: build
 
 on:
   pull_request:
+    branches:
+      - main
     paths-ignore:
       - 'README.md'
       - 'test/**'
@@ -17,46 +19,47 @@ on:
 jobs:
   build-apk:
     runs-on: ubuntu-latest
-    - uses: actions/checkout@v3
-    - uses: actions/setup-java@v2
-      with:
-        distribution: 'zulu'
-        java-version: '11'
-    - uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
 
-    - name: Get flutter dependencies
-    - run: flutter pub get
+      - name: Get flutter dependencies
+        run: flutter pub get
 
     # - run: flutter test
 
-    - name: Build apk
-    - run: flutter build apk
+      - name: Build apk
+        run: flutter build apk
 
-    - name: Upload the android apk
-    - uses: actions/upload-artifact@v3
-        name: release-apk
-        path: build/app/outputs/apk/release/*.apk
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release-apk
+          path: build/app/outputs/apk/release/*.apk
   
   build-ios:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
-        architecture: x64
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          architecture: x64
 
-    - name: Get flutter dependencies
-    - run: flutter pub get
-    # - run: flutter test
+      - name: Get flutter dependencies
+        run: flutter pub get
+        # run: flutter test
 
-    - name: Build the ipa
-    - run: flutter build ipa --release --no-codesign
+      - name: Build the ipa
+        run: flutter build ipa --release --no-codesign
 
-    - name: Upload the ios ipa
-    - uses: actions/upload-artifact@v3
-        name: release-ipa
-        path: build/ios/ipa/*.ipa
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release-ipa
+          path: build/ios/ipa/*.ipa
 
