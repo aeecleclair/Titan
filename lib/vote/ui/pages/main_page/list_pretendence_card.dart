@@ -52,7 +52,10 @@ class ListPretendenceCard extends HookConsumerWidget {
                             : 140) -
                     MediaQuery.of(context).size.height +
                     250;
-                final numberVotes = results.values.map((e) => e).toList();
+                List<int> numberVotes = [];
+                for (var i = 0; i < pretendance.length; i++) {
+                  numberVotes.add(results[pretendance[i].id] ?? 0);
+                }
                 totalVotes =
                     numberVotes.reduce((value, element) => value + element);
                 for (var i = 0; i < numberVotes.length; i++) {
