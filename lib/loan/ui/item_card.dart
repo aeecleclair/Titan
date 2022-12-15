@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/tools/constants.dart';
@@ -40,7 +41,9 @@ class ItemCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 15),
-              Text(item.name,
+              AutoSizeText(item.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -55,7 +58,9 @@ class ItemCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.grey.shade400)),
               const SizedBox(height: 5),
-              Text('${item.caution.toStringAsFixed(2)} €',
+              AutoSizeText('${item.caution.toStringAsFixed(2)} €',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

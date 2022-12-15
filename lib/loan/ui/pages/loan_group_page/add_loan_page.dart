@@ -9,10 +9,8 @@ import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
-import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
-import 'package:myecl/loan/ui/loaner_chip.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/search_result.dart';
 import 'package:myecl/loan/ui/text_entry.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/check_item_card.dart';
@@ -31,10 +29,8 @@ class AddLoanPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
     final key = GlobalKey<FormState>();
-    final asso = useState(ref.watch(loanerProvider));
-    final associations = ref.watch(userLoanerListProvider);
-    final items = useState(ref.watch(itemListProvider));
-    final itemListNotifier = ref.watch(itemListProvider.notifier);
+    final asso = ref.watch(loanerProvider);
+    final items = ref.watch(itemListProvider);
     final usersNotifier = ref.watch(userList.notifier);
     final selectedItems = ref.watch(selectedListProvider);
     final selectedItemsNotifier = ref.watch(selectedListProvider.notifier);
@@ -67,41 +63,7 @@ class AddLoanPage extends HookConsumerWidget {
                             color: Color.fromARGB(255, 205, 205, 205)))),
               ),
               const SizedBox(height: 30),
-              associations.when(
-                  data: (data) => SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        physics: const BouncingScrollPhysics(),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(width: 15),
-                            ...data.map(
-                              (e) => LoanerChip(
-                                label: capitalize(e.name),
-                                selected: asso.value.id == e.id,
-                                onTap: () async {
-                                  asso.value = e;
-                                  tokenExpireWrapper(ref, () async {
-                                    items.value =
-                                        await itemListNotifier.loadItemList(e.id);
-                                  });
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 15),
-                          ],
-                        ),
-                      ),
-                  error: (Object error, StackTrace? stackTrace) => Center(
-                        child: Text("Error : $error"),
-                      ),
-                  loading: () => const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.blue,
-                        ),
-                      )),
-              const SizedBox(height: 20),
-              items.value.when(data: (itemList) {
+              items.when(data: (itemList) {
                 if (itemList.isNotEmpty) {
                   return SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
@@ -214,9 +176,8 @@ class AddLoanPage extends HookConsumerWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                      SearchResult(
-                          borrower: borrower,
-                          queryController: queryController),
+                    SearchResult(
+                        borrower: borrower, queryController: queryController),
                   ]),
                   const SizedBox(height: 30),
                   DateEntry(
@@ -253,7 +214,7 @@ class AddLoanPage extends HookConsumerWidget {
                           displayToast(context, TypeMsg.error,
                               LoanTextConstants.invalidDates);
                         } else {
-                          items.value.when(
+                          items.when(
                             data: (itemList) {
                               tokenExpireWrapper(ref, () async {
                                 List<Item> selected = itemList
@@ -263,7 +224,7 @@ class AddLoanPage extends HookConsumerWidget {
                                 if (selected.isNotEmpty) {
                                   final value = await loanListNotifier.addLoan(
                                     Loan(
-                                      loaner: asso.value,
+                                      loaner: asso,
                                       items: selected,
                                       borrower: borrower.value,
                                       caution: caution.text.isNotEmpty
@@ -280,7 +241,7 @@ class AddLoanPage extends HookConsumerWidget {
                                   );
                                   if (value) {
                                     await adminLoanListNotifier.setTData(
-                                        asso.value,
+                                        asso,
                                         await loanListNotifier.copy());
                                     pageNotifier.setLoanPage(LoanPage.admin);
                                     displayToastWithContext(TypeMsg.msg,

@@ -76,7 +76,7 @@ class DetailLoanPage extends HookConsumerWidget {
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 10,
                                       mainAxisSpacing: 10,
-                                      childAspectRatio: 1),
+                                      childAspectRatio: 0.9),
                               itemBuilder: (context, index) {
                                 return ItemCard(
                                   item: loan.items[index],
