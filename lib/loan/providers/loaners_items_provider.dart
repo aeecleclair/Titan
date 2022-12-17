@@ -13,14 +13,8 @@ final loanersItemsProvider = StateNotifierProvider<LoanersItemsNotifier,
     AsyncValue<Map<Loaner, AsyncValue<List<Item>>>>>((ref) {
   final token = ref.watch(tokenProvider);
   final loaners = ref.watch(loanerList);
-  // final loaner = ref.watch(loanerProvider);
-  // final itemListNotifier = ref.watch(itemListProvider.notifier);
   LoanersItemsNotifier loanerLoanListNotifier =
       LoanersItemsNotifier(token: token);
   loanerLoanListNotifier.loadTList(loaners);
-  // if (loaner.id == Loaner.empty().id) return loanerLoanListNotifier;
-  // itemListNotifier.loadItemList(loaner.id).then((value) {
-  //   loanerLoanListNotifier.setTData(loaner, value);
-  // });
   return loanerLoanListNotifier;
 });

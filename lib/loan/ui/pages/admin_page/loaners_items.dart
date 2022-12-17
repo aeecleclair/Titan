@@ -86,7 +86,8 @@ class LoanersItems extends HookConsumerWidget {
                                     descriptions:
                                         LoanTextConstants.deletingItem,
                                     onYes: () {
-                                      tokenExpireWrapper(ref, () async {
+                                      tokenExpireWrapper(ref,
+                                          () async {
                                         final value = await itemListNotifier
                                             .deleteItem(e, loaner.id);
                                         if (value) {

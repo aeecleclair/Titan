@@ -5,6 +5,7 @@ import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/repositories/loan_repository.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class LoanerLoanListNotifier extends ListNotifier<Loan> {
   final LoanRepository _loanrepository = LoanRepository();
@@ -81,11 +82,13 @@ final loanerLoanListProvider =
     StateNotifierProvider<LoanerLoanListNotifier, AsyncValue<List<Loan>>>(
         (ref) {
   final token = ref.watch(tokenProvider);
-  final loanerId = ref.watch(loanerIdProvider);
   LoanerLoanListNotifier loanerLoanListNotifier =
       LoanerLoanListNotifier(token: token);
-  if (loanerId != "") {
-    loanerLoanListNotifier.loadLoan(loanerId);
-  }
+  tokenExpireWrapperAuth(ref, () async {
+    final loanerId = ref.watch(loanerIdProvider);
+    if (loanerId != "") {
+      loanerLoanListNotifier.loadLoan(loanerId);
+    }
+  });
   return loanerLoanListNotifier;
 });

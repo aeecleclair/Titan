@@ -219,8 +219,8 @@ class EditUserPage extends HookConsumerWidget {
                           right: 60,
                           child: GestureDetector(
                             onTap: () async {
-                              final value = await profilePictureNotifier
-                                  .cropImage();
+                              final value =
+                                  await profilePictureNotifier.cropImage();
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 
 class StatusNotifier extends SingleNotifier<Status> {
@@ -58,6 +59,8 @@ final statusProvider =
     StateNotifierProvider<StatusNotifier, AsyncValue<Status>>((ref) {
   final token = ref.watch(tokenProvider);
   final statusNotifier = StatusNotifier(token: token);
-  statusNotifier.loadStatus();
+  tokenExpireWrapperAuth(ref, () async {
+    await statusNotifier.loadStatus();
+  });
   return statusNotifier;
 });

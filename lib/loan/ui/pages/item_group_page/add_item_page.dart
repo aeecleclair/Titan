@@ -79,7 +79,7 @@ class AddItemPage extends HookConsumerWidget {
                     }
                     if (key.currentState!.validate()) {
                       tokenExpireWrapper(ref, () async {
-                          final value = await itemListNotifier.addItem(
+                        final value = await itemListNotifier.addItem(
                             Item(
                               name: name.text,
                               caution: int.parse(caution.text),
@@ -90,18 +90,18 @@ class AddItemPage extends HookConsumerWidget {
                                       24 *
                                       60 *
                                       60,
-                            ), loaner.id
-                          );
-                          if (value) {
-                            pageNotifier.setLoanPage(LoanPage.admin);
-                            await loanersitemsNotifier.setTData(
-                                loaner, await itemListNotifier.copy());
-                            displayToastWithContext(
-                                TypeMsg.msg, LoanTextConstants.addedObject);
-                          } else {
-                            displayToastWithContext(
-                                TypeMsg.error, LoanTextConstants.addingError);
-                          }
+                            ),
+                            loaner.id);
+                        if (value) {
+                          pageNotifier.setLoanPage(LoanPage.admin);
+                          await loanersitemsNotifier.setTData(
+                              loaner, await itemListNotifier.copy());
+                          displayToastWithContext(
+                              TypeMsg.msg, LoanTextConstants.addedObject);
+                        } else {
+                          displayToastWithContext(
+                              TypeMsg.error, LoanTextConstants.addingError);
+                        }
                       });
                     } else {
                       displayToast(context, TypeMsg.error,

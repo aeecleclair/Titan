@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final orderIndexProvider = StateNotifierProvider<OrderIndexNotifier, int>((ref) {
+final orderIndexProvider =
+    StateNotifierProvider<OrderIndexNotifier, int>((ref) {
   return OrderIndexNotifier();
 });
 

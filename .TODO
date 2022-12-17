@@ -12,9 +12,6 @@ TITAN :
 
 API :
 
-- GET 'bdebooking/user/' Not Found
-- GET 'bdebooking/rooms' Not Found
-- GET 'calendar/events' Not Found
 - PATCH available on edit
 - PATCH events
 

@@ -19,9 +19,7 @@ void tokenExpireWrapper(WidgetRef ref, Future<dynamic> Function() f) async {
   });
 }
 
-void tokenExpireWrapperAuth(
-    StateNotifierProviderRef<OpenIdTokenProvider,
-            AsyncValue<Map<String, String>>> ref, Future<dynamic> Function() f) async {
+void tokenExpireWrapperAuth(Ref ref, Future<dynamic> Function() f) async {
   f().catchError((error, stackTrace) async {
     if (error is AppException && error.type == ErrorType.tokenExpire) {
       try {

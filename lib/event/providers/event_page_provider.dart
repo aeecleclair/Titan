@@ -1,6 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum EventPage { main, addEvent, eventDetailfromModule, eventDetailfromCalendar }
+enum EventPage {
+  main,
+  addEvent,
+  eventDetailfromModule,
+  eventDetailfromCalendar
+}
 
 class EventPageProvider extends StateNotifier<EventPage> {
   EventPageProvider() : super(EventPage.main);
@@ -10,6 +15,7 @@ class EventPageProvider extends StateNotifier<EventPage> {
   }
 }
 
-final eventPageProvider = StateNotifierProvider<EventPageProvider, EventPage>((ref) {
+final eventPageProvider =
+    StateNotifierProvider<EventPageProvider, EventPage>((ref) {
   return EventPageProvider();
 });

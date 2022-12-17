@@ -1,9 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum LoanPage { main, addLoan, addItem, editItem, editLoan, admin, detailLoanFromMain, detailLoanFromAdmin }
+enum LoanPage {
+  main,
+  addLoan,
+  addItem,
+  editItem,
+  editLoan,
+  admin,
+  detailLoanFromMain,
+  detailLoanFromAdmin
+}
 
-
-final loanPageProvider = StateNotifierProvider<LoanPageNotifier, LoanPage>((ref) {
+final loanPageProvider =
+    StateNotifierProvider<LoanPageNotifier, LoanPage>((ref) {
   return LoanPageNotifier();
 });
 

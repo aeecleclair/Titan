@@ -4,6 +4,7 @@ import 'package:myecl/amap/repositories/cash_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class CashProvider extends ListNotifier<Cash> {
   final CashRepository _cashRepository = CashRepository();
@@ -59,7 +60,9 @@ final cashProvider =
   (ref) {
     final token = ref.watch(tokenProvider);
     CashProvider cashProvider = CashProvider(token: token);
-    cashProvider.loadCashList();
+    tokenExpireWrapperAuth(ref, () async {
+      await cashProvider.loadCashList();
+    });
     return cashProvider;
   },
 );

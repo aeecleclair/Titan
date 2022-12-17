@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/repositories/pretendance_repository.dart';
 
@@ -83,6 +84,8 @@ final pretendanceListProvider = StateNotifierProvider<PretendanceListNotifier,
     AsyncValue<List<Pretendance>>>((ref) {
   final token = ref.watch(tokenProvider);
   final pretendanceListNotifier = PretendanceListNotifier(token: token);
-  pretendanceListNotifier.loadPretendanceList();
+  tokenExpireWrapperAuth(ref, () async {
+    await pretendanceListNotifier.loadPretendanceList();
+  });
   return pretendanceListNotifier;
 });

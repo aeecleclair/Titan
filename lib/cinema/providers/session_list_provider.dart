@@ -3,6 +3,7 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/repositories/session_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SessionListNotifier extends ListNotifier<Session> {
   SessionRepository repository = SessionRepository();
@@ -41,6 +42,8 @@ final sessionListProvider =
         (ref) {
   final token = ref.watch(tokenProvider);
   SessionListNotifier notifier = SessionListNotifier(token: token);
-  notifier.loadSessions();
+  tokenExpireWrapperAuth(ref, () async {
+    await notifier.loadSessions();
+  });
   return notifier;
 });

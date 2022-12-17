@@ -179,8 +179,7 @@ class AddSessionPage extends HookConsumerWidget {
                               id: '',
                               overview: overview.text,
                               posterUrl: posterUrl.text,
-                              start:
-                                  DateTime.parse(
+                              start: DateTime.parse(
                                   processDateBackWithHour(start.text)),
                               tagline: '',
                             ),

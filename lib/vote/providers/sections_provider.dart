@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/repositories/section_repository.dart';
@@ -40,7 +41,9 @@ final sectionsProvider =
     StateNotifierProvider<SectionNotifier, AsyncValue<List<Section>>>((ref) {
   final token = ref.watch(tokenProvider);
   SectionNotifier notifier = SectionNotifier(token: token);
-  notifier.loadSectionList();
+  tokenExpireWrapperAuth(ref, () async {
+    await notifier.loadSectionList();
+  });
   return notifier;
 });
 

@@ -241,8 +241,7 @@ class AddLoanPage extends HookConsumerWidget {
                                   );
                                   if (value) {
                                     await adminLoanListNotifier.setTData(
-                                        asso,
-                                        await loanListNotifier.copy());
+                                        asso, await loanListNotifier.copy());
                                     pageNotifier.setLoanPage(LoanPage.admin);
                                     displayToastWithContext(TypeMsg.msg,
                                         LoanTextConstants.addedLoan);

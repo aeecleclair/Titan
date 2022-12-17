@@ -10,7 +10,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:myecl/auth/providers/is_connected_provider.dart';
 import 'package:myecl/auth/repository/openid_repository.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
 
@@ -18,12 +17,10 @@ final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
         (ref) {
   OpenIdTokenProvider oauth2TokenRepository = OpenIdTokenProvider();
-  tokenExpireWrapperAuth(ref, () async {
-    final isConnected = ref.watch(isConnectedProvider);
-    if (isConnected) {
-      await oauth2TokenRepository.getTokenFromStorage();
-    }
-  });
+  final isConnected = ref.watch(isConnectedProvider);
+  if (isConnected) {
+    oauth2TokenRepository.getTokenFromStorage();
+  }
   return oauth2TokenRepository;
 });
 

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final modifiedProductProvider = StateNotifierProvider<ModifiedProductNotifier, int>(
+final modifiedProductProvider =
+    StateNotifierProvider<ModifiedProductNotifier, int>(
   (ref) {
     return ModifiedProductNotifier();
   },
