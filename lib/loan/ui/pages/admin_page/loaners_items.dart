@@ -88,7 +88,7 @@ class LoanersItems extends HookConsumerWidget {
                                     onYes: () {
                                       tokenExpireWrapper(ref, () async {
                                         final value = await itemListNotifier
-                                            .deleteItem(e);
+                                            .deleteItem(e, loaner.id);
                                         if (value) {
                                           itemListNotifier.copy().then((value) {
                                             loanersitemsNotifier.setTData(

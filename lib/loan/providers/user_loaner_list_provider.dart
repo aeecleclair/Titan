@@ -45,3 +45,15 @@ final userLoanerListProvider =
     return orderListNotifier;
   },
 );
+
+
+final loanerList = Provider<List<Loaner>>((ref) {
+  final deliveryProvider = ref.watch(userLoanerListProvider);
+  return deliveryProvider.when(data: (loans) {
+    return loans;
+  }, error: (error, stackTrace) {
+    return [];
+  }, loading: () {
+    return [];
+  });
+});

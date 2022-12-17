@@ -6,9 +6,7 @@ import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
-import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/ui/loaner_chip.dart';
 import 'package:myecl/loan/ui/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -20,8 +18,7 @@ class AddItemPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final key = GlobalKey<FormState>();
-    final loaner = useState(ref.watch(loanerProvider));
-    final loaners = ref.watch(userLoanerListProvider);
+    final loaner = ref.watch(loanerProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final name = useTextEditingController();
@@ -47,36 +44,6 @@ class AddItemPage extends HookConsumerWidget {
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 205, 205, 205)))),
             ),
-            const SizedBox(height: 30),
-            loaners.when(
-                data: (data) => SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 15),
-                          ...data.map(
-                            (e) => LoanerChip(
-                              label: capitalize(e.name),
-                              selected: loaner.value.id == e.id,
-                              onTap: () async {
-                                loaner.value = e;
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: 15),
-                        ],
-                      ),
-                    ),
-                error: (Object error, StackTrace? stackTrace) => Center(
-                      child: Text("Error : $error"),
-                    ),
-                loading: () => const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.blue,
-                      ),
-                    )),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Column(children: [
@@ -112,26 +79,29 @@ class AddItemPage extends HookConsumerWidget {
                     }
                     if (key.currentState!.validate()) {
                       tokenExpireWrapper(ref, () async {
-                        final value = await itemListNotifier.addItem(
-                          Item(
-                            name: name.text,
-                            caution: int.parse(caution.text),
-                            id: '',
-                            available: true,
-                            suggestedLendingDuration:
-                                int.parse(lendingDuration.text) * 24 * 60 * 60,
-                          ),
-                        );
-                        if (value) {
-                          pageNotifier.setLoanPage(LoanPage.admin);
-                          await loanersitemsNotifier.setTData(
-                              loaner.value, await itemListNotifier.copy());
-                          displayToastWithContext(
-                              TypeMsg.msg, LoanTextConstants.addedObject);
-                        } else {
-                          displayToastWithContext(
-                              TypeMsg.error, LoanTextConstants.addingError);
-                        }
+                          final value = await itemListNotifier.addItem(
+                            Item(
+                              name: name.text,
+                              caution: int.parse(caution.text),
+                              id: '',
+                              available: true,
+                              suggestedLendingDuration:
+                                  int.parse(lendingDuration.text) *
+                                      24 *
+                                      60 *
+                                      60,
+                            ), loaner.id
+                          );
+                          if (value) {
+                            pageNotifier.setLoanPage(LoanPage.admin);
+                            await loanersitemsNotifier.setTData(
+                                loaner, await itemListNotifier.copy());
+                            displayToastWithContext(
+                                TypeMsg.msg, LoanTextConstants.addedObject);
+                          } else {
+                            displayToastWithContext(
+                                TypeMsg.error, LoanTextConstants.addingError);
+                          }
                       });
                     } else {
                       displayToast(context, TypeMsg.error,
