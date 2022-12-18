@@ -1,37 +1,52 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/providers/asking_refresh_token_provider.dart';
 
 void tokenExpireWrapper(WidgetRef ref, Future<dynamic> Function() f) async {
   f().catchError((error, stackTrace) async {
+    final tokenNotifier = ref.watch(authTokenProvider.notifier);
+    final askingRefreshTokenNotifier =
+        ref.watch(askingRefreshTokenProvider.notifier);
+    final askingRefreshToken = ref.watch(askingRefreshTokenProvider);
     if (error is AppException && error.type == ErrorType.tokenExpire) {
+      if (askingRefreshToken) return;
+      askingRefreshTokenNotifier.setbool(true);
       try {
-        final value = await ref.read(authTokenProvider.notifier).refreshToken();
+        final value = await tokenNotifier.refreshToken();
         if (value) {
           f();
         } else {
-          ref.watch(authTokenProvider.notifier).deleteToken();
+          tokenNotifier.deleteToken();
         }
       } catch (e) {
-        ref.watch(authTokenProvider.notifier).deleteToken();
+        tokenNotifier.deleteToken();
       }
+      askingRefreshTokenNotifier.setbool(false);
     }
   });
 }
 
 void tokenExpireWrapperAuth(Ref ref, Future<dynamic> Function() f) async {
   f().catchError((error, stackTrace) async {
+    final tokenNotifier = ref.watch(authTokenProvider.notifier);
+    final askingRefreshTokenNotifier =
+        ref.watch(askingRefreshTokenProvider.notifier);
+    final askingRefreshToken = ref.watch(askingRefreshTokenProvider);
     if (error is AppException && error.type == ErrorType.tokenExpire) {
+      if (askingRefreshToken) return;
+      askingRefreshTokenNotifier.setbool(true);
       try {
-        final value = await ref.read(authTokenProvider.notifier).refreshToken();
+        final value = await tokenNotifier.refreshToken();
         if (value) {
           f();
         } else {
-          ref.watch(authTokenProvider.notifier).deleteToken();
+          tokenNotifier.deleteToken();
         }
       } catch (e) {
-        ref.watch(authTokenProvider.notifier).deleteToken();
+        tokenNotifier.deleteToken();
       }
+      askingRefreshTokenNotifier.setbool(false);
     }
   });
 }

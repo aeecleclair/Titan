@@ -80,7 +80,8 @@ class AdminPage extends HookConsumerWidget {
                     const SizedBox(width: 15),
                     GestureDetector(
                       onTap: () {
-                        pageNotifier.setBookingPage(BookingPage.addRoom);
+                        roomNotifier.setRoom(Room.empty());
+                        pageNotifier.setBookingPage(BookingPage.addEditRoom);
                       },
                       child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -102,7 +103,7 @@ class AdminPage extends HookConsumerWidget {
                         selected: room.id == e.id,
                         onTap: () {
                           roomNotifier.setRoom(e);
-                          pageNotifier.setBookingPage(BookingPage.editRoom);
+                          pageNotifier.setBookingPage(BookingPage.addEditRoom);
                         },
                       ),
                     ),

@@ -39,7 +39,7 @@ class LoanersItems extends HookConsumerWidget {
                   const SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
-                      pageNotifier.setLoanPage(LoanPage.addItem);
+                      pageNotifier.setLoanPage(LoanPage.addEditItem);
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -107,7 +107,7 @@ class LoanersItems extends HookConsumerWidget {
                               });
                         },
                         onEdit: () {
-                          pageNotifier.setLoanPage(LoanPage.editItem);
+                          pageNotifier.setLoanPage(LoanPage.addEditItem);
                           itemNotifier.setItem(e);
                         },
                       )),

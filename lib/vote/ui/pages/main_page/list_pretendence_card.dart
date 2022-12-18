@@ -59,7 +59,8 @@ class ListPretendenceCard extends HookConsumerWidget {
                 totalVotes =
                     numberVotes.reduce((value, element) => value + element);
                 for (var i = 0; i < numberVotes.length; i++) {
-                  votesPercent[pretendance[i].id] = numberVotes[i] / totalVotes;
+                  votesPercent[pretendance[i].id] =
+                      totalVotes == 0 ? 0 : numberVotes[i] / totalVotes;
                 }
               },
             ));

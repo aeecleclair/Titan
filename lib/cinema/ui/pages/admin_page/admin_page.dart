@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/providers/cinema_page_provider.dart';
 import 'package:myecl/cinema/providers/session_list_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
@@ -35,7 +36,8 @@ class AdminPage extends HookConsumerWidget {
                   if (index == 0) {
                     return GestureDetector(
                         onTap: () {
-                          pageNotifier.setCinemaPage(CinemaPage.addSession);
+                          sessionNotifier.setSession(Session.empty());
+                          pageNotifier.setCinemaPage(CinemaPage.addEditSession);
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width / 2,
@@ -49,7 +51,7 @@ class AdminPage extends HookConsumerWidget {
                                 spreadRadius: 1,
                                 blurRadius: 10,
                                 offset: const Offset(
-                                    0, 5), // changes position of shadow
+                                    0, 5),
                               ),
                             ],
                           ),
@@ -64,7 +66,7 @@ class AdminPage extends HookConsumerWidget {
                       session: data[index - 1],
                       onEdit: () {
                         sessionNotifier.setSession(data[index - 1]);
-                        pageNotifier.setCinemaPage(CinemaPage.editSession);
+                        pageNotifier.setCinemaPage(CinemaPage.addEditSession);
                       },
                       onDelete: () {
                         showDialog(

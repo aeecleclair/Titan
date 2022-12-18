@@ -2,10 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum LoanPage {
   main,
-  addLoan,
-  addItem,
-  editItem,
-  editLoan,
+  addEditLoan,
+  addEditItem,
   admin,
   detailLoanFromMain,
   detailLoanFromAdmin

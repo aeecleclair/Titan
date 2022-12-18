@@ -4,8 +4,7 @@ enum VotePage {
   main,
   admin,
   addSection,
-  addPretendance,
-  editPretendance,
+  addEditPretendance,
   detailPageFromMain,
   detailPageFromAdmin
 }

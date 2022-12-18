@@ -2,11 +2,10 @@
 
 TITAN :
 
-- animation btn (shrinking) :
+- animation btn (shrinking + disable) :
 - dark mode
 - ask help
 - refractor add / edit pages
-- TokenExpireWrapper on provider load
 - opti day list
 
 
@@ -33,3 +32,8 @@ API :
 
 Builder de modules front et back (s/ site)
 IA pr conversion image -> flutter
+
+Nombre de lignes:  31228
+Nombre de fichiers:  366
+Nombre de lignes:  29404
+Nombre de fichiers:  359

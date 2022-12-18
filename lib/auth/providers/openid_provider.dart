@@ -237,16 +237,13 @@ class OpenIdTokenProvider
               storeToken();
             } else {
               state = const AsyncValue.error("Error", StackTrace.empty);
-              // deleteToken();
             }
           }
         } catch (e) {
           state = AsyncValue.error(e, StackTrace.empty);
-          // deleteToken();
         }
       } else {
         state = const AsyncValue.error("No token found", StackTrace.empty);
-        // deleteToken();
       }
     });
   }
@@ -275,6 +272,7 @@ class OpenIdTokenProvider
   Future<bool> refreshToken() async {
     return state.when(
       data: (token) async {
+        print(token);
         try {
           TokenResponse? resp = await appAuth.token(
             TokenRequest(
@@ -324,6 +322,7 @@ class OpenIdTokenProvider
   }
 
   void deleteToken() {
+    print('delete token');
     try {
       _secureStorage.delete(key: tokenName);
       state = AsyncValue.data({tokenKey: "", refreshTokenKey: ""});

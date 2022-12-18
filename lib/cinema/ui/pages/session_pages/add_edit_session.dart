@@ -14,22 +14,24 @@ import 'package:myecl/loan/ui/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class EditSessionPage extends HookConsumerWidget {
-  const EditSessionPage({super.key});
+class AddEditSessionPage extends HookConsumerWidget {
+  const AddEditSessionPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(cinemaPageProvider.notifier);
     final session = ref.watch(sessionProvider);
+    final isEdit = session.id != Session.empty().id;
     final key = GlobalKey<FormState>();
     final sessionListNotifier = ref.watch(sessionListProvider.notifier);
     final name = useTextEditingController(text: session.name);
-    final duration =
-        useTextEditingController(text: parseDurationBack(session.duration));
+    final duration = useTextEditingController(
+        text: isEdit ? parseDurationBack(session.duration) : '');
     final genre = useTextEditingController(text: session.genre);
     final overview = useTextEditingController(text: session.overview);
     final posterUrl = useTextEditingController(text: session.posterUrl);
-    final start = useTextEditingController(text: processDate(session.start));
+    final start = useTextEditingController(
+        text: isEdit ? processDate(session.start) : '');
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -42,10 +44,13 @@ class EditSessionPage extends HookConsumerWidget {
             child: Form(
               key: key,
               child: Column(children: [
-                const Align(
+                Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(CinemaTextConstants.editSession,
-                        style: TextStyle(
+                    child: Text(
+                        isEdit
+                            ? CinemaTextConstants.editSession
+                            : CinemaTextConstants.addSession,
+                        style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 205, 205, 205)))),
@@ -170,26 +175,38 @@ class EditSessionPage extends HookConsumerWidget {
                     }
                     if (key.currentState!.validate()) {
                       tokenExpireWrapper(ref, () async {
-                        final value = await sessionListNotifier.updateSession(
-                          Session(
-                            name: name.text,
-                            duration: parseDuration(duration.text),
-                            genre: genre.text,
-                            id: session.id,
-                            overview: overview.text,
-                            posterUrl: posterUrl.text,
-                            start: DateTime.parse(
-                                processDateBackWithHour(start.text)),
-                            tagline: '',
-                          ),
+                        Session newSession = Session(
+                          name: name.text,
+                          duration: parseDuration(duration.text),
+                          genre: genre.text,
+                          id: isEdit ? session.id : '',
+                          overview: overview.text,
+                          posterUrl: posterUrl.text,
+                          start: DateTime.parse(
+                              processDateBackWithHour(start.text)),
+                          tagline: '',
                         );
+                        final value = isEdit
+                            ? await sessionListNotifier
+                                .updateSession(newSession)
+                            : await sessionListNotifier.addSession(newSession);
                         if (value) {
                           pageNotifier.setCinemaPage(CinemaPage.admin);
-                          displayToastWithContext(
-                              TypeMsg.msg, CinemaTextConstants.editedSession);
+                          if (isEdit) {
+                            displayToastWithContext(
+                                TypeMsg.msg, CinemaTextConstants.editedSession);
+                          } else {
+                            displayToastWithContext(
+                                TypeMsg.msg, CinemaTextConstants.addedSession);
+                          }
                         } else {
-                          displayToastWithContext(
-                              TypeMsg.error, CinemaTextConstants.editingError);
+                          if (isEdit) {
+                            displayToastWithContext(TypeMsg.error,
+                                CinemaTextConstants.editingError);
+                          } else {
+                            displayToastWithContext(
+                                TypeMsg.error, CinemaTextConstants.addingError);
+                          }
                         }
                       });
                     } else {
@@ -214,8 +231,11 @@ class EditSessionPage extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      child: const Text(CinemaTextConstants.edit,
-                          style: TextStyle(
+                      child: Text(
+                          isEdit
+                              ? CinemaTextConstants.edit
+                              : CinemaTextConstants.add,
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 25,
                               fontWeight: FontWeight.bold))),

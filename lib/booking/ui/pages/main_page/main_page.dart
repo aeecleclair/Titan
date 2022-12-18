@@ -102,8 +102,9 @@ class MainPage extends HookConsumerWidget {
                           margin: const EdgeInsets.only(left: 15),
                           child: GestureDetector(
                             onTap: () {
+                              bookingNotifier.setBooking(Booking.empty());
                               pageNotifier
-                                  .setBookingPage(BookingPage.addBooking);
+                                  .setBookingPage(BookingPage.addEditBooking);
                             },
                             child: Container(
                               padding: const EdgeInsets.all(15.0),
@@ -144,7 +145,7 @@ class MainPage extends HookConsumerWidget {
                           onEdit: () {
                             bookingNotifier.setBooking(e);
                             pageNotifier
-                                .setBookingPage(BookingPage.editBooking);
+                                .setBookingPage(BookingPage.addEditBooking);
                           },
                           onReturn: () {
                             showDialog(

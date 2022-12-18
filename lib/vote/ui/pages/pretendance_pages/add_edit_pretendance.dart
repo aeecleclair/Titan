@@ -17,6 +17,7 @@ import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
 import 'package:myecl/vote/providers/pretendance_members.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
+import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
@@ -26,8 +27,9 @@ import 'package:myecl/vote/ui/pages/pretendance_pages/search_result.dart';
 import 'package:myecl/vote/ui/section_chip.dart';
 import 'package:myecl/vote/ui/text_entry.dart';
 
-class AddPretendancePage extends HookConsumerWidget {
-  const AddPretendancePage({Key? key}) : super(key: key);
+class AddEditPretendancePage extends HookConsumerWidget {
+  const AddEditPretendancePage({Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,23 +38,34 @@ class AddPretendancePage extends HookConsumerWidget {
     final addMemberKey = GlobalKey<FormState>();
     final section = useState(ref.watch(sectionProvider));
     final pretendanceListNotifier = ref.watch(pretendanceListProvider.notifier);
-    final pretendanceList = ref.watch(pretendanceListProvider);
     final sectionsNotifier = ref.watch(sectionPretendanceProvider.notifier);
-    final name = useTextEditingController();
-    final description = useTextEditingController();
-    final listType = useState(ListType.serio);
+    final pretendance = ref.watch(pretendanceProvider);
+    final isEdit = pretendance.id != Pretendance.empty().id;
+    final name = useTextEditingController(text: pretendance.name);
+    final description = useTextEditingController(text: pretendance.description);
+    final listType = useState(pretendance.listType);
     final usersNotifier = ref.watch(userList.notifier);
     final queryController = useTextEditingController();
     final role = useTextEditingController();
-    final program = useTextEditingController();
+    final program = useTextEditingController(text: pretendance.program);
     final member = useState(SimpleUser.empty());
     final members = ref.watch(pretendanceMembersProvider);
     final membersNotifier = ref.watch(pretendanceMembersProvider.notifier);
     final pretendanceLogosNotifier =
         ref.watch(pretendanceLogosProvider.notifier);
     final logoNotifier = ref.watch(pretendenceLogoProvider.notifier);
-    final showNotifier = ref.watch(displayResult.notifier);
     final logo = useState<String?>(null);
+    final logoFile = useState<Image?>(null);
+    final showNotifier = ref.watch(displayResult.notifier);
+    ref.watch(pretendanceLogosProvider).whenData((value) {
+      if (value[pretendance] != null) {
+        value[pretendance]!.whenData((data) {
+          if (data.isNotEmpty) {
+            logoFile.value = data.first;
+          }
+        });
+      }
+    });
     final ImagePicker picker = ImagePicker();
 
     void displayVoteToastWithContext(TypeMsg type, String msg) {
@@ -84,8 +97,8 @@ class AddPretendancePage extends HookConsumerWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      shape: BoxShape.circle,
                       color: Colors.white,
+                      shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
@@ -95,17 +108,19 @@ class AddPretendancePage extends HookConsumerWidget {
                         ),
                       ],
                     ),
-                    child: logo.value != null
+                    child: logoFile.value != null
                         ? Container(
                             width: 160,
                             height: 160,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                image: Image.file(
-                                  File(logo.value!),
-                                  fit: BoxFit.cover,
-                                ).image,
+                                image: logo.value != null
+                                    ? Image.file(
+                                        File(logo.value!),
+                                        fit: BoxFit.cover,
+                                      ).image
+                                    : logoFile.value!.image,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -125,6 +140,7 @@ class AddPretendancePage extends HookConsumerWidget {
                             await picker.pickImage(source: ImageSource.gallery);
                         if (image != null) {
                           logo.value = image.path;
+                          logoFile.value = Image.file(File(image.path));
                         }
                       },
                       child: Container(
@@ -160,9 +176,7 @@ class AddPretendancePage extends HookConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: TextEntry(
@@ -282,9 +296,8 @@ class AddPretendancePage extends HookConsumerWidget {
                             height: 10,
                           ),
                           SearchResult(
-                            borrower: member,
-                            queryController: queryController,
-                          ),
+                              borrower: member,
+                              queryController: queryController),
                           TextEntry(
                               label: VoteTextConstants.role,
                               suffix: '',
@@ -366,46 +379,72 @@ class AddPretendancePage extends HookConsumerWidget {
                     }
                     if (key.currentState!.validate()) {
                       tokenExpireWrapper(ref, () async {
-                        final value =
-                            await pretendanceListNotifier.addPretendance(
-                          Pretendance(
-                            name: name.text,
-                            id: '',
-                            description: description.text,
-                            listType: listType.value,
-                            members: members,
-                            section: section.value,
-                            program: program.text,
-                          ),
+                        final pretendanceList =
+                            ref.watch(pretendanceListProvider);
+                        Pretendance newPretendence = Pretendance(
+                          name: name.text,
+                          id: isEdit ? pretendance.id : '',
+                          description: description.text,
+                          listType: listType.value,
+                          members: members,
+                          section: section.value,
+                          program: program.text,
                         );
+                        final value = isEdit
+                            ? await pretendanceListNotifier
+                                .updatePretendance(newPretendence)
+                            : await pretendanceListNotifier
+                                .addPretendance(newPretendence);
                         if (value) {
-                          displayVoteToastWithContext(
-                              TypeMsg.msg, VoteTextConstants.addedPretendance);
                           pageNotifier.setVotePage(VotePage.admin);
-                          pretendanceList.when(
-                              data: (list) {
-                                final newPretendance = list.last;
-                                if (logo.value != null) {
-                                  logoNotifier.updateLogo(
-                                      newPretendance.id, logo.value!);
-                                  pretendanceLogosNotifier.setTData(
-                                      newPretendance,
-                                      AsyncData([
-                                        Image.file(
-                                          File(logo.value!),
-                                          fit: BoxFit.cover,
-                                        )
-                                      ]));
-                                }
-                              },
-                              error: (error, s) {},
-                              loading: () {});
+                          if (isEdit) {
+                            displayVoteToastWithContext(TypeMsg.msg,
+                                VoteTextConstants.editedPretendance);
+                            pretendanceList.when(
+                                data: (list) {
+                                  if (logo.value != null) {
+                                    logoNotifier.updateLogo(
+                                        pretendance.id, logo.value!);
+                                    pretendanceLogosNotifier.setTData(
+                                        pretendance,
+                                        AsyncData([
+                                          Image.file(
+                                            File(logo.value!),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ]));
+                                  }
+                                },
+                                error: (error, s) {},
+                                loading: () {});
+                          } else {
+                            displayVoteToastWithContext(TypeMsg.msg,
+                                VoteTextConstants.addedPretendance);
+                            pretendanceList.when(
+                                data: (list) {
+                                  final newPretendance = list.last;
+                                  if (logo.value != null) {
+                                    logoNotifier.updateLogo(
+                                        newPretendance.id, logo.value!);
+                                    pretendanceLogosNotifier.setTData(
+                                        newPretendance,
+                                        AsyncData([
+                                          Image.file(
+                                            File(logo.value!),
+                                            fit: BoxFit.cover,
+                                          )
+                                        ]));
+                                  }
+                                },
+                                error: (error, s) {},
+                                loading: () {});
+                          }
                           membersNotifier.clearMembers();
                           await sectionsNotifier.setTData(section.value,
                               await pretendanceListNotifier.copy());
                         } else {
                           displayVoteToastWithContext(
-                              TypeMsg.error, VoteTextConstants.addingError);
+                              TypeMsg.error, VoteTextConstants.editingError);
                         }
                       });
                     } else {
@@ -430,7 +469,7 @@ class AddPretendancePage extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      child: const Text(VoteTextConstants.add,
+                      child: const Text(VoteTextConstants.edit,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 25,

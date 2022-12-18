@@ -3,10 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 enum BookingPage {
   main,
   admin,
-  addBooking,
-  addRoom,
-  editRoom,
-  editBooking,
+  addEditBooking,
+  addEditRoom,
   detailBookingFromMain,
   detailBookingFromAdmin
 }

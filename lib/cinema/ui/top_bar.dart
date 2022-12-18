@@ -40,10 +40,7 @@ class TopBar extends HookConsumerWidget {
                           case CinemaPage.detailFromAdminPage:
                             pageNotifier.setCinemaPage(CinemaPage.admin);
                             break;
-                          case CinemaPage.addSession:
-                            pageNotifier.setCinemaPage(CinemaPage.admin);
-                            break;
-                          case CinemaPage.editSession:
+                          case CinemaPage.addEditSession:
                             pageNotifier.setCinemaPage(CinemaPage.admin);
                             break;
                         }

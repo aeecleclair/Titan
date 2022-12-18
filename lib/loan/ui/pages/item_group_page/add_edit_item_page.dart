@@ -2,28 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
+import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
+import 'package:myecl/loan/providers/item_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class AddItemPage extends HookConsumerWidget {
-  const AddItemPage({Key? key}) : super(key: key);
+class AddEditItemPage extends HookConsumerWidget {
+  const AddEditItemPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final loaner = ref.watch(loanerProvider);
+    final isEdit = loaner.id != Loaner.empty().id;
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
-    final name = useTextEditingController();
-    final caution = useTextEditingController();
-    final lendingDuration = useTextEditingController();
+    final item = ref.watch(itemProvider);
+    final name = useTextEditingController(text: item.name);
+    final caution =
+        useTextEditingController(text: isEdit ? item.caution.toString() : '');
+    final lendingDuration = useTextEditingController(
+        text: isEdit
+            ? (item.suggestedLendingDuration ~/ (24 * 60 * 60)).toString()
+            : '');
+
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -34,12 +43,15 @@ class AddItemPage extends HookConsumerWidget {
           key: key,
           child: Column(children: [
             const SizedBox(height: 30),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(LoanTextConstants.addObject,
-                      style: TextStyle(
+                  child: Text(
+                      isEdit
+                          ? LoanTextConstants.editItem
+                          : LoanTextConstants.addObject,
+                      style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 205, 205, 205)))),
@@ -79,28 +91,40 @@ class AddItemPage extends HookConsumerWidget {
                     }
                     if (key.currentState!.validate()) {
                       tokenExpireWrapper(ref, () async {
-                        final value = await itemListNotifier.addItem(
-                            Item(
-                              name: name.text,
-                              caution: int.parse(caution.text),
-                              id: '',
-                              available: true,
-                              suggestedLendingDuration:
-                                  int.parse(lendingDuration.text) *
-                                      24 *
-                                      60 *
-                                      60,
-                            ),
-                            loaner.id);
+                        Item newItem = Item(
+                            id: isEdit ? item.id : '',
+                            name: name.text,
+                            caution: int.parse(caution.text),
+                            suggestedLendingDuration:
+                                double.parse(lendingDuration.text) *
+                                    24 *
+                                    60 *
+                                    60,
+                            available: item.available);
+                        final value = isEdit
+                            ? await itemListNotifier.updateItem(
+                                newItem, loaner.id)
+                            : await itemListNotifier.addItem(
+                                newItem, loaner.id);
                         if (value) {
                           pageNotifier.setLoanPage(LoanPage.admin);
-                          await loanersitemsNotifier.setTData(
+                          loanersitemsNotifier.setTData(
                               loaner, await itemListNotifier.copy());
-                          displayToastWithContext(
-                              TypeMsg.msg, LoanTextConstants.addedObject);
+                          if (isEdit) {
+                            displayToastWithContext(
+                                TypeMsg.msg, LoanTextConstants.updatedItem);
+                          } else {
+                            displayToastWithContext(
+                                TypeMsg.msg, LoanTextConstants.addedObject);
+                          }
                         } else {
-                          displayToastWithContext(
-                              TypeMsg.error, LoanTextConstants.addingError);
+                          if (isEdit) {
+                            displayToastWithContext(
+                                TypeMsg.error, LoanTextConstants.updatingError);
+                          } else {
+                            displayToastWithContext(
+                                TypeMsg.error, LoanTextConstants.addingError);
+                          }
                         }
                       });
                     } else {
@@ -125,8 +149,11 @@ class AddItemPage extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      child: const Text(LoanTextConstants.add,
-                          style: TextStyle(
+                      child: Text(
+                          isEdit
+                              ? LoanTextConstants.edit
+                              : LoanTextConstants.add,
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 25,
                               fontWeight: FontWeight.bold))),

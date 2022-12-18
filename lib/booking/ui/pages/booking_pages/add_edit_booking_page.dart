@@ -4,8 +4,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/class/room.dart';
+import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
@@ -17,26 +18,36 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-class AddBookingPage extends HookConsumerWidget {
-  const AddBookingPage({Key? key}) : super(key: key);
+class AddEditBookingPage extends HookConsumerWidget {
+  const AddEditBookingPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
-    final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
-    final room = useState(Room.empty());
-    final start = useTextEditingController();
-    final end = useTextEditingController();
-    final motif = useTextEditingController();
-    final note = useTextEditingController();
-    final allDay = useState(false);
-    final recurrent = useState(false);
-    final keyRequired = useState(false);
+    final usersBookingsNotifier = ref.watch(userBookingListProvider.notifier);
+    final bookingsNotifier = ref.watch(bookingListProvider.notifier);
+    final booking = ref.watch(bookingProvider);
+    final isEdit = booking.id != Booking.empty().id;
+    final room = useState(booking.room);
+    final start = useTextEditingController(
+        text: isEdit ? processDateWithHour(booking.start) : "");
+    final end = useTextEditingController(
+        text: isEdit ? processDateWithHour(booking.end) : "");
+    final motif = useTextEditingController(text: booking.reason);
+    final note = useTextEditingController(text: booking.note);
+    final allDay = useState(false); // TODO:
+    final recurrent = useState(booking.recurrenceRule != ""
+        ? booking.recurrenceRule.contains("BYDAY")
+        : false);
+    final keyRequired = useState(booking.key);
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
-    final interval = useTextEditingController(text: "1");
+    final interval = useTextEditingController(
+        text: booking.recurrenceRule != ""
+            ? booking.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
+            : "1");
     final recurrenceEndDate = useTextEditingController();
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -49,12 +60,15 @@ class AddBookingPage extends HookConsumerWidget {
               key: key,
               child: Column(children: [
                 const SizedBox(height: 20),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(BookingTextConstants.addBooking,
-                          style: TextStyle(
+                      child: Text(
+                          isEdit
+                              ? BookingTextConstants.editBooking
+                              : BookingTextConstants.addBooking,
+                          style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 205, 205, 205)))),
@@ -85,9 +99,7 @@ class AddBookingPage extends HookConsumerWidget {
                           child: Text("Error : $error"),
                         ),
                     loading: () => const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.blue,
-                          ),
+                          child: CircularProgressIndicator(),
                         )),
                 const SizedBox(height: 10),
                 Padding(
@@ -108,7 +120,7 @@ class AddBookingPage extends HookConsumerWidget {
                       label: BookingTextConstants.reason,
                       suffix: '',
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
                     CheckBoxEntry(
                       title: BookingTextConstants.necessaryKey,
                       valueNotifier: keyRequired,
@@ -453,14 +465,14 @@ class AddBookingPage extends HookConsumerWidget {
                             start.text = DateTime.now()
                                 .subtract(const Duration(minutes: 1))
                                 .toString();
-                          } else if (!start.text.contains("-")) {
+                          } else if (!start.text.contains("/")) {
                             start.text = DateFormat('HH:mm')
                                 .parse(start.text)
                                 .toString();
                           }
                           if (end.text == "") {
                             end.text = DateTime.now().toString();
-                          } else if (!end.text.contains("-")) {
+                          } else if (!end.text.contains("/")) {
                             end.text =
                                 DateFormat('HH:mm').parse(end.text).toString();
                           }
@@ -495,25 +507,43 @@ class AddBookingPage extends HookConsumerWidget {
                                     DateTime.parse(end.text));
                               }
                               Booking newBooking = Booking(
-                                  id: '',
+                                  id: isEdit ? booking.id : "",
                                   reason: motif.text,
-                                  start: DateTime.parse(start.value.text),
-                                  end: DateTime.parse(end.value.text),
+                                  start: DateTime.parse(processDateBackWithHour(
+                                      start.value.text)),
+                                  end: DateTime.parse(
+                                      processDateBackWithHour(end.value.text)),
                                   note: note.text,
                                   room: room.value,
                                   key: keyRequired.value,
                                   decision: Decision.pending,
                                   recurrenceRule: recurrenceRule);
-                              final value =
-                                  await bookingsNotifier.addBooking(newBooking);
+                              final value = isEdit
+                                  ? await bookingsNotifier
+                                      .updateBooking(newBooking)
+                                  : await bookingsNotifier
+                                      .addBooking(newBooking);
                               if (value) {
-                                await bookingsNotifier.addBooking(newBooking);
                                 pageNotifier.setBookingPage(BookingPage.main);
-                                displayToastWithContext(TypeMsg.msg,
-                                    BookingTextConstants.addedBooking);
+                                if (isEdit) {
+                                  await usersBookingsNotifier
+                                      .updateBooking(newBooking);
+                                  displayToastWithContext(TypeMsg.msg,
+                                      BookingTextConstants.editedBooking);
+                                } else {
+                                  await usersBookingsNotifier
+                                      .addBooking(newBooking);
+                                  displayToastWithContext(TypeMsg.msg,
+                                      BookingTextConstants.addedBooking);
+                                }
                               } else {
-                                displayToastWithContext(TypeMsg.error,
-                                    BookingTextConstants.addingError);
+                                if (isEdit) {
+                                  displayToastWithContext(TypeMsg.error,
+                                      BookingTextConstants.editionError);
+                                } else {
+                                  displayToastWithContext(TypeMsg.error,
+                                      BookingTextConstants.addingError);
+                                }
                               }
                             });
                           }
@@ -539,8 +569,11 @@ class AddBookingPage extends HookConsumerWidget {
                               ),
                             ],
                           ),
-                          child: const Text(BookingTextConstants.add,
-                              style: TextStyle(
+                          child: Text(
+                              isEdit
+                                  ? BookingTextConstants.edit
+                                  : BookingTextConstants.add,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold))),
@@ -574,7 +607,7 @@ class AddBookingPage extends HookConsumerWidget {
             child: child!,
           );
         });
-    dateController.text = DateFormat('yyyy-MM-dd')
+    dateController.text = DateFormat('dd/MM/yyyy')
         .format(picked ?? now.add(const Duration(hours: 1)));
   }
 
@@ -642,10 +675,10 @@ class AddBookingPage extends HookConsumerWidget {
               child: child!,
             );
           });
-      dateController.text = DateFormat('yyyy-MM-dd HH:mm')
+      dateController.text = DateFormat('dd/MM/yyyy HH:mm')
           .format(DateTimeField.combine(picked, time));
     } else {
-      dateController.text = DateFormat('yyyy-MM-dd HH:mm').format(now);
+      dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
     }
   }
 }
