@@ -272,7 +272,6 @@ class OpenIdTokenProvider
   Future<bool> refreshToken() async {
     return state.when(
       data: (token) async {
-        print(token);
         try {
           TokenResponse? resp = await appAuth.token(
             TokenRequest(
@@ -322,7 +321,6 @@ class OpenIdTokenProvider
   }
 
   void deleteToken() {
-    print('delete token');
     try {
       _secureStorage.delete(key: tokenName);
       state = AsyncValue.data({tokenKey: "", refreshTokenKey: ""});
