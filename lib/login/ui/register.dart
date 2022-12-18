@@ -85,8 +85,8 @@ class Register extends HookConsumerWidget {
                           if (value == null || value.isEmpty) {
                             return LoginTextConstants.emailEmpty;
                           }
-                          RegExp regExp = RegExp(
-                              r'^[\w\-.]*@(ecl\d{2})|(alternance\d{4})|(auditeur)|(master)?.ec-lyon.fr$');
+                          RegExp regExp =
+                              RegExp(LoginTextConstants.emailRegExp);
                           if (!regExp.hasMatch(value)) {
                             return LoginTextConstants.emailInvalid;
                           }
@@ -114,8 +114,9 @@ class Register extends HookConsumerWidget {
                                 LoginTextConstants.mailSendingError);
                           }
                         } else {
-                            displayToastWithContext(TypeMsg.error,
-                                LoginTextConstants.emailInvalid);}
+                          displayToastWithContext(
+                              TypeMsg.error, LoginTextConstants.emailInvalid);
+                        }
                       }),
                   const Spacer(),
                   Row(

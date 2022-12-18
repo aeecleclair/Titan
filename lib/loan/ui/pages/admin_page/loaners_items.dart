@@ -127,12 +127,12 @@ class LoanersItems extends HookConsumerWidget {
           );
         } else {
           return const Center(
-            child: Text('No items'),
+            child: Text(LoanTextConstants.noItems),
           );
         }
       },
       error: (Object error, StackTrace? stackTrace) {
-        return const Center(child: Text('Error'));
+        return Center(child: Text('Error $error'));
       },
       loading: () {
         return const Center(

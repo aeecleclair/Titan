@@ -1,5 +1,7 @@
+import 'package:myecl/cinema/tools/constants.dart';
+
 String formatSessionDateAndDuration(DateTime date, int duration) {
-  return "Le ${formatDate(date)} - ${formatDuration(duration)}";
+  return "${CinemaTextConstants.the} ${formatDate(date)} - ${formatDuration(duration)}";
 }
 
 String formatDuration(int duration) {

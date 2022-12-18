@@ -465,7 +465,7 @@ class AddEditPretendancePage extends HookConsumerWidget {
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(
-                                3, 3), // changes position of shadow
+                                3, 3),
                           ),
                         ],
                       ),

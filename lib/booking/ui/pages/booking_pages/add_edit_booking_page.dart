@@ -14,6 +14,7 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/text_entry.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -476,7 +477,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                             end.text =
                                 DateFormat('HH:mm').parse(end.text).toString();
                           }
-                          if (start.text.compareTo(end.text) > 0) {
+                          if (processDateBack(start.text)
+                                  .compareTo(processDateBack(end.text)) >
+                              0) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidDates);
                           } else if (room.value.id.isEmpty) {
@@ -509,10 +512,11 @@ class AddEditBookingPage extends HookConsumerWidget {
                               Booking newBooking = Booking(
                                   id: isEdit ? booking.id : "",
                                   reason: motif.text,
-                                  start: DateTime.parse(processDateBackWithHour(
+                                  start: DateTime.parse(
+                                      processDateBack(
                                       start.value.text)),
                                   end: DateTime.parse(
-                                      processDateBackWithHour(end.value.text)),
+                                      processDateBack(end.value.text)),
                                   note: note.text,
                                   room: room.value,
                                   key: keyRequired.value,
@@ -621,7 +625,7 @@ class AddEditBookingPage extends HookConsumerWidget {
           return Theme(
             data: ThemeData.light().copyWith(
               colorScheme: const ColorScheme.light(
-                primary: Color.fromARGB(255, 172, 32, 10),
+                primary: ColorConstants.gradient1,
                 onPrimary: Colors.white,
                 surface: Colors.white,
                 onSurface: Colors.black,
@@ -647,7 +651,7 @@ class AddEditBookingPage extends HookConsumerWidget {
           return Theme(
             data: ThemeData.light().copyWith(
               colorScheme: const ColorScheme.light(
-                primary: Color.fromARGB(255, 172, 32, 10),
+                primary: ColorConstants.gradient1,
                 onPrimary: Colors.white,
                 surface: Colors.white,
                 onSurface: Colors.black,
@@ -665,7 +669,7 @@ class AddEditBookingPage extends HookConsumerWidget {
             return Theme(
               data: ThemeData.light().copyWith(
                 colorScheme: const ColorScheme.light(
-                  primary: Color.fromARGB(255, 172, 32, 10),
+                  primary: ColorConstants.gradient1,
                   onPrimary: Colors.white,
                   surface: Colors.white,
                   onSurface: Colors.black,

@@ -118,7 +118,7 @@ class DetailPage extends HookConsumerWidget {
                                 },
                                 loading: () =>
                                     const CircularProgressIndicator(),
-                                error: (error, stack) => const Text('Error')),
+                                error: (error, stack) => Text('Error $error')),
                             const SizedBox(
                               height: 20,
                             ),

@@ -15,6 +15,7 @@ import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/providers/voted_section_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
+import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/pages/main_page/list_pretendence_card.dart';
 import 'package:myecl/vote/ui/pages/main_page/list_side_item.dart';
 import 'package:myecl/vote/ui/pages/main_page/section_title.dart';
@@ -170,8 +171,8 @@ class MainPage extends HookConsumerWidget {
                                   loading: () => const Center(
                                     child: CircularProgressIndicator(),
                                   ),
-                                  error: (error, stack) => const Center(
-                                    child: Text('Error'),
+                                  error: (error, stack) =>  Center(
+                                    child: Text('Error : $error'),
                                   ),
                                 ),
                               ),
@@ -201,8 +202,7 @@ class MainPage extends HookConsumerWidget {
           child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.0),
               child: Center(
-                child: Text(
-                  "Vous n'êtes pas membre de l'AE",
+                child: Text(VoteTextConstants.notAEMember,
                   style: TextStyle(fontSize: 20),
                 ),
               )));

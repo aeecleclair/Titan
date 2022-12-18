@@ -74,30 +74,29 @@ class CustomDrawer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: TextSpan(children: [
                           const TextSpan(
-                              text:
-                                  "Ce site est la version Web de l'application MyECL. Nous vous invitons à télécharger l'application. N'utilisez ce site qu'en cas de problème avec l'application.\n"),
+                              text: DrawerTextConstants
+                                  .downloadAppOnMobileDevice),
                           TextSpan(
-                              text:
-                                  "https://play.google.com/store/apps/details?id=fr.myecl.titan",
+                              text: DrawerTextConstants.androidAppLink,
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Clipboard.setData(const ClipboardData(
                                       text:
-                                          "https://play.google.com/store/apps/details?id=fr.myecl.titan"));
-                                  displayToast(context, TypeMsg.msg, "Copié !");
+                                          DrawerTextConstants.androidAppLink));
+                                  displayToast(context, TypeMsg.msg,
+                                      DrawerTextConstants.copied);
                                 }),
                           const TextSpan(
-                            text: " ou ",
+                            text: DrawerTextConstants.or,
                           ),
                           TextSpan(
                               text:
-                                  "https://apps.apple.com/fr/app/myecl/id6444443430",
+                                  DrawerTextConstants.iosAppLink,
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Clipboard.setData(const ClipboardData(
-                                      text:
-                                          "https://apps.apple.com/fr/app/myecl/id6444443430"));
-                                  displayToast(context, TypeMsg.msg, "Copié !");
+                                      text:DrawerTextConstants.iosAppLink));
+                                  displayToast(context, TypeMsg.msg, DrawerTextConstants.copied);
                                 })
                         ]),
                       ),

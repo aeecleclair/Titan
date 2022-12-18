@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -96,8 +97,10 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
 final profilePictureProvider =
     StateNotifierProvider<ProfilePictureNotifier, AsyncValue<Uint8List>>((ref) {
   final token = ref.watch(tokenProvider);
-  final userId = ref.watch(idProvider);
   ProfilePictureNotifier notifier = ProfilePictureNotifier(token);
-  notifier.getProfilePicture(userId);
+  tokenExpireWrapperAuth(ref, () async {
+    final userId = ref.watch(idProvider);
+    notifier.getProfilePicture(userId);
+  });
   return notifier;
 });

@@ -11,6 +11,7 @@ import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/loan/ui/text_entry.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -259,7 +260,7 @@ _selectDate(BuildContext context, TextEditingController dateController) async {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: const ColorScheme.light(
-              primary: Color.fromARGB(255, 10, 153, 172),
+              primary: ColorConstants.gradient1,
               onPrimary: Colors.white,
               surface: Colors.white,
               onSurface: Colors.black,
@@ -277,7 +278,7 @@ _selectDate(BuildContext context, TextEditingController dateController) async {
           return Theme(
             data: ThemeData.light().copyWith(
               colorScheme: const ColorScheme.light(
-                primary: Color.fromARGB(255, 10, 153, 172),
+                primary: ColorConstants.gradient1,
                 onPrimary: Colors.white,
                 surface: Colors.white,
                 onSurface: Colors.black,
@@ -304,7 +305,7 @@ _selectOnlyHour(
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: const ColorScheme.light(
-              primary: Color.fromARGB(255, 10, 153, 172),
+              primary: ColorConstants.gradient1,
               onPrimary: Colors.white,
               surface: Colors.white,
               onSurface: Colors.black,

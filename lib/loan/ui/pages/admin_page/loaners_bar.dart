@@ -38,8 +38,8 @@ class LoanersBar extends HookConsumerWidget {
         ),
       ),
       error: (Object error, StackTrace stackTrace) {
-        return const Center(
-          child: Text('Something went wrong'),
+        return Center(
+          child: Text('Error: $error'),
         );
       },
       loading: () {

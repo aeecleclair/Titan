@@ -460,6 +460,6 @@ class CreateAccountPage extends HookConsumerWidget {
         });
 
     dateController.text = processDatePrint(
-        DateFormat('yyyy-MM-dd').format(picked ?? DateTime.now()));
+        DateFormat('dd/MM/yyyy').format(picked ?? DateTime.now()));
   }
 }

@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/vote/providers/result_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
+import 'package:myecl/vote/tools/constants.dart';
 
 class VoteBars extends HookConsumerWidget {
   const VoteBars({super.key});
@@ -156,7 +157,7 @@ class VoteBars extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '${voteValue[sectionIds[value.toInt()]] ?? 0} Voix',
+                            '${voteValue[sectionIds[value.toInt()]] ?? 0} ${VoteTextConstants.votes}',
                             style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,

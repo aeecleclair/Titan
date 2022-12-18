@@ -454,21 +454,21 @@ class AddEventPage extends HookConsumerWidget {
                           if (end.text == "") {
                             end.text = now.toString();
                           }
-                          if (start.text.compareTo(end.text) > 0) {
+                          if (processDateBack(start.text).compareTo(processDateBack(end.text)) > 0) {
                             displayToast(context, TypeMsg.error,
                                 EventTextConstants.invalidDates);
                           } else {
                             tokenExpireWrapper(ref, () async {
                               String recurrenceRule = "";
                               String startString = start.text;
-                              if (!startString.contains("-")) {
+                              if (!startString.contains("/")) {
                                 startString =
-                                    "${processDateToAPIWitoutHour(now)} $startString";
+                                    "${processDate(now)} $startString";
                               }
                               String endString = end.text;
-                              if (!endString.contains("-")) {
+                              if (!endString.contains("/")) {
                                 endString =
-                                    "${processDateToAPIWitoutHour(now)} $endString";
+                                    "${processDate(now)} $endString";
                               }
                               if (recurrent.value) {
                                 RecurrenceProperties recurrence =
@@ -493,12 +493,14 @@ class AddEventPage extends HookConsumerWidget {
                               Event newEvent = Event(
                                   id: '',
                                   description: description.text,
-                                  end: DateTime.parse(endString),
+                                  end: DateTime.parse(
+                                      processDateBack(endString)),
                                   name: name.text,
                                   organizer: organizer.text,
                                   allDay: allDay.value,
                                   location: place.text,
-                                  start: DateTime.parse(startString),
+                                  start: DateTime.parse(
+                                      processDateBack(startString)),
                                   type: eventType.value,
                                   recurrenceRule: recurrenceRule);
                               final value =
@@ -568,7 +570,7 @@ class AddEventPage extends HookConsumerWidget {
           );
         });
 
-    dateController.text = DateFormat('yyyy-MM-dd')
+    dateController.text = DateFormat('dd/MM/yyyy')
         .format(picked ?? now.add(const Duration(hours: 1)));
   }
 
@@ -636,10 +638,10 @@ class AddEventPage extends HookConsumerWidget {
               child: child!,
             );
           });
-      dateController.text = DateFormat('yyyy-MM-dd HH:mm')
+      dateController.text = DateFormat('dd/MM/yyyy HH:mm')
           .format(DateTimeField.combine(picked, time));
     } else {
-      dateController.text = DateFormat('yyyy-MM-dd HH:mm').format(now);
+      dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
     }
   }
 }

@@ -187,7 +187,7 @@ class MainPage extends HookConsumerWidget {
                             text: "${Repository.host}calendar/ical"))
                         .then((value) {
                       displayToastWithContext(
-                          TypeMsg.msg, "Le lien Ical a été copiée");
+                          TypeMsg.msg, SettingsTextConstants.icalCopied);
                     });
                   },
                   child: const Text(SettingsTextConstants.eventsIcal,

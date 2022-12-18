@@ -10,6 +10,8 @@ class LoginTextConstants {
   static const String emailEmpty = 'Veuillez entrer une adresse mail';
   static const String emailInvalid =
       'Veuillez entrer une adresse mail de centrale';
+  static const String emailRegExp =
+      r'^[\w\-.]*@(ecl\d{2})|(alternance\d{4})|(auditeur)|(master)?.ec-lyon.fr$';
   static const String emptyFieldError = 'Ce champ ne peut pas être vide';
   static const String endActivation = 'Finaliser l\'activation';
   static const String endResetPassword = 'Finaliser la réinitialisation';

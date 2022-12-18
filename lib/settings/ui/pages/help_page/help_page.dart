@@ -76,8 +76,8 @@ class HelpPage extends HookConsumerWidget {
                   child: CircularProgressIndicator(),
                 );
               }, error: (e, s) {
-                return const Center(
-                  child: Text("Error"),
+                return Center(
+                  child: Text("Error : $e"),
                 );
               }),
               const SizedBox(

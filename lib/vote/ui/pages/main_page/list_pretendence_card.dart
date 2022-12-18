@@ -107,9 +107,9 @@ class ListPretendenceCard extends HookConsumerWidget {
                         child: CircularProgressIndicator(),
                       )
                     ],
-                    error: (error, stack) => const [
+                    error: (error, stack) =>  [
                       Center(
-                        child: Text("Error occured"),
+                        child: Text("Error : $error"),
                       )
                     ],
                   ))
@@ -193,7 +193,7 @@ class ListPretendenceCard extends HookConsumerWidget {
         ],
       );
     }, error: (Object error, StackTrace stackTrace) {
-      return const Center(child: Text("Error occured"));
+      return Center(child: Text("Error : $error"));
     }, loading: () {
       return const Center(child: CircularProgressIndicator());
     });

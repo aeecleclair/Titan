@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 
 class DateEntry extends StatelessWidget {
@@ -51,7 +52,7 @@ _selectDate(BuildContext context, TextEditingController dateController) async {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: const ColorScheme.light(
-              primary: Color.fromARGB(255, 173, 57, 19),
+              primary: ColorConstants.gradient1,
               onPrimary: Colors.white,
               surface: Colors.white,
               onSurface: Colors.black,
