@@ -39,13 +39,14 @@ class ChangePassPage extends HookConsumerWidget {
               const SizedBox(
                 height: 30,
               ),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(SettingsTextConstants.changePassword,
                     style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black)),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.tertiary,
+                    )),
               ),
               const SizedBox(
                 height: 30,
@@ -118,8 +119,7 @@ class ChangePassPage extends HookConsumerWidget {
                               descriptions:
                                   SettingsTextConstants.changingPassword,
                               onYes: () {
-                                tokenExpireWrapper(ref,
-                                    () async {
+                                tokenExpireWrapper(ref, () async {
                                   final value =
                                       await userNotifier.changePassword(
                                           oldPassword.text,

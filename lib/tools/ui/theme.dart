@@ -6,6 +6,7 @@ class CustomTheme {
   static ThemeData get lightTheme {
     return ThemeData(
         primaryColor: ColorConstants.gradient1,
+        primarySwatch: Colors.orange,
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Montserrat',
         textTheme: GoogleFonts.notoSerifMalayalamTextTheme(),
@@ -20,6 +21,7 @@ class CustomTheme {
   static ThemeData get darkTheme {
     return ThemeData(
         primaryColor: ColorConstants.gradient1,
+        primarySwatch: Colors.orange,
         scaffoldBackgroundColor: const Color.fromARGB(255, 27, 29, 44),
         fontFamily: 'Montserrat',
         textTheme: GoogleFonts.notoSerifMalayalamTextTheme(),
@@ -27,7 +29,7 @@ class CustomTheme {
         colorScheme: ColorScheme.fromSwatch().copyWith(
             secondary: ColorConstants.gradient2,
             surface: Colors.grey.shade300,
-            tertiary: Colors.grey.shade300,
+            tertiary: Colors.grey.shade400,
             tertiaryContainer: Colors.grey.shade500));
   }
 }

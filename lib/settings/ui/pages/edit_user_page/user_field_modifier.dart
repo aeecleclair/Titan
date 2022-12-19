@@ -22,20 +22,26 @@ class UserFieldModifier extends StatelessWidget {
             style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
-                color: Colors.grey.shade500),
+                color: Theme.of(context).colorScheme.tertiary),
           ),
         ),
         Expanded(
           child: TextFormField(
             keyboardType: keyboardType,
             controller: controller,
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+                color: Theme.of(context).colorScheme.tertiary),
             cursorColor: const Color(0xFFfb6d10),
-            decoration: const InputDecoration(
-                contentPadding: EdgeInsets.all(10),
+            decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(10),
                 isDense: true,
-                focusedBorder: UnderlineInputBorder(
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.tertiary)),
+                focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Color(0xFFfb6d10)))),
-            style: const TextStyle(fontSize: 20),
           ),
         ),
       ],

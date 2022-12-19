@@ -13,7 +13,7 @@ class DarkModeItem extends HookConsumerWidget {
     final isDarkTheme = ref.watch(isDarkThemeProvider);
     final isDarkThemeNotifier = ref.watch(isDarkThemeProvider.notifier);
     return SettingsItem(
-      icon: HeroIcons.moon,
+      icon: isDarkTheme ? HeroIcons.moon : HeroIcons.sun,
       onTap: () {
         isDarkThemeNotifier.toggle();
         isDarkThemeNotifier.saveToPrefs();
@@ -21,16 +21,15 @@ class DarkModeItem extends HookConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(SettingsTextConstants.darkMode,
-              style: TextStyle(fontSize: 16, color: Colors.black)),
-          const SizedBox(
-            height: 5,
-          ),
+          Text(SettingsTextConstants.darkMode,
+              style: TextStyle(
+                  fontSize: 16, color: Theme.of(context).colorScheme.tertiary)),
           Text(
               isDarkTheme
                   ? SettingsTextConstants.darkModeOn
                   : SettingsTextConstants.darkModeOff,
-              style: const TextStyle(fontSize: 12, color: Colors.black)),
+              style: TextStyle(
+                  fontSize: 12, color: Theme.of(context).colorScheme.tertiary)),
         ],
       ),
     );
