@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/repositories/delivery_list_repository.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class DeliveryListNotifier extends ListNotifier<Delivery> {
   final DeliveryListRepository _deliveriesListRepository =
@@ -46,10 +47,10 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
         state = AsyncValue.data(deliveries);
       },
       error: (error, stackTrace) {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, stackTrace);
       },
       loading: () {
-        state = const AsyncValue.error("Cannot toggle expanded while loading");
+        state = const AsyncValue.error("Cannot toggle expanded while loading", StackTrace.empty);
       },
     );
   }
@@ -59,9 +60,11 @@ final deliveryListProvider =
     StateNotifierProvider<DeliveryListNotifier, AsyncValue<List<Delivery>>>(
         (ref) {
   final token = ref.watch(tokenProvider);
-  DeliveryListNotifier _orderListNotifier = DeliveryListNotifier(token: token);
-  _orderListNotifier.loadDeliveriesList();
-  return _orderListNotifier;
+  DeliveryListNotifier orderListNotifier = DeliveryListNotifier(token: token);
+  tokenExpireWrapperAuth(ref, () async {
+    await orderListNotifier.loadDeliveriesList();
+  });
+  return orderListNotifier;
 });
 
 final deliveryList = Provider<List<Delivery>>((ref) {

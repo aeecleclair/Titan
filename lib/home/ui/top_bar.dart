@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/home/tools/constants.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -12,7 +13,7 @@ class TopBar extends HookConsumerWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 20,
+          height: 15,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,28 +26,26 @@ class TopBar extends HookConsumerWidget {
                       onPressed: () {
                         controllerNotifier.toggle();
                       },
-                      icon: FaIcon(
-                        FontAwesomeIcons.chevronRight,
-                        color: Colors.grey.shade100,
+                      icon: const HeroIcon(
+                        HeroIcons.bars3BottomLeft,
+                        color: Colors.black,
+                        size: 30,
                       ));
                 },
               ),
             ),
-            Text(
-              "MyECL",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey.shade100,
-              ),
-            ),
+            const Text(HomeTextConstants.calendar,
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black)),
             const SizedBox(
               width: 70,
             ),
           ],
         ),
         const SizedBox(
-          height: 20,
+          height: 30,
         ),
       ],
     );

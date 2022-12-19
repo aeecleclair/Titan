@@ -1,0 +1,34 @@
+# Bugs
+
+TITAN :
+
+- animation btn (shrinking + disable) :
+- dark mode
+- ask help
+- opti day list
+- cache
+
+
+API :
+
+- PATCH available on edit
+- PATCH events
+
+# Modules :
+
+- Piston (1) discuter après la sortie
+- Soli (2) discuter après la sortie
+- BDS (3) cahier des charges
+- Payement (4) en discuter avec DBE
+- Messagerie (5)
+- JE (?) cahier des charges
+
+# Questions :
+
+- authentifiaction bio pour admin ?
+- Gestions des admins (qui, cmt les delete, cmt les add)
+
+# Projet :
+
+Builder de modules front et back (s/ site)
+IA pr conversion image -> flutter

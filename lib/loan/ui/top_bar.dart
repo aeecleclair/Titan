@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
@@ -16,7 +16,7 @@ class TopBar extends HookConsumerWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 42,
+          height: 15,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,61 +28,41 @@ class TopBar extends HookConsumerWidget {
                   return IconButton(
                       onPressed: () {
                         switch (page) {
-                          case LoanPage.detail:
-                            pageNotifier.setLoanPage(LoanPage.main);
-                            break;
-                          case LoanPage.editLoan:
-                            pageNotifier.setLoanPage(LoanPage.groupLoan);
-                            break;
                           case LoanPage.main:
                             controllerNotifier.toggle();
                             break;
-                          case LoanPage.option:
+                          case LoanPage.addEditLoan:
+                            pageNotifier.setLoanPage(LoanPage.admin);
+                            break;
+                          case LoanPage.addEditItem:
+                            pageNotifier.setLoanPage(LoanPage.admin);
+                            break;
+                          case LoanPage.admin:
                             pageNotifier.setLoanPage(LoanPage.main);
                             break;
-                          case LoanPage.addLoan:
-                            pageNotifier.setLoanPage(LoanPage.adminLoan);
-                            break;
-                          case LoanPage.addItem:
-                            pageNotifier.setLoanPage(LoanPage.adminItem);
-                            break;
-                          case LoanPage.history:
+                          case LoanPage.detailLoanFromMain:
                             pageNotifier.setLoanPage(LoanPage.main);
                             break;
-                          case LoanPage.historyDetail:
-                            pageNotifier.setLoanPage(LoanPage.history);
-                            break;
-                          case LoanPage.groupLoan:
-                            pageNotifier.setLoanPage(LoanPage.adminLoan);
-                            break;
-                          case LoanPage.editItem:
-                            pageNotifier.setLoanPage(LoanPage.adminItem);
-                            break;
-                          case LoanPage.adminItem:
-                            pageNotifier.setLoanPage(LoanPage.option);
-                            break;
-                          case LoanPage.adminLoan:
-                            pageNotifier.setLoanPage(LoanPage.option);
+                          case LoanPage.detailLoanFromAdmin:
+                            pageNotifier.setLoanPage(LoanPage.admin);
                             break;
                         }
                       },
-                      icon: FaIcon(
+                      icon: HeroIcon(
                         page == LoanPage.main
-                            ? FontAwesomeIcons.chevronRight
-                            : FontAwesomeIcons.chevronLeft,
-                        color: const Color.fromARGB(255, 0, 0, 0),
+                            ? HeroIcons.bars3BottomLeft
+                            : HeroIcons.chevronLeft,
+                        color: Colors.black,
+                        size: 30,
                       ));
                 },
               ),
             ),
-            const Text(
-              LoanTextConstants.loan,
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w500,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ),
+            const Text(LoanTextConstants.loan,
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black)),
             const SizedBox(
               width: 70,
             ),

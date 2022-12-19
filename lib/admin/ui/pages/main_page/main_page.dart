@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_id_provider.dart';
-import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
-import 'package:myecl/admin/ui/refresh_indicator.dart';
+import 'package:myecl/admin/ui/pages/main_page/asso_ui.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
-import 'package:myecl/tools/functions.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class MainPage extends HookConsumerWidget {
@@ -19,162 +22,156 @@ class MainPage extends HookConsumerWidget {
     final groups = ref.watch(allGroupListProvider);
     final groupsNotifier = ref.watch(allGroupListProvider.notifier);
     final pageNotifier = ref.watch(adminPageProvider.notifier);
-    final groupNotifier = ref.watch(groupProvider.notifier);
     final groupIdNotifier = ref.watch(groupIdProvider.notifier);
-    final loans = ref.watch(loanerList);
+    final loans = ref.watch(loanerListProvider);
     final loanListNotifier = ref.watch(loanerListProvider.notifier);
     ref.watch(userList);
-    return AdminRefresher(
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
+    final loanersId = [];
+
+    loans.whenData(
+        (value) => loanersId.addAll(value.map((e) => e.groupManagerId)));
+
+    return Refresher(
       onRefresh: () async {
         await groupsNotifier.loadGroups();
         await loanListNotifier.loadLoanerList();
       },
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: groups.when(data: (g) {
           return Column(children: [
-            const Text(AdminTextConstants.association + "s",
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: AdminColorConstants.gradient1)),
-            SizedBox(
-              height: 10,
-              width: MediaQuery.of(context).size.width,
-            ),
-            ...g
-                .map((x) => GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    child: Container(
-                        padding: const EdgeInsets.all(12),
-                        child: Text(
-                          capitalize(x.name),
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w500),
-                        )),
-                    onTap: () async {
-                      groupIdNotifier.setId(x.id);
-                      tokenExpireWrapper(ref, () async {
-                        await groupNotifier.loadGroup(x.id);
-                        pageNotifier.setAdminPage(AdminPage.asso);
-                      });
-                    }))
-                .toList(),
-            GestureDetector(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.65,
-                margin: const EdgeInsets.symmetric(vertical: 20),
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  gradient:  LinearGradient(
-                    colors: const [
-                      AdminColorConstants.gradient1,
-                      AdminColorConstants.gradient2,
-                    ],
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AdminColorConstants.gradient2.withOpacity(0.5),
-                      blurRadius: 5,
-                      offset: const Offset(2, 2),
-                      spreadRadius: 2,
+            Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    pageNotifier.setAdminPage(AdminPage.addAsso);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              blurRadius: 5,
+                              spreadRadius: 2)
+                        ]),
+                    child: Row(
+                      children: [
+                        const Spacer(),
+                        HeroIcon(
+                          HeroIcons.plus,
+                          color: Colors.grey.shade700,
+                          size: 40,
+                        ),
+                        const Spacer(),
+                      ],
                     ),
-                  ],
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: const Text(
-                  AdminTextConstants.addAssociation,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 255, 255, 255),
                   ),
                 ),
-              ),
-              onTap: () {
-                pageNotifier.setAdminPage(AdminPage.addAsso);
-              },
-            ),
-            loans.isNotEmpty
-                ? Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Text(AdminTextConstants.loaningAssociation,
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: AdminColorConstants.gradient1)),
-                      const SizedBox(height: 10),
-                      ...loans
-                          .map((x) => GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  child: Text(
-                                    capitalize(x.name),
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500),
-                                  )),
-                              onTap: () {
-                                groupIdNotifier.setId(x.groupManagerId);
-                                groupNotifier
-                                    .loadGroup(x.groupManagerId)
-                                    .then((value) {
-                                  pageNotifier.setAdminPage(AdminPage.asso);
+                GestureDetector(
+                  onTap: () {
+                    pageNotifier.setAdminPage(AdminPage.addLoaner);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              blurRadius: 5,
+                              spreadRadius: 2)
+                        ]),
+                    child: Row(
+                      children: [
+                        const Spacer(),
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            HeroIcon(
+                              HeroIcons.buildingLibrary,
+                              color: Colors.grey.shade700,
+                              size: 40,
+                            ),
+                            Positioned(
+                              right: -2,
+                              top: -2,
+                              child: HeroIcon(
+                                HeroIcons.plus,
+                                size: 15,
+                                color: Colors.grey.shade700,
+                              ),
+                            )
+                          ],
+                        ),
+                        const Spacer()
+                      ],
+                    ),
+                  ),
+                ),
+                ...g
+                    .map((group) => AssoUi(
+                          group: group,
+                          isLoaner: loanersId.contains(group.id),
+                          onTap: () async {
+                            groupIdNotifier.setId(group.id);
+                            pageNotifier.setAdminPage(AdminPage.asso);
+                          },
+                          onEdit: () {
+                            groupIdNotifier.setId(group.id);
+                            pageNotifier.setAdminPage(AdminPage.edit);
+                          },
+                          onDelete: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CustomDialogBox(
+                                    title: AdminTextConstants.deleting,
+                                    descriptions:
+                                        AdminTextConstants.deleteAssociation,
+                                    onYes: () async {
+                                      tokenExpireWrapper(ref, () async {
+                                        final value = await groupsNotifier
+                                            .deleteGroup(group);
+                                        if (value) {
+                                          displayToastWithContext(
+                                              TypeMsg.msg,
+                                              AdminTextConstants
+                                                  .deletedAssociation);
+                                        } else {
+                                          displayToastWithContext(TypeMsg.error,
+                                              AdminTextConstants.deletingError);
+                                        }
+                                      });
+                                    },
+                                  );
                                 });
-                              }))
-                          .toList(),
-                    ],
-                  )
-                : Container(),
-            GestureDetector(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                margin: const EdgeInsets.symmetric(vertical: 20),
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  gradient:  LinearGradient(
-                    colors: const [
-                      AdminColorConstants.gradient1,
-                      AdminColorConstants.gradient2,
-                    ],
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AdminColorConstants.gradient2.withOpacity(0.5),
-                      blurRadius: 5,
-                      offset: const Offset(2, 2),
-                      spreadRadius: 2,
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: const Text(
-                  AdminTextConstants.addLoaningAssociation,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 255, 255, 255),
-                  ),
-                ),
-              ),
-              onTap: () {
-                pageNotifier.setAdminPage(AdminPage.addLoaner);
-              },
-            )
+                          },
+                        ))
+                    .toList(),
+                const SizedBox(
+                  height: 20,
+                )
+              ],
+            ),
           ]);
         }, error: (e, s) {
           return Text(e.toString());
         }, loading: () {
           return const Center(
               child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation(AdminColorConstants.gradient1),
+            valueColor: AlwaysStoppedAnimation(ColorConstants.gradient1),
           ));
         }),
       ),

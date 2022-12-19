@@ -22,13 +22,13 @@ class Item {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['name'] = name;
-    _data['suggested_caution'] = caution;
-    _data['available'] = available;
-    _data['suggested_lending_duration'] = suggestedLendingDuration * (60 * 60 * 24);
-    return _data;
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['suggested_caution'] = caution;
+    data['available'] = available;
+    data['suggested_lending_duration'] = suggestedLendingDuration * (60 * 60 * 24);
+    return data;
   }
 
   Item copyWith({id, name, caution, available, suggestedLendingDuration}) {

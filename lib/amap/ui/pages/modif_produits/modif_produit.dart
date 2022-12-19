@@ -7,11 +7,10 @@ import 'package:myecl/amap/providers/modified_product_index_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_category_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/modif_produits/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:uuid/uuid.dart';
 
 class ModifProduct extends HookConsumerWidget {
@@ -19,7 +18,7 @@ class ModifProduct extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     final productsNotifier = ref.watch(productListProvider.notifier);
     final productsList = ref.watch(productListProvider);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
@@ -54,6 +53,10 @@ class ModifProduct extends HookConsumerWidget {
       }
     }).toList();
 
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     return Column(
       children: [
         const SizedBox(
@@ -65,7 +68,7 @@ class ModifProduct extends HookConsumerWidget {
                   color: AMAPColorConstants.background2.withOpacity(0.5)),
               child: Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: _formKey,
+                  key: formKey,
                   child: Container(
                     alignment: Alignment.center,
                     child: SingleChildScrollView(
@@ -248,7 +251,7 @@ class ModifProduct extends HookConsumerWidget {
                                         : AMAPTextConstants.add,
                                   ),
                                   onTap: () {
-                                    if (_formKey.currentState!.validate()) {
+                                    if (formKey.currentState!.validate()) {
                                       String cate = categoryController ==
                                               AMAPTextConstants.createCategory
                                           ? nouvellecategory.text
@@ -267,14 +270,12 @@ class ModifProduct extends HookConsumerWidget {
                                           final value = await productsNotifier
                                               .updateProduct(newProduct);
                                           if (value) {
-                                            displayAMAPToast(
-                                                context,
+                                            displayToastWithContext(
                                                 TypeMsg.msg,
                                                 AMAPTextConstants
                                                     .updatedProduct);
                                           } else {
-                                            displayAMAPToast(
-                                                context,
+                                            displayToastWithContext(
                                                 TypeMsg.error,
                                                 AMAPTextConstants
                                                     .updatingError);
@@ -301,28 +302,22 @@ class ModifProduct extends HookConsumerWidget {
                                         tokenExpireWrapper(ref, () async {
                                           final value = await productsNotifier
                                               .addProduct(newProduct);
-                                            if (value) {
-                                              displayAMAPToast(
-                                                  context,
-                                                  TypeMsg.msg,
-                                                  AMAPTextConstants
-                                                      .addedProduct);
-                                            } else {
-                                              displayAMAPToast(
-                                                  context,
-                                                  TypeMsg.error,
-                                                  AMAPTextConstants
-                                                      .addingError);
-                                            }
-                                            pageNotifier
-                                                .setAmapPage(AmapPage.admin);
+                                          if (value) {
+                                            displayToastWithContext(TypeMsg.msg,
+                                                AMAPTextConstants.addedProduct);
+                                          } else {
+                                            displayToastWithContext(
+                                                TypeMsg.error,
+                                                AMAPTextConstants.addingError);
+                                          }
+                                          pageNotifier
+                                              .setAmapPage(AmapPage.admin);
 
-                                            nameController.clear();
-                                            priceController.clear();
-                                            categoryNotifier.setText(
-                                                AMAPTextConstants
-                                                    .createCategory);
-                                            nouvellecategory.clear();
+                                          nameController.clear();
+                                          priceController.clear();
+                                          categoryNotifier.setText(
+                                              AMAPTextConstants.createCategory);
+                                          nouvellecategory.clear();
                                         });
                                       }
                                     }

@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/is_loan_admin_provider.dart';
+import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/providers/loan_provider.dart';
+import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/ui/loan_ui.dart';
-import 'package:myecl/loan/ui/refresh_indicator.dart';
+import 'package:myecl/loan/ui/loan_card.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -16,177 +20,161 @@ class MainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final loanList = ref.watch(loanListProvider);
+    final loanNotifier = ref.watch(loanProvider.notifier);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
-    final isLoanAdmin = ref.watch(isLoanAdminProvider);
-    bool displayHist = false;
-    List<Widget> listWidget = [
-      Container(
-          margin: const EdgeInsets.only(right: 10, left: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                LoanTextConstants.onGoingLoan,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              isLoanAdmin
-                  ? Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            pageNotifier.setLoanPage(LoanPage.history);
-                          },
-                          icon: const HeroIcon(
-                            HeroIcons.clipboardList,
-                            color: LoanColorConstants.lightGrey,
-                            size: 25,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            pageNotifier.setLoanPage(LoanPage.option);
-                          },
-                          icon: const HeroIcon(
-                            HeroIcons.plus,
-                            color: LoanColorConstants.lightGrey,
-                            size: 25,
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-            ],
-          ))
-    ];
+    final isAdmin = ref.watch(isLoanAdmin);
+    ref.watch(adminLoanListProvider);
+    ref.watch(itemListProvider);
+    ref.watch(loanerLoanListProvider);
+    List<List<Loan>> dictCateListWidget = [[], []];
 
     loanList.when(
       data: (data) {
         if (data.isNotEmpty) {
-          List<String> categories =
-              data.map((e) => e.loaner.name).toSet().toList();
-          Map<String, List<List<Widget>>> dictCateListWidget = {
-            for (var item in categories) item: [[], []]
-          };
-
           for (Loan l in data) {
             if (l.returned) {
-              displayHist = true;
-              dictCateListWidget[l.loaner.name]![1]
-                  .add(LoanUi(l: l, isHistory: false, isAdmin: false));
+              dictCateListWidget[1].add(l);
             } else {
-              dictCateListWidget[l.loaner.name]![0]
-                  .add(LoanUi(l: l, isHistory: false, isAdmin: false));
+              dictCateListWidget[0].add(l);
             }
           }
+        }
+      },
+      loading: () {},
+      error: (error, s) {},
+    );
 
-          for (String c in categories) {
-            if (dictCateListWidget[c]![0].isNotEmpty) {
-              listWidget.add(Container(
-                  height: 50,
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    height: 40,
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Text(
-                      c,
-                      style: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600,
+    return Stack(
+      children: [
+        Refresher(
+            onRefresh: () async {
+              await loanListNotifier.loadLoanList();
+            },
+            child: Column(children: [
+              const SizedBox(height: 10),
+              (dictCateListWidget[0].isNotEmpty)
+                  ? Column(children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(LoanTextConstants.onGoingLoan,
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 205, 205, 205))),
+                        ),
                       ),
+                      const SizedBox(height: 10),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 10),
+                            ...dictCateListWidget[0].map((e) => LoanCard(
+                                  loan: e,
+                                  isAdmin: false,
+                                  isDetail: false,
+                                  onEdit: () {},
+                                  onCalendar: () {},
+                                  onReturn: () async {},
+                                  onInfo: () {
+                                    loanNotifier.setLoan(e);
+                                    pageNotifier.setLoanPage(
+                                        LoanPage.detailLoanFromMain);
+                                  },
+                                )),
+                            const SizedBox(width: 10),
+                          ],
+                        ),
+                      )
+                    ])
+                  : (dictCateListWidget[1].isEmpty)
+                      ? const Center(
+                          child: Text(LoanTextConstants.noLoan,
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 205, 205, 205))))
+                      : Container(),
+              const SizedBox(height: 30),
+              if (dictCateListWidget[1].isNotEmpty)
+                Column(children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(LoanTextConstants.returnedLoan,
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 205, 205, 205))),
                     ),
-                  )));
-              listWidget += dictCateListWidget[c]![0];
-            }
-          }
-          if (displayHist) {
-            listWidget += [
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                margin: const EdgeInsets.only(right: 10, left: 20),
+                  ),
+                  const SizedBox(height: 10),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 10),
+                        ...dictCateListWidget[1]
+                            .map((e) => LoanCard(
+                                  loan: e,
+                                  isAdmin: false,
+                                  isDetail: false,
+                                  onEdit: () {},
+                                  onCalendar: () {},
+                                  onReturn: () async {},
+                                  onInfo: () {
+                                    loanNotifier.setLoan(e);
+                                    pageNotifier.setLoanPage(
+                                        LoanPage.detailLoanFromMain);
+                                  },
+                                ))
+                            .toList(),
+                        const SizedBox(width: 10),
+                      ],
+                    ),
+                  )
+                ])
+            ])),
+        if (isAdmin)
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: GestureDetector(
+              onTap: () {
+                pageNotifier.setLoanPage(LoanPage.admin);
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5))
+                    ]),
                 child: Row(
                   children: const [
-                    Text(
-                      LoanTextConstants.history,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    HeroIcon(HeroIcons.userGroup, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text("Admin",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white)),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-            ];
-            for (String c in categories) {
-              if (dictCateListWidget[c]![1].isNotEmpty) {
-                listWidget.add(Container(
-                    height: 50,
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      height: 40,
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        c,
-                        style: const TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    )));
-                listWidget += dictCateListWidget[c]![1];
-              }
-            }
-          }
-        } else {
-          listWidget.add(Container(
-            alignment: Alignment.center,
-            child: const Text(
-              LoanTextConstants.noLoan,
             ),
-          ));
-        }
-      },
-      loading: () {
-        listWidget.add(const Center(
-          child: CircularProgressIndicator(
-            valueColor:
-                AlwaysStoppedAnimation<Color>(LoanColorConstants.darkGrey),
-          ),
-        ));
-      },
-      error: (error, s) {
-        listWidget.add(Center(child: Text(error.toString())));
-      },
-    );
-
-    return LoanRefresher(
-      onRefresh: () async {
-        await loanListNotifier.loadLoanList();
-      },
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            ...listWidget,
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
-      ),
+          )
+      ],
     );
   }
 }

@@ -12,12 +12,12 @@ import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
-import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -38,6 +38,9 @@ class Boutons extends HookConsumerWidget {
     final userAmount = ref.watch(userAmountProvider);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     final products = [];
     productsList.when(
@@ -59,83 +62,86 @@ class Boutons extends HookConsumerWidget {
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           GestureDetector(
               child: GreenBtn(
-                  text: AMAPTextConstants.confirm +
-                      " (" +
-                      price.toStringAsFixed(2) +
-                      "€)"),
+                  text:
+                      "${AMAPTextConstants.confirm} (${price.toStringAsFixed(2)}€)"),
               onTap: () {
                 if (price == 0.0) {
-                  displayAMAPToast(
+                  displayToast(
                       context, TypeMsg.error, AMAPTextConstants.noProduct);
-                } else if (indexCmd == -1 && price < b) {
-                  List<Product> prod = [];
-                  for (var p in products) {
-                    if (p.quantity != 0) {
-                      prod.add(p.copyWith());
-                    }
-                  }
-                  Order newOrder = Order(
-                    user: me.toSimpleUser(),
-                      products: prod,
-                      deliveryDate: delList
-                          .firstWhere((d) => d.id == deliveryId)
-                          .deliveryDate,
-                      id: const Uuid().v4(),
-                      amount: price,
-                      deliveryId: deliveryId,
-                      productsIds: prod.map((e) => e.id).toList(),
-                      collectionSlot: collectionSlotNotifier.getText());
-                  tokenExpireWrapper(ref, () async {
-                    final value = await cmdsNotifier.addOrder(newOrder);
-                    if (value) {
-                      pageNotifier.setAmapPage(AmapPage.main);
-                      userAmountNotifier.updateCash(-price);
-                      displayAMAPToast(
-                          context, TypeMsg.msg, AMAPTextConstants.addedOrder);
-                      clearCmd(ref);
-                    } else {
-                      pageNotifier.setAmapPage(AmapPage.main);
-                      displayAMAPToast(context, TypeMsg.error,
-                          AMAPTextConstants.addingError);
-                    }
-                  });
-                } else {
-                  var lastPrice = 0.0;
-                  cmds.when(
-                    data: (c) {
-                      for (var p in c[indexCmd].products) {
-                        lastPrice += p.price * p.quantity;
-                      }
-                    },
-                    error: (Object error, StackTrace? stackTrace) {},
-                    loading: () {},
-                  );
-                  if (price < b + lastPrice) {
+                } else if (price < b) {
+                  if (indexCmd == -1) {
                     List<Product> prod = [];
                     for (var p in products) {
                       if (p.quantity != 0) {
                         prod.add(p.copyWith());
                       }
                     }
+                    Order newOrder = Order(
+                        user: me.toSimpleUser(),
+                        products: prod,
+                        deliveryDate: delList
+                            .firstWhere((d) => d.id == deliveryId)
+                            .deliveryDate,
+                        id: const Uuid().v4(),
+                        amount: price,
+                        deliveryId: deliveryId,
+                        productsIds: prod.map((e) => e.id).toList(),
+                        collectionSlot: collectionSlotNotifier.getText());
                     tokenExpireWrapper(ref, () async {
-                      final value =
-                          await cmdsNotifier.setProducts(indexCmd, prod);
+                      final value = await cmdsNotifier.addOrder(newOrder);
                       if (value) {
                         pageNotifier.setAmapPage(AmapPage.main);
-                        userAmountNotifier.updateCash(lastPrice - price);
-                        displayAMAPToast(context, TypeMsg.msg,
-                            AMAPTextConstants.updatedOrder);
+                        userAmountNotifier.updateCash(-price);
+                        displayToastWithContext(
+                            TypeMsg.msg, AMAPTextConstants.addedOrder);
+                        clearCmd(ref);
                       } else {
                         pageNotifier.setAmapPage(AmapPage.main);
-                        displayAMAPToast(context, TypeMsg.error,
-                            AMAPTextConstants.updatingError);
+                        displayToastWithContext(
+                            TypeMsg.error, AMAPTextConstants.addingError);
                       }
                     });
-                    clearCmd(ref);
                   } else {
-                    displayAMAPToast(context, TypeMsg.error,
-                        AMAPTextConstants.notEnoughMoney);
+                    var lastPrice = 0.0;
+                    cmds.when(
+                      data: (c) {
+                        for (var p in c[indexCmd].products) {
+                          lastPrice += p.price * p.quantity;
+                        }
+                      },
+                      error: (Object error, StackTrace? stackTrace) {},
+                      loading: () {},
+                    );
+                    if (price < b + lastPrice) {
+                      List<Product> prod = [];
+                      for (var p in products) {
+                        if (p.quantity != 0) {
+                          prod.add(p.copyWith());
+                        }
+                      }
+                      tokenExpireWrapper(ref, () async {
+                        final value =
+                            await cmdsNotifier.setProducts(indexCmd, prod);
+                        if (value) {
+                          pageNotifier.setAmapPage(AmapPage.main);
+                          userAmountNotifier.updateCash(lastPrice - price);
+                          displayToastWithContext(
+                              TypeMsg.msg, AMAPTextConstants.updatedOrder);
+                        } else {
+                          pageNotifier.setAmapPage(AmapPage.main);
+                          displayToastWithContext(
+                              TypeMsg.error, AMAPTextConstants.updatingError);
+                        }
+                      });
+                      clearCmd(ref);
+                    } else {
+                      displayToast(context, TypeMsg.error,
+                          AMAPTextConstants.notEnoughMoney);
+                    }
                   }
+                } else {
+                  displayToast(
+                      context, TypeMsg.error, AMAPTextConstants.notEnoughMoney);
                 }
               }),
           GestureDetector(
@@ -143,7 +149,7 @@ class Boutons extends HookConsumerWidget {
               width: MediaQuery.of(context).size.width * 0.2,
               height: 70,
               decoration: BoxDecoration(
-                gradient:  LinearGradient(colors: const [
+                gradient: const LinearGradient(colors: [
                   AMAPColorConstants.redGradient1,
                   AMAPColorConstants.redGradient2
                 ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -157,7 +163,7 @@ class Boutons extends HookConsumerWidget {
               ),
               alignment: Alignment.center,
               child: HeroIcon(
-                HeroIcons.x,
+                HeroIcons.xMark,
                 size: 35,
                 color: AMAPColorConstants.background,
               ),
@@ -166,7 +172,7 @@ class Boutons extends HookConsumerWidget {
               if (price != 0.0 || indexCmd != -1) {
                 showDialog(
                     context: context,
-                    builder: (BuildContext context) => AMAPDialog(
+                    builder: (BuildContext context) => CustomDialogBox(
                         descriptions: AMAPTextConstants.deletingOrder,
                         title: AMAPTextConstants.deleting,
                         onYes: () {

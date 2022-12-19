@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class UserUi extends HookConsumerWidget {
@@ -18,9 +18,6 @@ class UserUi extends HookConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              width: 20,
-            ),
             Expanded(
               child: Text(
                 user.getName(),
@@ -32,14 +29,14 @@ class UserUi extends HookConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: const [
-                    AdminColorConstants.redGradient1,
-                    AdminColorConstants.redGradient2
-                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  gradient: const LinearGradient(
+                    colors: [ColorConstants.background2, Colors.black],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                   boxShadow: [
                     BoxShadow(
-                        color:
-                            AdminColorConstants.redGradient2.withOpacity(0.4),
+                        color: ColorConstants.background2.withOpacity(0.4),
                         offset: const Offset(2, 3),
                         blurRadius: 5)
                   ],
@@ -54,9 +51,6 @@ class UserUi extends HookConsumerWidget {
               onTap: () {
                 onDelete();
               },
-            ),
-            Container(
-              width: 15,
             ),
           ],
         ));

@@ -14,9 +14,9 @@ class Cash {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['balance'] = balance;
-    return _data;
+    final data = <String, dynamic>{};
+    data['balance'] = balance;
+    return data;
   }
 
   Cash copyWith({user, balance}) {

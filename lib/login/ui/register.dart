@@ -1,110 +1,164 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/class/account_type.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/login/tools/functions.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/login/ui/text_from_decoration.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
 import 'package:myecl/tools/functions.dart';
 
 class Register extends HookConsumerWidget {
-  const Register({Key? key, required this.onSignInPressed}) : super(key: key);
+  const Register(
+      {Key? key, required this.onSignInPressed, required this.onMailRecieved})
+      : super(key: key);
 
-  final VoidCallback onSignInPressed;
+  final VoidCallback onSignInPressed, onMailRecieved;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final signUpNotifier = ref.watch(signUpProvider.notifier);
-    final username = useTextEditingController();
-    final password = useTextEditingController();
+    final mail = useTextEditingController();
     final hidePass = useState(true);
+    final key = GlobalKey<FormState>();
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      key: key,
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: const EdgeInsets.all(30.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              flex: 3,
-              child: const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  LoginTextConstants.createAccountTitle,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                onTap: onSignInPressed,
+                child: const HeroIcon(
+                  HeroIcons.chevronLeft,
+                  color: Colors.white,
+                  size: 30,
                 ),
               ),
             ),
             Expanded(
-              flex: 4,
+              flex: 3,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  LoginTextConstants.createAccountTitle,
+                  style: GoogleFonts.elMessiri(
+                      textStyle: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  )),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 5,
               child: Column(
                 children: [
+                  const Spacer(),
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: TextFormField(
-                          controller: username,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                          decoration: signInRegisterInputDecoration(
-                              isSignIn: false,
-                              hintText: LoginTextConstants.email))),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: TextFormField(
-                      controller: password,
-                      obscureText: hidePass.value,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                      decoration: signInRegisterInputDecoration(
-                          isSignIn: false,
-                          hintText: LoginTextConstants.password,
-                          notifier: hidePass),
-                    ),
+                      child: AutofillGroup(
+                          child: TextFormField(
+                        controller: mail,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                        decoration: signInRegisterInputDecoration(
+                            isSignIn: false,
+                            hintText: LoginTextConstants.email),
+                        keyboardType: TextInputType.emailAddress,
+                        autofillHints: const [AutofillHints.email],
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return LoginTextConstants.emailEmpty;
+                          }
+                          RegExp regExp =
+                              RegExp(LoginTextConstants.emailRegExp);
+                          if (!regExp.hasMatch(value)) {
+                            return LoginTextConstants.emailInvalid;
+                          }
+                          return null;
+                        },
+                      ))),
+                  const SizedBox(
+                    height: 30,
                   ),
                   SignUpBar(
-                    label: LoginTextConstants.create,
-                    isLoading: ref.watch(loadingrovider),
-                    onPressed: () async {
-                      final value = await signUpNotifier.createUser(
-                          username.text, password.text, AccountType.student);
-                      if (value) {
-                        displayLoginToast(context, TypeMsg.msg,
-                            LoginTextConstants.sendedMail);
-                      } else {
-                        displayLoginToast(context, TypeMsg.error,
-                            LoginTextConstants.mailSendingError);
-                      }
-                    },
-                  ),
+                      label: LoginTextConstants.create,
+                      isLoading: ref.watch(loadingrovider),
+                      onPressed: () async {
+                        if (key.currentState!.validate()) {
+                          final value = await signUpNotifier.createUser(
+                              mail.text, AccountType.student);
+                          if (value) {
+                            hidePass.value = true;
+                            mail.clear();
+                            onMailRecieved();
+                            displayToastWithContext(
+                                TypeMsg.msg, LoginTextConstants.sendedMail);
+                          } else {
+                            displayToastWithContext(TypeMsg.error,
+                                LoginTextConstants.mailSendingError);
+                          }
+                        } else {
+                          displayToastWithContext(
+                              TypeMsg.error, LoginTextConstants.emailInvalid);
+                        }
+                      }),
                   const Spacer(),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: InkWell(
-                      splashColor: Colors.white,
-                      onTap: () {
-                        onSignInPressed();
-                      },
-                      child: const Text(
-                        LoginTextConstants.signIn,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                          decoration: TextDecoration.underline,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                            onTap: () {
+                              onSignInPressed();
+                            },
+                            child: const Text(
+                              LoginTextConstants.signIn,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
+                              ),
+                            ),
+                          )),
+                      Container(
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                            onTap: () {
+                              onMailRecieved();
+                            },
+                            child: const Text(
+                              LoginTextConstants.recievedMail,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
+                              ),
+                            ),
+                          )),
+                    ],
                   ),
                 ],
               ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
@@ -16,7 +16,7 @@ class TopBar extends HookConsumerWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 42,
+          height: 15,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,27 +31,38 @@ class TopBar extends HookConsumerWidget {
                           case SettingsPage.main:
                             controllerNotifier.toggle();
                             break;
-                          case SettingsPage.info:
+                          case SettingsPage.edit:
+                            pageNotifier.setSettingsPage(SettingsPage.main);
+                            break;
+                          case SettingsPage.changePassword:
+                            pageNotifier.setSettingsPage(SettingsPage.main);
+                            break;
+                          case SettingsPage.notification:
+                            pageNotifier.setSettingsPage(SettingsPage.main);
+                            break;
+                          case SettingsPage.logs:
+                            pageNotifier.setSettingsPage(SettingsPage.main);
+                            break;
+                          case SettingsPage.modules:
                             pageNotifier.setSettingsPage(SettingsPage.main);
                             break;
                         }
                       },
-                      icon: FaIcon(
+                      icon: HeroIcon(
                         page == SettingsPage.main
-                            ? FontAwesomeIcons.chevronRight
-                            : FontAwesomeIcons.chevronLeft,
+                            ? HeroIcons.bars3BottomLeft
+                            : HeroIcons.chevronLeft,
                         color: const Color.fromARGB(255, 0, 0, 0),
+                        size: 30,
                       ));
                 },
               ),
             ),
-            const Text(
-              SettingsTextConstants.settings,
-              style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
-            ),
+            const Text(SettingsTextConstants.settings,
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black)),
             const SizedBox(
               width: 70,
             ),
@@ -59,7 +70,7 @@ class TopBar extends HookConsumerWidget {
         ),
         const SizedBox(
           height: 20,
-        ),
+        )
       ],
     );
   }

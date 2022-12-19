@@ -8,6 +8,7 @@ import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class AddButton extends ConsumerWidget {
   const AddButton({Key? key}) : super(key: key);
@@ -55,7 +56,7 @@ class AddButton extends ConsumerWidget {
                         Text(
                             solde.when(
                                 data: (s) =>
-                                    AMAPTextConstants.amount + " (" + s.balance.toStringAsFixed(2) + "€)",
+                                    "${AMAPTextConstants.amount} (${s.balance.toStringAsFixed(2)}€)",
                                 error: (e, s) => e.toString(),
                                 loading: () => AMAPTextConstants.loading),
                             style: const TextStyle(
@@ -78,9 +79,15 @@ class AddButton extends ConsumerWidget {
             ),
           )),
       onTap: () {
-        pageNotifier.setAmapPage(AmapPage.delivery);
-        indexCmdNotifier.setIndex(-1);
-        clearCmd(ref);
+        solde.whenData((value) {
+          if (value.balance > 0) {
+            pageNotifier.setAmapPage(AmapPage.delivery);
+            indexCmdNotifier.setIndex(-1);
+            clearCmd(ref);
+          } else {
+            displayToast(context, TypeMsg.error, AMAPTextConstants.noMoney);
+          }
+        });
       },
     );
   }

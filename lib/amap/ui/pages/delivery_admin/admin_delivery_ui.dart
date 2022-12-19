@@ -11,10 +11,9 @@ import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/dialog.dart';
-import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:tuple/tuple.dart';
 
 class DeliveryAdminUi extends HookConsumerWidget {
@@ -27,12 +26,16 @@ class DeliveryAdminUi extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(isAmapAdminProvider);
+    final isAdmin = ref.watch(isAmapAdmin);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
     final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final orderListNotifier = ref.watch(orderListProvider(c.id).notifier);
     final adminNotifier = ref.watch(adminDeliveryOrderList.notifier);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     final Map<Product, int> productQuantityDict = {};
     orders.item1.when(
@@ -76,9 +79,7 @@ class DeliveryAdminUi extends HookConsumerWidget {
               ),
               Expanded(
                 child: Text(
-                  AMAPTextConstants.deliveryOn +
-                      " " +
-                      processDate(c.deliveryDate),
+                  "${AMAPTextConstants.deliveryOn} ${processDate(c.deliveryDate)}",
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -200,10 +201,7 @@ class DeliveryAdminUi extends HookConsumerWidget {
                           width: 140,
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            c.products.length.toString() +
-                                " " +
-                                AMAPTextConstants.product +
-                                (c.products.length != 1 ? "s" : ""),
+                            "${c.products.length} ${AMAPTextConstants.product}${c.products.length != 1 ? "s" : ""}",
                             style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
@@ -218,8 +216,8 @@ class DeliveryAdminUi extends HookConsumerWidget {
                       margin: const EdgeInsets.only(left: 20),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        gradient:  LinearGradient(
-                          colors: const [
+                        gradient: const LinearGradient(
+                          colors: [
                             AMAPColorConstants.redGradient1,
                             AMAPColorConstants.redGradient2,
                           ],
@@ -251,7 +249,7 @@ class DeliveryAdminUi extends HookConsumerWidget {
               GestureDetector(
                   child: Container(
                     padding: const EdgeInsets.only(right: 15),
-                    child: const HeroIcon(HeroIcons.viewList,
+                    child: const HeroIcon(HeroIcons.listBullet,
                         color: AMAPColorConstants.textDark),
                   ),
                   onTap: () {
@@ -294,14 +292,14 @@ class DeliveryAdminUi extends HookConsumerWidget {
                             .then((value) {
                           if (value) {
                             if (lastState) {
-                              displayAMAPToast(context, TypeMsg.msg,
+                              displayToast(context, TypeMsg.msg,
                                   AMAPTextConstants.unlockedDelivery);
                             } else {
-                              displayAMAPToast(context, TypeMsg.msg,
+                              displayToast(context, TypeMsg.msg,
                                   AMAPTextConstants.lockedDelivery);
                             }
                           } else {
-                            displayAMAPToast(context, TypeMsg.error,
+                            displayToast(context, TypeMsg.error,
                                 AMAPTextConstants.updatingError);
                           }
                         });
@@ -326,7 +324,7 @@ class DeliveryAdminUi extends HookConsumerWidget {
                       onTap: () {
                         showDialog(
                             context: context,
-                            builder: (BuildContext context) => AMAPDialog(
+                            builder: (BuildContext context) => CustomDialogBox(
                                 descriptions:
                                     AMAPTextConstants.deletingDelivery,
                                 title: AMAPTextConstants.deleting,
@@ -335,10 +333,10 @@ class DeliveryAdminUi extends HookConsumerWidget {
                                     final value = await deliveryListNotifier
                                         .deleteDelivery(c);
                                     if (value) {
-                                      displayAMAPToast(context, TypeMsg.msg,
+                                      displayToastWithContext(TypeMsg.msg,
                                           AMAPTextConstants.deletedDelivery);
                                     } else {
-                                      displayAMAPToast(context, TypeMsg.error,
+                                      displayToastWithContext(TypeMsg.error,
                                           AMAPTextConstants.deletingError);
                                     }
                                   });

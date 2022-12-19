@@ -48,7 +48,7 @@ class DeliveryUi extends ConsumerWidget {
               ),
               Expanded(
                 child: Text(
-                  AMAPTextConstants.deliveryOn + " " + processDate(c.deliveryDate),
+                  "${AMAPTextConstants.deliveryOn} ${processDate(c.deliveryDate)}",
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -104,7 +104,7 @@ class DeliveryUi extends ConsumerWidget {
                                     width: 40,
                                     alignment: Alignment.centerRight,
                                     child: Text(
-                                      p.price.toStringAsFixed(2) + "€",
+                                      "${p.price.toStringAsFixed(2)}€",
                                       style: const TextStyle(
                                         fontSize: 13,
                                         color: AMAPColorConstants.textDark,
@@ -134,10 +134,7 @@ class DeliveryUi extends ConsumerWidget {
                       width: 140,
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        c.products.length.toString() +
-                            " " +
-                            AMAPTextConstants.product +
-                            (c.products.length != 1 ? "s" : ""),
+                        "${c.products.length} ${AMAPTextConstants.product}${c.products.length != 1 ? "s" : ""}",
                         style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -152,8 +149,8 @@ class DeliveryUi extends ConsumerWidget {
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
-                            gradient:  LinearGradient(
-                              colors: const [
+                            gradient:  const LinearGradient(
+                              colors: [
                                 AMAPColorConstants.textLight,
                                 AMAPColorConstants.textDark,
                               ],
@@ -194,8 +191,8 @@ class DeliveryUi extends ConsumerWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    gradient:  LinearGradient(
-                      colors: const [
+                    gradient:  const LinearGradient(
+                      colors: [
                         AMAPColorConstants.redGradient1,
                         AMAPColorConstants.redGradient2,
                       ],

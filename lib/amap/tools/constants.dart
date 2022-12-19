@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/tools/constants.dart';
 
-class AMAPColorConstants {
+class AMAPColorConstants extends ColorConstants {
   static final Color background = Colors.grey.shade100;
   static final Color background2 = Colors.grey.shade200;
   static final Color background3 = Colors.grey.shade300;
@@ -51,18 +52,21 @@ class AMAPTextConstants {
   static const String deliveryHistory = "Historique des livraisons";
   static const String deliveryList = "Liste des livraisons";
   static const String deliveryOn = "Livraison le";
+  static const String errorLoadingUser =
+      "Erreur lors du chargement des utilisateurs";
   static const String expectingNumber = "Veuillez entrer un nombre";
   static const String fillField = "Veuillez remplir ce champ";
   static const String handlingAccount = "Gérer les comptes";
   static const String loading = "Chargement...";
-  static const String lock = "Vérouiller";
-  static const String lockedDelivery = "Livraison vérrouillée";
-  static const String lockedOrder = "Commande vérouillée";
+  static const String lock = "Verouiller";
+  static const String lockedDelivery = "Livraison verrouillée";
+  static const String lockedOrder = "Commande verouillée";
   static const String looking = "Rechercher";
   static const String myOrders = "Mes commandes";
   static const String name = "Nom";
   static const String noProduct = "Pas de produit";
   static const String noCurrentOrder = "Pas de commande en cours";
+  static const String noMoney = "Pas assez d'argent";
   static const String notEnoughMoney = "Pas assez d'argent";
   static const String notPlannedDelivery = "Pas de livraison planifiée";
   static const String order = "Commander";

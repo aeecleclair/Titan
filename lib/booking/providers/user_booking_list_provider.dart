@@ -1,18 +1,25 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/repositories/user_booking_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserBookingListProvider extends ListNotifier<Booking> {
   final UserBookingRepository _userRepository = UserBookingRepository();
-  UserBookingListProvider({required String token})
+  String userId = "";
+  UserBookingListProvider({required String token, required this.userId})
       : super(const AsyncValue.loading()) {
     _userRepository.setToken(token);
+    setId(userId);
   }
 
-  Future<AsyncValue<List<Booking>>> loadUserBookings(String userId) async {
-    return await loadList(() async => _userRepository.getBookingList(userId));
+  void setId(String id) {
+    userId = id;
+  }
+
+  Future<AsyncValue<List<Booking>>> loadUserBookings() async {
+    return await loadList(() async => _userRepository.getMyBookingList(userId));
   }
 
   Future<bool> addBooking(Booking booking) async {
@@ -45,7 +52,9 @@ final userBookingListProvider =
         (ref) {
   final token = ref.watch(tokenProvider);
   final userId = ref.watch(idProvider);
-  final provider = UserBookingListProvider(token: token);
-  provider.loadUserBookings(userId);
+  final provider = UserBookingListProvider(token: token, userId: userId);
+  tokenExpireWrapperAuth(ref, () async {
+    await provider.loadUserBookings();
+  });
   return provider;
 });

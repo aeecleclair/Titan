@@ -1,66 +1,184 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
-import 'package:myecl/booking/providers/user_booking_list_provider.dart';
+import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/booking/providers/booking_provider.dart';
+import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
+import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/ui/button.dart';
-import 'package:myecl/booking/ui/refresh_indicator.dart';
+import 'package:myecl/booking/ui/booking_card.dart';
 import 'package:myecl/booking/ui/pages/main_page/calendar.dart';
+import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(isBookingAdminProvider);
-    final userId = ref.watch(idProvider);
+    final isAdmin = ref.watch(isBookingAdmin);
+    final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
-    return Expanded(
-      child: BookingRefresher(
-          onRefresh: () async {
-            await bookingsNotifier.loadUserBookings(userId);
-          },
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics()),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Calendar(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Button(
-                    text: BookingTextConstants.addBookingPage,
-                    page: BookingPage.addBooking,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Button(
-                    text: BookingTextConstants.myBookings,
-                    page: BookingPage.bookings,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  isAdmin
-                      ? Column(
-                          children: const [
-                            Button(
-                              text: BookingTextConstants.adminPage,
-                              page: BookingPage.admin,
+    final confirmedbookingsNotifier =
+        ref.watch(confirmedBookingListProvider.notifier);
+    final bookings = ref.watch(userBookingListProvider);
+    final bookingNotifier = ref.watch(bookingProvider.notifier);
+    return Refresher(
+      onRefresh: () async {
+        await confirmedbookingsNotifier.loadConfirmedBooking();
+        await bookingsNotifier.loadUserBookings();
+      },
+      child: Column(children: [
+        const SizedBox(height: 20),
+        SizedBox(
+            height: MediaQuery.of(context).size.height - 415,
+            child: const Calendar()),
+        SizedBox(
+          height: (isAdmin) ? 25 : 30,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(BookingTextConstants.myBookings,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 205, 205, 205))),
+                if (isAdmin)
+                  GestureDetector(
+                    onTap: () {
+                      pageNotifier.setBookingPage(BookingPage.admin);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 10,
+                                offset: const Offset(0, 5))
+                          ]),
+                      child: Row(
+                        children: const [
+                          HeroIcon(HeroIcons.userGroup,
+                              color: Colors.white, size: 20),
+                          SizedBox(width: 10),
+                          Text("Admin",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
+                        ],
+                      ),
+                    ),
+                  )
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          height: (isAdmin) ? 0 : 10,
+        ),
+        SizedBox(
+          height: 226,
+          child: bookings.when(
+              data: (List<Booking> data) => ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: data.length + 2,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == 0) {
+                        return Container(
+                          margin: const EdgeInsets.only(left: 15),
+                          child: GestureDetector(
+                            onTap: () {
+                              bookingNotifier.setBooking(Booking.empty());
+                              pageNotifier
+                                  .setBookingPage(BookingPage.addEditBooking);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Container(
+                                width: 120,
+                                height: 180,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Colors.grey.shade200.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 10,
+                                      offset: const Offset(3, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: const Center(
+                                    child: HeroIcon(
+                                  HeroIcons.plus,
+                                  size: 40.0,
+                                  color: Colors.black,
+                                )),
+                              ),
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        )
-                      : Container(),
-                ]),
-          )),
+                          ),
+                        );
+                      } else if (index == data.length + 1) {
+                        return const SizedBox(width: 15);
+                      } else {
+                        final e = data[index - 1];
+                        return BookingCard(
+                          booking: e,
+                          isAdmin: false,
+                          isDetail: false,
+                          onEdit: () {
+                            bookingNotifier.setBooking(e);
+                            pageNotifier
+                                .setBookingPage(BookingPage.addEditBooking);
+                          },
+                          onReturn: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return CustomDialogBox(
+                                    title: BookingTextConstants.deleting,
+                                    descriptions:
+                                        BookingTextConstants.deletingBooking,
+                                    onYes: () {},
+                                  );
+                                });
+                          },
+                          onInfo: () {
+                            bookingNotifier.setBooking(e);
+                            pageNotifier.setBookingPage(
+                                BookingPage.detailBookingFromMain);
+                          },
+                        );
+                      }
+                    },
+                  ),
+              error: (Object error, StackTrace? stackTrace) {
+                return Center(child: Text("Error $error"));
+              },
+              loading: () {
+                return const Center(
+                    child: CircularProgressIndicator(
+                  color: ColorConstants.background2,
+                ));
+              }),
+        )
+      ]),
     );
   }
 }

@@ -16,7 +16,7 @@ class TopButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        width: 150,
+        width: MediaQuery.of(context).size.width / 2 - 30,
         height: 70,
         margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         alignment: Alignment.center,

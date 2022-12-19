@@ -58,7 +58,7 @@ class ListProducts extends HookConsumerWidget {
               ? [
                   const Center(
                     child: Text(
-                    AMAPTextConstants.noProduct,
+                      AMAPTextConstants.noProduct,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -133,8 +133,8 @@ class ListProducts extends HookConsumerWidget {
                                           width: 150,
                                           height: 50,
                                           decoration: BoxDecoration(
-                                            gradient:  LinearGradient(
-                                                colors: const [
+                                            gradient: const LinearGradient(
+                                                colors: [
                                                   AMAPColorConstants.green1,
                                                   AMAPColorConstants.green2
                                                 ],
@@ -142,7 +142,8 @@ class ListProducts extends HookConsumerWidget {
                                                 end: Alignment.bottomRight),
                                             boxShadow: [
                                               BoxShadow(
-                                                  color: AMAPColorConstants.green2
+                                                  color: AMAPColorConstants
+                                                      .green2
                                                       .withOpacity(0.4),
                                                   offset: const Offset(2, 3),
                                                   blurRadius: 5)
@@ -159,8 +160,8 @@ class ListProducts extends HookConsumerWidget {
                                               HeroIcon(
                                                 HeroIcons.chevronDoubleDown,
                                                 size: 15,
-                                                color:
-                                                    AMAPColorConstants.background,
+                                                color: AMAPColorConstants
+                                                    .background,
                                               ),
                                               Text(AMAPTextConstants.seeMore,
                                                   style: TextStyle(
@@ -209,8 +210,8 @@ class ListProducts extends HookConsumerWidget {
           loading: () => [
             const Center(
               child: CircularProgressIndicator(
-                valueColor:
-                    AlwaysStoppedAnimation<Color>(AMAPColorConstants.greenGradient2),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                    AMAPColorConstants.greenGradient2),
               ),
             ),
           ],

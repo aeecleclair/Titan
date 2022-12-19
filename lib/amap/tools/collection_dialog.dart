@@ -20,10 +20,10 @@ class CollectionDialogBox extends StatefulWidget {
       : super(key: key);
 
   @override
-  _CollectionDialogBoxState createState() => _CollectionDialogBoxState();
+  CollectionDialogBoxState createState() => CollectionDialogBoxState();
 }
 
-class _CollectionDialogBoxState extends State<CollectionDialogBox> {
+class CollectionDialogBoxState extends State<CollectionDialogBox> {
   @override
   Widget build(BuildContext context) {
     return Dialog(

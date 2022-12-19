@@ -2,41 +2,75 @@ name: myecl
 description: A new Flutter project.
 
 publish_to: "none"
-version: 1.0.0+1
+version: 0.4.14+30
 
 environment:
-  sdk: ">=2.16.1 <3.0.0"
+  sdk: ">=2.18.0 <3.0.0"
 
 dependencies:
   animations: ^2.0.2
-  cupertino_icons: ^1.0.2
+  auto_size_text: ^3.0.0
+  collection: ^1.16.0
+  crypto: ^3.0.2
   datetime_picker_formfield: ^2.0.1
+  f_logs: ^2.0.1
+  fl_chart: ^0.55.2
   flash: ^2.0.3+2
   flutter:
     sdk: flutter
+  flutter_appauth: ^4.2.0
   flutter_hooks: ^0.18.2+1
-  flutter_riverpod: ^1.0.3
-  flutter_secure_storage: ^5.0.2
+  flutter_riverpod: ^2.1.1
+  flutter_secure_storage: ^6.0.0
   font_awesome_flutter: ^10.1.0
   google_fonts: ^3.0.1
-  heroicons: ^0.4.0
-  hooks_riverpod: ^1.0.3
+  heroicons: ^0.7.0
+  hooks_riverpod: ^2.1.1
   http: ^0.13.4
+  http_parser: ^4.0.2
+  image_cropper: ^3.0.1
+  image_picker: ^0.8.6
   intl: ^0.17.0
   jwt_decoder: ^2.0.1
   numberpicker: ^2.1.1
+  package_info_plus: ^3.0.2
+  path_provider: ^2.0.11
+  shared_preferences: ^2.0.15
   smooth_page_indicator: ^1.0.0+2
   syncfusion_flutter_calendar: ^20.1.50
+  syncfusion_flutter_xlsio: ^20.3.59-beta
   tuple: ^2.0.0
+  universal_html: ^2.0.8
   uuid: ^3.0.6
 
 dev_dependencies:
-  flutter_lints: ^1.0.0
+  dependency_validator: ^3.2.2
+  flutter_launcher_icons: ^0.11.0
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
 
 flutter:
   assets:
     - assets/images/test3.jpg
+    - assets/images/logo2.png
 
   uses-material-design: true
+
+flutter_icons:
+  android: "launcher_icon"
+  ios:
+    generate: true
+    image_path: "assets/images/logo.jpg"
+  image_path: "assets/images/logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/images/logo.png"
+  windows:
+    generate: true
+    image_path: "assets/images/logo.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/images/logo.png"

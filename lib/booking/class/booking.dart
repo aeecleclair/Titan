@@ -13,8 +13,7 @@ class Booking {
   late final Room room;
   late final bool key;
   late final Decision decision;
-  late final bool multipleDay;
-  late final bool recurring;
+  late final String recurrenceRule;
 
   Booking(
       {required this.id,
@@ -25,8 +24,7 @@ class Booking {
       required this.room,
       required this.key,
       required this.decision,
-      required this.multipleDay,
-      required this.recurring});
+      required this.recurrenceRule});
 
   Booking.fromJson(Map<String, dynamic> json) {
     id = json["id"];
@@ -37,37 +35,25 @@ class Booking {
     room = Room.fromJson(json["room"]);
     key = json["key"];
     decision = stringToDecision(json["decision"]);
-    multipleDay = json["multipleDay"];
-    recurring = json["recurring"];
+    recurrenceRule = json["recurrence_rule"] ?? "";
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data["id"] = id;
-    _data["reason"] = reason;
-    _data["start"] = processDateToAPI(start);
-    _data["end"] = processDateToAPI(end);
-    _data["note"] = note;
-    _data["room_id"] = room.id;
-    _data["key"] = key;
-    _data["decision"] = decision.name;
-    _data["multipleDay"] = multipleDay;
-    _data["recurring"] = recurring;
-    _data["url"] = "";
-    return _data;
+    final data = <String, dynamic>{};
+    data["id"] = id;
+    data["reason"] = reason;
+    data["start"] = processDateToAPI(start);
+    data["end"] = processDateToAPI(end);
+    data["note"] = note;
+    data["room_id"] = room.id;
+    data["key"] = key;
+    data["decision"] = decision.name;
+    data["recurrence_rule"] = recurrenceRule;
+    return data;
   }
 
   Booking copyWith(
-      {id,
-      reason,
-      start,
-      end,
-      note,
-      room,
-      key,
-      decision,
-      multipleDay,
-      recurring}) {
+      {id, reason, start, end, note, room, key, decision, recurrenceRule}) {
     return Booking(
         id: id ?? this.id,
         reason: reason ?? this.reason,
@@ -77,8 +63,7 @@ class Booking {
         room: room ?? this.room,
         key: key ?? this.key,
         decision: decision ?? this.decision,
-        multipleDay: multipleDay ?? this.multipleDay,
-        recurring: recurring ?? this.recurring);
+        recurrenceRule: recurrenceRule ?? this.recurrenceRule);
   }
 
   static Booking empty() {
@@ -91,7 +76,6 @@ class Booking {
         room: Room.empty(),
         key: false,
         decision: Decision.pending,
-        multipleDay: false,
-        recurring: false);
+        recurrenceRule: '');
   }
 }

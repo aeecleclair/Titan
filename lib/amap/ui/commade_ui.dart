@@ -12,16 +12,18 @@ import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/providers/order_price_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
-import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 
 class OrderUi extends ConsumerWidget {
   final Order c;
   final int i;
   final bool isAdmin;
-  const OrderUi({Key? key, required this.c, required this.i, required this.isAdmin}) : super(key: key);
+  const OrderUi(
+      {Key? key, required this.c, required this.i, required this.isAdmin})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -73,13 +75,9 @@ class OrderUi extends ConsumerWidget {
               ),
               Expanded(
                 child: Text(
-                  (!isAdmin ? "Le " +
-                      processDate(c.deliveryDate) : c.user.getName()) +
-                      " (" +
-                      c.collectionSlot +
-                      ")",
+                  "${!isAdmin ? "Le ${processDate(c.deliveryDate)}" : c.user.getName()} (${c.collectionSlot})",
                   style: TextStyle(
-                      fontSize: !isAdmin ? 20: 16,
+                      fontSize: !isAdmin ? 20 : 16,
                       fontWeight: FontWeight.w700,
                       color: AMAPColorConstants.green1),
                 ),
@@ -115,12 +113,7 @@ class OrderUi extends ConsumerWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  p.name +
-                                      " (" +
-                                      AMAPTextConstants.quantity +
-                                      " : " +
-                                      p.quantity.toString() +
-                                      ")",
+                                  "${p.name} (${AMAPTextConstants.quantity} : ${p.quantity})",
                                   style: const TextStyle(
                                     fontSize: 13,
                                     color: AMAPColorConstants.textDark,
@@ -138,9 +131,7 @@ class OrderUi extends ConsumerWidget {
                                     width: 40,
                                     alignment: Alignment.centerRight,
                                     child: Text(
-                                      (p.quantity * p.price)
-                                              .toStringAsFixed(2) +
-                                          "€",
+                                      "${(p.quantity * p.price).toStringAsFixed(2)}€",
                                       style: const TextStyle(
                                         fontSize: 13,
                                         color: AMAPColorConstants.textDark,
@@ -169,10 +160,7 @@ class OrderUi extends ConsumerWidget {
                 width: 140,
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  c.products.length.toString() +
-                      " " +
-                      AMAPTextConstants.product +
-                      (c.products.length != 1 ? "s" : ""),
+                  "${c.products.length} ${AMAPTextConstants.product}${c.products.length != 1 ? "s" : ""}",
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
@@ -183,12 +171,7 @@ class OrderUi extends ConsumerWidget {
                   width: 140,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    AMAPTextConstants.price +
-                        " : " +
-                        (c.products.map((p) => p.quantity * p.price))
-                            .reduce((value, element) => value + element)
-                            .toStringAsFixed(2) +
-                        "€",
+                    "${AMAPTextConstants.price} : ${(c.products.map((p) => p.quantity * p.price)).reduce((value, element) => value + element).toStringAsFixed(2)}€",
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
@@ -249,7 +232,7 @@ class OrderUi extends ConsumerWidget {
                       onTap: () {
                         showDialog(
                             context: context,
-                            builder: (BuildContext context) => AMAPDialog(
+                            builder: (BuildContext context) => CustomDialogBox(
                                 descriptions: AMAPTextConstants.deletingOrder,
                                 title: AMAPTextConstants.deleting,
                                 onYes: () {
@@ -259,7 +242,7 @@ class OrderUi extends ConsumerWidget {
                                       .reduce(
                                           (value, element) => value + element);
                                   userAmountNotifier.updateCash(price);
-                                  displayAMAPToast(context, TypeMsg.msg,
+                                  displayToast(context, TypeMsg.msg,
                                       AMAPTextConstants.deletedOrder);
                                 }));
                       },

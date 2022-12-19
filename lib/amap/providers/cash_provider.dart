@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/repositories/cash_repository.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class CashProvider extends ListNotifier<Cash> {
   final CashRepository _cashRepository = CashRepository();
@@ -43,11 +44,12 @@ class CashProvider extends ListNotifier<Cash> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           throw error;
         } else {
-          return AsyncValue.error(error);
+          return AsyncValue.error(error, stackTrace);
         }
       },
       loading: () {
-        return const AsyncValue.error("Cannot filter cash while loading");
+        return const AsyncValue.error(
+            "Cannot filter cash while loading", StackTrace.empty);
       },
     );
   }
@@ -57,8 +59,10 @@ final cashProvider =
     StateNotifierProvider<CashProvider, AsyncValue<List<Cash>>>(
   (ref) {
     final token = ref.watch(tokenProvider);
-    CashProvider _cashProvider = CashProvider(token: token);
-    _cashProvider.loadCashList();
-    return _cashProvider;
+    CashProvider cashProvider = CashProvider(token: token);
+    tokenExpireWrapperAuth(ref, () async {
+      await cashProvider.loadCashList();
+    });
+    return cashProvider;
   },
 );

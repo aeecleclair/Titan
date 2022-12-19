@@ -1,5 +1,16 @@
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/drawer/providers/page_provider.dart';
+
+enum ModuleType {
+  calendar,
+  settings,
+  amap,
+  loan,
+  booking,
+  admin,
+  event,
+  vote,
+  cinema
+}
 
 class Module {
   String name;

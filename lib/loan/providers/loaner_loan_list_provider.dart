@@ -1,10 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/repositories/loan_repository.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class LoanerLoanListNotifier extends ListNotifier<Loan> {
   final LoanRepository _loanrepository = LoanRepository();
@@ -59,7 +60,7 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
     return state.when(
         loading: () => const AsyncValue.loading(),
         data: (loans) => AsyncValue.data(loans.sublist(0)),
-        error: (error, s) => AsyncValue.error(error));
+        error: (error, s) => AsyncValue.error(error, s));
   }
 
   Future<AsyncValue<List<Loan>>> loadHistory(String loanerId) async {
@@ -67,7 +68,7 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
       final data = await _loanrepository.getHistory(loanerId);
       return AsyncValue.data(data);
     } catch (e) {
-      state = AsyncValue.error(e);
+      state = AsyncValue.error(e, StackTrace.current);
       if (e is AppException && e.type == ErrorType.tokenExpire) {
         rethrow;
       } else {
@@ -81,9 +82,13 @@ final loanerLoanListProvider =
     StateNotifierProvider<LoanerLoanListNotifier, AsyncValue<List<Loan>>>(
         (ref) {
   final token = ref.watch(tokenProvider);
-  final loanerId = ref.watch(loanerIdProvider);
-  LoanerLoanListNotifier _loanerLoanListNotifier =
+  LoanerLoanListNotifier loanerLoanListNotifier =
       LoanerLoanListNotifier(token: token);
-  _loanerLoanListNotifier.loadLoan(loanerId);
-  return _loanerLoanListNotifier;
+  tokenExpireWrapperAuth(ref, () async {
+    final loanerId = ref.watch(loanerIdProvider);
+    if (loanerId != "") {
+      loanerLoanListNotifier.loadLoan(loanerId);
+    }
+  });
+  return loanerLoanListNotifier;
 });

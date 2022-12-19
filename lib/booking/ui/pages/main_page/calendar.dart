@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
-import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Calendar extends HookConsumerWidget {
@@ -11,7 +11,7 @@ class Calendar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookings = ref.watch(bookingListProvider);
+    final bookings = ref.watch(confirmedBookingListProvider);
 
     void calendarTapped(CalendarTapDetails details, BuildContext context) {
       if (details.targetElement == CalendarElement.appointment ||
@@ -21,30 +21,33 @@ class Calendar extends HookConsumerWidget {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                  title: Text(appointmentDetails.subject),
+                  title: Text(appointmentDetails.subject,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )),
                   content: SizedBox(
-                    height: 90,
+                    height: 120,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          processDateWithHour(appointmentDetails.startTime),
-                          style: const TextStyle(
+                          formatDates(
+                              appointmentDetails.startTime,
+                              appointmentDetails.endTime,
+                              appointmentDetails.isAllDay),
+                          style: TextStyle(
                             fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          ),
-                        ),
-                        Text(
-                          processDateWithHour(appointmentDetails.endTime),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
+                            color: Colors.grey.shade400,
+                            fontSize: 18,
                           ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         Text(appointmentDetails.notes ?? "",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                                 fontWeight: FontWeight.w400, fontSize: 15)),
                       ],
@@ -54,22 +57,11 @@ class Calendar extends HookConsumerWidget {
       }
     }
 
-    return SizedBox(
-      height: 360,
-      width: MediaQuery.of(context).size.width,
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 30),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: BookingColorConstants.softBlack,
-              offset: const Offset(2, 3),
-              blurRadius: 10,
-            ),
-          ],
-        ),
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      return SizedBox(
+        height: constraints.maxHeight,
+        width: constraints.maxWidth,
         child: bookings.when(data: (res) {
           return Container(
             margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -78,106 +70,16 @@ class Calendar extends HookConsumerWidget {
                 SfCalendar(
                   onTap: (details) => calendarTapped(details, context),
                   dataSource: _getCalendarDataSource(res),
-                  // appointmentBuilder: (BuildContext context,
-                  //     CalendarAppointmentDetails details) {
-                  //   final Appointment meeting = details.appointments.first;
-                  //   if (_controller.view != CalendarView.month &&
-                  //       _controller.view != CalendarView.schedule &&
-                  //       meeting.startTime.day == meeting.endTime.day) {
-                  //     return Column(
-                  //       children: [
-                  //         Container(
-                  //           padding: const EdgeInsets.all(3),
-                  //           height: 50,
-                  //           alignment: Alignment.topLeft,
-                  //           decoration: BoxDecoration(
-                  //             shape: BoxShape.rectangle,
-                  //             borderRadius: const BorderRadius.only(
-                  //                 topLeft: Radius.circular(5),
-                  //                 topRight: Radius.circular(5)),
-                  //             color: meeting.color,
-                  //           ),
-                  //           child: SingleChildScrollView(
-                  //               child: Column(
-                  //             mainAxisAlignment: MainAxisAlignment.start,
-                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                  //             children: [
-                  //               Text(
-                  //                 meeting.subject,
-                  //                 style: const TextStyle(
-                  //                   color: Colors.white,
-                  //                   fontSize: 12,
-                  //                   fontWeight: FontWeight.w500,
-                  //                 ),
-                  //                 maxLines: 3,
-                  //                 softWrap: false,
-                  //                 overflow: TextOverflow.ellipsis,
-                  //               ),
-                  //             ],
-                  //           )),
-                  //         ),
-                  //         Container(
-                  //           height: details.bounds.height - 70,
-                  //           padding: const EdgeInsets.fromLTRB(3, 5, 3, 2),
-                  //           color: meeting.color.withOpacity(0.8),
-                  //           alignment: Alignment.topLeft,
-                  //           child: SingleChildScrollView(
-                  //               child: Column(
-                  //             mainAxisAlignment: MainAxisAlignment.start,
-                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                  //             children: [
-                  //               Text(
-                  //                 meeting.notes!,
-                  //                 style: const TextStyle(
-                  //                   color: Colors.white,
-                  //                   fontSize: 10,
-                  //                 ),
-                  //               )
-                  //             ],
-                  //           )),
-                  //         ),
-                  //         Container(
-                  //           height: 20,
-                  //           decoration: BoxDecoration(
-                  //             shape: BoxShape.rectangle,
-                  //             borderRadius: const BorderRadius.only(
-                  //                 bottomLeft: Radius.circular(5),
-                  //                 bottomRight: Radius.circular(5)),
-                  //             color: meeting.color,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     );
-                  //   }
-                  //   return Container(
-                  //     padding: const EdgeInsets.all(3),
-                  //     height: 50,
-                  //     alignment: Alignment.topLeft,
-                  //     decoration: BoxDecoration(
-                  //       shape: BoxShape.rectangle,
-                  //       borderRadius:
-                  //           const BorderRadius.all(Radius.circular(5)),
-                  //       color: meeting.color,
-                  //     ),
-                  //     child: Text(
-                  //           meeting.subject,
-                  //           style: const TextStyle(
-                  //             color: Colors.white,
-                  //             fontSize: 12,
-                  //             fontWeight: FontWeight.w500,
-                  //           ),
-                  //     ),
-                  //   );
-                  // },
                   view: CalendarView.week,
                   selectionDecoration: BoxDecoration(
                     color: Colors.transparent,
-                    border: Border.all(
-                        color: BookingColorConstants.darkBlue, width: 2),
+                    border: Border.all(color: Colors.black, width: 2),
                     borderRadius: const BorderRadius.all(Radius.circular(5)),
                     shape: BoxShape.rectangle,
                   ),
-                  todayHighlightColor: BookingColorConstants.lightBlue,
+                  todayHighlightColor: Colors.black,
+                  todayTextStyle: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                   firstDayOfWeek: 1,
                   timeZone: 'Europe/Paris',
                   timeSlotViewSettings: const TimeSlotViewSettings(
@@ -199,7 +101,7 @@ class Calendar extends HookConsumerWidget {
                     textStyle: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: BookingColorConstants.darkBlue,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -222,35 +124,28 @@ class Calendar extends HookConsumerWidget {
         }, loading: () {
           return const Center(
             child: CircularProgressIndicator(
-              color: BookingColorConstants.darkBlue,
+              color: ColorConstants.background2,
             ),
           );
         }),
-      ),
-    );
+      );
+    });
   }
 }
 
 _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
   List<Appointment> appointments = <Appointment>[];
   res.where((e) => e.decision == Decision.approved).map((e) {
-    RecurrenceProperties recurrence =
-        RecurrenceProperties(startDate: DateTime.now());
-    recurrence.recurrenceType = RecurrenceType.daily;
-    recurrence.recurrenceRange = RecurrenceRange.noEndDate;
-    recurrence.weekDays = WeekDays.values;
-    recurrence.interval = 7;
     appointments.add(Appointment(
         startTime: e.start,
         endTime: e.end,
-        subject: e.room.name + ' - ' + e.reason,
+        subject: '${e.room.name} - ${e.reason}',
         isAllDay: false,
         startTimeZone: "Europe/Paris",
         endTimeZone: "Europe/Paris",
         notes: e.note,
-        recurrenceRule: e.recurring
-            ? SfCalendar.generateRRule(recurrence, e.start, e.end)
-            : ""));
+        color: const Color.fromARGB(255, 189, 80, 78),
+        recurrenceRule: e.recurrenceRule));
   }).toList();
   return _AppointmentDataSource(appointments);
 }

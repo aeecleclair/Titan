@@ -6,11 +6,10 @@ import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/modified_product_index_provider.dart';
-import 'package:myecl/amap/tools/dialog.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ProductUi extends ConsumerWidget {
   final Product p;
@@ -21,6 +20,10 @@ class ProductUi extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryId = ref.watch(deliveryIdProvider);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     return Container(
         height: 55,
         alignment: Alignment.centerLeft,
@@ -46,7 +49,7 @@ class ProductUi extends ConsumerWidget {
                   width: 40,
                   alignment: Alignment.centerRight,
                   child: Text(
-                    p.price.toStringAsFixed(2) + "€",
+                    "${p.price.toStringAsFixed(2)}€",
                     style: const TextStyle(fontSize: 13),
                   ),
                 ),
@@ -57,7 +60,7 @@ class ProductUi extends ConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient:  LinearGradient(colors: const [
+                      gradient: const LinearGradient(colors: [
                         AMAPColorConstants.green1,
                         AMAPColorConstants.textLight
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -71,7 +74,7 @@ class ProductUi extends ConsumerWidget {
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
                     child: const HeroIcon(
-                      HeroIcons.pencilAlt,
+                      HeroIcons.pencilSquare,
                       size: 20,
                       color: Colors.white,
                     ),
@@ -91,7 +94,7 @@ class ProductUi extends ConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      gradient:  LinearGradient(colors: const [
+                      gradient: const LinearGradient(colors: [
                         AMAPColorConstants.redGradient1,
                         AMAPColorConstants.redGradient2
                       ], begin: Alignment.topLeft, end: Alignment.bottomRight),
@@ -113,7 +116,7 @@ class ProductUi extends ConsumerWidget {
                   onTap: () {
                     showDialog(
                         context: context,
-                        builder: (BuildContext context) => AMAPDialog(
+                        builder: (BuildContext context) => CustomDialogBox(
                             descriptions: AMAPTextConstants.deletingProduct,
                             title: AMAPTextConstants.deleting,
                             onYes: () async {
@@ -123,7 +126,7 @@ class ProductUi extends ConsumerWidget {
                                         deliveryProductListProvider(deliveryId)
                                             .notifier)
                                     .deleteProduct(p);
-                                displayAMAPToast(context, TypeMsg.msg,
+                                displayToastWithContext(TypeMsg.msg,
                                     AMAPTextConstants.deletedProduct);
                               });
                             }));

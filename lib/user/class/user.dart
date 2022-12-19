@@ -1,4 +1,5 @@
 import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class User {
@@ -26,31 +27,32 @@ class User {
   late final List<SimpleGroup> groups;
 
   User.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    firstname = json['firstname'];
-    nickname = json['nickname'];
+    name = capitaliseAll(json['name']);
+    firstname = capitaliseAll(json['firstname']);
+    nickname = capitaliseAll(json['nickname'] ?? "");
     id = json['id'];
     email = json['email'];
     birthday = json['birthday'];
     promo = json['promo'];
     floor = json['floor'];
     createdOn = json['created_on'];
-    groups = List.from(json['groups']).map((e) => SimpleGroup.fromJson(e)).toList();
+    groups =
+        List.from(json['groups']).map((e) => SimpleGroup.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['name'] = name;
-    _data['firstname'] = firstname;
-    _data['nickname'] = nickname;
-    _data['id'] = id;
-    _data['email'] = email;
-    _data['birthday'] = birthday;
-    _data['promo'] = promo;
-    _data['floor'] = floor;
-    _data['created_on'] = createdOn;
-    _data['groups'] = groups.map((e) => e.toJson()).toList();
-    return _data;
+    final data = <String, dynamic>{};
+    data['name'] = name;
+    data['firstname'] = firstname;
+    data['nickname'] = nickname;
+    data['id'] = id;
+    data['email'] = email;
+    data['birthday'] = birthday;
+    data['promo'] = promo;
+    data['floor'] = floor;
+    data['created_on'] = createdOn;
+    data['groups'] = groups.map((e) => e.toJson()).toList();
+    return data;
   }
 
   User.empty() {
@@ -58,10 +60,10 @@ class User {
     firstname = 'Prénom';
     nickname = 'Surnom';
     id = '';
-    email = '';
-    birthday = '';
-    promo = 0;
-    floor = '';
+    email = 'empty@ecl.ec-lyon.fr';
+    birthday = DateTime.now().toIso8601String().split("T")[0];
+    promo = 22;
+    floor = 'W1';
     createdOn = '';
     groups = [];
   }
@@ -92,12 +94,8 @@ class User {
     );
   }
 
-  SimpleUser toSimpleUser()  {
+  SimpleUser toSimpleUser() {
     return SimpleUser(
-      name: name,
-      firstname: firstname,
-      nickname: nickname,
-      id: id
-    );
+        name: name, firstname: firstname, nickname: nickname, id: id);
   }
 }

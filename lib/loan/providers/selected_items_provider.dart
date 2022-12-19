@@ -26,19 +26,20 @@ final editSelectedListProvider =
     error: (e, s) {},
     loading: () {},
   );
-  SelectedListProvider _selectedListProvider = SelectedListProvider(products);
-  _selectedListProvider.initWithLoan(products, loan);
-  return _selectedListProvider;
+  SelectedListProvider selectedListProvider = SelectedListProvider(products);
+  selectedListProvider.initWithLoan(products, loan);
+  return selectedListProvider;
 });
 
 class SelectedListProvider extends StateNotifier<List<bool>> {
   SelectedListProvider(List<dynamic> p)
       : super(List.generate(p.length, (index) => false));
 
-  void toggle(int i) {
+  Future<List<bool>> toggle(int i) async {
     var copy = state.toList();
     copy[i] = !copy[i];
     state = copy;
+    return state;
   }
 
   void initWithLoan(List<Item> products, Loan loan) {

@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/repositories/product_repository.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ProductListNotifier extends ListNotifier<Product> {
   final ProductListRepository _productListRepository = ProductListRepository();
@@ -41,7 +42,9 @@ final productListProvider =
     StateNotifierProvider<ProductListNotifier, AsyncValue<List<Product>>>(
         (ref) {
   final token = ref.watch(tokenProvider);
-  ProductListNotifier _productListNotifier = ProductListNotifier(token: token);
-  _productListNotifier.loadProductList();
-  return _productListNotifier;
+  ProductListNotifier productListNotifier = ProductListNotifier(token: token);
+  tokenExpireWrapperAuth(ref, () async {
+    productListNotifier.loadProductList();
+  });
+  return productListNotifier;
 });

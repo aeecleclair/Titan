@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/settings/providers/first_page_provider.dart';
 
-enum ModuleType { home, settings, amap, loan, booking, admin }
 
 class PageNotifier extends StateNotifier<ModuleType> {
-  PageNotifier() : super(ModuleType.home);
+  PageNotifier(ModuleType type) : super(type);
 
   void setPage(ModuleType i) {
     state = i;
@@ -11,5 +12,6 @@ class PageNotifier extends StateNotifier<ModuleType> {
 }
 
 final pageProvider = StateNotifierProvider<PageNotifier, ModuleType>((ref) {
-  return PageNotifier();
+  final firstPage = ref.watch(firstPageProvider);
+  return PageNotifier(firstPage);
 });

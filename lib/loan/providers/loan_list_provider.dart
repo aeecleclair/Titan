@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/repositories/loan_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class LoanListNotifier extends ListNotifier<Loan> {
   final LoanRepository _loanrepository = LoanRepository();
@@ -47,7 +48,9 @@ class LoanListNotifier extends ListNotifier<Loan> {
 final loanListProvider =
     StateNotifierProvider<LoanListNotifier, AsyncValue<List<Loan>>>((ref) {
   final token = ref.watch(tokenProvider);
-  LoanListNotifier _loanListNotifier = LoanListNotifier(token: token);
-  _loanListNotifier.loadLoanList();
-  return _loanListNotifier;
+  LoanListNotifier loanListNotifier = LoanListNotifier(token: token);
+  tokenExpireWrapperAuth(ref, () async {
+    await loanListNotifier.loadLoanList();
+  });
+  return loanListNotifier;
 });

@@ -12,24 +12,28 @@ class BookingRepository extends Repository {
   }
 
   Future<Booking> createBooking(Booking booking) async {
-    final b = await create(booking.toJson());
-    return Booking.fromJson(b);
+    return Booking.fromJson(await create(booking.toJson()));
   }
 
   Future<bool> updateBooking(Booking booking) async {
-    return await update(booking.toJson(), "");
+    return await update(booking.toJson(), "/${booking.id}");
   }
 
   Future<bool> confirmBooking(Booking booking, Decision value) async {
-    return await update({}, "/" + booking.id, suffix: '/reply/' + value.toString().split('.')[1]);
+    return await update({}, "/${booking.id}", suffix: '/reply/${value.toString().split('.')[1]}');
   }
 
   Future<bool> deleteBooking(String bookingId) async {
-    return await delete("/" + bookingId);
+    return await delete("/$bookingId");
   }
 
   Future<List<Booking>> getHistoryBookingList() async {
     return List<Booking>.from(
         (await getList(suffix: '/history')).map((x) => Booking.fromJson(x)));
+  }
+
+  Future<List<Booking>> getConfirmedBookingList() async {
+    return List<Booking>.from(
+        (await getList(suffix: '/confirmed')).map((x) => Booking.fromJson(x)));
   }
 }

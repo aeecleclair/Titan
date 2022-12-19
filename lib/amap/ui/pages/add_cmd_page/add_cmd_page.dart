@@ -10,18 +10,17 @@ import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/add_cmd_page/product_ui_check.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/tokenExpireWrapper.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class AddCmdPage extends HookConsumerWidget {
   const AddCmdPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final dateController = useTextEditingController();
     final productsList = ref.watch(productListProvider);
@@ -38,6 +37,10 @@ class AddCmdPage extends HookConsumerWidget {
 
     final selected = ref.watch(selectedListProvider);
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     products.map((e) {
       if (!categories.contains(e.category)) {
@@ -91,7 +94,7 @@ class AddCmdPage extends HookConsumerWidget {
         child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Form(
-                key: _formKey,
+                key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Container(
                     alignment: Alignment.center,
@@ -192,7 +195,7 @@ class AddCmdPage extends HookConsumerWidget {
                               child: const GreenBtn(
                                   text: AMAPTextConstants.addingCommand),
                               onTap: () {
-                                if (_formKey.currentState!.validate()) {
+                                if (formKey.currentState!.validate()) {
                                   final date = dateController.value.text;
                                   final del = Delivery(
                                       id: "",
@@ -208,11 +211,10 @@ class AddCmdPage extends HookConsumerWidget {
                                     if (value) {
                                       pageNotifier.setAmapPage(AmapPage.admin);
                                       await adminNotifier.addT(del);
-                                      displayAMAPToast(context, TypeMsg.msg,
+                                      displayToastWithContext(TypeMsg.msg,
                                           AMAPTextConstants.addedCommand);
                                     } else {
-                                      displayAMAPToast(
-                                          context,
+                                      displayToastWithContext(
                                           TypeMsg.error,
                                           AMAPTextConstants
                                               .alreadyExistCommand);
@@ -220,7 +222,7 @@ class AddCmdPage extends HookConsumerWidget {
                                     selectedNotifier.clear();
                                   });
                                 } else {
-                                  displayAMAPToast(context, TypeMsg.error,
+                                  displayToast(context, TypeMsg.error,
                                       AMAPTextConstants.addingError);
                                 }
                               }),

@@ -4,9 +4,10 @@ import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/repositories/amap_user_repository.dart';
 import 'package:myecl/amap/repositories/order_list_repository.dart';
-import 'package:myecl/auth/providers/oauth2_provider.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class OrderListNotifier extends ListNotifier<Order> {
   final OrderListRepository _orderListRepository = OrderListRepository();
@@ -32,8 +33,8 @@ class OrderListNotifier extends ListNotifier<Order> {
   }
 
   Future<AsyncValue<List<Order>>> loadDeliveryOrderList() async {
-    return await loadList(() async =>
-        _orderListRepository.getDeliveryOrderList(deliveryId));
+    return await loadList(
+        () async => _orderListRepository.getDeliveryOrderList(deliveryId));
   }
 
   Future<bool> addOrder(Order order) async {
@@ -70,10 +71,11 @@ class OrderListNotifier extends ListNotifier<Order> {
         state = AsyncValue.data(orders);
       },
       error: (error, stackTrace) {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, stackTrace);
       },
       loading: () {
-        state = const AsyncValue.error("Cannot update product while loading");
+        state = const AsyncValue.error(
+            "Cannot update product while loading", StackTrace.empty);
       },
     );
   }
@@ -86,10 +88,11 @@ class OrderListNotifier extends ListNotifier<Order> {
         state = AsyncValue.data(orders);
       },
       error: (error, stackTrace) {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, stackTrace);
       },
       loading: () {
-        state = const AsyncValue.error("Cannot toggle expanded while loading");
+        state = const AsyncValue.error(
+            "Cannot toggle expanded while loading", StackTrace.empty);
       },
     );
   }
@@ -109,42 +112,43 @@ class OrderListNotifier extends ListNotifier<Order> {
         }
       },
       error: (error, stackTrace) {
-        state = AsyncValue.error(error);
+        state = AsyncValue.error(error, stackTrace);
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           throw error;
         } else {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, stackTrace);
           return false;
         }
       },
       loading: () {
-        state = const AsyncValue.error("Cannot update product while loading");
+        state = const AsyncValue.error(
+            "Cannot update product while loading", StackTrace.empty);
         return false;
       },
     );
   }
 
   Future<double> getprice(int indexOrder) async {
-    double _price = 0;
+    double price = 0;
     try {
       state.when(
         data: (orders) async {
-          _price =
-              orders[indexOrder].products.fold(0, (previousValue, element) {
+          price = orders[indexOrder].products.fold(0, (previousValue, element) {
             return previousValue + element.price * element.quantity;
           });
         },
         error: (error, stackTrace) {
-          state = AsyncValue.error(error);
+          state = AsyncValue.error(error, stackTrace);
         },
         loading: () {
-          state = const AsyncValue.error("Cannot get price while loading");
+          state = const AsyncValue.error(
+              "Cannot get price while loading", StackTrace.empty);
         },
       );
     } catch (e) {
-      state = AsyncValue.error(e);
+      state = AsyncValue.error(e, StackTrace.empty);
     }
-    return _price;
+    return price;
   }
 
   Future<AsyncValue<List<Order>>> copy() async {
@@ -153,7 +157,7 @@ class OrderListNotifier extends ListNotifier<Order> {
         return AsyncValue.data(orders.sublist(0));
       },
       error: (error, stackTrace) {
-        return AsyncValue.error(error);
+        return AsyncValue.error(error, stackTrace);
       },
       loading: () {
         return const AsyncValue.loading();
@@ -164,13 +168,15 @@ class OrderListNotifier extends ListNotifier<Order> {
 
 final orderListProvider = StateNotifierProvider.family<OrderListNotifier,
     AsyncValue<List<Order>>, String>((ref, deliveryId) {
-  final userId = ref.watch(idProvider);
   final token = ref.watch(tokenProvider);
-  OrderListNotifier _orderListNotifier = OrderListNotifier(token: token);
-  _orderListNotifier.setId(deliveryId);
-  _orderListNotifier.setUserId(userId);
-  _orderListNotifier.loadOrderList();
-  return _orderListNotifier;
+  OrderListNotifier orderListNotifier = OrderListNotifier(token: token);
+  tokenExpireWrapperAuth(ref, () async {
+    final userId = ref.watch(idProvider);
+    orderListNotifier.setId(deliveryId);
+    orderListNotifier.setUserId(userId);
+    await orderListNotifier.loadOrderList();
+  });
+  return orderListNotifier;
 });
 
 final orderList = Provider((ref) {
