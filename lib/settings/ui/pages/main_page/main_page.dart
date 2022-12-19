@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/providers/logs_provider.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
+import 'package:myecl/settings/ui/pages/main_page/dark_mode_item.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -281,17 +282,10 @@ class MainPage extends HookConsumerWidget {
                 //   child: const Text(SettingsTextConstants.notifications,
                 //       style: TextStyle(fontSize: 16, color: Colors.black)),
                 // ),
-                // const SizedBox(
-                //   height: 30,
-                // ),
-                // SettingsItem(
-                //   icon: HeroIcons.moon,
-                //   onTap: () {
-                //     // pageNotifier.setSettingsPage(SettingsPage.help);
-                //   },
-                //   child: const Text(SettingsTextConstants.darkMode,
-                //       style: TextStyle(fontSize: 16, color: Colors.black)),
-                // ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const DarkModeItem(),
                 const SizedBox(
                   height: 30,
                 ),

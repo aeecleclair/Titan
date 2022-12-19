@@ -13,6 +13,7 @@ class SettingsTextConstants {
   static const String copied = "Copié !";
   static const String darkMode = "Mode sombre";
   static const String darkModeOff = "Désactivé";
+  static const String darkModeOn = "Activé";
   static const String deleteLogs = "Supprimer les logs ?";
   static const String detelePersonalData = "Supprimer mes données personnelles";
   static const String detelePersonalDataDesc =
@@ -37,7 +38,7 @@ class SettingsTextConstants {
   static const String language = "Langue";
   static const String languageFr = "Français";
   static const String logs = "Logs";
-  static const String modules = "Modules";
+  static const String modules = "Gestion des modules";
   static const String myIcs = "Mon lien Ical";
   static const String name = "Nom";
   static const String newPassword = "Nouveau mot de passe";

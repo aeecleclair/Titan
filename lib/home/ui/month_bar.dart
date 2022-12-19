@@ -51,17 +51,19 @@ class MonthBar extends HookConsumerWidget {
                     curve: Curves.easeInOut);
               },
               child: Text(getMonth((currentMonth.value - 1) % 12),
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 205, 205, 205))),
+                      color: Theme.of(context).colorScheme.tertiaryContainer)),
             ),
           ],
         ),
         Text(
           getMonth(currentMonth.value % 12),
-          style: const TextStyle(
-              fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 20,
+              color: Theme.of(context).colorScheme.tertiary,
+              fontWeight: FontWeight.bold),
         ),
         Row(
           children: [
@@ -80,10 +82,10 @@ class MonthBar extends HookConsumerWidget {
                     curve: Curves.easeInOut);
               },
               child: Text(getMonth((currentMonth.value + 1) % 12),
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 205, 205, 205))),
+                      color: Theme.of(context).colorScheme.tertiaryContainer)),
             ),
             const SizedBox(
               width: 30,

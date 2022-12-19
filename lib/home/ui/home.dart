@@ -53,15 +53,15 @@ class HomePage extends HookConsumerWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(HomeTextConstants.incomingEvents,
                             style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.black)),
+                                color: Theme.of(context).colorScheme.tertiary)),
                       ),
                     ),
                     const SizedBox(
@@ -84,14 +84,15 @@ class HomePage extends HookConsumerWidget {
                                           )))
                                       .values
                                       .toList())
-                              : const Center(
+                              : Center(
                                   child: Text(
                                     HomeTextConstants.noEvents,
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,
-                                        color:
-                                            Color.fromARGB(255, 205, 205, 205)),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiaryContainer),
                                   ),
                                 ),
                         ))

@@ -8,7 +8,6 @@ import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/home/tools/constants.dart';
 
 class DaysEvent extends HookConsumerWidget {
   final DateTime now;
@@ -56,15 +55,10 @@ class DaysEvent extends HookConsumerWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: end.compareTo(now) < 0
-                          ? [
-                              Colors.grey.shade700,
-                              Colors.grey.shade800,
-                            ]
-                          : start.compareTo(now) <= 0
+                      colors: start.compareTo(now) <= 0
                               ? [
-                                  HomeColorConstants.gradient1,
-                                  HomeColorConstants.gradient2,
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).colorScheme.secondary,
                                 ]
                               : [
                                   Colors.white,
@@ -77,7 +71,10 @@ class DaysEvent extends HookConsumerWidget {
                         color: end.compareTo(now) < 0
                             ? Colors.black.withOpacity(0.2)
                             : start.compareTo(now) <= 0
-                                ? HomeColorConstants.gradient2.withOpacity(0.2)
+                                ? Theme.of(context)
+                                    .colorScheme
+                                    .secondary
+                                    .withOpacity(0.2)
                                 : Colors.grey.withOpacity(0.2),
                         spreadRadius: 5,
                         blurRadius: 10,

@@ -24,6 +24,5 @@ class CinemaTextConstants {
   static const String posterUrl = "URL de l'affiche";
   static const String sessionDate = "Jour de la séance";
   static const String startHour = "Heure de début";
-
-  static var the;
+  static const String the = "Le";
 }
