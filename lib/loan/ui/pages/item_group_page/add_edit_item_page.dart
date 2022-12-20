@@ -21,10 +21,10 @@ class AddEditItemPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final loaner = ref.watch(loanerProvider);
-    final isEdit = loaner.id != Loaner.empty().id;
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final item = ref.watch(itemProvider);
+    final isEdit = item.id != Item.empty().id;
     final name = useTextEditingController(text: item.name);
     final caution =
         useTextEditingController(text: isEdit ? item.caution.toString() : '');
