@@ -48,7 +48,7 @@ class ModulesPage extends HookConsumerWidget {
                 children: [
                   HeroIcon(
                     module.icon,
-                    color: Theme.of(context).colorScheme.tertiaryContainer,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                   const SizedBox(
                     width: 20,
@@ -65,10 +65,8 @@ class ModulesPage extends HookConsumerWidget {
                   const Spacer(),
                   Checkbox(
                     value: modules.contains(module),
-                    activeColor:
-                        Theme.of(context).colorScheme.tertiaryContainer,
-                    
-                    onChanged: (bool? value) {
+                    activeColor: Theme.of(context).colorScheme.tertiary,
+                    onChanged: (_) {
                       modulesNotifier.toggleModule(module);
                     },
                   ),
