@@ -85,11 +85,13 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     final allmodulesName = allModules.map((e) => e.page.toString()).toList();
     if (modulesName.isEmpty) {
       modulesName = allmodulesName;
-      prefs.setStringList(dbModule, modulesName);
+      saveModules();
     }
     if (allModulesName.isEmpty || !eq.equals(allModulesName, allmodulesName)) {
       allModulesName = allmodulesName;
-      prefs.setStringList(dbAllModules, allmodulesName);
+      modulesName = allmodulesName;
+      saveAllModules();
+      saveModules();
     } else {
       allModules.sort((a, b) => allModulesName
           .indexOf(a.page.toString())
