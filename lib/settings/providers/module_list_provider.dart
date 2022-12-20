@@ -39,11 +39,11 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
         icon: HeroIcons.buildingLibrary,
         page: ModuleType.loan,
         selected: false),
-    // Module(
-    //     name: "Amap",
-    //     icon: HeroIcons.shoppingCart,
-    //     page: ModuleType.amap,
-    //     selected: false),
+    Module(
+        name: "Amap",
+        icon: HeroIcons.shoppingCart,
+        page: ModuleType.amap,
+        selected: false),
     Module(
         name: "Évenements",
         icon: HeroIcons.calendar,
