@@ -15,7 +15,8 @@ class CustomTheme {
             secondary: ColorConstants.gradient2,
             surface: Colors.grey.shade100,
             tertiary: const Color.fromARGB(255, 27, 29, 44),
-            tertiaryContainer: Colors.grey.shade300));
+            tertiaryContainer: Colors.grey.shade300,
+            onTertiary: Colors.grey.shade400));
   }
 
   static ThemeData get darkTheme {
@@ -30,6 +31,7 @@ class CustomTheme {
             secondary: ColorConstants.gradient2,
             surface: Colors.grey.shade300,
             tertiary: Colors.grey.shade400,
-            tertiaryContainer: Colors.grey.shade500));
+            tertiaryContainer: Colors.grey.shade500,
+            onTertiary: Colors.grey.shade600));
   }
 }

@@ -25,13 +25,14 @@ class AssoUi extends HookConsumerWidget {
         margin: const EdgeInsets.symmetric(vertical: 10),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
                   color: Colors.grey.withOpacity(0.2),
                   blurRadius: 5,
-                  spreadRadius: 2)
+                  spreadRadius: 2,
+                  offset: const Offset(0, 2))
             ]),
         child: Row(
           children: [
@@ -43,7 +44,7 @@ class AssoUi extends HookConsumerWidget {
                 children: [
                   HeroIcon(
                     HeroIcons.buildingLibrary,
-                    color: Colors.grey.shade700,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                   const SizedBox(
                     width: 15,
@@ -53,8 +54,8 @@ class AssoUi extends HookConsumerWidget {
             Expanded(
               child: Text(
                 capitalize(group.name),
-                style: const TextStyle(
-                    color: Colors.black,
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.tertiary,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),

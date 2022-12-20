@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_provider.dart';
-import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/pages/add_member_page/results.dart';
 import 'package:myecl/tools/constants.dart';
@@ -15,7 +14,6 @@ class AddMemberPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(adminPageProvider.notifier);
     final usersNotifier = ref.watch(userList.notifier);
     final editingController = useTextEditingController();
     final group = ref.watch(groupProvider);
@@ -53,29 +51,20 @@ class AddMemberPage extends HookConsumerWidget {
                   },
                   controller: editingController,
                   cursorColor: ColorConstants.gradient1,
-                  decoration: const InputDecoration(
-                      labelText: AdminTextConstants.looking,
-                      hintText: AdminTextConstants.looking,
-                      labelStyle: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: ColorConstants.background2),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: ColorConstants.gradient1,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: ColorConstants.gradient1,
-                          ),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(25.0))),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: ColorConstants.gradient1,
-                          ),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(25.0)))),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: Theme.of(context).colorScheme.tertiary,
+                  ),
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(10),
+                    isDense: true,
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.tertiary)),
+                    focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFFfb6d10))),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -83,42 +72,6 @@ class AddMemberPage extends HookConsumerWidget {
                 const MemberResults()
               ]),
             ),
-            GestureDetector(
-              child: Container(
-                width: double.infinity,
-                margin: const EdgeInsets.symmetric(vertical: 20),
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      ColorConstants.gradient1,
-                      ColorConstants.gradient2,
-                    ],
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: ColorConstants.gradient2.withOpacity(0.5),
-                      blurRadius: 5,
-                      offset: const Offset(2, 2),
-                      spreadRadius: 2,
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: const Text(
-                  AdminTextConstants.edit,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 255, 255, 255),
-                  ),
-                ),
-              ),
-              onTap: () {
-                pageNotifier.setAdminPage(AdminPage.asso);
-              },
-            )
           ],
         ),
       ),

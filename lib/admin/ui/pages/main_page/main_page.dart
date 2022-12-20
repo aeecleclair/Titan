@@ -55,7 +55,7 @@ class MainPage extends HookConsumerWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 10),
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
@@ -68,7 +68,7 @@ class MainPage extends HookConsumerWidget {
                         const Spacer(),
                         HeroIcon(
                           HeroIcons.plus,
-                          color: Colors.grey.shade700,
+                          color: Theme.of(context).colorScheme.tertiary,
                           size: 40,
                         ),
                         const Spacer(),
@@ -85,7 +85,7 @@ class MainPage extends HookConsumerWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 10),
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
@@ -101,7 +101,7 @@ class MainPage extends HookConsumerWidget {
                           children: [
                             HeroIcon(
                               HeroIcons.buildingLibrary,
-                              color: Colors.grey.shade700,
+                              color: Theme.of(context).colorScheme.tertiary,
                               size: 40,
                             ),
                             Positioned(
@@ -110,7 +110,7 @@ class MainPage extends HookConsumerWidget {
                               child: HeroIcon(
                                 HeroIcons.plus,
                                 size: 15,
-                                color: Colors.grey.shade700,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             )
                           ],

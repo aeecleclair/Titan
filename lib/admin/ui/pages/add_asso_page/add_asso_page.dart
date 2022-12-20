@@ -5,7 +5,6 @@ import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -32,13 +31,13 @@ class AddAssoPage extends HookConsumerWidget {
             child: Form(
               key: key,
               child: Column(children: [
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(AdminTextConstants.addAssociation,
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: ColorConstants.gradient1)),
+                          color: Theme.of(context).primaryColor)),
                 ),
                 const SizedBox(
                   height: 30,
@@ -54,24 +53,35 @@ class AddAssoPage extends HookConsumerWidget {
                         Container(
                           alignment: Alignment.centerLeft,
                           margin: const EdgeInsets.only(bottom: 3),
-                          child: const Text(
+                          child: Text(
                             AdminTextConstants.name,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: Color.fromARGB(255, 158, 158, 158),
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                         ),
                         SizedBox(
                           child: TextFormField(
                             controller: name,
-                            decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.all(10),
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
+                            decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.all(10),
                                 isDense: true,
+                                enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary)),
                                 focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: ColorConstants.gradient1))),
+                                  color: Theme.of(context).primaryColor,
+                                ))),
                             validator: (value) {
                               if (value == null) {
                                 return AdminTextConstants.emptyFieldError;
@@ -94,24 +104,35 @@ class AddAssoPage extends HookConsumerWidget {
                         Container(
                           alignment: Alignment.centerLeft,
                           margin: const EdgeInsets.only(bottom: 3),
-                          child: const Text(
+                          child: Text(
                             AdminTextConstants.description,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: Color.fromARGB(255, 158, 158, 158),
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                         ),
                         SizedBox(
                           child: TextFormField(
                             controller: description,
-                            decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.all(10),
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
+                            decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.all(10),
                                 isDense: true,
+                                enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary)),
                                 focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: ColorConstants.gradient1))),
+                                        color:
+                                            Theme.of(context).primaryColor))),
                             validator: (value) {
                               if (value == null) {
                                 return AdminTextConstants.emptyFieldError;
@@ -132,15 +153,18 @@ class AddAssoPage extends HookConsumerWidget {
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
+                      gradient: LinearGradient(
                         colors: [
-                          ColorConstants.gradient1,
-                          ColorConstants.gradient2,
+                          Theme.of(context).primaryColor,
+                          Theme.of(context).colorScheme.secondary,
                         ],
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: ColorConstants.gradient2.withOpacity(0.5),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(0.5),
                           blurRadius: 5,
                           offset: const Offset(2, 2),
                           spreadRadius: 2,
@@ -151,10 +175,9 @@ class AddAssoPage extends HookConsumerWidget {
                     child: const Text(
                       AdminTextConstants.add,
                       style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
                     ),
                   ),
                   onTap: () async {

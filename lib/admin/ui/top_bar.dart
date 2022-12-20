@@ -58,17 +58,17 @@ class TopBar extends HookConsumerWidget {
                         page == AdminPage.main
                             ? HeroIcons.bars3BottomLeft
                             : HeroIcons.chevronLeft,
-                        color: const Color.fromARGB(255, 0, 0, 0),
+                        color: Theme.of(context).colorScheme.tertiary,
                         size: 30,
                       ));
                 },
               ),
             ),
-            const Text(AdminTextConstants.administration,
+            Text(AdminTextConstants.administration,
                 style: TextStyle(
                     fontSize: 33,
                     fontWeight: FontWeight.w700,
-                    color: Colors.black)),
+                    color: Theme.of(context).colorScheme.tertiary)),
             const SizedBox(
               width: 70,
             ),

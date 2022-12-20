@@ -63,20 +63,26 @@ class AssoPage extends HookConsumerWidget {
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(g[0].description,
-                          style: const TextStyle(fontSize: 18)),
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.tertiary)),
                     ),
                   const SizedBox(height: 40),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: const Text("${AdminTextConstants.members} :",
+                    child: Text("${AdminTextConstants.members} :",
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.tertiary)),
                   ),
                   ...g[0].members.map((x) => Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.only(top: 25),
                       child: Text(capitalize(x.getName()),
-                          style: const TextStyle(fontSize: 18)))),
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.tertiary)))),
                   const SizedBox(height: 20),
                 ],
               ));
