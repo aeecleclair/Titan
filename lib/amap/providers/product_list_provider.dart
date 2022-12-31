@@ -7,7 +7,6 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ProductListNotifier extends ListNotifier<Product> {
   final ProductListRepository _productListRepository = ProductListRepository();
-  late String deliveryId;
   ProductListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _productListRepository.setToken(token);

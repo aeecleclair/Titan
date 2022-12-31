@@ -2,52 +2,34 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/providers/collection_slot_provider.dart';
+import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
-import 'package:myecl/amap/providers/delivery_list_provider.dart';
-import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
-import 'package:myecl/amap/providers/order_index_provider.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
-import 'package:myecl/amap/providers/order_price_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
-import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
-import 'package:uuid/uuid.dart';
 
 class Boutons extends HookConsumerWidget {
   const Boutons({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deliveryId = ref.watch(deliveryIdProvider);
-    final productsList = ref.watch(deliveryProductListProvider(deliveryId));
-    final cmds = ref.watch(orderListProvider(deliveryId));
-    final cmdsNotifier = ref.watch(orderListProvider(deliveryId).notifier);
-    final indexCmd = ref.watch(orderIndexProvider);
+    final order = ref.watch(orderProvider);
+    final orderNotifier = ref.watch(orderProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
-    final price = ref.watch(priceProvider);
-    final delList = ref.watch(deliveryList);
-    final collectionSlotNotifier = ref.watch(collectionSlotProvider.notifier);
+    final deliveryId = ref.watch(deliveryIdProvider);
+    final orderListNotifier = ref.watch(orderListProvider.notifier);
     final userAmount = ref.watch(userAmountProvider);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);
+    final isEdit = order.id != Order.empty().id;
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
-
-    final products = [];
-    productsList.when(
-      data: (list) => products.addAll(list),
-      error: (e, s) {},
-      loading: () {},
-    );
 
     double b = 0;
     userAmount.when(
@@ -57,96 +39,82 @@ class Boutons extends HookConsumerWidget {
         error: (e, s) {},
         loading: () {});
 
-    return SizedBox(
-        height: 90,
+    return Container(
+        height: 60,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          GestureDetector(
-              child: GreenBtn(
-                  text:
-                      "${AMAPTextConstants.confirm} (${price.toStringAsFixed(2)}€)"),
-              onTap: () {
-                if (price == 0.0) {
-                  displayToast(
-                      context, TypeMsg.error, AMAPTextConstants.noProduct);
-                } else if (price < b) {
-                  if (indexCmd == -1) {
-                    List<Product> prod = [];
-                    for (var p in products) {
-                      if (p.quantity != 0) {
-                        prod.add(p.copyWith());
-                      }
-                    }
-                    Order newOrder = Order(
-                        user: me.toSimpleUser(),
-                        products: prod,
-                        deliveryDate: delList
-                            .firstWhere((d) => d.id == deliveryId)
-                            .deliveryDate,
-                        id: const Uuid().v4(),
-                        amount: price,
-                        deliveryId: deliveryId,
-                        productsIds: prod.map((e) => e.id).toList(),
-                        collectionSlot: collectionSlotNotifier.getText());
+          Expanded(
+            child: GestureDetector(
+                child: Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(colors: [
+                      AMAPColorConstants.greenGradient1,
+                      AMAPColorConstants.greenGradient2
+                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                    boxShadow: [
+                      BoxShadow(
+                          color: AMAPColorConstants.greenGradient2
+                              .withOpacity(0.4),
+                          offset: const Offset(2, 3),
+                          blurRadius: 5)
+                    ],
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "${AMAPTextConstants.confirm} (${order.amount.toStringAsFixed(2)}€)",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: AMAPColorConstants.background),
+                  ),
+                ),
+                onTap: () {
+                  if (order.amount == 0.0) {
+                    displayToast(
+                        context, TypeMsg.error, AMAPTextConstants.noProduct);
+                  } else if (order.amount < b + order.lastAmount) {
+                    Order newOrder = order.copyWith(
+                        deliveryId: deliveryId, user: me.toSimpleUser());
                     tokenExpireWrapper(ref, () async {
-                      final value = await cmdsNotifier.addOrder(newOrder);
+                      final value = isEdit
+                          ? await orderListNotifier.updateOrder(
+                              order.copyWith(lastAmount: order.amount),
+                              deliveryId,
+                              me.id)
+                          : await orderListNotifier.addOrder(
+                              newOrder, deliveryId, me.id);
                       if (value) {
                         pageNotifier.setAmapPage(AmapPage.main);
-                        userAmountNotifier.updateCash(-price);
-                        displayToastWithContext(
-                            TypeMsg.msg, AMAPTextConstants.addedOrder);
-                        clearCmd(ref);
-                      } else {
-                        pageNotifier.setAmapPage(AmapPage.main);
-                        displayToastWithContext(
-                            TypeMsg.error, AMAPTextConstants.addingError);
-                      }
-                    });
-                  } else {
-                    var lastPrice = 0.0;
-                    cmds.when(
-                      data: (c) {
-                        for (var p in c[indexCmd].products) {
-                          lastPrice += p.price * p.quantity;
-                        }
-                      },
-                      error: (Object error, StackTrace? stackTrace) {},
-                      loading: () {},
-                    );
-                    if (price < b + lastPrice) {
-                      List<Product> prod = [];
-                      for (var p in products) {
-                        if (p.quantity != 0) {
-                          prod.add(p.copyWith());
-                        }
-                      }
-                      tokenExpireWrapper(ref, () async {
-                        final value =
-                            await cmdsNotifier.setProducts(indexCmd, prod);
-                        if (value) {
-                          pageNotifier.setAmapPage(AmapPage.main);
-                          userAmountNotifier.updateCash(lastPrice - price);
+                        userAmountNotifier
+                            .updateCash(order.lastAmount - order.amount);
+                        if (isEdit) {
                           displayToastWithContext(
                               TypeMsg.msg, AMAPTextConstants.updatedOrder);
                         } else {
-                          pageNotifier.setAmapPage(AmapPage.main);
+                          displayToastWithContext(
+                              TypeMsg.msg, AMAPTextConstants.addedOrder);
+                        }
+                      } else {
+                        if (isEdit) {
                           displayToastWithContext(
                               TypeMsg.error, AMAPTextConstants.updatingError);
+                        } else {
+                          displayToastWithContext(
+                              TypeMsg.error, AMAPTextConstants.addingError);
                         }
-                      });
-                      clearCmd(ref);
-                    } else {
-                      displayToast(context, TypeMsg.error,
-                          AMAPTextConstants.notEnoughMoney);
-                    }
+                      }
+                    });
+                  } else {
+                    displayToast(context, TypeMsg.error,
+                        AMAPTextConstants.notEnoughMoney);
                   }
-                } else {
-                  displayToast(
-                      context, TypeMsg.error, AMAPTextConstants.notEnoughMoney);
-                }
-              }),
+                }),
+          ),
           GestureDetector(
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.2,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               height: 70,
               decoration: BoxDecoration(
                 gradient: const LinearGradient(colors: [
@@ -169,18 +137,18 @@ class Boutons extends HookConsumerWidget {
               ),
             ),
             onTap: () {
-              if (price != 0.0 || indexCmd != -1) {
+              if (order.amount != 0.0 || order.id != Order.empty().id) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) => CustomDialogBox(
                         descriptions: AMAPTextConstants.deletingOrder,
                         title: AMAPTextConstants.deleting,
                         onYes: () {
-                          cancelCmd(ref);
+                          orderNotifier.setOrder(Order.empty());
+                          pageNotifier.setAmapPage(AmapPage.main);
                         }));
               } else {
                 pageNotifier.setAmapPage(AmapPage.main);
-                ref.watch(orderIndexProvider.notifier).setIndex(-1);
               }
             },
           ),

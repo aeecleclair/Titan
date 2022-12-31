@@ -1,12 +1,19 @@
 # Bugs
 
+AMAP : 
+
+- visuel list products
+- detail pages
+- admin delivery nb cmd
+- connect search avec UI (search cash)
+
 TITAN :
 
 - animation btn (shrinking + disable) :
 - dark mode
+- cache
 - ask help
 - opti day list
-- cache
 
 
 API :

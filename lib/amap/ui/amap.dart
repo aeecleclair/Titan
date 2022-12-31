@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/amap/ui/top_bar.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/amap/ui/page_switcher.dart';
@@ -31,44 +30,23 @@ class AmapHomePage extends HookConsumerWidget {
             case AmapPage.pres:
               pageNotifier.setAmapPage(AmapPage.main);
               break;
-            case AmapPage.products:
-              clearCmd(ref);
+            case AmapPage.addProducts:
               pageNotifier.setAmapPage(AmapPage.main);
               break;
             case AmapPage.admin:
               pageNotifier.setAmapPage(AmapPage.main);
               break;
-            case AmapPage.modif:
+            case AmapPage.addEditProduct:
               pageNotifier.setAmapPage(AmapPage.admin);
               break;
-            case AmapPage.addCmd:
+            case AmapPage.addEditDelivery:
               pageNotifier.setAmapPage(AmapPage.admin);
-              break;
-            case AmapPage.delivery:
-              pageNotifier.setAmapPage(AmapPage.main);
-              break;
-            case AmapPage.solde:
-              pageNotifier.setAmapPage(AmapPage.admin);
-              break;
-            case AmapPage.addSolde:
-              pageNotifier.setAmapPage(AmapPage.solde);
-              break;
-            case AmapPage.deliveryAdmin:
-              pageNotifier.setAmapPage(AmapPage.admin);
-              break;
-            case AmapPage.deliveryOrder:
-              pageNotifier.setAmapPage(AmapPage.deliveryAdmin);
               break;
           }
           return false;
         },
         child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/test3.jpg"),
-              fit: BoxFit.cover,
-            ),
-          ),
+          color: Colors.white,
           child: SafeArea(
             child: IgnorePointer(
               ignoring: controller.isCompleted,

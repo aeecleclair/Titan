@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/repositories/amap_user_repository.dart';
 import 'package:myecl/amap/repositories/order_list_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
@@ -12,38 +11,28 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class OrderListNotifier extends ListNotifier<Order> {
   final OrderListRepository _orderListRepository = OrderListRepository();
   final AmapUserRepository _userRepository = AmapUserRepository();
-  late String deliveryId;
-  late String userId;
   OrderListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _orderListRepository.setToken(token);
     _userRepository.setToken(token);
   }
 
-  void setId(String id) {
-    deliveryId = id;
-  }
-
-  void setUserId(String userId) {
-    this.userId = userId;
-  }
-
-  Future<AsyncValue<List<Order>>> loadOrderList() async {
+  Future<AsyncValue<List<Order>>> loadOrderList(String userId) async {
     return await loadList(() async => _userRepository.getOrderList(userId));
   }
 
-  Future<AsyncValue<List<Order>>> loadDeliveryOrderList() async {
+  Future<AsyncValue<List<Order>>> loadDeliveryOrderList(String deliveryId) async {
     return await loadList(
         () async => _orderListRepository.getDeliveryOrderList(deliveryId));
   }
 
-  Future<bool> addOrder(Order order) async {
+  Future<bool> addOrder(Order order, String deliveryId, String userId) async {
     return await add(
         (o) async => _orderListRepository.createOrder(deliveryId, o, userId),
         order);
   }
 
-  Future<bool> updateOrder(Order order) async {
+  Future<bool> updateOrder(Order order, String deliveryId, String userId) async {
     return await update(
         (o) async =>
             _orderListRepository.updateOrder(deliveryId, order, userId),
@@ -97,7 +86,8 @@ class OrderListNotifier extends ListNotifier<Order> {
     );
   }
 
-  Future<bool> setProducts(int indexOrder, List<Product> newListProduct) async {
+  Future<bool> setProducts(int indexOrder, List<Product> newListProduct,
+      String deliveryId, String userId) async {
     return state.when(
       data: (orders) async {
         try {
@@ -166,27 +156,13 @@ class OrderListNotifier extends ListNotifier<Order> {
   }
 }
 
-final orderListProvider = StateNotifierProvider.family<OrderListNotifier,
-    AsyncValue<List<Order>>, String>((ref, deliveryId) {
+final orderListProvider = StateNotifierProvider<OrderListNotifier,
+    AsyncValue<List<Order>>>((ref) {
   final token = ref.watch(tokenProvider);
   OrderListNotifier orderListNotifier = OrderListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     final userId = ref.watch(idProvider);
-    orderListNotifier.setId(deliveryId);
-    orderListNotifier.setUserId(userId);
-    await orderListNotifier.loadOrderList();
+    await orderListNotifier.loadOrderList(userId);
   });
   return orderListNotifier;
-});
-
-final orderList = Provider((ref) {
-  final deliveryId = ref.watch(deliveryIdProvider);
-  final notifier = ref.watch(orderListProvider(deliveryId));
-  return notifier.when(data: (orders) {
-    return orders;
-  }, error: (error, stackTrace) {
-    return [];
-  }, loading: () {
-    return [];
-  });
 });
