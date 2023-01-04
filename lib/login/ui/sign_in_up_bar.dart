@@ -40,9 +40,9 @@ class SignUpBar extends StatelessWidget {
                             color: Colors.white,
                           )
                         : const HeroIcon(
-                            HeroIcons.arrowLongRight,
+                            HeroIcons.arrowRight,
                             color: Colors.white,
-                            size: 24.0,
+                            size: 35.0,
                           ),
                   ),
                 ],
@@ -87,9 +87,9 @@ class SignInBar extends StatelessWidget {
                       color: ColorConstants.gradient2,
                     )
                   : const HeroIcon(
-                      HeroIcons.arrowLongRight,
+                      HeroIcons.arrowRight,
                       color: ColorConstants.gradient2,
-                      size: 24.0,
+                      size: 35.0,
                     ),
             ),
           ],

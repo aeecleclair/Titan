@@ -61,7 +61,7 @@ class MainPage extends HookConsumerWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: -70,
+                    bottom: -60,
                     right: -MediaQuery.of(context).size.width / 2 + 70,
                     child: Container(
                       width: MediaQuery.of(context).size.width,
