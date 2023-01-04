@@ -7,11 +7,13 @@ import 'package:myecl/amap/tools/constants.dart';
 class ProductCard extends StatelessWidget {
   final Product product;
   final Function() onEdit, onDelete;
+  final bool showButton;
   const ProductCard(
       {super.key,
       required this.product,
       required this.onEdit,
-      required this.onDelete});
+      required this.onDelete,
+      this.showButton = true});
 
   @override
   Widget build(BuildContext context) {
@@ -71,68 +73,69 @@ class ProductCard extends StatelessWidget {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 32, 67, 0))),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: onEdit,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            AMAPColorConstants.greenGradient2,
-                            AMAPColorConstants.textDark,
+              if (showButton) const Spacer(),
+              if (showButton)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: onEdit,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        padding: const EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [
+                              AMAPColorConstants.greenGradient2,
+                              AMAPColorConstants.textDark,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                                color: AMAPColorConstants.textDark
+                                    .withOpacity(0.5),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
                           ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
                         ),
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                              color:
-                                  AMAPColorConstants.textDark.withOpacity(0.5),
-                              blurRadius: 10,
-                              offset: const Offset(2, 3))
-                        ],
+                        child: const HeroIcon(HeroIcons.pencil,
+                            color: Colors.white),
                       ),
-                      child:
-                          const HeroIcon(HeroIcons.pencil, color: Colors.white),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: onDelete,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            AMAPColorConstants.redGradient1,
-                            AMAPColorConstants.redGradient2,
+                    GestureDetector(
+                      onTap: onDelete,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        padding: const EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [
+                              AMAPColorConstants.redGradient1,
+                              AMAPColorConstants.redGradient2,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                                color: AMAPColorConstants.redGradient2
+                                    .withOpacity(0.5),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
                           ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
                         ),
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                              color: AMAPColorConstants.redGradient2
-                                  .withOpacity(0.5),
-                              blurRadius: 10,
-                              offset: const Offset(2, 3))
-                        ],
+                        child: const HeroIcon(HeroIcons.trash,
+                            color: Colors.white),
                       ),
-                      child:
-                          const HeroIcon(HeroIcons.trash, color: Colors.white),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
               const SizedBox(height: 10),
             ],
           ),

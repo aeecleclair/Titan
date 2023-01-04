@@ -3,11 +3,15 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/main_page/command_ui.dart';
+import 'package:myecl/amap/ui/command_ui.dart';
 
 class OrderSection extends HookConsumerWidget {
-  final VoidCallback onTap, addOrder;
-  const OrderSection({super.key, required this.onTap, required this.addOrder});
+  final VoidCallback onTap, addOrder, onEdit;
+  const OrderSection(
+      {super.key,
+      required this.onTap,
+      required this.addOrder,
+      required this.onEdit});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -78,7 +82,8 @@ class OrderSection extends HookConsumerWidget {
                           )),
                     ),
                     ...data
-                        .map((e) => CommandeUI(order: e, onTap: onTap))
+                        .map((e) =>
+                            CommandeUI(order: e, onTap: onTap, onEdit: onEdit))
                         .toList(),
                     const SizedBox(
                       width: 25,

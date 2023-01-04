@@ -7,6 +7,7 @@ enum AmapPage {
   admin,
   addEditProduct,
   addEditDelivery,
+  detailPage
 }
 
 final amapPageProvider =

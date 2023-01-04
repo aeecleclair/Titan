@@ -148,9 +148,12 @@ class MainPage extends HookConsumerWidget {
                 Column(
                   children: [
                     OrderSection(
-                      onTap: () {
+                      onEdit: () {
                         showPanel.value = true;
                         animation.forward();
+                      },
+                      onTap: () {
+                        pageNotifier.setAmapPage(AmapPage.detailPage);
                       },
                       addOrder: () {
                         solde.whenData(
