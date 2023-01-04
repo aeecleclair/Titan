@@ -22,8 +22,6 @@ class DateEntry extends StatelessWidget {
         ? DateTime.parse(processDateBack(dateBefore))
         : DateTime.now();
 
-    print(dateBefore);
-
     selectDate(BuildContext context, TextEditingController dateController,
         DateTime before) async {
       final DateTime now = DateTime.now();

@@ -108,18 +108,18 @@ class AddEditBookingPage extends HookConsumerWidget {
                   child: Column(children: [
                     TextEntry(
                       keyboardType: TextInputType.text,
-                      label: BookingTextConstants.note,
-                      suffix: '',
-                      isInt: false,
-                      controller: note,
-                    ),
-                    const SizedBox(height: 30),
-                    TextEntry(
-                      keyboardType: TextInputType.text,
                       controller: motif,
                       isInt: false,
                       label: BookingTextConstants.reason,
                       suffix: '',
+                    ),
+                    const SizedBox(height: 30),
+                    TextEntry(
+                      keyboardType: TextInputType.text,
+                      label: BookingTextConstants.note,
+                      suffix: '',
+                      isInt: false,
+                      controller: note,
                     ),
                     const SizedBox(height: 20),
                     CheckBoxEntry(
