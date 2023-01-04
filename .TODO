@@ -9,12 +9,16 @@ AMAP :
 
 TITAN :
 
-- animation btn (shrinking + disable) :
-- dark mode
-- cache
+- Fix AMAP
+- animation btn (shrinking + disable) s/ tt btn avec interaction avec API
+- dark mode (pr chq module)
+- cache (Hive)
 - ask help
 - opti day list
 
+CINEMA : 
+
+themoviedb.org
 
 API :
 

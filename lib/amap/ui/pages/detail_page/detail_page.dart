@@ -50,7 +50,7 @@ class DetailPage extends HookConsumerWidget {
                               color: Colors.black),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       order.products.isNotEmpty

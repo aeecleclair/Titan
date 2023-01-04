@@ -14,7 +14,7 @@ class LoginTextConstants {
       r'^[\w\-.]*@(ecl\d{2})|(alternance\d{4})|(auditeur)|(master)?.ec-lyon.fr$';
   static const String emptyFieldError = 'Ce champ ne peut pas être vide';
   static const String endActivation = 'Finaliser l\'activation';
-  static const String endResetPassword = 'Finaliser la réinitialisation';
+  static const String endResetPassword = 'Finaliser la \nréinitialisation';
   static const String errorResetPassword = 'Erreur lors de la réinitialisation';
   static const String expectingDate = 'Une date est attendue';
   static const String fillAllFields = 'Veuillez remplir tous les champs';
