@@ -10,6 +10,7 @@ class ShrinkButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final clicked = useState(false);
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 100),
       lowerBound: 0.0,
@@ -26,11 +27,17 @@ class ShrinkButton extends HookConsumerWidget {
 
     return GestureDetector(
         onTap: () {
+          if (clicked.value) return;
           onTap?.call();
           shrinkButtonSize();
           restoreButtonSize();
+          clicked.value = true;
         },
-        onTapDown: (_) => shrinkButtonSize(),
+        onTapDown: (_) {
+          if (clicked.value) return;
+          shrinkButtonSize();
+          clicked.value = true;
+        },
         onTapCancel: restoreButtonSize,
         child: Transform.scale(scale: 1 - animation.value, child: child));
   }
