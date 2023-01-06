@@ -7,6 +7,12 @@ AMAP :
 - admin delivery nb cmd
 - connect search avec UI (search cash)
 
+Vote : 
+
+- del par type
+- pas détail pr vote blanc
+- pop up qd selectionné ms pas confirmé
+
 TITAN :
 
 - Fix AMAP

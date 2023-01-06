@@ -51,7 +51,7 @@ class ListPretendenceCard extends HookConsumerWidget {
                             ? 180
                             : 140) -
                     MediaQuery.of(context).size.height +
-                    250;
+                    (s == Status.open ? 250 : 150);
                 List<int> numberVotes = [];
                 for (var i = 0; i < pretendance.length; i++) {
                   numberVotes.add(results[pretendance[i].id] ?? 0);
@@ -107,7 +107,7 @@ class ListPretendenceCard extends HookConsumerWidget {
                         child: CircularProgressIndicator(),
                       )
                     ],
-                    error: (error, stack) =>  [
+                    error: (error, stack) => [
                       Center(
                         child: Text("Error : $error"),
                       )
