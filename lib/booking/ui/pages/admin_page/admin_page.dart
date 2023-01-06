@@ -157,6 +157,16 @@ class AdminPage extends HookConsumerWidget {
                               isAdmin: true,
                               isDetail: false,
                               onEdit: () {
+                                bookingNotifier.setBooking(e);
+                                pageNotifier.setBookingPage(
+                                    BookingPage.addEditBookingFromAdmin);
+                              },
+                              onInfo: () {
+                                bookingNotifier.setBooking(e);
+                                pageNotifier.setBookingPage(
+                                    BookingPage.detailBookingFromAdmin);
+                              },
+                              onConfirm: () {
                                 showDialog(
                                     context: context,
                                     builder: (context) {
@@ -170,7 +180,7 @@ class AdminPage extends HookConsumerWidget {
                                           });
                                     });
                               },
-                              onReturn: () {
+                              onDecline: () {
                                 showDialog(
                                     context: context,
                                     builder: (context) {
@@ -184,11 +194,6 @@ class AdminPage extends HookConsumerWidget {
                                           });
                                     });
                               },
-                              onInfo: () {
-                                bookingNotifier.setBooking(e);
-                                pageNotifier.setBookingPage(
-                                    BookingPage.detailBookingFromAdmin);
-                              },
                             )),
                         const SizedBox(width: 10),
                       ],
@@ -200,33 +205,34 @@ class AdminPage extends HookConsumerWidget {
             if (confirmedBookings.isNotEmpty)
               Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(BookingTextConstants.confirmed,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 205, 205, 205))),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            displayConfirmed.value = !displayConfirmed.value;
-                          },
-                          child: HeroIcon(
-                            displayConfirmed.value
-                                ? HeroIcons.chevronUp
-                                : HeroIcons.chevronDown,
-                            color: const Color.fromARGB(255, 205, 205, 205),
-                            size: 30,
-                          ),
-                        )
-                      ],
-                    ),
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      displayConfirmed.value = !displayConfirmed.value;
+                    },
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(BookingTextConstants.confirmed,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                          Color.fromARGB(255, 205, 205, 205))),
+                            ),
+                            HeroIcon(
+                              displayConfirmed.value
+                                  ? HeroIcons.chevronUp
+                                  : HeroIcons.chevronDown,
+                              color: const Color.fromARGB(255, 205, 205, 205),
+                              size: 30,
+                            ),
+                          ],
+                        )),
                   ),
                   if (displayConfirmed.value)
                     SingleChildScrollView(
@@ -239,8 +245,18 @@ class AdminPage extends HookConsumerWidget {
                                 booking: e,
                                 isAdmin: true,
                                 isDetail: false,
-                                onEdit: () {},
-                                onReturn: () {
+                                onEdit: () {
+                                  bookingNotifier.setBooking(e);
+                                  pageNotifier.setBookingPage(
+                                      BookingPage.addEditBookingFromAdmin);
+                                },
+                                onInfo: () {
+                                  bookingNotifier.setBooking(e);
+                                  pageNotifier.setBookingPage(
+                                      BookingPage.detailBookingFromAdmin);
+                                },
+                                onConfirm: () {},
+                                onDecline: () {
                                   showDialog(
                                       context: context,
                                       builder: (context) {
@@ -255,11 +271,6 @@ class AdminPage extends HookConsumerWidget {
                                             });
                                       });
                                 },
-                                onInfo: () {
-                                  bookingNotifier.setBooking(e);
-                                  pageNotifier.setBookingPage(
-                                      BookingPage.detailBookingFromAdmin);
-                                },
                               )),
                           const SizedBox(width: 10),
                         ],
@@ -271,30 +282,30 @@ class AdminPage extends HookConsumerWidget {
             if (canceledBookings.isNotEmpty)
               Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(BookingTextConstants.declined,
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 205, 205, 205))),
-                        GestureDetector(
-                          onTap: () {
-                            displayCanceled.value = !displayCanceled.value;
-                          },
-                          child: HeroIcon(
-                            displayCanceled.value
-                                ? HeroIcons.chevronUp
-                                : HeroIcons.chevronDown,
-                            color: const Color.fromARGB(255, 205, 205, 205),
-                            size: 30,
-                          ),
-                        )
-                      ],
-                    ),
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      displayCanceled.value = !displayCanceled.value;
+                    },
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(BookingTextConstants.declined,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 205, 205, 205))),
+                            HeroIcon(
+                              displayCanceled.value
+                                  ? HeroIcons.chevronUp
+                                  : HeroIcons.chevronDown,
+                              color: const Color.fromARGB(255, 205, 205, 205),
+                              size: 30,
+                            ),
+                          ],
+                        )),
                   ),
                   if (displayCanceled.value)
                     SingleChildScrollView(
@@ -308,6 +319,16 @@ class AdminPage extends HookConsumerWidget {
                                 isAdmin: true,
                                 isDetail: false,
                                 onEdit: () {
+                                  bookingNotifier.setBooking(e);
+                                  pageNotifier.setBookingPage(
+                                      BookingPage.addEditBookingFromAdmin);
+                                },
+                                onInfo: () {
+                                  bookingNotifier.setBooking(e);
+                                  pageNotifier.setBookingPage(
+                                      BookingPage.detailBookingFromAdmin);
+                                },
+                                onConfirm: () {
                                   showDialog(
                                       context: context,
                                       builder: (context) {
@@ -322,12 +343,7 @@ class AdminPage extends HookConsumerWidget {
                                             });
                                       });
                                 },
-                                onReturn: () {},
-                                onInfo: () {
-                                  bookingNotifier.setBooking(e);
-                                  pageNotifier.setBookingPage(
-                                      BookingPage.detailBookingFromAdmin);
-                                },
+                                onDecline: () {},
                               )),
                           const SizedBox(width: 10),
                         ],

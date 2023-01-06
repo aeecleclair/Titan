@@ -26,6 +26,8 @@ class PageSwitcher extends ConsumerWidget {
         return const DetailBookingPage();
       case BookingPage.detailBookingFromMain:
         return const DetailBookingPage();
+      case BookingPage.addEditBookingFromAdmin:
+        return const AddEditBookingPage();
     }
   }
 }

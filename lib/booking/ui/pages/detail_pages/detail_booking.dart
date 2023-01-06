@@ -75,12 +75,14 @@ class DetailBookingPage extends HookConsumerWidget {
             padding: const EdgeInsets.all(20.0),
             child: Center(
               child: BookingCard(
-                  booking: booking,
-                  onEdit: () {},
-                  onReturn: () {},
-                  onInfo: () {},
-                  isAdmin: false,
-                  isDetail: true),
+                booking: booking,
+                onEdit: () {},
+                onInfo: () {},
+                isAdmin: false,
+                isDetail: true,
+                onConfirm: () {},
+                onDecline: () {},
+              ),
             ),
           )
         ],

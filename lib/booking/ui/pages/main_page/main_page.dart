@@ -147,23 +147,13 @@ class MainPage extends HookConsumerWidget {
                             pageNotifier
                                 .setBookingPage(BookingPage.addEditBooking);
                           },
-                          onReturn: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return CustomDialogBox(
-                                    title: BookingTextConstants.deleting,
-                                    descriptions:
-                                        BookingTextConstants.deletingBooking,
-                                    onYes: () {},
-                                  );
-                                });
-                          },
                           onInfo: () {
                             bookingNotifier.setBooking(e);
                             pageNotifier.setBookingPage(
                                 BookingPage.detailBookingFromMain);
                           },
+                          onConfirm: () {},
+                          onDecline: () {},
                         );
                       }
                     },
