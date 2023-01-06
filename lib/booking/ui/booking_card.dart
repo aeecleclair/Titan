@@ -123,7 +123,8 @@ class BookingCard extends HookConsumerWidget {
                                 offset: const Offset(2, 3))
                           ],
                         ),
-                        child: const HeroIcon(HeroIcons.pencil, color: Colors.black),
+                        child: const HeroIcon(HeroIcons.pencil,
+                            color: Colors.black),
                       ),
                     ),
                     if (isAdmin) const Spacer(),
@@ -168,7 +169,7 @@ class BookingCard extends HookConsumerWidget {
                             borderRadius: BorderRadius.circular(30),
                             border: Border.all(
                                 color: isAdmin
-                                    ? booking.decision == Decision.pending
+                                    ? booking.decision == Decision.declined
                                         ? Colors.white
                                         : Colors.transparent
                                     : Colors.transparent,
