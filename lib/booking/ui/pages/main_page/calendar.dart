@@ -144,7 +144,7 @@ _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
         startTimeZone: "Europe/Paris",
         endTimeZone: "Europe/Paris",
         notes: e.note,
-        color: const Color.fromARGB(255, 189, 80, 78),
+        color: generateColor(e.room.id),
         recurrenceRule: e.recurrenceRule));
   }).toList();
   return _AppointmentDataSource(appointments);
