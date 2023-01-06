@@ -11,7 +11,6 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
 import 'package:myecl/booking/ui/calendar.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
@@ -154,6 +153,7 @@ class MainPage extends HookConsumerWidget {
                           },
                           onConfirm: () {},
                           onDecline: () {},
+                          onCopy: () {},
                         );
                       }
                     },

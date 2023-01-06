@@ -29,34 +29,35 @@ class ListBooking extends HookConsumerWidget {
     if (bookings.isNotEmpty) {
       return Column(
         children: [
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(title,
-                        style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 205, 205, 205))),
-                  ),
-                  if (canToggle)
-                    GestureDetector(
-                      onTap: () {
-                        toggle.value = !toggle.value;
-                      },
-                      child: HeroIcon(
+          if (canToggle)
+            GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  toggle.value = !toggle.value;
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(title,
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 205, 205, 205))),
+                      ),
+                      HeroIcon(
                         toggle.value
                             ? HeroIcons.chevronUp
                             : HeroIcons.chevronDown,
                         color: const Color.fromARGB(255, 205, 205, 205),
                         size: 30,
                       ),
-                    ),
-                ],
-              )),
+                    ],
+                  ),
+                )),
           if (toggle.value)
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -105,6 +106,11 @@ class ListBooking extends HookConsumerWidget {
                                           e, Decision.declined);
                                     });
                               });
+                        },
+                        onCopy: () {
+                          bookingNotifier.setBooking(e.copyWith(id: ""));
+                          pageNotifier.setBookingPage(
+                              BookingPage.addEditBookingFromAdmin);
                         },
                       )),
                   const SizedBox(width: 10),

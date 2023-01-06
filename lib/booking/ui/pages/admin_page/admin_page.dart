@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
@@ -25,8 +24,6 @@ class AdminPage extends HookConsumerWidget {
     final room = ref.watch(roomProvider);
     final roomNotifier = ref.watch(roomProvider.notifier);
     final bookings = ref.watch(bookingListProvider);
-    final displayConfirmed = useState(false);
-    final displayCanceled = useState(false);
     final List<Booking> pendingBookings = [],
         confirmedBookings = [],
         canceledBookings = [];

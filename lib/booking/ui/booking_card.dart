@@ -8,7 +8,7 @@ import 'package:myecl/booking/tools/functions.dart';
 
 class BookingCard extends HookConsumerWidget {
   final Booking booking;
-  final Function() onEdit, onConfirm, onDecline, onInfo;
+  final Function() onEdit, onConfirm, onDecline, onCopy, onInfo;
   final bool isAdmin, isDetail;
   const BookingCard(
       {super.key,
@@ -17,6 +17,7 @@ class BookingCard extends HookConsumerWidget {
       required this.onConfirm,
       required this.onDecline,
       required this.onInfo,
+      required this.onCopy,
       required this.isAdmin,
       required this.isDetail});
 
@@ -130,6 +131,28 @@ class BookingCard extends HookConsumerWidget {
                     if (isAdmin) const Spacer(),
                     if (isAdmin)
                       GestureDetector(
+                        onTap: onCopy,
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: const Offset(2, 3))
+                            ],
+                          ),
+                          child: const HeroIcon(HeroIcons.documentDuplicate,
+                              color: Colors.white),
+                        ),
+                      ),
+                    if (isAdmin) const Spacer(),
+                    if (isAdmin)
+                      GestureDetector(
                         onTap: onConfirm,
                         child: Container(
                           width: 40,
@@ -147,7 +170,7 @@ class BookingCard extends HookConsumerWidget {
                                 width: 2),
                             boxShadow: [
                               BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
+                                  color: Colors.grey.withOpacity(0.2),
                                   blurRadius: 10,
                                   offset: const Offset(2, 3))
                             ],

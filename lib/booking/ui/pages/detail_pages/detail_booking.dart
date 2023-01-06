@@ -81,7 +81,7 @@ class DetailBookingPage extends HookConsumerWidget {
                 isAdmin: false,
                 isDetail: true,
                 onConfirm: () {},
-                onDecline: () {},
+                onDecline: () {}, onCopy: () {  },
               ),
             ),
           )
