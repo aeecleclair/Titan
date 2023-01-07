@@ -9,6 +9,7 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AddEditRoomPage extends HookConsumerWidget {
   const AddEditRoomPage({Key? key}) : super(key: key);
@@ -68,7 +69,49 @@ class AddEditRoomPage extends HookConsumerWidget {
                 const SizedBox(
                   height: 50,
                 ),
-                GestureDetector(
+                ShrinkButton(
+                  waitChild: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(top: 8, bottom: 12),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 10,
+                            offset: const Offset(3, 3),
+                          ),
+                        ],
+                      ),
+                      child: const CircularProgressIndicator(
+                        color: Colors.white,
+                      )),
+                  onTap: () async {
+                    tokenExpireWrapper(ref, () async {
+                      Room newRoom =
+                          Room(id: isEdit ? room.id : '', name: name.text);
+                      final value = isEdit
+                          ? await roomListNotifier.updateRoom(newRoom)
+                          : await roomListNotifier.addRoom(newRoom);
+                      if (value) {
+                        pageNotifier.setBookingPage(BookingPage.admin);
+                        isEdit
+                            ? displayToastWithContext(
+                                TypeMsg.msg, BookingTextConstants.editedRoom)
+                            : displayToastWithContext(
+                                TypeMsg.msg, BookingTextConstants.addedRoom);
+                      } else {
+                        isEdit
+                            ? displayToastWithContext(TypeMsg.error,
+                                BookingTextConstants.editionError)
+                            : displayToastWithContext(TypeMsg.error,
+                                BookingTextConstants.addingError);
+                      }
+                    });
+                  },
                   child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.only(top: 8, bottom: 12),
@@ -93,29 +136,6 @@ class AddEditRoomPage extends HookConsumerWidget {
                               color: Colors.white,
                               fontSize: 25,
                               fontWeight: FontWeight.bold))),
-                  onTap: () {
-                    tokenExpireWrapper(ref, () async {
-                      Room newRoom =
-                          Room(id: isEdit ? room.id : '', name: name.text);
-                      final value = isEdit
-                          ? await roomListNotifier.updateRoom(newRoom)
-                          : await roomListNotifier.addRoom(newRoom);
-                      if (value) {
-                        pageNotifier.setBookingPage(BookingPage.admin);
-                        isEdit
-                            ? displayToastWithContext(
-                                TypeMsg.msg, BookingTextConstants.editedRoom)
-                            : displayToastWithContext(
-                                TypeMsg.msg, BookingTextConstants.addedRoom);
-                      } else {
-                        isEdit
-                            ? displayToastWithContext(TypeMsg.error,
-                                BookingTextConstants.editionError)
-                            : displayToastWithContext(TypeMsg.error,
-                                BookingTextConstants.addingError);
-                      }
-                    });
-                  },
                 ),
                 const SizedBox(height: 30),
               ],
