@@ -122,12 +122,18 @@ class EditUserPage extends HookConsumerWidget {
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
-                                      TypeMsg.msg, SettingsTextConstants.updatedProfilePicture);
+                                      TypeMsg.msg,
+                                      SettingsTextConstants
+                                          .updatedProfilePicture);
                                 } else {
-                                  displayToastWithContext(TypeMsg.error, SettingsTextConstants.tooHeavyProfilePicture);
+                                  displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants
+                                          .tooHeavyProfilePicture);
                                 }
                               } else {
-                                displayToastWithContext(TypeMsg.error, SettingsTextConstants.errorProfilePicture);
+                                displayToastWithContext(TypeMsg.error,
+                                    SettingsTextConstants.errorProfilePicture);
                               }
                             },
                             child: Container(
@@ -171,12 +177,18 @@ class EditUserPage extends HookConsumerWidget {
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
-                                      TypeMsg.msg, SettingsTextConstants.updatedProfilePicture);
+                                      TypeMsg.msg,
+                                      SettingsTextConstants
+                                          .updatedProfilePicture);
                                 } else {
-                                  displayToastWithContext(TypeMsg.error, SettingsTextConstants.tooHeavyProfilePicture);
+                                  displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants
+                                          .tooHeavyProfilePicture);
                                 }
                               } else {
-                                displayToastWithContext(TypeMsg.error, SettingsTextConstants.errorProfilePicture);
+                                displayToastWithContext(TypeMsg.error,
+                                    SettingsTextConstants.errorProfilePicture);
                               }
                             },
                             child: Container(
@@ -220,9 +232,14 @@ class EditUserPage extends HookConsumerWidget {
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
-                                      TypeMsg.msg, SettingsTextConstants.updatedProfilePicture);
+                                      TypeMsg.msg,
+                                      SettingsTextConstants
+                                          .updatedProfilePicture);
                                 } else {
-                                  displayToastWithContext(TypeMsg.error, SettingsTextConstants.errorProfilePicture);
+                                  displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants
+                                          .errorProfilePicture);
                                 }
                               }
                             },
@@ -267,8 +284,7 @@ class EditUserPage extends HookConsumerWidget {
                   );
                 }, error: (e, s) {
                   return const Center(
-                    child:
-                        Text(SettingsTextConstants.errorProfilePicture),
+                    child: Text(SettingsTextConstants.errorProfilePicture),
                   );
                 }),
                 const SizedBox(height: 50),
@@ -293,25 +309,28 @@ class EditUserPage extends HookConsumerWidget {
                     child: Text(
                       SettingsTextConstants.birthday,
                       style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey.shade500),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: Theme.of(context).colorScheme.tertiary,
+                      ),
                     ),
                   ),
                   Expanded(
                     child: AbsorbPointer(
                       child: TextFormField(
                         controller: dateController,
-                        decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(10),
                           isDense: true,
                           enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey)),
-                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color:
+                                      Theme.of(context).colorScheme.tertiary)),
+                          focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue)),
-                          errorBorder: UnderlineInputBorder(
+                          errorBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.red)),
-                          border: UnderlineInputBorder(
+                          border: const UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color.fromARGB(255, 158, 158, 158),
                             ),
@@ -323,10 +342,10 @@ class EditUserPage extends HookConsumerWidget {
                           }
                           return null;
                         },
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                     ),
@@ -366,9 +385,10 @@ class EditUserPage extends HookConsumerWidget {
                       child: Text(
                         SettingsTextConstants.floor,
                         style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.grey.shade500),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: Theme.of(context).colorScheme.tertiary,
+                        ),
                       ),
                     ),
                     Expanded(
@@ -378,19 +398,27 @@ class EditUserPage extends HookConsumerWidget {
                         hint: Text(
                           SettingsTextConstants.floor,
                           style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey.shade500),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            color: Theme.of(context).colorScheme.tertiary,
+                          ),
                         ),
                         onChanged: (value) {
                           floorController.text = value.toString();
                         },
                         style: TextStyle(
-                            fontSize: 20, color: Colors.grey.shade800),
-                        decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.all(10),
+                          fontSize: 20,
+                          color: Theme.of(context).colorScheme.tertiary,
+                        ),
+                        decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(10),
                             isDense: true,
-                            focusedBorder: UnderlineInputBorder(
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .tertiary)),
+                            focusedBorder: const UnderlineInputBorder(
                                 borderSide:
                                     BorderSide(color: Color(0xFFfb6d10)))),
                       ),
@@ -464,10 +492,10 @@ class EditUserPage extends HookConsumerWidget {
         builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Color(0xFFfb6d10),
-                onPrimary: Colors.white,
-                surface: Colors.white,
+              colorScheme: ColorScheme.light(
+                primary: const Color(0xFFfb6d10),
+                onPrimary: Theme.of(context).scaffoldBackgroundColor,
+                surface: Theme.of(context).scaffoldBackgroundColor,
                 onSurface: Colors.black,
               ),
               dialogBackgroundColor: Colors.white,

@@ -82,12 +82,18 @@ class AddLoanerPage extends HookConsumerWidget {
                                         children: [
                                           Text(
                                             capitalize(e.name),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontSize: 18,
-                                                fontWeight: FontWeight.w500),
+                                                fontWeight: FontWeight.w500,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .tertiary),
                                           ),
-                                          const HeroIcon(HeroIcons.plus,
-                                              size: 25, color: Colors.black)
+                                          HeroIcon(HeroIcons.plus,
+                                              size: 25,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .tertiary)
                                         ],
                                       ),
                                     ),

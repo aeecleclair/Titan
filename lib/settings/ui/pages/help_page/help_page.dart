@@ -47,20 +47,20 @@ class HelpPage extends HookConsumerWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 12),
                       decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.tertiary,
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .tertiary
+                                    .withOpacity(0.2),
                                 blurRadius: 10,
                                 offset: const Offset(0, 5))
                           ]),
-                      child: Row(
-                        children: const [
-                          HeroIcon(HeroIcons.trash,
-                              color: Colors.white, size: 20),
-                        ],
-                      ),
+                      child: HeroIcon(HeroIcons.trash,
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          size: 20),
                     ),
                   )
                 ],

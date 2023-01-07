@@ -52,9 +52,8 @@ class AdminHomePage extends ConsumerWidget {
         return false;
       },
       child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
+        decoration:
+            BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor),
         child: SafeArea(
           child: IgnorePointer(
             ignoring: controller.isCompleted,

@@ -52,17 +52,17 @@ class TopBar extends HookConsumerWidget {
                         page == SettingsPage.main
                             ? HeroIcons.bars3BottomLeft
                             : HeroIcons.chevronLeft,
-                        color: const Color.fromARGB(255, 0, 0, 0),
+                        color: Theme.of(context).colorScheme.tertiary,
                         size: 30,
                       ));
                 },
               ),
             ),
-            const Text(SettingsTextConstants.settings,
+            Text(SettingsTextConstants.settings,
                 style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.w700,
-                    color: Colors.black)),
+                    color: Theme.of(context).colorScheme.tertiary)),
             const SizedBox(
               width: 70,
             ),

@@ -26,19 +26,19 @@ class TopBar extends HookConsumerWidget {
                       onPressed: () {
                         controllerNotifier.toggle();
                       },
-                      icon: const HeroIcon(
+                      icon: HeroIcon(
                         HeroIcons.bars3BottomLeft,
-                        color: Colors.black,
+                        color: Theme.of(context).colorScheme.tertiary,
                         size: 30,
                       ));
                 },
               ),
             ),
-            const Text(HomeTextConstants.calendar,
+            Text(HomeTextConstants.calendar,
                 style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.w700,
-                    color: Colors.black)),
+                    color: Theme.of(context).colorScheme.tertiary)),
             const SizedBox(
               width: 70,
             ),

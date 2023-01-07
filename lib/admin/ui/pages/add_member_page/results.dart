@@ -33,7 +33,10 @@ class MemberResults extends HookConsumerWidget {
                           Expanded(
                             child: Text(
                               e.getName(),
-                              style: const TextStyle(fontSize: 15),
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color:
+                                      Theme.of(context).colorScheme.tertiary),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -64,7 +67,11 @@ class MemberResults extends HookConsumerWidget {
                                       });
                                     }
                                   },
-                                  icon: const Icon(Icons.add))
+                                  icon: Icon(
+                                    Icons.add,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
+                                  ))
                             ],
                           ),
                         ],

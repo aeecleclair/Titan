@@ -39,7 +39,7 @@ class ModulesPage extends HookConsumerWidget {
                   offset: const Offset(0, 2), // changes position of shadow
                 ),
               ],
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Container(
@@ -48,15 +48,15 @@ class ModulesPage extends HookConsumerWidget {
                 children: [
                   HeroIcon(
                     module.icon,
-                    color: Colors.grey.shade700,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                   const SizedBox(
                     width: 20,
                   ),
                   Text(
                     module.name,
-                    style: const TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.tertiary,
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
                     ),
@@ -65,14 +65,15 @@ class ModulesPage extends HookConsumerWidget {
                   const Spacer(),
                   Checkbox(
                     value: modules.contains(module),
-                    activeColor: Colors.grey.shade700,
-                    onChanged: (bool? value) {
+                    activeColor: Theme.of(context).colorScheme.tertiary,
+                    onChanged: (_) {
                       modulesNotifier.toggleModule(module);
                     },
                   ),
-                  const HeroIcon(
+                  HeroIcon(
                     HeroIcons.chevronUpDown,
                     size: 30,
+                    color: Theme.of(context).colorScheme.tertiary,
                   )
                 ],
               ),

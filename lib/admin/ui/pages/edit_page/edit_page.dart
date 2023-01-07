@@ -103,10 +103,22 @@ class EditPage extends HookConsumerWidget {
                                   child: TextFormField(
                                     controller: name,
                                     cursorColor: ColorConstants.gradient1,
-                                    decoration: const InputDecoration(
-                                        contentPadding: EdgeInsets.all(10),
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w400,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary,
+                                    ),
+                                    decoration: InputDecoration(
+                                        contentPadding: const EdgeInsets.all(10),
                                         isDense: true,
-                                        focusedBorder: UnderlineInputBorder(
+                                        enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .tertiary)),
+                                        focusedBorder: const UnderlineInputBorder(
                                             borderSide: BorderSide(
                                                 color:
                                                     ColorConstants.gradient1))),
@@ -150,10 +162,22 @@ class EditPage extends HookConsumerWidget {
                                   child: TextFormField(
                                     controller: description,
                                     cursorColor: ColorConstants.gradient1,
-                                    decoration: const InputDecoration(
-                                        contentPadding: EdgeInsets.all(10),
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w400,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary,
+                                    ),
+                                    decoration: InputDecoration(
+                                        contentPadding: const EdgeInsets.all(10),
                                         isDense: true,
-                                        focusedBorder: UnderlineInputBorder(
+                                        enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .tertiary)),
+                                        focusedBorder: const UnderlineInputBorder(
                                             borderSide: BorderSide(
                                                 color:
                                                     ColorConstants.gradient1))),
@@ -181,10 +205,11 @@ class EditPage extends HookConsumerWidget {
                             const SizedBox(
                               width: 20,
                             ),
-                            const Text(
+                            Text(
                               "${AdminTextConstants.members} :",
                               style: TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.bold),
+                                  fontSize: 25, fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).colorScheme.tertiary),
                             ),
                             GestureDetector(
                               onTap: () {

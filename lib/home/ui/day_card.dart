@@ -42,18 +42,18 @@ class DayCard extends HookConsumerWidget {
             end: Alignment.bottomRight,
             colors: isToday
                 ? [
-                    HomeColorConstants.gradient1,
-                    HomeColorConstants.gradient2,
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).colorScheme.secondary,
                   ]
                 : [
-                    Colors.white,
-                    Colors.grey.shade100,
+                    Theme.of(context).backgroundColor,
+                    Theme.of(context).colorScheme.surface,
                   ],
           ),
           boxShadow: [
             BoxShadow(
               color: isToday
-                  ? HomeColorConstants.gradient2.withOpacity(0.2)
+                  ? Theme.of(context).colorScheme.secondary.withOpacity(0.2)
                   : Colors.grey.withOpacity(0.2),
               spreadRadius: 5,
               blurRadius: 10,

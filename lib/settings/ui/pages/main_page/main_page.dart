@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/providers/logs_provider.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
+import 'package:myecl/settings/ui/pages/main_page/dark_mode_item.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -66,10 +67,12 @@ class MainPage extends HookConsumerWidget {
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.white.withOpacity(0.5),
+                            color: Theme.of(context)
+                                .scaffoldBackgroundColor
+                                .withOpacity(0.5),
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(-2, -3),
@@ -86,10 +89,12 @@ class MainPage extends HookConsumerWidget {
                                 ),
                                 Text(
                                   me.nickname,
-                                  style: const TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary),
                                 ),
                               ],
                             ),
@@ -98,9 +103,9 @@ class MainPage extends HookConsumerWidget {
                           ),
                           Text(
                             "${me.firstname} ${me.name}",
-                            style: const TextStyle(
-                              fontSize: 20,
-                            ),
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Theme.of(context).colorScheme.tertiary),
                           ),
                         ],
                       ),
@@ -138,12 +143,14 @@ class MainPage extends HookConsumerWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 capitalize(e.name),
-                                style: const TextStyle(
-                                    color: Colors.white,
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
-                            backgroundColor: Colors.black)),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.tertiary)),
                   )
                   .toList(),
               const SizedBox(
@@ -158,13 +165,13 @@ class MainPage extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Column(
               children: [
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(SettingsTextConstants.account,
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
-                          color: Colors.black)),
+                          color: Theme.of(context).colorScheme.tertiary)),
                 ),
                 const SizedBox(
                   height: 30,
@@ -174,8 +181,10 @@ class MainPage extends HookConsumerWidget {
                   onTap: () {
                     pageNotifier.setSettingsPage(SettingsPage.edit);
                   },
-                  child: const Text(SettingsTextConstants.editAccount,
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
+                  child: Text(SettingsTextConstants.editAccount,
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.tertiary)),
                 ),
                 const SizedBox(
                   height: 30,
@@ -190,19 +199,21 @@ class MainPage extends HookConsumerWidget {
                           TypeMsg.msg, SettingsTextConstants.icalCopied);
                     });
                   },
-                  child: const Text(SettingsTextConstants.eventsIcal,
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
+                  child: Text(SettingsTextConstants.eventsIcal,
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.tertiary)),
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(SettingsTextConstants.security,
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
-                          color: Colors.black)),
+                          color: Theme.of(context).colorScheme.tertiary)),
                 ),
                 const SizedBox(
                   height: 30,
@@ -212,19 +223,21 @@ class MainPage extends HookConsumerWidget {
                   onTap: () {
                     pageNotifier.setSettingsPage(SettingsPage.changePassword);
                   },
-                  child: const Text(SettingsTextConstants.editPassword,
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
+                  child: Text(SettingsTextConstants.editPassword,
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.tertiary)),
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(SettingsTextConstants.help,
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
-                          color: Colors.black)),
+                          color: Theme.of(context).colorScheme.tertiary)),
                 ),
                 // const SizedBox(
                 //   height: 30,
@@ -235,7 +248,7 @@ class MainPage extends HookConsumerWidget {
                 //     // pageNotifier.setSettingsPage(SettingsPage.help);
                 //   },
                 //   child: const Text(SettingsTextConstants.askHelp,
-                //       style: TextStyle(fontSize: 16, color: Colors.black)),
+                //       style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.tertiary)),
                 // ),
                 // const SizedBox(
                 //   height: 30,
@@ -246,7 +259,7 @@ class MainPage extends HookConsumerWidget {
                 //     // pageNotifier.setSettingsPage(SettingsPage.help);
                 //   },
                 //   child: const Text(SettingsTextConstants.repportBug,
-                //       style: TextStyle(fontSize: 16, color: Colors.black)),
+                //       style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.tertiary)),
                 // ),
                 const SizedBox(
                   height: 30,
@@ -256,19 +269,21 @@ class MainPage extends HookConsumerWidget {
                   onTap: () {
                     pageNotifier.setSettingsPage(SettingsPage.logs);
                   },
-                  child: const Text(SettingsTextConstants.logs,
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
+                  child: Text(SettingsTextConstants.logs,
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.tertiary)),
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(SettingsTextConstants.personalisation,
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
-                          color: Colors.black)),
+                          color: Theme.of(context).colorScheme.tertiary)),
                 ),
                 // const SizedBox(
                 //   height: 30,
@@ -279,19 +294,12 @@ class MainPage extends HookConsumerWidget {
                 //     // pageNotifier.setSettingsPage(SettingsPage.help);
                 //   },
                 //   child: const Text(SettingsTextConstants.notifications,
-                //       style: TextStyle(fontSize: 16, color: Colors.black)),
+                //       style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.tertiary)),
                 // ),
-                // const SizedBox(
-                //   height: 30,
-                // ),
-                // SettingsItem(
-                //   icon: HeroIcons.moon,
-                //   onTap: () {
-                //     // pageNotifier.setSettingsPage(SettingsPage.help);
-                //   },
-                //   child: const Text(SettingsTextConstants.darkMode,
-                //       style: TextStyle(fontSize: 16, color: Colors.black)),
-                // ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const DarkModeItem(),
                 const SizedBox(
                   height: 30,
                 ),
@@ -300,19 +308,21 @@ class MainPage extends HookConsumerWidget {
                   onTap: () {
                     pageNotifier.setSettingsPage(SettingsPage.modules);
                   },
-                  child: const Text(SettingsTextConstants.modules,
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
+                  child: Text(SettingsTextConstants.modules,
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.tertiary)),
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(SettingsTextConstants.personalData,
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
-                          color: Colors.black)),
+                          color: Theme.of(context).colorScheme.tertiary)),
                 ),
                 const SizedBox(
                   height: 30,
@@ -340,8 +350,10 @@ class MainPage extends HookConsumerWidget {
                           );
                         });
                   },
-                  child: const Text(SettingsTextConstants.detelePersonalData,
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
+                  child: Text(SettingsTextConstants.detelePersonalData,
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.tertiary)),
                 ),
                 const SizedBox(
                   height: 60,
@@ -350,15 +362,15 @@ class MainPage extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("${SettingsTextConstants.version} $titanVersion",
-                          style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black)),
-                      const Text(SettingsTextConstants.hyperionUrl,
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
-                              color: Colors.black)),
+                              color: Theme.of(context).colorScheme.tertiary)),
+                      Text(SettingsTextConstants.hyperionUrl,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).colorScheme.tertiary)),
                     ]),
                 const SizedBox(
                   height: 20,

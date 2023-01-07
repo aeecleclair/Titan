@@ -15,13 +15,16 @@ class UserUi extends HookConsumerWidget {
     return Container(
         height: 55,
         alignment: Alignment.centerLeft,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: Text(
                 user.getName(),
-                style: const TextStyle(fontSize: 15),
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Theme.of(context).colorScheme.tertiary),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -29,8 +32,11 @@ class UserUi extends HookConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [ColorConstants.background2, Colors.black],
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.tertiary.withOpacity(0.8),
+                      Theme.of(context).colorScheme.tertiary
+                    ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -42,10 +48,10 @@ class UserUi extends HookConsumerWidget {
                   ],
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
-                child: const HeroIcon(
+                child: HeroIcon(
                   HeroIcons.trash,
                   size: 20,
-                  color: Colors.white,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                 ),
               ),
               onTap: () {
