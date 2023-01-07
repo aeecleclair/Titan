@@ -24,6 +24,7 @@ class AddEditBookingPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final page = ref.watch(bookingPageProvider);
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
@@ -513,8 +514,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   id: isEdit ? booking.id : "",
                                   reason: motif.text,
                                   start: DateTime.parse(
-                                      processDateBack(
-                                      start.value.text)),
+                                      processDateBack(start.value.text)),
                                   end: DateTime.parse(
                                       processDateBack(end.value.text)),
                                   note: note.text,
@@ -528,7 +528,12 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   : await bookingsNotifier
                                       .addBooking(newBooking);
                               if (value) {
-                                pageNotifier.setBookingPage(BookingPage.main);
+                                if (page == BookingPage.addEditBooking) {
+                                  pageNotifier.setBookingPage(BookingPage.main);
+                                } else {
+                                  pageNotifier
+                                      .setBookingPage(BookingPage.admin);
+                                }
                                 if (isEdit) {
                                   await usersBookingsNotifier
                                       .updateBooking(newBooking);

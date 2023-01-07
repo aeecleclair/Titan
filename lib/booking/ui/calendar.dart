@@ -1,4 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
@@ -20,38 +22,68 @@ class Calendar extends HookConsumerWidget {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return AlertDialog(
-                  title: Text(appointmentDetails.subject,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      )),
-                  content: SizedBox(
-                    height: 120,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          formatDates(
-                              appointmentDetails.startTime,
-                              appointmentDetails.endTime,
-                              appointmentDetails.isAllDay),
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            color: Colors.grey.shade400,
-                            fontSize: 18,
-                          ),
+              return Dialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        height: 220 +
+                            (appointmentDetails.notes!.length / 30 - 5) * 15,
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AutoSizeText(appointmentDetails.subject,
+                                maxLines: 2,
+                                style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black)),
+                            const SizedBox(height: 10),
+                            Text(
+                              formatDates(
+                                  appointmentDetails.startTime,
+                                  appointmentDetails.endTime,
+                                  appointmentDetails.isAllDay),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.grey.shade400,
+                                fontSize: 15,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(appointmentDetails.notes ?? "",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w400, fontSize: 15)),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(appointmentDetails.notes ?? "",
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 15)),
-                      ],
-                    ),
+                      ),
+                      Positioned(
+                          top: -10,
+                          right: -10,
+                          child: GestureDetector(
+                              onTap: () => Navigator.pop(context),
+                              child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  padding: const EdgeInsets.all(7),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.grey.shade500
+                                                .withOpacity(0.3),
+                                            blurRadius: 5,
+                                            spreadRadius: 1)
+                                      ],
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: const HeroIcon(
+                                    HeroIcons.xMark,
+                                    size: 20,
+                                  ))))
+                    ],
                   ));
             });
       }
@@ -144,7 +176,7 @@ _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
         startTimeZone: "Europe/Paris",
         endTimeZone: "Europe/Paris",
         notes: e.note,
-        color: const Color.fromARGB(255, 189, 80, 78),
+        color: generateColor(e.room.id),
         recurrenceRule: e.recurrenceRule));
   }).toList();
   return _AppointmentDataSource(appointments);

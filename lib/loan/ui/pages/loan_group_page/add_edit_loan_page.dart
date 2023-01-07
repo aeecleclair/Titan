@@ -6,6 +6,7 @@ import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
+import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
@@ -33,6 +34,7 @@ class AddEditLoanPage extends HookConsumerWidget {
     final selectedItemsNotifier = ref.watch(editSelectedListProvider.notifier);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loan = ref.watch(loanProvider);
+    final loaner = ref.watch(loanerProvider);
     final isEdit = loan.id != Loan.empty().id;
     final borrower = useState(loan.borrower);
     final note = useTextEditingController(text: loan.notes);
@@ -246,7 +248,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                                   .toList();
                               if (selected.isNotEmpty) {
                                 Loan newLoan = Loan(
-                                  loaner: loan.loaner,
+                                  loaner: isEdit ? loan.loaner : loaner,
                                   items: selected,
                                   borrower: borrower.value,
                                   caution: caution.text.isNotEmpty

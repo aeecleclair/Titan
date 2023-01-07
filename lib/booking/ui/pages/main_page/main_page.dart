@@ -9,9 +9,8 @@ import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
-import 'package:myecl/booking/ui/pages/main_page/calendar.dart';
+import 'package:myecl/booking/ui/calendar.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
@@ -147,23 +146,14 @@ class MainPage extends HookConsumerWidget {
                             pageNotifier
                                 .setBookingPage(BookingPage.addEditBooking);
                           },
-                          onReturn: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return CustomDialogBox(
-                                    title: BookingTextConstants.deleting,
-                                    descriptions:
-                                        BookingTextConstants.deletingBooking,
-                                    onYes: () {},
-                                  );
-                                });
-                          },
                           onInfo: () {
                             bookingNotifier.setBooking(e);
                             pageNotifier.setBookingPage(
                                 BookingPage.detailBookingFromMain);
                           },
+                          onConfirm: () {},
+                          onDecline: () {},
+                          onCopy: () {},
                         );
                       }
                     },
