@@ -207,7 +207,7 @@ class EditPage extends HookConsumerWidget {
                             ),
                           ),
                           onTap: () async {
-                            tokenExpireWrapper(ref, () async {
+                            await tokenExpireWrapper(ref, () async {
                               Group newGroup = g[0].copyWith(
                                   name: name.text,
                                   description: description.text);

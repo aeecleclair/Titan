@@ -90,7 +90,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                         color: Colors.white,
                       )),
                   onTap: () async {
-                    tokenExpireWrapper(ref, () async {
+                    await tokenExpireWrapper(ref, () async {
                       Room newRoom =
                           Room(id: isEdit ? room.id : '', name: name.text);
                       final value = isEdit

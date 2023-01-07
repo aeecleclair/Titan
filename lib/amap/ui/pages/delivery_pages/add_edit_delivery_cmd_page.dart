@@ -170,7 +170,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                     deliveryDate:
                                         DateTime.parse(processDateBack(date)),
                                     locked: false);
-                                tokenExpireWrapper(ref, () async {
+                                await tokenExpireWrapper(ref, () async {
                                   final value =
                                       await deliveryNotifier.addDelivery(del);
                                   if (value) {

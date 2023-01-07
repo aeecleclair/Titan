@@ -507,7 +507,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidRoom);
                           } else {
-                            tokenExpireWrapper(ref, () async {
+                            await tokenExpireWrapper(ref, () async {
                               String recurrenceRule = "";
                               if (recurrent.value) {
                                 RecurrenceProperties recurrence =

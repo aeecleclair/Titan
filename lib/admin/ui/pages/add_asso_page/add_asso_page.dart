@@ -158,7 +158,7 @@ class AddAssoPage extends HookConsumerWidget {
                     ),
                   ),
                   onTap: () async {
-                    tokenExpireWrapper(ref, () async {
+                    await tokenExpireWrapper(ref, () async {
                       final value = await groupListNotifier.createGroup(
                           SimpleGroup(
                               name: name.text,

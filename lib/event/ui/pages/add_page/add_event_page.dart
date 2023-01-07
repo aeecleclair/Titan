@@ -488,7 +488,7 @@ class AddEventPage extends HookConsumerWidget {
                             displayToast(context, TypeMsg.error,
                                 EventTextConstants.invalidDates);
                           } else {
-                            tokenExpireWrapper(ref, () async {
+                            await tokenExpireWrapper(ref, () async {
                               String recurrenceRule = "";
                               String startString = start.text;
                               if (!startString.contains("/")) {

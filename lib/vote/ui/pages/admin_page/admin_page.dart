@@ -189,7 +189,7 @@ class AdminPage extends HookConsumerWidget {
                                     title: VoteTextConstants.resetVote,
                                     descriptions: "",
                                     onYes: () async {
-                                      tokenExpireWrapper(ref, () async {
+                                      await tokenExpireWrapper(ref, () async {
                                         final value =
                                             await statusNotifier.resetVote();
                                         ref

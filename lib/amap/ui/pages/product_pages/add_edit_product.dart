@@ -231,7 +231,7 @@ class AddEditProduct extends HookConsumerWidget {
                             category: cate,
                             quantity: 0,
                           );
-                          tokenExpireWrapper(ref, () async {
+                          await tokenExpireWrapper(ref, () async {
                             final value = isEdit
                                 ? await productsNotifier
                                     .updateProduct(newProduct)
