@@ -5,13 +5,12 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
-import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/booking/ui/calendar.dart';
+import 'package:myecl/booking/ui/pages/admin_page/list_booking.dart';
 import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
-import 'package:myecl/booking/ui/booking_card.dart';
-import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/refresher.dart';
 
@@ -24,8 +23,6 @@ class AdminPage extends HookConsumerWidget {
     final roomList = ref.watch(roomListProvider);
     final room = ref.watch(roomProvider);
     final roomNotifier = ref.watch(roomProvider.notifier);
-    final bookingListNotifier = ref.watch(bookingListProvider.notifier);
-    final bookingNotifier = ref.watch(bookingProvider.notifier);
     final bookings = ref.watch(bookingListProvider);
     final List<Booking> pendingBookings = [],
         confirmedBookings = [],
@@ -57,7 +54,34 @@ class AdminPage extends HookConsumerWidget {
         },
         child: Column(
           children: [
+            const SizedBox(height: 10),
+            SizedBox(
+                height: MediaQuery.of(context).size.height - 415,
+                child: const Calendar()),
             const SizedBox(height: 30),
+            if (pendingBookings.isEmpty &&
+                confirmedBookings.isEmpty &&
+                canceledBookings.isEmpty)
+              const Center(
+                child: Text(BookingTextConstants.noCurrentBooking,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ListBooking(
+              title: BookingTextConstants.pending,
+              bookings: pendingBookings,
+            ),
+            ListBooking(
+              title: BookingTextConstants.confirmed,
+              bookings: confirmedBookings,
+            ),
+            ListBooking(
+              title: BookingTextConstants.declined,
+              bookings: canceledBookings,
+            ),
+            const SizedBox(height: 10),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.0),
               child: Align(
@@ -119,185 +143,6 @@ class AdminPage extends HookConsumerWidget {
               },
             ),
             const SizedBox(height: 30),
-            if (pendingBookings.isEmpty &&
-                confirmedBookings.isEmpty &&
-                canceledBookings.isEmpty)
-              const Center(
-                child: Text(BookingTextConstants.noCurrentBooking,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)),
-              ),
-            if (pendingBookings.isNotEmpty)
-              Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(BookingTextConstants.pending,
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 205, 205, 205))),
-                    ),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 10),
-                        ...pendingBookings.map((e) => BookingCard(
-                              booking: e,
-                              isAdmin: true,
-                              isDetail: false,
-                              onEdit: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return CustomDialogBox(
-                                          title: BookingTextConstants.confirm,
-                                          descriptions:
-                                              BookingTextConstants.confirmBooking,
-                                          onYes: () async {
-                                            bookingListNotifier.toggleConfirmed(
-                                                e, Decision.approved);
-                                          });
-                                    });
-                              },
-                              onReturn: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return CustomDialogBox(
-                                          title: BookingTextConstants.decline,
-                                          descriptions:
-                                              BookingTextConstants.declineBooking,
-                                          onYes: () async {
-                                            bookingListNotifier.toggleConfirmed(
-                                                e, Decision.declined);
-                                          });
-                                    });
-                              },
-                              onInfo: () {
-                                bookingNotifier.setBooking(e);
-                                pageNotifier.setBookingPage(
-                                    BookingPage.detailBookingFromAdmin);
-                              },
-                            )),
-                        const SizedBox(width: 10),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                ],
-              ),
-            if (confirmedBookings.isNotEmpty)
-              Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(BookingTextConstants.confirmed,
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 205, 205, 205))),
-                    ),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 10),
-                        ...confirmedBookings.map((e) => BookingCard(
-                              booking: e,
-                              isAdmin: true,
-                              isDetail: false,
-                              onEdit: () {},
-                              onReturn: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return CustomDialogBox(
-                                          title: BookingTextConstants.decline,
-                                          descriptions:
-                                              BookingTextConstants.declineBooking,
-                                          onYes: () async {
-                                            bookingListNotifier.toggleConfirmed(
-                                                e, Decision.declined);
-                                          });
-                                    });
-                              },
-                              onInfo: () {
-                                bookingNotifier.setBooking(e);
-                                pageNotifier.setBookingPage(
-                                    BookingPage.detailBookingFromAdmin);
-                              },
-                            )),
-                        const SizedBox(width: 10),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                ],
-              ),
-            if (canceledBookings.isNotEmpty)
-              Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(BookingTextConstants.declined,
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 205, 205, 205))),
-                    ),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 10),
-                        ...canceledBookings.map((e) => BookingCard(
-                              booking: e,
-                              isAdmin: true,
-                              isDetail: false,
-                              onEdit: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return CustomDialogBox(
-                                          title: BookingTextConstants.confirm,
-                                          descriptions:
-                                              BookingTextConstants.confirmBooking,
-                                          onYes: () async {
-                                            bookingListNotifier.toggleConfirmed(
-                                                e, Decision.approved);
-                                          });
-                                    });
-                              },
-                              onReturn: () {},
-                              onInfo: () {
-                                bookingNotifier.setBooking(e);
-                                pageNotifier.setBookingPage(
-                                    BookingPage.detailBookingFromAdmin);
-                              },
-                            )),
-                        const SizedBox(width: 10),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                ],
-              )
           ],
         ),
       ),

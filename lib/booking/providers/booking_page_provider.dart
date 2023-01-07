@@ -4,6 +4,7 @@ enum BookingPage {
   main,
   admin,
   addEditBooking,
+  addEditBookingFromAdmin,
   addEditRoom,
   detailBookingFromMain,
   detailBookingFromAdmin
