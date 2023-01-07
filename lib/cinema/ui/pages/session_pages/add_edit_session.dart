@@ -14,6 +14,7 @@ import 'package:myecl/loan/ui/text_entry.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AddEditSessionPage extends HookConsumerWidget {
   const AddEditSessionPage({super.key});
@@ -169,13 +170,40 @@ class AddEditSessionPage extends HookConsumerWidget {
                   controller: overview,
                 ),
                 const SizedBox(height: 50),
-                GestureDetector(
-                  onTap: () {
+                ShrinkButton(
+                  waitChild: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(top: 8, bottom: 12),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset:
+                              const Offset(3, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: const Center(
+                      child: SizedBox(
+                        height: 30,
+                        width: 30,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  onTap: () async {
                     if (key.currentState == null) {
                       return;
                     }
                     if (key.currentState!.validate()) {
-                      tokenExpireWrapper(ref, () async {
+                      await tokenExpireWrapper(ref, () async {
                         Session newSession = Session(
                           name: name.text,
                           duration: parseDuration(duration.text),
