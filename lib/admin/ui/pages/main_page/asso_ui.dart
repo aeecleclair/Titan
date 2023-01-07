@@ -4,10 +4,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AssoUi extends HookConsumerWidget {
   final SimpleGroup group;
-  final void Function() onEdit, onDelete;
+  final void Function() onEdit;
+  final Future Function() onDelete;
   final bool isLoaner;
   const AssoUi(
       {super.key,
@@ -93,35 +95,61 @@ class AssoUi extends HookConsumerWidget {
               const SizedBox(
                 width: 10,
               ),
-              GestureDetector(
-                onTap: onDelete,
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        ColorConstants.gradient1,
-                        ColorConstants.gradient2,
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: ColorConstants.gradient2.withOpacity(0.3),
-                        spreadRadius: 2,
-                        blurRadius: 4,
-                        offset: const Offset(2, 3),
+              ShrinkButton(
+                  waitChild: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          ColorConstants.gradient1,
+                          ColorConstants.gradient2,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                    ],
-                    borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorConstants.gradient2.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 4,
+                          offset: const Offset(2, 3),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                  child: const HeroIcon(
-                    HeroIcons.xMark,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+                  onTap: onDelete,
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          ColorConstants.gradient1,
+                          ColorConstants.gradient2,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorConstants.gradient2.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 4,
+                          offset: const Offset(2, 3),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const HeroIcon(
+                      HeroIcons.xMark,
+                      color: Colors.white,
+                    ),
+                  )),
             ],
           )
         ],

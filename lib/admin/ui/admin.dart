@@ -36,9 +36,6 @@ class AdminHomePage extends ConsumerWidget {
           case AdminPage.addAsso:
             pageNotifier.setAdminPage(AdminPage.main);
             break;
-          case AdminPage.addMember:
-            pageNotifier.setAdminPage(AdminPage.edit);
-            break;
           case AdminPage.edit:
             pageNotifier.setAdminPage(AdminPage.main);
             break;
