@@ -11,6 +11,7 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/repositories/profile_picture_repository.dart';
@@ -219,8 +220,8 @@ class EditUserPage extends HookConsumerWidget {
                           right: 60,
                           child: GestureDetector(
                             onTap: () async {
-                              final value = await profilePictureNotifier
-                                  .cropImage();
+                              final value =
+                                  await profilePictureNotifier.cropImage();
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
@@ -403,9 +404,34 @@ class EditUserPage extends HookConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 50),
-                GestureDetector(
-                  onTap: () {
-                    tokenExpireWrapper(ref, () async {
+                ShrinkButton(
+                  waitChild: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(
+                        bottom: 12, top: 8, right: 12, left: 12),
+                    decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFFfb6d10), Color(0xffeb3e1b)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xffeb3e1b).withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(20)),
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  onTap: () async {
+                    await tokenExpireWrapper(ref, () async {
                       final value =
                           await asyncUserNotifier.updateMe(user.copyWith(
                         birthday: processDateBack(dateController.value.text),
@@ -454,7 +480,7 @@ class EditUserPage extends HookConsumerWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 70),
+                const SizedBox(height: 30),
               ])),
         ));
   }

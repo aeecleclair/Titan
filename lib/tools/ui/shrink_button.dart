@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ShrinkButton extends StatefulWidget {
-  final Widget child, waitChild;
+  final Container child;
+  final Widget waitChild;
   final Future Function() onTap;
 
   const ShrinkButton(
@@ -11,10 +12,10 @@ class ShrinkButton extends StatefulWidget {
       this.waitChild = const SizedBox()});
 
   @override
-  _CoreButtonState createState() => _CoreButtonState();
+  ShrinkButtonState createState() => ShrinkButtonState();
 }
 
-class _CoreButtonState extends State<ShrinkButton>
+class ShrinkButtonState extends State<ShrinkButton>
     with SingleTickerProviderStateMixin {
   static const clickAnimationDurationMillis = 100;
 

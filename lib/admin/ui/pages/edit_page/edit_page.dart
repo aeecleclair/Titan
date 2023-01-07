@@ -14,6 +14,7 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class EditPage extends HookConsumerWidget {
@@ -265,7 +266,58 @@ class EditPage extends HookConsumerWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        GestureDetector(
+                        ShrinkButton(
+                          waitChild: Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.symmetric(vertical: 20),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [
+                                  ColorConstants.gradient1,
+                                  ColorConstants.gradient2,
+                                ],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      ColorConstants.gradient2.withOpacity(0.5),
+                                  blurRadius: 5,
+                                  offset: const Offset(2, 2),
+                                  spreadRadius: 2,
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white),
+                              ),
+                            ),
+                          ),
+                          onTap: () async {
+                            await tokenExpireWrapper(ref, () async {
+                              Group newGroup = g[0].copyWith(
+                                  name: name.text,
+                                  description: description.text);
+                              groupNotifier.setGroup(newGroup);
+                              final value = await groupListNotifier
+                                  .updateGroup(newGroup.toSimpleGroup());
+                              if (value) {
+                                pageNotifier.setAdminPage(AdminPage.asso);
+                                displayToastWithContext(TypeMsg.msg,
+                                    AdminTextConstants.updatedAssociation);
+                              } else {
+                                displayToastWithContext(TypeMsg.msg,
+                                    AdminTextConstants.updatingError);
+                              }
+                            });
+                          },
                           child: Container(
                             width: double.infinity,
                             margin: const EdgeInsets.symmetric(vertical: 20),
@@ -298,25 +350,7 @@ class EditPage extends HookConsumerWidget {
                               ),
                             ),
                           ),
-                          onTap: () async {
-                            tokenExpireWrapper(ref, () async {
-                              Group newGroup = g[0].copyWith(
-                                  name: name.text,
-                                  description: description.text);
-                              groupNotifier.setGroup(newGroup);
-                              final value = await groupListNotifier
-                                  .updateGroup(newGroup.toSimpleGroup());
-                              if (value) {
-                                pageNotifier.setAdminPage(AdminPage.asso);
-                                displayToastWithContext(TypeMsg.msg,
-                                    AdminTextConstants.updatedAssociation);
-                              } else {
-                                displayToastWithContext(TypeMsg.msg,
-                                    AdminTextConstants.updatingError);
-                              }
-                            });
-                          },
-                        )
+                        ),
                       ]),
                     )
                   ]);
