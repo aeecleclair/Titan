@@ -38,7 +38,7 @@ dependencies:
   shared_preferences: ^2.0.15
   smooth_page_indicator: ^1.0.0+2
   syncfusion_flutter_calendar: ^20.1.50
-  syncfusion_flutter_xlsio: ^20.3.59-beta
+  syncfusion_flutter_xlsio: ^20.4.42-beta
   tuple: ^2.0.0
   universal_html: ^2.0.8
   uuid: ^3.0.6

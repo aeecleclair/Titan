@@ -776,7 +776,7 @@ packages:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.3.59"
+    version: "20.4.42"
   syncfusion_flutter_datepicker:
     dependency: transitive
     description:
@@ -790,14 +790,14 @@ packages:
       name: syncfusion_flutter_xlsio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.3.59-beta"
+    version: "20.4.42-beta"
   syncfusion_officecore:
     dependency: transitive
     description:
       name: syncfusion_officecore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.3.59-beta"
+    version: "20.4.42-beta"
   synchronized:
     dependency: transitive
     description:

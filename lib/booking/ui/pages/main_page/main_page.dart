@@ -13,6 +13,7 @@ import 'package:myecl/booking/ui/pages/main_page/calendar.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
