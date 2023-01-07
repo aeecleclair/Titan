@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/item_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
@@ -12,6 +11,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AddEditItemPage extends HookConsumerWidget {
   const AddEditItemPage({Key? key}) : super(key: key);
@@ -84,13 +84,40 @@ class AddEditItemPage extends HookConsumerWidget {
                   suffix: LoanTextConstants.days,
                 ),
                 const SizedBox(height: 50),
-                GestureDetector(
-                  onTap: () {
+                ShrinkButton(
+                  waitChild: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(top: 8, bottom: 12),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset:
+                              const Offset(3, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: const Center(
+                      child: SizedBox(
+                        height: 25,
+                        width: 25,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  onTap: () async {
                     if (key.currentState == null) {
                       return;
                     }
                     if (key.currentState!.validate()) {
-                      tokenExpireWrapper(ref, () async {
+                      await tokenExpireWrapper(ref, () async {
                         Item newItem = Item(
                             id: isEdit ? item.id : '',
                             name: name.text,
@@ -157,7 +184,7 @@ class AddEditItemPage extends HookConsumerWidget {
                               color: Colors.white,
                               fontSize: 25,
                               fontWeight: FontWeight.bold))),
-                )
+                ),
               ]),
             )
           ]),

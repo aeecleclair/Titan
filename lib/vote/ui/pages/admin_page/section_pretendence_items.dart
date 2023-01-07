@@ -104,8 +104,8 @@ class SectionPretendenceItems extends HookConsumerWidget {
                                             VotePage.addEditPretendance);
                                       });
                                     },
-                                    onDelete: () {
-                                      showDialog(
+                                    onDelete: () async {
+                                      await showDialog(
                                           context: context,
                                           builder: (context) {
                                             return CustomDialogBox(

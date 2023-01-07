@@ -67,7 +67,7 @@ class DetailPage extends HookConsumerWidget {
                               itemBuilder: (context, index) {
                                 return ProductCard(
                                   product: order.products[index],
-                                  onDelete: () {},
+                                  onDelete: () async {},
                                   onEdit: () {},
                                   showButton: false,
                                 );

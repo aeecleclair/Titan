@@ -142,8 +142,8 @@ class ChangePassPage extends HookConsumerWidget {
                         builder: (context) => CustomDialogBox(
                               descriptions:
                                   SettingsTextConstants.changingPassword,
-                              onYes: () {
-                                tokenExpireWrapper(ref,
+                              onYes: () async {
+                                await tokenExpireWrapper(ref,
                                     () async {
                                   final value =
                                       await userNotifier.changePassword(

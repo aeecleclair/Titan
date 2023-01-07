@@ -14,7 +14,6 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
 
 class EditPage extends HookConsumerWidget {
   const EditPage({Key? key}) : super(key: key);
@@ -31,7 +30,6 @@ class EditPage extends HookConsumerWidget {
     final simplegroupsGroupsNotifier =
         ref.watch(simpleGroupsGroupsProvider.notifier);
     final simplegroupsGroups = ref.watch(simpleGroupsGroupsProvider);
-
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -176,96 +174,6 @@ class EditPage extends HookConsumerWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            const Text(
-                              "${AdminTextConstants.members} :",
-                              style: TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.bold),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                usersNotifier.clear();
-                                pageNotifier.setAdminPage(AdminPage.addMember);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(7),
-                                decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                      colors: [
-                                        ColorConstants.gradient1,
-                                        ColorConstants.gradient2
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: ColorConstants.gradient2
-                                            .withOpacity(0.4),
-                                        offset: const Offset(2, 3),
-                                        blurRadius: 5)
-                                  ],
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                ),
-                                child: const HeroIcon(
-                                  HeroIcons.plus,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ...g[0].members.map((x) => UserUi(
-                            user: x,
-                            onDelete: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      CustomDialogBox(
-                                          descriptions: AdminTextConstants
-                                              .removeAssociationMember,
-                                          title: AdminTextConstants.deleting,
-                                          onYes: () async {
-                                            tokenExpireWrapper(ref, () async {
-                                              Group newGroup = g[0].copyWith(
-                                                  members: g[0]
-                                                      .members
-                                                      .where((element) =>
-                                                          element.id != x.id)
-                                                      .toList());
-                                              final value = await groupNotifier
-                                                  .deleteMember(newGroup, x);
-                                              if (value) {
-                                                simplegroupGroupsNotifier
-                                                    .setTData(newGroup.id,
-                                                        AsyncData([newGroup]));
-                                                pageNotifier.setAdminPage(
-                                                    AdminPage.edit);
-                                                displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    AdminTextConstants
-                                                        .updatedAssociation);
-                                              } else {
-                                                displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    AdminTextConstants
-                                                        .updatingError);
-                                              }
-                                            });
-                                          }));
-                            })),
-                        const SizedBox(
-                          height: 20,
-                        ),
                         ShrinkButton(
                           waitChild: Container(
                             width: double.infinity,
@@ -294,9 +202,7 @@ class EditPage extends HookConsumerWidget {
                               height: 20,
                               width: 20,
                               child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(Colors.white),
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -318,12 +224,43 @@ class EditPage extends HookConsumerWidget {
                               }
                             });
                           },
+                          child: Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.symmetric(vertical: 20),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [
+                                  ColorConstants.gradient1,
+                                  ColorConstants.gradient2,
+                                ],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      ColorConstants.gradient2.withOpacity(0.5),
+                                  blurRadius: 5,
+                                  offset: const Offset(2, 2),
+                                  spreadRadius: 2,
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: const Text(
+                              AdminTextConstants.edit,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            ),
+                          ),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        const SearchUser(
-                        ),
+                        const SearchUser(),
                       ]),
                     )
                   ]);

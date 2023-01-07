@@ -6,6 +6,7 @@ import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
@@ -115,9 +116,24 @@ class AdminPage extends HookConsumerWidget {
                                 color: Colors.black,
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                showDialog(
+                            ShrinkButton(
+                              waitChild: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Colors.black,
+                                ),
+                                child: const SizedBox(
+                                  height: 15,
+                                  width: 15,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              onTap: () async {
+                                await showDialog(
                                     context: context,
                                     builder: (context) => CustomDialogBox(
                                         title: VoteTextConstants.publish,
@@ -147,17 +163,33 @@ class AdminPage extends HookConsumerWidget {
                         ),
                       ),
                     if (status == Status.counting || status == Status.published)
-                      GestureDetector(
-                        onTap: () {
-                          showDialog(
+                      ShrinkButton(
+                        waitChild: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.black,
+                          ),
+                          child: const Center(
+                            child: SizedBox(
+                              height: 15,
+                              width: 15,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        onTap: () async {
+                          await showDialog(
                               context: context,
                               builder: (context) {
                                 return CustomDialogBox(
                                     title: VoteTextConstants.resetVote,
                                     descriptions: "",
                                     onYes: () async {
-                                      tokenExpireWrapper(ref,
-                                          () async {
+                                      await tokenExpireWrapper(ref, () async {
                                         final value =
                                             await statusNotifier.resetVote();
                                         ref
@@ -167,10 +199,13 @@ class AdminPage extends HookConsumerWidget {
                                         if (value) {
                                           showVotesNotifier.toggle(false);
                                           displayVoteToastWithContext(
-                                              TypeMsg.msg, VoteTextConstants.resetedVotes);
+                                              TypeMsg.msg,
+                                              VoteTextConstants.resetedVotes);
                                         } else {
                                           displayVoteToastWithContext(
-                                              TypeMsg.error, VoteTextConstants.errorResetingVotes);
+                                              TypeMsg.error,
+                                              VoteTextConstants
+                                                  .errorResetingVotes);
                                         }
                                       });
                                     });
@@ -237,16 +272,47 @@ class AdminPage extends HookConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 30.0, vertical: 50),
-                        child: GestureDetector(
-                          onTap: () {
-                            tokenExpireWrapper(ref, () async {
+                        child: ShrinkButton(
+                          waitChild: Container(
+                            padding: const EdgeInsets.only(top: 10, bottom: 12),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Colors.grey.shade900,
+                                      Colors.black
+                                    ]),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    spreadRadius: 5,
+                                    blurRadius: 10,
+                                    offset: const Offset(3, 3),
+                                  )
+                                ]),
+                            child: const Center(
+                              child: SizedBox(
+                                height: 15,
+                                width: 15,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          onTap: () async {
+                            await tokenExpireWrapper(ref, () async {
                               final value = await statusNotifier.countVote();
                               if (value) {
-                                displayVoteToastWithContext(
-                                    TypeMsg.msg, VoteTextConstants.votesCounted);
+                                displayVoteToastWithContext(TypeMsg.msg,
+                                    VoteTextConstants.votesCounted);
                               } else {
-                                displayVoteToastWithContext(
-                                    TypeMsg.error, VoteTextConstants.errorCountingVotes);
+                                displayVoteToastWithContext(TypeMsg.error,
+                                    VoteTextConstants.errorCountingVotes);
                               }
                             });
                           },
@@ -286,16 +352,45 @@ class AdminPage extends HookConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 30.0, vertical: 50),
-                        child: GestureDetector(
-                          onTap: () {
-                            tokenExpireWrapper(ref, () async {
+                        child: ShrinkButton(
+                          waitChild: Container(
+                            padding: const EdgeInsets.only(top: 10, bottom: 12),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    ColorConstants.gradient1,
+                                    ColorConstants.gradient2,
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: ColorConstants.gradient2
+                                        .withOpacity(0.2),
+                                    spreadRadius: 5,
+                                    blurRadius: 10,
+                                    offset: const Offset(3, 3),
+                                  )
+                                ]),
+                            child: const Center(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          onTap: () async {
+                            await tokenExpireWrapper(ref, () async {
                               final value = await statusNotifier.closeVote();
                               if (value) {
                                 displayVoteToastWithContext(
                                     TypeMsg.msg, VoteTextConstants.votesClosed);
                               } else {
-                                displayVoteToastWithContext(
-                                    TypeMsg.error, VoteTextConstants.errorClosingVotes);
+                                displayVoteToastWithContext(TypeMsg.error,
+                                    VoteTextConstants.errorClosingVotes);
                               }
                             });
                           },
@@ -337,9 +432,39 @@ class AdminPage extends HookConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 30.0, vertical: 50),
-                        child: GestureDetector(
-                          onTap: () {
-                            tokenExpireWrapper(ref, () async {
+                        child: ShrinkButton(
+                          waitChild: Container(
+                            padding: const EdgeInsets.only(top: 10, bottom: 12),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Colors.white,
+                                    Colors.grey.shade50,
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                                border:
+                                    Border.all(color: Colors.black, width: 2),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 5,
+                                    blurRadius: 10,
+                                    offset: const Offset(3, 3),
+                                  )
+                                ]),
+                            child: const Center(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          onTap: () async {
+                            await tokenExpireWrapper(ref, () async {
                               final value = await statusNotifier.openVote();
                               ref
                                   .watch(pretendanceListProvider.notifier)
@@ -348,8 +473,8 @@ class AdminPage extends HookConsumerWidget {
                                 displayVoteToastWithContext(
                                     TypeMsg.msg, VoteTextConstants.votesOpened);
                               } else {
-                                displayVoteToastWithContext(
-                                    TypeMsg.error, VoteTextConstants.errorOpeningVotes);
+                                displayVoteToastWithContext(TypeMsg.error,
+                                    VoteTextConstants.errorOpeningVotes);
                               }
                             });
                           },

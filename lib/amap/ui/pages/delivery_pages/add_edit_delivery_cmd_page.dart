@@ -11,6 +11,7 @@ import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/delivery_pages/product_ui_check.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AddEditDeliveryPage extends HookConsumerWidget {
   const AddEditDeliveryPage({Key? key}) : super(key: key);
@@ -24,8 +25,6 @@ class AddEditDeliveryPage extends HookConsumerWidget {
     final sortedProductsList = ref.watch(sortedByCategoryProductsProvider);
     final deliveryNotifier = ref.watch(deliveryListProvider.notifier);
     final selected = useState(List.generate(products.length, (index) => true));
-    // final selected = ref.watch(selectedListProvider);
-    // final selectedNotifier = ref.watch(selectedListProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -156,10 +155,10 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                         const SizedBox(
                           height: 30,
                         ),
-                        GestureDetector(
+                        ShrinkButton(
                             child: const GreenBtn(
                                 text: AMAPTextConstants.addDelivery),
-                            onTap: () {
+                            onTap: () async {
                               if (formKey.currentState!.validate()) {
                                 final date = dateController.value.text;
                                 final del = Delivery(
@@ -171,7 +170,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                     deliveryDate:
                                         DateTime.parse(processDateBack(date)),
                                     locked: false);
-                                tokenExpireWrapper(ref, () async {
+                                await tokenExpireWrapper(ref, () async {
                                   final value =
                                       await deliveryNotifier.addDelivery(del);
                                   if (value) {

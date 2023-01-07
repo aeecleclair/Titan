@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/ui/pages/add_asso_page/add_asso_page.dart';
 import 'package:myecl/admin/ui/pages/add_loaner_page/add_loaner_page.dart';
-import 'package:myecl/admin/ui/pages/add_member_page/add_member_page.dart';
 import 'package:myecl/admin/ui/pages/edit_page/edit_page.dart';
 import 'package:myecl/admin/ui/pages/main_page/main_page.dart';
 class PageSwitcher extends ConsumerWidget {
@@ -17,8 +16,6 @@ class PageSwitcher extends ConsumerWidget {
         return const MainPage();
       case AdminPage.addAsso:
         return const AddAssoPage();
-      case AdminPage.addMember:
-        return const AddMemberPage();
       case AdminPage.edit:
         return const EditPage();
       case AdminPage.addLoaner:

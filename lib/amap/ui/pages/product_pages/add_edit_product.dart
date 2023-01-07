@@ -12,6 +12,7 @@ import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/product_pages/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AddEditProduct extends HookConsumerWidget {
   const AddEditProduct({Key? key}) : super(key: key);
@@ -210,13 +211,13 @@ class AddEditProduct extends HookConsumerWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    GestureDetector(
+                    ShrinkButton(
                       child: GreenBtn(
                         text: isEdit
                             ? AMAPTextConstants.update
                             : AMAPTextConstants.add,
                       ),
-                      onTap: () {
+                      onTap: () async {
                         if (formKey.currentState!.validate()) {
                           String cate = categoryController ==
                                   AMAPTextConstants.createCategory
@@ -230,7 +231,7 @@ class AddEditProduct extends HookConsumerWidget {
                             category: cate,
                             quantity: 0,
                           );
-                          tokenExpireWrapper(ref, () async {
+                          await tokenExpireWrapper(ref, () async {
                             final value = isEdit
                                 ? await productsNotifier
                                     .updateProduct(newProduct)
