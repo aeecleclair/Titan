@@ -128,8 +128,8 @@ class MainPage extends HookConsumerWidget {
                             groupIdNotifier.setId(group.id);
                             pageNotifier.setAdminPage(AdminPage.edit);
                           },
-                          onDelete: () {
-                            showDialog(
+                          onDelete: () async {
+                            await showDialog(
                                 context: context,
                                 builder: (context) {
                                   return CustomDialogBox(

@@ -1,37 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ShrinkButton extends HookConsumerWidget {
-  final VoidCallback? onTap;
+class ShrinkButton extends StatefulWidget {
   final Widget child;
-  const ShrinkButton({Key? key, required this.onTap, required this.child})
-      : super(key: key);
+  final Widget waitChild;
+  final Future Function() onTap;
+
+  const ShrinkButton(
+      {super.key,
+      required this.child,
+      required this.onTap,
+      this.waitChild = const SizedBox()});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final animation = useAnimationController(
-      duration: const Duration(milliseconds: 100),
+  ShrinkButtonState createState() => ShrinkButtonState();
+}
+
+class ShrinkButtonState extends State<ShrinkButton>
+    with SingleTickerProviderStateMixin {
+  static const clickAnimationDurationMillis = 100;
+
+  double _scaleTransformValue = 1;
+  bool clicked = false;
+
+  // needed for the "click" tap effect
+  late final AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: clickAnimationDurationMillis),
       lowerBound: 0.0,
-      upperBound: 0.05,
-    );
+      upperBound: 0.1,
+    )..addListener(() {
+        setState(() => _scaleTransformValue = 1 - animationController.value);
+      });
+  }
 
-    void shrinkButtonSize() {
-      animation.forward();
-    }
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 
-    void restoreButtonSize() {
-      animation.reverse();
-    }
+  void _shrinkButtonSize() {
+    animationController.forward();
+  }
 
+  void _restoreButtonSize() {
+    animationController.reverse();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          onTap?.call();
-          shrinkButtonSize();
-          restoreButtonSize();
-        },
-        onTapDown: (_) => shrinkButtonSize(),
-        onTapCancel: restoreButtonSize,
-        child: Transform.scale(scale: 1 - animation.value, child: child));
+      behavior: HitTestBehavior.opaque,
+      onTap: () async {
+        if (clicked) return;
+        setState(() {
+          clicked = true;
+        });
+        _shrinkButtonSize();
+        widget.onTap().then((_) {
+          _restoreButtonSize();
+          setState(() {
+            clicked = false;
+          });
+        });
+      },
+      onTapDown: (_) {
+        _shrinkButtonSize();
+      },
+      onTapCancel: () {
+        _restoreButtonSize();
+      },
+      child: Transform.scale(
+          scale: _scaleTransformValue,
+          child: clicked ? widget.waitChild : widget.child),
+    );
   }
 }

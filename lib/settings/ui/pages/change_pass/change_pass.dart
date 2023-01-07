@@ -7,6 +7,7 @@ import 'package:myecl/settings/ui/pages/change_pass/test_entry_style.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class ChangePassPage extends HookConsumerWidget {
@@ -109,10 +110,34 @@ class ChangePassPage extends HookConsumerWidget {
               const SizedBox(
                 height: 60,
               ),
-              GestureDetector(
-                onTap: () {
+              ShrinkButton(
+                waitChild: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(bottom: 16, top: 12),
+                  decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFFfb6d10), Color(0xffeb3e1b)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xffeb3e1b).withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 7,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                onTap: () async {
                   if (key.currentState!.validate()) {
-                    showDialog(
+                    await showDialog(
                         context: context,
                         builder: (context) => CustomDialogBox(
                               descriptions:
