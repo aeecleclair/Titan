@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ShrinkButton extends StatefulWidget {
-  final Container child;
+  final Widget child;
   final Widget waitChild;
   final Future Function() onTap;
 
@@ -55,6 +55,7 @@ class ShrinkButtonState extends State<ShrinkButton>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () async {
         if (clicked) return;
         setState(() {

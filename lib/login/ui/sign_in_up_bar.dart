@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class SignUpBar extends StatelessWidget {
   const SignUpBar({
@@ -11,7 +12,7 @@ class SignUpBar extends StatelessWidget {
   }) : super(key: key);
 
   final String label;
-  final VoidCallback onPressed;
+  final Future Function() onPressed;
   final bool isLoading;
 
   @override
@@ -21,8 +22,7 @@ class SignUpBar extends StatelessWidget {
         child: Container(
             height: 50,
             alignment: Alignment.centerLeft,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
+            child: ShrinkButton(
               onTap: onPressed,
               child: Row(
                 children: [
@@ -31,17 +31,17 @@ class SignUpBar extends StatelessWidget {
                     style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
-                        color: Colors.white),
+                        color: ColorConstants.background2),
                   ),
                   Container(
                     margin: const EdgeInsets.only(left: 20),
                     child: isLoading
                         ? const CircularProgressIndicator(
-                            color: Colors.white,
+                            color: ColorConstants.gradient2,
                           )
                         : const Icon(
                             FontAwesomeIcons.rightLong,
-                            color: Colors.white,
+                            color: ColorConstants.gradient2,
                             size: 24.0,
                           ),
                   ),
@@ -60,15 +60,14 @@ class SignInBar extends StatelessWidget {
       : super(key: key);
 
   final String label;
-  final VoidCallback onPressed;
+  final Future Function() onPressed;
   final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 50,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
+      child: ShrinkButton(
         onTap: onPressed,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
