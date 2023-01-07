@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
@@ -39,10 +39,10 @@ class SignUpBar extends StatelessWidget {
                         ? const CircularProgressIndicator(
                             color: ColorConstants.gradient2,
                           )
-                        : const Icon(
-                            FontAwesomeIcons.rightLong,
-                            color: ColorConstants.gradient2,
-                            size: 24.0,
+                        : const HeroIcon(
+                            HeroIcons.arrowRight,
+                            color: Colors.white,
+                            size: 35.0,
                           ),
                   ),
                 ],
@@ -85,10 +85,10 @@ class SignInBar extends StatelessWidget {
                   ? const CircularProgressIndicator(
                       color: ColorConstants.gradient2,
                     )
-                  : const Icon(
-                      FontAwesomeIcons.rightLong,
+                  : const HeroIcon(
+                      HeroIcons.arrowRight,
                       color: ColorConstants.gradient2,
-                      size: 24.0,
+                      size: 35.0,
                     ),
             ),
           ],

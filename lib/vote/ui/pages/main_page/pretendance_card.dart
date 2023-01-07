@@ -205,7 +205,7 @@ class PretendanceCard extends HookConsumerWidget {
                                 },
                                 loading: () =>
                                     const CircularProgressIndicator(),
-                                error: (error, stack) => const Text('Error'))
+                                error: (error, stack) => Text('Error $error'))
                             : const HeroIcon(
                                 HeroIcons.cubeTransparent,
                                 size: 40,
@@ -241,18 +241,22 @@ class PretendanceCard extends HookConsumerWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            pretendanceNotifier.setId(pretendance);
-                            pageNotifier
-                                .setVotePage(VotePage.detailPageFromMain);
-                          },
-                          child: const HeroIcon(
-                            HeroIcons.informationCircle,
-                            color: Colors.black,
-                            size: 25,
-                          ),
-                        ),
+                        pretendance.listType != ListType.blank
+                            ? GestureDetector(
+                                onTap: () {
+                                  pretendanceNotifier.setId(pretendance);
+                                  pageNotifier
+                                      .setVotePage(VotePage.detailPageFromMain);
+                                },
+                                child: const HeroIcon(
+                                  HeroIcons.informationCircle,
+                                  color: Colors.black,
+                                  size: 25,
+                                ),
+                              )
+                            : const SizedBox(
+                                width: 25,
+                              ),
                       ],
                     ),
                     Center(

@@ -113,6 +113,9 @@ String processDateBack(String d) {
     return "";
   }
   List<String> e = d.split("/");
+  if (e[2].contains(" ")) {
+    return "${e[2].split(" ")[0]}-${e[1].toString().padLeft(2, "0")}-${e[0]} ${e[2].split(" ")[1]}";
+  }
   return "${e[2].toString().padLeft(2, "0")}-${e[1].toString().padLeft(2, "0")}-${e[0]}";
 }
 

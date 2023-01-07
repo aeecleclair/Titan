@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/result.dart';
 import 'package:myecl/vote/repositories/result_repository.dart';
 
@@ -19,6 +20,8 @@ final resultProvider =
     StateNotifierProvider<ResultNotifier, AsyncValue<List<Result>>>((ref) {
   final token = ref.watch(tokenProvider);
   final resultNotifier = ResultNotifier(token: token);
-  resultNotifier.loadResult();
+  tokenExpireWrapperAuth(ref, () async {
+    await resultNotifier.loadResult();
+  });
   return resultNotifier;
 });

@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
 import 'package:myecl/vote/providers/pretendance_members.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
@@ -51,9 +52,10 @@ class SectionPretendenceItems extends HookConsumerWidget {
                           if (status == Status.waiting)
                             GestureDetector(
                               onTap: () {
+                                pretendanceNotifier.setId(Pretendance.empty());
                                 membersNotifier.setMembers([]);
                                 pageNotifier
-                                    .setVotePage(VotePage.addPretendance);
+                                    .setVotePage(VotePage.addEditPretendance);
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(15.0),
@@ -99,7 +101,7 @@ class SectionPretendenceItems extends HookConsumerWidget {
                                         pretendanceNotifier.setId(e);
                                         membersNotifier.setMembers(e.members);
                                         pageNotifier.setVotePage(
-                                            VotePage.editPretendance);
+                                            VotePage.addEditPretendance);
                                       });
                                     },
                                     onDelete: () {

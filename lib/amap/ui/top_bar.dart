@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 
 class TopBar extends HookConsumerWidget {
@@ -17,7 +16,7 @@ class TopBar extends HookConsumerWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 30,
+          height: 15,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,41 +34,29 @@ class TopBar extends HookConsumerWidget {
                           case AmapPage.pres:
                             pageNotifier.setAmapPage(AmapPage.main);
                             break;
-                          case AmapPage.products:
-                            clearCmd(ref);
+                          case AmapPage.addProducts:
                             pageNotifier.setAmapPage(AmapPage.main);
                             break;
                           case AmapPage.admin:
                             pageNotifier.setAmapPage(AmapPage.main);
                             break;
-                          case AmapPage.modif:
+                          case AmapPage.addEditProduct:
                             pageNotifier.setAmapPage(AmapPage.admin);
                             break;
-                          case AmapPage.addCmd:
+                          case AmapPage.addEditDelivery:
                             pageNotifier.setAmapPage(AmapPage.admin);
                             break;
-                          case AmapPage.delivery:
+                          case AmapPage.detailPage:
                             pageNotifier.setAmapPage(AmapPage.main);
-                            break;
-                          case AmapPage.solde:
-                            pageNotifier.setAmapPage(AmapPage.admin);
-                            break;
-                          case AmapPage.addSolde:
-                            pageNotifier.setAmapPage(AmapPage.solde);
-                            break;
-                          case AmapPage.deliveryAdmin:
-                            pageNotifier.setAmapPage(AmapPage.admin);
-                            break;
-                          case AmapPage.deliveryOrder:
-                            pageNotifier.setAmapPage(AmapPage.deliveryAdmin);
                             break;
                         }
                       },
-                      icon: FaIcon(
+                      icon: HeroIcon(
                         page == AmapPage.main
-                            ? FontAwesomeIcons.chevronRight
-                            : FontAwesomeIcons.chevronLeft,
-                        color: const Color.fromARGB(255, 0, 0, 0),
+                            ? HeroIcons.bars3BottomLeft
+                            : HeroIcons.chevronLeft,
+                        color: Colors.black,
+                        size: 30,
                       ));
                 },
               ),
@@ -77,15 +64,29 @@ class TopBar extends HookConsumerWidget {
             const Text(
               AMAPTextConstants.amap,
               style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w500,
-                color: Color.fromARGB(255, 0, 0, 0),
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
-            const SizedBox(
+            SizedBox(
               width: 70,
+              child: page == AmapPage.main
+                  ? IconButton(
+                      onPressed: () {
+                        pageNotifier.setAmapPage(AmapPage.pres);
+                      },
+                      icon: const HeroIcon(
+                        HeroIcons.informationCircle,
+                        color: Colors.black,
+                        size: 40,
+                      ))
+                  : Container(),
             ),
           ],
+        ),
+        const SizedBox(
+          height: 20,
         ),
       ],
     );

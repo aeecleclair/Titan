@@ -20,9 +20,6 @@ class LoanHomePage extends HookConsumerWidget {
       body: WillPopScope(
         onWillPop: () async {
           switch (page) {
-            case LoanPage.editLoan:
-              pageNotifier.setLoanPage(LoanPage.main);
-              break;
             case LoanPage.main:
               if (!controller.isCompleted) {
                 controllerNotifier.toggle();
@@ -30,13 +27,10 @@ class LoanHomePage extends HookConsumerWidget {
               } else {
                 return true;
               }
-            case LoanPage.addLoan:
+            case LoanPage.addEditLoan:
               pageNotifier.setLoanPage(LoanPage.admin);
               break;
-            case LoanPage.addItem:
-              pageNotifier.setLoanPage(LoanPage.admin);
-              break;
-            case LoanPage.editItem:
+            case LoanPage.addEditItem:
               pageNotifier.setLoanPage(LoanPage.admin);
               break;
             case LoanPage.admin:

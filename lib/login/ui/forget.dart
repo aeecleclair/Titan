@@ -96,6 +96,7 @@ class ForgetPassword extends HookConsumerWidget {
                         displayToastWithContext(
                             TypeMsg.msg, LoginTextConstants.sendedResetMail);
                         email.clear();
+                        onMailRecieved();
                       } else {
                         displayToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);

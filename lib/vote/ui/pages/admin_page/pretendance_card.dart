@@ -116,7 +116,7 @@ class PretendanceCard extends HookConsumerWidget {
                           }
                         },
                         loading: () => const CircularProgressIndicator(),
-                        error: (error, stack) => const Text('Error')),
+                        error: (error, stack) => Text('Error $error')),
                     const SizedBox(
                       width: 10,
                     ),
@@ -148,7 +148,7 @@ class PretendanceCard extends HookConsumerWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    isDetail
+                    isDetail || pretendance.listType == ListType.blank
                         ? Container(
                             width: 30,
                           )
@@ -156,14 +156,14 @@ class PretendanceCard extends HookConsumerWidget {
                             onTap: () {
                               pretendanceNotifier.setId(pretendance);
                               pageNotifier
-                                  .setVotePage(VotePage.detailPageFromAdmin);
+                                  .setVotePage(VotePage.detailPageFromMain);
                             },
                             child: const HeroIcon(
                               HeroIcons.informationCircle,
                               color: Colors.black,
                               size: 25,
                             ),
-                          ),
+                          )
                   ],
                 ),
                 Center(

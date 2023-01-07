@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
 
@@ -44,13 +45,15 @@ class UserNotifier extends SingleNotifier<User> {
 
 final asyncUserProvider =
     StateNotifierProvider<UserNotifier, AsyncValue<User>>((ref) {
-  final isLoggedIn = ref.watch(isLoggedInProvider);
-  final id = ref.watch(idProvider);
   final token = ref.watch(tokenProvider);
   UserNotifier userNotifier = UserNotifier(token: token);
-  if (isLoggedIn && id != null) {
-    return userNotifier..loadMe();
-  }
+  tokenExpireWrapperAuth(ref, () async {
+    final isLoggedIn = ref.watch(isLoggedInProvider);
+    final id = ref.watch(idProvider);
+    if (isLoggedIn && id != null) {
+      return userNotifier..loadMe();
+    }
+  });
   return userNotifier;
 });
 

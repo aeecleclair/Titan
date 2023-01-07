@@ -11,6 +11,7 @@ import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
+import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/section_chip.dart';
 
 class SectionBar extends HookConsumerWidget {
@@ -75,9 +76,9 @@ class SectionBar extends HookConsumerWidget {
                               await showDialog(
                                   context: context,
                                   builder: (context) => CustomDialogBox(
-                                        title: 'Supprimer la section',
-                                        descriptions:
-                                            'Voulez-vous vraiment supprimer cette section ?',
+                                        title: VoteTextConstants.deleteSection,
+                                        descriptions: VoteTextConstants
+                                            .deleteSectionDescription,
                                         onYes: () async {
                                           final result = await sectionsNotifier
                                               .deleteSection(key);
@@ -86,11 +87,13 @@ class SectionBar extends HookConsumerWidget {
                                                 .deleteT(key);
                                             displayVoteToastWithContext(
                                                 TypeMsg.msg,
-                                                'Section supprimée avec succès');
+                                                VoteTextConstants
+                                                    .deletedSection);
                                           } else {
                                             displayVoteToastWithContext(
                                                 TypeMsg.error,
-                                                'Une erreur est survenue');
+                                                VoteTextConstants
+                                                    .deletingError);
                                           }
                                         },
                                       ));

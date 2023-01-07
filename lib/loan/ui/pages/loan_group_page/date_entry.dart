@@ -1,17 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 
 class DateEntry extends StatelessWidget {
   final String title;
+  final String dateBefore;
+  final VoidCallback onSelect;
   final TextEditingController controller;
 
-  const DateEntry({Key? key, required this.title, required this.controller})
+  const DateEntry(
+      {Key? key,
+      required this.title,
+      required this.controller,
+      required this.dateBefore,
+      required this.onSelect})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final before = dateBefore.isNotEmpty
+        ? DateTime.parse(processDateBack(dateBefore))
+        : DateTime.now();
+
+    selectDate(BuildContext context, TextEditingController dateController,
+        DateTime before) async {
+      final DateTime now = DateTime.now();
+      final DateTime? picked = await showDatePicker(
+          context: context,
+          initialDate: dateController.text.isNotEmpty
+              ? DateTime.parse(processDateBack(dateController.text))
+              : before,
+          firstDate: before,
+          lastDate: DateTime(now.year + 1, now.month, now.day),
+          builder: (BuildContext context, Widget? child) {
+            return Theme(
+              data: ThemeData.light().copyWith(
+                colorScheme: const ColorScheme.light(
+                  primary: ColorConstants.gradient1,
+                  onPrimary: Colors.white,
+                  surface: Colors.white,
+                  onSurface: Colors.black,
+                ),
+                dialogBackgroundColor: Colors.white,
+              ),
+              child: child!,
+            );
+          });
+      dateController.text = processDate(picked ?? now);
+      onSelect();
+    }
+
     return GestureDetector(
-      onTap: () => _selectDate(context, controller),
+      onTap: () => selectDate(context, controller, before),
       child: SizedBox(
         child: AbsorbPointer(
           child: TextFormField(
@@ -38,28 +78,4 @@ class DateEntry extends StatelessWidget {
       ),
     );
   }
-}
-
-_selectDate(BuildContext context, TextEditingController dateController) async {
-  final DateTime now = DateTime.now();
-  final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: now,
-      firstDate: now,
-      lastDate: DateTime(now.year + 1, now.month, now.day),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Color.fromARGB(255, 173, 57, 19),
-              onPrimary: Colors.white,
-              surface: Colors.white,
-              onSurface: Colors.black,
-            ),
-            dialogBackgroundColor: Colors.white,
-          ),
-          child: child!,
-        );
-      });
-  dateController.text = processDate(picked ?? now);
 }

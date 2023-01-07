@@ -4,10 +4,10 @@ import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/repositories/item_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ItemListNotifier extends ListNotifier<Item> {
   final ItemRepository _itemrepository = ItemRepository();
-  String loanerId = "";
   ItemListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _itemrepository.setToken(token);
@@ -18,12 +18,12 @@ class ItemListNotifier extends ListNotifier<Item> {
     return await loadList(() async => _itemrepository.getItemList(id));
   }
 
-  Future<bool> addItem(Item item) async {
+  Future<bool> addItem(Item item, String loanerId) async {
     return await add(
         (i) async => _itemrepository.createItem(loanerId, i), item);
   }
 
-  Future<bool> updateItem(Item item) async {
+  Future<bool> updateItem(Item item, String loanerId) async {
     return await update(
         (i) async => _itemrepository.updateItem(loanerId, i),
         (items, item) =>
@@ -31,7 +31,7 @@ class ItemListNotifier extends ListNotifier<Item> {
         item);
   }
 
-  Future<bool> deleteItem(Item item) async {
+  Future<bool> deleteItem(Item item, String loanerId) async {
     return await delete(
         (id) async => _itemrepository.deleteItem(loanerId, id),
         (items, item) => items..removeWhere((i) => i.id == item.id),
@@ -51,9 +51,11 @@ final itemListProvider =
     StateNotifierProvider<ItemListNotifier, AsyncValue<List<Item>>>((ref) {
   final token = ref.watch(tokenProvider);
   ItemListNotifier itemListNotifier = ItemListNotifier(token: token);
-  final loanerId = ref.watch(loanerIdProvider);
-  if (loanerId != "") {
-    itemListNotifier.loadItemList(loanerId);
-  }
+  tokenExpireWrapperAuth(ref, () async {
+    final loanerId = ref.watch(loanerIdProvider);
+    if (loanerId != "") {
+      await itemListNotifier.loadItemList(loanerId);
+    }
+  });
   return itemListNotifier;
 });

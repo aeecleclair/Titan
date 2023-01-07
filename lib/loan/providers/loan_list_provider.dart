@@ -3,6 +3,7 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/repositories/loan_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class LoanListNotifier extends ListNotifier<Loan> {
   final LoanRepository _loanrepository = LoanRepository();
@@ -48,6 +49,8 @@ final loanListProvider =
     StateNotifierProvider<LoanListNotifier, AsyncValue<List<Loan>>>((ref) {
   final token = ref.watch(tokenProvider);
   LoanListNotifier loanListNotifier = LoanListNotifier(token: token);
-  loanListNotifier.loadLoanList();
+  tokenExpireWrapperAuth(ref, () async {
+    await loanListNotifier.loadLoanList();
+  });
   return loanListNotifier;
 });

@@ -4,8 +4,7 @@ import 'package:myecl/cinema/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/cinema/providers/cinema_page_provider.dart';
 import 'package:myecl/cinema/ui/pages/detail_page/detail_page.dart';
 import 'package:myecl/cinema/ui/pages/main_page/main_page.dart';
-import 'package:myecl/cinema/ui/pages/session_pages/add_session.dart';
-import 'package:myecl/cinema/ui/pages/session_pages/edit_session.dart';
+import 'package:myecl/cinema/ui/pages/session_pages/add_edit_session.dart';
 
 class PageSwitcher extends ConsumerWidget {
   const PageSwitcher({Key? key}) : super(key: key);
@@ -22,10 +21,8 @@ class PageSwitcher extends ConsumerWidget {
         return const DetailPage();
       case CinemaPage.detailFromAdminPage:
         return const DetailPage();
-      case CinemaPage.addSession:
-        return const AddSessionPage();
-      case CinemaPage.editSession:
-        return const EditSessionPage();
+      case CinemaPage.addEditSession:
+        return const AddEditSessionPage();
     }
   }
 }

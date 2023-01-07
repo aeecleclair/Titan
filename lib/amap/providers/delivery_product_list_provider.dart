@@ -6,28 +6,23 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 
 class ProductListNotifier extends ListNotifier<Product> {
   final _productListRepository = DeliveryProductListRepository();
-  late String deliveryId;
   ProductListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _productListRepository.setToken(token);
   }
 
-  void setId(String id) {
-    deliveryId = id;
-  }
-
-  Future<AsyncValue<List<Product>>> loadProductList() async {
+  Future<AsyncValue<List<Product>>> loadProductList(String deliveryId) async {
     return await loadList(
         () async => _productListRepository.getProductList(deliveryId));
   }
 
-  Future<bool> addProduct(Product product) async {
+  Future<bool> addProduct(Product product, String deliveryId) async {
     return await add(
         (p) async => _productListRepository.createProduct(deliveryId, p),
         product);
   }
 
-  Future<bool> updateProduct(Product product) async {
+  Future<bool> updateProduct(Product product, String deliveryId) async {
     return await update(
         (p) async => _productListRepository.updateProduct(deliveryId, p),
         (products, product) => products
@@ -35,7 +30,7 @@ class ProductListNotifier extends ListNotifier<Product> {
         product);
   }
 
-  Future<bool> deleteProduct(Product product) async {
+  Future<bool> deleteProduct(Product product, String deliveryId) async {
     return await delete(
         (id) async => _productListRepository.deleteProduct(deliveryId, id),
         (products, product) => products..removeWhere((i) => i.id == product.id),
@@ -59,11 +54,9 @@ class ProductListNotifier extends ListNotifier<Product> {
   }
 }
 
-final deliveryProductListProvider = StateNotifierProvider.family<
-    ProductListNotifier, AsyncValue<List<Product>>, String>((ref, deliveryId) {
+final deliveryProductListProvider =
+    StateNotifierProvider<ProductListNotifier, AsyncValue<List<Product>>>(
+        (ref) {
   final token = ref.watch(tokenProvider);
-  ProductListNotifier productListNotifier = ProductListNotifier(token: token);
-  productListNotifier.setId(deliveryId);
-  productListNotifier.loadProductList();
-  return productListNotifier;
+  return ProductListNotifier(token: token);
 });

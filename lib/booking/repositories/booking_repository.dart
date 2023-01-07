@@ -16,7 +16,7 @@ class BookingRepository extends Repository {
   }
 
   Future<bool> updateBooking(Booking booking) async {
-    return await update(booking.toJson(), "");
+    return await update(booking.toJson(), "/${booking.id}");
   }
 
   Future<bool> confirmBooking(Booking booking, Decision value) async {

@@ -1,20 +1,38 @@
 # Bugs
 
+AMAP : 
+
+- visuel list products
+- detail pages (delivery)
+- admin delivery nb cmd
+- connect search avec UI (search cash)
+
+Vote : 
+
+- del par type
+- pop up qd selectionné ms pas confirmé
+
+Resa : 
+
+- hide already done (Hyperion ?)
+- notif pr admin on demand
+
+
 TITAN :
 
-- animation btn (shrinking) :
-- dark mode
+- Fix AMAP
+- animation btn (shrinking + disable) s/ tt btn avec interaction avec API
+- dark mode (pr chq module)
+- cache (Hive)
 - ask help
-- refractor add / edit pages
-- TokenExpireWrapper on provider load
 - opti day list
 
+CINEMA : 
+
+themoviedb.org
 
 API :
 
-- GET 'bdebooking/user/' Not Found
-- GET 'bdebooking/rooms' Not Found
-- GET 'calendar/events' Not Found
 - PATCH available on edit
 - PATCH events
 

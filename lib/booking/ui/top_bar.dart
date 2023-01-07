@@ -34,23 +34,20 @@ class TopBar extends HookConsumerWidget {
                           case BookingPage.admin:
                             pageNotifier.setBookingPage(BookingPage.main);
                             break;
-                          case BookingPage.addBooking:
+                          case BookingPage.addEditBooking:
                             pageNotifier.setBookingPage(BookingPage.main);
                             break;
-                          case BookingPage.addRoom:
+                          case BookingPage.addEditRoom:
                             pageNotifier.setBookingPage(BookingPage.admin);
-                            break;
-                          case BookingPage.editRoom:
-                            pageNotifier.setBookingPage(BookingPage.admin);
-                            break;
-                          case BookingPage.editBooking:
-                            pageNotifier.setBookingPage(BookingPage.main);
                             break;
                           case BookingPage.detailBookingFromAdmin:
                             pageNotifier.setBookingPage(BookingPage.admin);
                             break;
                           case BookingPage.detailBookingFromMain:
                             pageNotifier.setBookingPage(BookingPage.main);
+                            break;
+                          case BookingPage.addEditBookingFromAdmin:
+                            pageNotifier.setBookingPage(BookingPage.admin);
                             break;
                         }
                       },

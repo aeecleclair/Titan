@@ -37,9 +37,6 @@ class TopBar extends HookConsumerWidget {
                               await meNotifier.loadMe();
                             });
                             break;
-                          case AdminPage.asso:
-                            pageNotifier.setAdminPage(AdminPage.main);
-                            break;
                           case AdminPage.addAsso:
                             pageNotifier.setAdminPage(AdminPage.main);
                             break;

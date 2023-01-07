@@ -2,13 +2,12 @@ import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/tools/functions.dart';
 
 class Delivery {
-  Delivery({
-    required this.deliveryDate,
-    required this.products,
-    required this.id,
-    required this.locked,
-    this.expanded = false
-  });
+  Delivery(
+      {required this.deliveryDate,
+      required this.products,
+      required this.id,
+      required this.locked,
+      this.expanded = false});
   late final bool expanded;
   late final bool locked;
   late final DateTime deliveryDate;
@@ -41,4 +40,11 @@ class Delivery {
         locked: locked ?? this.locked,
         id: id ?? this.id);
   }
+
+  static Delivery empty() => Delivery(
+      deliveryDate: DateTime.now(),
+      products: [],
+      expanded: false,
+      locked: false,
+      id: '');
 }

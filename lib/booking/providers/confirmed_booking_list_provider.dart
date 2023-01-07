@@ -3,6 +3,7 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/repositories/booking_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ConfirmedBookingListProvider extends ListNotifier<Booking> {
   final BookingRepository _bookingRepository = BookingRepository();
@@ -12,15 +13,17 @@ class ConfirmedBookingListProvider extends ListNotifier<Booking> {
   }
 
   Future<AsyncValue<List<Booking>>> loadConfirmedBooking() async {
-    return await loadList(() async => _bookingRepository.getConfirmedBookingList());
+    return await loadList(
+        () async => _bookingRepository.getConfirmedBookingList());
   }
 }
 
-final confirmedBookingListProvider =
-    StateNotifierProvider<ConfirmedBookingListProvider, AsyncValue<List<Booking>>>(
-        (ref) {
+final confirmedBookingListProvider = StateNotifierProvider<
+    ConfirmedBookingListProvider, AsyncValue<List<Booking>>>((ref) {
   final token = ref.watch(tokenProvider);
   final provider = ConfirmedBookingListProvider(token: token);
-  provider.loadConfirmedBooking();
+  tokenExpireWrapperAuth(ref, () async {
+    await provider.loadConfirmedBooking();
+  });
   return provider;
 });

@@ -1,38 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/others/tools/constants.dart';
+import 'package:myecl/version/providers/titan_version_provider.dart';
 
-class UpdatePage extends StatelessWidget {
+class UpdatePage extends HookConsumerWidget {
   const UpdatePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final titanVersion = ref.watch(titanVersionProvider);
     return Scaffold(
         body: Padding(
-      padding: const EdgeInsets.all(30.0),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.75,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              HeroIcon(
-                HeroIcons.bellAlert,
-                size: 100,
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Center(
-                child: Text(
-                  OthersTextConstants.tooOldVersion,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ],
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Column(
+        children: [
+          const Spacer(
+            flex: 2,
           ),
-        ),
+          const HeroIcon(
+            HeroIcons.bellAlert,
+            size: 100,
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          const Center(
+            child: Text(
+              OthersTextConstants.tooOldVersion,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+          const Spacer(
+            flex: 3,
+          ),
+          Text("${OthersTextConstants.version} $titanVersion",
+              style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black)),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
       ),
     ));
   }

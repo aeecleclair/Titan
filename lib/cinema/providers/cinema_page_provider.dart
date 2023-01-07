@@ -5,8 +5,7 @@ enum CinemaPage {
   admin,
   detailFromMainPage,
   detailFromAdminPage,
-  addSession,
-  editSession,
+  addEditSession,
 }
 
 class CinemaPageProvider extends StateNotifier<CinemaPage> {

@@ -3,10 +3,10 @@ import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/repositories/product_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ProductListNotifier extends ListNotifier<Product> {
   final ProductListRepository _productListRepository = ProductListRepository();
-  late String deliveryId;
   ProductListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _productListRepository.setToken(token);
@@ -42,6 +42,8 @@ final productListProvider =
         (ref) {
   final token = ref.watch(tokenProvider);
   ProductListNotifier productListNotifier = ProductListNotifier(token: token);
-  productListNotifier.loadProductList();
+  tokenExpireWrapperAuth(ref, () async {
+    productListNotifier.loadProductList();
+  });
   return productListNotifier;
 });

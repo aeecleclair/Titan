@@ -9,9 +9,8 @@ import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
-import 'package:myecl/booking/ui/pages/main_page/calendar.dart';
+import 'package:myecl/booking/ui/calendar.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
@@ -19,7 +18,7 @@ class MainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(isBookingAdmin);
+    final isAdmin = ref.watch(isBookingAdminProvider);
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final confirmedbookingsNotifier =
@@ -102,8 +101,9 @@ class MainPage extends HookConsumerWidget {
                           margin: const EdgeInsets.only(left: 15),
                           child: GestureDetector(
                             onTap: () {
+                              bookingNotifier.setBooking(Booking.empty());
                               pageNotifier
-                                  .setBookingPage(BookingPage.addBooking);
+                                  .setBookingPage(BookingPage.addEditBooking);
                             },
                             child: Container(
                               padding: const EdgeInsets.all(15.0),
@@ -144,25 +144,16 @@ class MainPage extends HookConsumerWidget {
                           onEdit: () {
                             bookingNotifier.setBooking(e);
                             pageNotifier
-                                .setBookingPage(BookingPage.editBooking);
-                          },
-                          onReturn: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return CustomDialogBox(
-                                    title: BookingTextConstants.deleting,
-                                    descriptions:
-                                        BookingTextConstants.deletingBooking,
-                                    onYes: () {},
-                                  );
-                                });
+                                .setBookingPage(BookingPage.addEditBooking);
                           },
                           onInfo: () {
                             bookingNotifier.setBooking(e);
                             pageNotifier.setBookingPage(
                                 BookingPage.detailBookingFromMain);
                           },
+                          onConfirm: () {},
+                          onDecline: () {},
+                          onCopy: () {},
                         );
                       }
                     },

@@ -14,14 +14,14 @@ final selectedListProvider =
 });
 
 class SelectedListProvider extends StateNotifier<List<bool>> {
-  SelectedListProvider(List<dynamic> p) : super(List.generate(p.length, (index) => true));
+  SelectedListProvider(List<dynamic> p)
+      : super(List.generate(p.length, (index) => true));
 
   void toggle(int i) {
     var copy = state.toList();
     copy[i] = !copy[i];
     state = copy;
   }
-
 
   void clear() {
     state = List.generate(state.length, (index) => true);

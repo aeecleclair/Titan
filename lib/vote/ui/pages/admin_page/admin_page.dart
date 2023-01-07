@@ -156,7 +156,8 @@ class AdminPage extends HookConsumerWidget {
                                     title: VoteTextConstants.resetVote,
                                     descriptions: "",
                                     onYes: () async {
-                                      tokenExpireWrapper(ref, () async {
+                                      tokenExpireWrapper(ref,
+                                          () async {
                                         final value =
                                             await statusNotifier.resetVote();
                                         ref
@@ -166,10 +167,10 @@ class AdminPage extends HookConsumerWidget {
                                         if (value) {
                                           showVotesNotifier.toggle(false);
                                           displayVoteToastWithContext(
-                                              TypeMsg.msg, 'Vote is reset');
+                                              TypeMsg.msg, VoteTextConstants.resetedVotes);
                                         } else {
                                           displayVoteToastWithContext(
-                                              TypeMsg.error, 'Error');
+                                              TypeMsg.error, VoteTextConstants.errorResetingVotes);
                                         }
                                       });
                                     });
@@ -242,10 +243,10 @@ class AdminPage extends HookConsumerWidget {
                               final value = await statusNotifier.countVote();
                               if (value) {
                                 displayVoteToastWithContext(
-                                    TypeMsg.msg, 'Votes counted');
+                                    TypeMsg.msg, VoteTextConstants.votesCounted);
                               } else {
                                 displayVoteToastWithContext(
-                                    TypeMsg.error, 'Vote not counted');
+                                    TypeMsg.error, VoteTextConstants.errorCountingVotes);
                               }
                             });
                           },
@@ -291,10 +292,10 @@ class AdminPage extends HookConsumerWidget {
                               final value = await statusNotifier.closeVote();
                               if (value) {
                                 displayVoteToastWithContext(
-                                    TypeMsg.msg, 'Vote is closed');
+                                    TypeMsg.msg, VoteTextConstants.votesClosed);
                               } else {
                                 displayVoteToastWithContext(
-                                    TypeMsg.error, 'Error');
+                                    TypeMsg.error, VoteTextConstants.errorClosingVotes);
                               }
                             });
                           },
@@ -345,10 +346,10 @@ class AdminPage extends HookConsumerWidget {
                                   .loadPretendanceList();
                               if (value) {
                                 displayVoteToastWithContext(
-                                    TypeMsg.msg, 'Vote is open');
+                                    TypeMsg.msg, VoteTextConstants.votesOpened);
                               } else {
                                 displayVoteToastWithContext(
-                                    TypeMsg.error, 'Error');
+                                    TypeMsg.error, VoteTextConstants.errorOpeningVotes);
                               }
                             });
                           },

@@ -124,18 +124,8 @@ class MainPage extends HookConsumerWidget {
                     .map((group) => AssoUi(
                           group: group,
                           isLoaner: loanersId.contains(group.id),
-                          onTap: () async {
-                            groupIdNotifier.setId(group.id);
-                            // tokenExpireWrapper(ref, () async {
-                            //   await groupNotifier.loadGroup(group.id);
-                            // });
-                            pageNotifier.setAdminPage(AdminPage.asso);
-                          },
                           onEdit: () {
                             groupIdNotifier.setId(group.id);
-                            // tokenExpireWrapper(ref, () async {
-                            //   await groupNotifier.loadGroup(group.id);
-                            // });
                             pageNotifier.setAdminPage(AdminPage.edit);
                           },
                           onDelete: () async {

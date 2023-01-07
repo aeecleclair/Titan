@@ -35,7 +35,7 @@ class SimpleUser {
         id = '';
 
   String getName() {
-    if (nickname.isNotEmpty) {
+    if (nickname.isNotEmpty && !["-", "/", " "].contains(nickname)) {
       return '$nickname ($firstname $name)';
     } else {
       return '$firstname $name';

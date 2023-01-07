@@ -9,9 +9,8 @@ import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/providers/simple_groups_groups_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/admin/ui/user_ui.dart';
+import 'package:myecl/admin/ui/pages/edit_page/search_user.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -25,17 +24,15 @@ class EditPage extends HookConsumerWidget {
     final groupId = ref.watch(groupIdProvider);
     final groupNotifier = ref.watch(groupProvider.notifier);
     final groupListNotifier = ref.watch(allGroupListProvider.notifier);
-    ref.watch(userList);
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();
     final description = useTextEditingController();
     final pageNotifier = ref.watch(adminPageProvider.notifier);
-    final usersNotifier = ref.watch(userList.notifier);
     final simplegroupsGroupsNotifier =
         ref.watch(simpleGroupsGroupsProvider.notifier);
     final simplegroupsGroups = ref.watch(simpleGroupsGroupsProvider);
-    final simplegroupGroupsNotifier =
-        ref.watch(simpleGroupsGroupsProvider.notifier);
+
+
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -65,8 +62,6 @@ class EditPage extends HookConsumerWidget {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  name.text = g[0].name;
-                  description.text = g[0].description;
                   return Column(children: [
                     const Align(
                       alignment: Alignment.centerLeft,
@@ -77,40 +72,44 @@ class EditPage extends HookConsumerWidget {
                               color: ColorConstants.gradient1)),
                     ),
                     const SizedBox(
-                      height: 40,
+                      height: 20,
                     ),
                     Form(
                       key: key,
                       child: Column(children: [
                         Container(
-                            margin: const EdgeInsets.symmetric(vertical: 20),
+                            margin: const EdgeInsets.symmetric(vertical: 10),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  margin: const EdgeInsets.only(bottom: 3),
-                                  child: const Text(
-                                    AdminTextConstants.name,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color.fromARGB(255, 158, 158, 158),
-                                    ),
-                                  ),
-                                ),
                                 SizedBox(
                                   child: TextFormField(
                                     controller: name,
                                     cursorColor: ColorConstants.gradient1,
-                                    decoration: const InputDecoration(
-                                        contentPadding: EdgeInsets.all(10),
-                                        isDense: true,
-                                        focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color:
-                                                    ColorConstants.gradient1))),
+                                    decoration: InputDecoration(
+                                        labelText: g[0].name,
+                                        labelStyle: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        suffixIcon: Container(
+                                          padding: const EdgeInsets.all(10),
+                                          child: const HeroIcon(
+                                            HeroIcons.pencil,
+                                          ),
+                                        ),
+                                        enabledBorder:
+                                            const UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                          ),
+                                        ),
+                                        focusedBorder:
+                                            const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: ColorConstants
+                                                        .gradient1))),
                                     validator: (value) {
                                       if (value == null) {
                                         return AdminTextConstants
@@ -126,38 +125,39 @@ class EditPage extends HookConsumerWidget {
                                 ),
                               ],
                             )),
-                        const SizedBox(
-                          height: 20,
-                        ),
                         Container(
-                            margin: const EdgeInsets.symmetric(vertical: 20),
+                            margin: const EdgeInsets.symmetric(vertical: 10),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  margin: const EdgeInsets.only(bottom: 3),
-                                  child: const Text(
-                                    AdminTextConstants.description,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color.fromARGB(255, 158, 158, 158),
-                                    ),
-                                  ),
-                                ),
                                 SizedBox(
                                   child: TextFormField(
                                     controller: description,
                                     cursorColor: ColorConstants.gradient1,
-                                    decoration: const InputDecoration(
-                                        contentPadding: EdgeInsets.all(10),
-                                        isDense: true,
-                                        focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color:
-                                                    ColorConstants.gradient1))),
+                                    decoration: InputDecoration(
+                                        labelText: g[0].description,
+                                        labelStyle: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        suffixIcon: Container(
+                                          padding: const EdgeInsets.all(10),
+                                          child: const HeroIcon(
+                                            HeroIcons.pencil,
+                                          ),
+                                        ),
+                                        enabledBorder:
+                                            const UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                          ),
+                                        ),
+                                        focusedBorder:
+                                            const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: ColorConstants
+                                                        .gradient1))),
                                     validator: (value) {
                                       if (value == null) {
                                         return AdminTextConstants
@@ -309,7 +309,7 @@ class EditPage extends HookConsumerWidget {
                               final value = await groupListNotifier
                                   .updateGroup(newGroup.toSimpleGroup());
                               if (value) {
-                                pageNotifier.setAdminPage(AdminPage.asso);
+                                pageNotifier.setAdminPage(AdminPage.main);
                                 displayToastWithContext(TypeMsg.msg,
                                     AdminTextConstants.updatedAssociation);
                               } else {
@@ -318,38 +318,11 @@ class EditPage extends HookConsumerWidget {
                               }
                             });
                           },
-                          child: Container(
-                            width: double.infinity,
-                            margin: const EdgeInsets.symmetric(vertical: 20),
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                colors: [
-                                  ColorConstants.gradient1,
-                                  ColorConstants.gradient2,
-                                ],
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      ColorConstants.gradient2.withOpacity(0.5),
-                                  blurRadius: 5,
-                                  offset: const Offset(2, 2),
-                                  spreadRadius: 2,
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: const Text(
-                              AdminTextConstants.edit,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(255, 255, 255, 255),
-                              ),
-                            ),
-                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const SearchUser(
                         ),
                       ]),
                     )

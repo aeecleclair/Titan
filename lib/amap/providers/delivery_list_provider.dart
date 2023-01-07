@@ -3,6 +3,7 @@ import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/repositories/delivery_list_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class DeliveryListNotifier extends ListNotifier<Delivery> {
   final DeliveryListRepository _deliveriesListRepository =
@@ -49,7 +50,8 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
         state = AsyncValue.error(error, stackTrace);
       },
       loading: () {
-        state = const AsyncValue.error("Cannot toggle expanded while loading", StackTrace.empty);
+        state = const AsyncValue.error(
+            "Cannot toggle expanded while loading", StackTrace.empty);
       },
     );
   }
@@ -60,17 +62,18 @@ final deliveryListProvider =
         (ref) {
   final token = ref.watch(tokenProvider);
   DeliveryListNotifier orderListNotifier = DeliveryListNotifier(token: token);
-  orderListNotifier.loadDeliveriesList();
+  tokenExpireWrapperAuth(ref, () async {
+    await orderListNotifier.loadDeliveriesList();
+  });
   return orderListNotifier;
 });
 
+
 final deliveryList = Provider<List<Delivery>>((ref) {
-  final deliveryProvider = ref.watch(deliveryListProvider);
-  return deliveryProvider.when(data: (orders) {
-    return orders;
-  }, error: (error, stackTrace) {
-    return [];
-  }, loading: () {
-    return [];
-  });
+  final state = ref.watch(deliveryListProvider);
+  return state.when(
+    data: (deliveries) => deliveries,
+    loading: () => [],
+    error: (error, stackTrace) => [],
+  );
 });

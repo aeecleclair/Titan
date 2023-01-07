@@ -39,8 +39,10 @@ class OnGoingLoan extends HookConsumerWidget {
                     children: [
                       const SizedBox(width: 10),
                       GestureDetector(
-                        onTap: () {
-                          pageNotifier.setLoanPage(LoanPage.addLoan);
+                        onTap: () async {
+                          await loanNotifier.setLoan(Loan.empty());
+                          ref.watch(itemListProvider);
+                          pageNotifier.setLoanPage(LoanPage.addEditLoan);
                         },
                         child: Container(
                           padding: const EdgeInsets.all(15.0),
@@ -79,11 +81,10 @@ class OnGoingLoan extends HookConsumerWidget {
                                 loan: e,
                                 isAdmin: true,
                                 isDetail: false,
-                                onEdit: () {
-                                  loanNotifier.setLoan(e).then((_) {
-                                    ref.watch(itemListProvider);
-                                    pageNotifier.setLoanPage(LoanPage.editLoan);
-                                  });
+                                onEdit: () async {
+                                  await loanNotifier.setLoan(e);
+                                  ref.watch(itemListProvider);
+                                  pageNotifier.setLoanPage(LoanPage.addEditLoan);
                                 },
                                 onCalendar: () {
                                   showDialog<int>(

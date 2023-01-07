@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/cinema/class/session.dart';
 
@@ -46,8 +47,10 @@ class AdminSessionCard extends StatelessWidget {
                 height: MediaQuery.of(context).size.width - 260,
                 child: Column(
                   children: [
-                    Text(
+                    AutoSizeText(
                       session.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,

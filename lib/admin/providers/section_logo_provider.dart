@@ -4,6 +4,7 @@ import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SimpleGroupLogoNotifier extends MapNotifier<SimpleGroup, Image> {
   SimpleGroupLogoNotifier({required String token}) : super(token: token);
@@ -14,18 +15,20 @@ final allgroupLogosProvider = StateNotifierProvider<SimpleGroupLogoNotifier,
   final token = ref.watch(tokenProvider);
   SimpleGroupLogoNotifier simpleGroupLogoNotifier =
       SimpleGroupLogoNotifier(token: token);
-  ref.watch(allGroupListProvider).when(data: (allgroup) {
-    simpleGroupLogoNotifier.loadTList(allgroup);
-    for (final l in allgroup) {
-      simpleGroupLogoNotifier.setTData(l, const AsyncValue.data([]));
-    }
-    return simpleGroupLogoNotifier;
-  }, error: (error, stackTrace) {
-    simpleGroupLogoNotifier.loadTList([]);
-    return simpleGroupLogoNotifier;
-  }, loading: () {
-    simpleGroupLogoNotifier.loadTList([]);
-    return simpleGroupLogoNotifier;
+  tokenExpireWrapperAuth(ref, () async {
+    ref.watch(allGroupListProvider).when(data: (allgroup) {
+      simpleGroupLogoNotifier.loadTList(allgroup);
+      for (final l in allgroup) {
+        simpleGroupLogoNotifier.setTData(l, const AsyncValue.data([]));
+      }
+      return simpleGroupLogoNotifier;
+    }, error: (error, stackTrace) {
+      simpleGroupLogoNotifier.loadTList([]);
+      return simpleGroupLogoNotifier;
+    }, loading: () {
+      simpleGroupLogoNotifier.loadTList([]);
+      return simpleGroupLogoNotifier;
+    });
   });
   return simpleGroupLogoNotifier;
 });

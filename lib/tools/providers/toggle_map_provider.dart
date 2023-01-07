@@ -6,7 +6,7 @@ class ToggleMapNotifier<T, E> extends StateNotifier<
     AsyncValue<Map<T, Tuple2<AsyncValue<List<E>>, bool>>>> {
   ToggleMapNotifier({required String token}) : super(const AsyncLoading());
 
-  void loadTList(List<T> tList) async {
+  Future loadTList(List<T> tList) async {
     Map<T, Tuple2<AsyncValue<List<E>>, bool>> loanersItems = {};
     for (T l in tList) {
       loanersItems[l] = const Tuple2(AsyncValue.data([]), false);
@@ -25,8 +25,8 @@ class ToggleMapNotifier<T, E> extends StateNotifier<
     );
   }
 
-  void addE(T t, E e) {
-    state.when(data: (d) async {
+  Future addE(T t, E e) {
+    return state.when(data: (d) async {
       try {
         List<E> currentLoans = d[t]!
             .item1
@@ -44,14 +44,14 @@ class ToggleMapNotifier<T, E> extends StateNotifier<
           return false;
         }
       }
-    }, error: (error, s) {
+    }, error: (error, s) async {
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
         state = AsyncValue.error(error, s);
         return false;
       }
-    }, loading: () {
+    }, loading: () async {
       state = const AsyncValue.error("Cannot add while loading", StackTrace.empty);
       return false;
     });

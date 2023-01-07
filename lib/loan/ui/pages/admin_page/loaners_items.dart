@@ -39,7 +39,7 @@ class LoanersItems extends HookConsumerWidget {
                   const SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
-                      pageNotifier.setLoanPage(LoanPage.addItem);
+                      pageNotifier.setLoanPage(LoanPage.addEditItem);
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -86,9 +86,10 @@ class LoanersItems extends HookConsumerWidget {
                                     descriptions:
                                         LoanTextConstants.deletingItem,
                                     onYes: () {
-                                      tokenExpireWrapper(ref, () async {
+                                      tokenExpireWrapper(ref,
+                                          () async {
                                         final value = await itemListNotifier
-                                            .deleteItem(e);
+                                            .deleteItem(e, loaner.id);
                                         if (value) {
                                           itemListNotifier.copy().then((value) {
                                             loanersitemsNotifier.setTData(
@@ -106,7 +107,7 @@ class LoanersItems extends HookConsumerWidget {
                               });
                         },
                         onEdit: () {
-                          pageNotifier.setLoanPage(LoanPage.editItem);
+                          pageNotifier.setLoanPage(LoanPage.addEditItem);
                           itemNotifier.setItem(e);
                         },
                       )),
@@ -126,12 +127,12 @@ class LoanersItems extends HookConsumerWidget {
           );
         } else {
           return const Center(
-            child: Text('No items'),
+            child: Text(LoanTextConstants.noItems),
           );
         }
       },
       error: (Object error, StackTrace? stackTrace) {
-        return const Center(child: Text('Error'));
+        return Center(child: Text('Error $error'));
       },
       loading: () {
         return const Center(

@@ -51,7 +51,7 @@ class ListPretendenceCard extends HookConsumerWidget {
                             ? 180
                             : 140) -
                     MediaQuery.of(context).size.height +
-                    250;
+                    (s == Status.open ? 250 : 150);
                 List<int> numberVotes = [];
                 for (var i = 0; i < pretendance.length; i++) {
                   numberVotes.add(results[pretendance[i].id] ?? 0);
@@ -59,7 +59,8 @@ class ListPretendenceCard extends HookConsumerWidget {
                 totalVotes =
                     numberVotes.reduce((value, element) => value + element);
                 for (var i = 0; i < numberVotes.length; i++) {
-                  votesPercent[pretendance[i].id] = numberVotes[i] / totalVotes;
+                  votesPercent[pretendance[i].id] =
+                      totalVotes == 0 ? 0 : numberVotes[i] / totalVotes;
                 }
               },
             ));
@@ -106,9 +107,9 @@ class ListPretendenceCard extends HookConsumerWidget {
                         child: CircularProgressIndicator(),
                       )
                     ],
-                    error: (error, stack) => const [
+                    error: (error, stack) => [
                       Center(
-                        child: Text("Error occured"),
+                        child: Text("Error : $error"),
                       )
                     ],
                   ))
@@ -192,7 +193,7 @@ class ListPretendenceCard extends HookConsumerWidget {
         ],
       );
     }, error: (Object error, StackTrace stackTrace) {
-      return const Center(child: Text("Error occured"));
+      return Center(child: Text("Error : $error"));
     }, loading: () {
       return const Center(child: CircularProgressIndicator());
     });

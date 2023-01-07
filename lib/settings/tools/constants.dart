@@ -23,6 +23,8 @@ class SettingsTextConstants {
   static const String editPassword = "Modifier le mot de passe";
   static const String email = "Email";
   static const String emptyField = "Ce champ ne peut pas être vide";
+  static const String errorProfilePicture =
+      "Erreur lors de la modification de la photo de profil";
   static const String errorSendingDemand =
       "Erreur lors de l'envoi de la demande";
   static const String eventsIcal = "Lien Ical des événements";
@@ -31,6 +33,7 @@ class SettingsTextConstants {
   static const String floor = "Étage";
   static const String help = "Aide";
   static const String hyperionUrl = "https://hyperion.myecl.fr";
+  static const String icalCopied = "Lien Ical copié !";
   static const String language = "Langue";
   static const String languageFr = "Français";
   static const String logs = "Logs";
@@ -53,7 +56,10 @@ class SettingsTextConstants {
   static const String security = "Sécurité";
   static const String sendedDemand = "Demande envoyée";
   static const String settings = "Paramètres";
+  static const String tooHeavyProfilePicture =
+      "L'image est trop lourde (max 4Mo)";
   static const String updatedProfile = "Profil modifié";
+  static const String updatedProfilePicture = "Photo de profil modifiée";
   static const String updateNotification = "Mettre à jour les notifications";
   static const String updatingError =
       "Erreur lors de la modification du profil";

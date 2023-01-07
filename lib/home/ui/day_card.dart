@@ -33,8 +33,9 @@ class DayCard extends HookConsumerWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(70),
           border: Border.all(
-              color:
-                  (selectedDay == index && !isToday) ? Colors.black : Colors.transparent,
+              color: (selectedDay == index && !isToday)
+                  ? Colors.black
+                  : Colors.transparent,
               width: 2),
           gradient: LinearGradient(
             begin: Alignment.topLeft,

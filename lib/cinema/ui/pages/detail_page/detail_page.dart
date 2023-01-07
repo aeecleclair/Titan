@@ -110,29 +110,6 @@ class DetailPage extends HookConsumerWidget {
               const SizedBox(
                 height: 140,
               ),
-              // GestureDetector(
-              //   onTap: () {},
-              //   child: Container(
-              //     padding:
-              //         const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-              //     decoration: BoxDecoration(
-              //       color: Colors.white.withOpacity(0.9),
-              //       borderRadius: BorderRadius.circular(22),
-              //       boxShadow: [
-              //         BoxShadow(
-              //           color: Colors.white.withOpacity(0.3),
-              //           blurRadius: 10,
-              //           spreadRadius: 7,
-              //           offset: const Offset(0, 5),
-              //         ),
-              //       ],
-              //     ),
-              //     child: const HeroIcon(
-              //       HeroIcons.play,
-              //       size: 30,
-              //     ),
-              //   ),
-              // ),
               Container(
                 width: double.infinity,
                 height: 250,

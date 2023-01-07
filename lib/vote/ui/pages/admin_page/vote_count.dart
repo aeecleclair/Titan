@@ -57,16 +57,16 @@ class VoteCount extends HookConsumerWidget {
           loading: () => const Center(
             child: CircularProgressIndicator(),
           ),
-          error: (error, stack) => const Center(
-            child: Text('Error'),
+          error: (error, stack) => Center(
+            child: Text('Error $error'),
           ),
         );
       },
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),
-      error: (error, stack) => const Center(
-        child: Text('Error'),
+      error: (error, stack) => Center(
+        child: Text('Error $error'),
       ),
     );
   }

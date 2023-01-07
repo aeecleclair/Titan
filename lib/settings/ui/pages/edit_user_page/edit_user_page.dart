@@ -123,14 +123,12 @@ class EditUserPage extends HookConsumerWidget {
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
-                                      TypeMsg.msg, "Photo de profil changée");
+                                      TypeMsg.msg, SettingsTextConstants.updatedProfilePicture);
                                 } else {
-                                  displayToastWithContext(TypeMsg.error,
-                                      "L'image est trop lourde (max 4Mo)");
+                                  displayToastWithContext(TypeMsg.error, SettingsTextConstants.tooHeavyProfilePicture);
                                 }
                               } else {
-                                displayToastWithContext(TypeMsg.error,
-                                    "Erreur lors du changement de photo de profil");
+                                displayToastWithContext(TypeMsg.error, SettingsTextConstants.errorProfilePicture);
                               }
                             },
                             child: Container(
@@ -174,14 +172,12 @@ class EditUserPage extends HookConsumerWidget {
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
-                                      TypeMsg.msg, "Photo de profil changée");
+                                      TypeMsg.msg, SettingsTextConstants.updatedProfilePicture);
                                 } else {
-                                  displayToastWithContext(TypeMsg.error,
-                                      "L'image est trop lourde (max 4Mo)");
+                                  displayToastWithContext(TypeMsg.error, SettingsTextConstants.tooHeavyProfilePicture);
                                 }
                               } else {
-                                displayToastWithContext(TypeMsg.error,
-                                    "Erreur lors du changement de photo de profil");
+                                displayToastWithContext(TypeMsg.error, SettingsTextConstants.errorProfilePicture);
                               }
                             },
                             child: Container(
@@ -225,10 +221,9 @@ class EditUserPage extends HookConsumerWidget {
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
-                                      TypeMsg.msg, "Photo de profil changée");
+                                      TypeMsg.msg, SettingsTextConstants.updatedProfilePicture);
                                 } else {
-                                  displayToastWithContext(TypeMsg.error,
-                                      "Erreur lors du changement de photo de profil");
+                                  displayToastWithContext(TypeMsg.error, SettingsTextConstants.errorProfilePicture);
                                 }
                               }
                             },
@@ -274,7 +269,7 @@ class EditUserPage extends HookConsumerWidget {
                 }, error: (e, s) {
                   return const Center(
                     child:
-                        Text("Erreur lors du chargement de la photo de profil"),
+                        Text(SettingsTextConstants.errorProfilePicture),
                   );
                 }),
                 const SizedBox(height: 50),
@@ -509,6 +504,6 @@ class EditUserPage extends HookConsumerWidget {
 
     dateController.text = picked == null
         ? me.birthday
-        : processDatePrint(DateFormat('yyyy-MM-dd').format(picked));
+        : processDatePrint(DateFormat('dd/MM/yyyy').format(picked));
   }
 }
