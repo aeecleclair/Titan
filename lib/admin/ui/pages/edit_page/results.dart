@@ -49,13 +49,18 @@ class MemberResults extends HookConsumerWidget {
                                             .addMember(newGroup, e)
                                             .then((value) {
                                           if (value) {
-                                            simplegroupGroupsNotifier.setTData(
-                                                newGroup.id,
-                                                AsyncData([newGroup]));
-                                            pageNotifier
-                                                .setAdminPage(AdminPage.edit);
-                                            displayToast(context, TypeMsg.msg,
-                                                AdminTextConstants.addedMember);
+                                            simplegroupGroupsNotifier
+                                                .setTData(newGroup.id,
+                                                    AsyncData([newGroup]))
+                                                .then((value) {
+                                              pageNotifier
+                                                  .setAdminPage(AdminPage.edit);
+                                              displayToast(
+                                                  context,
+                                                  TypeMsg.msg,
+                                                  AdminTextConstants
+                                                      .addedMember);
+                                            });
                                           } else {
                                             displayToast(context, TypeMsg.error,
                                                 AdminTextConstants.addingError);
