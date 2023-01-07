@@ -50,7 +50,8 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
         state = AsyncValue.error(error, stackTrace);
       },
       loading: () {
-        state = const AsyncValue.error("Cannot toggle expanded while loading", StackTrace.empty);
+        state = const AsyncValue.error(
+            "Cannot toggle expanded while loading", StackTrace.empty);
       },
     );
   }
@@ -67,13 +68,12 @@ final deliveryListProvider =
   return orderListNotifier;
 });
 
+
 final deliveryList = Provider<List<Delivery>>((ref) {
-  final deliveryProvider = ref.watch(deliveryListProvider);
-  return deliveryProvider.when(data: (orders) {
-    return orders;
-  }, error: (error, stackTrace) {
-    return [];
-  }, loading: () {
-    return [];
-  });
+  final state = ref.watch(deliveryListProvider);
+  return state.when(
+    data: (deliveries) => deliveries,
+    loading: () => [],
+    error: (error, stackTrace) => [],
+  );
 });

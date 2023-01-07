@@ -18,11 +18,14 @@ class AMAPColorConstants extends ColorConstants {
 }
 
 class AMAPTextConstants {
+  static const String accounts = "Comptes";
   static const String add = "Ajouter";
+  static const String addDelivery = "Ajouter une livraison";
   static const String addedCommand = "Commande ajoutée";
   static const String addedOrder = "Commande ajoutée";
   static const String addedProduct = "Produit ajouté";
   static const String addedUser = "Utilisateur ajouté";
+  static const String addProduct = "Ajouter un produit";
   static const String addUser = "Ajouter un utilisateur";
   static const String addingACommand = "Ajouter une commande";
   static const String addingCommand = "Ajouter la commande";
@@ -52,6 +55,7 @@ class AMAPTextConstants {
   static const String deliveryHistory = "Historique des livraisons";
   static const String deliveryList = "Liste des livraisons";
   static const String deliveryOn = "Livraison le";
+  static const String editProduct = "Modifier le produit";
   static const String errorLoadingUser =
       "Erreur lors du chargement des utilisateurs";
   static const String expectingNumber = "Veuillez entrer un nombre";
@@ -59,9 +63,11 @@ class AMAPTextConstants {
   static const String handlingAccount = "Gérer les comptes";
   static const String loading = "Chargement...";
   static const String lock = "Verouiller";
+  static const String locked = "Verrouillée";
   static const String lockedDelivery = "Livraison verrouillée";
   static const String lockedOrder = "Commande verouillée";
   static const String looking = "Rechercher";
+  static const String lockingDelivery = "Verrouiller la livraison ?";
   static const String myOrders = "Mes commandes";
   static const String name = "Nom";
   static const String noProduct = "Pas de produit";
@@ -69,6 +75,7 @@ class AMAPTextConstants {
   static const String noMoney = "Pas assez d'argent";
   static const String notEnoughMoney = "Pas assez d'argent";
   static const String notPlannedDelivery = "Pas de livraison planifiée";
+  static const String opened = "Ouverte";
   static const String order = "Commander";
   static const String pickChooseCategory =
       "Veuillez créer une catégorie ou en choisir une";
@@ -79,8 +86,10 @@ class AMAPTextConstants {
   static const String quantity = "Quantité";
   static const String requiredDate = "La date est requise";
   static const String seeMore = "Voir plus";
+  static const String the = "Le";
   static const String unlock = "Dévérouiller";
   static const String unlockedDelivery = "Livraison dévérouillée";
+  static const String unlockingDelivery = "Dévérouiller la livraison ?";
   static const String update = "Modifier";
   static const String updatedAmount = "Solde modifié";
   static const String updatedOrder = "Commande modifiée";

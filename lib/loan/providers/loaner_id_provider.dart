@@ -1,14 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
 
-final loanerIdProvider =
-    StateNotifierProvider<LoanerIdProvider, String>((ref) {
+final loanerIdProvider = StateNotifierProvider<LoanerIdProvider, String>((ref) {
   final deliveries = ref.watch(loanerList);
   if (deliveries.isEmpty) {
     return LoanerIdProvider("");
-  } else {
-    return LoanerIdProvider(deliveries.first.id);
   }
+  return LoanerIdProvider(deliveries.first.id);
 });
 
 class LoanerIdProvider extends StateNotifier<String> {

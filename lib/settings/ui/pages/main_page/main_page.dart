@@ -1,3 +1,4 @@
+import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
@@ -5,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/providers/logs_provider.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
+import 'package:myecl/settings/tools/functions.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -13,6 +15,7 @@ import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/repositories/profile_picture_repository.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -61,7 +64,7 @@ class MainPage extends HookConsumerWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: -70,
+                    bottom: -60,
                     right: -MediaQuery.of(context).size.width / 2 + 70,
                     child: Container(
                       width: MediaQuery.of(context).size.width,
@@ -237,17 +240,27 @@ class MainPage extends HookConsumerWidget {
                 //   child: const Text(SettingsTextConstants.askHelp,
                 //       style: TextStyle(fontSize: 16, color: Colors.black)),
                 // ),
-                // const SizedBox(
-                //   height: 30,
-                // ),
-                // SettingsItem(
-                //   icon: HeroIcons.bugAnt,
-                //   onTap: () {
-                //     // pageNotifier.setSettingsPage(SettingsPage.help);
-                //   },
-                //   child: const Text(SettingsTextConstants.repportBug,
-                //       style: TextStyle(fontSize: 16, color: Colors.black)),
-                // ),
+                const SizedBox(
+                  height: 30,
+                ),
+                SettingsItem(
+                  icon: HeroIcons.bugAnt,
+                  onTap: () {
+                    BetterFeedback.of(context).show(
+                      (UserFeedback feedback) async {
+                        final screenshotFilePath =
+                            await writeImageToStorage(feedback.screenshot);
+
+                        await Share.shareXFiles(
+                          [XFile(screenshotFilePath)],
+                          text: feedback.text,
+                        );
+                      },
+                    );
+                  },
+                  child: const Text(SettingsTextConstants.repportBug,
+                      style: TextStyle(fontSize: 16, color: Colors.black)),
+                ),
                 const SizedBox(
                   height: 30,
                 ),

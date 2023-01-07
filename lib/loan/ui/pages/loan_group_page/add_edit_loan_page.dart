@@ -38,8 +38,8 @@ class AddEditLoanPage extends HookConsumerWidget {
     final isEdit = loan.id != Loan.empty().id;
     final borrower = useState(loan.borrower);
     final note = useTextEditingController(text: loan.notes);
-    final start =
-        useTextEditingController(text: isEdit ? processDate(loan.start) : "");
+    final start = useTextEditingController(
+        text: isEdit ? processDate(loan.start) : processDate(DateTime.now()));
     final end =
         useTextEditingController(text: isEdit ? processDate(loan.end) : "");
     final caution = useTextEditingController(text: loan.caution);
@@ -51,6 +51,18 @@ class AddEditLoanPage extends HookConsumerWidget {
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
+    }
+
+    void evaluateEnd(List<Item> selected) {
+      end.text = processDate(DateTime.parse(processDateBack(start.text)).add(
+          Duration(
+              days: (selected.fold<double>(
+                      double.infinity,
+                      (previousValue, element) =>
+                          previousValue > element.suggestedLendingDuration
+                              ? element.suggestedLendingDuration
+                              : previousValue) ~/
+                  (24 * 60 * 60)))));
     }
 
     return SingleChildScrollView(
@@ -98,17 +110,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                                     if (numberSelected.value > 0) {
                                       caution.text =
                                           "${selected.fold<double>(0, (previousValue, element) => previousValue + element.caution).toStringAsFixed(2)}€";
-                                      end.text = processDate(DateTime.now().add(Duration(
-                                          days: (selected.fold<double>(
-                                                  double.infinity,
-                                                  (previousValue, element) =>
-                                                      previousValue >
-                                                              element
-                                                                  .suggestedLendingDuration
-                                                          ? element
-                                                              .suggestedLendingDuration
-                                                          : previousValue) ~/
-                                              (24 * 60 * 60)))));
+                                      evaluateEnd(selected);
                                     } else {
                                       end.text = "";
                                       caution.text = "";
@@ -183,9 +185,30 @@ class AddEditLoanPage extends HookConsumerWidget {
                     borrower: borrower, queryController: queryController),
                 const SizedBox(height: 30),
                 DateEntry(
-                    title: LoanTextConstants.beginDate, controller: start),
+                  title: LoanTextConstants.beginDate,
+                  controller: start,
+                  dateBefore: '',
+                  onSelect: () {
+                    items.whenData((itemList) {
+                      List<Item> selected = itemList
+                          .where((element) =>
+                              selectedItems[itemList.indexOf(element)])
+                          .toList();
+                      if (selected.isNotEmpty) {
+                        evaluateEnd(selected);
+                      } else {
+                        end.text = "";
+                      }
+                    });
+                  },
+                ),
                 const SizedBox(height: 30),
-                DateEntry(title: LoanTextConstants.endDate, controller: end),
+                DateEntry(
+                  title: LoanTextConstants.endDate,
+                  controller: end,
+                  dateBefore: start.text,
+                  onSelect: () {},
+                ),
                 const SizedBox(height: 30),
                 TextEntry(
                   keyboardType: TextInputType.text,

@@ -1,13 +1,24 @@
 # Bugs
 
+AMAP : 
+
+- visuel list products
+- detail pages (delivery)
+- admin delivery nb cmd
+- connect search avec UI (search cash)
+
 TITAN :
 
-- animation btn (shrinking + disable) :
-- dark mode
+- Fix AMAP
+- animation btn (shrinking + disable) s/ tt btn avec interaction avec API
+- dark mode (pr chq module)
+- cache (Hive)
 - ask help
 - opti day list
-- cache
 
+CINEMA : 
+
+themoviedb.org
 
 API :
 

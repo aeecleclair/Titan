@@ -9,12 +9,12 @@ class LoginTextConstants {
   static const String email = 'Email';
   static const String emailEmpty = 'Veuillez entrer une adresse mail';
   static const String emailInvalid =
-      'Veuillez entrer une adresse mail de centrale';
+      'Veuillez entrer une adresse mail de centrale.\nSi vous n\'en possédez pas, veuillez contacter Éclair';
   static const String emailRegExp =
       r'^[\w\-.]*@(ecl\d{2})|(alternance\d{4})|(auditeur)|(master)?.ec-lyon.fr$';
   static const String emptyFieldError = 'Ce champ ne peut pas être vide';
   static const String endActivation = 'Finaliser l\'activation';
-  static const String endResetPassword = 'Finaliser la réinitialisation';
+  static const String endResetPassword = 'Finaliser la \nréinitialisation';
   static const String errorResetPassword = 'Erreur lors de la réinitialisation';
   static const String expectingDate = 'Une date est attendue';
   static const String fillAllFields = 'Veuillez remplir tous les champs';
@@ -35,7 +35,7 @@ class LoginTextConstants {
   static const String recievedMail = 'J\'ai reçu le mail';
   static const String recover = 'Réinitialiser';
   static const String resetedPassword = 'Mot de passe réinitialisé';
-  static const String resetPasswordTitle = 'Réinitialiser\nle mot de passe';
+  static const String resetPasswordTitle = 'Réinitialiser\nle mot de \npasse';
   static const String username = 'Surnom';
   static const String welcomeBack = 'Bienvenue';
 }

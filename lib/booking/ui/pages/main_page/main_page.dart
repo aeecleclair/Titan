@@ -19,7 +19,7 @@ class MainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(isBookingAdmin);
+    final isAdmin = ref.watch(isBookingAdminProvider);
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final confirmedbookingsNotifier =
