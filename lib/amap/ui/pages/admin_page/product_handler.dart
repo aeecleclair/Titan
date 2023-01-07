@@ -85,8 +85,8 @@ class ProductHandler extends HookConsumerWidget {
                     .map(
                       (e) => ProductCard(
                         product: e,
-                        onDelete: () {
-                          showDialog(
+                        onDelete: () async {
+                          await showDialog(
                               context: context,
                               builder: (context) => CustomDialogBox(
                                     title: "Supprimer le produit",

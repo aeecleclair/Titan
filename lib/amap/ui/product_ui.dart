@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
-  final Function() onEdit, onDelete;
+  final Function() onEdit;
+  final Future Function() onDelete;
   final bool showButton;
   const ProductCard(
       {super.key,
@@ -106,34 +108,59 @@ class ProductCard extends StatelessWidget {
                             color: Colors.white),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: onDelete,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        padding: const EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              AMAPColorConstants.redGradient1,
-                              AMAPColorConstants.redGradient2,
+                    ShrinkButton(
+                        waitChild: Container(
+                            width: 40,
+                            height: 40,
+                            padding: const EdgeInsets.all(7),
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [
+                                  AMAPColorConstants.redGradient1,
+                                  AMAPColorConstants.redGradient2,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: AMAPColorConstants.redGradient2
+                                        .withOpacity(0.5),
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 3))
+                              ],
+                            ),
+                            child: const Center(
+                              child: CircularProgressIndicator(
+                                  color: Colors.white),
+                            )),
+                        onTap: onDelete,
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [
+                                AMAPColorConstants.redGradient1,
+                                AMAPColorConstants.redGradient2,
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: AMAPColorConstants.redGradient2
+                                      .withOpacity(0.5),
+                                  blurRadius: 10,
+                                  offset: const Offset(2, 3))
                             ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
                           ),
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                                color: AMAPColorConstants.redGradient2
-                                    .withOpacity(0.5),
-                                blurRadius: 10,
-                                offset: const Offset(2, 3))
-                          ],
-                        ),
-                        child: const HeroIcon(HeroIcons.trash,
-                            color: Colors.white),
-                      ),
-                    ),
+                          child: const HeroIcon(HeroIcons.trash,
+                              color: Colors.white),
+                        ))
                   ],
                 ),
               const SizedBox(height: 10),
