@@ -1,12 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class ItemCard extends StatelessWidget {
   final Item item;
   final bool showButtons;
-  final Function() onEdit, onDelete;
+  final Function() onEdit;
+  final Future Function() onDelete;
   const ItemCard(
       {super.key,
       required this.item,
@@ -75,6 +78,7 @@ class ItemCard extends StatelessWidget {
                       child: Container(
                         width: 40,
                         height: 40,
+                        padding: const EdgeInsets.all(7),
                         decoration: BoxDecoration(
                           color: Colors.grey.shade200,
                           borderRadius: BorderRadius.circular(30),
@@ -85,27 +89,54 @@ class ItemCard extends StatelessWidget {
                                 offset: const Offset(2, 3))
                           ],
                         ),
-                        child: const Icon(Icons.edit, color: Colors.black),
+                        child: const HeroIcon(HeroIcons.pencil,
+                            color: Colors.black),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: onDelete,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 10,
-                                offset: const Offset(2, 3))
-                          ],
-                        ),
-                        child: const Icon(Icons.delete, color: Colors.white),
-                      ),
-                    ),
+                    ShrinkButton(
+                        waitChild: Container(
+                            width: 40,
+                            height: 40,
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 3))
+                              ],
+                            ),
+                            child: const Center(
+                              child: SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.white),
+                                ),
+                              ),
+                            )),
+                        onTap: onDelete,
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: const Offset(2, 3))
+                            ],
+                          ),
+                          child: const HeroIcon(HeroIcons.trash,
+                              color: Colors.white),
+                        )),
                   ],
                 ),
               if (showButtons) const SizedBox(height: 10),

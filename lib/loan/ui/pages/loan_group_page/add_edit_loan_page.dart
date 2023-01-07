@@ -19,6 +19,7 @@ import 'package:myecl/loan/ui/text_entry.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AddEditLoanPage extends HookConsumerWidget {
@@ -226,8 +227,34 @@ class AddEditLoanPage extends HookConsumerWidget {
                   suffix: '',
                 ),
                 const SizedBox(height: 50),
-                GestureDetector(
-                  onTap: () {
+                ShrinkButton(
+                  waitChild: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(top: 8, bottom: 12),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 10,
+                            offset: const Offset(
+                                3, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: const Center(
+                        child: SizedBox(
+                          height: 25,
+                          width: 25,
+                          child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  ColorConstants.background2)),
+                        ),
+                      )),
+                  onTap: () async {
                     if (key.currentState == null) {
                       return;
                     }
@@ -240,8 +267,8 @@ class AddEditLoanPage extends HookConsumerWidget {
                             LoanTextConstants.invalidDates);
                       } else {
                         items.when(
-                          data: (itemList) {
-                            tokenExpireWrapper(ref, () async {
+                          data: (itemList) async {
+                            await tokenExpireWrapper(ref, () async {
                               List<Item> selected = itemList
                                   .where((element) =>
                                       selectedItems[itemList.indexOf(element)])

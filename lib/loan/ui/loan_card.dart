@@ -4,11 +4,13 @@ import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;
   final bool isAdmin, isDetail;
-  final Function() onEdit, onCalendar, onReturn, onInfo;
+  final Function() onEdit, onInfo;
+  final Future Function() onCalendar, onReturn;
   const LoanCard(
       {super.key,
       required this.loan,
@@ -135,43 +137,79 @@ class LoanCard extends StatelessWidget {
                           child: const Icon(Icons.edit, color: Colors.black),
                         ),
                       ),
-                      GestureDetector(
-                        onTap: onCalendar,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3))
-                            ],
+                      ShrinkButton(
+                          waitChild: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(30),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 3))
+                                ],
+                              ),
+                              child: const Center(
+                                  child: CircularProgressIndicator(
+                                color: Colors.black,
+                              ))),
+                          onTap: onCalendar,
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 3))
+                              ],
+                            ),
+                            child: const HeroIcon(HeroIcons.calendarDays,
+                                color: Colors.black),
+                          )),
+                      ShrinkButton(
+                          waitChild: Container(
+                            width: 40,
+                            height: 40,
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 3))
+                              ],
+                            ),
+                            child: const Center(
+                                child: CircularProgressIndicator(
+                              color: Colors.white,
+                            )),
                           ),
-                          child: const Icon(Icons.calendar_month_outlined,
-                              color: Colors.black),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: onReturn,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3))
-                            ],
-                          ),
-                          child: const Icon(Icons.check, color: Colors.white),
-                        ),
-                      ),
+                          onTap: onReturn,
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 3))
+                              ],
+                            ),
+                            child: const HeroIcon(HeroIcons.check,
+                                color: Colors.white),
+                          )),
                     ],
                   ),
                 const SizedBox(height: 10),

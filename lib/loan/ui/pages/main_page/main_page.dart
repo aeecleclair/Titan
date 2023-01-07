@@ -77,7 +77,7 @@ class MainPage extends HookConsumerWidget {
                                   isAdmin: false,
                                   isDetail: false,
                                   onEdit: () {},
-                                  onCalendar: () {},
+                                  onCalendar: () async {},
                                   onReturn: () async {},
                                   onInfo: () {
                                     loanNotifier.setLoan(e);
@@ -125,7 +125,7 @@ class MainPage extends HookConsumerWidget {
                                   isAdmin: false,
                                   isDetail: false,
                                   onEdit: () {},
-                                  onCalendar: () {},
+                                  onCalendar: () async {},
                                   onReturn: () async {},
                                   onInfo: () {
                                     loanNotifier.setLoan(e);

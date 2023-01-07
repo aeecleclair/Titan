@@ -81,7 +81,7 @@ class DetailLoanPage extends HookConsumerWidget {
                                 return ItemCard(
                                   item: loan.items[index],
                                   showButtons: false,
-                                  onDelete: () {},
+                                  onDelete: () async {},
                                   onEdit: () {},
                                 );
                               },
@@ -99,11 +99,11 @@ class DetailLoanPage extends HookConsumerWidget {
               child: LoanCard(
                 loan: loan,
                 onEdit: () {},
-                onReturn: () {},
+                onReturn: () async {},
                 onInfo: () {},
                 isAdmin: false,
                 isDetail: true,
-                onCalendar: () {},
+                onCalendar: () async {},
               ),
             ),
           )

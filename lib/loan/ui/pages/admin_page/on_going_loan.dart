@@ -86,8 +86,8 @@ class OnGoingLoan extends HookConsumerWidget {
                                   ref.watch(itemListProvider);
                                   pageNotifier.setLoanPage(LoanPage.addEditLoan);
                                 },
-                                onCalendar: () {
-                                  showDialog<int>(
+                                onCalendar: () async { 
+                                  await showDialog<int>(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return DelayDialog(
