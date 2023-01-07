@@ -197,7 +197,7 @@ class DetailPage extends HookConsumerWidget {
                 pretendance: pretendance,
                 onEdit: () {},
                 isAdmin: false,
-                onDelete: () {},
+                onDelete: () async {},
                 isDetail: true,
               ),
             ),

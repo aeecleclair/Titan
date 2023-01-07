@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
@@ -14,7 +15,8 @@ import 'package:myecl/vote/repositories/status_repository.dart';
 class PretendanceCard extends HookConsumerWidget {
   final Pretendance pretendance;
   final bool isAdmin, isDetail;
-  final Function() onEdit, onDelete;
+  final Function() onEdit;
+  final Future Function() onDelete;
   const PretendanceCard(
       {super.key,
       required this.pretendance,
@@ -187,6 +189,7 @@ class PretendanceCard extends HookConsumerWidget {
                         child: Container(
                           width: 40,
                           height: 40,
+                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(30),
@@ -197,27 +200,47 @@ class PretendanceCard extends HookConsumerWidget {
                                   offset: const Offset(2, 3))
                             ],
                           ),
-                          child: const Icon(Icons.edit, color: Colors.black),
+                          child: const HeroIcon(HeroIcons.pencil,
+                              color: Colors.black),
                         ),
                       ),
-                      GestureDetector(
-                        onTap: onDelete,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3))
-                            ],
+                      ShrinkButton(
+                          waitChild: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 3))
+                              ],
+                            ),
+                            child: const Center(
+                                child: CircularProgressIndicator(
+                              color: Colors.white,
+                            )),
                           ),
-                          child: const Icon(Icons.delete, color: Colors.white),
-                        ),
-                      ),
+                          onTap: onDelete,
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 3))
+                              ],
+                            ),
+                            child: const HeroIcon(HeroIcons.trash,
+                                color: Colors.white),
+                          )),
                     ],
                   ),
               ],

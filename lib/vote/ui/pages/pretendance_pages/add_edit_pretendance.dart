@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/members.dart';
@@ -28,8 +29,7 @@ import 'package:myecl/vote/ui/section_chip.dart';
 import 'package:myecl/vote/ui/text_entry.dart';
 
 class AddEditPretendancePage extends HookConsumerWidget {
-  const AddEditPretendancePage({Key? key})
-      : super(key: key);
+  const AddEditPretendancePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -371,110 +371,130 @@ class AddEditPretendancePage extends HookConsumerWidget {
             ),
             const SizedBox(height: 50),
             Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: GestureDetector(
-                  onTap: () {
-                    if (key.currentState == null) {
-                      return;
-                    }
-                    if (key.currentState!.validate()) {
-                      tokenExpireWrapper(ref, () async {
-                        final pretendanceList =
-                            ref.watch(pretendanceListProvider);
-                        Pretendance newPretendence = Pretendance(
-                          name: name.text,
-                          id: isEdit ? pretendance.id : '',
-                          description: description.text,
-                          listType: listType.value,
-                          members: members,
-                          section: section.value,
-                          program: program.text,
-                        );
-                        final value = isEdit
-                            ? await pretendanceListNotifier
-                                .updatePretendance(newPretendence)
-                            : await pretendanceListNotifier
-                                .addPretendance(newPretendence);
-                        if (value) {
-                          pageNotifier.setVotePage(VotePage.admin);
-                          if (isEdit) {
-                            displayVoteToastWithContext(TypeMsg.msg,
-                                VoteTextConstants.editedPretendance);
-                            pretendanceList.when(
-                                data: (list) {
-                                  if (logo.value != null) {
-                                    logoNotifier.updateLogo(
-                                        pretendance.id, logo.value!);
-                                    pretendanceLogosNotifier.setTData(
-                                        pretendance,
-                                        AsyncData([
-                                          Image.file(
-                                            File(logo.value!),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ]));
-                                  }
-                                },
-                                error: (error, s) {},
-                                loading: () {});
-                          } else {
-                            displayVoteToastWithContext(TypeMsg.msg,
-                                VoteTextConstants.addedPretendance);
-                            pretendanceList.when(
-                                data: (list) {
-                                  final newPretendance = list.last;
-                                  if (logo.value != null) {
-                                    logoNotifier.updateLogo(
-                                        newPretendance.id, logo.value!);
-                                    pretendanceLogosNotifier.setTData(
-                                        newPretendance,
-                                        AsyncData([
-                                          Image.file(
-                                            File(logo.value!),
-                                            fit: BoxFit.cover,
-                                          )
-                                        ]));
-                                  }
-                                },
-                                error: (error, s) {},
-                                loading: () {});
-                          }
-                          membersNotifier.clearMembers();
-                          await sectionsNotifier.setTData(section.value,
-                              await pretendanceListNotifier.copy());
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: ShrinkButton(
+                waitChild: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(top: 8, bottom: 12),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: const Center(
+                        child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ))),
+                onTap: () async {
+                  if (key.currentState == null) {
+                    return;
+                  }
+                  if (key.currentState!.validate()) {
+                    await tokenExpireWrapper(ref, () async {
+                      final pretendanceList =
+                          ref.watch(pretendanceListProvider);
+                      Pretendance newPretendence = Pretendance(
+                        name: name.text,
+                        id: isEdit ? pretendance.id : '',
+                        description: description.text,
+                        listType: listType.value,
+                        members: members,
+                        section: section.value,
+                        program: program.text,
+                      );
+                      final value = isEdit
+                          ? await pretendanceListNotifier
+                              .updatePretendance(newPretendence)
+                          : await pretendanceListNotifier
+                              .addPretendance(newPretendence);
+                      if (value) {
+                        pageNotifier.setVotePage(VotePage.admin);
+                        if (isEdit) {
+                          displayVoteToastWithContext(
+                              TypeMsg.msg, VoteTextConstants.editedPretendance);
+                          pretendanceList.when(
+                              data: (list) {
+                                if (logo.value != null) {
+                                  logoNotifier.updateLogo(
+                                      pretendance.id, logo.value!);
+                                  pretendanceLogosNotifier.setTData(
+                                      pretendance,
+                                      AsyncData([
+                                        Image.file(
+                                          File(logo.value!),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ]));
+                                }
+                              },
+                              error: (error, s) {},
+                              loading: () {});
                         } else {
                           displayVoteToastWithContext(
-                              TypeMsg.error, VoteTextConstants.editingError);
+                              TypeMsg.msg, VoteTextConstants.addedPretendance);
+                          pretendanceList.when(
+                              data: (list) {
+                                final newPretendance = list.last;
+                                if (logo.value != null) {
+                                  logoNotifier.updateLogo(
+                                      newPretendance.id, logo.value!);
+                                  pretendanceLogosNotifier.setTData(
+                                      newPretendance,
+                                      AsyncData([
+                                        Image.file(
+                                          File(logo.value!),
+                                          fit: BoxFit.cover,
+                                        )
+                                      ]));
+                                }
+                              },
+                              error: (error, s) {},
+                              loading: () {});
                         }
-                      });
-                    } else {
-                      displayToast(context, TypeMsg.error,
-                          VoteTextConstants.incorrectOrMissingFields);
-                    }
-                  },
-                  child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(top: 8, bottom: 12),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(
-                                3, 3),
-                          ),
-                        ],
-                      ),
-                      child: const Text(VoteTextConstants.edit,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold))),
-                )),
+                        membersNotifier.clearMembers();
+                        await sectionsNotifier.setTData(section.value,
+                            await pretendanceListNotifier.copy());
+                      } else {
+                        displayVoteToastWithContext(
+                            TypeMsg.error, VoteTextConstants.editingError);
+                      }
+                    });
+                  } else {
+                    displayToast(context, TypeMsg.error,
+                        VoteTextConstants.incorrectOrMissingFields);
+                  }
+                },
+                child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(top: 8, bottom: 12),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: const Text(VoteTextConstants.edit,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold))),
+              ),
+            ),
             const SizedBox(height: 30),
           ]),
         ));
