@@ -14,6 +14,7 @@ import 'package:myecl/event/ui/pages/add_page/loaner_chip.dart';
 import 'package:myecl/event/ui/pages/add_page/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEventPage extends HookConsumerWidget {
@@ -440,8 +441,35 @@ class AddEventPage extends HookConsumerWidget {
                       suffix: '',
                     ),
                     const SizedBox(height: 50),
-                    GestureDetector(
-                      onTap: () {
+                    ShrinkButton(
+                      waitChild: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.only(top: 8, bottom: 12),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 10,
+                              offset: const Offset(
+                                  3, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: const Center(
+                          child: SizedBox(
+                            height: 25,
+                            width: 25,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () async {
                         if (key.currentState == null) {
                           return;
                         }
@@ -454,7 +482,9 @@ class AddEventPage extends HookConsumerWidget {
                           if (end.text == "") {
                             end.text = now.toString();
                           }
-                          if (processDateBack(start.text).compareTo(processDateBack(end.text)) > 0) {
+                          if (processDateBack(start.text)
+                                  .compareTo(processDateBack(end.text)) >
+                              0) {
                             displayToast(context, TypeMsg.error,
                                 EventTextConstants.invalidDates);
                           } else {
@@ -467,8 +497,7 @@ class AddEventPage extends HookConsumerWidget {
                               }
                               String endString = end.text;
                               if (!endString.contains("/")) {
-                                endString =
-                                    "${processDate(now)} $endString";
+                                endString = "${processDate(now)} $endString";
                               }
                               if (recurrent.value) {
                                 RecurrenceProperties recurrence =
