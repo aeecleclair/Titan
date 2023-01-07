@@ -97,7 +97,13 @@ class MainPage extends HookConsumerWidget {
                     children: [
                       SizedBox(
                         height: MediaQuery.of(context).size.height -
-                            (isAdmin ? 215 : 220),
+                            (s == Status.open
+                                ? isAdmin
+                                    ? 215
+                                    : 220
+                                : isAdmin
+                                    ? 150
+                                    : 155),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -171,7 +177,7 @@ class MainPage extends HookConsumerWidget {
                                   loading: () => const Center(
                                     child: CircularProgressIndicator(),
                                   ),
-                                  error: (error, stack) =>  Center(
+                                  error: (error, stack) => Center(
                                     child: Text('Error : $error'),
                                   ),
                                 ),
@@ -183,7 +189,8 @@ class MainPage extends HookConsumerWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      if (sectionList.isNotEmpty) const VoteButton(),
+                      if (sectionList.isNotEmpty && s == Status.open)
+                        const VoteButton(),
                       const SizedBox(
                         height: 20,
                       ),
@@ -202,7 +209,8 @@ class MainPage extends HookConsumerWidget {
           child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.0),
               child: Center(
-                child: Text(VoteTextConstants.notAEMember,
+                child: Text(
+                  VoteTextConstants.notAEMember,
                   style: TextStyle(fontSize: 20),
                 ),
               )));

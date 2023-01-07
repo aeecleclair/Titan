@@ -8,6 +8,7 @@ class VoteTextConstants {
   static const String addSection = 'Ajouter une section';
   static const String alreadyAddedMember = 'Membre déjà ajouté';
   static const String alreadyVoted = "Vote enregistré";
+  static const String chooseList = 'Choisir une liste';
   static const String clear = 'Réinitialiser';
   static const String closedVote = 'Votes clos';
   static const String closeVote = 'Fermer les votes';
@@ -70,5 +71,7 @@ class VoteTextConstants {
   static const String votesClosed = 'Votes clos';
   static const String votesCounted = 'Votes dépouillés';
   static const String votesOpened = 'Votes ouverts';
-  static const String chooseList = 'Choisir une liste';
+  static const String warning = "Attention";
+  static const String warningMessage =
+      "La sélection ne sera pas sauvegardée.\nVoulez-vous continuer ?";
 }

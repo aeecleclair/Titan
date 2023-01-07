@@ -241,18 +241,22 @@ class PretendanceCard extends HookConsumerWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            pretendanceNotifier.setId(pretendance);
-                            pageNotifier
-                                .setVotePage(VotePage.detailPageFromMain);
-                          },
-                          child: const HeroIcon(
-                            HeroIcons.informationCircle,
-                            color: Colors.black,
-                            size: 25,
-                          ),
-                        ),
+                        pretendance.listType != ListType.blank
+                            ? GestureDetector(
+                                onTap: () {
+                                  pretendanceNotifier.setId(pretendance);
+                                  pageNotifier
+                                      .setVotePage(VotePage.detailPageFromMain);
+                                },
+                                child: const HeroIcon(
+                                  HeroIcons.informationCircle,
+                                  color: Colors.black,
+                                  size: 25,
+                                ),
+                              )
+                            : const SizedBox(
+                                width: 25,
+                              ),
                       ],
                     ),
                     Center(
