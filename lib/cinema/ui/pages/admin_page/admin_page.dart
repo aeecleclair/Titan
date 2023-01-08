@@ -68,8 +68,8 @@ class AdminPage extends HookConsumerWidget {
                         sessionNotifier.setSession(data[index - 1]);
                         pageNotifier.setCinemaPage(CinemaPage.addEditSession);
                       },
-                      onDelete: () {
-                        showDialog(
+                      onDelete: () async {
+                        await showDialog(
                             context: context,
                             builder: (context) {
                               return CustomDialogBox(

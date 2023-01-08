@@ -195,7 +195,8 @@ class PretendanceCard extends HookConsumerWidget {
                                         height: 40,
                                         width: 40,
                                         child: Center(
-                                          child: HeroIcon(HeroIcons.exclamationCircle),
+                                          child: HeroIcon(
+                                              HeroIcons.exclamationCircle),
                                         ),
                                       );
                                     });
@@ -298,7 +299,8 @@ class PretendanceCard extends HookConsumerWidget {
                                             offset: const Offset(2, 3))
                                       ],
                                     ),
-                                    child: const Icon(Icons.how_to_vote,
+                                    child: const HeroIcon(
+                                        HeroIcons.envelopeOpen,
                                         color: Colors.white),
                                   ),
                                 )
