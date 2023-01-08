@@ -64,49 +64,57 @@ class MainPage extends HookConsumerWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: -60,
-                    right: -MediaQuery.of(context).size.width / 2 + 70,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(-2, -3),
+                    top: 0,
+                    left: -MediaQuery.of(context).size.width / 2 + 70,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 125,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 10,
+                                offset: const Offset(-2, -3),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          if (me.nickname.isNotEmpty)
-                            Column(
-                              children: [
-                                const SizedBox(
-                                  height: 10,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              if (me.nickname.isNotEmpty)
+                                Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      me.nickname,
+                                      style: const TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  me.nickname,
-                                  style: const TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              Text(
+                                "${me.firstname} ${me.name}",
+                                style: const TextStyle(
+                                  fontSize: 20,
                                 ),
-                              ],
-                            ),
-                          const SizedBox(
-                            height: 3,
+                              ),
+                            ],
                           ),
-                          Text(
-                            "${me.firstname} ${me.name}",
-                            style: const TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

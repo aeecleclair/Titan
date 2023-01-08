@@ -150,8 +150,8 @@ class DetailPage extends HookConsumerWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        padding: const EdgeInsets.only(
-                            top: 8, bottom: 12, left: 15, right: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
                         decoration: BoxDecoration(
                           color: Colors.grey.shade900,
                           borderRadius: BorderRadius.circular(18),
