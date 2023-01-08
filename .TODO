@@ -10,7 +10,6 @@ AMAP :
 Vote : 
 
 - del par type
-- pop up qd selectionné ms pas confirmé
 
 Resa : 
 
@@ -20,7 +19,6 @@ Resa :
 TITAN :
 
 - Fix AMAP
-- animation btn (shrinking + disable) s/ tt btn avec interaction avec API
 - dark mode (pr chq module)
 - cache (Hive)
 - ask help

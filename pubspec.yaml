@@ -39,7 +39,6 @@ dependencies:
   shared_preferences: ^2.0.15
   smooth_page_indicator: ^1.0.0+2
   syncfusion_flutter_calendar: ^20.1.50
-  syncfusion_flutter_xlsio: ^20.4.42-beta
   tuple: ^2.0.0
   universal_html: ^2.0.8
   vector_math: ^2.1.2
@@ -53,8 +52,7 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/images/test3.jpg
-    - assets/images/logo2.png
+    - assets/images/logo.png
 
   uses-material-design: true
 
