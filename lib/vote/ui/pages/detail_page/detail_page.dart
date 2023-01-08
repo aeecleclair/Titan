@@ -108,7 +108,7 @@ class DetailPage extends HookConsumerWidget {
                                         height: 50,
                                         width: 50,
                                         child: Center(
-                                          child: Icon(Icons.error),
+                                          child: HeroIcon(HeroIcons.exclamationCircle),
                                         ),
                                       );
                                     });

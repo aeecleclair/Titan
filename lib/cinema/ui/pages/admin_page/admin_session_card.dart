@@ -1,10 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:myecl/cinema/class/session.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AdminSessionCard extends StatelessWidget {
   final Session session;
-  final VoidCallback onTap, onEdit, onDelete;
+  final VoidCallback onTap, onEdit;
+  final Future Function() onDelete;
   const AdminSessionCard(
       {super.key,
       required this.session,
@@ -65,6 +68,7 @@ class AdminSessionCard extends StatelessWidget {
                           child: Container(
                             width: 40,
                             height: 40,
+                            padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               color: Colors.grey.shade200,
                               borderRadius: BorderRadius.circular(30),
@@ -75,14 +79,16 @@ class AdminSessionCard extends StatelessWidget {
                                     offset: const Offset(2, 3))
                               ],
                             ),
-                            child: const Icon(Icons.edit, color: Colors.black),
+                            child: const HeroIcon(HeroIcons.pencil,
+                                color: Colors.black),
                           ),
                         ),
-                        GestureDetector(
+                        ShrinkButton(
                           onTap: onDelete,
-                          child: Container(
+                          waitChild: Container(
                             width: 40,
                             height: 40,
+                            padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               color: Colors.black,
                               borderRadius: BorderRadius.circular(30),
@@ -93,8 +99,27 @@ class AdminSessionCard extends StatelessWidget {
                                     offset: const Offset(2, 3))
                               ],
                             ),
-                            child:
-                                const Icon(Icons.delete, color: Colors.white),
+                            child: const Center(
+                                child: CircularProgressIndicator(
+                              color: Colors.white,
+                            )),
+                          ),
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 3))
+                              ],
+                            ),
+                            child: const HeroIcon(HeroIcons.trash,
+                                color: Colors.white),
                           ),
                         ),
                       ],

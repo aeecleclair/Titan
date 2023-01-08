@@ -195,7 +195,7 @@ class PretendanceCard extends HookConsumerWidget {
                                         height: 40,
                                         width: 40,
                                         child: Center(
-                                          child: Icon(Icons.error),
+                                          child: HeroIcon(HeroIcons.exclamationCircle),
                                         ),
                                       );
                                     });

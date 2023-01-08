@@ -109,6 +109,7 @@ class SearchUser extends HookConsumerWidget {
                       ),
                     )),
               ),
+              if (add.value) SizedBox(height: 10),
               if (add.value) const MemberResults(),
               if (!add.value)
                 ...g[0].members.map((x) => UserUi(
