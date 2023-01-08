@@ -19,6 +19,7 @@ Resa :
 TITAN :
 
 - Fix AMAP
+- Try catch pr les requetesds ui (et rethrow ds provider)
 - dark mode (pr chq module)
 - cache (Hive)
 - ask help

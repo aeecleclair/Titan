@@ -4,8 +4,9 @@ import 'package:myecl/tools/exception.dart';
 import 'package:f_logs/f_logs.dart';
 
 abstract class Repository {
-  static const host = "https://hyperion.myecl.fr/";
-  final ext = "";
+  static const String host = "https://hyperion.myecl.fr/";
+  static const String expiredTokenDetail = "Could not validate credentials";
+  final String ext = "";
   final Map<String, String> headers = {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -49,7 +50,20 @@ abstract class Repository {
     } else if (response.statusCode == 403) {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-      throw AppException(ErrorType.tokenExpire, response.body);
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        final decoded = json.decode(resp);
+        if (decoded["detail"] == expiredTokenDetail) {
+          throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+        } else {
+          throw AppException(ErrorType.notFound, decoded["detail"]);
+        }
+      } catch (e) {
+        FLog.error(
+            text: "GET ${ext + suffix}\nError while decoding response",
+            exception: e);
+        throw AppException(ErrorType.notFound, response.body);
+      }
     } else {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
@@ -73,9 +87,21 @@ abstract class Repository {
       }
     } else if (response.statusCode == 403) {
       FLog.error(
-          text:
-              "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}");
-      throw AppException(ErrorType.tokenExpire, response.body);
+          text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        final decoded = json.decode(resp);
+        if (decoded["detail"] == expiredTokenDetail) {
+          throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+        } else {
+          throw AppException(ErrorType.notFound, decoded["detail"]);
+        }
+      } catch (e) {
+        FLog.error(
+            text: "GET ${ext + suffix}\nError while decoding response",
+            exception: e);
+        throw AppException(ErrorType.notFound, response.body);
+      }
     } else {
       FLog.error(
           text:
@@ -102,9 +128,21 @@ abstract class Repository {
       return true;
     } else if (response.statusCode == 403) {
       FLog.error(
-          text:
-              "POST ${ext + suffix}\n${response.statusCode} ${response.body}");
-      throw AppException(ErrorType.tokenExpire, response.body);
+          text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        final decoded = json.decode(resp);
+        if (decoded["detail"] == expiredTokenDetail) {
+          throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+        } else {
+          throw AppException(ErrorType.notFound, decoded["detail"]);
+        }
+      } catch (e) {
+        FLog.error(
+            text: "GET ${ext + suffix}\nError while decoding response",
+            exception: e);
+        throw AppException(ErrorType.notFound, response.body);
+      }
     } else {
       FLog.error(
           text:
@@ -121,9 +159,21 @@ abstract class Repository {
       return true;
     } else if (response.statusCode == 403) {
       FLog.error(
-          text:
-              "PATCH ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
-      throw AppException(ErrorType.tokenExpire, response.body);
+          text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        final decoded = json.decode(resp);
+        if (decoded["detail"] == expiredTokenDetail) {
+          throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+        } else {
+          throw AppException(ErrorType.notFound, decoded["detail"]);
+        }
+      } catch (e) {
+        FLog.error(
+            text: "GET ${ext + suffix}\nError while decoding response",
+            exception: e);
+        throw AppException(ErrorType.notFound, response.body);
+      }
     } else {
       FLog.error(
           text:
@@ -140,9 +190,21 @@ abstract class Repository {
       return true;
     } else if (response.statusCode == 403) {
       FLog.error(
-          text:
-              "DELETE ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
-      throw AppException(ErrorType.tokenExpire, response.body);
+          text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+      try {
+        String resp = utf8.decode(response.body.runes.toList());
+        final decoded = json.decode(resp);
+        if (decoded["detail"] == expiredTokenDetail) {
+          throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+        } else {
+          throw AppException(ErrorType.notFound, decoded["detail"]);
+        }
+      } catch (e) {
+        FLog.error(
+            text: "GET ${ext + suffix}\nError while decoding response",
+            exception: e);
+        throw AppException(ErrorType.notFound, response.body);
+      }
     } else {
       FLog.error(
           text:
