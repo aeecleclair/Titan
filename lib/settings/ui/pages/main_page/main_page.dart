@@ -68,7 +68,7 @@ class MainPage extends HookConsumerWidget {
                     left: -MediaQuery.of(context).size.width / 2 + 70,
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 125,
                         ),
                         Container(
