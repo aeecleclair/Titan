@@ -248,27 +248,27 @@ class MainPage extends HookConsumerWidget {
                 //   child: const Text(SettingsTextConstants.askHelp,
                 //       style: TextStyle(fontSize: 16, color: Colors.black)),
                 // ),
-                const SizedBox(
-                  height: 30,
-                ),
-                SettingsItem(
-                  icon: HeroIcons.bugAnt,
-                  onTap: () {
-                    BetterFeedback.of(context).show(
-                      (UserFeedback feedback) async {
-                        final screenshotFilePath =
-                            await writeImageToStorage(feedback.screenshot);
+                // const SizedBox(
+                //   height: 30,
+                // ),
+                // SettingsItem(
+                //   icon: HeroIcons.bugAnt,
+                //   onTap: () {
+                //     BetterFeedback.of(context).show(
+                //       (UserFeedback feedback) async {
+                //         final screenshotFilePath =
+                //             await writeImageToStorage(feedback.screenshot);
 
-                        await Share.shareXFiles(
-                          [XFile(screenshotFilePath)],
-                          text: feedback.text,
-                        );
-                      },
-                    );
-                  },
-                  child: const Text(SettingsTextConstants.repportBug,
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
-                ),
+                //         await Share.shareXFiles(
+                //           [XFile(screenshotFilePath)],
+                //           text: feedback.text,
+                //         );
+                //       },
+                //     );
+                //   },
+                //   child: const Text(SettingsTextConstants.repportBug,
+                //       style: TextStyle(fontSize: 16, color: Colors.black)),
+                // ),
                 const SizedBox(
                   height: 30,
                 ),
