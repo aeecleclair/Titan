@@ -34,6 +34,7 @@ class DeliveryHandler extends HookConsumerWidget {
             children: [
               const SizedBox(
                 width: 15,
+                height: 195,
               ),
               GestureDetector(
                   onTap: () {

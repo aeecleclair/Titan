@@ -5,7 +5,6 @@ import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -57,12 +56,12 @@ class DeliveryUi extends HookConsumerWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 2),
+              const SizedBox(),
               Text(
                   '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
                   style: const TextStyle(
@@ -86,7 +85,7 @@ class DeliveryUi extends HookConsumerWidget {
               ),
               Row(
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   GestureDetector(
                     onTap: () {
                       showDialog(
@@ -195,14 +194,14 @@ class DeliveryUi extends HookConsumerWidget {
                       child: Row(
                         children: [
                           Container(
-                            padding: EdgeInsets.only(bottom: 2),
-                            child: Text(
+                            padding: const EdgeInsets.only(bottom: 2),
+                            child: const Text(
                               AMAPTextConstants.openDelivery,
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           HeroIcon(
@@ -216,7 +215,7 @@ class DeliveryUi extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  Spacer()
+                  const Spacer()
                 ],
               ),
             ],

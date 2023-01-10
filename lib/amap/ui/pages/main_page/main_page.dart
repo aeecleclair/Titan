@@ -7,7 +7,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
