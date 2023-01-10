@@ -25,9 +25,9 @@ class AccountHandler extends HookConsumerWidget {
     final focus = ref.watch(focusProvider);
     final focusNotifier = ref.watch(focusProvider.notifier);
     final focusNode = useFocusNode();
-    // if (focus) { // TODO: fix this
-    //   focusNode.requestFocus();
-    // }
+    if (focus) {
+      focusNode.requestFocus();
+    }
     return Column(
       children: [
         Container(
