@@ -11,9 +11,8 @@ class ProductListNotifier extends ListNotifier<Product> {
     _productListRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Product>>> loadProductList(String deliveryId) async {
-    return await loadList(
-        () async => _productListRepository.getProductList(deliveryId));
+  Future<AsyncValue<List<Product>>> loadProductList(List<Product> products) async {
+    return state = AsyncValue.data(products);
   }
 
   Future<bool> addProduct(Product product, String deliveryId) async {
