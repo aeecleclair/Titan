@@ -8,7 +8,6 @@ class DeliveryListRepository extends Repository {
   final ext = "amap/deliveries";
 
   Future<List<Delivery>> getDeliveryList() async {
-    print(await getList());
     return List<Delivery>.from(
         (await getList()).map((x) => Delivery.fromJson(x)));
   }
@@ -27,6 +26,22 @@ class DeliveryListRepository extends Repository {
 
   Future<Delivery> getDelivery(String deliveryId) async {
     return Delivery.fromJson(await getOne("/$deliveryId"));
+  }
+
+  Future<bool> openDelivery(Delivery delivery) async {
+    return await create({}, suffix: "${delivery.id}/openordering");
+  }
+
+  Future<bool> lockDelivery(Delivery delivery) async {
+    return await create({}, suffix: "${delivery.id}/lock");
+  }
+
+  Future<bool> deliverDelivery(Delivery delivery) async {
+    return await create({}, suffix: "${delivery.id}/delivered");
+  }
+
+  Future<bool> archiveDelivery(String deliveryId) async {
+    return await create({}, suffix: "$deliveryId/archive");
   }
 
   Future<List<Product>> getAllProductsFromOrder(

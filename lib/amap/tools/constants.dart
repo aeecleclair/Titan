@@ -96,4 +96,8 @@ class AMAPTextConstants {
   static const String updatedProduct = "Produit modifié";
   static const String updatingError = "Echec de la modification";
   static const String usersNotFound = "Aucun utilisateur trouvé";
+
+  static var openDelivery = "Ouvrir";
+
+  static var openningDelivery = "Ouvrir la livraison ?";
 }

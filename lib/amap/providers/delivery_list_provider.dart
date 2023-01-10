@@ -29,6 +29,42 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
         delivery);
   }
 
+  Future<bool> openDelivery(Delivery delivery) async {
+    return await update(
+      _deliveriesListRepository.openDelivery,
+      (deliveries, delivery) => deliveries
+          ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
+        delivery..copyWith(status: DeliveryStatus.orderable)
+    );
+  }
+
+  Future<bool> lockDelivery(Delivery delivery) async {
+    return await update(
+      _deliveriesListRepository.lockDelivery,
+      (deliveries, delivery) => deliveries
+          ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
+        delivery..copyWith(status: DeliveryStatus.locked)
+    );
+  }
+
+   Future<bool> deliverDelivery(Delivery delivery) async {
+    return await update(
+      _deliveriesListRepository.lockDelivery,
+      (deliveries, delivery) => deliveries
+          ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
+        delivery..copyWith(status: DeliveryStatus.deliverd)
+    );
+  }
+
+   Future<bool> archiveDelivery(Delivery delivery) async {
+    return await delete(
+        _deliveriesListRepository.archiveDelivery,
+        (deliveries, delivery) =>
+            deliveries..removeWhere((i) => i.id == delivery.id),
+        delivery.id,
+        delivery);
+  }
+
   Future<bool> deleteDelivery(Delivery delivery) async {
     return await delete(
         _deliveriesListRepository.deleteDelivery,

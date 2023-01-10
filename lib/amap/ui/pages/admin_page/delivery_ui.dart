@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -59,79 +60,75 @@ class DeliveryUi extends HookConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    delivery.status.toString()
-                        // ? AMAPTextConstants.locked
-                        // : AMAPTextConstants.opened,
-                    // style: TextStyle(
-                    //     fontSize: 18,
-                    //     fontWeight: FontWeight.bold,
-                    //     color: delivery.locked
-                    //         ? AMAPColorConstants.redGradient1
-                    //         : AMAPColorConstants.textDark),
-                  ),
                   GestureDetector(
                     onTap: () {
                       showDialog(
                           context: context,
                           builder: ((context) => CustomDialogBox(
-                              // title: delivery.locked
-                              //     ? AMAPTextConstants.unlock
-                              //     : AMAPTextConstants.lock,
-                              // descriptions: delivery.locked
-                              //     ? AMAPTextConstants.unlockingDelivery
-                              //     : AMAPTextConstants.lockingDelivery,
-                              title: AMAPTextConstants.lock,
-                              descriptions: AMAPTextConstants.lockingDelivery,
+                              title: delivery.status == DeliveryStatus.creation
+                              ? AMAPTextConstants.openDelivery
+                                  // ? AMAPTextConstants.unlock
+                                  : AMAPTextConstants.lock,
+                              descriptions: delivery.status == DeliveryStatus.creation
+                              ? AMAPTextConstants.openningDelivery
+                                  // ? AMAPTextConstants.unlockingDelivery
+                                  : AMAPTextConstants.lockingDelivery,
                               onYes: () {
                                 tokenExpireWrapper(ref, () async {
-                                  // final lastState = delivery.locked;
-                                  // deliveryListNotifier
-                                  //     .updateDelivery(delivery.copyWith(
-                                  //   locked: !delivery.locked,
-                                  // ))
-                                  //     .then((value) {
-                                  //   if (value) {
-                                  //     if (lastState) {
-                                  //       displayVoteWithContext(TypeMsg.msg,
-                                  //           AMAPTextConstants.unlockedDelivery);
-                                  //     } else {
-                                  //       displayVoteWithContext(TypeMsg.msg,
-                                  //           AMAPTextConstants.lockedDelivery);
-                                  //     }
-                                  //   } else {
-                                  //     displayVoteWithContext(TypeMsg.error,
-                                  //         AMAPTextConstants.updatingError);
-                                  //   }
-                                  // });
-                                });
+                                  switch (delivery.status){
+                                    case DeliveryStatus.creation:
+                                      deliveryListNotifier.openDelivery(delivery);
+                                      break;
+                                    case DeliveryStatus.orderable:
+                                    deliveryListNotifier.lockDelivery(delivery);
+                                      break;
+                                    case DeliveryStatus.locked:
+                                    deliveryListNotifier.deliverDelivery(delivery);
+                                      break;
+                                    case DeliveryStatus.deliverd:
+                                    deliveryListNotifier.archiveDelivery(delivery);
+                                      break;}
+                                  });
                               })));
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 15),
-                      margin: const EdgeInsets.only(left: 20),
+                          vertical: 8, horizontal: 12),
+                      // margin: const EdgeInsets.only(left: 20),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        // gradient: LinearGradient(
-                        //   colors: !delivery.locked
-                        //       ? [
-                        //           AMAPColorConstants.redGradient1,
-                        //           AMAPColorConstants.redGradient2,
-                        //         ]
-                        //       : [
-                        //           AMAPColorConstants.greenGradient1,
-                        //           AMAPColorConstants.greenGradient2,
-                        //         ],
-                        //   begin: Alignment.topLeft,
-                        //   end: Alignment.bottomRight,
-                        // ),
+                        gradient: LinearGradient(
+                          colors: !(delivery.status == DeliveryStatus.creation)
+                              ? [
+                                  AMAPColorConstants.redGradient1,
+                                  AMAPColorConstants.redGradient2,
+                                ]
+                              : [
+                                  AMAPColorConstants.greenGradient1,
+                                  AMAPColorConstants.greenGradient2,
+                                ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
                       ),
-                      child: Icon(
-                        // !delivery.locked ? Icons.lock : Icons.lock_open,
-                        Icons.lock,
-                        color: Colors.white,
-                        size: 20,
+                      child: Row(
+                        children: [
+                          Text(
+                            AMAPTextConstants.openDelivery,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Icon(
+                            !(delivery.status == DeliveryStatus.creation) ? Icons.lock : Icons.lock_open,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ],
                       ),
                     ),
                   ),

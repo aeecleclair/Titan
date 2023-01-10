@@ -1,11 +1,12 @@
 import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 
-import '../tools/functions.dart';
-
-
 enum DeliveryStatus {
-  creation
+  creation,
+  orderable,
+  locked,
+  deliverd,
 }
 class Delivery {
   Delivery(
