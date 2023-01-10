@@ -60,48 +60,50 @@ class DeliveryUi extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    delivery.locked
-                        ? AMAPTextConstants.locked
-                        : AMAPTextConstants.opened,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: delivery.locked
-                            ? AMAPColorConstants.redGradient1
-                            : AMAPColorConstants.textDark),
+                    delivery.status.toString()
+                        // ? AMAPTextConstants.locked
+                        // : AMAPTextConstants.opened,
+                    // style: TextStyle(
+                    //     fontSize: 18,
+                    //     fontWeight: FontWeight.bold,
+                    //     color: delivery.locked
+                    //         ? AMAPColorConstants.redGradient1
+                    //         : AMAPColorConstants.textDark),
                   ),
                   GestureDetector(
                     onTap: () {
                       showDialog(
                           context: context,
                           builder: ((context) => CustomDialogBox(
-                              title: delivery.locked
-                                  ? AMAPTextConstants.unlock
-                                  : AMAPTextConstants.lock,
-                              descriptions: delivery.locked
-                                  ? AMAPTextConstants.unlockingDelivery
-                                  : AMAPTextConstants.lockingDelivery,
+                              // title: delivery.locked
+                              //     ? AMAPTextConstants.unlock
+                              //     : AMAPTextConstants.lock,
+                              // descriptions: delivery.locked
+                              //     ? AMAPTextConstants.unlockingDelivery
+                              //     : AMAPTextConstants.lockingDelivery,
+                              title: AMAPTextConstants.lock,
+                              descriptions: AMAPTextConstants.lockingDelivery,
                               onYes: () {
                                 tokenExpireWrapper(ref, () async {
-                                  final lastState = delivery.locked;
-                                  deliveryListNotifier
-                                      .updateDelivery(delivery.copyWith(
-                                    locked: !delivery.locked,
-                                  ))
-                                      .then((value) {
-                                    if (value) {
-                                      if (lastState) {
-                                        displayVoteWithContext(TypeMsg.msg,
-                                            AMAPTextConstants.unlockedDelivery);
-                                      } else {
-                                        displayVoteWithContext(TypeMsg.msg,
-                                            AMAPTextConstants.lockedDelivery);
-                                      }
-                                    } else {
-                                      displayVoteWithContext(TypeMsg.error,
-                                          AMAPTextConstants.updatingError);
-                                    }
-                                  });
+                                  // final lastState = delivery.locked;
+                                  // deliveryListNotifier
+                                  //     .updateDelivery(delivery.copyWith(
+                                  //   locked: !delivery.locked,
+                                  // ))
+                                  //     .then((value) {
+                                  //   if (value) {
+                                  //     if (lastState) {
+                                  //       displayVoteWithContext(TypeMsg.msg,
+                                  //           AMAPTextConstants.unlockedDelivery);
+                                  //     } else {
+                                  //       displayVoteWithContext(TypeMsg.msg,
+                                  //           AMAPTextConstants.lockedDelivery);
+                                  //     }
+                                  //   } else {
+                                  //     displayVoteWithContext(TypeMsg.error,
+                                  //         AMAPTextConstants.updatingError);
+                                  //   }
+                                  // });
                                 });
                               })));
                     },
@@ -111,22 +113,23 @@ class DeliveryUi extends HookConsumerWidget {
                       margin: const EdgeInsets.only(left: 20),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        gradient: LinearGradient(
-                          colors: !delivery.locked
-                              ? [
-                                  AMAPColorConstants.redGradient1,
-                                  AMAPColorConstants.redGradient2,
-                                ]
-                              : [
-                                  AMAPColorConstants.greenGradient1,
-                                  AMAPColorConstants.greenGradient2,
-                                ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
+                        // gradient: LinearGradient(
+                        //   colors: !delivery.locked
+                        //       ? [
+                        //           AMAPColorConstants.redGradient1,
+                        //           AMAPColorConstants.redGradient2,
+                        //         ]
+                        //       : [
+                        //           AMAPColorConstants.greenGradient1,
+                        //           AMAPColorConstants.greenGradient2,
+                        //         ],
+                        //   begin: Alignment.topLeft,
+                        //   end: Alignment.bottomRight,
+                        // ),
                       ),
                       child: Icon(
-                        !delivery.locked ? Icons.lock : Icons.lock_open,
+                        // !delivery.locked ? Icons.lock : Icons.lock_open,
+                        Icons.lock,
                         color: Colors.white,
                         size: 20,
                       ),

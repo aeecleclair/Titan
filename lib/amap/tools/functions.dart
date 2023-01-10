@@ -1,3 +1,4 @@
+import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/class/order.dart';
 
 String collectionSlotToString(CollectionSlot slot) {
@@ -19,5 +20,21 @@ CollectionSlot stringToCollectionSlot(String slot) {
       return CollectionSlot.soir;
     default:
       return CollectionSlot.midi;
+  }
+}
+
+String deliveryStatusToString(DeliveryStatus status) {
+  switch (status) {
+    case DeliveryStatus.creation:
+      return 'creation';
+  }
+}
+
+DeliveryStatus stringToDeliveryStatus(String status) {
+  switch (status) {
+    case 'creation':
+      return DeliveryStatus.creation;
+    default:
+      return DeliveryStatus.creation;
   }
 }

@@ -1,15 +1,21 @@
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/tools/functions.dart';
 
+import '../tools/functions.dart';
+
+
+enum DeliveryStatus {
+  creation
+}
 class Delivery {
   Delivery(
       {required this.deliveryDate,
       required this.products,
       required this.id,
-      required this.locked,
+      required this.status,
       this.expanded = false});
   late final bool expanded;
-  late final bool locked;
+  late final DeliveryStatus status;
   late final DateTime deliveryDate;
   late final List<Product> products;
   late final String id;
@@ -19,7 +25,7 @@ class Delivery {
     products =
         List<Product>.from(json['products'].map((x) => Product.fromJson(x)));
     id = json['id'];
-    locked = json['locked'];
+    status = stringToDeliveryStatus(json['status']);
     expanded = false;
   }
 
@@ -27,17 +33,17 @@ class Delivery {
     final data = <String, dynamic>{};
     data['delivery_date'] = processDateToAPIWitoutHour(deliveryDate);
     data['products_ids'] = products.map((e) => e.id).toList();
-    data['locked'] = locked;
+    data['status'] = status;
     data['id'] = id;
     return data;
   }
 
-  Delivery copyWith({deliveryDate, products, expanded, id, locked}) {
+  Delivery copyWith({deliveryDate, products, expanded, id, status}) {
     return Delivery(
         deliveryDate: deliveryDate ?? this.deliveryDate,
         products: products ?? this.products,
         expanded: expanded ?? this.expanded,
-        locked: locked ?? this.locked,
+        status: status ?? this.status,
         id: id ?? this.id);
   }
 
@@ -45,6 +51,6 @@ class Delivery {
       deliveryDate: DateTime.now(),
       products: [],
       expanded: false,
-      locked: false,
+      status: DeliveryStatus.creation,
       id: '');
 }

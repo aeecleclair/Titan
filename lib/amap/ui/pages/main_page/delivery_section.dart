@@ -44,7 +44,7 @@ class DeliverySection extends HookConsumerWidget {
                   children: [
                     const SizedBox(height: 10),
                     for (var i = 0; i < data.length; i++)
-                      if (!data[i].locked)
+                      // if (!data[i].locked)
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: DeliveryUi(

@@ -8,6 +8,7 @@ class DeliveryListRepository extends Repository {
   final ext = "amap/deliveries";
 
   Future<List<Delivery>> getDeliveryList() async {
+    print(await getList());
     return List<Delivery>.from(
         (await getList()).map((x) => Delivery.fromJson(x)));
   }
