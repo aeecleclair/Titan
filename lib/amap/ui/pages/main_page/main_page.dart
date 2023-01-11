@@ -14,7 +14,7 @@ import 'package:myecl/amap/providers/order_list_provider.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/main_page/collectionn_slot_selector.dart';
+import 'package:myecl/amap/ui/pages/main_page/collection_slot_selector.dart';
 import 'package:myecl/amap/ui/pages/main_page/delivery_section.dart';
 import 'package:myecl/amap/ui/pages/main_page/orders_section.dart';
 import 'package:myecl/tools/refresher.dart';

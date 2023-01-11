@@ -23,7 +23,6 @@ class AddEditDeliveryPage extends HookConsumerWidget {
     final dateController = useTextEditingController();
     final products = ref.watch(productList);
     final sortedProductsList = ref.watch(sortedByCategoryProductsProvider);
-    final deliveryNotifier = ref.watch(deliveryListProvider.notifier);
     final selected = useState(List.generate(products.length, (index) => true));
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -169,8 +168,11 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                         .toList(),
                                     deliveryDate:
                                         DateTime.parse(processDateBack(date)),
-                                    status: DeliveryStatus.creation); // TODO: edit
+                                    status:
+                                        DeliveryStatus.creation); // TODO: edit
                                 await tokenExpireWrapper(ref, () async {
+                                  final deliveryNotifier =
+                                      ref.watch(deliveryListProvider.notifier);
                                   final value =
                                       await deliveryNotifier.addDelivery(del);
                                   if (value) {

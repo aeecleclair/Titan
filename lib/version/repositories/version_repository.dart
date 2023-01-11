@@ -8,6 +8,7 @@ class VersionRepository extends Repository {
 
   Future<Version> getVersion() async {
     initLogger();
+    print("getVersion");
     return Version.fromJson(await getOne(""));
   }
 }
