@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum EventPage {
   main,
-  addEvent,
+  addEditEvent,
   eventDetailfromModule,
   eventDetailfromCalendar
 }

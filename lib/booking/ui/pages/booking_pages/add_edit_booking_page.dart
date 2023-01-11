@@ -51,7 +51,10 @@ class AddEditBookingPage extends HookConsumerWidget {
         text: booking.recurrenceRule != ""
             ? booking.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
             : "1");
-    final recurrenceEndDate = useTextEditingController();
+    final recurrenceEndDate = useTextEditingController(
+        text: booking.recurrenceRule != ""
+            ? booking.recurrenceRule.split(";UNTIL=")[1].split(";")[0]
+            : "1");
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }

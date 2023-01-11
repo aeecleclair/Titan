@@ -13,6 +13,9 @@ class EventTextConstants {
   static const String deletingEvent = "Supprimer l'événement ?";
   static const String description = "Description";
   static const String edit = "Modifier";
+  static const String editEvent = "Modifier un événement";
+  static const String editedEvent = "Événement modifié";
+  static const String editingError = "Erreur lors de la modification";
   static const String endDate = "Date de fin";
   static const String endHour = "Heure de fin";
   static const String eventList = "Liste des événements";
@@ -36,7 +39,7 @@ class EventTextConstants {
   static const String noPlaceError = "Veuillez entrer un lieu";
   static const String noRuleError = "Veuillez entrer une règle de récurrence";
   static const String organizer = "Organisateur";
-  static const String place = "Lieu";
+  static const String location = "Lieu";
   static const String previous = "Précédent";
   static const String recurrence = "Récurrence";
   static const String recurrenceDays = "Jours de récurrence";

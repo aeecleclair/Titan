@@ -1,5 +1,6 @@
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/user/class/applicant.dart';
 
 enum CalendarEventType {
   eventAE,
@@ -21,6 +22,7 @@ class Event {
   late final CalendarEventType type;
   late final String description;
   late final String recurrenceRule;
+  late final Applicant applicant;
 
   Event({
     required this.id,
@@ -33,6 +35,7 @@ class Event {
     required this.description,
     required this.allDay,
     required this.recurrenceRule,
+    required this.applicant,
   });
 
   Event.fromJson(Map<String, dynamic> json) {
@@ -46,6 +49,7 @@ class Event {
     type = stringToCalendarEventType(json['type']);
     description = json['description'];
     recurrenceRule = json['recurrence_rule'];
+    applicant = Applicant.fromJson(json['applicant']);
   }
 
   Map<String, dynamic> toJson() {
@@ -60,6 +64,7 @@ class Event {
     data['type'] = calendarEventTypeToString(type);
     data['description'] = description;
     data['recurrence_rule'] = recurrenceRule;
+    data['applicant_id'] = applicant.id;
     return data;
   }
 
@@ -74,6 +79,7 @@ class Event {
     String? description,
     bool? allDay,
     String? recurrenceRule,
+    Applicant? applicant,
   }) {
     return Event(
       id: id ?? this.id,
@@ -86,6 +92,7 @@ class Event {
       description: description ?? this.description,
       recurrenceRule: recurrenceRule ?? this.recurrenceRule,
       allDay: allDay ?? this.allDay,
+      applicant: applicant ?? this.applicant,
     );
   }
 
@@ -100,5 +107,6 @@ class Event {
     type = CalendarEventType.eventAE;
     description = '';
     recurrenceRule = '';
+    applicant = Applicant.empty();
   }
 }

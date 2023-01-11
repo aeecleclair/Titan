@@ -51,7 +51,7 @@ class MainPage extends HookConsumerWidget {
                           if (index == 0) {
                             return GestureDetector(
                               onTap: () {
-                                pageNotifier.setEventPage(EventPage.addEvent);
+                                pageNotifier.setEventPage(EventPage.addEditEvent);
                               },
                               child: Container(
                                   margin: const EdgeInsets.only(

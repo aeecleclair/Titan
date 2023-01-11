@@ -36,7 +36,7 @@ class TopBar extends HookConsumerWidget {
                           case EventPage.main:
                             controllerNotifier.toggle();
                             break;
-                          case EventPage.addEvent:
+                          case EventPage.addEditEvent:
                             pageNotifier.setEventPage(EventPage.main);
                             break;
                           case EventPage.eventDetailfromModule:

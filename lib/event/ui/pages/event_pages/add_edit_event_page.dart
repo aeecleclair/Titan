@@ -7,36 +7,47 @@ import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
+import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/selected_days_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/event/ui/pages/add_page/loaner_chip.dart';
-import 'package:myecl/event/ui/pages/add_page/text_entry.dart';
+import 'package:myecl/event/ui/pages/event_pages/loaner_chip.dart';
+import 'package:myecl/event/ui/pages/event_pages/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-class AddEventPage extends HookConsumerWidget {
-  const AddEventPage({Key? key}) : super(key: key);
+class AddEditEventPage extends HookConsumerWidget {
+  const AddEditEventPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
+    final user = ref.watch(userProvider);
+    final event = ref.watch(eventProvider);
+    final isEdit = event.id != Event.empty().id;
     final pageNotifier = ref.watch(eventPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final eventListNotifier = ref.watch(eventListProvider.notifier);
     final eventType = useState(CalendarEventType.happyHour);
-    final name = useTextEditingController();
-    final organizer = useTextEditingController();
-    final start = useTextEditingController();
-    final end = useTextEditingController();
-    final place = useTextEditingController();
-    final description = useTextEditingController();
-    final allDay = useState(false);
-    final recurrent = useState(false);
-    final interval = useTextEditingController(text: "1");
-    final recurrenceEndDate = useTextEditingController();
+    final name = useTextEditingController(text: event.name);
+    final organizer = useTextEditingController(text: event.organizer);
+    final start = useTextEditingController(text: processDate(event.start));
+    final end = useTextEditingController(text: processDate(event.end));
+    final location = useTextEditingController(text: event.location);
+    final description = useTextEditingController(text: event.description);
+    final allDay = useState(false); //  TODO
+    final recurrent = useState(event.recurrenceRule.contains("FREQ"));
+    final interval = useTextEditingController(
+        text: event.recurrenceRule != ""
+            ? event.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
+            : "1");
+    final recurrenceEndDate = useTextEditingController(
+        text: event.recurrenceRule != ""
+            ? event.recurrenceRule.split(";UNTIL=")[1].split(";")[0]
+            : "1");
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
 
@@ -50,11 +61,14 @@ class AddEventPage extends HookConsumerWidget {
           child: Form(
               key: key,
               child: Column(children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30),
                   child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(EventTextConstants.addEvent,
+                      child: Text(
+                          isEdit
+                              ? EventTextConstants.editEvent
+                              : EventTextConstants.addEvent,
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -427,9 +441,9 @@ class AddEventPage extends HookConsumerWidget {
                     const SizedBox(height: 30),
                     TextEntry(
                       keyboardType: TextInputType.text,
-                      controller: place,
+                      controller: location,
                       isInt: false,
-                      label: EventTextConstants.place,
+                      label: EventTextConstants.location,
                       suffix: '',
                     ),
                     const SizedBox(height: 30),
@@ -527,20 +541,33 @@ class AddEventPage extends HookConsumerWidget {
                                   name: name.text,
                                   organizer: organizer.text,
                                   allDay: allDay.value,
-                                  location: place.text,
+                                  location: location.text,
                                   start: DateTime.parse(
                                       processDateBack(startString)),
                                   type: eventType.value,
-                                  recurrenceRule: recurrenceRule);
-                              final value =
-                                  await eventListNotifier.addEvent(newEvent);
+                                  recurrenceRule: recurrenceRule,
+                                  applicant: user.toApplicant());
+                              final value = isEdit
+                                  ? await eventListNotifier
+                                      .updateEvent(newEvent)
+                                  : await eventListNotifier.addEvent(newEvent);
                               if (value) {
                                 pageNotifier.setEventPage(EventPage.main);
-                                displayToastWithContext(
-                                    TypeMsg.msg, EventTextConstants.addedEvent);
+                                if (isEdit) {
+                                  displayToastWithContext(
+                                      TypeMsg.msg, EventTextConstants.editedEvent);
+                                } else {
+                                  displayToastWithContext(
+                                      TypeMsg.msg, EventTextConstants.addedEvent);
+                                }
                               } else {
-                                displayToastWithContext(TypeMsg.error,
-                                    EventTextConstants.addingError);
+                                if (isEdit) {
+                                  displayToastWithContext(TypeMsg.error,
+                                      EventTextConstants.editingError);
+                                } else {
+                                  displayToastWithContext(TypeMsg.error,
+                                      EventTextConstants.addingError);
+                                }
                               }
                             });
                           }

@@ -1,5 +1,6 @@
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/user/class/applicant.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class User {
@@ -97,5 +98,16 @@ class User {
   SimpleUser toSimpleUser() {
     return SimpleUser(
         name: name, firstname: firstname, nickname: nickname, id: id);
+  }
+
+  Applicant toApplicant() {
+    return Applicant(
+        name: name,
+        firstname: firstname,
+        nickname: nickname,
+        id: id,
+        email: email,
+        promo: promo,
+        phone: '');
   }
 }

@@ -32,7 +32,7 @@ class EventHomePage extends ConsumerWidget {
             } else {
               return true;
             }
-          case EventPage.addEvent:
+          case EventPage.addEditEvent:
             pageNotifier.setEventPage(EventPage.main);
             break;
           case EventPage.eventDetailfromModule:
