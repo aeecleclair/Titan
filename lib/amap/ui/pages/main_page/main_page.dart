@@ -184,7 +184,7 @@ class MainPage extends HookConsumerWidget {
                         offset: Offset(
                             0,
                             (1 - popAnimation.value) *
-                                (MediaQuery.of(context).size.height - 190)),
+                                (MediaQuery.of(context).size.height)),
                         child: child);
                   },
                   animation: animation,
