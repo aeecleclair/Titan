@@ -67,7 +67,7 @@ class ProductCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
               const SizedBox(height: 2),
-              AutoSizeText('${product.price} €',
+              AutoSizeText('${product.price.toStringAsFixed(2)} €',
                   maxLines: 1,
                   minFontSize: 10,
                   overflow: TextOverflow.ellipsis,

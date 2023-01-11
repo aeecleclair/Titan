@@ -51,10 +51,18 @@ class AMAPTextConstants {
   static const String deletingOrder = "Supprimer la commande ?";
   static const String deletingProduct = "Supprimer le produit ?";
   static const String delivery = "Livraison";
+  static const String deliveryArchived = "Livraison archivée";
+  static const String deliveryDelivered = "Livraison effectuée";
   static const String deliveryHandling = "Gérer les livraisons";
   static const String deliveryHistory = "Historique des livraisons";
   static const String deliveryList = "Liste des livraisons";
+  static const String deliveryLocked = "Livraison verrouillée";
   static const String deliveryOn = "Livraison le";
+  static const String deliveryOpened = "Livraison ouverte";
+  static const String deliveryNotArchived = "Livraison non archivée";
+  static const String deliveryNotLocked = "Livraison non verrouillée";
+  static const String deliveryNotDelivered = "Livraison non effectuée";
+  static const String deliveryNotOpened = "Livraison non ouverte";
   static const String editProduct = "Modifier le produit";
   static const String errorLoadingUser =
       "Erreur lors du chargement des utilisateurs";
@@ -75,7 +83,9 @@ class AMAPTextConstants {
   static const String noMoney = "Pas assez d'argent";
   static const String notEnoughMoney = "Pas assez d'argent";
   static const String notPlannedDelivery = "Pas de livraison planifiée";
+  static const String openDelivery = "Ouvrir";
   static const String opened = "Ouverte";
+  static const String openningDelivery = "Ouvrir la livraison ?";
   static const String order = "Commander";
   static const String pickChooseCategory =
       "Veuillez créer une catégorie ou en choisir une";
@@ -96,8 +106,4 @@ class AMAPTextConstants {
   static const String updatedProduct = "Produit modifié";
   static const String updatingError = "Echec de la modification";
   static const String usersNotFound = "Aucun utilisateur trouvé";
-
-  static var openDelivery = "Ouvrir";
-
-  static var openningDelivery = "Ouvrir la livraison ?";
 }
