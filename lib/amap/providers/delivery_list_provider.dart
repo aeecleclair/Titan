@@ -34,7 +34,7 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
       _deliveriesListRepository.openDelivery,
       (deliveries, delivery) => deliveries
           ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
-        delivery..copyWith(status: DeliveryStatus.orderable)
+        delivery.copyWith(status: DeliveryStatus.orderable)
     );
   }
 
@@ -43,7 +43,7 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
       _deliveriesListRepository.lockDelivery,
       (deliveries, delivery) => deliveries
           ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
-        delivery..copyWith(status: DeliveryStatus.locked)
+        delivery.copyWith(status: DeliveryStatus.locked)
     );
   }
 
@@ -52,7 +52,7 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
       _deliveriesListRepository.lockDelivery,
       (deliveries, delivery) => deliveries
           ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
-        delivery..copyWith(status: DeliveryStatus.deliverd)
+        delivery.copyWith(status: DeliveryStatus.deliverd)
     );
   }
 

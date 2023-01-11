@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -44,7 +45,7 @@ class DeliverySection extends HookConsumerWidget {
                   children: [
                     const SizedBox(height: 10),
                     for (var i = 0; i < data.length; i++)
-                      // if (!data[i].locked)
+                      if (data[i].status == DeliveryStatus.orderable)
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: DeliveryUi(

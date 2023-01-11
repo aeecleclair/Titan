@@ -4,7 +4,7 @@ import 'package:myecl/tools/exception.dart';
 import 'package:f_logs/f_logs.dart';
 
 abstract class Repository {
-  static const String host = "https://hyperion.myecl.fr/";
+  static const String host = "http://localhost:8000/";
   static const String expiredTokenDetail = "Could not validate credentials";
   final String ext = "";
   final Map<String, String> headers = {
@@ -90,10 +90,7 @@ abstract class Repository {
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
         String resp = utf8.decode(response.body.runes.toList());
         final decoded = json.decode(resp);
-        print(decoded);
-        print(decoded["detail"]);
         if (decoded["detail"] == expiredTokenDetail) {
-          print("token expired");
           throw AppException(ErrorType.tokenExpire, decoded["detail"]);
         } else {
           throw AppException(ErrorType.notFound, decoded["detail"]);

@@ -8,6 +8,7 @@ enum DeliveryStatus {
   locked,
   deliverd,
 }
+
 class Delivery {
   Delivery(
       {required this.deliveryDate,
@@ -34,7 +35,7 @@ class Delivery {
     final data = <String, dynamic>{};
     data['delivery_date'] = processDateToAPIWitoutHour(deliveryDate);
     data['products_ids'] = products.map((e) => e.id).toList();
-    data['status'] = status;
+    data['status'] = deliveryStatusToString(status);
     data['id'] = id;
     return data;
   }

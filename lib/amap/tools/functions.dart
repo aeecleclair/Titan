@@ -28,11 +28,11 @@ String deliveryStatusToString(DeliveryStatus status) {
     case DeliveryStatus.creation:
       return 'creation';
     case DeliveryStatus.orderable:
-    return 'orderable';
+      return 'orderable';
     case DeliveryStatus.locked:
-    return 'locked';
+      return 'locked';
     case DeliveryStatus.deliverd:
-    return 'delivered';
+      return 'delivered';
   }
 }
 
@@ -40,12 +40,12 @@ DeliveryStatus stringToDeliveryStatus(String status) {
   switch (status) {
     case 'creation':
       return DeliveryStatus.creation;
-      case 'orderable':
+    case 'orderable':
       return DeliveryStatus.orderable;
     case 'locked':
-    return DeliveryStatus.locked;
+      return DeliveryStatus.locked;
     case 'delivered':
-    return  DeliveryStatus.deliverd;
+      return DeliveryStatus.deliverd;
     default:
       return DeliveryStatus.creation;
   }

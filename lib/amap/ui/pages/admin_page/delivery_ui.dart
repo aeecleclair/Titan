@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -66,29 +65,35 @@ class DeliveryUi extends HookConsumerWidget {
                           context: context,
                           builder: ((context) => CustomDialogBox(
                               title: delivery.status == DeliveryStatus.creation
-                              ? AMAPTextConstants.openDelivery
+                                  ? AMAPTextConstants.openDelivery
                                   // ? AMAPTextConstants.unlock
                                   : AMAPTextConstants.lock,
-                              descriptions: delivery.status == DeliveryStatus.creation
-                              ? AMAPTextConstants.openningDelivery
-                                  // ? AMAPTextConstants.unlockingDelivery
-                                  : AMAPTextConstants.lockingDelivery,
+                              descriptions:
+                                  delivery.status == DeliveryStatus.creation
+                                      ? AMAPTextConstants.openningDelivery
+                                      // ? AMAPTextConstants.unlockingDelivery
+                                      : AMAPTextConstants.lockingDelivery,
                               onYes: () {
                                 tokenExpireWrapper(ref, () async {
-                                  switch (delivery.status){
+                                  switch (delivery.status) {
                                     case DeliveryStatus.creation:
-                                      deliveryListNotifier.openDelivery(delivery);
+                                      deliveryListNotifier
+                                          .openDelivery(delivery);
                                       break;
                                     case DeliveryStatus.orderable:
-                                    deliveryListNotifier.lockDelivery(delivery);
+                                      deliveryListNotifier
+                                          .lockDelivery(delivery);
                                       break;
                                     case DeliveryStatus.locked:
-                                    deliveryListNotifier.deliverDelivery(delivery);
+                                      deliveryListNotifier
+                                          .deliverDelivery(delivery);
                                       break;
                                     case DeliveryStatus.deliverd:
-                                    deliveryListNotifier.archiveDelivery(delivery);
-                                      break;}
-                                  });
+                                      deliveryListNotifier
+                                          .archiveDelivery(delivery);
+                                      break;
+                                  }
+                                });
                               })));
                     },
                     child: Container(
@@ -115,16 +120,15 @@ class DeliveryUi extends HookConsumerWidget {
                         children: [
                           Text(
                             AMAPTextConstants.openDelivery,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20
-                            ),
+                            style: const TextStyle(color: Colors.white, fontSize: 20),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Icon(
-                            !(delivery.status == DeliveryStatus.creation) ? Icons.lock : Icons.lock_open,
+                            !(delivery.status == DeliveryStatus.creation)
+                                ? Icons.lock
+                                : Icons.lock_open,
                             color: Colors.white,
                             size: 20,
                           ),
