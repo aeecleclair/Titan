@@ -5,7 +5,7 @@ import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
-import 'package:myecl/amap/providers/order_list_provider.dart';
+import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/dialog.dart';
@@ -22,7 +22,7 @@ class Boutons extends HookConsumerWidget {
     final orderNotifier = ref.watch(orderProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final deliveryId = ref.watch(deliveryIdProvider);
-    final orderListNotifier = ref.watch(orderListProvider.notifier);
+    final orderListNotifier = ref.watch(userOrderListProvider.notifier);
     final userAmount = ref.watch(userAmountProvider);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);

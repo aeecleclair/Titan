@@ -10,7 +10,7 @@ import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
-import 'package:myecl/amap/providers/order_list_provider.dart';
+import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -33,7 +33,7 @@ class MainPage extends HookConsumerWidget {
     // final deliveryId = ref.watch(deliveryIdProvider);
     final delivery = ref.watch(deliveryProvider);
     final deliveriesNotifier = ref.watch(deliveryListProvider.notifier);
-    final ordersNotifier = ref.watch(orderListProvider.notifier);
+    final ordersNotifier = ref.watch(userOrderListProvider.notifier);
     final soldeNotifier = ref.watch(userAmountProvider.notifier);
     final solde = ref.watch(userAmountProvider);
     final showPanel = useState(false);

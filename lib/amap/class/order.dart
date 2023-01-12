@@ -3,15 +3,14 @@ import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/list_users.dart';
 
-
 enum CollectionSlot { midi, soir }
 
 class Order {
   Order(
       {required this.id,
       required this.deliveryId,
-      required this.deliveryDate,
-      required this.productsIds,
+      required this.orderingDate,
+      required this.productsDetail,
       required this.amount,
       required this.lastAmount,
       required this.collectionSlot,
@@ -22,9 +21,9 @@ class Order {
   late final SimpleUser user;
   late final CollectionSlot collectionSlot;
   late final String id;
-  late final DateTime deliveryDate;
+  late final DateTime orderingDate;
   late final String deliveryId;
-  late final List<String> productsIds;
+  late final List<String> productsDetail;
   late final bool expanded;
   late final List<Product> products;
   late final double amount, lastAmount;
@@ -32,27 +31,28 @@ class Order {
 
   Order.fromJson(Map<String, dynamic> json) {
     id = json['order_id'];
-    deliveryDate = DateTime.parse(json['delivery_date']);
     deliveryId = json['delivery_id'];
     amount = json['amount'];
     lastAmount = amount;
-    products =
-        List<Product>.from(json['products'].map((x) => Product.fromJson(x)));
+    products = List<Product>.from(
+        json['productsdetail'].map((x) => Product.fromJson(x)));
     expanded = false;
-    productsIds =
+    productsDetail =
         List<String>.from(products.map((element) => element.id).toList());
     productsQuantity =
         List<int>.from(products.map((element) => element.quantity).toList());
     collectionSlot = stringToCollectionSlot(json['collection_slot']);
     user = SimpleUser.fromJson(json['user']);
+    orderingDate = DateTime.parse(json['ordering_date']);
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['order_id'] = id;
     data['delivery_id'] = deliveryId;
-    data['delivery_date'] = processDateToAPIWitoutHour(deliveryDate);
-    data['products_ids'] = productsIds;
+    data['amount'] = amount;
+    data['ordering_date'] = processDateToAPIWitoutHour(orderingDate);
+    data['products_ids'] = productsDetail;
     data['collection_slot'] = collectionSlotToString(collectionSlot);
     data['products_quantity'] = products.map((e) => e.quantity).toList();
     data['user_id'] = user.id;
@@ -61,7 +61,7 @@ class Order {
 
   Order copyWith(
       {id,
-      deliveryDate,
+      orderingDate,
       products,
       expanded,
       deliveryId,
@@ -71,10 +71,10 @@ class Order {
       user}) {
     return Order(
         id: id ?? this.id,
-        deliveryDate: deliveryDate ?? this.deliveryDate,
-        productsIds: products != null
+        orderingDate: orderingDate ?? this.orderingDate,
+        productsDetail: products != null
             ? List<String>.from(products.map((element) => element.id).toList())
-            : productsIds,
+            : productsDetail,
         productsQuantity: products != null
             ? List<int>.from(
                 products.map((element) => element.quantity).toList())
@@ -89,16 +89,17 @@ class Order {
   }
 
   void setProducts(List<Product> products) {
-    this.products =
-        products.where((element) => productsIds.contains(element.id)).toList();
+    this.products = products
+        .where((element) => productsDetail.contains(element.id))
+        .toList();
     productsQuantity = products.map((element) => element.quantity).toList();
   }
 
   static Order empty() {
     return Order(
         id: '',
-        deliveryDate: DateTime.now(),
-        productsIds: [],
+        orderingDate: DateTime.now(),
+        productsDetail: [],
         productsQuantity: [],
         deliveryId: '',
         products: [],
