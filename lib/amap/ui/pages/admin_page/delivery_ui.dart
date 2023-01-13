@@ -195,8 +195,14 @@ class DeliveryUi extends HookConsumerWidget {
                         children: [
                           Container(
                             padding: const EdgeInsets.only(bottom: 2),
-                            child: const Text(
-                              AMAPTextConstants.openDelivery,
+                            child: Text(
+                              delivery.status == DeliveryStatus.creation
+                                  ? AMAPTextConstants.openDelivery
+                                  : delivery.status == DeliveryStatus.orderable
+                                      ? AMAPTextConstants.closeDelivery
+                                      : delivery.status == DeliveryStatus.locked
+                                          ? AMAPTextConstants.deliverDelivery
+                                          : AMAPTextConstants.archiveDelivery,
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             ),

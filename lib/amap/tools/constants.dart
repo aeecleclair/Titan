@@ -36,7 +36,9 @@ class AMAPTextConstants {
       "Il existe déjà une commande à cette date";
   static const String amap = "Amap";
   static const String amount = "Solde";
+  static const String archiveDelivery = "Archiver";
   static const String category = "Catégorie";
+  static const String closeDelivery = "Verouiller";
   static const String commandDate = "Date de la commande";
   static const String commandProducts = "Produits de la commande";
   static const String confirm = "Confirmer";
@@ -50,6 +52,7 @@ class AMAPTextConstants {
   static const String deletingError = "Erreur lors de la suppression";
   static const String deletingOrder = "Supprimer la commande ?";
   static const String deletingProduct = "Supprimer le produit ?";
+  static const String deliverDelivery = "Fermer";
   static const String delivery = "Livraison";
   static const String deliveryArchived = "Livraison archivée";
   static const String deliveryDelivered = "Livraison effectuée";
