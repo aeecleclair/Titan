@@ -241,7 +241,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(
-                                3, 3), // changes position of shadow
+                                3, 3),
                           ),
                         ],
                       ),
@@ -351,8 +351,11 @@ class AddEditLoanPage extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      child: const Text(LoanTextConstants.edit,
-                          style: TextStyle(
+                      child: Text(
+                          isEdit
+                              ? LoanTextConstants.edit
+                              : LoanTextConstants.add,
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 25,
                               fontWeight: FontWeight.bold))),

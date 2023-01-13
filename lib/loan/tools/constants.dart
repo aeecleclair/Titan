@@ -19,7 +19,7 @@ class LoanTextConstants {
   static const String confirmation = "Confirmation";
   static const String dates = "Dates";
   static const String days = "Jours";
-  static const String delay = "Délai";
+  static const String delay = "Délai de la prolongation";
   static const String delete = "Supprimer";
   static const String deletingLoan = "Supprimer le prêt ?";
   static const String deletedItem = "Objet supprimé";
