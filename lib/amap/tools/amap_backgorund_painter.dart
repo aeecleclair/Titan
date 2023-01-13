@@ -46,7 +46,7 @@ class AmapBackgroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (Random().nextDouble() < 0.1) {
+    if (Random().nextDouble() < 0.05) {
       spheres.add(Sphere.generateNextSphere(size.width, size.height));
     }
     int i = 0;

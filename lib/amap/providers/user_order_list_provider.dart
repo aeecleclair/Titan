@@ -27,7 +27,8 @@ class UserOrderListNotifier extends ListNotifier<Order> {
         order);
   }
 
-  Future<bool> updateOrder(Order order, String deliveryId, String userId) async {
+  Future<bool> updateOrder(
+      Order order, String deliveryId, String userId) async {
     return await update(
         (o) async =>
             _orderListRepository.updateOrder(deliveryId, order, userId),
@@ -151,13 +152,15 @@ class UserOrderListNotifier extends ListNotifier<Order> {
   }
 }
 
-final userOrderListProvider = StateNotifierProvider<UserOrderListNotifier,
-    AsyncValue<List<Order>>>((ref) {
+final userOrderListProvider =
+    StateNotifierProvider<UserOrderListNotifier, AsyncValue<List<Order>>>(
+        (ref) {
   final token = ref.watch(tokenProvider);
-  UserOrderListNotifier orderListNotifier = UserOrderListNotifier(token: token);
+  UserOrderListNotifier userOrderListNotifier =
+      UserOrderListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     final userId = ref.watch(idProvider);
-    await orderListNotifier.loadOrderList(userId);
+    await userOrderListNotifier.loadOrderList(userId);
   });
-  return orderListNotifier;
+  return userOrderListNotifier;
 });

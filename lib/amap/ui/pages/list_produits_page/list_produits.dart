@@ -9,6 +9,7 @@ import 'package:myecl/amap/providers/page_controller_provider.dart';
 import 'package:myecl/amap/providers/scroll_controller_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/list_produits_page/produit_ui_list.dart';
+import 'package:myecl/tools/functions.dart';
 
 class ListProducts extends HookConsumerWidget {
   const ListProducts({Key? key}) : super(key: key);
@@ -57,9 +58,9 @@ class ListProducts extends HookConsumerWidget {
                       Container(
                         height: 50,
                         alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.only(left: 20, top: 10),
+                        padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
                         child: Text(
-                          c,
+                          capitalize(c),
                           style: const TextStyle(
                             fontSize: 25,
                             color: AMAPColorConstants.textDark,

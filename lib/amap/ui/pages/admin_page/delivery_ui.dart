@@ -204,7 +204,7 @@ class DeliveryUi extends HookConsumerWidget {
                                           ? AMAPTextConstants.deliverDelivery
                                           : AMAPTextConstants.archiveDelivery,
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
+                                  const TextStyle(color: Colors.white, fontSize: 20),
                             ),
                           ),
                           const SizedBox(

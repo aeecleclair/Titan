@@ -190,7 +190,7 @@ class MainPage extends HookConsumerWidget {
                   animation: animation,
                   child: Container(
                     width: double.infinity,
-                    height: MediaQuery.of(context).size.height - 190,
+                    height: MediaQuery.of(context).size.height - 150,
                     decoration: BoxDecoration(
                       gradient: const RadialGradient(
                         colors: [

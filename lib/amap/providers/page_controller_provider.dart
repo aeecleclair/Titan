@@ -9,5 +9,9 @@ final amapPageControllerProvider =
 );
 
 class AmapPageControllerNotifier extends StateNotifier<PageController> {
-  AmapPageControllerNotifier() : super(PageController());
+  AmapPageControllerNotifier()
+      : super(PageController(
+          viewportFraction: 0.85,
+          initialPage: 0,
+        ));
 }
