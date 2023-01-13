@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
+import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -15,6 +17,8 @@ class DeliveryUi extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final pageNotifier = ref.watch(amapPageProvider.notifier);
+    final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
     final deliverOrders = ref.watch(adminDeliveryOrderListProvider);
 
@@ -62,12 +66,27 @@ class DeliveryUi extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(),
-              Text(
-                  '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AMAPColorConstants.textDark)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                      '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AMAPColorConstants.textDark)),
+                  GestureDetector(
+                    onTap: () {
+                      deliveryIdNotifier.setId(delivery.id);
+                      pageNotifier.setAmapPage(AmapPage.deliveryDetail);
+                    },
+                    child: const HeroIcon(
+                      HeroIcons.arrowTopRightOnSquare,
+                      color: AMAPColorConstants.textDark,
+                    ),
+                  ),
+                ],
+              ),
               Text(
                   orders.isEmpty
                       ? AMAPTextConstants.noCurrentOrder
@@ -85,6 +104,58 @@ class DeliveryUi extends HookConsumerWidget {
               ),
               Row(
                 children: [
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: ((context) => CustomDialogBox(
+                              title: AMAPTextConstants.deleteDelivery,
+                              descriptions:
+                                  '${AMAPTextConstants.deleteDeliveryDescription} ${processDate(delivery.deliveryDate)} ?',
+                              onYes: () {
+                                tokenExpireWrapper(ref, () async {
+                                  deliveryListNotifier
+                                      .deleteDelivery(delivery)
+                                      .then((value) {
+                                    if (value) {
+                                      displayVoteWithContext(TypeMsg.msg,
+                                          AMAPTextConstants.deletedDelivery);
+                                    } else {
+                                      displayVoteWithContext(TypeMsg.error,
+                                          AMAPTextConstants.deletingError);
+                                    }
+                                  });
+                                });
+                              })));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        gradient: const LinearGradient(
+                          colors: [
+                            AMAPColorConstants.redGradient1,
+                            AMAPColorConstants.redGradient2,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                              color: AMAPColorConstants.redGradient2
+                                  .withOpacity(0.5),
+                              blurRadius: 10,
+                              offset: const Offset(2, 3))
+                        ],
+                      ),
+                      child: const HeroIcon(
+                        HeroIcons.trash,
+                        color: Colors.white,
+                        size: 22,
+                      ),
+                    ),
+                  ),
                   const Spacer(),
                   GestureDetector(
                     onTap: () {
@@ -93,13 +164,19 @@ class DeliveryUi extends HookConsumerWidget {
                           builder: ((context) => CustomDialogBox(
                               title: delivery.status == DeliveryStatus.creation
                                   ? AMAPTextConstants.openDelivery
-                                  // ? AMAPTextConstants.unlock
-                                  : AMAPTextConstants.lock,
+                                  : delivery.status == DeliveryStatus.orderable
+                                      ? AMAPTextConstants.lock
+                                      : delivery.status == DeliveryStatus.locked
+                                          ? AMAPTextConstants.deliver
+                                          : AMAPTextConstants.archive,
                               descriptions:
                                   delivery.status == DeliveryStatus.creation
                                       ? AMAPTextConstants.openningDelivery
-                                      // ? AMAPTextConstants.unlockingDelivery
-                                      : AMAPTextConstants.lockingDelivery,
+                                      : delivery.status == DeliveryStatus.orderable
+                                      ? AMAPTextConstants.lockingDelivery
+                                      : delivery.status == DeliveryStatus.locked
+                                          ? AMAPTextConstants.deliveryHandling
+                                          : AMAPTextConstants.archivingDelivery,
                               onYes: () {
                                 tokenExpireWrapper(ref, () async {
                                   switch (delivery.status) {
@@ -174,7 +251,6 @@ class DeliveryUi extends HookConsumerWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 15),
-                      // margin: const EdgeInsets.only(left: 20),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
                         gradient: LinearGradient(
@@ -190,6 +266,17 @@ class DeliveryUi extends HookConsumerWidget {
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                              color:
+                                  !(delivery.status == DeliveryStatus.creation)
+                                      ? AMAPColorConstants.redGradient2
+                                          .withOpacity(0.5)
+                                      : AMAPColorConstants.greenGradient2
+                                          .withOpacity(0.5),
+                              blurRadius: 10,
+                              offset: const Offset(2, 3))
+                        ],
                       ),
                       child: Row(
                         children: [
@@ -203,17 +290,21 @@ class DeliveryUi extends HookConsumerWidget {
                                       : delivery.status == DeliveryStatus.locked
                                           ? AMAPTextConstants.deliverDelivery
                                           : AMAPTextConstants.archiveDelivery,
-                              style:
-                                  const TextStyle(color: Colors.white, fontSize: 20),
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 20),
                             ),
                           ),
                           const SizedBox(
                             width: 10,
                           ),
                           HeroIcon(
-                            !(delivery.status == DeliveryStatus.creation)
-                                ? HeroIcons.lockOpen
-                                : HeroIcons.lockClosed,
+                            delivery.status == DeliveryStatus.creation
+                                ? HeroIcons.lockClosed
+                                : delivery.status == DeliveryStatus.orderable
+                                    ? HeroIcons.lockOpen
+                                    : delivery.status == DeliveryStatus.locked
+                                        ? HeroIcons.truck
+                                        : HeroIcons.archiveBoxArrowDown,
                             color: Colors.white,
                             size: 20,
                           ),
@@ -221,7 +312,6 @@ class DeliveryUi extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  const Spacer()
                 ],
               ),
             ],

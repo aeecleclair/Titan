@@ -36,6 +36,7 @@ class AMAPTextConstants {
       "Il existe déjà une commande à cette date";
   static const String amap = "Amap";
   static const String amount = "Solde";
+  static const String archive = "Archiver";
   static const String archiveDelivery = "Archiver";
   static const String category = "Catégorie";
   static const String closeDelivery = "Verouiller";
@@ -44,6 +45,9 @@ class AMAPTextConstants {
   static const String confirm = "Confirmer";
   static const String createCategory = "Créer une catégorie";
   static const String delete = "Supprimer";
+  static const String deleteDelivery = "Supprimer la livraison ?";
+  static const String deleteDeliveryDescription =
+      "Cette action est irréversible";
   static const String deletedDelivery = "Livraison supprimée";
   static const String deletedOrder = "Commande supprimée";
   static const String deletedProduct = "Produit supprimé";
@@ -52,9 +56,11 @@ class AMAPTextConstants {
   static const String deletingError = "Erreur lors de la suppression";
   static const String deletingOrder = "Supprimer la commande ?";
   static const String deletingProduct = "Supprimer le produit ?";
-  static const String deliverDelivery = "Fermer";
+  static const String deliver = "Livraison teminée ?";
+  static const String deliverDelivery = "Livrer";
   static const String delivery = "Livraison";
   static const String deliveryArchived = "Livraison archivée";
+  static const String archivingDelivery = "Archivage de la livraison";
   static const String deliveryDelivered = "Livraison effectuée";
   static const String deliveryHandling = "Gérer les livraisons";
   static const String deliveryHistory = "Historique des livraisons";
