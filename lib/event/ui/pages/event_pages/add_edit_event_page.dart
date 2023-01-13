@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
@@ -27,6 +29,7 @@ class AddEditEventPage extends HookConsumerWidget {
     final now = DateTime.now();
     final user = ref.watch(userProvider);
     final event = ref.watch(eventProvider);
+    final rooms = ref.watch(roomListProvider);
     final isEdit = event.id != Event.empty().id;
     final pageNotifier = ref.watch(eventPageProvider.notifier);
     final key = GlobalKey<FormState>();
@@ -38,6 +41,7 @@ class AddEditEventPage extends HookConsumerWidget {
     final end = useTextEditingController(text: processDate(event.end));
     final location = useTextEditingController(text: event.location);
     final description = useTextEditingController(text: event.description);
+    final roomId = useTextEditingController(text: event.roomId);
     final allDay = useState(false); //  TODO
     final recurrent = useState(event.recurrenceRule.contains("FREQ"));
     final interval = useTextEditingController(
@@ -50,6 +54,7 @@ class AddEditEventPage extends HookConsumerWidget {
             : "1");
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
+    final isRoom = useState(false);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -62,14 +67,14 @@ class AddEditEventPage extends HookConsumerWidget {
               key: key,
               child: Column(children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                           isEdit
                               ? EventTextConstants.editEvent
                               : EventTextConstants.addEvent,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 205, 205, 205)))),
@@ -439,13 +444,105 @@ class AddEditEventPage extends HookConsumerWidget {
                             ],
                           ),
                     const SizedBox(height: 30),
-                    TextEntry(
-                      keyboardType: TextInputType.text,
-                      controller: location,
-                      isInt: false,
-                      label: EventTextConstants.location,
-                      suffix: '',
-                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                isRoom.value = true;
+                              },
+                              child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+                                  child: Chip(
+                                    label: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text("Salle",
+                                            style: TextStyle(
+                                              color: isRoom.value
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ))),
+                                    backgroundColor: isRoom.value
+                                        ? Colors.black
+                                        : Colors.grey.shade200,
+                                  ))),
+                          GestureDetector(
+                            onTap: () {
+                              isRoom.value = false;
+                              roomId.text = "";
+                            },
+                            child: Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Chip(
+                                  label: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Autre",
+                                        style: TextStyle(
+                                          color: isRoom.value
+                                              ? Colors.black
+                                              : Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  backgroundColor: isRoom.value
+                                      ? Colors.grey.shade200
+                                      : Colors.black),
+                            ),
+                          )
+                        ]),
+                    const SizedBox(height: 20),
+                    isRoom.value
+                        ? SizedBox(
+                            height: 52,
+                            child: SingleChildScrollView(
+                              child: rooms.when(
+                                  data: (rooms) => ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: rooms.length,
+                                      itemBuilder: (context, index) {
+                                        final selected =
+                                            rooms[index].id == roomId.text;
+                                        return GestureDetector(
+                                          child: Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 10.0),
+                                            child: Chip(
+                                                label: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(rooms[index].name,
+                                                      style: TextStyle(
+                                                        color: selected
+                                                            ? Colors.black
+                                                            : Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      )),
+                                                ),
+                                                backgroundColor: selected
+                                                    ? Colors.grey.shade200
+                                                    : Colors.black),
+                                          ),
+                                          onTap: () {
+                                            location.text = rooms[index].name;
+                                            roomId.text = rooms[index].id;
+                                          },
+                                        );
+                                      }),
+                                  error: (e, s) => Text(e.toString()),
+                                  loading: () => const SizedBox()),
+                            ),
+                          )
+                        : TextEntry(
+                            keyboardType: TextInputType.text,
+                            controller: location,
+                            isInt: false,
+                            label: EventTextConstants.location,
+                            suffix: '',
+                          ),
                     const SizedBox(height: 30),
                     TextEntry(
                       keyboardType: TextInputType.text,
@@ -534,7 +631,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                     DateTime.parse(endString));
                               }
                               Event newEvent = Event(
-                                  id: '',
+                                  id: isEdit ? event.id : "",
                                   description: description.text,
                                   end: DateTime.parse(
                                       processDateBack(endString)),
@@ -546,7 +643,9 @@ class AddEditEventPage extends HookConsumerWidget {
                                       processDateBack(startString)),
                                   type: eventType.value,
                                   recurrenceRule: recurrenceRule,
-                                  applicant: user.toApplicant());
+                                  applicant: user.toApplicant(),
+                                  decision: Decision.pending,
+                                  roomId: roomId.text);
                               final value = isEdit
                                   ? await eventListNotifier
                                       .updateEvent(newEvent)
@@ -554,11 +653,11 @@ class AddEditEventPage extends HookConsumerWidget {
                               if (value) {
                                 pageNotifier.setEventPage(EventPage.main);
                                 if (isEdit) {
-                                  displayToastWithContext(
-                                      TypeMsg.msg, EventTextConstants.editedEvent);
+                                  displayToastWithContext(TypeMsg.msg,
+                                      EventTextConstants.editedEvent);
                                 } else {
-                                  displayToastWithContext(
-                                      TypeMsg.msg, EventTextConstants.addedEvent);
+                                  displayToastWithContext(TypeMsg.msg,
+                                      EventTextConstants.addedEvent);
                                 }
                               } else {
                                 if (isEdit) {
@@ -590,8 +689,11 @@ class AddEditEventPage extends HookConsumerWidget {
                               ),
                             ],
                           ),
-                          child: const Text(EventTextConstants.add,
-                              style: TextStyle(
+                          child: Text(
+                              isEdit
+                                  ? EventTextConstants.edit
+                                  : EventTextConstants.add,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold))),

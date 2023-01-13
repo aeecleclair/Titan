@@ -154,7 +154,8 @@ class EventUi extends ConsumerWidget {
                             child: GestureDetector(
                               onTap: () async {
                                 eventNotifier.setEvent(event);
-                                pageNotifier.setEventPage(EventPage.addEditEvent);
+                                pageNotifier
+                                    .setEventPage(EventPage.addEditEvent);
                               },
                               child: Container(
                                 padding:
@@ -174,7 +175,7 @@ class EventUi extends ConsumerWidget {
                                                 : Colors.grey.shade300)),
                                 child: Center(
                                   child: Text(
-                                    EventTextConstants.delete,
+                                    EventTextConstants.edit,
                                     style: TextStyle(
                                         color: textColor,
                                         fontSize: 15,
@@ -184,7 +185,7 @@ class EventUi extends ConsumerWidget {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(

@@ -1,3 +1,5 @@
+import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/applicant.dart';
@@ -23,6 +25,8 @@ class Event {
   late final String description;
   late final String recurrenceRule;
   late final Applicant applicant;
+  late final Decision decision;
+  late final String roomId;
 
   Event({
     required this.id,
@@ -36,6 +40,8 @@ class Event {
     required this.allDay,
     required this.recurrenceRule,
     required this.applicant,
+    required this.decision,
+    required this.roomId,
   });
 
   Event.fromJson(Map<String, dynamic> json) {
@@ -50,6 +56,8 @@ class Event {
     description = json['description'];
     recurrenceRule = json['recurrence_rule'];
     applicant = Applicant.fromJson(json['applicant']);
+    decision = stringToDecision(json['decision']);
+    roomId = json['room_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -65,6 +73,8 @@ class Event {
     data['description'] = description;
     data['recurrence_rule'] = recurrenceRule;
     data['applicant_id'] = applicant.id;
+    data['decision'] = decisionToString(decision);
+    data['room_id'] = roomId;
     return data;
   }
 
@@ -80,6 +90,8 @@ class Event {
     bool? allDay,
     String? recurrenceRule,
     Applicant? applicant,
+    Decision? decision,
+    String? roomId,
   }) {
     return Event(
       id: id ?? this.id,
@@ -93,6 +105,8 @@ class Event {
       recurrenceRule: recurrenceRule ?? this.recurrenceRule,
       allDay: allDay ?? this.allDay,
       applicant: applicant ?? this.applicant,
+      decision: decision ?? this.decision,
+      roomId: roomId ?? this.roomId,
     );
   }
 
@@ -108,5 +122,7 @@ class Event {
     description = '';
     recurrenceRule = '';
     applicant = Applicant.empty();
+    decision = Decision.pending;
+    roomId = '';
   }
 }
