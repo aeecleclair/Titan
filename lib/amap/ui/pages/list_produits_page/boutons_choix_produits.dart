@@ -11,6 +11,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class Boutons extends HookConsumerWidget {
@@ -44,8 +45,8 @@ class Boutons extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Expanded(
-            child: GestureDetector(
-                child: Container(
+            child: ShrinkButton(
+                waitChild: Container(
                   margin: const EdgeInsets.only(right: 10),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(colors: [
@@ -62,15 +63,11 @@ class Boutons extends HookConsumerWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                   ),
                   alignment: Alignment.center,
-                  child: Text(
-                    "${AMAPTextConstants.confirm} (${order.amount.toStringAsFixed(2)}€)",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: AMAPColorConstants.background),
+                  child: CircularProgressIndicator(
+                    color: AMAPColorConstants.background,
                   ),
                 ),
-                onTap: () {
+                onTap: () async {
                   if (order.amount == 0.0) {
                     displayToast(
                         context, TypeMsg.error, AMAPTextConstants.noProduct);
@@ -110,7 +107,32 @@ class Boutons extends HookConsumerWidget {
                     displayToast(context, TypeMsg.error,
                         AMAPTextConstants.notEnoughMoney);
                   }
-                }),
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(colors: [
+                      AMAPColorConstants.greenGradient1,
+                      AMAPColorConstants.greenGradient2
+                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                    boxShadow: [
+                      BoxShadow(
+                          color: AMAPColorConstants.greenGradient2
+                              .withOpacity(0.4),
+                          offset: const Offset(2, 3),
+                          blurRadius: 5)
+                    ],
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "${AMAPTextConstants.confirm} (${order.amount.toStringAsFixed(2)}€)",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: AMAPColorConstants.background),
+                  ),
+                )),
           ),
           GestureDetector(
             child: Container(

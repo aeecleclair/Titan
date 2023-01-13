@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:myecl/amap/providers/delivery_provider.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -272,17 +273,50 @@ class MainPage extends HookConsumerWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        GestureDetector(
-                            onTap: () {
+                        ShrinkButton(
+                            onTap: () async {
                               orderNotifier.setOrder(order.copyWith(
                                 deliveryId: delivery.id,
                               ));
-                              tokenExpireWrapper(ref, () async {
+                              await tokenExpireWrapper(ref, () async {
                                 await deliveryProductListNotifier
                                     .loadProductList(delivery.products);
                               });
                               pageNotifier.setAmapPage(AmapPage.addProducts);
                             },
+                            waitChild: Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 30),
+                              height: 70,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    AMAPColorConstants.greenGradient2,
+                                    AMAPColorConstants.textDark,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AMAPColorConstants.textDark
+                                        .withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 5),
+                                  ),
+                                ],
+                              ),
+                              child: Container(
+                                padding: const EdgeInsets.only(bottom: 5),
+                                width: double.infinity,
+                                child: const Center(
+                                    child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                )),
+                              ),
+                            ),
                             child: Container(
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 30),

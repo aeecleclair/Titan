@@ -10,6 +10,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class DeliveryUi extends HookConsumerWidget {
   final Delivery delivery;
@@ -104,16 +105,16 @@ class DeliveryUi extends HookConsumerWidget {
               ),
               Row(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
+                  ShrinkButton(
+                    onTap: () async {
+                      await showDialog(
                           context: context,
                           builder: ((context) => CustomDialogBox(
                               title: AMAPTextConstants.deleteDelivery,
                               descriptions:
                                   '${AMAPTextConstants.deleteDeliveryDescription} ${processDate(delivery.deliveryDate)} ?',
-                              onYes: () {
-                                tokenExpireWrapper(ref, () async {
+                              onYes: () async {
+                                await tokenExpireWrapper(ref, () async {
                                   deliveryListNotifier
                                       .deleteDelivery(delivery)
                                       .then((value) {
@@ -128,6 +129,33 @@ class DeliveryUi extends HookConsumerWidget {
                                 });
                               })));
                     },
+                    waitChild: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        gradient: const LinearGradient(
+                          colors: [
+                            AMAPColorConstants.redGradient1,
+                            AMAPColorConstants.redGradient2,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                              color: AMAPColorConstants.redGradient2
+                                  .withOpacity(0.5),
+                              blurRadius: 10,
+                              offset: const Offset(2, 3))
+                        ],
+                      ),
+                      child: const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white),
+                      
+                      ),
+                    ),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 12),
@@ -157,9 +185,9 @@ class DeliveryUi extends HookConsumerWidget {
                     ),
                   ),
                   const Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
+                  ShrinkButton(
+                    onTap: () async {
+                     await  showDialog(
                           context: context,
                           builder: ((context) => CustomDialogBox(
                               title: delivery.status == DeliveryStatus.creation
@@ -169,16 +197,16 @@ class DeliveryUi extends HookConsumerWidget {
                                       : delivery.status == DeliveryStatus.locked
                                           ? AMAPTextConstants.deliver
                                           : AMAPTextConstants.archive,
-                              descriptions:
-                                  delivery.status == DeliveryStatus.creation
-                                      ? AMAPTextConstants.openningDelivery
-                                      : delivery.status == DeliveryStatus.orderable
+                              descriptions: delivery.status ==
+                                      DeliveryStatus.creation
+                                  ? AMAPTextConstants.openningDelivery
+                                  : delivery.status == DeliveryStatus.orderable
                                       ? AMAPTextConstants.lockingDelivery
                                       : delivery.status == DeliveryStatus.locked
                                           ? AMAPTextConstants.deliveryHandling
                                           : AMAPTextConstants.archivingDelivery,
-                              onYes: () {
-                                tokenExpireWrapper(ref, () async {
+                              onYes: () async {
+                                await tokenExpireWrapper(ref, () async {
                                   switch (delivery.status) {
                                     case DeliveryStatus.creation:
                                       deliveryListNotifier
@@ -248,6 +276,43 @@ class DeliveryUi extends HookConsumerWidget {
                                 });
                               })));
                     },
+                    waitChild: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        gradient: LinearGradient(
+                          colors: !(delivery.status == DeliveryStatus.creation)
+                              ? [
+                                  AMAPColorConstants.redGradient1,
+                                  AMAPColorConstants.redGradient2,
+                                ]
+                              : [
+                                  AMAPColorConstants.greenGradient1,
+                                  AMAPColorConstants.greenGradient2,
+                                ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                              color:
+                                  !(delivery.status == DeliveryStatus.creation)
+                                      ? AMAPColorConstants.redGradient2
+                                          .withOpacity(0.5)
+                                      : AMAPColorConstants.greenGradient2
+                                          .withOpacity(0.5),
+                              blurRadius: 10,
+                              offset: const Offset(2, 3))
+                        ],
+                      ),
+                      child: const SizedBox(
+                        width: 100,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      )
+                    ),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 15),
@@ -306,7 +371,7 @@ class DeliveryUi extends HookConsumerWidget {
                                         ? HeroIcons.truck
                                         : HeroIcons.archiveBoxArrowDown,
                             color: Colors.white,
-                            size: 20,
+                            size: 22,
                           ),
                         ],
                       ),
