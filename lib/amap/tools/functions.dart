@@ -31,7 +31,7 @@ String deliveryStatusToString(DeliveryStatus status) {
       return 'orderable';
     case DeliveryStatus.locked:
       return 'locked';
-    case DeliveryStatus.deliverd:
+    case DeliveryStatus.delivered:
       return 'delivered';
   }
 }
@@ -45,7 +45,7 @@ DeliveryStatus stringToDeliveryStatus(String status) {
     case 'locked':
       return DeliveryStatus.locked;
     case 'delivered':
-      return DeliveryStatus.deliverd;
+      return DeliveryStatus.delivered;
     default:
       return DeliveryStatus.creation;
   }

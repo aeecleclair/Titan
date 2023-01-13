@@ -38,6 +38,7 @@ class AMAPTextConstants {
   static const String amount = "Solde";
   static const String archive = "Archiver";
   static const String archiveDelivery = "Archiver";
+  static const String archivingDelivery = "Archivage de la livraison";
   static const String category = "Catégorie";
   static const String closeDelivery = "Verouiller";
   static const String commandDate = "Date de la commande";
@@ -58,11 +59,11 @@ class AMAPTextConstants {
   static const String deletingProduct = "Supprimer le produit ?";
   static const String deliver = "Livraison teminée ?";
   static const String deliverDelivery = "Livrer";
+  static const String deliveringDelivery =
+      "Toutes les commandes sont livrées ?";
   static const String delivery = "Livraison";
   static const String deliveryArchived = "Livraison archivée";
-  static const String archivingDelivery = "Archivage de la livraison";
   static const String deliveryDelivered = "Livraison effectuée";
-  static const String deliveryHandling = "Gérer les livraisons";
   static const String deliveryHistory = "Historique des livraisons";
   static const String deliveryList = "Liste des livraisons";
   static const String deliveryLocked = "Livraison verrouillée";

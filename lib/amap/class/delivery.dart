@@ -6,7 +6,7 @@ enum DeliveryStatus {
   creation,
   orderable,
   locked,
-  deliverd,
+  delivered,
 }
 
 class Delivery {

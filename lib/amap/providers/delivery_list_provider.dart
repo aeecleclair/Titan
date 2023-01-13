@@ -31,32 +31,29 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
 
   Future<bool> openDelivery(Delivery delivery) async {
     return await update(
-      _deliveriesListRepository.openDelivery,
-      (deliveries, delivery) => deliveries
+        _deliveriesListRepository.openDelivery,
+        (deliveries, delivery) => deliveries
           ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
-        delivery.copyWith(status: DeliveryStatus.orderable)
-    );
+        delivery.copyWith(status: DeliveryStatus.orderable));
   }
 
   Future<bool> lockDelivery(Delivery delivery) async {
     return await update(
-      _deliveriesListRepository.lockDelivery,
-      (deliveries, delivery) => deliveries
+        _deliveriesListRepository.lockDelivery,
+        (deliveries, delivery) => deliveries
           ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
-        delivery.copyWith(status: DeliveryStatus.locked)
-    );
+        delivery.copyWith(status: DeliveryStatus.locked));
   }
 
-   Future<bool> deliverDelivery(Delivery delivery) async {
+  Future<bool> deliverDelivery(Delivery delivery) async {
     return await update(
-      _deliveriesListRepository.lockDelivery,
-      (deliveries, delivery) => deliveries
+        _deliveriesListRepository.deliverDelivery,
+        (deliveries, delivery) => deliveries
           ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
-        delivery.copyWith(status: DeliveryStatus.deliverd)
-    );
+        delivery.copyWith(status: DeliveryStatus.delivered));
   }
 
-   Future<bool> archiveDelivery(Delivery delivery) async {
+  Future<bool> archiveDelivery(Delivery delivery) async {
     return await delete(
         _deliveriesListRepository.archiveDelivery,
         (deliveries, delivery) =>
@@ -103,7 +100,6 @@ final deliveryListProvider =
   });
   return orderListNotifier;
 });
-
 
 final deliveryList = Provider<List<Delivery>>((ref) {
   final state = ref.watch(deliveryListProvider);

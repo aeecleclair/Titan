@@ -151,9 +151,7 @@ class DeliveryUi extends HookConsumerWidget {
                         ],
                       ),
                       child: const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white),
-                      
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
                     ),
                     child: Container(
@@ -187,7 +185,7 @@ class DeliveryUi extends HookConsumerWidget {
                   const Spacer(),
                   ShrinkButton(
                     onTap: () async {
-                     await  showDialog(
+                      await showDialog(
                           context: context,
                           builder: ((context) => CustomDialogBox(
                               title: delivery.status == DeliveryStatus.creation
@@ -203,7 +201,7 @@ class DeliveryUi extends HookConsumerWidget {
                                   : delivery.status == DeliveryStatus.orderable
                                       ? AMAPTextConstants.lockingDelivery
                                       : delivery.status == DeliveryStatus.locked
-                                          ? AMAPTextConstants.deliveryHandling
+                                          ? AMAPTextConstants.deliveringDelivery
                                           : AMAPTextConstants.archivingDelivery,
                               onYes: () async {
                                 await tokenExpireWrapper(ref, () async {
@@ -255,7 +253,7 @@ class DeliveryUi extends HookConsumerWidget {
                                         }
                                       });
                                       break;
-                                    case DeliveryStatus.deliverd:
+                                    case DeliveryStatus.delivered:
                                       deliveryListNotifier
                                           .archiveDelivery(delivery)
                                           .then((value) {
@@ -277,42 +275,42 @@ class DeliveryUi extends HookConsumerWidget {
                               })));
                     },
                     waitChild: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        gradient: LinearGradient(
-                          colors: !(delivery.status == DeliveryStatus.creation)
-                              ? [
-                                  AMAPColorConstants.redGradient1,
-                                  AMAPColorConstants.redGradient2,
-                                ]
-                              : [
-                                  AMAPColorConstants.greenGradient1,
-                                  AMAPColorConstants.greenGradient2,
-                                ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          gradient: LinearGradient(
+                            colors:
+                                !(delivery.status == DeliveryStatus.creation)
+                                    ? [
+                                        AMAPColorConstants.redGradient1,
+                                        AMAPColorConstants.redGradient2,
+                                      ]
+                                    : [
+                                        AMAPColorConstants.greenGradient1,
+                                        AMAPColorConstants.greenGradient2,
+                                      ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                color: !(delivery.status ==
+                                        DeliveryStatus.creation)
+                                    ? AMAPColorConstants.redGradient2
+                                        .withOpacity(0.5)
+                                    : AMAPColorConstants.greenGradient2
+                                        .withOpacity(0.5),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
+                          ],
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                              color:
-                                  !(delivery.status == DeliveryStatus.creation)
-                                      ? AMAPColorConstants.redGradient2
-                                          .withOpacity(0.5)
-                                      : AMAPColorConstants.greenGradient2
-                                          .withOpacity(0.5),
-                              blurRadius: 10,
-                              offset: const Offset(2, 3))
-                        ],
-                      ),
-                      child: const SizedBox(
-                        width: 100,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                      )
-                    ),
+                        child: const SizedBox(
+                          width: 100,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        )),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 15),
