@@ -63,7 +63,7 @@ class CommandeUI extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                      '${AMAPTextConstants.the} ${processDate(order.orderingDate)}',
+                      '${AMAPTextConstants.the} ${processDate(order.deliveryDate)}',
                       style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

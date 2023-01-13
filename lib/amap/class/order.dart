@@ -10,6 +10,7 @@ class Order {
       {required this.id,
       required this.deliveryId,
       required this.orderingDate,
+      required this.deliveryDate,
       required this.productsDetail,
       required this.amount,
       required this.lastAmount,
@@ -22,6 +23,7 @@ class Order {
   late final CollectionSlot collectionSlot;
   late final String id;
   late final DateTime orderingDate;
+  late final DateTime deliveryDate;
   late final String deliveryId;
   late final List<String> productsDetail;
   late final bool expanded;
@@ -44,6 +46,7 @@ class Order {
     collectionSlot = stringToCollectionSlot(json['collection_slot']);
     user = SimpleUser.fromJson(json['user']);
     orderingDate = DateTime.parse(json['ordering_date']);
+    deliveryDate = DateTime.parse(json['delivery_date']);
   }
 
   Map<String, dynamic> toJson() {
@@ -52,6 +55,7 @@ class Order {
     data['delivery_id'] = deliveryId;
     data['amount'] = amount;
     data['ordering_date'] = processDateToAPIWitoutHour(orderingDate);
+    data['delivery_date'] = processDateToAPIWitoutHour(deliveryDate);
     data['products_ids'] = productsDetail;
     data['collection_slot'] = collectionSlotToString(collectionSlot);
     data['products_quantity'] = products.map((e) => e.quantity).toList();
@@ -62,6 +66,7 @@ class Order {
   Order copyWith(
       {id,
       orderingDate,
+      deliveryDate,
       products,
       expanded,
       deliveryId,
@@ -72,6 +77,7 @@ class Order {
     return Order(
         id: id ?? this.id,
         orderingDate: orderingDate ?? this.orderingDate,
+        deliveryDate: deliveryDate ?? this.deliveryDate,
         productsDetail: products != null
             ? List<String>.from(products.map((element) => element.id).toList())
             : productsDetail,
@@ -99,6 +105,7 @@ class Order {
     return Order(
         id: '',
         orderingDate: DateTime.now(),
+        deliveryDate: DateTime.now(),
         productsDetail: [],
         productsQuantity: [],
         deliveryId: '',
