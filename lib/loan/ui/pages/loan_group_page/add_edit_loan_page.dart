@@ -49,6 +49,7 @@ class AddEditLoanPage extends HookConsumerWidget {
         useTextEditingController(text: isEdit ? loan.borrower.getName() : "");
 
     final numberSelected = useState(loan.items.length);
+    final initialDate = useState(isEdit ? loan.start : DateTime.now());
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -188,7 +189,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                 DateEntry(
                   title: LoanTextConstants.beginDate,
                   controller: start,
-                  dateBefore: '',
+                  dateBefore: DateTime.now(),
                   onSelect: () {
                     items.whenData((itemList) {
                       List<Item> selected = itemList
@@ -200,6 +201,8 @@ class AddEditLoanPage extends HookConsumerWidget {
                       } else {
                         end.text = "";
                       }
+                      initialDate.value =
+                          DateTime.parse(processDateBack(start.text));
                     });
                   },
                 ),
@@ -207,7 +210,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                 DateEntry(
                   title: LoanTextConstants.endDate,
                   controller: end,
-                  dateBefore: start.text,
+                  dateBefore: initialDate.value,
                   onSelect: () {},
                 ),
                 const SizedBox(height: 30),
@@ -240,8 +243,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 5,
                             blurRadius: 10,
-                            offset: const Offset(
-                                3, 3),
+                            offset: const Offset(3, 3),
                           ),
                         ],
                       ),

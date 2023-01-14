@@ -5,7 +5,7 @@ import 'package:myecl/tools/functions.dart';
 
 class DateEntry extends StatelessWidget {
   final String title;
-  final String dateBefore;
+  final DateTime dateBefore;
   final VoidCallback onSelect;
   final TextEditingController controller;
 
@@ -18,9 +18,6 @@ class DateEntry extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final before = dateBefore.isNotEmpty
-        ? DateTime.parse(processDateBack(dateBefore))
-        : DateTime.now();
 
     selectDate(BuildContext context, TextEditingController dateController,
         DateTime before) async {
@@ -51,7 +48,7 @@ class DateEntry extends StatelessWidget {
     }
 
     return GestureDetector(
-      onTap: () => selectDate(context, controller, before),
+      onTap: () => selectDate(context, controller, dateBefore),
       child: SizedBox(
         child: AbsorbPointer(
           child: TextFormField(
