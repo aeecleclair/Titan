@@ -21,14 +21,9 @@ class TheMovieDBRepository extends Repository {
     return <TheMovieDBSearchResult>[];
   }
 
-  Future<List<TheMovieDBGenre>> getAllGenre() async {
-    final resp = await getOne("",
-        suffix: "genre/movie/list?api_key=$apiKey&language=fr-FR");
-    if (resp["genres"] != null) {
-      return (resp["genres"] as List<dynamic>)
-          .map((e) => TheMovieDBGenre.fromJson(e))
-          .toList();
-    }
-    return <TheMovieDBGenre>[];
+  Future<TheMovieDBMovie> getMovie(String id) async {
+    final resp = await getOne("movie$id",
+        suffix: "?api_key=$apiKey&language=fr-FR");
+    return TheMovieDBMovie.fromJson(resp);
   }
 }
