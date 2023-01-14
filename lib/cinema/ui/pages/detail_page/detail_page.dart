@@ -13,6 +13,7 @@ class DetailPage extends HookConsumerWidget {
     final session = ref.watch(sessionProvider);
     final page = ref.watch(cinemaPageProvider);
     final pageNotifier = ref.watch(cinemaPageProvider.notifier);
+    final List<String> genres = session.genre.split(', ');
     return Stack(
       children: [
         Stack(
@@ -128,51 +129,83 @@ class DetailPage extends HookConsumerWidget {
               ),
               Container(
                 color: Colors.grey.shade50,
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Column(
                   children: [
                     const SizedBox(
                       height: 15,
                     ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        session.name,
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade900,
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        child: Text(
-                          session.genre,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            session.name,
+                            style: const TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            formatDate(session.start),
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      height: 35,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: genres.length + 2,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index == 0 || index == genres.length + 1) {
+                            return const SizedBox(
+                              width: 20,
+                            );
+                          } else {
+                            return Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade900,
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              child: Text(
+                                genres[index - 1],
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    Text(
-                      session.overview,
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                        fontSize: 15,
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Text(
+                        session.overview,
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          fontSize: 15,
+                        ),
                       ),
                     ),
                     const SizedBox(
