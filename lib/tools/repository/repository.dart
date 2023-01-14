@@ -12,7 +12,7 @@ abstract class Repository {
   static const String expiredTokenDetail = "Could not validate credentials";
   final String ext = "";
   final Map<String, String> headers = {
-    "Content-Type": "application/json",
+    "Content-Type": "application/json; charset=UTF-8",
     "Accept": "application/json",
   };
   LogsConfig config = FLog.getDefaultConfigurations()
@@ -43,7 +43,11 @@ abstract class Repository {
         await http.get(Uri.parse(host + ext + suffix), headers: headers);
     if (response.statusCode == 200) {
       try {
-        return (jsonDecode(response.body) as List);
+        String toDecode = response.body;
+        if (host == displayHost) {
+          toDecode = utf8.decode(response.body.runes.toList());
+        }
+        return jsonDecode(toDecode);
       } catch (e) {
         FLog.error(
             text: "GET ${ext + suffix}\nError while decoding response",
@@ -54,8 +58,11 @@ abstract class Repository {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
       try {
-        String resp = utf8.decode(response.body.runes.toList());
-        final decoded = json.decode(resp);
+        String toDecode = response.body;
+        if (host == displayHost) {
+          toDecode = utf8.decode(response.body.runes.toList());
+        }
+        final decoded = jsonDecode(toDecode);
         if (decoded["detail"] == expiredTokenDetail) {
           throw AppException(ErrorType.tokenExpire, decoded["detail"]);
         } else {
@@ -80,17 +87,26 @@ abstract class Repository {
         await http.get(Uri.parse(host + ext + id + suffix), headers: headers);
     if (response.statusCode == 200) {
       try {
-        return jsonDecode(response.body);
+        String toDecode = response.body;
+        if (host == displayHost) {
+          toDecode = utf8.decode(response.body.runes.toList());
+        }
+        return jsonDecode(toDecode);
       } catch (e) {
         FLog.error(
             text: "GET ${ext + id + suffix}\nError while decoding response",
             exception: e);
-        return {};
+        return <String, dynamic>{};
       }
     } else if (response.statusCode == 403) {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-      final decoded = jsonDecode(response.body);
+
+      String toDecode = response.body;
+      if (host == displayHost) {
+        toDecode = utf8.decode(response.body.runes.toList());
+      }
+      final decoded = jsonDecode(toDecode);
       if (decoded["detail"] == expiredTokenDetail) {
         throw AppException(ErrorType.tokenExpire, decoded["detail"]);
       } else {
@@ -110,7 +126,11 @@ abstract class Repository {
         headers: headers, body: jsonEncode(t));
     if (response.statusCode == 201) {
       try {
-        return jsonDecode(response.body);
+        String toDecode = response.body;
+        if (host == displayHost) {
+          toDecode = utf8.decode(response.body.runes.toList());
+        }
+        return jsonDecode(toDecode);
       } catch (e) {
         FLog.error(
             text: "POST ${ext + suffix}\nError while decoding response",
@@ -122,7 +142,12 @@ abstract class Repository {
     } else if (response.statusCode == 403) {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-      final decoded = jsonDecode(response.body);
+
+      String toDecode = response.body;
+      if (host == displayHost) {
+        toDecode = utf8.decode(response.body.runes.toList());
+      }
+      final decoded = jsonDecode(toDecode);
       if (decoded["detail"] == expiredTokenDetail) {
         throw AppException(ErrorType.tokenExpire, decoded["detail"]);
       } else {
@@ -145,7 +170,11 @@ abstract class Repository {
     } else if (response.statusCode == 403) {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-      final decoded = jsonDecode(response.body);
+      String toDecode = response.body;
+      if (host == displayHost) {
+        toDecode = utf8.decode(response.body.runes.toList());
+      }
+      final decoded = jsonDecode(toDecode);
       if (decoded["detail"] == expiredTokenDetail) {
         throw AppException(ErrorType.tokenExpire, decoded["detail"]);
       } else {
@@ -168,7 +197,11 @@ abstract class Repository {
     } else if (response.statusCode == 403) {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-      final decoded = jsonDecode(response.body);
+      String toDecode = response.body;
+      if (host == displayHost) {
+        toDecode = utf8.decode(response.body.runes.toList());
+      }
+      final decoded = jsonDecode(toDecode);
       if (decoded["detail"] == expiredTokenDetail) {
         throw AppException(ErrorType.tokenExpire, decoded["detail"]);
       } else {

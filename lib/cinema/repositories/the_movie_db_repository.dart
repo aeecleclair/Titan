@@ -22,6 +22,7 @@ class TheMovieDBRepository extends Repository {
   }
 
   Future<TheMovieDBMovie> getMovie(String id) async {
-    return TheMovieDBMovie.fromJson(await getOne("movie/$id", suffix: "?api_key=$apiKey&language=fr-FR"));
+    return TheMovieDBMovie.fromJson(
+        await getOne("movie/$id", suffix: "?api_key=$apiKey&language=fr-FR"));
   }
 }
