@@ -16,7 +16,9 @@ class TheMovieDBMovie {
   });
 
   TheMovieDBMovie.fromJson(Map<String, dynamic> json) {
-    genres = json['genres'].cast<String>();
+    genres = (json['genres'] as List<dynamic>)
+        .map((e) => e['name'] as String)
+        .toList();
     overview = json['overview'] as String;
     posterUrl = json['poster_path'] != null
         ? "https://image.tmdb.org/t/p/w500${json['poster_path']}"

@@ -23,10 +23,13 @@ class TextEntry extends StatelessWidget {
       cursorColor: Colors.black,
       decoration: InputDecoration(
         labelText: label,
-        suffix: Text(suffix,
-            style: const TextStyle(
-              color: Colors.black,
-            )),
+        suffix: Container(
+          padding: const EdgeInsets.all(10),
+          child: Text(suffix,
+              style: const TextStyle(
+                color: Colors.black,
+              )),
+        ),
         floatingLabelStyle: const TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,

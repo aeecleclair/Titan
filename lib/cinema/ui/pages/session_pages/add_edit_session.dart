@@ -8,6 +8,7 @@ import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/providers/cinema_page_provider.dart';
 import 'package:myecl/cinema/providers/session_list_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
+import 'package:myecl/cinema/providers/the_movie_db_genre_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/loan/ui/text_entry.dart';
@@ -23,7 +24,9 @@ class AddEditSessionPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(cinemaPageProvider.notifier);
     final session = ref.watch(sessionProvider);
+    final movieNotifier = ref.watch(theMovieDBMovieProvider.notifier);
     final isEdit = session.id != Session.empty().id;
+    final imdbUrl = useTextEditingController();
     final key = GlobalKey<FormState>();
     final sessionListNotifier = ref.watch(sessionListProvider.notifier);
     final name = useTextEditingController(text: session.name);
@@ -34,6 +37,8 @@ class AddEditSessionPage extends HookConsumerWidget {
     final posterUrl = useTextEditingController(text: session.posterUrl);
     final start = useTextEditingController(
         text: isEdit ? processDate(session.start) : '');
+    final tagline = useTextEditingController(text: session.tagline);
+    final displayPosterUrl = useState(session.posterUrl);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -57,7 +62,91 @@ class AddEditSessionPage extends HookConsumerWidget {
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 205, 205, 205)))),
                 const SizedBox(height: 30),
-                (posterUrl.text.isEmpty)
+                TextField(
+                  controller: imdbUrl,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    labelText: CinemaTextConstants.importFromIMDB,
+                    labelStyle:
+                        const TextStyle(color: Colors.black, fontSize: 20),
+                    suffixIcon: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: ShrinkButton(
+                        onTap: () async {
+                          if (imdbUrl.text.isEmpty) {
+                            displayToastWithContext(
+                                TypeMsg.error, CinemaTextConstants.emptyUrl);
+                            return;
+                          }
+                          if (!imdbUrl.text.contains('imdb.com/title/')) {
+                            displayToastWithContext(
+                                TypeMsg.error, CinemaTextConstants.invalidUrl);
+                            return;
+                          }
+                          final movieId = imdbUrl.text
+                              .split('imdb.com/title/')
+                              .last
+                              .split('/')
+                              .first;
+                          tokenExpireWrapper(ref, () async {
+                            movieNotifier.loadMovie(movieId).then((value) {
+                              value.when(
+                                data: (data) {
+                                  name.text = data.title;
+                                  overview.text = data.overview;
+                                  posterUrl.text = data.posterUrl;
+                                  genre.text = data.genres.join(', ');
+                                  tagline.text = data.tagline;
+                                  duration.text =
+                                      parseDurationBack(data.runtime);
+                                  displayPosterUrl.value = data.posterUrl;
+                                },
+                                loading: () {},
+                                error: (e, s) {
+                                  displayToastWithContext(
+                                      TypeMsg.error, e.toString());
+                                },
+                              );
+                            });
+                          });
+                        },
+                        waitChild: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color(0xffe2b616),
+                          ),
+                          child: const CircularProgressIndicator(
+                            color: Colors.black,
+                          ),
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color(0xffe2b616),
+                          ),
+                          child: const HeroIcon(
+                            HeroIcons.arrowRight,
+                            size: 22,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                    border: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                    ),
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                (displayPosterUrl.value.isEmpty)
                     ? Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 50, horizontal: 30),
@@ -70,7 +159,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                           color: Colors.grey.shade500,
                         ),
                       )
-                    : Image.network(posterUrl.text, fit: BoxFit.cover),
+                    : Image.network(displayPosterUrl.value, fit: BoxFit.cover),
                 const SizedBox(height: 30),
                 TextEntry(
                   keyboardType: TextInputType.text,
@@ -169,6 +258,14 @@ class AddEditSessionPage extends HookConsumerWidget {
                   isInt: false,
                   controller: overview,
                 ),
+                const SizedBox(height: 30),
+                TextEntry(
+                  keyboardType: TextInputType.text,
+                  label: CinemaTextConstants.tagline,
+                  suffix: '',
+                  isInt: false,
+                  controller: tagline,
+                ),
                 const SizedBox(height: 50),
                 ShrinkButton(
                   waitChild: Container(
@@ -213,7 +310,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                           posterUrl: posterUrl.text,
                           start: DateTime.parse(
                               processDateBackWithHour(start.text)),
-                          tagline: '',
+                          tagline: tagline.text,
                         );
                         final value = isEdit
                             ? await sessionListNotifier

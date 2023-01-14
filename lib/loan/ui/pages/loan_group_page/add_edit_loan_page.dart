@@ -87,6 +87,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                           color: Color.fromARGB(255, 205, 205, 205)))),
             ),
             const SizedBox(height: 30),
+            
             items.when(data: (itemList) {
               if (itemList.isNotEmpty) {
                 return SingleChildScrollView(

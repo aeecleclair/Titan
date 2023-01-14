@@ -107,7 +107,7 @@ abstract class Repository {
   /// POST ext/suffix
   Future<dynamic> create(dynamic t, {String suffix = ""}) async {
     final response = await http.post(Uri.parse(host + ext + suffix),
-        headers: headers, body: json.encode(t));
+        headers: headers, body: jsonEncode(t));
     if (response.statusCode == 201) {
       try {
         return jsonDecode(response.body);
@@ -139,7 +139,7 @@ abstract class Repository {
   /// PATCH ext/id/suffix
   Future<bool> update(dynamic t, String tId, {String suffix = ""}) async {
     final response = await http.patch(Uri.parse(host + ext + tId + suffix),
-        headers: headers, body: json.encode(t));
+        headers: headers, body: jsonEncode(t));
     if (response.statusCode == 204 || response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
