@@ -40,7 +40,7 @@ class GroupRepository extends Repository {
 
   Future<bool> deleteMember(Group group, SimpleUser user) async {
     final response = await http.delete(
-        Uri.parse("${Repository.host}${ext}membership"),
+        Uri.parse("$host${ext}membership"),
         headers: headers,
         body: json.encode({"user_id": user.id, "group_id": group.id}));
     if (response.statusCode == 204) {

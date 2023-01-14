@@ -13,7 +13,7 @@ abstract class LogoRepository extends Repository {
 
   Future<Image> getLogo(String id, {String suffix = ""}) async {
     final response = await http
-        .get(Uri.parse("${Repository.host}$ext$id$suffix"), headers: headers);
+        .get(Uri.parse("$host$ext$id$suffix"), headers: headers);
     if (response.statusCode == 200) {
       try {
         return Image.memory(response.bodyBytes);
@@ -44,7 +44,7 @@ abstract class LogoRepository extends Repository {
     final file = File(path);
     final image = Image.file(file);
     final request = http.MultipartRequest(
-        'POST', Uri.parse("${Repository.host}$ext$id$suffix"))
+        'POST', Uri.parse("$host$ext$id$suffix"))
       ..headers.addAll(headers)
       ..files.add(await http.MultipartFile.fromPath('image', path,
           contentType: MediaType('image', 'jpeg')));

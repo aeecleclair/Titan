@@ -191,8 +191,8 @@ class MainPage extends HookConsumerWidget {
                 SettingsItem(
                   icon: HeroIcons.calendarDays,
                   onTap: () {
-                    Clipboard.setData(const ClipboardData(
-                            text: "${Repository.host}calendar/ical"))
+                    Clipboard.setData(ClipboardData(
+                            text: "${Repository.displayHost}calendar/ical"))
                         .then((value) {
                       displayToastWithContext(
                           TypeMsg.msg, SettingsTextConstants.icalCopied);
