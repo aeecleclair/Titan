@@ -7,7 +7,6 @@ class CreateAccount {
   late String password;
   late DateTime birthday;
   late String phone;
-  late String promo;
   late String floor;
   late String activationToken;
 
@@ -18,7 +17,6 @@ class CreateAccount {
     required this.password,
     required this.birthday,
     required this.phone,
-    required this.promo,
     required this.floor,
     required this.activationToken,
   });
@@ -30,7 +28,6 @@ class CreateAccount {
     password = json['password'];
     birthday = DateTime.parse(json['birthday']);
     phone = json['phone'];
-    promo = json['promo'];
     floor = json['floor'];
     activationToken = json['activation_token'];
   }
@@ -43,7 +40,6 @@ class CreateAccount {
     data['password'] = password;
     data['birthday'] = processDateToAPIWitoutHour(birthday);
     data['phone'] = phone;
-    data['promo'] = promo;
     data['floor'] = floor;
     data['activation_token'] = activationToken;
     return data;
@@ -67,7 +63,6 @@ class CreateAccount {
       password: password ?? this.password,
       birthday: birthday ?? this.birthday,
       phone: phone ?? this.phone,
-      promo: promo ?? this.promo,
       floor: floor ?? this.floor,
       activationToken: activationToken ?? this.activationToken,
     );

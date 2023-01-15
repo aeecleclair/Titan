@@ -29,7 +29,6 @@ class CreateAccountPage extends HookConsumerWidget {
     final firstname = useTextEditingController();
     final username = useTextEditingController();
     final birthday = useTextEditingController();
-    final promo = useTextEditingController();
     final phone = useTextEditingController();
     final lastIndex = useState(0);
     List<DropdownMenuItem> items = [
@@ -71,7 +70,6 @@ class CreateAccountPage extends HookConsumerWidget {
     }
 
     List<GlobalKey<FormState>> formKeys = [
-      GlobalKey<FormState>(),
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
@@ -184,19 +182,9 @@ class CreateAccountPage extends HookConsumerWidget {
         ),
       ]),
       CreateAccountField(
-        controller: promo,
-        label: LoginTextConstants.promo,
-        index: 7,
-        pageController: pageController,
-        currentPage: currentPage,
-        formKey: formKeys[6],
-        keyboardType: TextInputType.number,
-        hint: "20",
-      ),
-      CreateAccountField(
         controller: phone,
         label: LoginTextConstants.phone,
-        index: 8,
+        index: 7,
         pageController: pageController,
         currentPage: currentPage,
         formKey: formKeys[7],
@@ -207,7 +195,7 @@ class CreateAccountPage extends HookConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(
-            height: 9,
+            height: 8,
           ),
           const Align(
             alignment: Alignment.centerLeft,
@@ -264,7 +252,6 @@ class CreateAccountPage extends HookConsumerWidget {
               firstname.text.isNotEmpty &&
               username.text.isNotEmpty &&
               birthday.text.isNotEmpty &&
-              promo.text.isNotEmpty &&
               phone.text.isNotEmpty &&
               floor.text.isNotEmpty &&
               password.text.isNotEmpty &&
@@ -274,7 +261,6 @@ class CreateAccountPage extends HookConsumerWidget {
               firstname: firstname.text,
               nickname: username.text,
               birthday: DateTime.parse(processDateBack(birthday.text)),
-              promo: promo.text,
               phone: phone.text,
               floor: floor.text,
               activationToken: activationCode.text,

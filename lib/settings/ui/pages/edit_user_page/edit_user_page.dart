@@ -272,16 +272,16 @@ class EditUserPage extends HookConsumerWidget {
                         Text(SettingsTextConstants.errorProfilePicture),
                   );
                 }),
-                const SizedBox(height: 50),
-                UserFieldModifier(
-                    label: SettingsTextConstants.firstname,
-                    keyboardType: TextInputType.text,
-                    controller: firstNameController),
-                const SizedBox(height: 50),
-                UserFieldModifier(
-                    label: SettingsTextConstants.name,
-                    keyboardType: TextInputType.text,
-                    controller: nameController),
+                // const SizedBox(height: 50),
+                // UserFieldModifier(
+                //     label: SettingsTextConstants.firstname,
+                //     keyboardType: TextInputType.text,
+                //     controller: firstNameController),
+                // const SizedBox(height: 50),
+                // UserFieldModifier(
+                //     label: SettingsTextConstants.name,
+                //     keyboardType: TextInputType.text,
+                //     controller: nameController),
                 const SizedBox(height: 50),
                 UserFieldModifier(
                     label: SettingsTextConstants.nickname,

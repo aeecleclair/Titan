@@ -4,7 +4,7 @@ import 'package:myecl/tools/exception.dart';
 import 'package:f_logs/f_logs.dart';
 
 abstract class Repository {
-  static const String host = "https://hyperion.myecl.fr/";
+  static const String host = "http://localhost:8000/";
   static const String expiredTokenDetail = "Could not validate credentials";
   final String ext = "";
   final Map<String, String> headers = {
@@ -88,13 +88,13 @@ abstract class Repository {
     } else if (response.statusCode == 403) {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-        String resp = utf8.decode(response.body.runes.toList());
-        final decoded = json.decode(resp);
-        if (decoded["detail"] == expiredTokenDetail) {
-          throw AppException(ErrorType.tokenExpire, decoded["detail"]);
-        } else {
-          throw AppException(ErrorType.notFound, decoded["detail"]);
-        }
+      String resp = utf8.decode(response.body.runes.toList());
+      final decoded = json.decode(resp);
+      if (decoded["detail"] == expiredTokenDetail) {
+        throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+      } else {
+        throw AppException(ErrorType.notFound, decoded["detail"]);
+      }
     } else {
       FLog.error(
           text:
@@ -122,13 +122,13 @@ abstract class Repository {
     } else if (response.statusCode == 403) {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-        String resp = utf8.decode(response.body.runes.toList());
-        final decoded = json.decode(resp);
-        if (decoded["detail"] == expiredTokenDetail) {
-          throw AppException(ErrorType.tokenExpire, decoded["detail"]);
-        } else {
-          throw AppException(ErrorType.notFound, decoded["detail"]);
-        }
+      String resp = utf8.decode(response.body.runes.toList());
+      final decoded = json.decode(resp);
+      if (decoded["detail"] == expiredTokenDetail) {
+        throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+      } else {
+        throw AppException(ErrorType.notFound, decoded["detail"]);
+      }
     } else {
       FLog.error(
           text:
@@ -146,13 +146,13 @@ abstract class Repository {
     } else if (response.statusCode == 403) {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-        String resp = utf8.decode(response.body.runes.toList());
-        final decoded = json.decode(resp);
-        if (decoded["detail"] == expiredTokenDetail) {
-          throw AppException(ErrorType.tokenExpire, decoded["detail"]);
-        } else {
-          throw AppException(ErrorType.notFound, decoded["detail"]);
-        }
+      String resp = utf8.decode(response.body.runes.toList());
+      final decoded = json.decode(resp);
+      if (decoded["detail"] == expiredTokenDetail) {
+        throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+      } else {
+        throw AppException(ErrorType.notFound, decoded["detail"]);
+      }
     } else {
       FLog.error(
           text:
@@ -170,13 +170,13 @@ abstract class Repository {
     } else if (response.statusCode == 403) {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-        String resp = utf8.decode(response.body.runes.toList());
-        final decoded = json.decode(resp);
-        if (decoded["detail"] == expiredTokenDetail) {
-          throw AppException(ErrorType.tokenExpire, decoded["detail"]);
-        } else {
-          throw AppException(ErrorType.notFound, decoded["detail"]);
-        }
+      String resp = utf8.decode(response.body.runes.toList());
+      final decoded = json.decode(resp);
+      if (decoded["detail"] == expiredTokenDetail) {
+        throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+      } else {
+        throw AppException(ErrorType.notFound, decoded["detail"]);
+      }
     } else {
       FLog.error(
           text:
