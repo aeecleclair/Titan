@@ -72,7 +72,16 @@ class DetailPage extends HookConsumerWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: EventUi(event: event, isDetailPage: true),
+            child: EventUi(
+              event: event,
+              isAdmin: false,
+              isDetailPage: true,
+              onConfirm: () {},
+              onCopy: () {},
+              onDecline: () {},
+              onEdit: () {},
+              onInfo: () {},
+            ),
           )
         ],
       ),

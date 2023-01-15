@@ -31,6 +31,7 @@ class AddEditEventPage extends HookConsumerWidget {
     final event = ref.watch(eventProvider);
     final rooms = ref.watch(roomListProvider);
     final isEdit = event.id != Event.empty().id;
+    final page = ref.watch(eventPageProvider);
     final pageNotifier = ref.watch(eventPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final eventListNotifier = ref.watch(eventListProvider.notifier);
@@ -41,7 +42,7 @@ class AddEditEventPage extends HookConsumerWidget {
     final end = useTextEditingController(text: processDate(event.end));
     final location = useTextEditingController(text: event.location);
     final description = useTextEditingController(text: event.description);
-    final roomId = useTextEditingController(text: event.roomId);
+    final roomId = useState(event.roomId);
     final allDay = useState(false); //  TODO
     final recurrent = useState(event.recurrenceRule.contains("FREQ"));
     final interval = useTextEditingController(
@@ -471,7 +472,7 @@ class AddEditEventPage extends HookConsumerWidget {
                           GestureDetector(
                             onTap: () {
                               isRoom.value = false;
-                              roomId.text = "";
+                              roomId.value = "";
                             },
                             child: Container(
                               margin:
@@ -504,7 +505,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                       itemCount: rooms.length,
                                       itemBuilder: (context, index) {
                                         final selected =
-                                            rooms[index].id == roomId.text;
+                                            rooms[index].id == roomId.value;
                                         return GestureDetector(
                                           child: Container(
                                             margin: const EdgeInsets.symmetric(
@@ -516,19 +517,19 @@ class AddEditEventPage extends HookConsumerWidget {
                                                   child: Text(rooms[index].name,
                                                       style: TextStyle(
                                                         color: selected
-                                                            ? Colors.black
-                                                            : Colors.white,
+                                                            ? Colors.white
+                                                            : Colors.black,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       )),
                                                 ),
                                                 backgroundColor: selected
-                                                    ? Colors.grey.shade200
-                                                    : Colors.black),
+                                                    ? Colors.black
+                                                    : Colors.grey.shade200),
                                           ),
                                           onTap: () {
                                             location.text = rooms[index].name;
-                                            roomId.text = rooms[index].id;
+                                            roomId.value = rooms[index].id;
                                           },
                                         );
                                       }),
@@ -643,15 +644,20 @@ class AddEditEventPage extends HookConsumerWidget {
                                       processDateBack(startString)),
                                   type: eventType.value,
                                   recurrenceRule: recurrenceRule,
+                                  applicantId: user.id,
                                   applicant: user.toApplicant(),
                                   decision: Decision.pending,
-                                  roomId: roomId.text);
+                                  roomId: roomId.value);
                               final value = isEdit
                                   ? await eventListNotifier
                                       .updateEvent(newEvent)
                                   : await eventListNotifier.addEvent(newEvent);
                               if (value) {
-                                pageNotifier.setEventPage(EventPage.main);
+                                if (page == EventPage.addEditEventFromMain) {
+                                  pageNotifier.setEventPage(EventPage.main);
+                                } else {
+                                  pageNotifier.setEventPage(EventPage.admin);
+                                }
                                 if (isEdit) {
                                   displayToastWithContext(TypeMsg.msg,
                                       EventTextConstants.editedEvent);

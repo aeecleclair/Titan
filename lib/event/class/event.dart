@@ -24,6 +24,7 @@ class Event {
   late final CalendarEventType type;
   late final String description;
   late final String recurrenceRule;
+  late final String applicantId;
   late final Applicant applicant;
   late final Decision decision;
   late final String roomId;
@@ -39,6 +40,7 @@ class Event {
     required this.description,
     required this.allDay,
     required this.recurrenceRule,
+    required this.applicantId,
     required this.applicant,
     required this.decision,
     required this.roomId,
@@ -54,10 +56,11 @@ class Event {
     location = json['location'];
     type = stringToCalendarEventType(json['type']);
     description = json['description'];
-    recurrenceRule = json['recurrence_rule'];
-    applicant = Applicant.fromJson(json['applicant']);
+    recurrenceRule = json['recurrence_rule'] ?? "";
+    applicantId = json['applicant_id'];
+    applicant = json['applicant'] != null ? Applicant.fromJson(json['applicant']) : Applicant.empty().copyWith(id: applicantId);
     decision = stringToDecision(json['decision']);
-    roomId = json['room_id'];
+    roomId = json['room_id'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -89,6 +92,7 @@ class Event {
     String? description,
     bool? allDay,
     String? recurrenceRule,
+    String? applicantId,
     Applicant? applicant,
     Decision? decision,
     String? roomId,
@@ -104,6 +108,7 @@ class Event {
       description: description ?? this.description,
       recurrenceRule: recurrenceRule ?? this.recurrenceRule,
       allDay: allDay ?? this.allDay,
+      applicantId: applicantId ?? this.applicantId,
       applicant: applicant ?? this.applicant,
       decision: decision ?? this.decision,
       roomId: roomId ?? this.roomId,
@@ -121,6 +126,7 @@ class Event {
     type = CalendarEventType.eventAE;
     description = '';
     recurrenceRule = '';
+    applicantId = '';
     applicant = Applicant.empty();
     decision = Decision.pending;
     roomId = '';
