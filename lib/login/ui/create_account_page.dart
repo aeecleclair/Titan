@@ -10,6 +10,7 @@ import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/login_field.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
+import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -90,14 +91,26 @@ class CreateAccountPage extends HookConsumerWidget {
         currentPage: currentPage,
         formKey: formKeys[0],
       ),
-      CreateAccountField(
-        controller: password,
-        label: LoginTextConstants.password,
-        index: 2,
-        pageController: pageController,
-        currentPage: currentPage,
-        formKey: formKeys[1],
-        keyboardType: TextInputType.visiblePassword,
+      Column(
+        children: [
+          CreateAccountField(
+            controller: password,
+            label: LoginTextConstants.password,
+            index: 2,
+            pageController: pageController,
+            currentPage: currentPage,
+            formKey: formKeys[1],
+            keyboardType: TextInputType.visiblePassword,
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          PasswordStrength(
+            newPassword: password,
+            whiteBar: true,
+            textColor: ColorConstants.background2,
+          )
+        ],
       ),
       CreateAccountField(
         controller: name,

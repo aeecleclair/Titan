@@ -32,7 +32,6 @@ class SettingsTextConstants {
   static const String firstname = "Prénom";
   static const String floor = "Étage";
   static const String help = "Aide";
-  static const String hyperionUrl = "https://hyperion.myecl.fr";
   static const String icalCopied = "Lien Ical copié !";
   static const String language = "Langue";
   static const String languageFr = "Français";
@@ -64,4 +63,11 @@ class SettingsTextConstants {
   static const String updatingError =
       "Erreur lors de la modification du profil";
   static const String version = "Version";
+
+  static const String passwordStrength = "Force du mot de passe";
+  static const String passwordStrengthVeryWeak = "Très faible";
+  static const String passwordStrengthWeak = "Faible";
+  static const String passwordStrengthMedium = "Moyen";
+  static const String passwordStrengthStrong = "Fort";
+  static const String passwordStrengthVeryStrong = "Très fort";
 }

@@ -26,6 +26,12 @@ class LoginTextConstants {
   static const String name = 'Nom';
   static const String newPassword = 'Nouveau mot de passe';
   static const String password = 'Mot de passe';
+  static const String passwordLengthError = 'Le mot de passe doit faire au moins 6 caractères';
+  static const String passwordStrengthVeryWeak = 'Très faible';
+  static const String passwordStrengthWeak = 'Faible';
+  static const String passwordStrengthMedium = 'Moyen';
+  static const String passwordStrengthStrong = 'Fort';
+  static const String passwordStrengthVeryStrong = 'Très fort';
   static const String phone = 'Téléphone';
   static const String promo = 'Promo';
   static const String sendedMail = 'Mail de confirmation envoyé';

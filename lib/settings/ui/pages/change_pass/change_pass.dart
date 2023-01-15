@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
+import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/settings/ui/pages/change_pass/test_entry_style.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -108,6 +109,10 @@ class ChangePassPage extends HookConsumerWidget {
                     },
                   )),
               const SizedBox(
+                height: 40,
+              ),
+              PasswordStrength(newPassword: newPassword),
+              const SizedBox(
                 height: 60,
               ),
               ShrinkButton(
@@ -143,8 +148,7 @@ class ChangePassPage extends HookConsumerWidget {
                               descriptions:
                                   SettingsTextConstants.changingPassword,
                               onYes: () async {
-                                await tokenExpireWrapper(ref,
-                                    () async {
+                                await tokenExpireWrapper(ref, () async {
                                   final value =
                                       await userNotifier.changePassword(
                                           oldPassword.text,
