@@ -235,13 +235,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_password_strength:
-    dependency: "direct main"
-    description:
-      name: flutter_password_strength
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.6"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -943,6 +936,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.1"
+  zxcvbn:
+    dependency: "direct main"
+    description:
+      name: zxcvbn
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
 sdks:
   dart: ">=2.18.0 <3.0.0"
   flutter: ">=3.0.0"
