@@ -12,6 +12,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/user/class/floors.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/repositories/profile_picture_repository.dart';
@@ -39,34 +40,11 @@ class EditUserPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    List<DropdownMenuItem> items = [
-      "Adoma",
-      "Exté",
-      "T1",
-      "T2",
-      "T3",
-      "T4",
-      "T56",
-      "U1",
-      "U2",
-      "U3",
-      "U4",
-      "U56",
-      "V1",
-      "V2",
-      "V3",
-      "V45",
-      "V6",
-      "X1",
-      "X2",
-      "X3",
-      "X4",
-      "X5",
-      "X6",
-    ]
+    print(Floors.values);
+    List<DropdownMenuItem> items = Floors.values
         .map((e) => DropdownMenuItem(
               value: e,
-              child: Text(e),
+              child: Text(capitalize(e.toString().split('.').last)),
             ))
         .toList();
 
@@ -123,12 +101,18 @@ class EditUserPage extends HookConsumerWidget {
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
-                                      TypeMsg.msg, SettingsTextConstants.updatedProfilePicture);
+                                      TypeMsg.msg,
+                                      SettingsTextConstants
+                                          .updatedProfilePicture);
                                 } else {
-                                  displayToastWithContext(TypeMsg.error, SettingsTextConstants.tooHeavyProfilePicture);
+                                  displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants
+                                          .tooHeavyProfilePicture);
                                 }
                               } else {
-                                displayToastWithContext(TypeMsg.error, SettingsTextConstants.errorProfilePicture);
+                                displayToastWithContext(TypeMsg.error,
+                                    SettingsTextConstants.errorProfilePicture);
                               }
                             },
                             child: Container(
@@ -172,12 +156,18 @@ class EditUserPage extends HookConsumerWidget {
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
-                                      TypeMsg.msg, SettingsTextConstants.updatedProfilePicture);
+                                      TypeMsg.msg,
+                                      SettingsTextConstants
+                                          .updatedProfilePicture);
                                 } else {
-                                  displayToastWithContext(TypeMsg.error, SettingsTextConstants.tooHeavyProfilePicture);
+                                  displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants
+                                          .tooHeavyProfilePicture);
                                 }
                               } else {
-                                displayToastWithContext(TypeMsg.error, SettingsTextConstants.errorProfilePicture);
+                                displayToastWithContext(TypeMsg.error,
+                                    SettingsTextConstants.errorProfilePicture);
                               }
                             },
                             child: Container(
@@ -221,9 +211,14 @@ class EditUserPage extends HookConsumerWidget {
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
-                                      TypeMsg.msg, SettingsTextConstants.updatedProfilePicture);
+                                      TypeMsg.msg,
+                                      SettingsTextConstants
+                                          .updatedProfilePicture);
                                 } else {
-                                  displayToastWithContext(TypeMsg.error, SettingsTextConstants.errorProfilePicture);
+                                  displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants
+                                          .errorProfilePicture);
                                 }
                               }
                             },
@@ -268,8 +263,7 @@ class EditUserPage extends HookConsumerWidget {
                   );
                 }, error: (e, s) {
                   return const Center(
-                    child:
-                        Text(SettingsTextConstants.errorProfilePicture),
+                    child: Text(SettingsTextConstants.errorProfilePicture),
                   );
                 }),
                 // const SizedBox(height: 50),
