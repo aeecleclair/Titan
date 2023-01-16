@@ -14,6 +14,7 @@ class Booking {
   late final bool key;
   late final Decision decision;
   late final String recurrenceRule;
+  late final String entity;
 
   Booking(
       {required this.id,
@@ -24,7 +25,8 @@ class Booking {
       required this.room,
       required this.key,
       required this.decision,
-      required this.recurrenceRule});
+      required this.recurrenceRule,
+      required this.entity});
 
   Booking.fromJson(Map<String, dynamic> json) {
     id = json["id"];
@@ -36,6 +38,7 @@ class Booking {
     key = json["key"];
     decision = stringToDecision(json["decision"]);
     recurrenceRule = json["recurrence_rule"] ?? "";
+    entity = json["entity"] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -49,11 +52,12 @@ class Booking {
     data["key"] = key;
     data["decision"] = decision.name;
     data["recurrence_rule"] = recurrenceRule;
+    data["entity"] = entity;
     return data;
   }
 
   Booking copyWith(
-      {id, reason, start, end, note, room, key, decision, recurrenceRule}) {
+      {id, reason, start, end, note, room, key, decision, recurrenceRule, entity}) {
     return Booking(
         id: id ?? this.id,
         reason: reason ?? this.reason,
@@ -63,7 +67,8 @@ class Booking {
         room: room ?? this.room,
         key: key ?? this.key,
         decision: decision ?? this.decision,
-        recurrenceRule: recurrenceRule ?? this.recurrenceRule);
+        recurrenceRule: recurrenceRule ?? this.recurrenceRule,
+        entity: entity ?? this.entity);
   }
 
   static Booking empty() {
@@ -76,6 +81,7 @@ class Booking {
         room: Room.empty(),
         key: false,
         decision: Decision.pending,
-        recurrenceRule: '');
+        recurrenceRule: '',
+        entity: '');
   }
 }

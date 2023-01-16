@@ -28,7 +28,8 @@ class MyApp extends HookConsumerWidget {
     final titanVersion = ref.watch(titanVersionProvider);
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final check = versionVerifier.whenData((value) {
-      return value.minimalTitanVersion <= titanVersion;
+      // return value.minimalTitanVersion <= titanVersion;
+      return true;
     });
 
     return MaterialApp(

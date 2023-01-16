@@ -40,6 +40,7 @@ class AddEditBookingPage extends HookConsumerWidget {
         text: isEdit ? processDateWithHour(booking.end) : "");
     final motif = useTextEditingController(text: booking.reason);
     final note = useTextEditingController(text: booking.note);
+    final entity = useTextEditingController(text: booking.entity);
     final allDay = useState(false); // TODO:
     final recurrent = useState(booking.recurrenceRule != ""
         ? booking.recurrenceRule.contains("BYDAY")
@@ -111,6 +112,14 @@ class AddEditBookingPage extends HookConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Column(children: [
+                    TextEntry(
+                      keyboardType: TextInputType.text,
+                      controller: entity,
+                      isInt: false,
+                      label: BookingTextConstants.entity,
+                      suffix: '',
+                    ),
+                    const SizedBox(height: 30),
                     TextEntry(
                       keyboardType: TextInputType.text,
                       controller: motif,
@@ -475,12 +484,14 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 spreadRadius: 5,
                                 blurRadius: 10,
                                 offset: const Offset(
-                                    3, 3), // changes position of shadow
+                                    3, 3),
                               ),
                             ],
                           ),
                           child:
-                              const Center(child: CircularProgressIndicator())),
+                              const Center(child: CircularProgressIndicator(
+                            color: Colors.white,
+                              ))),
                       onTap: () async {
                         if (key.currentState == null) {
                           return;
@@ -544,7 +555,8 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   room: room.value,
                                   key: keyRequired.value,
                                   decision: Decision.pending,
-                                  recurrenceRule: recurrenceRule);
+                                  recurrenceRule: recurrenceRule,
+                                  entity: entity.text);
                               final value = isEdit
                                   ? await bookingsNotifier
                                       .updateBooking(newBooking)
