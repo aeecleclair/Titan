@@ -101,25 +101,28 @@ class AddEditLoanPage extends HookConsumerWidget {
                             (e) => CheckItemCard(
                               item: e,
                               onCheck: () async {
-                                selectedItemsNotifier
-                                    .toggle(itemList.indexOf(e))
-                                    .then(
-                                  (value) {
-                                    List<Item> selected = itemList
-                                        .where((element) =>
-                                            value[itemList.indexOf(element)])
-                                        .toList();
-                                    numberSelected.value = selected.length;
-                                    if (numberSelected.value > 0) {
-                                      caution.text =
-                                          "${selected.fold<double>(0, (previousValue, element) => previousValue + element.caution).toStringAsFixed(2)}€";
-                                      evaluateEnd(selected);
-                                    } else {
-                                      end.text = "";
-                                      caution.text = "";
-                                    }
-                                  },
-                                );
+                                if (selectedItems[itemList.indexOf(e)] ||
+                                    isEdit) {
+                                  selectedItemsNotifier
+                                      .toggle(itemList.indexOf(e))
+                                      .then(
+                                    (value) {
+                                      List<Item> selected = itemList
+                                          .where((element) =>
+                                              value[itemList.indexOf(element)])
+                                          .toList();
+                                      numberSelected.value = selected.length;
+                                      if (numberSelected.value > 0) {
+                                        caution.text =
+                                            "${selected.fold<double>(0, (previousValue, element) => previousValue + element.caution).toStringAsFixed(2)}€";
+                                        evaluateEnd(selected);
+                                      } else {
+                                        end.text = "";
+                                        caution.text = "";
+                                      }
+                                    },
+                                  );
+                                }
                               },
                               isSelected: selectedItems[itemList.indexOf(e)],
                             ),
@@ -253,8 +256,8 @@ class AddEditLoanPage extends HookConsumerWidget {
                           height: 25,
                           width: 25,
                           child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  ColorConstants.background2)),
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white)),
                         ),
                       )),
                   onTap: () async {
@@ -269,7 +272,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                         displayToast(context, TypeMsg.error,
                             LoanTextConstants.invalidDates);
                       } else {
-                        items.when(
+                        await items.when(
                           data: (itemList) async {
                             await tokenExpireWrapper(ref, () async {
                               List<Item> selected = itemList

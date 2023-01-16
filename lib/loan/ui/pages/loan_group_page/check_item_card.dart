@@ -18,7 +18,7 @@ class CheckItemCard extends StatelessWidget {
     return GestureDetector(
       onTap: onCheck,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+        margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5),
         padding: const EdgeInsets.all(12.0),
         child: Container(
           width: 140,
