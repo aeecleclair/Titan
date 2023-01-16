@@ -40,10 +40,9 @@ class EditUserPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    print(Floors.values);
     List<DropdownMenuItem> items = Floors.values
         .map((e) => DropdownMenuItem(
-              value: e,
+              value: capitalize(e.toString().split('.').last),
               child: Text(capitalize(e.toString().split('.').last)),
             ))
         .toList();

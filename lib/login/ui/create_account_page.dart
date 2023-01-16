@@ -12,6 +12,7 @@ import 'package:myecl/login/ui/login_field.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/user/class/floors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class CreateAccountPage extends HookConsumerWidget {
@@ -31,34 +32,10 @@ class CreateAccountPage extends HookConsumerWidget {
     final birthday = useTextEditingController();
     final phone = useTextEditingController();
     final lastIndex = useState(0);
-    List<DropdownMenuItem> items = [
-      "Adoma",
-      "Exté",
-      "T1",
-      "T2",
-      "T3",
-      "T4",
-      "T56",
-      "U1",
-      "U2",
-      "U3",
-      "U4",
-      "U56",
-      "V1",
-      "V2",
-      "V3",
-      "V45",
-      "V6",
-      "X1",
-      "X2",
-      "X3",
-      "X4",
-      "X5",
-      "X6",
-    ]
+    List<DropdownMenuItem> items = Floors.values
         .map((e) => DropdownMenuItem(
-              value: e,
-              child: Text(e),
+              value: capitalize(e.toString().split('.').last),
+              child: Text(capitalize(e.toString().split('.').last)),
             ))
         .toList();
 
