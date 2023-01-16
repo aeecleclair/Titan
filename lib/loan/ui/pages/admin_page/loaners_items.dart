@@ -61,12 +61,6 @@ class LoanersItems extends HookConsumerWidget {
                               blurRadius: 10,
                               offset: const Offset(3, 3),
                             ),
-                            BoxShadow(
-                              color: Colors.grey.shade200.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 10,
-                              offset: const Offset(3, 3),
-                            ),
                           ],
                         ),
                         child: const Center(

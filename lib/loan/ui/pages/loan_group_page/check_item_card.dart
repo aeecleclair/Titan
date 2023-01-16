@@ -73,7 +73,7 @@ class CheckItemCard extends StatelessWidget {
                         color: Colors.black)),
                 const SizedBox(height: 5),
                 Text(
-                    '${LoanTextConstants.duration} : ${item.suggestedLendingDuration ~/ (24 * 60 * 60)} ${LoanTextConstants.days}',
+                    '${LoanTextConstants.duration} : ${item.suggestedLendingDuration} ${LoanTextConstants.days}',
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,

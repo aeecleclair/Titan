@@ -63,8 +63,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                       (previousValue, element) =>
                           previousValue > element.suggestedLendingDuration
                               ? element.suggestedLendingDuration
-                              : previousValue) ~/
-                  (24 * 60 * 60)))));
+                              : previousValue)).toInt())));
     }
 
     return SingleChildScrollView(
