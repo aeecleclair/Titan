@@ -20,11 +20,17 @@ class PageSwitcher extends ConsumerWidget {
       case EventPage.addEditEventFromMain:
         return const AddEditEventPage();
       case EventPage.eventDetailfromModuleFromMain:
-        return const DetailPage();
+        return const DetailPage(
+          isAdmin: false,
+        );
       case EventPage.eventDetailfromModuleFromAdmin:
-        return const DetailPage();
+        return const DetailPage(
+          isAdmin: true,
+        );
       case EventPage.eventDetailfromCalendar:
-        return const DetailPage();
+        return const DetailPage(
+          isAdmin: false,
+        );
       case EventPage.admin:
         return const AdminPage();
     }

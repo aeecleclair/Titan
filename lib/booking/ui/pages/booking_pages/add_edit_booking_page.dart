@@ -18,6 +18,7 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEditBookingPage extends HookConsumerWidget {
@@ -26,6 +27,7 @@ class AddEditBookingPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(bookingPageProvider);
+    final user = ref.watch(userProvider);
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
@@ -556,7 +558,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   key: keyRequired.value,
                                   decision: Decision.pending,
                                   recurrenceRule: recurrenceRule,
-                                  entity: entity.text);
+                                  entity: entity.text,
+                                  applicant: user.toApplicant(),
+                                  applicantId: user.id);
                               final value = isEdit
                                   ? await bookingsNotifier
                                       .updateBooking(newBooking)
