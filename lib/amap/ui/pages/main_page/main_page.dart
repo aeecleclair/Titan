@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_provider.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 import 'package:flutter/material.dart';
@@ -31,7 +33,6 @@ class MainPage extends HookConsumerWidget {
     final orderNotifier = ref.watch(orderProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final isAdmin = ref.watch(isAmapAdmin);
-    // final deliveryId = ref.watch(deliveryIdProvider);
     final delivery = ref.watch(deliveryProvider);
     final deliveriesNotifier = ref.watch(deliveryListProvider.notifier);
     final ordersNotifier = ref.watch(userOrderListProvider.notifier);
@@ -49,6 +50,10 @@ class MainPage extends HookConsumerWidget {
     ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic));
     final shakingAnimation = useAnimationController(
         duration: const Duration(milliseconds: 700), initialValue: 0);
+
+    void displayToastWithoutContext(TypeMsg type, String text) {
+      displayToast(context, type, text);
+    }
 
     return Refresher(
         onRefresh: () async {
@@ -158,17 +163,22 @@ class MainPage extends HookConsumerWidget {
                         pageNotifier.setAmapPage(AmapPage.detailPage);
                       },
                       addOrder: () {
-                        solde.whenData(
-                          (s) {
-                            if (s.balance > 0) {
-                              orderNotifier.setOrder(Order.empty());
-                              animation.forward();
-                              showPanel.value = true;
-                            } else {
-                              shakingAnimation.forward(from: 0);
-                            }
-                          },
-                        );
+                        if (delivery.id != Delivery.empty().id) {
+                          solde.whenData(
+                            (s) {
+                              if (s.balance > 0) {
+                                orderNotifier.setOrder(Order.empty());
+                                animation.forward();
+                                showPanel.value = true;
+                              } else {
+                                shakingAnimation.forward(from: 0);
+                              }
+                            },
+                          );
+                        } else {
+                          displayToastWithoutContext(TypeMsg.error,
+                              AMAPTextConstants.noOpennedDelivery);
+                        }
                       },
                     ),
                     const SizedBox(
@@ -275,14 +285,19 @@ class MainPage extends HookConsumerWidget {
                         ),
                         ShrinkButton(
                             onTap: () async {
-                              orderNotifier.setOrder(order.copyWith(
-                                deliveryId: delivery.id,
-                              ));
-                              await tokenExpireWrapper(ref, () async {
-                                await deliveryProductListNotifier
-                                    .loadProductList(delivery.products);
-                              });
-                              pageNotifier.setAmapPage(AmapPage.addProducts);
+                              if (delivery.id != Delivery.empty().id) {
+                                orderNotifier.setOrder(order.copyWith(
+                                  deliveryId: delivery.id,
+                                ));
+                                await tokenExpireWrapper(ref, () async {
+                                  await deliveryProductListNotifier
+                                      .loadProductList(delivery.products);
+                                });
+                                pageNotifier.setAmapPage(AmapPage.addProducts);
+                              } else {
+                                displayToastWithoutContext(TypeMsg.error,
+                                    AMAPTextConstants.notPlannedDelivery);
+                              }
                             },
                             waitChild: Container(
                               margin:

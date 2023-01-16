@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 
 final deliveryIdProvider =
@@ -7,7 +8,13 @@ final deliveryIdProvider =
   if (deliveries.isEmpty) {
     return DeliveryIdProvider("");
   }
-  return DeliveryIdProvider(deliveries.first.id);
+  final orderableDeliveries = deliveries
+      .where((element) => element.status == DeliveryStatus.orderable)
+      .toList();
+      if (orderableDeliveries.isEmpty) {
+        return DeliveryIdProvider("");
+      }
+  return DeliveryIdProvider(orderableDeliveries.first.id);
 });
 
 class DeliveryIdProvider extends StateNotifier<String> {

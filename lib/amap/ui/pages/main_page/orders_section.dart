@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/amap/class/delivery.dart';
+import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/command_ui.dart';
@@ -16,6 +18,13 @@ class OrderSection extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final orders = ref.watch(userOrderListProvider);
+    final deliveries = ref.watch(deliveryListProvider);
+    final orderableDeliveries = deliveries.when(
+        data: (data) => data
+            .where((element) => element.status == DeliveryStatus.orderable)
+            .toList(),
+        loading: () => [],
+        error: (_, __) => []);
     return Column(
       children: [
         const Padding(
@@ -81,10 +90,15 @@ class OrderSection extends HookConsumerWidget {
                 ),
                 ...orders.when(
                     data: (data) {
-                      return data
-                          .map((e) => CommandeUI(
-                              order: e, onTap: onTap, onEdit: onEdit))
-                          .toList();
+                      return data.map((e) {
+                        final canEdit = orderableDeliveries
+                            .any((element) => element.id == e.deliveryId);
+                        return CommandeUI(
+                            order: e,
+                            onTap: onTap,
+                            onEdit: onEdit,
+                            showButton: canEdit);
+                      }).toList();
                     },
                     loading: () =>
                         [const Center(child: CircularProgressIndicator())],

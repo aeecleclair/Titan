@@ -13,13 +13,14 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class CommandeUI extends HookConsumerWidget {
   final Order order;
   final void Function() onTap, onEdit;
-  final bool showButton;
+  final bool showButton, isDetail;
   const CommandeUI(
       {super.key,
       required this.order,
       required this.onTap,
       required this.onEdit,
-      this.showButton = true});
+      this.showButton = true,
+      this.isDetail = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,7 +34,7 @@ class CommandeUI extends HookConsumerWidget {
         margin: const EdgeInsets.symmetric(horizontal: 5.0),
         padding: const EdgeInsets.all(12.0),
         width: 195,
-        height: showButton ? 160 : 120,
+        height: isDetail ? 120 : 160,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           gradient: const RadialGradient(
@@ -68,7 +69,7 @@ class CommandeUI extends HookConsumerWidget {
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: AMAPColorConstants.textDark)),
-                  if (showButton)
+                  if (!isDetail)
                     GestureDetector(
                       onTap: () {
                         orderNotifier.setOrder(order);
@@ -110,99 +111,112 @@ class CommandeUI extends HookConsumerWidget {
                     fontWeight: FontWeight.w700,
                     color: AMAPColorConstants.textDark),
               ),
-              if (showButton) const Spacer(),
-              if (showButton)
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        orderNotifier.setOrder(order);
-                        onEdit();
-                      },
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        padding: const EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              AMAPColorConstants.greenGradient1,
-                              AMAPColorConstants.greenGradient2,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+              const Spacer(),
+              if (!isDetail)
+                showButton
+                    ? Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              orderNotifier.setOrder(order);
+                              onEdit();
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              padding: const EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    AMAPColorConstants.greenGradient1,
+                                    AMAPColorConstants.greenGradient2,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: AMAPColorConstants.greenGradient2
+                                          .withOpacity(0.5),
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 3))
+                                ],
+                              ),
+                              child: const HeroIcon(
+                                HeroIcons.pencil,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                                color: AMAPColorConstants.greenGradient2
-                                    .withOpacity(0.5),
-                                blurRadius: 10,
-                                offset: const Offset(2, 3))
-                          ],
-                        ),
-                        child: const HeroIcon(
-                          HeroIcons.pencil,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: ((context) => CustomDialogBox(
-                                title: AMAPTextConstants.delete,
-                                descriptions: AMAPTextConstants.deletingOrder,
-                                onYes: () {
-                                  tokenExpireWrapper(ref, () async {
-                                    orderListNotifier
-                                        .deleteOrder(order)
-                                        .then((value) {
-                                      if (value) {
-                                        displayToastWithContext(TypeMsg.msg,
-                                            AMAPTextConstants.unlockedDelivery);
-                                      } else {
-                                        displayToastWithContext(TypeMsg.error,
-                                            AMAPTextConstants.updatingError);
-                                      }
-                                    });
-                                  });
-                                })));
-                      },
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        padding: const EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              AMAPColorConstants.redGradient1,
-                              AMAPColorConstants.redGradient2,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: ((context) => CustomDialogBox(
+                                      title: AMAPTextConstants.delete,
+                                      descriptions:
+                                          AMAPTextConstants.deletingOrder,
+                                      onYes: () {
+                                        tokenExpireWrapper(ref, () async {
+                                          orderListNotifier
+                                              .deleteOrder(order)
+                                              .then((value) {
+                                            if (value) {
+                                              displayToastWithContext(
+                                                  TypeMsg.msg,
+                                                  AMAPTextConstants
+                                                      .unlockedDelivery);
+                                            } else {
+                                              displayToastWithContext(
+                                                  TypeMsg.error,
+                                                  AMAPTextConstants
+                                                      .updatingError);
+                                            }
+                                          });
+                                        });
+                                      })));
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              padding: const EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    AMAPColorConstants.redGradient1,
+                                    AMAPColorConstants.redGradient2,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: AMAPColorConstants.redGradient2
+                                          .withOpacity(0.5),
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 3))
+                                ],
+                              ),
+                              child: const HeroIcon(
+                                HeroIcons.trash,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                                color: AMAPColorConstants.redGradient2
-                                    .withOpacity(0.5),
-                                blurRadius: 10,
-                                offset: const Offset(2, 3))
-                          ],
-                        ),
-                        child: const HeroIcon(
-                          HeroIcons.trash,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                        ],
+                      )
+                    : const Text(
+                        AMAPTextConstants.locked,
+                        style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700,
+                            color: AMAPColorConstants.textDark),
+                      )
             ],
           ),
         ));
