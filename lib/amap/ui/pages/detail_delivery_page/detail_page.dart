@@ -28,6 +28,29 @@ class DetailDeliveryPage extends HookConsumerWidget {
                   return Row(
                     children: [
                       Expanded(
+                        child: Column(
+                          children: [
+                            Container(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: AutoSizeText(
+                                  data[index].user.getName(),
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            ...data[index].products.map((e) => Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
+                                child: Text("- ${e.name}"))),
+                          ],
+                        ),
+                      ),
+                      Expanded(
                         child: CommandeUI(
                           order: data[index],
                           onTap: () {},
@@ -35,17 +58,6 @@ class DetailDeliveryPage extends HookConsumerWidget {
                           showButton: false,
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                            padding: const EdgeInsets.all(20),
-                            child: AutoSizeText(
-                              data[index].user.getName(),
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )),
-                      )
                     ],
                   );
                 },
