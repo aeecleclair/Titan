@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
@@ -12,6 +13,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
     final delivery = ref.watch(deliveryProvider);
     final deliveryOrders = ref.watch(adminDeliveryOrderListProvider);
     return Container(
+      padding: const EdgeInsets.all(30),
       child: deliveryOrders.when(
         data: (data) {
           final orders = data[delivery];
@@ -23,8 +25,29 @@ class DetailDeliveryPage extends HookConsumerWidget {
               return ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (context, index) {
-                  return CommandeUI(
-                      order: data[index], onTap: () {}, onEdit: () {});
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: CommandeUI(
+                          order: data[index],
+                          onTap: () {},
+                          onEdit: () {},
+                          showButton: false,
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                            padding: const EdgeInsets.all(20),
+                            child: AutoSizeText(
+                              data[index].user.getName(),
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                      )
+                    ],
+                  );
                 },
               );
             },
