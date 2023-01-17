@@ -11,7 +11,8 @@ class ProductListNotifier extends ListNotifier<Product> {
     _productListRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Product>>> loadProductList(List<Product> products) async {
+  Future<AsyncValue<List<Product>>> loadProductList(
+      List<Product> products) async {
     return state = AsyncValue.data(products);
   }
 
@@ -41,15 +42,9 @@ class ProductListNotifier extends ListNotifier<Product> {
     return await update(
         (p) async => true,
         (products, product) => products
-          ..[products.indexWhere((p) => p.id == product.id)] = product,
-        product.copyWith(quantity: i));
-  }
-
-  Future<bool> resetQuantity() async {
-    return await update(
-        (p) async => true,
-        (products, p) => products.map((e) => e.copyWith(quantity: 0)).toList(),
-        Product.empty());
+          ..[products.indexWhere((p) => p.id == product.id)] =
+              product.copyWith(quantity: i),
+        product);
   }
 }
 

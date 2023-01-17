@@ -244,68 +244,58 @@ class DeliveryUi extends HookConsumerWidget {
                                 await tokenExpireWrapper(ref, () async {
                                   switch (delivery.status) {
                                     case DeliveryStatus.creation:
-                                      deliveryListNotifier
-                                          .openDelivery(delivery)
-                                          .then((value) {
-                                        if (value) {
-                                          displayVoteWithContext(TypeMsg.msg,
-                                              AMAPTextConstants.deliveryOpened);
-                                        } else {
-                                          displayVoteWithContext(
-                                              TypeMsg.error,
-                                              AMAPTextConstants
-                                                  .deliveryNotOpened);
-                                        }
-                                      });
+                                      final value = await deliveryListNotifier
+                                          .openDelivery(delivery);
+                                      if (value) {
+                                        displayVoteWithContext(TypeMsg.msg,
+                                            AMAPTextConstants.deliveryOpened);
+                                      } else {
+                                        displayVoteWithContext(
+                                            TypeMsg.error,
+                                            AMAPTextConstants
+                                                .deliveryNotOpened);
+                                      }
                                       break;
                                     case DeliveryStatus.orderable:
-                                      deliveryListNotifier
-                                          .lockDelivery(delivery)
-                                          .then((value) {
-                                        if (value) {
-                                          displayVoteWithContext(TypeMsg.msg,
-                                              AMAPTextConstants.deliveryLocked);
-                                        } else {
-                                          displayVoteWithContext(
-                                              TypeMsg.error,
-                                              AMAPTextConstants
-                                                  .deliveryNotLocked);
-                                        }
-                                      });
+                                      final value = await deliveryListNotifier
+                                          .lockDelivery(delivery);
+                                      if (value) {
+                                        displayVoteWithContext(TypeMsg.msg,
+                                            AMAPTextConstants.deliveryLocked);
+                                      } else {
+                                        displayVoteWithContext(
+                                            TypeMsg.error,
+                                            AMAPTextConstants
+                                                .deliveryNotLocked);
+                                      }
                                       break;
                                     case DeliveryStatus.locked:
-                                      deliveryListNotifier
-                                          .deliverDelivery(delivery)
-                                          .then((value) {
-                                        if (value) {
-                                          displayVoteWithContext(
-                                              TypeMsg.msg,
-                                              AMAPTextConstants
-                                                  .deliveryDelivered);
-                                        } else {
-                                          displayVoteWithContext(
-                                              TypeMsg.error,
-                                              AMAPTextConstants
-                                                  .deliveryNotDelivered);
-                                        }
-                                      });
+                                      final value = await deliveryListNotifier
+                                          .deliverDelivery(delivery);
+                                      if (value) {
+                                        displayVoteWithContext(
+                                            TypeMsg.msg,
+                                            AMAPTextConstants
+                                                .deliveryDelivered);
+                                      } else {
+                                        displayVoteWithContext(
+                                            TypeMsg.error,
+                                            AMAPTextConstants
+                                                .deliveryNotDelivered);
+                                      }
                                       break;
                                     case DeliveryStatus.delivered:
-                                      deliveryListNotifier
-                                          .archiveDelivery(delivery)
-                                          .then((value) {
-                                        if (value) {
-                                          displayVoteWithContext(
-                                              TypeMsg.msg,
-                                              AMAPTextConstants
-                                                  .deliveryArchived);
-                                        } else {
-                                          displayVoteWithContext(
-                                              TypeMsg.error,
-                                              AMAPTextConstants
-                                                  .deliveryNotArchived);
-                                        }
-                                      });
+                                      final value = await deliveryListNotifier
+                                          .archiveDelivery(delivery);
+                                      if (value) {
+                                        displayVoteWithContext(TypeMsg.msg,
+                                            AMAPTextConstants.deliveryArchived);
+                                      } else {
+                                        displayVoteWithContext(
+                                            TypeMsg.error,
+                                            AMAPTextConstants
+                                                .deliveryNotArchived);
+                                      }
                                       break;
                                   }
                                 });

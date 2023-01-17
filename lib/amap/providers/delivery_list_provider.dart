@@ -33,24 +33,27 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
     return await update(
         _deliveriesListRepository.openDelivery,
         (deliveries, delivery) => deliveries
-          ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
-        delivery.copyWith(status: DeliveryStatus.orderable));
+          ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
+              delivery.copyWith(status: DeliveryStatus.orderable),
+        delivery);
   }
 
   Future<bool> lockDelivery(Delivery delivery) async {
     return await update(
         _deliveriesListRepository.lockDelivery,
         (deliveries, delivery) => deliveries
-          ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
-        delivery.copyWith(status: DeliveryStatus.locked));
+          ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
+              delivery.copyWith(status: DeliveryStatus.locked),
+        delivery);
   }
 
   Future<bool> deliverDelivery(Delivery delivery) async {
     return await update(
         _deliveriesListRepository.deliverDelivery,
         (deliveries, delivery) => deliveries
-          ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
-        delivery.copyWith(status: DeliveryStatus.delivered));
+          ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
+              delivery.copyWith(status: DeliveryStatus.delivered),
+        delivery);
   }
 
   Future<bool> archiveDelivery(Delivery delivery) async {

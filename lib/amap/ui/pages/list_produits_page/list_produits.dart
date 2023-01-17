@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/scroll_provider.dart';
 import 'package:myecl/amap/providers/sorted_delivery_product.dart';
@@ -10,8 +7,6 @@ import 'package:myecl/amap/providers/page_controller_provider.dart';
 import 'package:myecl/amap/providers/scroll_controller_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/list_produits_page/category_page.dart';
-import 'package:myecl/amap/ui/pages/list_produits_page/produit_ui_list.dart';
-import 'package:myecl/tools/functions.dart';
 
 class ListProducts extends HookConsumerWidget {
   const ListProducts({Key? key}) : super(key: key);
