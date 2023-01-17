@@ -155,8 +155,8 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                           height: 30,
                         ),
                         ShrinkButton(
-                            child: const GreenBtn(
-                                text: AMAPTextConstants.addDelivery),
+                            waitChild: const GreenBtn(
+                                text: AMAPTextConstants.waiting),
                             onTap: () async {
                               if (formKey.currentState!.validate()) {
                                 final date = dateController.value.text;
@@ -188,7 +188,9 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                 displayToast(context, TypeMsg.error,
                                     AMAPTextConstants.addingError);
                               }
-                            }),
+                            },
+                            child: const GreenBtn(
+                                text: AMAPTextConstants.addDelivery)),
                         const SizedBox(
                           height: 40,
                         ),

@@ -141,85 +141,89 @@ class DeliveryUi extends HookConsumerWidget {
                     color: AMAPColorConstants.textLight),
               ),
               Row(
+                mainAxisAlignment: (delivery.status == DeliveryStatus.creation)
+                    ? MainAxisAlignment.spaceBetween
+                    : MainAxisAlignment.center,
                 children: [
-                  ShrinkButton(
-                    onTap: () async {
-                      await showDialog(
-                          context: context,
-                          builder: ((context) => CustomDialogBox(
-                              title: AMAPTextConstants.deleteDelivery,
-                              descriptions:
-                                  '${AMAPTextConstants.deleteDeliveryDescription} ${processDate(delivery.deliveryDate)} ?',
-                              onYes: () async {
-                                await tokenExpireWrapper(ref, () async {
-                                  deliveryListNotifier
-                                      .deleteDelivery(delivery)
-                                      .then((value) {
-                                    if (value) {
-                                      displayVoteWithContext(TypeMsg.msg,
-                                          AMAPTextConstants.deletedDelivery);
-                                    } else {
-                                      displayVoteWithContext(TypeMsg.error,
-                                          AMAPTextConstants.deletingError);
-                                    }
+                  if (delivery.status == DeliveryStatus.creation)
+                    ShrinkButton(
+                      onTap: () async {
+                        await showDialog(
+                            context: context,
+                            builder: ((context) => CustomDialogBox(
+                                title: AMAPTextConstants.deleteDelivery,
+                                descriptions:
+                                    AMAPTextConstants.deleteDeliveryDescription,
+                                onYes: () async {
+                                  await tokenExpireWrapper(ref, () async {
+                                    deliveryListNotifier
+                                        .deleteDelivery(delivery)
+                                        .then((value) {
+                                      if (value) {
+                                        displayVoteWithContext(TypeMsg.msg,
+                                            AMAPTextConstants.deletedDelivery);
+                                      } else {
+                                        displayVoteWithContext(TypeMsg.error,
+                                            AMAPTextConstants.deletingError);
+                                      }
+                                    });
                                   });
-                                });
-                              })));
-                    },
-                    waitChild: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 12),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        gradient: const LinearGradient(
-                          colors: [
-                            AMAPColorConstants.redGradient1,
-                            AMAPColorConstants.redGradient2,
+                                })));
+                      },
+                      waitChild: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 12),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          gradient: const LinearGradient(
+                            colors: [
+                              AMAPColorConstants.redGradient1,
+                              AMAPColorConstants.redGradient2,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                color: AMAPColorConstants.redGradient2
+                                    .withOpacity(0.5),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
                           ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                              color: AMAPColorConstants.redGradient2
-                                  .withOpacity(0.5),
-                              blurRadius: 10,
-                              offset: const Offset(2, 3))
-                        ],
+                        child: const CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
                       ),
-                      child: const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 12),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          gradient: const LinearGradient(
+                            colors: [
+                              AMAPColorConstants.redGradient1,
+                              AMAPColorConstants.redGradient2,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                color: AMAPColorConstants.redGradient2
+                                    .withOpacity(0.5),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
+                          ],
+                        ),
+                        child: const HeroIcon(
+                          HeroIcons.trash,
+                          color: Colors.white,
+                          size: 22,
+                        ),
                       ),
                     ),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 12),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        gradient: const LinearGradient(
-                          colors: [
-                            AMAPColorConstants.redGradient1,
-                            AMAPColorConstants.redGradient2,
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                              color: AMAPColorConstants.redGradient2
-                                  .withOpacity(0.5),
-                              blurRadius: 10,
-                              offset: const Offset(2, 3))
-                        ],
-                      ),
-                      child: const HeroIcon(
-                        HeroIcons.trash,
-                        color: Colors.white,
-                        size: 22,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
                   ShrinkButton(
                     onTap: () async {
                       await showDialog(
