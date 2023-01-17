@@ -94,6 +94,7 @@ class AMAPTextConstants {
   static const String noOpennedDelivery = "Pas de livraison ouverte";
   static const String notEnoughMoney = "Pas assez d'argent";
   static const String notPlannedDelivery = "Pas de livraison planifiée";
+  static const String oneOrder = "commande";
   static const String openDelivery = "Ouvrir";
   static const String opened = "Ouverte";
   static const String openningDelivery = "Ouvrir la livraison ?";

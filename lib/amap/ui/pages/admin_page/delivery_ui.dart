@@ -6,6 +6,7 @@ import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
+import 'package:myecl/amap/providers/orders_by_delivery_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -21,20 +22,37 @@ class DeliveryUi extends HookConsumerWidget {
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
-    final deliverOrders = ref.watch(adminDeliveryOrderListProvider);
+    final deliveryOrders = ref.watch(adminDeliveryOrderListProvider);
+    final deliveryOrdersNotifier =
+        ref.watch(adminDeliveryOrderListProvider.notifier);
+    final ordersByDeliveryListNotifier =
+        ref.watch(orderByDeliveryListProvider.notifier);
 
     final orders = [];
-    deliverOrders.when(
+    deliveryOrders.when(
       data: (data) {
-        if (data[delivery] != null) {
-          data[delivery]!.when(
-            data: (data) {
+        data[delivery]!.when(
+          data: (data) {
+            if (data.isNotEmpty) {
               orders.addAll(data);
-            },
-            loading: () {},
-            error: (error, stack) {},
-          );
-        }
+            } else {
+              tokenExpireWrapper(ref, () async {
+                final ordersByDelivery = await ordersByDeliveryListNotifier
+                    .loadDeliveryOrderList(delivery.id);
+                deliveryOrdersNotifier.setTData(delivery, ordersByDelivery);
+                ordersByDelivery.when(
+                  data: (data) {
+                    orders.addAll(data);
+                  },
+                  loading: () {},
+                  error: (error, stack) {},
+                );
+              });
+            }
+          },
+          loading: () {},
+          error: (error, stack) {},
+        );
       },
       loading: () {},
       error: (error, stack) {},
@@ -91,7 +109,7 @@ class DeliveryUi extends HookConsumerWidget {
               Text(
                   orders.isEmpty
                       ? AMAPTextConstants.noCurrentOrder
-                      : '${orders.length} ${AMAPTextConstants.order}${orders.length != 1 ? "s" : ""}',
+                      : '${orders.length} ${AMAPTextConstants.oneOrder}${orders.length != 1 ? "s" : ""}',
                   style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
