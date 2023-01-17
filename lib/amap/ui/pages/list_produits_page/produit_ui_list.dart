@@ -36,7 +36,6 @@ class ProductUiInList extends ConsumerWidget {
             Row(
               children: [
                 Container(
-                  width: 40,
                   alignment: Alignment.centerRight,
                   child: Text(
                     "${p.price.toStringAsFixed(2)}€",
@@ -81,7 +80,6 @@ class ProductUiInList extends ConsumerWidget {
                   },
                 ),
                 Container(
-                  width: 15,
                   alignment: Alignment.center,
                   child: Text(
                     quantity.toString(),
@@ -117,7 +115,7 @@ class ProductUiInList extends ConsumerWidget {
                   },
                 ),
                 Container(
-                  width: 10,
+                  width: 20,
                 ),
               ],
             )

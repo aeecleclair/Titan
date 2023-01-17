@@ -31,28 +31,47 @@ class DeliveryUi extends HookConsumerWidget {
     final orders = [];
     deliveryOrders.when(
       data: (data) {
-        data[delivery]!.when(
-          data: (data) {
-            if (data.isNotEmpty) {
-              orders.addAll(data);
-            } else {
-              tokenExpireWrapper(ref, () async {
-                final ordersByDelivery = await ordersByDeliveryListNotifier
-                    .loadDeliveryOrderList(delivery.id);
-                deliveryOrdersNotifier.setTData(delivery, ordersByDelivery);
-                ordersByDelivery.when(
-                  data: (data) {
-                    orders.addAll(data);
-                  },
-                  loading: () {},
-                  error: (error, stack) {},
-                );
-              });
-            }
-          },
-          loading: () {},
-          error: (error, stack) {},
-        );
+        if (data.containsKey(delivery.id)) {
+          data[delivery.id]!.item1.when(
+                data: (d) {
+                  if (d.isNotEmpty) {
+                    orders.addAll(d);
+                  } else if (!data[delivery.id]!.item2) {
+                    tokenExpireWrapper(ref, () async {
+                      final ordersByDelivery =
+                          await ordersByDeliveryListNotifier
+                              .loadDeliveryOrderList(delivery.id);
+                      deliveryOrdersNotifier.setTData(
+                          delivery.id, ordersByDelivery);
+                      ordersByDelivery.when(
+                        data: (data) {
+                          orders.addAll(data);
+                        },
+                        loading: () {},
+                        error: (error, stack) {},
+                      );
+                      deliveryOrdersNotifier.toggleExpanded(delivery.id);
+                    });
+                  }
+                },
+                loading: () {},
+                error: (error, stack) {},
+              );
+        } else {
+          tokenExpireWrapper(ref, () async {
+            final ordersByDelivery = await ordersByDeliveryListNotifier
+                .loadDeliveryOrderList(delivery.id);
+            deliveryOrdersNotifier.setTData(delivery.id, ordersByDelivery);
+            ordersByDelivery.when(
+              data: (data) {
+                orders.addAll(data);
+              },
+              loading: () {},
+              error: (error, stack) {},
+            );
+            deliveryOrdersNotifier.toggleExpanded(delivery.id);
+          });
+        }
       },
       loading: () {},
       error: (error, stack) {},
@@ -380,9 +399,9 @@ class DeliveryUi extends HookConsumerWidget {
                           ),
                           HeroIcon(
                             delivery.status == DeliveryStatus.creation
-                                ? HeroIcons.lockClosed
+                                ? HeroIcons.lockOpen
                                 : delivery.status == DeliveryStatus.orderable
-                                    ? HeroIcons.lockOpen
+                                    ? HeroIcons.lockClosed
                                     : delivery.status == DeliveryStatus.locked
                                         ? HeroIcons.truck
                                         : HeroIcons.archiveBoxArrowDown,

@@ -9,6 +9,7 @@ import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class CommandeUI extends HookConsumerWidget {
   final Order order;
@@ -31,7 +32,7 @@ class CommandeUI extends HookConsumerWidget {
     }
 
     return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+        margin: const EdgeInsets.symmetric(horizontal: 15.0),
         padding: const EdgeInsets.all(12.0),
         width: 195,
         height: isDetail ? 120 : 160,
@@ -151,16 +152,16 @@ class CommandeUI extends HookConsumerWidget {
                             ),
                           ),
                           const Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              showDialog(
+                          ShrinkButton(
+                            onTap: () async {
+                              await showDialog(
                                   context: context,
                                   builder: ((context) => CustomDialogBox(
                                       title: AMAPTextConstants.delete,
                                       descriptions:
                                           AMAPTextConstants.deletingOrder,
-                                      onYes: () {
-                                        tokenExpireWrapper(ref, () async {
+                                      onYes: () async {
+                                        await tokenExpireWrapper(ref, () async {
                                           orderListNotifier
                                               .deleteOrder(order)
                                               .then((value) {
@@ -179,6 +180,32 @@ class CommandeUI extends HookConsumerWidget {
                                         });
                                       })));
                             },
+                            waitChild: Container(
+                              height: 40,
+                              width: 40,
+                              padding: const EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    AMAPColorConstants.redGradient1,
+                                    AMAPColorConstants.redGradient2,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: AMAPColorConstants.redGradient2
+                                          .withOpacity(0.5),
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 3))
+                                ],
+                              ),
+                              child: const Center(child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                              ),)
+                            ),
                             child: Container(
                               height: 40,
                               width: 40,

@@ -74,7 +74,7 @@ class Boutons extends HookConsumerWidget {
                   } else if (order.amount < b + order.lastAmount) {
                     Order newOrder = order.copyWith(
                         deliveryId: deliveryId, user: me.toSimpleUser());
-                    tokenExpireWrapper(ref, () async {
+                    await tokenExpireWrapper(ref, () async {
                       final value = isEdit
                           ? await orderListNotifier.updateOrder(
                               order.copyWith(lastAmount: order.amount),
