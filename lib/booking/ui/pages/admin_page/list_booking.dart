@@ -93,13 +93,15 @@ class ListBooking extends HookConsumerWidget {
                                         BookingTextConstants.confirmBooking,
                                     onYes: () async {
                                       await tokenExpireWrapper(ref, () async {
+                                        Booking newBooking = e.copyWith(
+                                            decision: Decision.approved);
                                         bookingListNotifier
                                             .toggleConfirmed(
-                                                e, Decision.approved)
+                                                newBooking, Decision.approved)
                                             .then((value) {
                                           if (value) {
                                             confirmedBookingListNotifier
-                                                .addBooking(e);
+                                                .addBooking(newBooking);
                                           }
                                         });
                                       });
@@ -116,13 +118,15 @@ class ListBooking extends HookConsumerWidget {
                                         BookingTextConstants.declineBooking,
                                     onYes: () async {
                                       await tokenExpireWrapper(ref, () async {
+                                        Booking newBooking = e.copyWith(
+                                            decision: Decision.declined);
                                         bookingListNotifier
                                             .toggleConfirmed(
-                                                e, Decision.declined)
+                                                newBooking, Decision.declined)
                                             .then((value) {
                                           if (value) {
                                             confirmedBookingListNotifier
-                                                .deleteBooking(e);
+                                                .deleteBooking(newBooking);
                                           }
                                         });
                                       });

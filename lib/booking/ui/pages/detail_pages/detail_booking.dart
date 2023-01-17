@@ -79,36 +79,33 @@ class DetailBookingPage extends HookConsumerWidget {
                       const SizedBox(
                         height: 30,
                       ),
-                      AutoSizeText(
-                        booking.applicant.getName(),
-                        style: const TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      if (booking.entity.isNotEmpty)
-                      Column(
-                        children: [
-                          AutoSizeText(
-                            "${BookingTextConstants.bookedfor} ${booking.entity}",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
                       if (isAdmin)
                         Column(
                           children: [
+                            AutoSizeText(
+                              booking.applicant.getName(),
+                              style: const TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             const SizedBox(
                               height: 30,
+                            ),
+                            if (booking.entity.isNotEmpty)
+                              Column(
+                                children: [
+                                  AutoSizeText(
+                                    "${BookingTextConstants.bookedfor} ${booking.entity}",
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            const SizedBox(
+                              height: 50,
                             ),
                             Row(
                               children: [

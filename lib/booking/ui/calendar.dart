@@ -167,7 +167,7 @@ class Calendar extends HookConsumerWidget {
 
 _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
   List<Appointment> appointments = <Appointment>[];
-  res.where((e) => e.decision == Decision.approved).map((e) {
+  res.map((e) {
     appointments.add(Appointment(
         startTime: e.start,
         endTime: e.end,
