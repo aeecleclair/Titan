@@ -12,6 +12,10 @@ import 'package:myecl/loan/ui/pages/loan_group_page/caution_text_entry.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/end_date_entry.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/item_bar.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/number_selected_text.dart';
+import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/loan/ui/pages/loan_group_page/check_item_card.dart';
+import 'package:myecl/loan/ui/pages/loan_group_page/date_entry.dart';
+import 'package:myecl/loan/ui/pages/loan_group_page/item_bar.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/search_result.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/start_date_entry.dart';
 import 'package:myecl/loan/ui/text_entry.dart';
@@ -25,6 +29,9 @@ class AddEditLoanPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final key = GlobalKey<FormState>();
+    final items = ref.watch(itemListProvider);
+    final selectedItems = ref.watch(editSelectedListProvider);
+    final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loan = ref.watch(loanProvider);
     final isEdit = loan.id != Loan.empty().id;
     final note = useTextEditingController(text: loan.notes);
