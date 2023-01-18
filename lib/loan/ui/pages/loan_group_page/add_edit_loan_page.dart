@@ -14,6 +14,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/check_item_card.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/date_entry.dart';
+import 'package:myecl/loan/ui/pages/loan_group_page/item_bar.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/search_result.dart';
 import 'package:myecl/loan/ui/text_entry.dart';
 import 'package:myecl/tools/constants.dart';
@@ -32,7 +33,6 @@ class AddEditLoanPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final items = ref.watch(itemListProvider);
     final selectedItems = ref.watch(editSelectedListProvider);
-    final selectedItemsNotifier = ref.watch(editSelectedListProvider.notifier);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loan = ref.watch(loanProvider);
     final loaner = ref.watch(loanerProvider);
@@ -59,13 +59,14 @@ class AddEditLoanPage extends HookConsumerWidget {
       end.text = processDate(DateTime.parse(processDateBack(start.text)).add(
           Duration(
               days: (selected.fold<double>(
-                      double.infinity,
-                      (previousValue, element) =>
-                          previousValue > element.suggestedLendingDuration
-                              ? element.suggestedLendingDuration
-                              : previousValue)).toInt())));
+                  double.infinity,
+                  (previousValue, element) =>
+                      previousValue > element.suggestedLendingDuration
+                          ? element.suggestedLendingDuration
+                          : previousValue)).toInt())));
     }
 
+    print("AddEditLoanPage: build");
     return SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Form(
