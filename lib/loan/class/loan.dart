@@ -74,4 +74,9 @@ class Loan {
     items = [];
     returned = false;
   }
+
+  @override
+  String toString() {
+    return 'Loan(id: $id, loaner: $loaner, borrower: $borrower, notes: $notes, start: $start, end: $end, caution: $caution, items: $items, returned: $returned)';
+  }
 }

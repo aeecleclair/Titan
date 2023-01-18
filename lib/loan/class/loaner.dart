@@ -35,4 +35,9 @@ class Loaner {
     groupManagerId = "";
     id = "";
   }
+
+  @override
+  String toString() {
+    return 'Loaner(name: $name, groupManagerId: $groupManagerId, id: $id)';
+  }
 }

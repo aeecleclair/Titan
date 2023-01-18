@@ -48,4 +48,9 @@ class Item {
     available = false;
     suggestedLendingDuration = 0;
   }
+
+  @override
+  String toString() {
+    return 'Item(id: $id, name: $name, caution: $caution, available: $available, suggestedLendingDuration: $suggestedLendingDuration)';
+  }
 }

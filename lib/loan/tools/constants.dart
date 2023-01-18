@@ -72,6 +72,7 @@ class LoanTextConstants {
   static const String returningError = "Erreur lors du retour";
   static const String returningLoan = "Retour";
   static const String returnLoan = "Rendre le prêt ?";
+  static const String returnLoanDescription = "Voulez-vous rendre ce prêt ?";
   static const String toReturn = "A rendre";
   static const String unavailable = "Indisponible";
   static const String update = "Modifier";
