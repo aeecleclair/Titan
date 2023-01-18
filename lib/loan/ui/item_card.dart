@@ -59,7 +59,9 @@ class ItemCard extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade400)),
+                      color: item.available
+                          ? Colors.grey.shade400
+                          : const Color.fromARGB(255, 172, 32, 10))),
               const SizedBox(height: 5),
               AutoSizeText('${item.caution.toStringAsFixed(2)} €',
                   maxLines: 1,
