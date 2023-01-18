@@ -67,6 +67,7 @@ class LoanTextConstants {
   static const String paidCaution = "Caution payée";
   static const String positiveNumber = "Veuillez entrer un nombre positif";
   static const String previous = "Précédent";
+  static const String returned = "Rendu";
   static const String returnedLoan = "Prêt rendu";
   static const String returningError = "Erreur lors du retour";
   static const String returningLoan = "Retour";
