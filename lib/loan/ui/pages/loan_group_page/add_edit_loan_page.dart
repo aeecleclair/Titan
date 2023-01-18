@@ -13,7 +13,6 @@ import 'package:myecl/loan/ui/pages/loan_group_page/end_date_entry.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/item_bar.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/number_selected_text.dart';
 import 'package:myecl/loan/tools/functions.dart';
-import 'package:myecl/loan/ui/pages/loan_group_page/check_item_card.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/date_entry.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/item_bar.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/search_result.dart';
