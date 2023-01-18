@@ -63,6 +63,15 @@ class DetailLoanPage extends HookConsumerWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Text(
+                              loan.notes,
+                              style: const TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
                           ],
                         ),
                       ),
