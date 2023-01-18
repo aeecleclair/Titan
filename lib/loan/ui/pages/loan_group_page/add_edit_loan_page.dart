@@ -36,6 +36,7 @@ class AddEditLoanPage extends HookConsumerWidget {
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loan = ref.watch(loanProvider);
     final loaner = ref.watch(loanerProvider);
+    print(loaner);
     final isEdit = loan.id != Loan.empty().id;
     final borrower = useState(loan.borrower);
     final note = useTextEditingController(text: loan.notes);
@@ -66,7 +67,6 @@ class AddEditLoanPage extends HookConsumerWidget {
                           : previousValue)).toInt())));
     }
 
-    print("AddEditLoanPage: build");
     return SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Form(
@@ -300,7 +300,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                                     : await loanListNotifier.addLoan(newLoan);
                                 if (value) {
                                   await adminLoanListNotifier.setTData(
-                                      loan.loaner,
+                                      isEdit ? loan.loaner : loaner,
                                       await loanListNotifier.copy());
                                   pageNotifier.setLoanPage(LoanPage.admin);
                                   if (isEdit) {
