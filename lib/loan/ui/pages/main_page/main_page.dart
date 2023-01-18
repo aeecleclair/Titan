@@ -92,12 +92,24 @@ class MainPage extends HookConsumerWidget {
                       )
                     ])
                   : (dictCateListWidget[1].isEmpty)
-                      ? const Center(
-                          child: Text(LoanTextConstants.noLoan,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 205, 205, 205))))
+                      ? SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.7,
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            children: const [
+                              Expanded(
+                                child: Center(
+                                    child: Text(LoanTextConstants.noLoan,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color:
+                                                Color.fromARGB(255, 205, 205, 205)))),
+                              ),
+                              Spacer()
+                            ],
+                          ),
+                        )
                       : Container(),
               const SizedBox(height: 30),
               if (dictCateListWidget[1].isNotEmpty)
@@ -107,7 +119,7 @@ class MainPage extends HookConsumerWidget {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                          '${dictCateListWidget[1].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}',
+                          '${dictCateListWidget[1].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''}',
                           style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -144,8 +156,8 @@ class MainPage extends HookConsumerWidget {
             ])),
         if (isAdmin)
           Positioned(
-            bottom: 20,
-            right: 20,
+            top: 30,
+            right: 30,
             child: GestureDetector(
               onTap: () {
                 pageNotifier.setLoanPage(LoanPage.admin);
