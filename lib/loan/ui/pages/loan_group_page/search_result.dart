@@ -7,13 +7,12 @@ class SearchResult extends HookConsumerWidget {
   final ValueNotifier<SimpleUser> borrower;
   final TextEditingController queryController;
   const SearchResult(
-      {super.key,
-      required this.borrower,
-      required this.queryController});
+      {super.key, required this.borrower, required this.queryController});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
+    final usersNotifier = ref.watch(userList.notifier);
     return users.when(
         data: (u) {
           return Column(
@@ -44,6 +43,7 @@ class SearchResult extends HookConsumerWidget {
                       onTap: () {
                         borrower.value = e;
                         queryController.text = e.getName();
+                        usersNotifier.clear();
                       }))
                   .toList());
         },
