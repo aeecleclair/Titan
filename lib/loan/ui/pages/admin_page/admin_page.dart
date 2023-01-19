@@ -93,18 +93,6 @@ class AdminPage extends HookConsumerWidget {
             Column(
               children: const [
                 SizedBox(height: 40),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(LoanTextConstants.onGoingLoan,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 205, 205, 205))),
-                  ),
-                ),
-                SizedBox(height: 15),
                 OnGoingLoan(),
                 SizedBox(height: 40),
                 Padding(

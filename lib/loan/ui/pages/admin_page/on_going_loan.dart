@@ -37,169 +37,196 @@ class OnGoingLoan extends HookConsumerWidget {
     return adminLoanList.when(data: (loans) {
       if (loans[loaner] != null) {
         return loans[loaner]!.when(
-            data: (List<Loan> data) => SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                        onTap: () async {
-                          await loanNotifier.setLoan(Loan.empty());
-                          ref.watch(itemListProvider);
-                          pageNotifier.setLoanPage(LoanPage.addEditLoan);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Container(
-                            width: 120,
-                            height: 180,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.shade200.withOpacity(0.5),
-                                  spreadRadius: 5,
-                                  blurRadius: 10,
-                                  offset: const Offset(3, 3),
-                                ),
-                                BoxShadow(
-                                  color: Colors.grey.shade200.withOpacity(0.5),
-                                  spreadRadius: 5,
-                                  blurRadius: 10,
-                                  offset: const Offset(3, 3),
-                                ),
-                              ],
-                            ),
-                            child: const Center(
-                                child: HeroIcon(
-                              HeroIcons.plus,
-                              size: 40.0,
-                              color: Colors.black,
-                            )),
-                          ),
-                        ),
+            data: (List<Loan> data) => Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                            '${data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 205, 205, 205))),
                       ),
-                      ...data
-                          .map((e) => LoanCard(
-                                loan: e,
-                                isAdmin: true,
-                                isDetail: false,
-                                onEdit: () async {
-                                  await loanNotifier.setLoan(e);
-                                  ref.watch(itemListProvider);
-                                  pageNotifier
-                                      .setLoanPage(LoanPage.addEditLoan);
-                                },
-                                onCalendar: () async {
-                                  await showDialog<int>(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return DelayDialog(
-                                          onYes: (i) async {
-                                            Loan newLoan = e.copyWith(
-                                                end: e.end
-                                                    .add(Duration(days: i)));
-                                            await loanNotifier.setLoan(newLoan);
-                                            tokenExpireWrapper(ref, () async {
-                                              final value =
-                                                  await loanListNotifier
-                                                      .extendLoan(newLoan, i);
-                                              if (value) {
-                                                await adminLoanListNotifier
-                                                    .setTData(
-                                                        loaner,
-                                                        await loanListNotifier
-                                                            .copy());
-                                                displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    LoanTextConstants
-                                                        .extendedLoan);
-                                              } else {
-                                                displayToastWithContext(
-                                                    TypeMsg.error,
-                                                    LoanTextConstants
-                                                        .extendingError);
-                                              }
-                                            });
-                                          },
-                                        );
-                                      });
-                                },
-                                onReturn: () async {
-                                  await showDialog(
-                                      context: context,
-                                      builder: (context) => CustomDialogBox(
-                                          title: LoanTextConstants.returnLoan,
-                                          descriptions: LoanTextConstants
-                                              .returnLoanDescription,
-                                          onYes: () async {
-                                            await tokenExpireWrapper(ref,
-                                                () async {
-                                              final loanItemsId = e.items
-                                                  .map((e) => e.id)
-                                                  .toList();
-                                              final updatedItems = loanersItems
-                                                  .when<List<Item>>(
-                                                      data: (items) =>
-                                                          items[loaner]!.when(
-                                                              data: (items) =>
-                                                                  items,
-                                                              loading: () => [],
-                                                              error: (_, __) =>
-                                                                  []),
-                                                      loading: () => [],
-                                                      error: (_, __) => [])
-                                                  .map(
-                                                (element) {
-                                                  if (loanItemsId
-                                                      .contains(element.id)) {
-                                                    return element.copyWith(
-                                                        available: true);
+                    ),
+                    const SizedBox(height: 15),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: () async {
+                              await loanNotifier.setLoan(Loan.empty());
+                              ref.watch(itemListProvider);
+                              pageNotifier.setLoanPage(LoanPage.addEditLoan);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Container(
+                                width: 120,
+                                height: 180,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Colors.grey.shade200.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 10,
+                                      offset: const Offset(3, 3),
+                                    ),
+                                    BoxShadow(
+                                      color:
+                                          Colors.grey.shade200.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 10,
+                                      offset: const Offset(3, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: const Center(
+                                    child: HeroIcon(
+                                  HeroIcons.plus,
+                                  size: 40.0,
+                                  color: Colors.black,
+                                )),
+                              ),
+                            ),
+                          ),
+                          ...data
+                              .map((e) => LoanCard(
+                                    loan: e,
+                                    isAdmin: true,
+                                    isDetail: false,
+                                    onEdit: () async {
+                                      await loanNotifier.setLoan(e);
+                                      ref.watch(itemListProvider);
+                                      pageNotifier
+                                          .setLoanPage(LoanPage.addEditLoan);
+                                    },
+                                    onCalendar: () async {
+                                      await showDialog<int>(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return DelayDialog(
+                                              onYes: (i) async {
+                                                Loan newLoan = e.copyWith(
+                                                    end: e.end.add(
+                                                        Duration(days: i)));
+                                                await loanNotifier
+                                                    .setLoan(newLoan);
+                                                tokenExpireWrapper(ref,
+                                                    () async {
+                                                  final value =
+                                                      await loanListNotifier
+                                                          .extendLoan(
+                                                              newLoan, i);
+                                                  if (value) {
+                                                    await adminLoanListNotifier
+                                                        .setTData(
+                                                            loaner,
+                                                            await loanListNotifier
+                                                                .copy());
+                                                    displayToastWithContext(
+                                                        TypeMsg.msg,
+                                                        LoanTextConstants
+                                                            .extendedLoan);
+                                                  } else {
+                                                    displayToastWithContext(
+                                                        TypeMsg.error,
+                                                        LoanTextConstants
+                                                            .extendingError);
                                                   }
-                                                  return element;
-                                                },
-                                              ).toList();
-                                              final value =
-                                                  await loanListNotifier
-                                                      .returnLoan(e);
-                                              if (value) {
-                                                pageNotifier.setLoanPage(
-                                                    LoanPage.admin);
-                                                await loanersitemsNotifier
-                                                    .setTData(
-                                                        loaner,
-                                                        AsyncData(
-                                                            updatedItems));
-                                                await adminLoanListNotifier
-                                                    .setTData(
-                                                        loaner,
-                                                        await loanListNotifier
-                                                            .copy());
-                                                displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    LoanTextConstants
-                                                        .returnedLoan);
-                                              } else {
-                                                displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    LoanTextConstants
-                                                        .returningError);
-                                              }
-                                            });
-                                          }));
-                                },
-                                onInfo: () {
-                                  loanNotifier.setLoan(e);
-                                  pageNotifier.setLoanPage(
-                                      LoanPage.detailLoanFromAdmin);
-                                },
-                              ))
-                          .toList(),
-                      const SizedBox(width: 10),
-                    ],
-                  ),
+                                                });
+                                              },
+                                            );
+                                          });
+                                    },
+                                    onReturn: () async {
+                                      await showDialog(
+                                          context: context,
+                                          builder: (context) => CustomDialogBox(
+                                              title:
+                                                  LoanTextConstants.returnLoan,
+                                              descriptions: LoanTextConstants
+                                                  .returnLoanDescription,
+                                              onYes: () async {
+                                                await tokenExpireWrapper(ref,
+                                                    () async {
+                                                  final loanItemsId = e.items
+                                                      .map((e) => e.id)
+                                                      .toList();
+                                                  final updatedItems = loanersItems
+                                                      .when<List<Item>>(
+                                                          data: (items) => items[
+                                                                  loaner]!
+                                                              .when(
+                                                                  data:
+                                                                      (items) =>
+                                                                          items,
+                                                                  loading: () =>
+                                                                      [],
+                                                                  error:
+                                                                      (_, __) =>
+                                                                          []),
+                                                          loading: () => [],
+                                                          error: (_, __) => [])
+                                                      .map(
+                                                    (element) {
+                                                      if (loanItemsId.contains(
+                                                          element.id)) {
+                                                        return element.copyWith(
+                                                            available: true);
+                                                      }
+                                                      return element;
+                                                    },
+                                                  ).toList();
+                                                  final value =
+                                                      await loanListNotifier
+                                                          .returnLoan(e);
+                                                  if (value) {
+                                                    pageNotifier.setLoanPage(
+                                                        LoanPage.admin);
+                                                    await loanersitemsNotifier
+                                                        .setTData(
+                                                            loaner,
+                                                            AsyncData(
+                                                                updatedItems));
+                                                    await adminLoanListNotifier
+                                                        .setTData(
+                                                            loaner,
+                                                            await loanListNotifier
+                                                                .copy());
+                                                    displayToastWithContext(
+                                                        TypeMsg.msg,
+                                                        LoanTextConstants
+                                                            .returnedLoan);
+                                                  } else {
+                                                    displayToastWithContext(
+                                                        TypeMsg.msg,
+                                                        LoanTextConstants
+                                                            .returningError);
+                                                  }
+                                                });
+                                              }));
+                                    },
+                                    onInfo: () {
+                                      loanNotifier.setLoan(e);
+                                      pageNotifier.setLoanPage(
+                                          LoanPage.detailLoanFromAdmin);
+                                    },
+                                  ))
+                              .toList(),
+                          const SizedBox(width: 10),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
             error: (Object error, StackTrace? stackTrace) {
               return Center(child: Text('Error $error'));
