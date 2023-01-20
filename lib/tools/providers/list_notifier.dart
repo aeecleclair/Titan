@@ -31,7 +31,6 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error, StackTrace.current);
           return false;
         }
       }
@@ -64,7 +63,6 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error, StackTrace.current);
           return false;
         }
       }
@@ -97,7 +95,6 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error, StackTrace.current);
           return false;
         }
       }
