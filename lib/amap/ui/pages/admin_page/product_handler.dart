@@ -109,7 +109,9 @@ class ProductHandler extends HookConsumerWidget {
               ),
               error: (Object e, StackTrace? s) =>
                   Text("Error: ${e.toString()}"),
-              loading: () => const CircularProgressIndicator(),
+              loading: () => const CircularProgressIndicator(
+                color: AMAPColorConstants.greenGradient2,
+              ),
             ),
             const SizedBox(
               width: 10,

@@ -7,7 +7,6 @@ import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/login/ui/auth.dart';
 import 'package:myecl/others/ui/no_internert_page.dart';
 import 'package:myecl/others/ui/update_page.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
 
@@ -47,7 +46,6 @@ class MyApp extends HookConsumerWidget {
           loading: () => const Scaffold(
                 body: Center(
                   child: CircularProgressIndicator(
-                    color: ColorConstants.gradient1,
                   ),
                 ),
               ),

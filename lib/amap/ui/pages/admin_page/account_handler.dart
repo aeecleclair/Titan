@@ -168,7 +168,9 @@ class AccountHandler extends HookConsumerWidget {
             ),
             error: (Object e, StackTrace? s) =>
                 Center(child: Text("Error: ${e.toString()}")),
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: CircularProgressIndicator(
+              color: AMAPColorConstants.greenGradient2,
+            )),
           ),
         ),
       ],

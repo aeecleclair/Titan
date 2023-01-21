@@ -68,7 +68,9 @@ class DeliverySection extends HookConsumerWidget {
                 ),
               );
             },
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: CircularProgressIndicator(
+              color: AMAPColorConstants.greenGradient2,
+            )),
             error: (error, stack) => Text(error.toString()),
           ),
         ),

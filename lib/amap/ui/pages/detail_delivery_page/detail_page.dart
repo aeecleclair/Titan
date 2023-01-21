@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/command_ui.dart';
 import 'package:myecl/tools/functions.dart';
 
@@ -25,7 +26,9 @@ class DetailDeliveryPage extends HookConsumerWidget {
             data: (data) {
               final orders = data[delivery.id];
               if (orders == null) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator(
+                  color: AMAPColorConstants.greenGradient2,
+                ));
               }
               return orders.item1.when(
                 data: (data) {
@@ -74,11 +77,15 @@ class DetailDeliveryPage extends HookConsumerWidget {
                     );
                   }
                 },
-                loading: () => const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator(
+                  color: AMAPColorConstants.greenGradient2,
+                )),
                 error: (error, stack) => Text(error.toString()),
               );
             },
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: CircularProgressIndicator(
+              color: AMAPColorConstants.greenGradient2,
+            )),
             error: (error, stack) => Text(error.toString()),
           ),
         ],

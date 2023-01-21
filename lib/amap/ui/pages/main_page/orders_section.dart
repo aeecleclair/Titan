@@ -101,7 +101,9 @@ class OrderSection extends HookConsumerWidget {
                       }).toList();
                     },
                     loading: () =>
-                        [const Center(child: CircularProgressIndicator())],
+                        [const Center(child: CircularProgressIndicator(
+                            color: AMAPColorConstants.greenGradient2,
+                          ))],
                     error: (error, stack) => [Text(error.toString())]),
                 const SizedBox(
                   width: 25,
