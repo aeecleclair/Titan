@@ -31,7 +31,7 @@ class CategoryPage extends HookConsumerWidget {
 
     double minScale = 0.8;
     double scale = 1;
-    double maxHeigth = MediaQuery.of(context).size.height - 370;
+    double maxHeigth = MediaQuery.of(context).size.height - 295;
     double height = 0;
 
     if (index == scroll.floor()) {

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_provider.dart';
+import 'package:myecl/amap/providers/orderable_deliveries.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
@@ -50,6 +51,11 @@ class MainPage extends HookConsumerWidget {
     ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic));
     final shakingAnimation = useAnimationController(
         duration: const Duration(milliseconds: 700), initialValue: 0);
+
+    final orderableDeliveries = ref.watch(orderableDeliveriesProvider);
+    final orderableDeliveriesIds = orderableDeliveries
+        .map((delivery) => delivery.id)
+        .toList(growable: false);
 
     void displayToastWithoutContext(TypeMsg type, String text) {
       displayToast(context, type, text);
@@ -163,7 +169,7 @@ class MainPage extends HookConsumerWidget {
                         pageNotifier.setAmapPage(AmapPage.detailPage);
                       },
                       addOrder: () {
-                        if (delivery.id != Delivery.empty().id) {
+                        if (orderableDeliveriesIds.contains(delivery.id)) {
                           solde.whenData(
                             (s) {
                               if (s.balance > 0) {
@@ -285,7 +291,8 @@ class MainPage extends HookConsumerWidget {
                         ),
                         ShrinkButton(
                             onTap: () async {
-                              if (delivery.id != Delivery.empty().id) {
+                              if (orderableDeliveriesIds
+                                  .contains(delivery.id)) {
                                 orderNotifier.setOrder(order.copyWith(
                                   deliveryId: delivery.id,
                                 ));
