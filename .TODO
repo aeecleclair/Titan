@@ -6,11 +6,12 @@ Vote :
 
 Resa : 
 
-- hide already done (Hyperion ?)
+- hide already done (Hyperion : archive)
 - notif pr admin on demand
 
 TITAN :
 
+- Refactor (clean code)
 - dark mode (pr chq module)
 - cache (Hive)
 - ask help

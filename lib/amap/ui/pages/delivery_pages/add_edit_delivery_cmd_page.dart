@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
+import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/providers/sorted_by_category_products.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -23,7 +24,8 @@ class AddEditDeliveryPage extends HookConsumerWidget {
     final dateController = useTextEditingController();
     final products = ref.watch(productList);
     final sortedProductsList = ref.watch(sortedByCategoryProductsProvider);
-    final selected = useState(List.generate(products.length, (index) => true));
+    final selected = ref.watch(selectedListProvider);
+    final selectedNotifier = ref.watch(selectedListProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -136,13 +138,11 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                           height: 10,
                                         ),
                                         ...value.map((e) => ProductUi(
-                                              isModif: selected
-                                                  .value[products.indexOf(e)],
+                                              isModif:
+                                                  selected[products.indexOf(e)],
                                               onclick: () {
-                                                selected.value[
-                                                    products
-                                                        .indexOf(e)] = !selected
-                                                    .value[products.indexOf(e)];
+                                                selectedNotifier.toggle(
+                                                    products.indexOf(e));
                                               },
                                               p: e,
                                             ))
@@ -155,16 +155,16 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                           height: 30,
                         ),
                         ShrinkButton(
-                            waitChild: const GreenBtn(
-                                text: AMAPTextConstants.waiting),
+                            waitChild:
+                                const GreenBtn(text: AMAPTextConstants.waiting),
                             onTap: () async {
                               if (formKey.currentState!.validate()) {
                                 final date = dateController.value.text;
                                 final del = Delivery(
                                     id: "",
                                     products: products
-                                        .where((element) => selected
-                                            .value[products.indexOf(element)])
+                                        .where((element) =>
+                                            selected[products.indexOf(element)])
                                         .toList(),
                                     deliveryDate:
                                         DateTime.parse(processDateBack(date)),
