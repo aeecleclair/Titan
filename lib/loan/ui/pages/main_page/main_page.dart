@@ -38,6 +38,8 @@ class MainPage extends HookConsumerWidget {
               dictCateListWidget[0].add(l);
             }
           }
+          dictCateListWidget[0].sort((a, b) => a.end.compareTo(b.end));
+          dictCateListWidget[1].sort((a, b) => b.end.compareTo(a.end));
         }
       },
       loading: () {},

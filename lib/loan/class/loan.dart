@@ -50,7 +50,8 @@ class Loan {
     return data;
   }
 
-  Loan copyWith({id, loaner, borrower, notes, start, end, caution, items, returned}) {
+  Loan copyWith(
+      {id, loaner, borrower, notes, start, end, caution, items, returned}) {
     return Loan(
         id: id ?? this.id,
         loaner: loaner ?? this.loaner,
