@@ -3,33 +3,28 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
+import 'package:myecl/loan/providers/borrower_provider.dart';
+import 'package:myecl/loan/providers/caution_provider.dart';
+import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/selected_items_provider.dart';
+import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
-import 'package:myecl/user/class/list_users.dart';
 
 class AddEditButton extends HookConsumerWidget {
-  final ValueNotifier<SimpleUser> borrower;
-  final TextEditingController start;
-  final TextEditingController end;
   final TextEditingController note;
-  final TextEditingController caution;
   final bool isEdit;
   final Future Function(Function) onAddEdit;
   const AddEditButton({
     Key? key,
-    required this.borrower,
-    required this.start,
-    required this.end,
     required this.note,
-    required this.caution,
     required this.isEdit,
     required this.onAddEdit,
   }) : super(key: key);
@@ -43,6 +38,10 @@ class AddEditButton extends HookConsumerWidget {
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loan = ref.watch(loanProvider);
     final loaner = ref.watch(loanerProvider);
+    final caution = ref.watch(cautionProvider);
+    final end = ref.watch(endProvider);
+    final start = ref.watch(startProvider);
+    final borrower = ref.watch(borrowerProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -80,6 +79,9 @@ class AddEditButton extends HookConsumerWidget {
               0) {
             displayToast(
                 context, TypeMsg.error, LoanTextConstants.invalidDates);
+          } else if (borrower.id.isEmpty) {
+            displayToast(
+                context, TypeMsg.error, LoanTextConstants.noBorrower);
           } else {
             await items.when(
               data: (itemList) async {
@@ -92,10 +94,8 @@ class AddEditButton extends HookConsumerWidget {
                     Loan newLoan = Loan(
                       loaner: isEdit ? loan.loaner : loaner,
                       items: selected,
-                      borrower: borrower.value,
-                      caution: caution.text.isNotEmpty
-                          ? caution.text
-                          : "${selected.fold<double>(0, (previousValue, element) => previousValue + element.caution)}€",
+                      borrower: borrower,
+                      caution: caution.text,
                       end: DateTime.parse(processDateBack(end.text)),
                       id: isEdit ? loan.id : "",
                       notes: note.text,

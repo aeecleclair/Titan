@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/providers/caution_provider.dart';
+import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/selected_items_provider.dart';
+import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/check_item_card.dart';
 import 'package:myecl/tools/constants.dart';
 
 class ItemBar extends HookConsumerWidget {
   final bool isEdit;
-  final ValueNotifier<int> numberSelected;
-  final TextEditingController caution, end;
-  final Function(List<Item>) evaluateEnd;
-  const ItemBar({Key? key, required this.isEdit,
-    required this.numberSelected,
-    required this.caution,
-    required this.end,
-    required this.evaluateEnd
+  const ItemBar({
+    Key? key,
+    required this.isEdit,
   }) : super(key: key);
 
   @override
@@ -24,6 +22,9 @@ class ItemBar extends HookConsumerWidget {
     final items = ref.watch(itemListProvider);
     final selectedItems = ref.watch(editSelectedListProvider);
     final selectedItemsNotifier = ref.watch(editSelectedListProvider.notifier);
+    final cautionNotifier = ref.watch(cautionProvider.notifier);
+    final endNotifier = ref.watch(endProvider.notifier);
+    final start = ref.watch(startProvider);
     return items.when(data: (itemList) {
       if (itemList.isNotEmpty) {
         return SingleChildScrollView(
@@ -42,14 +43,13 @@ class ItemBar extends HookConsumerWidget {
                               .where(
                                   (element) => value[itemList.indexOf(element)])
                               .toList();
-                          numberSelected.value = selected.length;
-                          if (numberSelected.value > 0) {
-                            caution.text =
-                                "${selected.fold<double>(0, (previousValue, element) => previousValue + element.caution).toStringAsFixed(2)}€";
-                            evaluateEnd(selected);
+                          if (selected.isNotEmpty) {
+                            cautionNotifier.setCaution(
+                                "${selected.fold<double>(0, (previousValue, element) => previousValue + element.caution).toStringAsFixed(2)}€");
+                            endNotifier.setEndFromSelected(start.text, selected);
                           } else {
-                            end.text = "";
-                            caution.text = "";
+                            endNotifier.setEnd("");
+                            cautionNotifier.setCaution("");
                           }
                         },
                       );

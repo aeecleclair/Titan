@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/loan/providers/caution_provider.dart';
+import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/add_edit_button.dart';
-import 'package:myecl/loan/ui/pages/loan_group_page/date_entry.dart';
+import 'package:myecl/loan/ui/pages/loan_group_page/caution_text_entry.dart';
+import 'package:myecl/loan/ui/pages/loan_group_page/end_date_entry.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/item_bar.dart';
+import 'package:myecl/loan/ui/pages/loan_group_page/number_selected_text.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/search_result.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/start_date_entry.dart';
 import 'package:myecl/loan/ui/text_entry.dart';
@@ -24,32 +27,20 @@ class AddEditLoanPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final loan = ref.watch(loanProvider);
     final isEdit = loan.id != Loan.empty().id;
-    final borrower = useState(loan.borrower);
     final note = useTextEditingController(text: loan.notes);
-    final start = useTextEditingController(
-        text: isEdit ? processDate(loan.start) : processDate(DateTime.now()));
-    final end =
-        useTextEditingController(text: isEdit ? processDate(loan.end) : "");
-    final caution = useTextEditingController(text: loan.caution);
+    final startNotifier = ref.watch(startProvider.notifier);
+    startNotifier.setStart(
+        isEdit ? processDate(loan.start) : processDate(DateTime.now()));
+    final endNotifier = ref.watch(endProvider.notifier);
+    endNotifier.setEnd(isEdit ? processDate(loan.end) : "");
+    final cautionNotifier = ref.watch(cautionProvider.notifier);
+    cautionNotifier.setCaution(loan.caution);
     final usersNotifier = ref.watch(userList.notifier);
     final queryController =
         useTextEditingController(text: isEdit ? loan.borrower.getName() : "");
 
-    final numberSelected = useState(loan.items.length);
     final initialDate = useState(isEdit ? loan.start : DateTime.now());
 
-    void evaluateEnd(List<Item> selected) {
-      end.text = processDate(DateTime.parse(processDateBack(start.text)).add(
-          Duration(
-              days: (selected.fold<double>(
-                  double.infinity,
-                  (previousValue, element) =>
-                      previousValue > element.suggestedLendingDuration
-                          ? element.suggestedLendingDuration
-                          : previousValue)).toInt())));
-    }
-
-    print("AddEditLoanPage.build");
     return SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Form(
@@ -70,79 +61,14 @@ class AddEditLoanPage extends HookConsumerWidget {
                           color: Color.fromARGB(255, 205, 205, 205)))),
             ),
             const SizedBox(height: 30),
-            
-            items.when(data: (itemList) {
-              if (itemList.isNotEmpty) {
-                return SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 15),
-                          ...itemList.map(
-                            (e) => CheckItemCard(
-                              item: e,
-                              onCheck: () async {
-                                if (selectedItems[itemList.indexOf(e)] ||
-                                    isEdit) {
-                                  selectedItemsNotifier
-                                      .toggle(itemList.indexOf(e))
-                                      .then(
-                                    (value) {
-                                      List<Item> selected = itemList
-                                          .where((element) =>
-                                              value[itemList.indexOf(element)])
-                                          .toList();
-                                      numberSelected.value = selected.length;
-                                      if (numberSelected.value > 0) {
-                                        caution.text =
-                                            "${selected.fold<double>(0, (previousValue, element) => previousValue + element.caution).toStringAsFixed(2)}€";
-                                        evaluateEnd(selected);
-                                      } else {
-                                        end.text = "";
-                                        caution.text = "";
-                                      }
-                                    },
-                                  );
-                                }
-                              },
-                              isSelected: selectedItems[itemList.indexOf(e)],
-                            ),
-                          ),
-                          const SizedBox(width: 15),
-                        ]));
-              } else {
-                return const SizedBox(
-                  height: 160,
-                  child: Center(
-                      child: Text(LoanTextConstants.noItems,
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500))),
-                );
-              }
-            }, error: (error, s) {
-              return SizedBox(
-                height: 160,
-                child: Text(error.toString(),
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w500)),
-              );
-            }, loading: () {
-              return const SizedBox(
-                height: 160,
-                child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                        ColorConstants.background2)),
-              );
-            }),
+            ItemBar(
+              isEdit: isEdit,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Column(children: [
                 const SizedBox(height: 20),
-                Text(
-                  formatNumberItems(numberSelected.value),
-                ),
+                const NumberSelectedText(),
                 const SizedBox(height: 20),
                 TextFormField(
                   onChanged: (value) {
@@ -170,20 +96,12 @@ class AddEditLoanPage extends HookConsumerWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                SearchResult(
-                    borrower: borrower, queryController: queryController),
+                SearchResult(queryController: queryController),
                 const SizedBox(height: 30),
-                StartDateEntry(
-                    end: end,
-                    start: start,
-                    initialDate: initialDate,
-                    evaluateEnd: evaluateEnd),
+                StartDateEntry(initialDate: initialDate),
                 const SizedBox(height: 30),
-                DateEntry(
-                  title: LoanTextConstants.endDate,
-                  controller: end,
-                  dateBefore: initialDate.value,
-                  onSelect: () {},
+                EndDateEntry(
+                  initialDate: initialDate,
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -194,27 +112,16 @@ class AddEditLoanPage extends HookConsumerWidget {
                   controller: note,
                 ),
                 const SizedBox(height: 30),
-                TextEntry(
-                  keyboardType: TextInputType.text,
-                  controller: caution,
-                  isInt: false,
-                  label: LoanTextConstants.caution,
-                  suffix: '',
-                ),
+                const CautionTextEntry(),
                 const SizedBox(height: 50),
                 AddEditButton(
                   isEdit: isEdit,
-                  borrower: borrower,
                   note: note,
-                  start: start,
-                  end: end,
-                  caution: caution,
                   onAddEdit: (p0) async {
                     if (key.currentState == null) {
                       return;
                     }
-                    if (key.currentState!.validate() &&
-                        borrower.value.id.isNotEmpty) {
+                    if (key.currentState!.validate()) {
                       p0();
                     } else {
                       displayToast(context, TypeMsg.error,

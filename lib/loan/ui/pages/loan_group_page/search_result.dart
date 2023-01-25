@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/loan/providers/borrower_provider.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
-  final ValueNotifier<SimpleUser> borrower;
   final TextEditingController queryController;
   const SearchResult(
-      {super.key, required this.borrower, required this.queryController});
+      {super.key, required this.queryController});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
+    final borrower = ref.watch(borrowerProvider);
+    final borrowerNotifier = ref.watch(borrowerProvider.notifier);
     return users.when(
         data: (u) {
           return Column(
@@ -31,7 +32,7 @@ class SearchResult extends HookConsumerWidget {
                                   e.getName(),
                                   style: TextStyle(
                                     fontSize: 13,
-                                    fontWeight: (borrower.value.id == e.id)
+                                    fontWeight: (borrower.id == e.id)
                                         ? FontWeight.bold
                                         : FontWeight.w400,
                                   ),
@@ -41,7 +42,7 @@ class SearchResult extends HookConsumerWidget {
                             ]),
                       ),
                       onTap: () {
-                        borrower.value = e;
+                        borrowerNotifier.setBorrower(e);
                         queryController.text = e.getName();
                         usersNotifier.clear();
                       }))

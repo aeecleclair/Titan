@@ -56,6 +56,7 @@ class LoanTextConstants {
   static const String no = "Non";
   static const String noAssociationsFounded = "Aucune association trouvée";
   static const String noAvailableItems = "Aucun objet disponible";
+  static const String noBorrower = "Aucun emprunteur";
   static const String noItems = "Aucun objet";
   static const String noItemSelected = "Aucun objet sélectionné";
   static const String noLoan = "Aucun prêt";
