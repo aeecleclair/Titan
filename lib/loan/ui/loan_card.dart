@@ -23,7 +23,8 @@ class LoanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shouldReturn = DateTime.now().compareTo(loan.end) > 0;
+    final shouldReturn =
+        DateTime.now().compareTo(loan.end) > 0 && !loan.returned;
     return GestureDetector(
       onTap: () {
         if (isAdmin) {
@@ -101,13 +102,15 @@ class LoanCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                        shouldReturn
-                            ? LoanTextConstants.toReturn
-                            : LoanTextConstants.onGoing,
+                        loan.returned
+                            ? LoanTextConstants.returned
+                            : shouldReturn
+                                ? LoanTextConstants.toReturn
+                                : LoanTextConstants.onGoing,
                         style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
-                            color: shouldReturn
+                            color: shouldReturn && !loan.returned
                                 ? const Color.fromARGB(255, 172, 32, 10)
                                 : Colors.grey.shade400)),
                     Text(processDate(loan.end),

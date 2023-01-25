@@ -103,8 +103,8 @@ class MainPage extends HookConsumerWidget {
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
-                                            color:
-                                                Color.fromARGB(255, 205, 205, 205)))),
+                                            color: Color.fromARGB(
+                                                255, 205, 205, 205)))),
                               ),
                               Spacer()
                             ],
@@ -156,7 +156,7 @@ class MainPage extends HookConsumerWidget {
             ])),
         if (isAdmin)
           Positioned(
-            top: 30,
+            top: 0,
             right: 30,
             child: GestureDetector(
               onTap: () {
