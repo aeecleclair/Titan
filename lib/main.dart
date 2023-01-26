@@ -45,8 +45,7 @@ class MyApp extends HookConsumerWidget {
               : const UpdatePage(),
           loading: () => const Scaffold(
                 body: Center(
-                  child: CircularProgressIndicator(
-                  ),
+                  child: CircularProgressIndicator(),
                 ),
               ),
           error: (error, stack) => const Scaffold(body: NoInternetPage())),

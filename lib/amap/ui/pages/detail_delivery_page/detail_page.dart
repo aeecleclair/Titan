@@ -26,7 +26,8 @@ class DetailDeliveryPage extends HookConsumerWidget {
             data: (data) {
               final orders = data[delivery.id];
               if (orders == null) {
-                return const Center(child: CircularProgressIndicator(
+                return const Center(
+                    child: CircularProgressIndicator(
                   color: AMAPColorConstants.greenGradient2,
                 ));
               }
@@ -35,55 +36,57 @@ class DetailDeliveryPage extends HookConsumerWidget {
                   if (data.isEmpty) {
                     return const Center(child: Text("Aucune commande"));
                   } else {
-                    return ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        return Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Container(
-                                      padding: const EdgeInsets.only(right: 20),
-                                      child: AutoSizeText(
-                                        data[index].user.getName(),
-                                        maxLines: 1,
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )),
-                                  const SizedBox(
-                                    height: 10,
+                    return Column(
+                      children: [
+                        ...data.map((e) => Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                          padding:
+                                              const EdgeInsets.only(right: 20),
+                                          child: AutoSizeText(
+                                            e.user.getName(),
+                                            maxLines: 1,
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      ...e.products.map((e) => Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5),
+                                          child: Text("- ${e.name}"))),
+                                    ],
                                   ),
-                                  ...data[index].products.map((e) => Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5),
-                                      child: Text("- ${e.name}"))),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: CommandeUI(
-                                order: data[index],
-                                onTap: () {},
-                                onEdit: () {},
-                                showButton: false,
-                              ),
-                            ),
-                          ],
-                        );
-                      },
+                                ),
+                                Expanded(
+                                  child: CommandeUI(
+                                    order: e,
+                                    onTap: () {},
+                                    onEdit: () {},
+                                    showButton: false,
+                                  ),
+                                ),
+                              ],
+                            )),
+                      ],
                     );
                   }
                 },
-                loading: () => const Center(child: CircularProgressIndicator(
+                loading: () => const Center(
+                    child: CircularProgressIndicator(
                   color: AMAPColorConstants.greenGradient2,
                 )),
                 error: (error, stack) => Text(error.toString()),
               );
             },
-            loading: () => const Center(child: CircularProgressIndicator(
+            loading: () => const Center(
+                child: CircularProgressIndicator(
               color: AMAPColorConstants.greenGradient2,
             )),
             error: (error, stack) => Text(error.toString()),
