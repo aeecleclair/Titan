@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/class/event.dart';
+import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
@@ -18,12 +19,12 @@ class MainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isEventAdmin);
     final pageNotifier = ref.watch(eventPageProvider.notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
-    final eventListNotifier = ref.watch(eventListProvider.notifier);
-    final events = ref.watch(eventListProvider);
+    final eventListNotifier = ref.watch(confirmedEventListProvider.notifier);
+    final events = ref.watch(confirmedEventListProvider);
     return Expanded(
       child: Refresher(
         onRefresh: () async {
-          await eventListNotifier.loadEventList();
+          await eventListNotifier.loadConfirmedEvent();
         },
         child: Column(
           children: [

@@ -16,6 +16,11 @@ class EventRepository extends Repository {
         (await getList(suffix: "confirmed")).map((x) => Event.fromJson(x)));
   }
 
+  Future<List<Event>> getUserEventList(String id) async {
+    return List<Event>.from(
+        (await getList(suffix: "user/$id")).map((x) => Event.fromJson(x)));
+  }
+
   Future<bool> confirmEvent(Event event, Decision value) async {
     return await update({}, event.id,
         suffix: '/reply/${value.toString().split('.')[1]}');

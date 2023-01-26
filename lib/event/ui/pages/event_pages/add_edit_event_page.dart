@@ -11,6 +11,7 @@ import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/selected_days_provider.dart';
+import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/event/ui/pages/event_pages/loaner_chip.dart';
@@ -34,7 +35,7 @@ class AddEditEventPage extends HookConsumerWidget {
     final page = ref.watch(eventPageProvider);
     final pageNotifier = ref.watch(eventPageProvider.notifier);
     final key = GlobalKey<FormState>();
-    final eventListNotifier = ref.watch(eventListProvider.notifier);
+    final eventListNotifier = ref.watch(eventEventListProvider.notifier);
     final eventType = useState(CalendarEventType.happyHour);
     final name = useTextEditingController(text: event.name);
     final organizer = useTextEditingController(text: event.organizer);
