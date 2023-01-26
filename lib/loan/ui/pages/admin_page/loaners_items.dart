@@ -34,84 +34,93 @@ class LoanersItems extends HookConsumerWidget {
       data: (items) {
         if (items[loaner] != null) {
           return items[loaner]!.when(
-            data: (data) => SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              child: Row(
-                children: [
-                  const SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () {
-                      loanNotifier.setLoan(Loan.empty());
-                      pageNotifier.setLoanPage(LoanPage.addEditItem);
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      padding: const EdgeInsets.all(12.0),
+            data: (data) {
+              if (data.isNotEmpty) {
+                data.sort((a, b) => a.name.compareTo(b.name));
+              }
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                child: Row(
+                  children: [
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () {
+                        loanNotifier.setLoan(Loan.empty());
+                        pageNotifier.setLoanPage(LoanPage.addEditItem);
+                      },
                       child: Container(
-                        width: 120,
-                        height: 160,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.shade200.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 10,
-                              offset: const Offset(3, 3),
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                        padding: const EdgeInsets.all(12.0),
+                        child: Container(
+                          width: 120,
+                          height: 160,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.shade200.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 10,
+                                offset: const Offset(3, 3),
+                              ),
+                            ],
+                          ),
+                          child: const Center(
+                            child: HeroIcon(
+                              HeroIcons.plus,
+                              size: 40.0,
+                              color: Colors.black,
                             ),
-                          ],
-                        ),
-                        child: const Center(
-                          child: HeroIcon(
-                            HeroIcons.plus,
-                            size: 40.0,
-                            color: Colors.black,
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  ...data.map((e) => ItemCard(
-                        item: e,
-                        showButtons: true,
-                        onDelete: () async {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return CustomDialogBox(
-                                    descriptions:
-                                        LoanTextConstants.deletingItem,
-                                    onYes: () {
-                                      tokenExpireWrapper(ref, () async {
-                                        final value = await itemListNotifier
-                                            .deleteItem(e, loaner.id);
-                                        if (value) {
-                                          itemListNotifier.copy().then((value) {
-                                            loanersitemsNotifier.setTData(
-                                                loaner, value);
-                                          });
-                                          displayToastWithContext(TypeMsg.msg,
-                                              LoanTextConstants.deletedItem);
-                                        } else {
-                                          displayToastWithContext(TypeMsg.error,
-                                              LoanTextConstants.deletingError);
-                                        }
-                                      });
-                                    },
-                                    title: LoanTextConstants.delete);
-                              });
-                        },
-                        onEdit: () {
-                          pageNotifier.setLoanPage(LoanPage.addEditItem);
-                          itemNotifier.setItem(e);
-                        },
-                      )),
-                  const SizedBox(width: 10),
-                ],
-              ),
-            ),
+                    ...data.map((e) => ItemCard(
+                          item: e,
+                          showButtons: true,
+                          onDelete: () async {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return CustomDialogBox(
+                                      descriptions:
+                                          LoanTextConstants.deletingItem,
+                                      onYes: () {
+                                        tokenExpireWrapper(ref, () async {
+                                          final value = await itemListNotifier
+                                              .deleteItem(e, loaner.id);
+                                          if (value) {
+                                            itemListNotifier
+                                                .copy()
+                                                .then((value) {
+                                              loanersitemsNotifier.setTData(
+                                                  loaner, value);
+                                            });
+                                            displayToastWithContext(TypeMsg.msg,
+                                                LoanTextConstants.deletedItem);
+                                          } else {
+                                            displayToastWithContext(
+                                                TypeMsg.error,
+                                                LoanTextConstants
+                                                    .deletingError);
+                                          }
+                                        });
+                                      },
+                                      title: LoanTextConstants.delete);
+                                });
+                          },
+                          onEdit: () {
+                            pageNotifier.setLoanPage(LoanPage.addEditItem);
+                            itemNotifier.setItem(e);
+                          },
+                        )),
+                    const SizedBox(width: 10),
+                  ],
+                ),
+              );
+            },
             error: (Object error, StackTrace? stackTrace) {
               return Center(child: Text('Error $error'));
             },

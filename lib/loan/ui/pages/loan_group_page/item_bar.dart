@@ -27,6 +27,9 @@ class ItemBar extends HookConsumerWidget {
     final start = ref.watch(startProvider);
     return items.when(data: (itemList) {
       if (itemList.isNotEmpty) {
+        final sortedAvailable = itemList.where((element) => element.available).toList()..sort((a, b) => a.name.compareTo(b.name));
+        final sortedUnavailable = itemList.where((element) => !element.available).toList()..sort((a, b) => a.name.compareTo(b.name));
+        itemList = sortedAvailable + sortedUnavailable;
         return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
