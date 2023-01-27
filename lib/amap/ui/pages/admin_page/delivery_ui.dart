@@ -440,7 +440,7 @@ class DeliveryUi extends HookConsumerWidget {
                                 : delivery.status == DeliveryStatus.orderable
                                     ? AMAPTextConstants.closeDelivery
                                     : delivery.status == DeliveryStatus.locked
-                                        ? AMAPTextConstants.deliverDelivery
+                                        ? AMAPTextConstants.endingDelivery
                                         : AMAPTextConstants.archiveDelivery,
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 20),
