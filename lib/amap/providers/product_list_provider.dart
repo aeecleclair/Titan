@@ -20,11 +20,11 @@ class ProductListNotifier extends ListNotifier<Product> {
     return await add(_productListRepository.createProduct, product);
   }
 
-  Future<bool> updateProduct(Product product) async {
+  Future<bool> updateProduct(Product product, Product newProduct) async {
     return await update(
         _productListRepository.updateProduct,
         (products, product) => products
-          ..[products.indexWhere((p) => p.id == product.id)] = product,
+          ..[products.indexWhere((p) => p.id == product.id)] = newProduct,
         product);
   }
 
