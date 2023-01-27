@@ -40,7 +40,7 @@ class AMAPTextConstants {
   static const String archiveDelivery = "Archiver";
   static const String archivingDelivery = "Archivage de la livraison";
   static const String category = "Catégorie";
-  static const String closeDelivery = "Verouiller";
+  static const String closeDelivery = "Verrouiller";
   static const String commandDate = "Date de la commande";
   static const String commandProducts = "Produits de la commande";
   static const String confirm = "Confirmer";
@@ -85,7 +85,7 @@ class AMAPTextConstants {
   static const String lock = "Verrouiller";
   static const String locked = "Verrouillée";
   static const String lockedDelivery = "Livraison verrouillée";
-  static const String lockedOrder = "Commande verouillée";
+  static const String lockedOrder = "Commande verrouillée";
   static const String looking = "Rechercher";
   static const String lockingDelivery = "Verrouiller la livraison ?";
   static const String myOrders = "Mes commandes";
