@@ -45,7 +45,7 @@ class ProductCard extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 17.0),
+          padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
