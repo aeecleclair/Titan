@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/providers/orderable_deliveries.dart';
 import 'package:myecl/tools/functions.dart';
