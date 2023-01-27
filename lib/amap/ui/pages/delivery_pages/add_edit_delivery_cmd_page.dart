@@ -24,7 +24,8 @@ class AddEditDeliveryPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final delivery = ref.watch(deliveryProvider);
     final isEdit = delivery.id != Delivery.empty().id;
-    final dateController = useTextEditingController(text: isEdit ? processDate(delivery.deliveryDate) : '');
+    final dateController = useTextEditingController(
+        text: isEdit ? processDate(delivery.deliveryDate) : '');
     final products = ref.watch(productList);
     final sortedProductsList = ref.watch(sortedByCategoryProductsProvider);
     final selected = ref.watch(selectedListProvider);
@@ -176,8 +177,10 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                 await tokenExpireWrapper(ref, () async {
                                   final deliveryNotifier =
                                       ref.watch(deliveryListProvider.notifier);
-                                  final value = isEdit ? await deliveryNotifier.updateDelivery(del) :
-                                      await deliveryNotifier.addDelivery(del);
+                                  final value = isEdit
+                                      ? await deliveryNotifier
+                                          .updateDelivery(del)
+                                      : await deliveryNotifier.addDelivery(del);
                                   if (value) {
                                     pageNotifier.setAmapPage(AmapPage.admin);
                                     if (isEdit) {
@@ -192,8 +195,10 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                       displayToastWithContext(TypeMsg.error,
                                           AMAPTextConstants.editingError);
                                     } else {
-                                      displayToastWithContext(TypeMsg.error,
-                                          AMAPTextConstants.addingError);
+                                      displayToastWithContext(
+                                          TypeMsg.error,
+                                          AMAPTextConstants
+                                              .alreadyExistCommand);
                                     }
                                   }
                                 });
