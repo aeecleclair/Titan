@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -7,6 +9,8 @@ import 'package:intl/intl.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/providers/cinema_page_provider.dart';
 import 'package:myecl/cinema/providers/session_list_provider.dart';
+import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
+import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/providers/the_movie_db_genre_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
@@ -29,16 +33,33 @@ class AddEditSessionPage extends HookConsumerWidget {
     final imdbUrl = useTextEditingController();
     final key = GlobalKey<FormState>();
     final sessionListNotifier = ref.watch(sessionListProvider.notifier);
+    final sessionList = ref.watch(sessionListProvider);
     final name = useTextEditingController(text: session.name);
     final duration = useTextEditingController(
         text: isEdit ? parseDurationBack(session.duration) : '');
     final genre = useTextEditingController(text: session.genre);
     final overview = useTextEditingController(text: session.overview);
-    final posterUrl = useTextEditingController(text: session.posterUrl);
     final start = useTextEditingController(
-        text: isEdit ? processDate(session.start) : '');
+        text: isEdit ? processDateWithHour(session.start) : '');
     final tagline = useTextEditingController(text: session.tagline);
-    final displayPosterUrl = useState(session.posterUrl);
+    final sessionPosterMap = ref.watch(sessionPosterMapProvider);
+    final logo = useState<String?>(null);
+    final logoFile = useState<Image?>(null);
+    final posterUrl = useTextEditingController();
+    final sessionPosterMapNotifier =
+        ref.watch(sessionPosterMapProvider.notifier);
+    final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
+
+    sessionPosterMap.whenData((value) {
+      if (value[session] != null) {
+        value[session]!.whenData((data) {
+          if (data.isNotEmpty) {
+            logoFile.value = data.first;
+          }
+        });
+      }
+    });
+
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -94,12 +115,13 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 data: (data) {
                                   name.text = data.title;
                                   overview.text = data.overview;
+                                  logo.value = data.posterUrl;
                                   posterUrl.text = data.posterUrl;
                                   genre.text = data.genres.join(', ');
                                   tagline.text = data.tagline;
                                   duration.text =
                                       parseDurationBack(data.runtime);
-                                  displayPosterUrl.value = data.posterUrl;
+                                  
                                 },
                                 loading: () {},
                                 error: (e, s) {
@@ -146,7 +168,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 30),
-                (displayPosterUrl.value.isEmpty)
+                (logo.value == null)
                     ? Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 50, horizontal: 30),
@@ -159,7 +181,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                           color: Colors.grey.shade500,
                         ),
                       )
-                    : Image.network(displayPosterUrl.value, fit: BoxFit.cover),
+                    : Image.network(logo.value!, fit: BoxFit.cover),
                 const SizedBox(height: 30),
                 TextEntry(
                   keyboardType: TextInputType.text,
@@ -307,7 +329,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                           genre: genre.text,
                           id: isEdit ? session.id : '',
                           overview: overview.text,
-                          posterUrl: posterUrl.text,
                           start: DateTime.parse(
                               processDateBackWithHour(start.text)),
                           tagline: tagline.text,
@@ -321,9 +342,44 @@ class AddEditSessionPage extends HookConsumerWidget {
                           if (isEdit) {
                             displayToastWithContext(
                                 TypeMsg.msg, CinemaTextConstants.editedSession);
+                            sessionList.when(
+                                data: (list) {
+                                  if (logo.value != null) {
+                                    sessionPosterNotifier.updateLogo(
+                                        session.id, logo.value!);
+                                    sessionPosterMapNotifier.setTData(
+                                        session,
+                                        AsyncData([
+                                          Image.file(
+                                            File(logo.value!),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ]));
+                                  }
+                                },
+                                error: (error, s) {},
+                                loading: () {});
                           } else {
                             displayToastWithContext(
                                 TypeMsg.msg, CinemaTextConstants.addedSession);
+                            sessionList.when(
+                                data: (list) {
+                                  final newPretendance = list.last;
+                                  if (logo.value != null) {
+                                    sessionPosterNotifier.updateLogo(
+                                        newPretendance.id, logo.value!);
+                                    sessionPosterMapNotifier.setTData(
+                                        newPretendance,
+                                        AsyncData([
+                                          Image.file(
+                                            File(logo.value!),
+                                            fit: BoxFit.cover,
+                                          )
+                                        ]));
+                                  }
+                                },
+                                error: (error, s) {},
+                                loading: () {});
                           }
                         } else {
                           if (isEdit) {

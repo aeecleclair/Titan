@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/cinema/providers/cinema_page_provider.dart';
+import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
+import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 
@@ -13,26 +15,73 @@ class DetailPage extends HookConsumerWidget {
     final session = ref.watch(sessionProvider);
     final page = ref.watch(cinemaPageProvider);
     final pageNotifier = ref.watch(cinemaPageProvider.notifier);
+    final sessionPosterMap = ref.watch(sessionPosterMapProvider);
+    final sessionPosterMapNotifier =
+        ref.watch(sessionPosterMapProvider.notifier);
+    final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
     final List<String> genres = session.genre.split(', ');
     return Stack(
       children: [
         Stack(
           children: [
-            Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10,
-                  spreadRadius: 7,
-                  offset: Offset(0, 5),
-                ),
-              ]),
-              child: Image.network(
-                session.posterUrl,
-                fit: BoxFit.fill,
-              ),
-            ),
+            sessionPosterMap.when(
+                data: (data) {
+                  if (data[session] != null) {
+                    return data[session]!.when(data: (data) {
+                      if (data.isNotEmpty) {
+                        return Container(
+                          width: double.infinity,
+                          decoration: const BoxDecoration(boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 10,
+                              spreadRadius: 7,
+                              offset: Offset(0, 5),
+                            ),
+                          ]),
+                          child: Image(
+                            image: data.first.image,
+                            fit: BoxFit.fill,
+                          ),
+                        );
+                      } else {
+                        sessionPosterNotifier.getLogo(session.id).then((value) {
+                          sessionPosterMapNotifier.setTData(
+                              session, AsyncData([value]));
+                        });
+                        return Container(
+                          width: double.infinity,
+                          decoration: const BoxDecoration(boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 10,
+                              spreadRadius: 7,
+                              offset: Offset(0, 5),
+                            ),
+                          ]),
+                        );
+                      }
+                    }, loading: () {
+                      return const SizedBox(
+                        width: double.infinity,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }, error: (error, stack) {
+                      return const SizedBox(
+                        width: double.infinity,
+                        child: Center(
+                          child: HeroIcon(HeroIcons.exclamationCircle),
+                        ),
+                      );
+                    });
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+                loading: () => const CircularProgressIndicator(),
+                error: (error, stack) => Text('Error $error')),
           ],
         ),
         SingleChildScrollView(

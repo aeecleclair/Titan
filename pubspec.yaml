@@ -13,6 +13,7 @@ dependencies:
   collection: ^1.16.0
   crypto: ^3.0.2
   datetime_picker_formfield: ^2.0.1
+  dotenv: ^4.0.1
   f_logs: ^2.0.1
   feedback: ^2.5.0
   fl_chart: ^0.55.2
@@ -35,6 +36,7 @@ dependencies:
   jwt_decoder: ^2.0.1
   numberpicker: ^2.1.1
   package_info_plus: ^3.0.2
+  path: ^1.8.2
   path_provider: ^2.0.11
   share_plus: ^6.3.0
   shared_preferences: ^2.0.15
