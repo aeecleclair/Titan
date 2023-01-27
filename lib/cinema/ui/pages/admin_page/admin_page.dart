@@ -50,8 +50,7 @@ class AdminPage extends HookConsumerWidget {
                                 color: Colors.grey.withOpacity(0.2),
                                 spreadRadius: 1,
                                 blurRadius: 10,
-                                offset: const Offset(
-                                    0, 5),
+                                offset: const Offset(0, 5),
                               ),
                             ],
                           ),
@@ -68,8 +67,8 @@ class AdminPage extends HookConsumerWidget {
                         sessionNotifier.setSession(data[index - 1]);
                         pageNotifier.setCinemaPage(CinemaPage.addEditSession);
                       },
-                      onDelete: () {
-                        showDialog(
+                      onDelete: () async {
+                        await showDialog(
                             context: context,
                             builder: (context) {
                               return CustomDialogBox(

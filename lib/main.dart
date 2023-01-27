@@ -1,6 +1,6 @@
-import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
@@ -12,12 +12,12 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
 
-void main() {
+void main() async {
+  await dotenv.load();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(const ProviderScope(child: BetterFeedback(
-      child: MyApp())));
+    runApp(const ProviderScope(child: MyApp()));
   });
 }
 

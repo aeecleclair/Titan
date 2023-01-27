@@ -6,9 +6,11 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
+import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
 import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ListBooking extends HookConsumerWidget {
   final List<Booking> bookings;
@@ -25,6 +27,8 @@ class ListBooking extends HookConsumerWidget {
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     final bookingListNotifier = ref.watch(bookingListProvider.notifier);
+    final confirmedBookingListNotifier =
+        ref.watch(confirmedBookingListProvider.notifier);
     final toggle = useState(false);
     if (bookings.isNotEmpty) {
       return Column(
@@ -79,8 +83,8 @@ class ListBooking extends HookConsumerWidget {
                           pageNotifier.setBookingPage(
                               BookingPage.detailBookingFromAdmin);
                         },
-                        onConfirm: () {
-                          showDialog(
+                        onConfirm: () async {
+                          await showDialog(
                               context: context,
                               builder: (context) {
                                 return CustomDialogBox(
@@ -88,13 +92,22 @@ class ListBooking extends HookConsumerWidget {
                                     descriptions:
                                         BookingTextConstants.confirmBooking,
                                     onYes: () async {
-                                      bookingListNotifier.toggleConfirmed(
-                                          e, Decision.approved);
+                                      await tokenExpireWrapper(ref, () async {
+                                        bookingListNotifier
+                                          .toggleConfirmed(
+                                                  e, Decision.approved)
+                                              .then((value) {
+                                            if (value) {
+                                              confirmedBookingListNotifier
+                                                  .addBooking(e);
+                                            }
+                                          });
+                                      });
                                     });
                               });
                         },
-                        onDecline: () {
-                          showDialog(
+                        onDecline: () async {
+                          await showDialog(
                               context: context,
                               builder: (context) {
                                 return CustomDialogBox(
@@ -102,8 +115,17 @@ class ListBooking extends HookConsumerWidget {
                                     descriptions:
                                         BookingTextConstants.declineBooking,
                                     onYes: () async {
-                                      bookingListNotifier.toggleConfirmed(
-                                          e, Decision.declined);
+                                      await tokenExpireWrapper(ref, () async {
+                                        bookingListNotifier
+                                          .toggleConfirmed(
+                                                  e, Decision.declined)
+                                              .then((value) {
+                                            if (value) {
+                                              confirmedBookingListNotifier
+                                                  .deleteBooking(e);
+                                            }
+                                          });
+                                      });
                                     });
                               });
                         },

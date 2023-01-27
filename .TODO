@@ -7,10 +7,13 @@ AMAP :
 - admin delivery nb cmd
 - connect search avec UI (search cash)
 
+Ciné: 
+
+- A1fficher date
+
 Vote : 
 
 - del par type
-- pop up qd selectionné ms pas confirmé
 
 Resa : 
 
@@ -20,7 +23,7 @@ Resa :
 TITAN :
 
 - Fix AMAP
-- animation btn (shrinking + disable) s/ tt btn avec interaction avec API
+- Try catch pr les requetesds ui (et rethrow ds provider)
 - dark mode (pr chq module)
 - cache (Hive)
 - ask help

@@ -16,6 +16,19 @@ class ConfirmedBookingListProvider extends ListNotifier<Booking> {
     return await loadList(
         () async => _bookingRepository.getConfirmedBookingList());
   }
+
+  Future<bool> addBooking(Booking booking) async {
+    return await add((b) async => b, booking);
+  }
+
+  Future<bool> deleteBooking(Booking booking) async {
+    return await delete(
+        (_) async => true,
+        (bookings, booking) =>
+            bookings..removeWhere((element) => element.id == booking.id),
+        booking.id,
+        booking);
+  }
 }
 
 final confirmedBookingListProvider = StateNotifierProvider<

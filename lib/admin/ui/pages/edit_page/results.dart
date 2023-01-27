@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/providers/group_provider.dart';
-import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/providers/simple_groups_groups_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class MemberResults extends HookConsumerWidget {
@@ -16,11 +17,14 @@ class MemberResults extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final group = ref.watch(groupProvider);
-    final pageNotifier = ref.watch(adminPageProvider.notifier);
     final groupNotifier = ref.watch(groupProvider.notifier);
     final users = ref.watch(userList);
     final simplegroupGroupsNotifier =
         ref.watch(simpleGroupsGroupsProvider.notifier);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
     return users.when(
         data: (value) {
           return Column(
@@ -39,12 +43,12 @@ class MemberResults extends HookConsumerWidget {
                           ),
                           Row(
                             children: [
-                              IconButton(
-                                  onPressed: () async {
+                              ShrinkButton(
+                                  onTap: () async {
                                     if (!group.value!.members.contains(e)) {
                                       Group newGroup = group.value!.copyWith(
                                           members: group.value!.members + [e]);
-                                      tokenExpireWrapper(ref, () async {
+                                      await tokenExpireWrapper(ref, () async {
                                         groupNotifier
                                             .addMember(newGroup, e)
                                             .then((value) {
@@ -53,23 +57,29 @@ class MemberResults extends HookConsumerWidget {
                                                 .setTData(newGroup.id,
                                                     AsyncData([newGroup]))
                                                 .then((value) {
-                                              pageNotifier
-                                                  .setAdminPage(AdminPage.edit);
-                                              displayToast(
-                                                  context,
+                                              displayToastWithContext(
                                                   TypeMsg.msg,
                                                   AdminTextConstants
                                                       .addedMember);
                                             });
                                           } else {
-                                            displayToast(context, TypeMsg.error,
+                                            displayToastWithContext(TypeMsg.error,
                                                 AdminTextConstants.addingError);
                                           }
                                         });
                                       });
                                     }
                                   },
-                                  icon: const Icon(Icons.add))
+                                  waitChild: const Center(
+                                    child: SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        color: ColorConstants.gradient1,
+                                      ),
+                                    ),
+                                  ),
+                                  child: const HeroIcon(HeroIcons.plus))
                             ],
                           ),
                         ],

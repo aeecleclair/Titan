@@ -46,7 +46,7 @@ class SignIn extends HookConsumerWidget {
                       child: Column(
                         children: [
                           const Image(
-                            image: AssetImage('assets/images/logo2.png'),
+                            image: AssetImage('assets/images/logo.png'),
                             height: 200,
                             width: 200,
                           ),

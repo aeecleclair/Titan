@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/tools/constants.dart';
@@ -47,7 +48,8 @@ class CheckItemCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 15),
-                Text(item.name,
+                AutoSizeText(item.name,
+                    maxLines: 1,
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

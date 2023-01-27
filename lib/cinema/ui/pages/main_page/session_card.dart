@@ -3,6 +3,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/providers/scroll_provider.dart';
+import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
+import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 
 class SessionCard extends HookConsumerWidget {
@@ -19,25 +21,28 @@ class SessionCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scroll = ref.watch(scrollProvider);
+    final sessionPosterMap = ref.watch(sessionPosterMapProvider);
+    final sessionPosterMapNotifier =
+        ref.watch(sessionPosterMapProvider.notifier);
+    final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
 
     double minScale = 0.8;
     double scale = 1;
-    double maxHeigth = MediaQuery.of(context).size.height - 370;
+    double maxHeigth = MediaQuery.of(context).size.height - 342;
     double height = 0;
 
-    if (index == scroll.floor()) {
+    int scrollValue = scroll.floor();
+
+    if (index == scrollValue) {
       scale = 1 - (scroll - index) * (1 - minScale);
-      height = maxHeigth * (1 - scale) / 2;
-    } else if (index == scroll.floor() + 1) {
+    } else if (index == scrollValue + 1) {
       scale = minScale + (scroll - index + 1) * (1 - minScale);
-      height = maxHeigth * (1 - scale) / 2;
-    } else if (index == scroll.floor() - 1) {
+    } else if (index == scrollValue - 1) {
       scale = minScale + (scroll - index - 1) * (1 - minScale);
-      height = maxHeigth * (1 - scale) / 2;
     } else {
       scale = minScale;
-      height = maxHeigth * (1 - minScale) / 2;
     }
+    height = maxHeigth * (1 - scale) / 2;
 
     return GestureDetector(
       onTap: onTap,
@@ -49,22 +54,74 @@ class SessionCard extends HookConsumerWidget {
             SizedBox(
               height: height,
             ),
-            Container(
-              height: maxHeigth * scale,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                image: DecorationImage(
-                    image: NetworkImage(session.posterUrl), fit: BoxFit.cover),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: const Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-              ),
-            ),
+            sessionPosterMap.when(
+                data: (data) {
+                  if (data[session] != null) {
+                    return data[session]!.when(data: (data) {
+                      if (data.isNotEmpty) {
+                        return Container(
+                          height: maxHeigth * scale,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.amber,
+                            image: DecorationImage(
+                                image: data.first.image, fit: BoxFit.cover),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        sessionPosterNotifier.getLogo(session.id).then((value) {
+                          sessionPosterMapNotifier.setTData(
+                              session, AsyncData([value]));
+                        });
+                        return Container(
+                          height: maxHeigth * scale,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    }, loading: () {
+                      return SizedBox(
+                        height: maxHeigth * scale,
+                        width: double.infinity,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }, error: (error, stack) {
+                      return SizedBox(
+                        height: maxHeigth * scale,
+                        width: double.infinity,
+                        child: const Center(
+                          child: HeroIcon(HeroIcons.exclamationCircle),
+                        ),
+                      );
+                    });
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+                loading: () => const CircularProgressIndicator(),
+                error: (error, stack) => Text('Error $error')),
             const SizedBox(
               height: 15,
             ),

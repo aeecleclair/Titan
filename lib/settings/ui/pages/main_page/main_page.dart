@@ -1,4 +1,3 @@
-import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
@@ -6,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/providers/logs_provider.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
-import 'package:myecl/settings/tools/functions.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
 import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -15,7 +13,6 @@ import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/repositories/profile_picture_repository.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
-import 'package:share_plus/share_plus.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -64,49 +61,57 @@ class MainPage extends HookConsumerWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: -60,
-                    right: -MediaQuery.of(context).size.width / 2 + 70,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(-2, -3),
+                    top: 0,
+                    left: -MediaQuery.of(context).size.width / 2 + 70,
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 125,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 10,
+                                offset: const Offset(-2, -3),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          if (me.nickname.isNotEmpty)
-                            Column(
-                              children: [
-                                const SizedBox(
-                                  height: 10,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              if (me.nickname.isNotEmpty)
+                                Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      me.nickname,
+                                      style: const TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  me.nickname,
-                                  style: const TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              Text(
+                                "${me.firstname} ${me.name}",
+                                style: const TextStyle(
+                                  fontSize: 20,
                                 ),
-                              ],
-                            ),
-                          const SizedBox(
-                            height: 3,
+                              ),
+                            ],
                           ),
-                          Text(
-                            "${me.firstname} ${me.name}",
-                            style: const TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -186,8 +191,8 @@ class MainPage extends HookConsumerWidget {
                 SettingsItem(
                   icon: HeroIcons.calendarDays,
                   onTap: () {
-                    Clipboard.setData(const ClipboardData(
-                            text: "${Repository.host}calendar/ical"))
+                    Clipboard.setData(ClipboardData(
+                            text: "${Repository.displayHost}calendar/ical"))
                         .then((value) {
                       displayToastWithContext(
                           TypeMsg.msg, SettingsTextConstants.icalCopied);
@@ -240,27 +245,27 @@ class MainPage extends HookConsumerWidget {
                 //   child: const Text(SettingsTextConstants.askHelp,
                 //       style: TextStyle(fontSize: 16, color: Colors.black)),
                 // ),
-                const SizedBox(
-                  height: 30,
-                ),
-                SettingsItem(
-                  icon: HeroIcons.bugAnt,
-                  onTap: () {
-                    BetterFeedback.of(context).show(
-                      (UserFeedback feedback) async {
-                        final screenshotFilePath =
-                            await writeImageToStorage(feedback.screenshot);
+                // const SizedBox(
+                //   height: 30,
+                // ),
+                // SettingsItem(
+                //   icon: HeroIcons.bugAnt,
+                //   onTap: () {
+                //     BetterFeedback.of(context).show(
+                //       (UserFeedback feedback) async {
+                //         final screenshotFilePath =
+                //             await writeImageToStorage(feedback.screenshot);
 
-                        await Share.shareXFiles(
-                          [XFile(screenshotFilePath)],
-                          text: feedback.text,
-                        );
-                      },
-                    );
-                  },
-                  child: const Text(SettingsTextConstants.repportBug,
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
-                ),
+                //         await Share.shareXFiles(
+                //           [XFile(screenshotFilePath)],
+                //           text: feedback.text,
+                //         );
+                //       },
+                //     );
+                //   },
+                //   child: const Text(SettingsTextConstants.repportBug,
+                //       style: TextStyle(fontSize: 16, color: Colors.black)),
+                // ),
                 const SizedBox(
                   height: 30,
                 ),

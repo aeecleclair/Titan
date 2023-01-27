@@ -124,6 +124,7 @@ class LoanCard extends StatelessWidget {
                         child: Container(
                           width: 40,
                           height: 40,
+                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(30),
@@ -134,7 +135,7 @@ class LoanCard extends StatelessWidget {
                                   offset: const Offset(2, 3))
                             ],
                           ),
-                          child: const Icon(Icons.edit, color: Colors.black),
+                          child: const HeroIcon(HeroIcons.pencil, color: Colors.black),
                         ),
                       ),
                       ShrinkButton(
@@ -159,6 +160,7 @@ class LoanCard extends StatelessWidget {
                           child: Container(
                             width: 40,
                             height: 40,
+                            padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               color: Colors.grey.shade200,
                               borderRadius: BorderRadius.circular(30),

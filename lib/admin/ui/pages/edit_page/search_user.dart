@@ -109,6 +109,7 @@ class SearchUser extends HookConsumerWidget {
                       ),
                     )),
               ),
+              if (add.value) const SizedBox(height: 10),
               if (add.value) const MemberResults(),
               if (!add.value)
                 ...g[0].members.map((x) => UserUi(
@@ -121,7 +122,7 @@ class SearchUser extends HookConsumerWidget {
                                   AdminTextConstants.removeAssociationMember,
                               title: AdminTextConstants.deleting,
                               onYes: () async {
-                                tokenExpireWrapper(ref, () async {
+                                await tokenExpireWrapper(ref, () async {
                                   Group newGroup = g[0].copyWith(
                                       members: g[0]
                                           .members
