@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
+import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/providers/sorted_by_category_products.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
@@ -21,7 +22,9 @@ class AddEditDeliveryPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final pageNotifier = ref.watch(amapPageProvider.notifier);
-    final dateController = useTextEditingController();
+    final delivery = ref.watch(deliveryProvider);
+    final isEdit = delivery.id != Delivery.empty().id;
+    final dateController = useTextEditingController(text: isEdit ? processDate(delivery.deliveryDate) : '');
     final products = ref.watch(productList);
     final sortedProductsList = ref.watch(sortedByCategoryProductsProvider);
     final selected = ref.watch(selectedListProvider);
@@ -161,7 +164,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                               if (formKey.currentState!.validate()) {
                                 final date = dateController.value.text;
                                 final del = Delivery(
-                                    id: "",
+                                    id: isEdit ? delivery.id : '',
                                     products: products
                                         .where((element) =>
                                             selected[products.indexOf(element)])
@@ -173,15 +176,25 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                 await tokenExpireWrapper(ref, () async {
                                   final deliveryNotifier =
                                       ref.watch(deliveryListProvider.notifier);
-                                  final value =
+                                  final value = isEdit ? await deliveryNotifier.updateDelivery(del) :
                                       await deliveryNotifier.addDelivery(del);
                                   if (value) {
                                     pageNotifier.setAmapPage(AmapPage.admin);
-                                    displayToastWithContext(TypeMsg.msg,
-                                        AMAPTextConstants.addedCommand);
+                                    if (isEdit) {
+                                      displayToastWithContext(TypeMsg.msg,
+                                          AMAPTextConstants.editedCommand);
+                                    } else {
+                                      displayToastWithContext(TypeMsg.msg,
+                                          AMAPTextConstants.addedCommand);
+                                    }
                                   } else {
-                                    displayToastWithContext(TypeMsg.error,
-                                        AMAPTextConstants.alreadyExistCommand);
+                                    if (isEdit) {
+                                      displayToastWithContext(TypeMsg.error,
+                                          AMAPTextConstants.editingError);
+                                    } else {
+                                      displayToastWithContext(TypeMsg.error,
+                                          AMAPTextConstants.addingError);
+                                    }
                                   }
                                 });
                               } else {
