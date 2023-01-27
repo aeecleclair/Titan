@@ -28,22 +28,21 @@ class SessionCard extends HookConsumerWidget {
 
     double minScale = 0.8;
     double scale = 1;
-    double maxHeigth = MediaQuery.of(context).size.height - 370;
+    double maxHeigth = MediaQuery.of(context).size.height - 270;
     double height = 0;
 
-    if (index == scroll.floor()) {
+    int scrollValue = scroll.floor();
+
+    if (index == scrollValue) {
       scale = 1 - (scroll - index) * (1 - minScale);
-      height = maxHeigth * (1 - scale) / 2;
-    } else if (index == scroll.floor() + 1) {
+    } else if (index == scrollValue + 1) {
       scale = minScale + (scroll - index + 1) * (1 - minScale);
-      height = maxHeigth * (1 - scale) / 2;
-    } else if (index == scroll.floor() - 1) {
+    } else if (index == scrollValue - 1) {
       scale = minScale + (scroll - index - 1) * (1 - minScale);
-      height = maxHeigth * (1 - scale) / 2;
     } else {
       scale = minScale;
-      height = maxHeigth * (1 - minScale) / 2;
     }
+    height = maxHeigth * (1 - scale) / 2;
 
     return GestureDetector(
       onTap: onTap,
