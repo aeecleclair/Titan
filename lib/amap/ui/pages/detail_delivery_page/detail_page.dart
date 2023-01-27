@@ -64,13 +64,11 @@ class DetailDeliveryPage extends HookConsumerWidget {
                                     ],
                                   ),
                                 ),
-                                Expanded(
-                                  child: CommandeUI(
-                                    order: e,
-                                    onTap: () {},
-                                    onEdit: () {},
-                                    showButton: false,
-                                  ),
+                                CommandeUI(
+                                  order: e,
+                                  onTap: () {},
+                                  onEdit: () {},
+                                  showButton: false,
                                 ),
                               ],
                             )),

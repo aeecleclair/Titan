@@ -181,31 +181,33 @@ class CommandeUI extends HookConsumerWidget {
                                       })));
                             },
                             waitChild: Container(
-                              height: 40,
-                              width: 40,
-                              padding: const EdgeInsets.all(7),
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    AMAPColorConstants.redGradient1,
-                                    AMAPColorConstants.redGradient2,
+                                height: 40,
+                                width: 40,
+                                padding: const EdgeInsets.all(7),
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      AMAPColorConstants.redGradient1,
+                                      AMAPColorConstants.redGradient2,
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: AMAPColorConstants.redGradient2
+                                            .withOpacity(0.5),
+                                        blurRadius: 10,
+                                        offset: const Offset(2, 3))
                                   ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
                                 ),
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: AMAPColorConstants.redGradient2
-                                          .withOpacity(0.5),
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 3))
-                                ],
-                              ),
-                              child: const Center(child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                              ),)
-                            ),
+                                child: const Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white),
+                                  ),
+                                )),
                             child: Container(
                               height: 40,
                               width: 40,
