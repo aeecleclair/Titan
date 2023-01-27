@@ -3,7 +3,7 @@ import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 
-final deliveryProvider = Provider((ref) {
+final deliveryProvider = Provider<Delivery>((ref) {
   final deliveryId = ref.watch(deliveryIdProvider);
   final deliveryList = ref.watch(deliveryListProvider);
   return deliveryList.when(

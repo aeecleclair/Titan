@@ -168,22 +168,17 @@ class MainPage extends HookConsumerWidget {
                         pageNotifier.setAmapPage(AmapPage.detailPage);
                       },
                       addOrder: () {
-                        if (orderableDeliveriesIds.contains(delivery.id)) {
-                          solde.whenData(
-                            (s) {
-                              if (s.balance > 0) {
-                                orderNotifier.setOrder(Order.empty());
-                                animation.forward();
-                                showPanel.value = true;
-                              } else {
-                                shakingAnimation.forward(from: 0);
-                              }
-                            },
-                          );
-                        } else {
-                          displayToastWithoutContext(TypeMsg.error,
-                              AMAPTextConstants.noOpennedDelivery);
-                        }
+                        solde.whenData(
+                          (s) {
+                            if (s.balance > 0) {
+                              orderNotifier.setOrder(Order.empty());
+                              animation.forward();
+                              showPanel.value = true;
+                            } else {
+                              shakingAnimation.forward(from: 0);
+                            }
+                          },
+                        );
                       },
                     ),
                     const SizedBox(
@@ -196,12 +191,14 @@ class MainPage extends HookConsumerWidget {
                 ),
                 AnimatedBuilder(
                   builder: (context, child) {
-                    return Transform.translate(
-                        offset: Offset(
-                            0,
-                            (1 - popAnimation.value) *
-                                (MediaQuery.of(context).size.height)),
-                        child: child);
+                    return Opacity(
+                        opacity: popAnimation.value,
+                        child: Transform.translate(
+                            offset: Offset(
+                                0,
+                                (1 - popAnimation.value) *
+                                    (MediaQuery.of(context).size.height)),
+                            child: child));
                   },
                   animation: animation,
                   child: Container(
@@ -377,7 +374,7 @@ class MainPage extends HookConsumerWidget {
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ],

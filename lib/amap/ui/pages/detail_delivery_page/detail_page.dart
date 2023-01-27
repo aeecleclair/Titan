@@ -112,7 +112,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                                               const EdgeInsets.only(right: 20),
                                           child: AutoSizeText(
                                             e.user.getName(),
-                                            maxLines: 1,
+                                            maxLines: 2,
                                             style: const TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
