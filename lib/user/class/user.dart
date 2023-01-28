@@ -12,6 +12,7 @@ class User {
     required this.birthday,
     required this.promo,
     required this.floor,
+    required this.phone,
     required this.createdOn,
     required this.groups,
   });
@@ -23,6 +24,7 @@ class User {
   late final String birthday;
   late final int promo;
   late final String floor;
+  late final String? phone;
   late final String createdOn;
   late final List<SimpleGroup> groups;
 
@@ -35,6 +37,7 @@ class User {
     birthday = json['birthday'];
     promo = json['promo'];
     floor = json['floor'];
+    phone = json['phone'] != "" ? json['phone'] : null;
     createdOn = json['created_on'];
     groups =
         List.from(json['groups']).map((e) => SimpleGroup.fromJson(e)).toList();
@@ -50,6 +53,7 @@ class User {
     data['birthday'] = birthday;
     data['promo'] = promo;
     data['floor'] = floor;
+    data['phone'] = phone;
     data['created_on'] = createdOn;
     data['groups'] = groups.map((e) => e.toJson()).toList();
     return data;
@@ -64,6 +68,7 @@ class User {
     birthday = DateTime.now().toIso8601String().split("T")[0];
     promo = 22;
     floor = 'W1';
+    phone = null;
     createdOn = '';
     groups = [];
   }
@@ -77,6 +82,7 @@ class User {
     String? birthday,
     int? promo,
     String? floor,
+    String? phone,
     String? createdOn,
     List<SimpleGroup>? groups,
   }) {
@@ -89,6 +95,7 @@ class User {
       birthday: birthday ?? this.birthday,
       promo: promo ?? this.promo,
       floor: floor ?? this.floor,
+      phone: phone ?? this.phone,
       createdOn: createdOn ?? this.createdOn,
       groups: groups ?? this.groups,
     );
@@ -101,6 +108,6 @@ class User {
 
   @override
   String toString() {
-    return 'User{name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, birthday: $birthday, promo: $promo, floor: $floor, createdOn: $createdOn, groups: $groups}';
+    return "User {name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, birthday: $birthday, promo: $promo, floor: $floor, phone: $phone, createdOn: $createdOn, groups: $groups}";
   }
 }
