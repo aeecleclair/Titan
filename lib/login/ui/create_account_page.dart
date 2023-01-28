@@ -228,7 +228,6 @@ class CreateAccountPage extends HookConsumerWidget {
           if (name.text.isNotEmpty &&
               firstname.text.isNotEmpty &&
               birthday.text.isNotEmpty &&
-              phone.text.isNotEmpty &&
               floor.text.isNotEmpty &&
               password.text.isNotEmpty &&
               activationCode.text.isNotEmpty) {
@@ -237,7 +236,7 @@ class CreateAccountPage extends HookConsumerWidget {
               firstname: firstname.text,
               nickname: nickname.text.isEmpty ? null : nickname.text,
               birthday: DateTime.parse(processDateBack(birthday.text)),
-              phone: phone.text,
+              phone: phone.text.isEmpty ? null : phone.text,
               floor: floor.text,
               activationToken: activationCode.text,
               password: password.text,

@@ -6,7 +6,7 @@ class CreateAccount {
   late String? nickname;
   late String password;
   late DateTime birthday;
-  late String phone;
+  late String? phone;
   late String floor;
   late String activationToken;
 
@@ -27,7 +27,7 @@ class CreateAccount {
     nickname = json['nickname'];
     password = json['password'];
     birthday = DateTime.parse(json['birthday']);
-    phone = json['phone'];
+    phone = json['phone'] != "" ? json['phone'] : null;
     floor = json['floor'];
     activationToken = json['activation_token'];
   }
