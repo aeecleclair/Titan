@@ -493,8 +493,7 @@ class EditUserPage extends HookConsumerWidget {
           );
         });
 
-    dateController.text = picked == null
-        ? me.birthday
-        : processDatePrint(DateFormat('dd/MM/yyyy').format(picked));
+    dateController.text = processDatePrint(
+        picked == null ? me.birthday : DateFormat('dd/MM/yyyy').format(picked));
   }
 }
