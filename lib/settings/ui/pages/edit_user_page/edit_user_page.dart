@@ -30,7 +30,9 @@ class EditUserPage extends HookConsumerWidget {
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
     final dateController =
         useTextEditingController(text: processDatePrint(user.birthday));
-    final nickNameController = useTextEditingController(text: user.nickname ?? '');
+    final nickNameController =
+        useTextEditingController(text: user.nickname ?? '');
+    final phoneController = useTextEditingController(text: user.phone ?? '');
     final floorController =
         useTextEditingController(text: user.floor.toString());
 
@@ -269,6 +271,11 @@ class EditUserPage extends HookConsumerWidget {
                     keyboardType: TextInputType.text,
                     controller: nickNameController),
                 const SizedBox(height: 50),
+                UserFieldModifier(
+                    label: SettingsTextConstants.phone,
+                    keyboardType: TextInputType.text,
+                    controller: phoneController),
+                const SizedBox(height: 50),
                 Row(children: [
                   SizedBox(
                     width: 120,
@@ -414,6 +421,9 @@ class EditUserPage extends HookConsumerWidget {
                         nickname: nickNameController.value.text.isEmpty
                             ? null
                             : nickNameController.value.text,
+                        phone: phoneController.value.text.isEmpty
+                            ? null
+                            : phoneController.value.text,
                         floor: floorController.value.text,
                       ));
                       if (value) {

@@ -49,6 +49,7 @@ class SettingsTextConstants {
       "Les mots de passe ne correspondent pas";
   static const String personalData = "Données personnelles";
   static const String personalisation = "Personnalisation";
+  static const String phone = "Téléphone";
   static const String profilePicture = "Photo de profil";
   static const String promo = "Promotion";
   static const String repportBug = "Signaler un bug";
