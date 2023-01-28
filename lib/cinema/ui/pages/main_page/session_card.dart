@@ -64,7 +64,6 @@ class SessionCard extends HookConsumerWidget {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            color: Colors.amber,
                             image: DecorationImage(
                                 image: data.first.image, fit: BoxFit.cover),
                             boxShadow: [

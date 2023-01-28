@@ -4,6 +4,7 @@ import 'package:myecl/loan/tools/constants.dart';
 class TextEntry extends StatelessWidget {
   final String label, suffix;
   final bool isInt;
+  final bool canBeEmpty;
   final TextEditingController controller;
   final TextInputType keyboardType;
   const TextEntry(
@@ -12,7 +13,8 @@ class TextEntry extends StatelessWidget {
       required this.suffix,
       required this.isInt,
       required this.controller,
-      required this.keyboardType})
+      required this.keyboardType,
+      this.canBeEmpty = false})
       : super(key: key);
 
   @override
@@ -39,15 +41,17 @@ class TextEntry extends StatelessWidget {
         ),
       ),
       validator: (value) {
-        if (value == null) {
-          return LoanTextConstants.noValue;
-        } else if (value.isEmpty) {
-          return LoanTextConstants.noValue;
-        } else if (isInt) {
-          if (int.tryParse(value) == null) {
-            return LoanTextConstants.invalidNumber;
-          } else if (int.parse(value) < 0) {
-            return LoanTextConstants.positiveNumber;
+        if (!canBeEmpty) {
+          if (value == null) {
+            return LoanTextConstants.noValue;
+          } else if (value.isEmpty) {
+            return LoanTextConstants.noValue;
+          } else if (isInt) {
+            if (int.tryParse(value) == null) {
+              return LoanTextConstants.invalidNumber;
+            } else if (int.parse(value) < 0) {
+              return LoanTextConstants.positiveNumber;
+            }
           }
         }
         return null;
