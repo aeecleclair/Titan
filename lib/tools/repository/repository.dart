@@ -139,7 +139,6 @@ abstract class Repository {
 
   /// PATCH ext/id/suffix
   Future<bool> update(dynamic t, String tId, {String suffix = ""}) async {
-    print(json.encode(t));
     final response = await http.patch(Uri.parse(host + ext + tId + suffix),
         headers: headers, body: json.encode(t));
     if (response.statusCode == 204 || response.statusCode == 200) {
