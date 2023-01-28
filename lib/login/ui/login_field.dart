@@ -72,6 +72,10 @@ class CreateAccountField extends HookConsumerWidget {
             decoration: (keyboardType == TextInputType.visiblePassword)
                 ? InputDecoration(
                     hintText: hint,
+                    hintStyle: TextStyle(
+                        color: Colors.white.withOpacity(0.5),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
                     suffixIcon: IconButton(
                       icon: Icon(
                         hidePassword.value
@@ -97,6 +101,10 @@ class CreateAccountField extends HookConsumerWidget {
                     errorStyle: const TextStyle(color: Colors.white))
                 : InputDecoration(
                     hintText: hint,
+                    hintStyle: TextStyle(
+                        color: Colors.white.withOpacity(0.5),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
                     enabledBorder: const UnderlineInputBorder(
                         borderSide:
                             BorderSide(color: ColorConstants.background2)),

@@ -54,6 +54,7 @@ class CreateAccountPage extends HookConsumerWidget {
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
     ];
 
     List<Widget> steps = [
@@ -102,6 +103,8 @@ class CreateAccountPage extends HookConsumerWidget {
         currentPage: currentPage,
         formKey: formKeys[4],
         keyboardType: TextInputType.name,
+        canBeEmpty: true,
+        hint: LoginTextConstants.canBeEmpty,
       ),
       Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         const SizedBox(
@@ -167,6 +170,8 @@ class CreateAccountPage extends HookConsumerWidget {
         formKey: formKeys[7],
         keyboardType: TextInputType.phone,
         autofillHints: const [AutofillHints.telephoneNumber],
+        canBeEmpty: true,
+        hint: LoginTextConstants.canBeEmpty,
       ),
       Column(
         mainAxisAlignment: MainAxisAlignment.start,

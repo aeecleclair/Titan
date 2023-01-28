@@ -3,6 +3,7 @@ class LoginTextConstants {
   static const String accountNotActivated = 'Compte non activé';
   static const String activationCode = 'Code d\'activation';
   static const String birthday = 'Date de naissance';
+  static const String canBeEmpty = 'Ce champ peut être vide';
   static const String create = 'Créer';
   static const String createAccount = 'Créer un compte';
   static const String createAccountTitle = 'Créer un\ncompte';
