@@ -3,7 +3,7 @@ import 'package:myecl/tools/functions.dart';
 class CreateAccount {
   late String name;
   late String firstname;
-  late String nickname;
+  late String? nickname;
   late String password;
   late DateTime birthday;
   late String phone;
@@ -66,5 +66,10 @@ class CreateAccount {
       floor: floor ?? this.floor,
       activationToken: activationToken ?? this.activationToken,
     );
+  }
+
+  @override
+  String toString() {
+    return "CreateAccount {name: $name, firstname: $firstname, nickname: $nickname, password: $password, birthday: $birthday, phone: $phone, floor: $floor, activationToken: $activationToken}";
   }
 }

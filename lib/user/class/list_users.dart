@@ -9,13 +9,14 @@ class SimpleUser {
   });
   late final String name;
   late final String firstname;
-  late final String nickname;
+  late final String? nickname;
   late final String id;
 
   SimpleUser.fromJson(Map<String, dynamic> json) {
     name = capitaliseAll(json['name']);
     firstname = capitaliseAll(json['firstname']);
-    nickname = capitaliseAll(json['nickname'] ?? "");
+    nickname =
+        json['nickname'] != "" ? capitaliseAll(json['nickname']) : null;
     id = json['id'];
   }
 
@@ -31,14 +32,19 @@ class SimpleUser {
   SimpleUser.empty()
       : name = '',
         firstname = '',
-        nickname = '',
+        nickname = null,
         id = '';
 
   String getName() {
-    if (nickname.isNotEmpty && !["-", "/", " "].contains(nickname)) {
+    if (nickname != null) {
       return '$nickname ($firstname $name)';
     } else {
       return '$firstname $name';
     }
+  }
+
+  @override
+  String toString() {
+    return "SimpleUser {name: $name, firstname: $firstname, nickname: $nickname, id: $id}";
   }
 }

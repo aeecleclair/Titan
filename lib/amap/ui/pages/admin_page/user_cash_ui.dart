@@ -97,9 +97,9 @@ class UserCashUi extends HookConsumerWidget {
                               children: [
                                 const SizedBox(height: 10),
                                 AutoSizeText(
-                                    cash.user.nickname.isEmpty
-                                        ? cash.user.firstname
-                                        : cash.user.nickname,
+                                    cash.user.nickname != null
+                                        ? cash.user.nickname!
+                                        : cash.user.firstname,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
@@ -109,7 +109,7 @@ class UserCashUi extends HookConsumerWidget {
                                             223, 244, 255, 183))),
                                 const SizedBox(height: 2),
                                 AutoSizeText(
-                                    cash.user.nickname.isNotEmpty
+                                    cash.user.nickname != null
                                         ? '${cash.user.firstname} ${cash.user.name}'
                                         : cash.user.name,
                                     maxLines: 1,

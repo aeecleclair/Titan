@@ -84,26 +84,29 @@ class MainPage extends HookConsumerWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              if (me.nickname.isNotEmpty)
-                                Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 8,
+                              Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    me.nickname != null
+                                        ? me.nickname!
+                                        : me.firstname,
+                                    style: const TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Text(
-                                      me.nickname,
-                                      style: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
+                              ),
                               const SizedBox(
                                 height: 3,
                               ),
                               Text(
-                                "${me.firstname} ${me.name}",
+                                me.nickname != null
+                                    ? "${me.firstname} ${me.name}"
+                                    : me.name,
                                 style: const TextStyle(
                                   fontSize: 20,
                                 ),

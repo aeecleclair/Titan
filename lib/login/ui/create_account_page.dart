@@ -28,7 +28,7 @@ class CreateAccountPage extends HookConsumerWidget {
     final name = useTextEditingController();
     final password = useTextEditingController();
     final firstname = useTextEditingController();
-    final username = useTextEditingController();
+    final nickname = useTextEditingController();
     final birthday = useTextEditingController();
     final phone = useTextEditingController();
     final lastIndex = useState(0);
@@ -95,8 +95,8 @@ class CreateAccountPage extends HookConsumerWidget {
         autofillHints: const [AutofillHints.givenName],
       ),
       CreateAccountField(
-        controller: username,
-        label: LoginTextConstants.username,
+        controller: nickname,
+        label: LoginTextConstants.nickname,
         index: 5,
         pageController: pageController,
         currentPage: currentPage,
@@ -227,7 +227,6 @@ class CreateAccountPage extends HookConsumerWidget {
         onPressed: () async {
           if (name.text.isNotEmpty &&
               firstname.text.isNotEmpty &&
-              username.text.isNotEmpty &&
               birthday.text.isNotEmpty &&
               phone.text.isNotEmpty &&
               floor.text.isNotEmpty &&
@@ -236,7 +235,7 @@ class CreateAccountPage extends HookConsumerWidget {
             CreateAccount finalcreateAccount = CreateAccount(
               name: name.text,
               firstname: firstname.text,
-              nickname: username.text,
+              nickname: nickname.text.isEmpty ? null : nickname.text,
               birthday: DateTime.parse(processDateBack(birthday.text)),
               phone: phone.text,
               floor: floor.text,

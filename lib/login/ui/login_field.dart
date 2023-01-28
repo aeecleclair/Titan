@@ -14,6 +14,7 @@ class CreateAccountField extends HookConsumerWidget {
   final List<String> autofillHints;
   final String hint;
   final GlobalKey<FormState> formKey;
+  final bool canBeEmpty;
   const CreateAccountField({
     super.key,
     required this.controller,
@@ -25,6 +26,7 @@ class CreateAccountField extends HookConsumerWidget {
     this.keyboardType = TextInputType.text,
     this.autofillHints = const [],
     this.hint = '',
+    this.canBeEmpty = false,
   });
 
   @override
@@ -108,7 +110,7 @@ class CreateAccountField extends HookConsumerWidget {
                     )),
                     errorStyle: const TextStyle(color: Colors.white)),
             validator: (value) {
-              if (value == null || value.isEmpty) {
+              if (!canBeEmpty && (value == null || value.isEmpty)) {
                 return LoginTextConstants.emptyFieldError;
               }
               return null;

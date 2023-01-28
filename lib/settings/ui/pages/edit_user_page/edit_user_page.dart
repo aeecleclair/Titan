@@ -30,9 +30,7 @@ class EditUserPage extends HookConsumerWidget {
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
     final dateController =
         useTextEditingController(text: processDatePrint(user.birthday));
-    final firstNameController = useTextEditingController(text: user.firstname);
-    final nameController = useTextEditingController(text: user.name);
-    final nickNameController = useTextEditingController(text: user.nickname);
+    final nickNameController = useTextEditingController(text: user.nickname ?? '');
     final floorController =
         useTextEditingController(text: user.floor.toString());
 
@@ -265,16 +263,6 @@ class EditUserPage extends HookConsumerWidget {
                     child: Text(SettingsTextConstants.errorProfilePicture),
                   );
                 }),
-                // const SizedBox(height: 50),
-                // UserFieldModifier(
-                //     label: SettingsTextConstants.firstname,
-                //     keyboardType: TextInputType.text,
-                //     controller: firstNameController),
-                // const SizedBox(height: 50),
-                // UserFieldModifier(
-                //     label: SettingsTextConstants.name,
-                //     keyboardType: TextInputType.text,
-                //     controller: nameController),
                 const SizedBox(height: 50),
                 UserFieldModifier(
                     label: SettingsTextConstants.nickname,
@@ -423,9 +411,9 @@ class EditUserPage extends HookConsumerWidget {
                       final value =
                           await asyncUserNotifier.updateMe(user.copyWith(
                         birthday: processDateBack(dateController.value.text),
-                        firstname: firstNameController.value.text,
-                        name: nameController.value.text,
-                        nickname: nickNameController.value.text,
+                        nickname: nickNameController.value.text.isEmpty
+                            ? null
+                            : nickNameController.value.text,
                         floor: floorController.value.text,
                       ));
                       if (value) {

@@ -17,7 +17,7 @@ class User {
   });
   late final String name;
   late final String firstname;
-  late final String nickname;
+  late final String? nickname;
   late final String id;
   late final String email;
   late final String birthday;
@@ -29,7 +29,7 @@ class User {
   User.fromJson(Map<String, dynamic> json) {
     name = capitaliseAll(json['name']);
     firstname = capitaliseAll(json['firstname']);
-    nickname = capitaliseAll(json['nickname'] ?? "");
+    nickname = json['nickname'] != "" ? capitaliseAll(json['nickname']) : null;
     id = json['id'];
     email = json['email'];
     birthday = json['birthday'];
@@ -58,7 +58,7 @@ class User {
   User.empty() {
     name = 'Nom';
     firstname = 'Prénom';
-    nickname = 'Surnom';
+    nickname = null;
     id = '';
     email = 'empty@ecl.ec-lyon.fr';
     birthday = DateTime.now().toIso8601String().split("T")[0];
@@ -97,5 +97,10 @@ class User {
   SimpleUser toSimpleUser() {
     return SimpleUser(
         name: name, firstname: firstname, nickname: nickname, id: id);
+  }
+
+  @override
+  String toString() {
+    return 'User{name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, birthday: $birthday, promo: $promo, floor: $floor, createdOn: $createdOn, groups: $groups}';
   }
 }
