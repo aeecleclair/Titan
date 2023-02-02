@@ -290,14 +290,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                   controller: tagline,
                   canBeEmpty: true,
                 ),
-                const SizedBox(height: 30),
-                TextEntry(
-                  keyboardType: TextInputType.text,
-                  label: CinemaTextConstants.tagline,
-                  suffix: '',
-                  isInt: false,
-                  controller: tagline,
-                ),
                 const SizedBox(height: 50),
                 ShrinkButton(
                   waitChild: Container(
