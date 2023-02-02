@@ -37,11 +37,11 @@ class AddEditSessionPage extends HookConsumerWidget {
     final name = useTextEditingController(text: session.name);
     final duration = useTextEditingController(
         text: isEdit ? parseDurationBack(session.duration) : '');
-    final genre = useTextEditingController(text: session.genre);
-    final overview = useTextEditingController(text: session.overview);
+    final genre = useTextEditingController(text: session.genre ?? '');
+    final overview = useTextEditingController(text: session.overview ?? '');
     final start = useTextEditingController(
         text: isEdit ? processDateWithHour(session.start) : '');
-    final tagline = useTextEditingController(text: session.tagline);
+    final tagline = useTextEditingController(text: session.tagline ?? '');
     final sessionPosterMap = ref.watch(sessionPosterMapProvider);
     final logo = useState<String?>(null);
     final logoFile = useState<Image?>(null);
@@ -121,7 +121,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                                   tagline.text = data.tagline;
                                   duration.text =
                                       parseDurationBack(data.runtime);
-                                  
                                 },
                                 loading: () {},
                                 error: (e, s) {
@@ -271,6 +270,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   suffix: '',
                   isInt: false,
                   controller: genre,
+                  canBeEmpty: true,
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -279,6 +279,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   suffix: '',
                   isInt: false,
                   controller: overview,
+                  canBeEmpty: true,
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -287,6 +288,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   suffix: '',
                   isInt: false,
                   controller: tagline,
+                  canBeEmpty: true,
                 ),
                 const SizedBox(height: 50),
                 ShrinkButton(
@@ -326,12 +328,13 @@ class AddEditSessionPage extends HookConsumerWidget {
                         Session newSession = Session(
                           name: name.text,
                           duration: parseDuration(duration.text),
-                          genre: genre.text,
+                          genre: genre.text.isEmpty ? null : genre.text,
                           id: isEdit ? session.id : '',
-                          overview: overview.text,
+                          overview:
+                              overview.text.isEmpty ? null : overview.text,
                           start: DateTime.parse(
                               processDateBackWithHour(start.text)),
-                          tagline: tagline.text,
+                          tagline: tagline.text.isEmpty ? null : tagline.text,
                         );
                         final value = isEdit
                             ? await sessionListNotifier

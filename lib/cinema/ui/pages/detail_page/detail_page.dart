@@ -19,7 +19,9 @@ class DetailPage extends HookConsumerWidget {
     final sessionPosterMapNotifier =
         ref.watch(sessionPosterMapProvider.notifier);
     final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
-    final List<String> genres = session.genre.split(', ');
+    final List<String> genres = session.genre != null
+        ? session.genre!.split(',').map((e) => e.trim()).toList()
+        : [];
     return Stack(
       children: [
         Stack(
@@ -250,7 +252,9 @@ class DetailPage extends HookConsumerWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: Text(
-                        session.overview,
+                        session.overview == null
+                            ? session.overview!
+                            : 'No overview available',
                         textAlign: TextAlign.left,
                         style: const TextStyle(
                           fontSize: 15,

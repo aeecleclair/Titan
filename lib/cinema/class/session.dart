@@ -5,9 +5,9 @@ class Session {
   late final String name;
   late final DateTime start;
   late final int duration;
-  late final String overview;
-  late final String genre;
-  late final String tagline;
+  late final String? overview;
+  late final String? genre;
+  late final String? tagline;
 
   Session(
       {required this.id,
