@@ -45,7 +45,7 @@ class ItemCard extends StatelessWidget {
             children: [
               const SizedBox(height: 15),
               AutoSizeText(item.name,
-                  maxLines: 2,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                       fontSize: 18,
