@@ -9,6 +9,7 @@ import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:myecl/auth/providers/is_connected_provider.dart';
 import 'package:myecl/auth/repository/openid_repository.dart';
+import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
@@ -16,12 +17,12 @@ import 'package:universal_html/html.dart' as html;
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
         (ref) {
-  OpenIdTokenProvider oauth2TokenRepository = OpenIdTokenProvider();
+  OpenIdTokenProvider openIdTokenProvider = OpenIdTokenProvider();
   final isConnected = ref.watch(isConnectedProvider);
   if (isConnected) {
-    oauth2TokenRepository.getTokenFromStorage();
+    openIdTokenProvider.getTokenFromStorage();
   }
-  return oauth2TokenRepository;
+  return openIdTokenProvider;
 });
 
 class IsLoggedInProvider extends StateNotifier<bool> {
@@ -47,6 +48,7 @@ class IsLoggedInProvider extends StateNotifier<bool> {
 final isLoggedInProvider =
     StateNotifierProvider<IsLoggedInProvider, bool>((ref) {
   final IsLoggedInProvider isLoggedInProvider = IsLoggedInProvider(false);
+
   final isConnected = ref.watch(isConnectedProvider);
   final authToken = ref.watch(authTokenProvider);
   if (isConnected) {
@@ -55,7 +57,8 @@ final isLoggedInProvider =
   return isLoggedInProvider;
 });
 
-final loadingrovider = Provider((ref) {
+final loadingrovider = FutureProvider<bool>((ref) {
+  final cacheManager = CacheManager();
   return ref.watch(authTokenProvider).when(
     data: (tokens) {
       return tokens["token"] != "" && ref.watch(isLoggedInProvider);
@@ -63,24 +66,27 @@ final loadingrovider = Provider((ref) {
     error: (e, s) {
       return false;
     },
-    loading: () {
-      return true;
+    loading: () async {
+      return await cacheManager.readCache("id") == "";
     },
   );
 });
 
-final idProvider = Provider((ref) {
+final idProvider = FutureProvider<String>((ref) {
+  final cacheManager = CacheManager();
   return ref.watch(authTokenProvider).when(
     data: (tokens) {
-      return tokens["token"] == ""
-          ? null
+      final id = tokens["token"] == ""
+          ? ""
           : JwtDecoder.decode(tokens["token"] as String)["sub"];
+      cacheManager.writeCache("id", id);
+      return id;
     },
     error: (e, s) {
-      return null;
+      return "";
     },
-    loading: () {
-      return null;
+    loading: () async {
+      return await cacheManager.readCache("id");
     },
   );
 });

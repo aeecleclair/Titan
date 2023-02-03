@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:f_logs/f_logs.dart';
 
@@ -15,6 +18,7 @@ abstract class Repository {
     "Content-Type": "application/json; charset=UTF-8",
     "Accept": "application/json",
   };
+  final cacheManager = CacheManager();
   LogsConfig config = FLog.getDefaultConfigurations()
     ..isDevelopmentDebuggingEnabled = true
     ..timestampFormat = TimestampFormat.TIME_FORMAT_24_FULL
@@ -39,25 +43,105 @@ abstract class Repository {
 
   /// GET ext/suffix
   Future<List> getList({String suffix = ""}) async {
-    final response =
-        await http.get(Uri.parse(host + ext + suffix), headers: headers);
-    if (response.statusCode == 200) {
-      try {
-        String toDecode = response.body;
-        if (host == displayHost) {
-          toDecode = utf8.decode(response.body.runes.toList());
+    try {
+      final response =
+          await http.get(Uri.parse(host + ext + suffix), headers: headers);
+      if (response.statusCode == 200) {
+        try {
+          String toDecode = response.body;
+          if (host == displayHost) {
+            toDecode = utf8.decode(response.body.runes.toList());
+          }
+          cacheManager.writeCache(ext + suffix, toDecode);
+          return jsonDecode(toDecode);
+        } catch (e) {
+          FLog.error(
+              text: "GET ${ext + suffix}\nError while decoding response",
+              exception: e);
+          cacheManager.deleteCache(ext + suffix);
+          return [];
         }
+      } else if (response.statusCode == 403) {
+        FLog.error(
+            text:
+                "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+        try {
+          String toDecode = response.body;
+          if (host == displayHost) {
+            toDecode = utf8.decode(response.body.runes.toList());
+          }
+          final decoded = jsonDecode(toDecode);
+          if (decoded["detail"] == expiredTokenDetail) {
+            throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+          } else {
+            throw AppException(ErrorType.notFound, decoded["detail"]);
+          }
+        } catch (e) {
+          FLog.error(
+              text: "GET ${ext + suffix}\nError while decoding response",
+              exception: e);
+          throw AppException(ErrorType.notFound, response.body);
+        }
+      } else {
+        FLog.error(
+            text:
+                "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+        throw AppException(ErrorType.notFound, response.body);
+      }
+    } on TimeoutException {
+      try {
+        final toDecode = await cacheManager.readCache(ext + suffix);
         return jsonDecode(toDecode);
       } catch (e) {
         FLog.error(
-            text: "GET ${ext + suffix}\nError while decoding response",
+            text:
+                "GET ${ext + suffix}\nError while decoding response from cache",
             exception: e);
+        cacheManager.deleteCache(ext + suffix);
         return [];
       }
-    } else if (response.statusCode == 403) {
-      FLog.error(
-          text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+    } on SocketException {
       try {
+        final toDecode = await cacheManager.readCache(ext + suffix);
+        return jsonDecode(toDecode);
+      } catch (e) {
+        FLog.error(
+            text:
+                "GET ${ext + suffix}\nError while decoding response from cache",
+            exception: e);
+        cacheManager.deleteCache(ext + suffix);
+        return [];
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// Get ext/id/suffix
+  Future<dynamic> getOne(String id, {String suffix = ""}) async {
+    try {
+      final response =
+          await http.get(Uri.parse(host + ext + id + suffix), headers: headers);
+      print(response.body);
+      if (response.statusCode == 200) {
+        try {
+          String toDecode = response.body;
+          if (host == displayHost) {
+            toDecode = utf8.decode(response.body.runes.toList());
+          }
+          cacheManager.writeCache(ext + id + suffix, toDecode);
+          return jsonDecode(toDecode);
+        } catch (e) {
+          FLog.error(
+              text: "GET ${ext + id + suffix}\nError while decoding response",
+              exception: e);
+          return <String, dynamic>{};
+        }
+      } else if (response.statusCode == 403) {
+        FLog.error(
+            text:
+                "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+
         String toDecode = response.body;
         if (host == displayHost) {
           toDecode = utf8.decode(response.body.runes.toList());
@@ -68,35 +152,26 @@ abstract class Repository {
         } else {
           throw AppException(ErrorType.notFound, decoded["detail"]);
         }
-      } catch (e) {
+      } else {
         FLog.error(
-            text: "GET ${ext + suffix}\nError while decoding response",
-            exception: e);
+            text:
+                "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}");
         throw AppException(ErrorType.notFound, response.body);
       }
-    } else {
-      FLog.error(
-          text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-      throw AppException(ErrorType.notFound, response.body);
-    }
-  }
-
-  /// Get ext/id/suffix
-  Future<dynamic> getOne(String id, {String suffix = ""}) async {
-    final response =
-        await http.get(Uri.parse(host + ext + id + suffix), headers: headers);
-    if (response.statusCode == 200) {
+    } on AppException {
+      rethrow;
+    } catch (e) {
       try {
-        String toDecode = response.body;
-        if (host == displayHost) {
-          toDecode = utf8.decode(response.body.runes.toList());
-        }
+        final toDecode = await cacheManager.readCache(ext + id + suffix);
+        print(toDecode);
         return jsonDecode(toDecode);
       } catch (e) {
         FLog.error(
-            text: "GET ${ext + id + suffix}\nError while decoding response",
+            text:
+                "GET ${ext + suffix}\nError while decoding response from cache",
             exception: e);
-        return <String, dynamic>{};
+        cacheManager.deleteCache(ext + suffix);
+        return [];
       }
     } else if (response.statusCode == 403) {
       FLog.error(

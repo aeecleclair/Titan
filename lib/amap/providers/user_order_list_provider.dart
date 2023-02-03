@@ -21,6 +21,12 @@ class UserOrderListNotifier extends ListNotifier<Order> {
     return await loadList(() async => _userRepository.getOrderList(userId));
   }
 
+  Future<AsyncValue<List<Order>>> loadDeliveryOrderList(
+      String deliveryId) async {
+    return await loadList(
+        () async => _orderListRepository.getDeliveryOrderList(deliveryId));
+  }
+
   Future<bool> addOrder(Order order, String deliveryId, String userId) async {
     return await add(
         (o) async => _orderListRepository.createOrder(deliveryId, o, userId),
@@ -160,7 +166,8 @@ final userOrderListProvider =
       UserOrderListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     final userId = ref.watch(idProvider);
-    await userOrderListNotifier.loadOrderList(userId);
+    userId.whenData(
+        (value) async => await orderListNotifier.loadOrderList(value));
   });
   return userOrderListNotifier;
 });
