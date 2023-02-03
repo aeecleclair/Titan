@@ -122,7 +122,6 @@ abstract class Repository {
     try {
       final response =
           await http.get(Uri.parse(host + ext + id + suffix), headers: headers);
-      print(response.body);
       if (response.statusCode == 200) {
         try {
           String toDecode = response.body;
@@ -163,7 +162,6 @@ abstract class Repository {
     } catch (e) {
       try {
         final toDecode = await cacheManager.readCache(ext + id + suffix);
-        print(toDecode);
         return jsonDecode(toDecode);
       } catch (e) {
         FLog.error(
