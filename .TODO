@@ -1,16 +1,5 @@
 # Bugs
 
-AMAP : 
-
-- visuel list products
-- detail pages (delivery)
-- admin delivery nb cmd
-- connect search avec UI (search cash)
-
-Ciné: 
-
-- A1fficher date
-
 Vote : 
 
 - del par type
@@ -22,21 +11,13 @@ Resa :
 
 TITAN :
 
-- Fix AMAP
-- Try catch pr les requetesds ui (et rethrow ds provider)
 - dark mode (pr chq module)
-- cache (Hive)
 - ask help
 - opti day list
-
-CINEMA : 
-
-themoviedb.org
 
 API :
 
 - PATCH available on edit
-- PATCH events
 
 # Modules :
 
