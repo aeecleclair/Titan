@@ -54,7 +54,7 @@ class UserRepository extends Repository {
   Future<Uint8List> getProfilePicture(String userId) async {
     try {
       final response = await http.get(
-          Uri.parse("${Repository.host}$ext$userId/profile-picture/"),
+          Uri.parse("$host$ext$userId/profile-picture/"),
           headers: headers);
       if (response.statusCode == 200) {
         try {
@@ -92,7 +92,7 @@ class UserRepository extends Repository {
           .create();
       file.writeAsBytesSync(bytes.buffer.asUint8List());
       final request = http.MultipartRequest(
-          'POST', Uri.parse("${Repository.host}${ext}me/profile-picture"))
+          'POST', Uri.parse("$host${ext}me/profile-picture"))
         ..headers.addAll(headers)
         ..files.add(await http.MultipartFile.fromPath('image', file.path,
             contentType: MediaType('image', 'jpeg')));

@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
-class AdminSessionCard extends StatelessWidget {
+class AdminSessionCard extends HookConsumerWidget {
   final Session session;
   final VoidCallback onTap, onEdit;
   final Future Function() onDelete;
@@ -16,7 +16,11 @@ class AdminSessionCard extends StatelessWidget {
       required this.onDelete});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sessionPosterMap = ref.watch(sessionPosterMapProvider);
+    final sessionPosterMapNotifier =
+        ref.watch(sessionPosterMapProvider.notifier);
+    final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -38,12 +42,57 @@ class AdminSessionCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(18),
           child: Column(
             children: [
-              Image.network(
-                session.posterUrl,
+              sessionPosterMap.when(
+                  data: (data) {
+                    if (data[session] != null) {
+                      return data[session]!.when(data: (data) {
+                        if (data.isNotEmpty) {
+                          return               Image(
+                image: data.first.image,
                 height: 200,
                 width: double.infinity,
                 fit: BoxFit.cover,
-              ),
+              );
+                        } else {
+                          sessionPosterNotifier
+                              .getLogo(session.id)
+                              .then((value) {
+                            sessionPosterMapNotifier.setTData(
+                                session, AsyncData([value]));
+                          });
+                          return Container(
+                            width: double.infinity,
+                            decoration: const BoxDecoration(boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 10,
+                                spreadRadius: 7,
+                                offset: Offset(0, 5),
+                              ),
+                            ]),
+                          );
+                        }
+                      }, loading: () {
+                        return const SizedBox(
+                          width: double.infinity,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }, error: (error, stack) {
+                        return const SizedBox(
+                          width: double.infinity,
+                          child: Center(
+                            child: HeroIcon(HeroIcons.exclamationCircle),
+                          ),
+                        );
+                      });
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
+                  loading: () => const CircularProgressIndicator(),
+                  error: (error, stack) => Text('Error $error')),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
