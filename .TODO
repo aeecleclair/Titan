@@ -21,10 +21,17 @@ API :
 
 # Doc :
 
-- Repo
-- Provider
-- Cache
-- Créer module
+- Add :
+    - Cache
+    - naming
+    - erreur classique
+
+- Edit :
+    - Repo
+    - Provider
+    - Gestion des erreurs
+    - tokenExpireWrapper
+    - Créer module
 
 # Modules :
 

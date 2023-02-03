@@ -17,7 +17,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/main_page/collectionn_slot_selector.dart';
 import 'package:myecl/amap/ui/pages/main_page/delivery_section.dart';
 import 'package:myecl/amap/ui/pages/main_page/orders_section.dart';
-import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
