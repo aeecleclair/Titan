@@ -84,22 +84,21 @@ class MainPage extends HookConsumerWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    me.nickname != null
-                                        ? me.nickname!
-                                        : me.firstname,
-                                    style: const TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold,
+                              if (me.nickname.isNotEmpty)
+                                Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 8,
                                     ),
-                                  ),
-                                ],
-                              ),
+                                    Text(
+                                      me.nickname,
+                                      style: const TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               const SizedBox(
                                 height: 3,
                               ),
@@ -194,8 +193,8 @@ class MainPage extends HookConsumerWidget {
                 SettingsItem(
                   icon: HeroIcons.calendarDays,
                   onTap: () {
-                    Clipboard.setData(const ClipboardData(
-                            text: "${Repository.host}calendar/ical"))
+                    Clipboard.setData(ClipboardData(
+                            text: "${Repository.displayHost}calendar/ical"))
                         .then((value) {
                       displayToastWithContext(
                           TypeMsg.msg, SettingsTextConstants.icalCopied);
