@@ -58,7 +58,6 @@ abstract class Repository {
           FLog.error(
               text: "GET ${ext + suffix}\nError while decoding response",
               exception: e);
-          cacheManager.deleteCache(ext + suffix);
           return [];
         }
       } else if (response.statusCode == 403) {
@@ -88,32 +87,20 @@ abstract class Repository {
                 "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
         throw AppException(ErrorType.notFound, response.body);
       }
-    } on TimeoutException {
-      try {
-        final toDecode = await cacheManager.readCache(ext + suffix);
-        return jsonDecode(toDecode);
-      } catch (e) {
-        FLog.error(
-            text:
-                "GET ${ext + suffix}\nError while decoding response from cache",
-            exception: e);
-        cacheManager.deleteCache(ext + suffix);
-        return [];
-      }
-    } on SocketException {
-      try {
-        final toDecode = await cacheManager.readCache(ext + suffix);
-        return jsonDecode(toDecode);
-      } catch (e) {
-        FLog.error(
-            text:
-                "GET ${ext + suffix}\nError while decoding response from cache",
-            exception: e);
-        cacheManager.deleteCache(ext + suffix);
-        return [];
-      }
-    } catch (e) {
+    } on AppException {
       rethrow;
+    } catch (e) {
+      try {
+        final toDecode = await cacheManager.readCache(ext + suffix);
+        return jsonDecode(toDecode);
+      } catch (e) {
+        FLog.error(
+            text:
+                "GET ${ext + suffix}\nError while decoding response from cache",
+            exception: e);
+        cacheManager.deleteCache(ext + suffix);
+        return [];
+      }
     }
   }
 

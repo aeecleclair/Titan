@@ -14,31 +14,49 @@ abstract class LogoRepository extends Repository {
   static const String expiredTokenDetail = "Could not validate credentials";
 
   Future<Image> getLogo(String id, {String suffix = ""}) async {
-    final response =
-        await http.get(Uri.parse("$host$ext$id$suffix"), headers: headers);
-    if (response.statusCode == 200) {
+    try {
+      final response =
+          await http.get(Uri.parse("$host$ext$id$suffix"), headers: headers);
+      if (response.statusCode == 200) {
+        try {
+          await cacheManager.writeImage(ext + id + suffix, response.bodyBytes);
+          return Image.memory(response.bodyBytes);
+        } catch (e) {
+          FLog.error(
+              text: "GET $ext$id$suffix\nError while decoding response",
+              exception: e);
+          rethrow;
+        }
+      } else if (response.statusCode == 403) {
+        FLog.error(
+            text:
+                "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+        String resp = utf8.decode(response.body.runes.toList());
+        final decoded = json.decode(resp);
+        if (decoded["detail"] == expiredTokenDetail) {
+          throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+        } else {
+          throw AppException(ErrorType.notFound, decoded["detail"]);
+        }
+      } else {
+        FLog.error(
+            text:
+                "GET $ext$id$suffix\n${response.statusCode} ${response.body}");
+        throw AppException(ErrorType.notFound, response.body);
+      }
+    } on AppException {
+      rethrow;
+    } catch (e) {
       try {
-        return Image.memory(response.bodyBytes);
+        return await cacheManager.readImage(ext + id + suffix);
       } catch (e) {
         FLog.error(
-            text: "GET $ext$id$suffix\nError while decoding response",
+            text:
+                "GET $ext$id$suffix\nError while decoding response from cache",
             exception: e);
+        cacheManager.deleteCache(ext + id + suffix);
         rethrow;
       }
-    } else if (response.statusCode == 403) {
-      FLog.error(
-          text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-      String resp = utf8.decode(response.body.runes.toList());
-      final decoded = json.decode(resp);
-      if (decoded["detail"] == expiredTokenDetail) {
-        throw AppException(ErrorType.tokenExpire, decoded["detail"]);
-      } else {
-        throw AppException(ErrorType.notFound, decoded["detail"]);
-      }
-    } else {
-      FLog.error(
-          text: "GET $ext$id$suffix\n${response.statusCode} ${response.body}");
-      throw AppException(ErrorType.notFound, response.body);
     }
   }
 
