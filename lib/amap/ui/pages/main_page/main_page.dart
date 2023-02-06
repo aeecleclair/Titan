@@ -1,4 +1,8 @@
 import 'dart:math';
+import 'package:myecl/amap/providers/delivery_provider.dart';
+import 'package:myecl/amap/providers/orderable_deliveries.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -6,15 +10,14 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
-import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
-import 'package:myecl/amap/providers/order_list_provider.dart';
+import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/main_page/collectionn_slot_selector.dart';
+import 'package:myecl/amap/ui/pages/main_page/collection_slot_selector.dart';
 import 'package:myecl/amap/ui/pages/main_page/delivery_section.dart';
 import 'package:myecl/amap/ui/pages/main_page/orders_section.dart';
 import 'package:myecl/tools/ui/refresher.dart';
@@ -30,9 +33,9 @@ class MainPage extends HookConsumerWidget {
     final orderNotifier = ref.watch(orderProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final isAdmin = ref.watch(isAmapAdmin);
-    final deliveryId = ref.watch(deliveryIdProvider);
+    final delivery = ref.watch(deliveryProvider);
     final deliveriesNotifier = ref.watch(deliveryListProvider.notifier);
-    final ordersNotifier = ref.watch(orderListProvider.notifier);
+    final ordersNotifier = ref.watch(userOrderListProvider.notifier);
     final soldeNotifier = ref.watch(userAmountProvider.notifier);
     final solde = ref.watch(userAmountProvider);
     final showPanel = useState(false);
@@ -47,6 +50,15 @@ class MainPage extends HookConsumerWidget {
     ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic));
     final shakingAnimation = useAnimationController(
         duration: const Duration(milliseconds: 700), initialValue: 0);
+
+    final orderableDeliveries = ref.watch(orderableDeliveriesProvider);
+    final orderableDeliveriesIds = orderableDeliveries
+        .map((delivery) => delivery.id)
+        .toList(growable: false);
+
+    void displayToastWithoutContext(TypeMsg type, String text) {
+      displayToast(context, type, text);
+    }
 
     return Refresher(
         onRefresh: () async {
@@ -179,17 +191,19 @@ class MainPage extends HookConsumerWidget {
                 ),
                 AnimatedBuilder(
                   builder: (context, child) {
-                    return Transform.translate(
-                        offset: Offset(
-                            0,
-                            (1 - popAnimation.value) *
-                                (MediaQuery.of(context).size.height - 190)),
-                        child: child);
+                    return Opacity(
+                        opacity: popAnimation.value,
+                        child: Transform.translate(
+                            offset: Offset(
+                                0,
+                                (1 - popAnimation.value) *
+                                    (MediaQuery.of(context).size.height)),
+                            child: child));
                   },
                   animation: animation,
                   child: Container(
                     width: double.infinity,
-                    height: MediaQuery.of(context).size.height - 190,
+                    height: MediaQuery.of(context).size.height - 150,
                     decoration: BoxDecoration(
                       gradient: const RadialGradient(
                         colors: [
@@ -271,17 +285,56 @@ class MainPage extends HookConsumerWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        GestureDetector(
-                            onTap: () {
-                              orderNotifier.setOrder(order.copyWith(
-                                deliveryId: deliveryId,
-                              ));
-                              tokenExpireWrapper(ref, () async {
-                                await deliveryProductListNotifier
-                                    .loadProductList(deliveryId);
-                              });
-                              pageNotifier.setAmapPage(AmapPage.addProducts);
+                        ShrinkButton(
+                            onTap: () async {
+                              if (orderableDeliveriesIds
+                                  .contains(delivery.id)) {
+                                orderNotifier.setOrder(order.copyWith(
+                                  deliveryId: delivery.id,
+                                ));
+                                await tokenExpireWrapper(ref, () async {
+                                  await deliveryProductListNotifier
+                                      .loadProductList(delivery.products);
+                                });
+                                pageNotifier.setAmapPage(AmapPage.addProducts);
+                              } else {
+                                displayToastWithoutContext(TypeMsg.error,
+                                    AMAPTextConstants.notPlannedDelivery);
+                              }
                             },
+                            waitChild: Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 30),
+                              height: 70,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    AMAPColorConstants.greenGradient2,
+                                    AMAPColorConstants.textDark,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AMAPColorConstants.textDark
+                                        .withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 5),
+                                  ),
+                                ],
+                              ),
+                              child: Container(
+                                padding: const EdgeInsets.only(bottom: 5),
+                                width: double.infinity,
+                                child: const Center(
+                                    child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                )),
+                              ),
+                            ),
                             child: Container(
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 30),
@@ -321,7 +374,7 @@ class MainPage extends HookConsumerWidget {
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ],

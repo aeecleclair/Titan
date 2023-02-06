@@ -5,12 +5,13 @@ import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
-import 'package:myecl/amap/providers/order_list_provider.dart';
+import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class Boutons extends HookConsumerWidget {
@@ -22,7 +23,7 @@ class Boutons extends HookConsumerWidget {
     final orderNotifier = ref.watch(orderProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final deliveryId = ref.watch(deliveryIdProvider);
-    final orderListNotifier = ref.watch(orderListProvider.notifier);
+    final orderListNotifier = ref.watch(userOrderListProvider.notifier);
     final userAmount = ref.watch(userAmountProvider);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);
@@ -44,8 +45,8 @@ class Boutons extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Expanded(
-            child: GestureDetector(
-                child: Container(
+            child: ShrinkButton(
+                waitChild: Container(
                   margin: const EdgeInsets.only(right: 10),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(colors: [
@@ -62,22 +63,18 @@ class Boutons extends HookConsumerWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                   ),
                   alignment: Alignment.center,
-                  child: Text(
-                    "${AMAPTextConstants.confirm} (${order.amount.toStringAsFixed(2)}€)",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: AMAPColorConstants.background),
+                  child: CircularProgressIndicator(
+                    color: AMAPColorConstants.background,
                   ),
                 ),
-                onTap: () {
+                onTap: () async {
                   if (order.amount == 0.0) {
                     displayToast(
                         context, TypeMsg.error, AMAPTextConstants.noProduct);
                   } else if (order.amount < b + order.lastAmount) {
                     Order newOrder = order.copyWith(
                         deliveryId: deliveryId, user: me.toSimpleUser());
-                    tokenExpireWrapper(ref, () async {
+                    await tokenExpireWrapper(ref, () async {
                       final value = isEdit
                           ? await orderListNotifier.updateOrder(
                               order.copyWith(lastAmount: order.amount),
@@ -110,7 +107,32 @@ class Boutons extends HookConsumerWidget {
                     displayToast(context, TypeMsg.error,
                         AMAPTextConstants.notEnoughMoney);
                   }
-                }),
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(colors: [
+                      AMAPColorConstants.greenGradient1,
+                      AMAPColorConstants.greenGradient2
+                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                    boxShadow: [
+                      BoxShadow(
+                          color: AMAPColorConstants.greenGradient2
+                              .withOpacity(0.4),
+                          offset: const Offset(2, 3),
+                          blurRadius: 5)
+                    ],
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "${AMAPTextConstants.confirm} (${order.amount.toStringAsFixed(2)}€)",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: AMAPColorConstants.background),
+                  ),
+                )),
           ),
           GestureDetector(
             child: Container(

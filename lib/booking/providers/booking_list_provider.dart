@@ -48,8 +48,8 @@ class BookingListProvider extends ListNotifier<Booking> {
     return await update(
         (booking) => _repository.confirmBooking(booking, decision),
         (bookings, booking) => bookings
-          ..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
-        booking.copyWith(decision: decision));
+          ..[bookings.indexWhere((b) => b.id == booking.id)] = booking.copyWith(decision: decision),
+        booking);
   }
 }
 

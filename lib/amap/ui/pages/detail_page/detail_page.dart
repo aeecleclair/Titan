@@ -91,6 +91,7 @@ class DetailPage extends HookConsumerWidget {
                 onTap: () {},
                 onEdit: () {},
                 showButton: false,
+                isDetail: true,
               ),
             ),
           )

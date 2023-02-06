@@ -45,6 +45,9 @@ class AmapHomePage extends HookConsumerWidget {
             case AmapPage.detailPage:
               pageNotifier.setAmapPage(AmapPage.main);
               break;
+            case AmapPage.deliveryDetail:
+              pageNotifier.setAmapPage(AmapPage.admin);
+              break;
           }
           return false;
         },

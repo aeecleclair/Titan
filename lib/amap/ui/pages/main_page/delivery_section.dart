@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -13,6 +14,12 @@ class DeliverySection extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
+    final orderableDeliveries = deliveries.when(
+        data: (data) => data
+            .where((element) => element.status == DeliveryStatus.orderable)
+            .toList(),
+        loading: () => [],
+        error: (_, __) => []);
     return Column(
       children: [
         Padding(
@@ -34,7 +41,7 @@ class DeliverySection extends HookConsumerWidget {
           height: MediaQuery.of(context).size.height - 560,
           child: deliveries.when(
             data: (data) {
-              if (data.isEmpty) {
+              if (orderableDeliveries.isEmpty) {
                 return const Center(
                   child: Text('Aucune livraison prévue'),
                 );
@@ -43,25 +50,27 @@ class DeliverySection extends HookConsumerWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 10),
-                    for (var i = 0; i < data.length; i++)
-                      if (!data[i].locked)
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                          child: DeliveryUi(
-                            delivery: data[i],
-                            onTap: () {
-                              if (showSelected) {
-                                deliveryIdNotifier.setId(data[i].id);
-                              }
-                            },
-                            showSelected: showSelected,
-                          ),
+                    for (var i = 0; i < orderableDeliveries.length; i++)
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: DeliveryUi(
+                          delivery: orderableDeliveries[i],
+                          onTap: () {
+                            if (showSelected) {
+                              deliveryIdNotifier
+                                  .setId(orderableDeliveries[i].id);
+                            }
+                          },
+                          showSelected: showSelected,
                         ),
+                      ),
                   ],
                 ),
               );
             },
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: CircularProgressIndicator(
+              color: AMAPColorConstants.greenGradient2,
+            )),
             error: (error, stack) => Text(error.toString()),
           ),
         ),

@@ -101,7 +101,6 @@ abstract class Repository {
     } else if (response.statusCode == 403) {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-
       String toDecode = response.body;
       if (host == displayHost) {
         toDecode = utf8.decode(response.body.runes.toList());
@@ -142,7 +141,6 @@ abstract class Repository {
     } else if (response.statusCode == 403) {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-
       String toDecode = response.body;
       if (host == displayHost) {
         toDecode = utf8.decode(response.body.runes.toList());

@@ -10,6 +10,7 @@ import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class UserCashUi extends HookConsumerWidget {
   final Cash cash;
@@ -89,8 +90,8 @@ class UserCashUi extends HookConsumerWidget {
                           ],
                         ),
                         child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 17.0),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 17.0, vertical: 5),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,23 +216,21 @@ class UserCashUi extends HookConsumerWidget {
                                 const SizedBox(
                                   width: 20,
                                 ),
-                                GestureDetector(
-                                  child: const Icon(
-                                    Icons.add,
+                                ShrinkButton(
+                                  waitChild: const CircularProgressIndicator(
                                     color: Color.fromARGB(223, 244, 255, 183),
-                                    size: 30,
                                   ),
-                                  onTap: () {
+                                  onTap: () async {
+                                    if (key.currentState == null) {
+                                      return;
+                                    }
                                     if (key.currentState!.validate()) {
-                                      tokenExpireWrapper(ref, () async {
+                                      await tokenExpireWrapper(ref, () async {
                                         await ref
                                             .read(cashProvider.notifier)
                                             .updateCash(
-                                              Cash(
-                                                user: cash.user,
-                                                balance: cash.balance +
-                                                    int.parse(amount.text),
-                                              ),
+                                              cash,
+                                              int.parse(amount.text),
                                             )
                                             .then((value) {
                                           if (value) {
@@ -251,6 +250,11 @@ class UserCashUi extends HookConsumerWidget {
                                       });
                                     }
                                   },
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: Color.fromARGB(223, 244, 255, 183),
+                                    size: 30,
+                                  ),
                                 ),
                               ],
                             ),

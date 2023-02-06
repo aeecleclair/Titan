@@ -36,12 +36,19 @@ class AMAPTextConstants {
       "Il existe déjà une commande à cette date";
   static const String amap = "Amap";
   static const String amount = "Solde";
+  static const String archive = "Archiver";
+  static const String archiveDelivery = "Archiver";
+  static const String archivingDelivery = "Archivage de la livraison";
   static const String category = "Catégorie";
+  static const String closeDelivery = "Verrouiller";
   static const String commandDate = "Date de la commande";
   static const String commandProducts = "Produits de la commande";
   static const String confirm = "Confirmer";
   static const String createCategory = "Créer une catégorie";
   static const String delete = "Supprimer";
+  static const String deleteDelivery = "Supprimer la livraison ?";
+  static const String deleteDeliveryDescription =
+      "Cette action est irréversible";
   static const String deletedDelivery = "Livraison supprimée";
   static const String deletedOrder = "Commande supprimée";
   static const String deletedProduct = "Produit supprimé";
@@ -50,22 +57,35 @@ class AMAPTextConstants {
   static const String deletingError = "Erreur lors de la suppression";
   static const String deletingOrder = "Supprimer la commande ?";
   static const String deletingProduct = "Supprimer le produit ?";
+  static const String deliver = "Livraison teminée ?";
+  static const String deliveringDelivery =
+      "Toutes les commandes sont livrées ?";
   static const String delivery = "Livraison";
-  static const String deliveryHandling = "Gérer les livraisons";
+  static const String deliveryArchived = "Livraison archivée";
+  static const String deliveryDelivered = "Livraison effectuée";
   static const String deliveryHistory = "Historique des livraisons";
   static const String deliveryList = "Liste des livraisons";
+  static const String deliveryLocked = "Livraison verrouillée";
   static const String deliveryOn = "Livraison le";
+  static const String deliveryOpened = "Livraison ouverte";
+  static const String deliveryNotArchived = "Livraison non archivée";
+  static const String deliveryNotLocked = "Livraison non verrouillée";
+  static const String deliveryNotDelivered = "Livraison non effectuée";
+  static const String deliveryNotOpened = "Livraison non ouverte";
+  static const String editedCommand = "Commande modifiée";
+  static const String editingError = "Erreur lors de la modification";
   static const String editProduct = "Modifier le produit";
+  static const String endingDelivery = "Fin de la livraison";
   static const String errorLoadingUser =
       "Erreur lors du chargement des utilisateurs";
   static const String expectingNumber = "Veuillez entrer un nombre";
   static const String fillField = "Veuillez remplir ce champ";
   static const String handlingAccount = "Gérer les comptes";
   static const String loading = "Chargement...";
-  static const String lock = "Verouiller";
+  static const String lock = "Verrouiller";
   static const String locked = "Verrouillée";
   static const String lockedDelivery = "Livraison verrouillée";
-  static const String lockedOrder = "Commande verouillée";
+  static const String lockedOrder = "Commande verrouillée";
   static const String looking = "Rechercher";
   static const String lockingDelivery = "Verrouiller la livraison ?";
   static const String myOrders = "Mes commandes";
@@ -73,9 +93,13 @@ class AMAPTextConstants {
   static const String noProduct = "Pas de produit";
   static const String noCurrentOrder = "Pas de commande en cours";
   static const String noMoney = "Pas assez d'argent";
+  static const String noOpennedDelivery = "Pas de livraison ouverte";
   static const String notEnoughMoney = "Pas assez d'argent";
   static const String notPlannedDelivery = "Pas de livraison planifiée";
+  static const String oneOrder = "commande";
+  static const String openDelivery = "Ouvrir";
   static const String opened = "Ouverte";
+  static const String openningDelivery = "Ouvrir la livraison ?";
   static const String order = "Commander";
   static const String pickChooseCategory =
       "Veuillez créer une catégorie ou en choisir une";
@@ -96,4 +120,5 @@ class AMAPTextConstants {
   static const String updatedProduct = "Produit modifié";
   static const String updatingError = "Echec de la modification";
   static const String usersNotFound = "Aucun utilisateur trouvé";
+  static const String waiting = "En attente";
 }
