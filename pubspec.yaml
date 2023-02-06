@@ -17,6 +17,7 @@ dependencies:
   f_logs: ^2.0.1
   fl_chart: ^0.55.2
   flash: ^2.0.3+2
+  fluro: ^2.0.4
   flutter:
     sdk: flutter
   flutter_appauth: ^4.2.0
