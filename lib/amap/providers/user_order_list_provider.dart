@@ -8,10 +8,10 @@ import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class OrderListNotifier extends ListNotifier<Order> {
+class UserOrderListNotifier extends ListNotifier<Order> {
   final OrderListRepository _orderListRepository = OrderListRepository();
   final AmapUserRepository _userRepository = AmapUserRepository();
-  OrderListNotifier({required String token})
+  UserOrderListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _orderListRepository.setToken(token);
     _userRepository.setToken(token);
@@ -21,18 +21,14 @@ class OrderListNotifier extends ListNotifier<Order> {
     return await loadList(() async => _userRepository.getOrderList(userId));
   }
 
-  Future<AsyncValue<List<Order>>> loadDeliveryOrderList(String deliveryId) async {
-    return await loadList(
-        () async => _orderListRepository.getDeliveryOrderList(deliveryId));
-  }
-
   Future<bool> addOrder(Order order, String deliveryId, String userId) async {
     return await add(
         (o) async => _orderListRepository.createOrder(deliveryId, o, userId),
         order);
   }
 
-  Future<bool> updateOrder(Order order, String deliveryId, String userId) async {
+  Future<bool> updateOrder(
+      Order order, String deliveryId, String userId) async {
     return await update(
         (o) async =>
             _orderListRepository.updateOrder(deliveryId, order, userId),
@@ -156,13 +152,15 @@ class OrderListNotifier extends ListNotifier<Order> {
   }
 }
 
-final orderListProvider = StateNotifierProvider<OrderListNotifier,
-    AsyncValue<List<Order>>>((ref) {
+final userOrderListProvider =
+    StateNotifierProvider<UserOrderListNotifier, AsyncValue<List<Order>>>(
+        (ref) {
   final token = ref.watch(tokenProvider);
-  OrderListNotifier orderListNotifier = OrderListNotifier(token: token);
+  UserOrderListNotifier userOrderListNotifier =
+      UserOrderListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     final userId = ref.watch(idProvider);
-    await orderListNotifier.loadOrderList(userId);
+    await userOrderListNotifier.loadOrderList(userId);
   });
-  return orderListNotifier;
+  return userOrderListNotifier;
 });

@@ -46,3 +46,7 @@ app.*.map.json
 
 # env 
 .env*
+
+# Todo
+.TODO
+

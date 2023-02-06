@@ -30,7 +30,6 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error, StackTrace.current);
           return false;
         }
       }
@@ -59,7 +58,6 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error, StackTrace.current);
           return false;
         }
       }
@@ -89,7 +87,6 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error, StackTrace.current);
           return false;
         }
       }

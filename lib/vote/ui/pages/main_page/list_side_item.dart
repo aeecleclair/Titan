@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';

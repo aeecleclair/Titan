@@ -6,18 +6,35 @@ Vote :
 
 Resa : 
 
-- hide already done (Hyperion ?)
+- hide already done (Hyperion : archive)
 - notif pr admin on demand
 
 TITAN :
+
+- Refactor (clean code)
 
 - dark mode (pr chq module)
 - ask help
 - opti day list
 
+
 API :
 
 - PATCH available on edit
+
+# Doc :
+
+- Add :
+    - Cache
+    - naming
+    - erreur classique
+
+- Edit :
+    - Repo
+    - Provider
+    - Gestion des erreurs
+    - tokenExpireWrapper
+    - Créer module
 
 # Modules :
 

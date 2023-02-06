@@ -13,12 +13,19 @@ class Product {
   late final String category;
 
   Product.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    price = json['price'];
-    quantity =
-        json.containsKey("quantity") ? json["quantity"] : 0;
-    category = json['category'];
+    if (json.containsKey("product")) {
+      quantity = json["quantity"];
+      id = json["product"]['id'];
+      name = json["product"]['name'];
+      price = json["product"]['price'];
+      category = json["product"]['category'];
+    } else {
+      id = json['id'];
+      name = json['name'];
+      price = json['price'];
+      quantity = 0;
+      category = json['category'];
+    }
   }
 
   Product copyWith({id, name, price, quantity, category}) => Product(

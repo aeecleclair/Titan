@@ -471,8 +471,7 @@ class CreateAccountPage extends HookConsumerWidget {
             child: child!,
           );
         });
-
-    dateController.text = processDatePrint(
-        DateFormat('dd/MM/yyyy').format(picked ?? DateTime.now()));
+    dateController.text =
+        DateFormat('dd/MM/yyyy').format(picked ?? DateTime.now());
   }
 }

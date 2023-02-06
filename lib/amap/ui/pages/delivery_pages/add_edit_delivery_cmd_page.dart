@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
+import 'package:myecl/amap/providers/delivery_provider.dart';
+import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/providers/sorted_by_category_products.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -20,11 +22,14 @@ class AddEditDeliveryPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final pageNotifier = ref.watch(amapPageProvider.notifier);
-    final dateController = useTextEditingController();
+    final delivery = ref.watch(deliveryProvider);
+    final isEdit = delivery.id != Delivery.empty().id;
+    final dateController = useTextEditingController(
+        text: isEdit ? processDate(delivery.deliveryDate) : '');
     final products = ref.watch(productList);
     final sortedProductsList = ref.watch(sortedByCategoryProductsProvider);
-    final deliveryNotifier = ref.watch(deliveryListProvider.notifier);
-    final selected = useState(List.generate(products.length, (index) => true));
+    final selected = ref.watch(selectedListProvider);
+    final selectedNotifier = ref.watch(selectedListProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -137,13 +142,11 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                           height: 10,
                                         ),
                                         ...value.map((e) => ProductUi(
-                                              isModif: selected
-                                                  .value[products.indexOf(e)],
+                                              isModif:
+                                                  selected[products.indexOf(e)],
                                               onclick: () {
-                                                selected.value[
-                                                    products
-                                                        .indexOf(e)] = !selected
-                                                    .value[products.indexOf(e)];
+                                                selectedNotifier.toggle(
+                                                    products.indexOf(e));
                                               },
                                               p: e,
                                             ))
@@ -156,37 +159,56 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                           height: 30,
                         ),
                         ShrinkButton(
-                            child: const GreenBtn(
-                                text: AMAPTextConstants.addDelivery),
+                            waitChild:
+                                const GreenBtn(text: AMAPTextConstants.waiting),
                             onTap: () async {
                               if (formKey.currentState!.validate()) {
                                 final date = dateController.value.text;
                                 final del = Delivery(
-                                    id: "",
+                                    id: isEdit ? delivery.id : '',
                                     products: products
-                                        .where((element) => selected
-                                            .value[products.indexOf(element)])
+                                        .where((element) =>
+                                            selected[products.indexOf(element)])
                                         .toList(),
                                     deliveryDate:
                                         DateTime.parse(processDateBack(date)),
-                                    locked: false);
+                                    status:
+                                        DeliveryStatus.creation); // TODO: edit
                                 await tokenExpireWrapper(ref, () async {
-                                  final value =
-                                      await deliveryNotifier.addDelivery(del);
+                                  final deliveryNotifier =
+                                      ref.watch(deliveryListProvider.notifier);
+                                  final value = isEdit
+                                      ? await deliveryNotifier
+                                          .updateDelivery(del)
+                                      : await deliveryNotifier.addDelivery(del);
                                   if (value) {
                                     pageNotifier.setAmapPage(AmapPage.admin);
-                                    displayToastWithContext(TypeMsg.msg,
-                                        AMAPTextConstants.addedCommand);
+                                    if (isEdit) {
+                                      displayToastWithContext(TypeMsg.msg,
+                                          AMAPTextConstants.editedCommand);
+                                    } else {
+                                      displayToastWithContext(TypeMsg.msg,
+                                          AMAPTextConstants.addedCommand);
+                                    }
                                   } else {
-                                    displayToastWithContext(TypeMsg.error,
-                                        AMAPTextConstants.alreadyExistCommand);
+                                    if (isEdit) {
+                                      displayToastWithContext(TypeMsg.error,
+                                          AMAPTextConstants.editingError);
+                                    } else {
+                                      displayToastWithContext(
+                                          TypeMsg.error,
+                                          AMAPTextConstants
+                                              .alreadyExistCommand);
+                                    }
                                   }
                                 });
                               } else {
                                 displayToast(context, TypeMsg.error,
                                     AMAPTextConstants.addingError);
                               }
-                            }),
+                            },
+                            child: const GreenBtn(
+                                text: AMAPTextConstants.addDelivery)),
                         const SizedBox(
                           height: 40,
                         ),

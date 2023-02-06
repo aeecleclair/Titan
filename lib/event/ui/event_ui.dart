@@ -10,7 +10,7 @@ import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 
 class EventUi extends ConsumerWidget {

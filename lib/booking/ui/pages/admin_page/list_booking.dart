@@ -9,7 +9,7 @@ import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
-import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ListBooking extends HookConsumerWidget {

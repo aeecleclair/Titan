@@ -5,7 +5,7 @@ import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/settings/ui/pages/change_pass/test_entry_style.dart';
-import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';

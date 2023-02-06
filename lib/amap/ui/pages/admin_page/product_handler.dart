@@ -7,7 +7,7 @@ import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/product_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/product_ui.dart';
-import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ProductHandler extends HookConsumerWidget {
@@ -109,7 +109,9 @@ class ProductHandler extends HookConsumerWidget {
               ),
               error: (Object e, StackTrace? s) =>
                   Text("Error: ${e.toString()}"),
-              loading: () => const CircularProgressIndicator(),
+              loading: () => const CircularProgressIndicator(
+                color: AMAPColorConstants.greenGradient2,
+              ),
             ),
             const SizedBox(
               width: 10,

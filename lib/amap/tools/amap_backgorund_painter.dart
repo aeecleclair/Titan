@@ -15,12 +15,12 @@ class Sphere {
   static Sphere generateNextSphere(double width, double height) {
     Sphere newSphere = Sphere(
         Random().nextDouble() * width,
-        height + Random().nextDouble() * 10,
+        height + 20,
         7 + Random().nextDouble() * 10,
-        1 + Random().nextDouble() * 3,
+        1 + Random().nextDouble() * 2,
         -5 * pi / 8 + Random().nextDouble() * pi / 4);
     int green = Random().nextInt(100) + 100;
-    int red = 60 + Random().nextInt(green - 100);
+    int red = 60 + Random().nextInt(green - 99);
     newSphere.paint.color = Color.fromARGB(
       255,
       red,
@@ -46,7 +46,7 @@ class AmapBackgroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (Random().nextDouble() < 0.1) {
+    if (Random().nextDouble() < 0.05) {
       spheres.add(Sphere.generateNextSphere(size.width, size.height));
     }
     int i = 0;

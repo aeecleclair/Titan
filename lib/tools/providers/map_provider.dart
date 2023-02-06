@@ -37,7 +37,6 @@ class MapNotifier<T, E>
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error, StackTrace.empty);
           return false;
         }
       }
@@ -66,7 +65,6 @@ class MapNotifier<T, E>
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error, StackTrace.empty);
           return false;
         }
       }
@@ -95,7 +93,6 @@ class MapNotifier<T, E>
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;
         } else {
-          state = AsyncValue.error(error, StackTrace.empty);
           return false;
         }
       }

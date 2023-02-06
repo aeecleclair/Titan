@@ -11,7 +11,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loaners_bar.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loaners_items.dart';
 import 'package:myecl/loan/ui/pages/admin_page/on_going_loan.dart';
-import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
