@@ -37,7 +37,7 @@ class MyApp extends HookConsumerWidget {
       title: 'MyECL',
       theme: ThemeData(
           primarySwatch: Colors.orange,
-          textTheme: GoogleFonts.notoSerifMalayalamTextTheme(
+          textTheme: GoogleFonts.latoTextTheme(
               Theme.of(context).textTheme)),
       home: check.when(
           data: (value) => value

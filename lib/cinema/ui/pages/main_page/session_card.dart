@@ -28,7 +28,7 @@ class SessionCard extends HookConsumerWidget {
 
     double minScale = 0.8;
     double scale = 1;
-    double maxHeigth = MediaQuery.of(context).size.height - 342;
+    double maxHeigth = MediaQuery.of(context).size.height - 344;
     double height = 0;
 
     int scrollValue = scroll.floor();
