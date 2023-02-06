@@ -22,7 +22,7 @@ class CheckItemCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Container(
           width: 140,
-          height: 150,
+          height: 130,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(30),

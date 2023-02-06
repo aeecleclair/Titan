@@ -34,7 +34,7 @@ class LoanCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(15.0),
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.7,
+          width: 300,
           height: 180,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -81,23 +81,25 @@ class LoanCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                   ]),
-                const SizedBox(height: 10),
+                SizedBox(height: !isAdmin ? 10 : 15),
                 Text(loan.borrower.getName(),
                     style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
-                const SizedBox(height: 3),
+                const SizedBox(height: 7),
                 Text(formatItems(loan.items),
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey.shade400)),
+                const SizedBox(height: 5),
                 Text(loan.caution,
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
+                const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
