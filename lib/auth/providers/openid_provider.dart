@@ -60,8 +60,8 @@ final isLoggedInProvider =
   final isCaching = ref.watch(isCachingProvider);
   if (isConnected) {
     isLoggedInProvider.refresh(authToken);
-  }
-  else if (isCaching.when(data: (data) => data, error: (e, s) => false, loading: () => false)) {
+  } else if (isCaching.when(
+      data: (data) => data, error: (e, s) => false, loading: () => false)) {
     return IsLoggedInProvider(true);
   }
   return isLoggedInProvider;
@@ -69,17 +69,19 @@ final isLoggedInProvider =
 
 final loadingrovider = FutureProvider<bool>((ref) {
   final isCaching = ref.watch(isCachingProvider);
-  return isCaching.when(data: (data) => !data, error: (e, s) => false, loading: () => true) || ref.watch(authTokenProvider).when(
-    data: (tokens) {
-      return tokens["token"] != "" && ref.watch(isLoggedInProvider);
-    },
-    error: (e, s) {
-      return false;
-    },
-    loading: () {
-      return true;
-    },
-  );
+  return isCaching.when(
+          data: (data) => data, error: (e, s) => false, loading: () => true) ||
+      ref.watch(authTokenProvider).when(
+        data: (tokens) {
+          return tokens["token"] != "" && ref.watch(isLoggedInProvider);
+        },
+        error: (e, s) {
+          return false;
+        },
+        loading: () {
+          return true;
+        },
+      );
 });
 
 final idProvider = FutureProvider<String>((ref) {

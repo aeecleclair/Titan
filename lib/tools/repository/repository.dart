@@ -158,24 +158,6 @@ abstract class Repository {
         cacheManager.deleteCache(ext + suffix);
         return [];
       }
-    } else if (response.statusCode == 403) {
-      FLog.error(
-          text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
-      String toDecode = response.body;
-      if (host == displayHost) {
-        toDecode = utf8.decode(response.body.runes.toList());
-      }
-      final decoded = jsonDecode(toDecode);
-      if (decoded["detail"] == expiredTokenDetail) {
-        throw AppException(ErrorType.tokenExpire, decoded["detail"]);
-      } else {
-        throw AppException(ErrorType.notFound, decoded["detail"]);
-      }
-    } else {
-      FLog.error(
-          text:
-              "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}");
-      throw AppException(ErrorType.notFound, response.body);
     }
   }
 
