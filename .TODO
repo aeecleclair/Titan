@@ -12,10 +12,38 @@ Resa :
 TITAN :
 
 - Refactor (clean code)
+
 - dark mode (pr chq module)
-- cache (Hive)
 - ask help
 - opti day list
+
+
+API :
+
+- PATCH available on edit
+
+# Doc :
+
+- Add :
+    - Cache
+    - naming
+    - erreur classique
+
+- Edit :
+    - Repo
+    - Provider
+    - Gestion des erreurs
+    - tokenExpireWrapper
+    - Créer module
+
+# Modules :
+
+- Piston (1) discuter après la sortie
+- Soli (2) discuter après la sortie
+- BDS (3) cahier des charges
+- Payement (4) en discuter avec DBE
+- Messagerie (5)
+- JE (?) cahier des charges
 
 # Questions :
 

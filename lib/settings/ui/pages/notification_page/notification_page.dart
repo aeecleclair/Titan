@@ -4,7 +4,7 @@ import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 
 class NotificationPage extends HookConsumerWidget {
   const NotificationPage({super.key});

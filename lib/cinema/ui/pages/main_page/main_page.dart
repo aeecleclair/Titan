@@ -10,7 +10,7 @@ import 'package:myecl/cinema/providers/session_list_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/ui/pages/main_page/session_card.dart';
-import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);

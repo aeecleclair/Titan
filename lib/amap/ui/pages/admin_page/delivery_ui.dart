@@ -10,7 +10,7 @@ import 'package:myecl/amap/providers/orders_by_delivery_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';

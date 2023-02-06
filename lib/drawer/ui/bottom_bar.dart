@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/tools/constants.dart';
-import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 
 class BottomBar extends ConsumerWidget {
