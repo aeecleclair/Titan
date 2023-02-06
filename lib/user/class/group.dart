@@ -21,4 +21,9 @@ class Groups {
     data['id'] = id;
     return data;
   }
+
+  @override
+  String toString() {
+    return "Groups {name: $name, description: $description, id: $id}";
+  }
 }

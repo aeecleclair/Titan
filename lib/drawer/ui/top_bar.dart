@@ -135,7 +135,9 @@ class TopBar extends HookConsumerWidget {
                           SizedBox(
                             width: 200,
                             child: Text(
-                              user.nickname,
+                              user.nickname != null
+                                  ? user.nickname!
+                                  : user.firstname,
                               style: TextStyle(
                                   color: Colors.grey.shade100,
                                   fontSize: 20,
@@ -148,7 +150,9 @@ class TopBar extends HookConsumerWidget {
                           SizedBox(
                               width: 200,
                               child: Text(
-                                "${user.firstname} ${user.name}",
+                                user.nickname != null
+                                    ? "${user.firstname} ${user.name}"
+                                    : user.name,
                                 style: TextStyle(
                                   color: Colors.grey.shade100,
                                   fontSize: 15,

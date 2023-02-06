@@ -31,7 +31,7 @@ class SignUpBar extends StatelessWidget {
                     style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
-                        color: ColorConstants.background2),
+                        color: Colors.white),
                   ),
                   Container(
                     margin: const EdgeInsets.only(left: 20),

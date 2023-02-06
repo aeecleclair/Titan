@@ -103,7 +103,9 @@ class MainPage extends HookConsumerWidget {
                                 height: 3,
                               ),
                               Text(
-                                "${me.firstname} ${me.name}",
+                                me.nickname != null
+                                    ? "${me.firstname} ${me.name}"
+                                    : me.name,
                                 style: const TextStyle(
                                   fontSize: 20,
                                 ),

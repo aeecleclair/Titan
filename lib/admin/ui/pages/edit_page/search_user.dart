@@ -29,6 +29,7 @@ class SearchUser extends HookConsumerWidget {
     final simplegroupGroupsNotifier =
         ref.watch(simpleGroupsGroupsProvider.notifier);
     final add = useState(false);
+    final focusNode = useFocusNode();
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -46,6 +47,7 @@ class SearchUser extends HookConsumerWidget {
           return Column(
             children: [
               TextField(
+                focusNode: focusNode,
                 onChanged: (value) {
                   tokenExpireWrapper(ref, () async {
                     if (editingController.text.isNotEmpty) {
@@ -67,6 +69,13 @@ class SearchUser extends HookConsumerWidget {
                     suffixIcon: GestureDetector(
                       onTap: () {
                         add.value = !add.value;
+                        if (!add.value) {
+                          editingController.clear();
+                          usersNotifier.clear();
+                          focusNode.unfocus();
+                        } else {
+                          focusNode.requestFocus();
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(7.0),

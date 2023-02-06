@@ -13,6 +13,7 @@ import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/user/class/floors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class CreateAccountPage extends HookConsumerWidget {
@@ -28,39 +29,14 @@ class CreateAccountPage extends HookConsumerWidget {
     final name = useTextEditingController();
     final password = useTextEditingController();
     final firstname = useTextEditingController();
-    final username = useTextEditingController();
+    final nickname = useTextEditingController();
     final birthday = useTextEditingController();
-    final promo = useTextEditingController();
     final phone = useTextEditingController();
     final lastIndex = useState(0);
-    List<DropdownMenuItem> items = [
-      "Adoma",
-      "Exté",
-      "T1",
-      "T2",
-      "T3",
-      "T4",
-      "T56",
-      "U1",
-      "U2",
-      "U3",
-      "U4",
-      "U56",
-      "V1",
-      "V2",
-      "V3",
-      "V45",
-      "V6",
-      "X1",
-      "X2",
-      "X3",
-      "X4",
-      "X5",
-      "X6",
-    ]
+    List<DropdownMenuItem> items = Floors.values
         .map((e) => DropdownMenuItem(
-              value: e,
-              child: Text(e),
+              value: capitalize(e.toString().split('.').last),
+              child: Text(capitalize(e.toString().split('.').last)),
             ))
         .toList();
 
@@ -133,13 +109,15 @@ class CreateAccountPage extends HookConsumerWidget {
         autofillHints: const [AutofillHints.givenName],
       ),
       CreateAccountField(
-        controller: username,
-        label: LoginTextConstants.username,
+        controller: nickname,
+        label: LoginTextConstants.nickname,
         index: 5,
         pageController: pageController,
         currentPage: currentPage,
         formKey: formKeys[4],
         keyboardType: TextInputType.name,
+        canBeEmpty: true,
+        hint: LoginTextConstants.canBeEmpty,
       ),
       Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         const SizedBox(
@@ -197,30 +175,22 @@ class CreateAccountPage extends HookConsumerWidget {
         ),
       ]),
       CreateAccountField(
-        controller: promo,
-        label: LoginTextConstants.promo,
-        index: 7,
-        pageController: pageController,
-        currentPage: currentPage,
-        formKey: formKeys[6],
-        keyboardType: TextInputType.number,
-        hint: "20",
-      ),
-      CreateAccountField(
         controller: phone,
         label: LoginTextConstants.phone,
-        index: 8,
+        index: 7,
         pageController: pageController,
         currentPage: currentPage,
         formKey: formKeys[7],
         keyboardType: TextInputType.phone,
         autofillHints: const [AutofillHints.telephoneNumber],
+        canBeEmpty: true,
+        hint: LoginTextConstants.canBeEmpty,
       ),
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(
-            height: 9,
+            height: 8,
           ),
           const Align(
             alignment: Alignment.centerLeft,
@@ -275,20 +245,16 @@ class CreateAccountPage extends HookConsumerWidget {
         onPressed: () async {
           if (name.text.isNotEmpty &&
               firstname.text.isNotEmpty &&
-              username.text.isNotEmpty &&
               birthday.text.isNotEmpty &&
-              promo.text.isNotEmpty &&
-              phone.text.isNotEmpty &&
               floor.text.isNotEmpty &&
               password.text.isNotEmpty &&
               activationCode.text.isNotEmpty) {
             CreateAccount finalcreateAccount = CreateAccount(
               name: name.text,
               firstname: firstname.text,
-              nickname: username.text,
+              nickname: nickname.text.isEmpty ? null : nickname.text,
               birthday: DateTime.parse(processDateBack(birthday.text)),
-              promo: promo.text,
-              phone: phone.text,
+              phone: phone.text.isEmpty ? null : phone.text,
               floor: floor.text,
               activationToken: activationCode.text,
               password: password.text,
