@@ -96,7 +96,7 @@ class UserCashUi extends HookConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const SizedBox(height: 10),
+                                const SizedBox(height: 8),
                                 AutoSizeText(
                                     cash.user.nickname != null
                                         ? cash.user.nickname!
@@ -108,7 +108,7 @@ class UserCashUi extends HookConsumerWidget {
                                         fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(
                                             223, 244, 255, 183))),
-                                const SizedBox(height: 2),
+                                const SizedBox(height: 5),
                                 AutoSizeText(
                                     cash.user.nickname != null
                                         ? '${cash.user.firstname} ${cash.user.name}'
@@ -119,6 +119,7 @@ class UserCashUi extends HookConsumerWidget {
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
                                         color: AMAPColorConstants.textDark)),
+                                const SizedBox(height: 5),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
