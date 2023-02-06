@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
+import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/delivery_ui.dart';
 
@@ -13,6 +14,7 @@ class DeliveryHandler extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
+    final selectedNotifier = ref.watch(selectedListProvider.notifier);
     return Column(
       children: [
         Container(
@@ -34,9 +36,11 @@ class DeliveryHandler extends HookConsumerWidget {
             children: [
               const SizedBox(
                 width: 15,
+                height: 195,
               ),
               GestureDetector(
                   onTap: () {
+                    selectedNotifier.clear();
                     pageNotifier.setAmapPage(AmapPage.addEditDelivery);
                   },
                   child: Container(
@@ -75,7 +79,9 @@ class DeliveryHandler extends HookConsumerWidget {
                 },
                 error: (Object e, StackTrace? s) =>
                     Text("Error: ${e.toString()}"),
-                loading: () => const CircularProgressIndicator(),
+                loading: () => const CircularProgressIndicator(
+                  color: AMAPColorConstants.greenGradient2,
+                ),
               ),
               const SizedBox(
                 width: 5,

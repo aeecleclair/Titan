@@ -5,7 +5,9 @@ class EventTextConstants {
   static const String addingError = "Erreur lors de l'ajout";
   static const String allDay = "Toute la journée";
   static const String confirmation = "Confirmation";
+  static const String confirmed = "Confirmé";
   static const String dates = "Dates";
+  static const String declined = "Refusé";
   static const String delete = "Supprimer";
   static const String deletedEvent = "Événement supprimé";
   static const String deleting = "Suppression";
@@ -13,6 +15,9 @@ class EventTextConstants {
   static const String deletingEvent = "Supprimer l'événement ?";
   static const String description = "Description";
   static const String edit = "Modifier";
+  static const String editEvent = "Modifier un événement";
+  static const String editedEvent = "Événement modifié";
+  static const String editingError = "Erreur lors de la modification";
   static const String endDate = "Date de fin";
   static const String endHour = "Heure de fin";
   static const String eventList = "Liste des événements";
@@ -25,9 +30,11 @@ class EventTextConstants {
       "La date de fin doit être après la date de début";
   static const String invalidIntervalError =
       "Veuillez entrer un intervalle valide";
+  static const String myEvents = "Mes événements";
   static const String name = "Nom";
   static const String next = "Suivant";
   static const String no = "Non";
+  static const String noCurrentEvent = "Aucun événement en cours";
   static const String noDateError = "Veuillez entrer une date";
   static const String noDescriptionError = "Veuillez entrer une description";
   static const String noEvent = "Aucun événement";
@@ -36,7 +43,8 @@ class EventTextConstants {
   static const String noPlaceError = "Veuillez entrer un lieu";
   static const String noRuleError = "Veuillez entrer une règle de récurrence";
   static const String organizer = "Organisateur";
-  static const String place = "Lieu";
+  static const String location = "Lieu";
+  static const String pending = "En attente";
   static const String previous = "Précédent";
   static const String recurrence = "Récurrence";
   static const String recurrenceDays = "Jours de récurrence";

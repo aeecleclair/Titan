@@ -23,9 +23,13 @@ class PageSwitcher extends ConsumerWidget {
       case BookingPage.addEditRoom:
         return const AddEditRoomPage();
       case BookingPage.detailBookingFromAdmin:
-        return const DetailBookingPage();
+        return const DetailBookingPage(
+          isAdmin: true,
+        );
       case BookingPage.detailBookingFromMain:
-        return const DetailBookingPage();
+        return const DetailBookingPage(
+          isAdmin: false,
+        );
       case BookingPage.addEditBookingFromAdmin:
         return const AddEditBookingPage();
     }

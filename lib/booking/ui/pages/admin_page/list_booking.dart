@@ -9,7 +9,7 @@ import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
-import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ListBooking extends HookConsumerWidget {
@@ -71,7 +71,7 @@ class ListBooking extends HookConsumerWidget {
                   const SizedBox(width: 10),
                   ...bookings.map((e) => BookingCard(
                         booking: e,
-                        isAdmin: true,
+                        isAdmin: e.start.isAfter(DateTime.now()),
                         isDetail: false,
                         onEdit: () {
                           bookingNotifier.setBooking(e);
@@ -93,15 +93,17 @@ class ListBooking extends HookConsumerWidget {
                                         BookingTextConstants.confirmBooking,
                                     onYes: () async {
                                       await tokenExpireWrapper(ref, () async {
+                                        Booking newBooking = e.copyWith(
+                                            decision: Decision.approved);
                                         bookingListNotifier
-                                          .toggleConfirmed(
-                                                  e, Decision.approved)
-                                              .then((value) {
-                                            if (value) {
-                                              confirmedBookingListNotifier
-                                                  .addBooking(e);
-                                            }
-                                          });
+                                            .toggleConfirmed(
+                                                newBooking, Decision.approved)
+                                            .then((value) {
+                                          if (value) {
+                                            confirmedBookingListNotifier
+                                                .addBooking(newBooking);
+                                          }
+                                        });
                                       });
                                     });
                               });
@@ -116,15 +118,17 @@ class ListBooking extends HookConsumerWidget {
                                         BookingTextConstants.declineBooking,
                                     onYes: () async {
                                       await tokenExpireWrapper(ref, () async {
+                                        Booking newBooking = e.copyWith(
+                                            decision: Decision.declined);
                                         bookingListNotifier
-                                          .toggleConfirmed(
-                                                  e, Decision.declined)
-                                              .then((value) {
-                                            if (value) {
-                                              confirmedBookingListNotifier
-                                                  .deleteBooking(e);
-                                            }
-                                          });
+                                            .toggleConfirmed(
+                                                newBooking, Decision.declined)
+                                            .then((value) {
+                                          if (value) {
+                                            confirmedBookingListNotifier
+                                                .deleteBooking(newBooking);
+                                          }
+                                        });
                                       });
                                     });
                               });

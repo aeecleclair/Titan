@@ -8,6 +8,7 @@ class BookingTextConstants {
   static const String addingError = "Erreur lors de l'ajout";
   static const String adminPage = "Administrateur";
   static const String allDay = "Toute la journée";
+  static const String bookedfor = "Réservé pour";
   static const String booking = "Réservation";
   static const String bookingCreated = "Réservation créée";
   static const String bookingDemand = "Demande de réservation";
@@ -36,6 +37,7 @@ class BookingTextConstants {
   static const String editRoom = "Modifier une salle";
   static const String endDate = "Date de fin";
   static const String endHour = "Heure de fin";
+  static const String entity = "Pour qui ?";
   static const String eventEvery = "Tous les";
   static const String historyPage = "Historique";
   static const String incorrectOrMissingFields =
@@ -84,4 +86,5 @@ class BookingTextConstants {
     "Samedi",
     "Dimanche"
   ];
+
 }

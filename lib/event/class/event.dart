@@ -1,5 +1,8 @@
+import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/user/class/applicant.dart';
 
 enum CalendarEventType {
   eventAE,
@@ -21,6 +24,10 @@ class Event {
   late final CalendarEventType type;
   late final String description;
   late final String recurrenceRule;
+  late final String applicantId;
+  late final Applicant applicant;
+  late final Decision decision;
+  late final String roomId;
 
   Event({
     required this.id,
@@ -33,6 +40,10 @@ class Event {
     required this.description,
     required this.allDay,
     required this.recurrenceRule,
+    required this.applicantId,
+    required this.applicant,
+    required this.decision,
+    required this.roomId,
   });
 
   Event.fromJson(Map<String, dynamic> json) {
@@ -45,7 +56,11 @@ class Event {
     location = json['location'];
     type = stringToCalendarEventType(json['type']);
     description = json['description'];
-    recurrenceRule = json['recurrence_rule'];
+    recurrenceRule = json['recurrence_rule'] ?? "";
+    applicantId = json['applicant_id'];
+    applicant = json['applicant'] != null ? Applicant.fromJson(json['applicant']) : Applicant.empty().copyWith(id: applicantId);
+    decision = stringToDecision(json['decision']);
+    roomId = json['room_id'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -60,6 +75,9 @@ class Event {
     data['type'] = calendarEventTypeToString(type);
     data['description'] = description;
     data['recurrence_rule'] = recurrenceRule;
+    data['applicant_id'] = applicant.id;
+    data['decision'] = decisionToString(decision);
+    data['room_id'] = roomId;
     return data;
   }
 
@@ -74,6 +92,10 @@ class Event {
     String? description,
     bool? allDay,
     String? recurrenceRule,
+    String? applicantId,
+    Applicant? applicant,
+    Decision? decision,
+    String? roomId,
   }) {
     return Event(
       id: id ?? this.id,
@@ -86,6 +108,10 @@ class Event {
       description: description ?? this.description,
       recurrenceRule: recurrenceRule ?? this.recurrenceRule,
       allDay: allDay ?? this.allDay,
+      applicantId: applicantId ?? this.applicantId,
+      applicant: applicant ?? this.applicant,
+      decision: decision ?? this.decision,
+      roomId: roomId ?? this.roomId,
     );
   }
 
@@ -100,5 +126,9 @@ class Event {
     type = CalendarEventType.eventAE;
     description = '';
     recurrenceRule = '';
+    applicantId = '';
+    applicant = Applicant.empty();
+    decision = Decision.pending;
+    roomId = '';
   }
 }

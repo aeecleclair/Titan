@@ -28,10 +28,26 @@ class DeliveryListRepository extends Repository {
     return Delivery.fromJson(await getOne("/$deliveryId"));
   }
 
+  Future<bool> openDelivery(Delivery delivery) async {
+    return await create({}, suffix: "/${delivery.id}/openordering");
+  }
+
+  Future<bool> lockDelivery(Delivery delivery) async {
+    return await create({}, suffix: "/${delivery.id}/lock");
+  }
+
+  Future<bool> deliverDelivery(Delivery delivery) async {
+    return await create({}, suffix: "/${delivery.id}/delivered");
+  }
+
+  Future<bool> archiveDelivery(String deliveryId) async {
+    return await create({}, suffix: "/$deliveryId/archive");
+  }
+
   Future<List<Product>> getAllProductsFromOrder(
       String deliveryId, String orderId) async {
-    return List<Product>.from((await getList(
-            suffix: "/$deliveryId/orders/$orderId/products"))
-        .map((x) => Product.fromJson(x)));
+    return List<Product>.from(
+        (await getList(suffix: "/$deliveryId/orders/$orderId/products"))
+            .map((x) => Product.fromJson(x)));
   }
 }

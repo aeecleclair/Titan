@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/is_ae_member_provider.dart';
 import 'package:myecl/vote/providers/is_vote_admin_provider.dart';

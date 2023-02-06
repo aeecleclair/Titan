@@ -45,10 +45,10 @@ class SignIn extends HookConsumerWidget {
                       flex: 2,
                       child: Column(
                         children: [
-                          const Image(
-                            image: AssetImage('assets/images/logo.png'),
-                            height: 200,
-                            width: 200,
+                          const Expanded(
+                            child: Image(
+                              image: AssetImage('assets/images/logo.png'),
+                            ),
                           ),
                           SignInBar(
                             isLoading: ref.watch(loadingrovider),

@@ -1,6 +1,7 @@
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/user/class/applicant.dart';
 
 enum Decision { approved, declined, pending }
 
@@ -14,6 +15,9 @@ class Booking {
   late final bool key;
   late final Decision decision;
   late final String recurrenceRule;
+  late final String entity;
+  late final Applicant applicant;
+  late final String applicantId;
 
   Booking(
       {required this.id,
@@ -24,7 +28,10 @@ class Booking {
       required this.room,
       required this.key,
       required this.decision,
-      required this.recurrenceRule});
+      required this.recurrenceRule,
+      required this.entity,
+      required this.applicant,
+      required this.applicantId});
 
   Booking.fromJson(Map<String, dynamic> json) {
     id = json["id"];
@@ -36,6 +43,9 @@ class Booking {
     key = json["key"];
     decision = stringToDecision(json["decision"]);
     recurrenceRule = json["recurrence_rule"] ?? "";
+    entity = json["entity"] ?? "";
+    applicantId = json["applicant_id"];
+    applicant = json["applicant"] != null ? Applicant.fromJson(json["applicant"]) : Applicant.empty().copyWith(id: applicantId);
   }
 
   Map<String, dynamic> toJson() {
@@ -49,11 +59,13 @@ class Booking {
     data["key"] = key;
     data["decision"] = decision.name;
     data["recurrence_rule"] = recurrenceRule;
+    data["entity"] = entity;
+    data["applicant_id"] = applicantId;
     return data;
   }
 
   Booking copyWith(
-      {id, reason, start, end, note, room, key, decision, recurrenceRule}) {
+      {id, reason, start, end, note, room, key, decision, recurrenceRule, entity, applicant, applicantId}) {
     return Booking(
         id: id ?? this.id,
         reason: reason ?? this.reason,
@@ -63,7 +75,10 @@ class Booking {
         room: room ?? this.room,
         key: key ?? this.key,
         decision: decision ?? this.decision,
-        recurrenceRule: recurrenceRule ?? this.recurrenceRule);
+        recurrenceRule: recurrenceRule ?? this.recurrenceRule,
+        entity: entity ?? this.entity,
+        applicant: applicant ?? this.applicant,
+        applicantId: applicantId ?? this.applicantId);
   }
 
   static Booking empty() {
@@ -76,6 +91,9 @@ class Booking {
         room: Room.empty(),
         key: false,
         decision: Decision.pending,
-        recurrenceRule: '');
+        recurrenceRule: '',
+        entity: '',
+        applicant: Applicant.empty(),
+        applicantId: '');
   }
 }

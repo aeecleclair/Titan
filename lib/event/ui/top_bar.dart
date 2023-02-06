@@ -36,16 +36,25 @@ class TopBar extends HookConsumerWidget {
                           case EventPage.main:
                             controllerNotifier.toggle();
                             break;
-                          case EventPage.addEvent:
+                          case EventPage.addEditEventFromMain:
                             pageNotifier.setEventPage(EventPage.main);
                             break;
-                          case EventPage.eventDetailfromModule:
+                          case EventPage.addEditEventFromAdmin:
+                            pageNotifier.setEventPage(EventPage.admin);
+                            break;
+                          case EventPage.eventDetailfromModuleFromMain:
                             pageNotifier.setEventPage(EventPage.main);
+                            break;
+                          case EventPage.eventDetailfromModuleFromAdmin:
+                            pageNotifier.setEventPage(EventPage.admin);
                             break;
                           case EventPage.eventDetailfromCalendar:
                             appPageNotifier.setPage(ModuleType.calendar);
                             pageNotifier.setEventPage(EventPage.main);
                             hasScrolledNotifier.setHasScrolled(true);
+                            break;
+                          case EventPage.admin:
+                            pageNotifier.setEventPage(EventPage.main);
                             break;
                         }
                       },
