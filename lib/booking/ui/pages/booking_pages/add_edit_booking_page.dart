@@ -80,7 +80,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                           style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 205, 205, 205)))),
+                              color: Color.fromARGB(255, 149, 149, 149)))),
                 ),
                 const SizedBox(height: 20),
                 rooms.when(
@@ -485,15 +485,14 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 5,
                                 blurRadius: 10,
-                                offset: const Offset(
-                                    3, 3),
+                                offset: const Offset(3, 3),
                               ),
                             ],
                           ),
-                          child:
-                              const Center(child: CircularProgressIndicator(
+                          child: const Center(
+                              child: CircularProgressIndicator(
                             color: Colors.white,
-                              ))),
+                          ))),
                       onTap: () async {
                         if (key.currentState == null) {
                           return;

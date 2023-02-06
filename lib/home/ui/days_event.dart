@@ -35,7 +35,7 @@ class DaysEvent extends HookConsumerWidget {
               child: Text(day,
                   style: const TextStyle(
                       fontSize: 18,
-                      color: Color.fromARGB(255, 205, 205, 205),
+                      color: Color.fromARGB(255, 149, 149, 149),
                       fontWeight: FontWeight.bold)),
             ),
             const SizedBox(

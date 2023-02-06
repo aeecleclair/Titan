@@ -45,7 +45,7 @@ class MainPage extends HookConsumerWidget {
                               style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 205, 205, 205))),
+                                  color: Color.fromARGB(255, 149, 149, 149))),
                           if (isAdmin)
                             GestureDetector(
                               onTap: () {

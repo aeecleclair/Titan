@@ -18,6 +18,7 @@ class DetailPage extends HookConsumerWidget {
     void displayToastWithoutContext(TypeMsg type, String message) {
       displayToast(context, type, message);
     }
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Stack(
@@ -195,15 +196,17 @@ class DetailPage extends HookConsumerWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: EventUi(
-              event: event,
-              isAdmin: false,
-              isDetailPage: true,
-              onConfirm: () {},
-              onCopy: () {},
-              onDecline: () {},
-              onEdit: () {},
-              onInfo: () {},
+            child: Center(
+              child: EventUi(
+                event: event,
+                isAdmin: false,
+                isDetailPage: true,
+                onConfirm: () {},
+                onCopy: () {},
+                onDecline: () {},
+                onEdit: () {},
+                onInfo: () {},
+              ),
             ),
           )
         ],

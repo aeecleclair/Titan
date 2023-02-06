@@ -27,7 +27,7 @@ class BookingCard extends HookConsumerWidget {
       padding: const EdgeInsets.all(15.0),
       height: isDetail ? 180 : 226,
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.7,
+        width: 300,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30),
