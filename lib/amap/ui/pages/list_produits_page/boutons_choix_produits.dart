@@ -71,7 +71,7 @@ class Boutons extends HookConsumerWidget {
                   if (order.amount == 0.0) {
                     displayToast(
                         context, TypeMsg.error, AMAPTextConstants.noProduct);
-                  } else if (order.amount < b + order.lastAmount) {
+                  } else if (order.amount <= b + order.lastAmount) {
                     Order newOrder = order.copyWith(
                         deliveryId: deliveryId, user: me.toSimpleUser());
                     await tokenExpireWrapper(ref, () async {

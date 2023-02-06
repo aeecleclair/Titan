@@ -86,7 +86,7 @@ class DeliveryUi extends HookConsumerWidget {
       margin: const EdgeInsets.symmetric(horizontal: 15.0),
       padding: const EdgeInsets.all(10.0),
       height: 160,
-      width: 250,
+      width: 280,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         color: Colors.white,
@@ -152,7 +152,7 @@ class DeliveryUi extends HookConsumerWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 15, bottom: 5),
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: Row(
               mainAxisAlignment: (delivery.status == DeliveryStatus.creation)
