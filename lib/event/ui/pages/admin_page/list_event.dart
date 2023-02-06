@@ -10,8 +10,8 @@ import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/ui/event_ui.dart';
-import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 
 class ListEvent extends HookConsumerWidget {
   final List<Event> events;
@@ -51,13 +51,13 @@ class ListEvent extends HookConsumerWidget {
                             style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 205, 205, 205))),
+                                color: Color.fromARGB(255, 149, 149, 149))),
                       ),
                       HeroIcon(
                         toggle.value
                             ? HeroIcons.chevronUp
                             : HeroIcons.chevronDown,
-                        color: const Color.fromARGB(255, 205, 205, 205),
+                        color: const Color.fromARGB(255, 149, 149, 149),
                         size: 30,
                       ),
                     ],

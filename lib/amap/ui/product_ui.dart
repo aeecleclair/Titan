@@ -45,7 +45,7 @@ class ProductCard extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 17.0),
+          padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +58,7 @@ class ProductCard extends StatelessWidget {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 32, 67, 0))),
-              const SizedBox(height: 2),
+              const SizedBox(height: 4),
               AutoSizeText(product.category,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -66,8 +66,8 @@ class ProductCard extends StatelessWidget {
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              const SizedBox(height: 2),
-              AutoSizeText('${product.price} €',
+              const SizedBox(height: 4),
+              AutoSizeText('${product.price.toStringAsFixed(2)} €',
                   maxLines: 1,
                   minFontSize: 10,
                   overflow: TextOverflow.ellipsis,

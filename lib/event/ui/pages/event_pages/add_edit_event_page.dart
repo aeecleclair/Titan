@@ -7,7 +7,6 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/selected_days_provider.dart';
@@ -79,7 +78,7 @@ class AddEditEventPage extends HookConsumerWidget {
                           style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 205, 205, 205)))),
+                              color: Color.fromARGB(255, 149, 149, 149)))),
                 ),
                 const SizedBox(height: 30),
                 SingleChildScrollView(
@@ -766,7 +765,7 @@ class AddEditEventPage extends HookConsumerWidget {
   _selectDate(
       BuildContext context, TextEditingController dateController) async {
     final DateTime now = DateTime.now();
-    final DateTime? picked = await showDatePicker(
+    showDatePicker(
         context: context,
         initialDate: now,
         firstDate: now,
@@ -784,29 +783,31 @@ class AddEditEventPage extends HookConsumerWidget {
             ),
             child: child!,
           );
-        });
-    if (picked != null) {
-      final time = await showTimePicker(
-          context: context,
-          initialTime: TimeOfDay.fromDateTime(picked),
-          builder: (BuildContext context, Widget? child) {
-            return Theme(
-              data: ThemeData.light().copyWith(
-                colorScheme: const ColorScheme.light(
-                  primary: Color.fromARGB(255, 10, 153, 172),
-                  onPrimary: Colors.white,
-                  surface: Colors.white,
-                  onSurface: Colors.black,
+        }).then((picked) {
+      if (picked != null) {
+        showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.now(),
+            builder: (BuildContext context, Widget? child) {
+              return Theme(
+                data: ThemeData.light().copyWith(
+                  colorScheme: const ColorScheme.light(
+                    primary: Color.fromARGB(255, 10, 153, 172),
+                    onPrimary: Colors.white,
+                    surface: Colors.white,
+                    onSurface: Colors.black,
+                  ),
+                  dialogBackgroundColor: Colors.white,
                 ),
-                dialogBackgroundColor: Colors.white,
-              ),
-              child: child!,
-            );
-          });
-      dateController.text = DateFormat('dd/MM/yyyy HH:mm')
-          .format(DateTimeField.combine(picked, time));
-    } else {
-      dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
-    }
+                child: child!,
+              );
+            }).then((value) {
+          dateController.text = DateFormat('dd/MM/yyyy HH:mm')
+              .format(DateTimeField.combine(picked, value));
+        });
+      } else {
+        dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
+      }
+    });
   }
 }

@@ -11,7 +11,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loaners_bar.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loaners_items.dart';
 import 'package:myecl/loan/ui/pages/admin_page/on_going_loan.dart';
-import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -93,18 +93,6 @@ class AdminPage extends HookConsumerWidget {
             Column(
               children: const [
                 SizedBox(height: 40),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(LoanTextConstants.onGoingLoan,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 205, 205, 205))),
-                  ),
-                ),
-                SizedBox(height: 15),
                 OnGoingLoan(),
                 SizedBox(height: 40),
                 Padding(
@@ -115,7 +103,7 @@ class AdminPage extends HookConsumerWidget {
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 205, 205, 205))),
+                            color: Color.fromARGB(255, 149, 149, 149))),
                   ),
                 ),
                 SizedBox(height: 15),

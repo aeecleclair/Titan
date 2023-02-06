@@ -36,7 +36,6 @@ class ProductUiInList extends ConsumerWidget {
             Row(
               children: [
                 Container(
-                  width: 40,
                   alignment: Alignment.centerRight,
                   child: Text(
                     "${p.price.toStringAsFixed(2)}€",
@@ -52,7 +51,7 @@ class ProductUiInList extends ConsumerWidget {
                     height: 25,
                     alignment: Alignment.center,
                     child: HeroIcon(
-                      HeroIcons.minusSmall,
+                      HeroIcons.minus,
                       size: 22,
                       color: quantity > 0
                           ? AMAPColorConstants.green2.withOpacity(0.8)
@@ -81,7 +80,6 @@ class ProductUiInList extends ConsumerWidget {
                   },
                 ),
                 Container(
-                  width: 15,
                   alignment: Alignment.center,
                   child: Text(
                     quantity.toString(),
@@ -94,7 +92,7 @@ class ProductUiInList extends ConsumerWidget {
                     width: 25,
                     height: 25,
                     alignment: Alignment.center,
-                    child: HeroIcon(HeroIcons.plusSmall,
+                    child: HeroIcon(HeroIcons.plus,
                         size: 22,
                         color: AMAPColorConstants.green2.withOpacity(0.8)),
                   ),
@@ -117,7 +115,7 @@ class ProductUiInList extends ConsumerWidget {
                   },
                 ),
                 Container(
-                  width: 10,
+                  width: 20,
                 ),
               ],
             )

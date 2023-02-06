@@ -80,7 +80,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                           style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 205, 205, 205)))),
+                              color: Color.fromARGB(255, 149, 149, 149)))),
                 ),
                 const SizedBox(height: 20),
                 rooms.when(
@@ -485,15 +485,14 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 5,
                                 blurRadius: 10,
-                                offset: const Offset(
-                                    3, 3),
+                                offset: const Offset(3, 3),
                               ),
                             ],
                           ),
-                          child:
-                              const Center(child: CircularProgressIndicator(
+                          child: const Center(
+                              child: CircularProgressIndicator(
                             color: Colors.white,
-                              ))),
+                          ))),
                       onTap: () async {
                         if (key.currentState == null) {
                           return;
@@ -686,7 +685,7 @@ class AddEditBookingPage extends HookConsumerWidget {
   _selectDate(
       BuildContext context, TextEditingController dateController) async {
     final DateTime now = DateTime.now();
-    final DateTime? picked = await showDatePicker(
+    showDatePicker(
         context: context,
         initialDate: now,
         firstDate: now,
@@ -695,7 +694,7 @@ class AddEditBookingPage extends HookConsumerWidget {
           return Theme(
             data: ThemeData.light().copyWith(
               colorScheme: const ColorScheme.light(
-                primary: ColorConstants.gradient1,
+                primary: Color.fromARGB(255, 10, 153, 172),
                 onPrimary: Colors.white,
                 surface: Colors.white,
                 onSurface: Colors.black,
@@ -704,29 +703,31 @@ class AddEditBookingPage extends HookConsumerWidget {
             ),
             child: child!,
           );
-        });
-    if (picked != null) {
-      final time = await showTimePicker(
-          context: context,
-          initialTime: TimeOfDay.fromDateTime(picked),
-          builder: (BuildContext context, Widget? child) {
-            return Theme(
-              data: ThemeData.light().copyWith(
-                colorScheme: const ColorScheme.light(
-                  primary: ColorConstants.gradient1,
-                  onPrimary: Colors.white,
-                  surface: Colors.white,
-                  onSurface: Colors.black,
+        }).then((picked) {
+      if (picked != null) {
+        showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.now(),
+            builder: (BuildContext context, Widget? child) {
+              return Theme(
+                data: ThemeData.light().copyWith(
+                  colorScheme: const ColorScheme.light(
+                    primary: Color.fromARGB(255, 10, 153, 172),
+                    onPrimary: Colors.white,
+                    surface: Colors.white,
+                    onSurface: Colors.black,
+                  ),
+                  dialogBackgroundColor: Colors.white,
                 ),
-                dialogBackgroundColor: Colors.white,
-              ),
-              child: child!,
-            );
-          });
-      dateController.text = DateFormat('dd/MM/yyyy HH:mm')
-          .format(DateTimeField.combine(picked, time));
-    } else {
-      dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
-    }
+                child: child!,
+              );
+            }).then((value) {
+          dateController.text = DateFormat('dd/MM/yyyy HH:mm')
+              .format(DateTimeField.combine(picked, value));
+        });
+      } else {
+        dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
+      }
+    });
   }
 }

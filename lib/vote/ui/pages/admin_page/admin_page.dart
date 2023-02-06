@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -83,7 +83,7 @@ class AdminPage extends HookConsumerWidget {
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 205, 205, 205))),
+                        color: Color.fromARGB(255, 149, 149, 149))),
               ),
             ),
             const SizedBox(height: 10),
@@ -100,7 +100,7 @@ class AdminPage extends HookConsumerWidget {
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 205, 205, 205))),
+                            color: Color.fromARGB(255, 149, 149, 149))),
                     if (showVotes && status == Status.counting)
                       Expanded(
                         child: Row(

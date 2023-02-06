@@ -23,6 +23,8 @@ class LoanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final shouldReturn =
+        DateTime.now().compareTo(loan.end) > 0 && !loan.returned;
     return GestureDetector(
       onTap: () {
         if (isAdmin) {
@@ -32,7 +34,7 @@ class LoanCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(15.0),
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.7,
+          width: 300,
           height: 180,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -79,34 +81,40 @@ class LoanCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                   ]),
-                const SizedBox(height: 10),
+                SizedBox(height: !isAdmin ? 10 : 15),
                 Text(loan.borrower.getName(),
                     style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
-                const SizedBox(height: 3),
+                const SizedBox(height: 7),
                 Text(formatItems(loan.items),
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey.shade400)),
+                const SizedBox(height: 5),
                 Text(loan.caution,
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
+                const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                        DateTime.now().compareTo(loan.end) <= 0
-                            ? LoanTextConstants.onGoing
-                            : LoanTextConstants.ended,
+                        loan.returned
+                            ? LoanTextConstants.returned
+                            : shouldReturn
+                                ? LoanTextConstants.toReturn
+                                : LoanTextConstants.onGoing,
                         style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
-                            color: Colors.grey.shade400)),
+                            color: shouldReturn && !loan.returned
+                                ? const Color.fromARGB(255, 172, 32, 10)
+                                : Colors.grey.shade400)),
                     Text(processDate(loan.end),
                         style: TextStyle(
                             fontSize: 13,
@@ -135,7 +143,8 @@ class LoanCard extends StatelessWidget {
                                   offset: const Offset(2, 3))
                             ],
                           ),
-                          child: const HeroIcon(HeroIcons.pencil, color: Colors.black),
+                          child: const HeroIcon(HeroIcons.pencil,
+                              color: Colors.black),
                         ),
                       ),
                       ShrinkButton(
@@ -160,6 +169,7 @@ class LoanCard extends StatelessWidget {
                           child: Container(
                             width: 40,
                             height: 40,
+                            padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               color: Colors.grey.shade200,
                               borderRadius: BorderRadius.circular(30),

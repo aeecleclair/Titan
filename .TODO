@@ -1,42 +1,39 @@
 # Bugs
 
-AMAP : 
-
-- visuel list products
-- detail pages (delivery)
-- admin delivery nb cmd
-- connect search avec UI (search cash)
-
-Ciné: 
-
-- A1fficher date
-
 Vote : 
 
 - del par type
 
 Resa : 
 
-- hide already done (Hyperion ?)
+- hide already done (Hyperion : archive)
 - notif pr admin on demand
 
 TITAN :
 
-- Fix AMAP
-- Try catch pr les requetesds ui (et rethrow ds provider)
+- Refactor (clean code)
 - dark mode (pr chq module)
-- cache (Hive)
 - ask help
 - opti day list
 
-CINEMA : 
-
-themoviedb.org
 
 API :
 
 - PATCH available on edit
-- PATCH events
+
+# Doc :
+
+- Add :
+    - Cache
+    - naming
+    - erreur classique
+
+- Edit :
+    - Repo
+    - Provider
+    - Gestion des erreurs
+    - tokenExpireWrapper
+    - Créer module
 
 # Modules :
 

@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/repositories/event_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
@@ -46,7 +45,9 @@ final eventEventListProvider =
   final userId = ref.watch(idProvider);
   final provider = EventEventListProvider(token: token);
   tokenExpireWrapperAuth(ref, () async {
-    await provider.loadConfirmedEvent(userId);
+    userId.whenData((value) async {
+    await provider.loadConfirmedEvent(value);
+    });
   });
   return provider;
 });

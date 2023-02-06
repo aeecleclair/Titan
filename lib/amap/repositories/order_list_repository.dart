@@ -8,21 +8,13 @@ class OrderListRepository extends Repository {
 
   Future<Order> createOrder(
       String deliveryId, Order order, String userId) async {
-    Map<String, dynamic> orderJson = order.toJson()
-      ..addAll({
-        "user_id": userId,
-      });
     return Order.fromJson(
-        await create(orderJson, suffix: "$deliveryId/orders"));
+        await create(order.toJson(), suffix: "$deliveryId/orders"));
   }
 
   Future<bool> updateOrder(
       String deliveryId, Order order, String userId) async {
-    Map<String, dynamic> orderJson = order.toJson()
-      ..addAll({
-        "user_id": userId,
-      });
-    return await update(orderJson, deliveryId, suffix: "/orders");
+    return await update(order.toJson(), deliveryId, suffix: "/orders/${order.id}");
   }
 
   Future<bool> deleteOrder(String deliveryId, String orderId) async {
@@ -36,7 +28,7 @@ class OrderListRepository extends Repository {
   }
 
   Future<List<Order>> getDeliveryOrderList(String deliveryId) async {
-    return List<Order>.from(
-        (await getList(suffix: "$deliveryId/orders")).map((x) => Order.fromJson(x)));
+    return List<Order>.from((await getList(suffix: "$deliveryId/orders"))
+        .map((x) => Order.fromJson(x)));
   }
 }

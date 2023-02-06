@@ -4,7 +4,7 @@ import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 
 class NotificationPage extends HookConsumerWidget {
   const NotificationPage({super.key});
@@ -26,7 +26,7 @@ class NotificationPage extends HookConsumerWidget {
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 205, 205, 205))),
+                      color: Color.fromARGB(255, 149, 149, 149))),
             ),
             const SizedBox(
               height: 30,

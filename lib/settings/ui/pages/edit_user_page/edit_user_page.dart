@@ -9,9 +9,10 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/user/class/floors.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/repositories/profile_picture_repository.dart';
@@ -29,9 +30,9 @@ class EditUserPage extends HookConsumerWidget {
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
     final dateController =
         useTextEditingController(text: processDatePrint(user.birthday));
-    final firstNameController = useTextEditingController(text: user.firstname);
-    final nameController = useTextEditingController(text: user.name);
-    final nickNameController = useTextEditingController(text: user.nickname);
+    final nickNameController =
+        useTextEditingController(text: user.nickname ?? '');
+    final phoneController = useTextEditingController(text: user.phone ?? '');
     final floorController =
         useTextEditingController(text: user.floor.toString());
 
@@ -39,34 +40,10 @@ class EditUserPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    List<DropdownMenuItem> items = [
-      "Adoma",
-      "Exté",
-      "T1",
-      "T2",
-      "T3",
-      "T4",
-      "T56",
-      "U1",
-      "U2",
-      "U3",
-      "U4",
-      "U56",
-      "V1",
-      "V2",
-      "V3",
-      "V45",
-      "V6",
-      "X1",
-      "X2",
-      "X3",
-      "X4",
-      "X5",
-      "X6",
-    ]
+    List<DropdownMenuItem> items = Floors.values
         .map((e) => DropdownMenuItem(
-              value: e,
-              child: Text(e),
+              value: capitalize(e.toString().split('.').last),
+              child: Text(capitalize(e.toString().split('.').last)),
             ))
         .toList();
 
@@ -88,7 +65,7 @@ class EditUserPage extends HookConsumerWidget {
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 205, 205, 205))),
+                          color: Color.fromARGB(255, 149, 149, 149))),
                 ),
                 const SizedBox(height: 40),
                 profilePicture.when(data: (profile) {
@@ -123,12 +100,18 @@ class EditUserPage extends HookConsumerWidget {
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
-                                      TypeMsg.msg, SettingsTextConstants.updatedProfilePicture);
+                                      TypeMsg.msg,
+                                      SettingsTextConstants
+                                          .updatedProfilePicture);
                                 } else {
-                                  displayToastWithContext(TypeMsg.error, SettingsTextConstants.tooHeavyProfilePicture);
+                                  displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants
+                                          .tooHeavyProfilePicture);
                                 }
                               } else {
-                                displayToastWithContext(TypeMsg.error, SettingsTextConstants.errorProfilePicture);
+                                displayToastWithContext(TypeMsg.error,
+                                    SettingsTextConstants.errorProfilePicture);
                               }
                             },
                             child: Container(
@@ -172,12 +155,18 @@ class EditUserPage extends HookConsumerWidget {
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
-                                      TypeMsg.msg, SettingsTextConstants.updatedProfilePicture);
+                                      TypeMsg.msg,
+                                      SettingsTextConstants
+                                          .updatedProfilePicture);
                                 } else {
-                                  displayToastWithContext(TypeMsg.error, SettingsTextConstants.tooHeavyProfilePicture);
+                                  displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants
+                                          .tooHeavyProfilePicture);
                                 }
                               } else {
-                                displayToastWithContext(TypeMsg.error, SettingsTextConstants.errorProfilePicture);
+                                displayToastWithContext(TypeMsg.error,
+                                    SettingsTextConstants.errorProfilePicture);
                               }
                             },
                             child: Container(
@@ -221,9 +210,14 @@ class EditUserPage extends HookConsumerWidget {
                               if (value != null) {
                                 if (value) {
                                   displayToastWithContext(
-                                      TypeMsg.msg, SettingsTextConstants.updatedProfilePicture);
+                                      TypeMsg.msg,
+                                      SettingsTextConstants
+                                          .updatedProfilePicture);
                                 } else {
-                                  displayToastWithContext(TypeMsg.error, SettingsTextConstants.errorProfilePicture);
+                                  displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants
+                                          .errorProfilePicture);
                                 }
                               }
                             },
@@ -268,25 +262,19 @@ class EditUserPage extends HookConsumerWidget {
                   );
                 }, error: (e, s) {
                   return const Center(
-                    child:
-                        Text(SettingsTextConstants.errorProfilePicture),
+                    child: Text(SettingsTextConstants.errorProfilePicture),
                   );
                 }),
-                const SizedBox(height: 50),
-                UserFieldModifier(
-                    label: SettingsTextConstants.firstname,
-                    keyboardType: TextInputType.text,
-                    controller: firstNameController),
-                const SizedBox(height: 50),
-                UserFieldModifier(
-                    label: SettingsTextConstants.name,
-                    keyboardType: TextInputType.text,
-                    controller: nameController),
                 const SizedBox(height: 50),
                 UserFieldModifier(
                     label: SettingsTextConstants.nickname,
                     keyboardType: TextInputType.text,
                     controller: nickNameController),
+                const SizedBox(height: 50),
+                UserFieldModifier(
+                    label: SettingsTextConstants.phone,
+                    keyboardType: TextInputType.text,
+                    controller: phoneController),
                 const SizedBox(height: 50),
                 Row(children: [
                   SizedBox(
@@ -430,9 +418,12 @@ class EditUserPage extends HookConsumerWidget {
                       final value =
                           await asyncUserNotifier.updateMe(user.copyWith(
                         birthday: processDateBack(dateController.value.text),
-                        firstname: firstNameController.value.text,
-                        name: nameController.value.text,
-                        nickname: nickNameController.value.text,
+                        nickname: nickNameController.value.text.isEmpty
+                            ? null
+                            : nickNameController.value.text,
+                        phone: phoneController.value.text.isEmpty
+                            ? null
+                            : phoneController.value.text,
                         floor: floorController.value.text,
                       ));
                       if (value) {
@@ -502,8 +493,7 @@ class EditUserPage extends HookConsumerWidget {
           );
         });
 
-    dateController.text = picked == null
-        ? me.birthday
-        : processDatePrint(DateFormat('dd/MM/yyyy').format(picked));
+    dateController.text = processDatePrint(
+        picked == null ? me.birthday : DateFormat('dd/MM/yyyy').format(picked));
   }
 }

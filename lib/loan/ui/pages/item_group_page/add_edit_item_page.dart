@@ -29,9 +29,7 @@ class AddEditItemPage extends HookConsumerWidget {
     final caution =
         useTextEditingController(text: isEdit ? item.caution.toString() : '');
     final lendingDuration = useTextEditingController(
-        text: isEdit
-            ? (item.suggestedLendingDuration ~/ (24 * 60 * 60)).toString()
-            : '');
+        text: isEdit ? (item.suggestedLendingDuration).toString() : '');
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -54,7 +52,7 @@ class AddEditItemPage extends HookConsumerWidget {
                       style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 205, 205, 205)))),
+                          color: Color.fromARGB(255, 149, 149, 149)))),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -123,10 +121,7 @@ class AddEditItemPage extends HookConsumerWidget {
                             name: name.text,
                             caution: int.parse(caution.text),
                             suggestedLendingDuration:
-                                double.parse(lendingDuration.text) *
-                                    24 *
-                                    60 *
-                                    60,
+                                double.parse(lendingDuration.text),
                             available: item.available);
                         final value = isEdit
                             ? await itemListNotifier.updateItem(

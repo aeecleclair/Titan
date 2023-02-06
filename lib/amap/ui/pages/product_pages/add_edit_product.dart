@@ -7,6 +7,7 @@ import 'package:myecl/amap/providers/category_list_provider.dart';
 import 'package:myecl/amap/providers/product_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_category_provider.dart';
+import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/green_btn.dart';
 import 'package:myecl/amap/ui/pages/product_pages/text_entry.dart';
@@ -22,6 +23,7 @@ class AddEditProduct extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final product = ref.watch(productProvider);
     final isEdit = product.id != Product.empty().id;
+    final products = ref.watch(productListProvider);
     final productsNotifier = ref.watch(productListProvider.notifier);
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final categories = ref.watch(categoryListProvider);
@@ -212,10 +214,8 @@ class AddEditProduct extends HookConsumerWidget {
                       height: 40,
                     ),
                     ShrinkButton(
-                      child: GreenBtn(
-                        text: isEdit
-                            ? AMAPTextConstants.update
-                            : AMAPTextConstants.add,
+                      waitChild: const GreenBtn(
+                        text: AMAPTextConstants.waiting,
                       ),
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
@@ -242,6 +242,9 @@ class AddEditProduct extends HookConsumerWidget {
                                 displayToastWithContext(TypeMsg.msg,
                                     AMAPTextConstants.updatedProduct);
                               } else {
+                                ref.watch(selectedListProvider.notifier).rebuild(
+                                  products.when(data: (data) => data, error: (e, s) => [], loading: () =>[])
+                                );
                                 displayToastWithContext(TypeMsg.msg,
                                     AMAPTextConstants.addedProduct);
                               }
@@ -258,6 +261,11 @@ class AddEditProduct extends HookConsumerWidget {
                           });
                         }
                       },
+                      child: GreenBtn(
+                        text: isEdit
+                            ? AMAPTextConstants.update
+                            : AMAPTextConstants.add,
+                      ),
                     ),
                     const SizedBox(
                       height: 10,

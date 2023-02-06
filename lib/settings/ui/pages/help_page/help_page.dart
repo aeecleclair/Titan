@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/providers/logs_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/help_page/log_card.dart';
-import 'package:myecl/tools/dialog.dart';
-import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 
 class HelpPage extends HookConsumerWidget {
   const HelpPage({super.key});
@@ -31,7 +31,7 @@ class HelpPage extends HookConsumerWidget {
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 205, 205, 205))),
+                          color: Color.fromARGB(255, 149, 149, 149))),
                   GestureDetector(
                     onTap: () {
                       showDialog(

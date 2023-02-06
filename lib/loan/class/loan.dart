@@ -50,7 +50,8 @@ class Loan {
     return data;
   }
 
-  Loan copyWith({id, loaner, borrower, notes, start, end, caution, items, returned}) {
+  Loan copyWith(
+      {id, loaner, borrower, notes, start, end, caution, items, returned}) {
     return Loan(
         id: id ?? this.id,
         loaner: loaner ?? this.loaner,
@@ -73,5 +74,10 @@ class Loan {
     caution = '';
     items = [];
     returned = false;
+  }
+
+  @override
+  String toString() {
+    return 'Loan(id: $id, loaner: $loaner, borrower: $borrower, notes: $notes, start: $start, end: $end, caution: $caution, items: $items, returned: $returned)';
   }
 }

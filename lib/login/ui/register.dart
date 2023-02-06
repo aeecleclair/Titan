@@ -97,7 +97,10 @@ class Register extends HookConsumerWidget {
                   ),
                   SignUpBar(
                       label: LoginTextConstants.create,
-                      isLoading: ref.watch(loadingrovider),
+                      isLoading: ref.watch(loadingrovider).when(
+                        data: (data) => data,
+                        error: (e, s) => false,
+                        loading: () => false),
                       onPressed: () async {
                         if (key.currentState!.validate()) {
                           final value = await signUpNotifier.createUser(

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/tools/constants.dart';
@@ -17,11 +18,11 @@ class CheckItemCard extends StatelessWidget {
     return GestureDetector(
       onTap: onCheck,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+        margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5),
         padding: const EdgeInsets.all(12.0),
         child: Container(
           width: 140,
-          height: 150,
+          height: 130,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(30),
@@ -47,7 +48,8 @@ class CheckItemCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 15),
-                Text(item.name,
+                AutoSizeText(item.name,
+                    maxLines: 1,
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -71,7 +73,7 @@ class CheckItemCard extends StatelessWidget {
                         color: Colors.black)),
                 const SizedBox(height: 5),
                 Text(
-                    '${LoanTextConstants.duration} : ${item.suggestedLendingDuration ~/ (24 * 60 * 60)} ${LoanTextConstants.days}',
+                    '${LoanTextConstants.duration} : ${item.suggestedLendingDuration} ${LoanTextConstants.days}',
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,

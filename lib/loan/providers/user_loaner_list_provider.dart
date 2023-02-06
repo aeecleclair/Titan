@@ -16,7 +16,7 @@ class UserLoanerListNotifier extends ListNotifier<Loaner> {
     return await loadList(_loanerRepository.getMyLoaner);
   }
 
-    Future<bool> addLoaner(Loaner loaner) async {
+  Future<bool> addLoaner(Loaner loaner) async {
     return await add(_loanerRepository.createLoaner, loaner);
   }
 
@@ -41,7 +41,8 @@ final userLoanerListProvider =
     StateNotifierProvider<UserLoanerListNotifier, AsyncValue<List<Loaner>>>(
   (ref) {
     final token = ref.watch(tokenProvider);
-    UserLoanerListNotifier orderListNotifier = UserLoanerListNotifier(token: token);
+    UserLoanerListNotifier orderListNotifier =
+        UserLoanerListNotifier(token: token);
     tokenExpireWrapperAuth(ref, () async {
       await orderListNotifier.loadMyLoanerList();
     });
@@ -49,14 +50,10 @@ final userLoanerListProvider =
   },
 );
 
-
 final loanerList = Provider<List<Loaner>>((ref) {
   final deliveryProvider = ref.watch(userLoanerListProvider);
-  return deliveryProvider.when(data: (loans) {
-    return loans;
-  }, error: (error, stackTrace) {
-    return [];
-  }, loading: () {
-    return [];
-  });
+  return deliveryProvider.when(
+      data: (loans) => loans,
+      error: (error, stackTrace) => [],
+      loading: () => []);
 });

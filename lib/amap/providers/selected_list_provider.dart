@@ -26,4 +26,8 @@ class SelectedListProvider extends StateNotifier<List<bool>> {
   void clear() {
     state = List.generate(state.length, (index) => true);
   }
+
+  void rebuild(List<dynamic> p) {
+    state = List.generate(p.length, (index) => true);
+  }
 }

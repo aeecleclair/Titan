@@ -9,7 +9,7 @@ import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
-import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ListBooking extends HookConsumerWidget {
@@ -50,13 +50,13 @@ class ListBooking extends HookConsumerWidget {
                             style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 205, 205, 205))),
+                                color: Color.fromARGB(255, 149, 149, 149))),
                       ),
                       HeroIcon(
                         toggle.value
                             ? HeroIcons.chevronUp
                             : HeroIcons.chevronDown,
-                        color: const Color.fromARGB(255, 205, 205, 205),
+                        color: const Color.fromARGB(255, 149, 149, 149),
                         size: 30,
                       ),
                     ],

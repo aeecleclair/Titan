@@ -3,13 +3,12 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
-import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/is_admin.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/event_ui.dart';
-import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -45,7 +44,7 @@ class MainPage extends HookConsumerWidget {
                               style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 205, 205, 205))),
+                                  color: Color.fromARGB(255, 149, 149, 149))),
                           if (isAdmin)
                             GestureDetector(
                               onTap: () {

@@ -93,3 +93,14 @@ Add to `info.plist`
 	</dict>
 </dict>
 ```
+
+#### Android
+
+Add to `AndroidManifest.xml` file in the android/app/src/main folder :
+
+```
+<application
+    ...
+    android:usesCleartextTraffic="true"
+    ...   >
+```

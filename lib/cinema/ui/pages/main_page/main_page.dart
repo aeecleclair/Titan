@@ -10,7 +10,7 @@ import 'package:myecl/cinema/providers/session_list_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/ui/pages/main_page/session_card.dart';
-import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -53,7 +53,7 @@ class MainPage extends HookConsumerWidget {
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 205, 205, 205))),
+                            color: Color.fromARGB(255, 149, 149, 149))),
                     if (isAdmin)
                       GestureDetector(
                         onTap: () {
@@ -105,7 +105,7 @@ class MainPage extends HookConsumerWidget {
                 );
               }
               return SizedBox(
-                height: MediaQuery.of(context).size.height - 227,
+                height: MediaQuery.of(context).size.height - 252,
                 child: PageView.builder(
                     physics: const BouncingScrollPhysics(),
                     controller: pageController,

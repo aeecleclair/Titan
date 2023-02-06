@@ -42,7 +42,7 @@ class MemberCard extends StatelessWidget {
             children: [
               const SizedBox(height: 10),
               AutoSizeText(
-                  member.nickname.isEmpty ? member.firstname : member.nickname,
+                  member.nickname!= null ? member.nickname! : member.firstname,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -51,7 +51,7 @@ class MemberCard extends StatelessWidget {
                       color: Colors.black)),
               const SizedBox(height: 2),
               AutoSizeText(
-                  member.nickname.isNotEmpty
+                  member.nickname != null
                       ? '${member.firstname} ${member.name}'
                       : member.name,
                   maxLines: 2,

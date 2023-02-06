@@ -6,9 +6,9 @@ import 'package:myecl/settings/providers/logs_provider.dart';
 import 'package:myecl/settings/providers/settings_page_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
-import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/refresher.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/repositories/profile_picture_repository.dart';
@@ -84,14 +84,15 @@ class MainPage extends HookConsumerWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              if (me.nickname.isNotEmpty)
                                 Column(
                                   children: [
                                     const SizedBox(
                                       height: 8,
                                     ),
                                     Text(
-                                      me.nickname,
+                                      me.nickname != null 
+                                        ? me.nickname!
+                                        : me.firstname,
                                       style: const TextStyle(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold,
@@ -103,7 +104,9 @@ class MainPage extends HookConsumerWidget {
                                 height: 3,
                               ),
                               Text(
-                                "${me.firstname} ${me.name}",
+                                me.nickname != null
+                                    ? "${me.firstname} ${me.name}"
+                                    : me.name,
                                 style: const TextStyle(
                                   fontSize: 20,
                                 ),
@@ -191,8 +194,8 @@ class MainPage extends HookConsumerWidget {
                 SettingsItem(
                   icon: HeroIcons.calendarDays,
                   onTap: () {
-                    Clipboard.setData(const ClipboardData(
-                            text: "${Repository.host}calendar/ical"))
+                    Clipboard.setData(ClipboardData(
+                            text: "${Repository.displayHost}calendar/ical"))
                         .then((value) {
                       displayToastWithContext(
                           TypeMsg.msg, SettingsTextConstants.icalCopied);
@@ -372,8 +375,8 @@ class MainPage extends HookConsumerWidget {
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
                               color: Colors.black)),
-                      const Text(Repository.host,
-                          style: TextStyle(
+                      Text(Repository.displayHost,
+                          style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
                               color: Colors.black)),

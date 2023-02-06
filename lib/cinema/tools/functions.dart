@@ -17,7 +17,7 @@ String formatDuration(int duration) {
 }
 
 String formatDate(DateTime date) {
-  return "${date.day}/${date.month}/${date.year} - ${date.hour}h${date.minute.toString().padLeft(2, "0")}";
+  return "${date.day.toString().padLeft(2, "0")}/${date.month.toString().padLeft(2, "0")}/${date.year} - ${date.hour.toString().padLeft(2, "0")}h${date.minute.toString().padLeft(2, "0")}";
 }
 
 int parseDuration(String duration) {

@@ -7,7 +7,7 @@ import 'package:myecl/cinema/providers/session_list_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/ui/pages/admin_page/admin_session_card.dart';
-import 'package:myecl/tools/dialog.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -50,8 +50,7 @@ class AdminPage extends HookConsumerWidget {
                                 color: Colors.grey.withOpacity(0.2),
                                 spreadRadius: 1,
                                 blurRadius: 10,
-                                offset: const Offset(
-                                    0, 5),
+                                offset: const Offset(0, 5),
                               ),
                             ],
                           ),

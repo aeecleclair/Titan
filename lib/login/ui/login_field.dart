@@ -14,6 +14,7 @@ class CreateAccountField extends HookConsumerWidget {
   final List<String> autofillHints;
   final String hint;
   final GlobalKey<FormState> formKey;
+  final bool canBeEmpty;
   final bool isPassword;
   const CreateAccountField({
     super.key,
@@ -27,6 +28,7 @@ class CreateAccountField extends HookConsumerWidget {
     this.keyboardType = TextInputType.text,
     this.autofillHints = const [],
     this.hint = '',
+    this.canBeEmpty = false,
   });
 
   @override
@@ -72,6 +74,10 @@ class CreateAccountField extends HookConsumerWidget {
             decoration: (keyboardType == TextInputType.visiblePassword)
                 ? InputDecoration(
                     hintText: hint,
+                    hintStyle: TextStyle(
+                        color: Colors.white.withOpacity(0.5),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
                     suffixIcon: IconButton(
                       icon: Icon(
                         hidePassword.value
@@ -97,6 +103,10 @@ class CreateAccountField extends HookConsumerWidget {
                     errorStyle: const TextStyle(color: Colors.white))
                 : InputDecoration(
                     hintText: hint,
+                    hintStyle: TextStyle(
+                        color: Colors.white.withOpacity(0.5),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
                     enabledBorder: const UnderlineInputBorder(
                         borderSide:
                             BorderSide(color: ColorConstants.background2)),
@@ -110,10 +120,10 @@ class CreateAccountField extends HookConsumerWidget {
                     )),
                     errorStyle: const TextStyle(color: Colors.white)),
             validator: (value) {
-              if (value == null || value.isEmpty) {
+              if (!canBeEmpty && (value == null || value.isEmpty)) {
                 return LoginTextConstants.emptyFieldError;
               }
-              else if (isPassword && value.length < 6) {
+              else if (isPassword && (value != null && value.length < 6)) {
                 return LoginTextConstants.passwordLengthError;
               }
               return null;
