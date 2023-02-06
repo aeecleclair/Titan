@@ -16,7 +16,7 @@ packages:
       sha256: ed7cc591a948744994714375caf9a2ce89e1d82e8243997c8a2994d57181c212
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.6"
+    version: "3.3.5"
   args:
     dependency: transitive
     description:
@@ -1005,14 +1005,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
-  uuid:
-    dependency: transitive
-    description:
-      name: uuid
-      sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.7"
   vector_math:
     dependency: "direct main"
     description:

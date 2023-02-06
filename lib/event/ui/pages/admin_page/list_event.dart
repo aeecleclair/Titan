@@ -10,8 +10,8 @@ import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/ui/event_ui.dart';
-import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 
 class ListEvent extends HookConsumerWidget {
   final List<Event> events;

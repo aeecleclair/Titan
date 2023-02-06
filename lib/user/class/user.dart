@@ -110,7 +110,8 @@ class User {
   @override
   String toString() {
     return "User {name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, birthday: $birthday, promo: $promo, floor: $floor, phone: $phone, createdOn: $createdOn, groups: $groups}";
-
+  }
+  
   Applicant toApplicant() {
     return Applicant(
         name: name,

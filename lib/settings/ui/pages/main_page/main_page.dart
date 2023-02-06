@@ -84,14 +84,15 @@ class MainPage extends HookConsumerWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              if (me.nickname.isNotEmpty)
                                 Column(
                                   children: [
                                     const SizedBox(
                                       height: 8,
                                     ),
                                     Text(
-                                      me.nickname,
+                                      me.nickname != null 
+                                        ? me.nickname!
+                                        : me.firstname,
                                       style: const TextStyle(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold,
@@ -374,8 +375,8 @@ class MainPage extends HookConsumerWidget {
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
                               color: Colors.black)),
-                      const Text(Repository.host,
-                          style: TextStyle(
+                      Text(Repository.displayHost,
+                          style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
                               color: Colors.black)),
