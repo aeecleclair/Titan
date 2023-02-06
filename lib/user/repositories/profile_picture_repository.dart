@@ -31,7 +31,8 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
   Future<bool?> setProfilePicture(ImageSource source) async {
     final previousState = state;
     state = const AsyncLoading();
-    final XFile? image = await _picker.pickImage(source: source, imageQuality: 20);
+    final XFile? image =
+        await _picker.pickImage(source: source, imageQuality: 20);
     if (image != null) {
       try {
         final i = await _userRepository.addProfilePicture(image.path);
@@ -100,7 +101,11 @@ final profilePictureProvider =
   ProfilePictureNotifier notifier = ProfilePictureNotifier(token);
   tokenExpireWrapperAuth(ref, () async {
     final userId = ref.watch(idProvider);
-    notifier.getProfilePicture(userId);
+    userId.whenData(
+      (value) {
+        notifier.getProfilePicture(value);
+      },
+    );
   });
   return notifier;
 });

@@ -51,7 +51,10 @@ class SignIn extends HookConsumerWidget {
                             ),
                           ),
                           SignInBar(
-                            isLoading: ref.watch(loadingrovider),
+                            isLoading: ref.watch(loadingrovider).when(
+                        data: (data) => data,
+                        error: (e, s) => false,
+                        loading: () => false),
                             label: LoginTextConstants.signIn,
                             onPressed: () async {
                               await authNotifier.getTokenFromRequest();
