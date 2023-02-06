@@ -6,15 +6,17 @@ import 'package:myecl/event/repositories/event_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class EventListNotifier extends ListNotifier<Event> {
+class EventEventListProvider extends ListNotifier<Event> {
   final EventRepository _eventRepository = EventRepository();
-  EventListNotifier(String token) : super(const AsyncValue.loading()) {
+  EventEventListProvider({required String token})
+      : super(const AsyncValue.loading()) {
     _eventRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Event>>> loadEventList() async {
-    return await loadList(_eventRepository.getAllEvent);
+  Future<AsyncValue<List<Event>>> loadConfirmedEvent(String id) async {
+    return await loadList(() async => _eventRepository.getUserEventList(id));
   }
+
 
   Future<bool> addEvent(Event event) async {
     return await add(_eventRepository.createEvent, event);
@@ -35,22 +37,16 @@ class EventListNotifier extends ListNotifier<Event> {
         event.id,
         event);
   }
-
-  Future<bool> toggleConfirmed(Event event, Decision decision) async {
-    return await update(
-        (event) => _eventRepository.confirmEvent(event, decision),
-        (events, event) => events
-          ..[events.indexWhere((b) => b.id == event.id)] = event,
-        event.copyWith(decision: decision));
-  }
 }
 
-final eventListProvider =
-    StateNotifierProvider<EventListNotifier, AsyncValue<List<Event>>>((ref) {
+final eventEventListProvider =
+    StateNotifierProvider<EventEventListProvider, AsyncValue<List<Event>>>(
+        (ref) {
   final token = ref.watch(tokenProvider);
-  EventListNotifier notifier = EventListNotifier(token);
+  final userId = ref.watch(idProvider);
+  final provider = EventEventListProvider(token: token);
   tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadEventList();
+    await provider.loadConfirmedEvent(userId);
   });
-  return notifier;
+  return provider;
 });

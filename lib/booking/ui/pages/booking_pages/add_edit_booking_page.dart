@@ -18,6 +18,7 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEditBookingPage extends HookConsumerWidget {
@@ -26,6 +27,7 @@ class AddEditBookingPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(bookingPageProvider);
+    final user = ref.watch(userProvider);
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
@@ -40,6 +42,7 @@ class AddEditBookingPage extends HookConsumerWidget {
         text: isEdit ? processDateWithHour(booking.end) : "");
     final motif = useTextEditingController(text: booking.reason);
     final note = useTextEditingController(text: booking.note);
+    final entity = useTextEditingController(text: booking.entity);
     final allDay = useState(false); // TODO:
     final recurrent = useState(booking.recurrenceRule != ""
         ? booking.recurrenceRule.contains("BYDAY")
@@ -51,7 +54,10 @@ class AddEditBookingPage extends HookConsumerWidget {
         text: booking.recurrenceRule != ""
             ? booking.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
             : "1");
-    final recurrenceEndDate = useTextEditingController();
+    final recurrenceEndDate = useTextEditingController(
+        text: booking.recurrenceRule != ""
+            ? booking.recurrenceRule.split(";UNTIL=")[1].split(";")[0]
+            : "1");
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -108,6 +114,14 @@ class AddEditBookingPage extends HookConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Column(children: [
+                    TextEntry(
+                      keyboardType: TextInputType.text,
+                      controller: entity,
+                      isInt: false,
+                      label: BookingTextConstants.entity,
+                      suffix: '',
+                    ),
+                    const SizedBox(height: 30),
                     TextEntry(
                       keyboardType: TextInputType.text,
                       controller: motif,
@@ -472,12 +486,14 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 spreadRadius: 5,
                                 blurRadius: 10,
                                 offset: const Offset(
-                                    3, 3), // changes position of shadow
+                                    3, 3),
                               ),
                             ],
                           ),
                           child:
-                              const Center(child: CircularProgressIndicator())),
+                              const Center(child: CircularProgressIndicator(
+                            color: Colors.white,
+                              ))),
                       onTap: () async {
                         if (key.currentState == null) {
                           return;
@@ -541,7 +557,10 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   room: room.value,
                                   key: keyRequired.value,
                                   decision: Decision.pending,
-                                  recurrenceRule: recurrenceRule);
+                                  recurrenceRule: recurrenceRule,
+                                  entity: entity.text,
+                                  applicant: user.toApplicant(),
+                                  applicantId: user.id);
                               final value = isEdit
                                   ? await bookingsNotifier
                                       .updateBooking(newBooking)

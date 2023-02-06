@@ -2,9 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum EventPage {
   main,
-  addEvent,
-  eventDetailfromModule,
-  eventDetailfromCalendar
+  admin,
+  addEditEventFromMain,
+  eventDetailfromModuleFromMain,
+  eventDetailfromModuleFromAdmin,
+  eventDetailfromCalendar,
+  addEditEventFromAdmin
 }
 
 class EventPageProvider extends StateNotifier<EventPage> {

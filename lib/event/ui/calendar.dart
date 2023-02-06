@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/event/class/event.dart';
+import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -13,7 +14,7 @@ class Calendar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookings = ref.watch(confirmedBookingListProvider);
+    final events = ref.watch(confirmedEventListProvider);
 
     void calendarTapped(CalendarTapDetails details, BuildContext context) {
       if (details.targetElement == CalendarElement.appointment ||
@@ -94,7 +95,7 @@ class Calendar extends HookConsumerWidget {
       return SizedBox(
         height: constraints.maxHeight,
         width: constraints.maxWidth,
-        child: bookings.when(data: (res) {
+        child: events.when(data: (res) {
           return Container(
             margin: const EdgeInsets.symmetric(horizontal: 5),
             child: Stack(
@@ -165,18 +166,18 @@ class Calendar extends HookConsumerWidget {
   }
 }
 
-_AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
+_AppointmentDataSource _getCalendarDataSource(List<Event> res) {
   List<Appointment> appointments = <Appointment>[];
-  res.map((e) {
+  res.where((e) => e.decision == Decision.approved).map((e) {
     appointments.add(Appointment(
         startTime: e.start,
         endTime: e.end,
-        subject: '${e.room.name} - ${e.reason}',
-        isAllDay: false,
+        subject: '${e.name} - ${e.organizer}',
+        isAllDay: e.allDay,
         startTimeZone: "Europe/Paris",
         endTimeZone: "Europe/Paris",
-        notes: e.note,
-        color: generateColor(e.room.id),
+        notes: e.description,
+        color: generateColor(e.location),
         recurrenceRule: e.recurrenceRule));
   }).toList();
   return _AppointmentDataSource(appointments);

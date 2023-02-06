@@ -3,34 +3,35 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
-import 'package:myecl/booking/providers/booking_page_provider.dart';
-import 'package:myecl/booking/providers/booking_provider.dart';
-import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/ui/booking_card.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/event/class/event.dart';
+import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
+import 'package:myecl/event/providers/event_list_provider.dart';
+import 'package:myecl/event/providers/event_page_provider.dart';
+import 'package:myecl/event/providers/event_provider.dart';
+import 'package:myecl/event/ui/event_ui.dart';
+import 'package:myecl/tools/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class ListBooking extends HookConsumerWidget {
-  final List<Booking> bookings;
+class ListEvent extends HookConsumerWidget {
+  final List<Event> events;
   final bool canToggle = true;
   final String title;
-  const ListBooking({
+  const ListEvent({
     Key? key,
-    required this.bookings,
+    required this.events,
     required this.title,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(bookingPageProvider.notifier);
-    final bookingNotifier = ref.watch(bookingProvider.notifier);
-    final bookingListNotifier = ref.watch(bookingListProvider.notifier);
-    final confirmedBookingListNotifier =
-        ref.watch(confirmedBookingListProvider.notifier);
+    final pageNotifier = ref.watch(eventPageProvider.notifier);
+    final eventNotifier = ref.watch(eventProvider.notifier);
+    final eventListNotifier = ref.watch(eventListProvider.notifier);
+    final confirmedEventListNotifier =
+        ref.watch(confirmedEventListProvider.notifier);
     final toggle = useState(false);
-    if (bookings.isNotEmpty) {
+    if (events.isNotEmpty) {
       return Column(
         children: [
           if (canToggle)
@@ -69,19 +70,19 @@ class ListBooking extends HookConsumerWidget {
               child: Row(
                 children: [
                   const SizedBox(width: 10),
-                  ...bookings.map((e) => BookingCard(
-                        booking: e,
+                  ...events.map((e) => EventUi(
+                        event: e,
+                        isDetailPage: true,
                         isAdmin: e.start.isAfter(DateTime.now()),
-                        isDetail: false,
                         onEdit: () {
-                          bookingNotifier.setBooking(e);
-                          pageNotifier.setBookingPage(
-                              BookingPage.addEditBookingFromAdmin);
+                          eventNotifier.setEvent(e);
+                          pageNotifier
+                              .setEventPage(EventPage.addEditEventFromAdmin);
                         },
                         onInfo: () {
-                          bookingNotifier.setBooking(e);
-                          pageNotifier.setBookingPage(
-                              BookingPage.detailBookingFromAdmin);
+                          eventNotifier.setEvent(e);
+                          pageNotifier.setEventPage(
+                              EventPage.eventDetailfromModuleFromAdmin);
                         },
                         onConfirm: () async {
                           await showDialog(
@@ -93,15 +94,13 @@ class ListBooking extends HookConsumerWidget {
                                         BookingTextConstants.confirmBooking,
                                     onYes: () async {
                                       await tokenExpireWrapper(ref, () async {
-                                        Booking newBooking = e.copyWith(
-                                            decision: Decision.approved);
-                                        bookingListNotifier
+                                        eventListNotifier
                                             .toggleConfirmed(
-                                                newBooking, Decision.approved)
+                                                e, Decision.approved)
                                             .then((value) {
                                           if (value) {
-                                            confirmedBookingListNotifier
-                                                .addBooking(newBooking);
+                                            confirmedEventListNotifier
+                                                .addEvent(e);
                                           }
                                         });
                                       });
@@ -118,15 +117,13 @@ class ListBooking extends HookConsumerWidget {
                                         BookingTextConstants.declineBooking,
                                     onYes: () async {
                                       await tokenExpireWrapper(ref, () async {
-                                        Booking newBooking = e.copyWith(
-                                            decision: Decision.declined);
-                                        bookingListNotifier
+                                        eventListNotifier
                                             .toggleConfirmed(
-                                                newBooking, Decision.declined)
+                                                e, Decision.declined)
                                             .then((value) {
                                           if (value) {
-                                            confirmedBookingListNotifier
-                                                .deleteBooking(newBooking);
+                                            confirmedEventListNotifier
+                                                .deleteEvent(e);
                                           }
                                         });
                                       });
@@ -134,9 +131,9 @@ class ListBooking extends HookConsumerWidget {
                               });
                         },
                         onCopy: () {
-                          bookingNotifier.setBooking(e.copyWith(id: ""));
-                          pageNotifier.setBookingPage(
-                              BookingPage.addEditBookingFromAdmin);
+                          eventNotifier.setEvent(e.copyWith(id: ""));
+                          pageNotifier
+                              .setEventPage(EventPage.addEditEventFromAdmin);
                         },
                       )),
                   const SizedBox(width: 10),

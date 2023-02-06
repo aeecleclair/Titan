@@ -1,3 +1,4 @@
+import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -8,6 +9,21 @@ class EventRepository extends Repository {
 
   Future<List<Event>> getAllEvent() async {
     return List<Event>.from((await getList()).map((x) => Event.fromJson(x)));
+  }
+
+  Future<List<Event>> getConfirmedEventList() async {
+    return List<Event>.from(
+        (await getList(suffix: "confirmed")).map((x) => Event.fromJson(x)));
+  }
+
+  Future<List<Event>> getUserEventList(String id) async {
+    return List<Event>.from(
+        (await getList(suffix: "user/$id")).map((x) => Event.fromJson(x)));
+  }
+
+  Future<bool> confirmEvent(Event event, Decision value) async {
+    return await update({}, event.id,
+        suffix: '/reply/${value.toString().split('.')[1]}');
   }
 
   Future<Event> getEvent(String id) async {

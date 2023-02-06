@@ -372,7 +372,7 @@ class MainPage extends HookConsumerWidget {
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
                               color: Colors.black)),
-                      const Text(SettingsTextConstants.hyperionUrl,
+                      const Text(Repository.host,
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,

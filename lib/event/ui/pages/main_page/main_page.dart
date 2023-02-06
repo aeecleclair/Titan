@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/event/class/event.dart';
+import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
+import 'package:myecl/event/providers/event_provider.dart';
+import 'package:myecl/event/providers/is_admin.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/event_ui.dart';
 import 'package:myecl/tools/ui/refresher.dart';
@@ -12,13 +16,15 @@ class MainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isAdmin = ref.watch(isEventAdmin);
     final pageNotifier = ref.watch(eventPageProvider.notifier);
-    final eventNotifier = ref.watch(eventListProvider.notifier);
-    final events = ref.watch(eventListProvider);
+    final eventNotifier = ref.watch(eventProvider.notifier);
+    final eventListNotifier = ref.watch(confirmedEventListProvider.notifier);
+    final events = ref.watch(confirmedEventListProvider);
     return Expanded(
       child: Refresher(
         onRefresh: () async {
-          await eventNotifier.loadEventList();
+          await eventListNotifier.loadConfirmedEvent();
         },
         child: Column(
           children: [
@@ -29,14 +35,50 @@ class MainPage extends HookConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                          events.isEmpty
-                              ? EventTextConstants.noEvent
-                              : EventTextConstants.eventList,
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 205, 205, 205))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                              events.isEmpty
+                                  ? EventTextConstants.noEvent
+                                  : EventTextConstants.myEvents,
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 205, 205, 205))),
+                          if (isAdmin)
+                            GestureDetector(
+                              onTap: () {
+                                pageNotifier.setEventPage(EventPage.admin);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 8),
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.black.withOpacity(0.2),
+                                          blurRadius: 10,
+                                          offset: const Offset(0, 5))
+                                    ]),
+                                child: Row(
+                                  children: const [
+                                    HeroIcon(HeroIcons.userGroup,
+                                        color: Colors.white, size: 20),
+                                    SizedBox(width: 10),
+                                    Text("Admin",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white)),
+                                  ],
+                                ),
+                              ),
+                            )
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -51,7 +93,9 @@ class MainPage extends HookConsumerWidget {
                           if (index == 0) {
                             return GestureDetector(
                               onTap: () {
-                                pageNotifier.setEventPage(EventPage.addEvent);
+                                eventNotifier.setEvent(Event.empty());
+                                pageNotifier.setEventPage(
+                                    EventPage.addEditEventFromMain);
                               },
                               child: Container(
                                   margin: const EdgeInsets.only(
@@ -89,7 +133,15 @@ class MainPage extends HookConsumerWidget {
                             );
                           }
                           return EventUi(
-                              event: events[index - 1], isDetailPage: false);
+                            event: events[index - 1],
+                            isAdmin: false,
+                            isDetailPage: false,
+                            onConfirm: () {},
+                            onCopy: () {},
+                            onDecline: () {},
+                            onEdit: () {},
+                            onInfo: () {},
+                          );
                         }),
                   ),
                 ],

@@ -42,7 +42,9 @@ dependencies:
   syncfusion_flutter_calendar: ^20.1.50
   tuple: ^2.0.0
   universal_html: ^2.0.8
+  url_launcher: ^6.1.7
   vector_math: ^2.1.2
+  zxcvbn: ^1.0.0
 
 dev_dependencies:
   dependency_validator: ^3.2.2

@@ -3,42 +3,60 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
+import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/selected_days_provider.dart';
+import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/event/ui/pages/add_page/loaner_chip.dart';
-import 'package:myecl/event/ui/pages/add_page/text_entry.dart';
+import 'package:myecl/event/ui/pages/event_pages/loaner_chip.dart';
+import 'package:myecl/event/ui/pages/event_pages/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-class AddEventPage extends HookConsumerWidget {
-  const AddEventPage({Key? key}) : super(key: key);
+class AddEditEventPage extends HookConsumerWidget {
+  const AddEditEventPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
+    final user = ref.watch(userProvider);
+    final event = ref.watch(eventProvider);
+    final rooms = ref.watch(roomListProvider);
+    final isEdit = event.id != Event.empty().id;
+    final page = ref.watch(eventPageProvider);
     final pageNotifier = ref.watch(eventPageProvider.notifier);
     final key = GlobalKey<FormState>();
-    final eventListNotifier = ref.watch(eventListProvider.notifier);
+    final eventListNotifier = ref.watch(eventEventListProvider.notifier);
     final eventType = useState(CalendarEventType.happyHour);
-    final name = useTextEditingController();
-    final organizer = useTextEditingController();
-    final start = useTextEditingController();
-    final end = useTextEditingController();
-    final place = useTextEditingController();
-    final description = useTextEditingController();
-    final allDay = useState(false);
-    final recurrent = useState(false);
-    final interval = useTextEditingController(text: "1");
-    final recurrenceEndDate = useTextEditingController();
+    final name = useTextEditingController(text: event.name);
+    final organizer = useTextEditingController(text: event.organizer);
+    final start = useTextEditingController(text: processDate(event.start));
+    final end = useTextEditingController(text: processDate(event.end));
+    final location = useTextEditingController(text: event.location);
+    final description = useTextEditingController(text: event.description);
+    final roomId = useState(event.roomId);
+    final allDay = useState(false); //  TODO
+    final recurrent = useState(event.recurrenceRule.contains("FREQ"));
+    final interval = useTextEditingController(
+        text: event.recurrenceRule != ""
+            ? event.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
+            : "1");
+    final recurrenceEndDate = useTextEditingController(
+        text: event.recurrenceRule != ""
+            ? event.recurrenceRule.split(";UNTIL=")[1].split(";")[0]
+            : "1");
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
+    final isRoom = useState(false);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -50,12 +68,15 @@ class AddEventPage extends HookConsumerWidget {
           child: Form(
               key: key,
               child: Column(children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(EventTextConstants.addEvent,
-                          style: TextStyle(
+                      child: Text(
+                          isEdit
+                              ? EventTextConstants.editEvent
+                              : EventTextConstants.addEvent,
+                          style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 205, 205, 205)))),
@@ -425,13 +446,105 @@ class AddEventPage extends HookConsumerWidget {
                             ],
                           ),
                     const SizedBox(height: 30),
-                    TextEntry(
-                      keyboardType: TextInputType.text,
-                      controller: place,
-                      isInt: false,
-                      label: EventTextConstants.place,
-                      suffix: '',
-                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                isRoom.value = true;
+                              },
+                              child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+                                  child: Chip(
+                                    label: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text("Salle",
+                                            style: TextStyle(
+                                              color: isRoom.value
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ))),
+                                    backgroundColor: isRoom.value
+                                        ? Colors.black
+                                        : Colors.grey.shade200,
+                                  ))),
+                          GestureDetector(
+                            onTap: () {
+                              isRoom.value = false;
+                              roomId.value = "";
+                            },
+                            child: Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Chip(
+                                  label: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Autre",
+                                        style: TextStyle(
+                                          color: isRoom.value
+                                              ? Colors.black
+                                              : Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  backgroundColor: isRoom.value
+                                      ? Colors.grey.shade200
+                                      : Colors.black),
+                            ),
+                          )
+                        ]),
+                    const SizedBox(height: 20),
+                    isRoom.value
+                        ? SizedBox(
+                            height: 52,
+                            child: SingleChildScrollView(
+                              child: rooms.when(
+                                  data: (rooms) => ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: rooms.length,
+                                      itemBuilder: (context, index) {
+                                        final selected =
+                                            rooms[index].id == roomId.value;
+                                        return GestureDetector(
+                                          child: Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 10.0),
+                                            child: Chip(
+                                                label: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(rooms[index].name,
+                                                      style: TextStyle(
+                                                        color: selected
+                                                            ? Colors.white
+                                                            : Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      )),
+                                                ),
+                                                backgroundColor: selected
+                                                    ? Colors.black
+                                                    : Colors.grey.shade200),
+                                          ),
+                                          onTap: () {
+                                            location.text = rooms[index].name;
+                                            roomId.value = rooms[index].id;
+                                          },
+                                        );
+                                      }),
+                                  error: (e, s) => Text(e.toString()),
+                                  loading: () => const SizedBox()),
+                            ),
+                          )
+                        : TextEntry(
+                            keyboardType: TextInputType.text,
+                            controller: location,
+                            isInt: false,
+                            label: EventTextConstants.location,
+                            suffix: '',
+                          ),
                     const SizedBox(height: 30),
                     TextEntry(
                       keyboardType: TextInputType.text,
@@ -520,27 +633,47 @@ class AddEventPage extends HookConsumerWidget {
                                     DateTime.parse(endString));
                               }
                               Event newEvent = Event(
-                                  id: '',
+                                  id: isEdit ? event.id : "",
                                   description: description.text,
                                   end: DateTime.parse(
                                       processDateBack(endString)),
                                   name: name.text,
                                   organizer: organizer.text,
                                   allDay: allDay.value,
-                                  location: place.text,
+                                  location: location.text,
                                   start: DateTime.parse(
                                       processDateBack(startString)),
                                   type: eventType.value,
-                                  recurrenceRule: recurrenceRule);
-                              final value =
-                                  await eventListNotifier.addEvent(newEvent);
+                                  recurrenceRule: recurrenceRule,
+                                  applicantId: user.id,
+                                  applicant: user.toApplicant(),
+                                  decision: Decision.pending,
+                                  roomId: roomId.value);
+                              final value = isEdit
+                                  ? await eventListNotifier
+                                      .updateEvent(newEvent)
+                                  : await eventListNotifier.addEvent(newEvent);
                               if (value) {
-                                pageNotifier.setEventPage(EventPage.main);
-                                displayToastWithContext(
-                                    TypeMsg.msg, EventTextConstants.addedEvent);
+                                if (page == EventPage.addEditEventFromMain) {
+                                  pageNotifier.setEventPage(EventPage.main);
+                                } else {
+                                  pageNotifier.setEventPage(EventPage.admin);
+                                }
+                                if (isEdit) {
+                                  displayToastWithContext(TypeMsg.msg,
+                                      EventTextConstants.editedEvent);
+                                } else {
+                                  displayToastWithContext(TypeMsg.msg,
+                                      EventTextConstants.addedEvent);
+                                }
                               } else {
-                                displayToastWithContext(TypeMsg.error,
-                                    EventTextConstants.addingError);
+                                if (isEdit) {
+                                  displayToastWithContext(TypeMsg.error,
+                                      EventTextConstants.editingError);
+                                } else {
+                                  displayToastWithContext(TypeMsg.error,
+                                      EventTextConstants.addingError);
+                                }
                               }
                             });
                           }
@@ -563,8 +696,11 @@ class AddEventPage extends HookConsumerWidget {
                               ),
                             ],
                           ),
-                          child: const Text(EventTextConstants.add,
-                              style: TextStyle(
+                          child: Text(
+                              isEdit
+                                  ? EventTextConstants.edit
+                                  : EventTextConstants.add,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold))),
