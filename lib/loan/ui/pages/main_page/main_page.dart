@@ -38,6 +38,8 @@ class MainPage extends HookConsumerWidget {
               dictCateListWidget[0].add(l);
             }
           }
+          dictCateListWidget[0].sort((a, b) => a.end.compareTo(b.end));
+          dictCateListWidget[1].sort((a, b) => b.end.compareTo(a.end));
         }
       },
       loading: () {},
@@ -54,12 +56,13 @@ class MainPage extends HookConsumerWidget {
               const SizedBox(height: 10),
               (dictCateListWidget[0].isNotEmpty)
                   ? Column(children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 30.0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(LoanTextConstants.onGoingLoan,
-                              style: TextStyle(
+                          child: Text(
+                              '${dictCateListWidget[0].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[0].length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
+                              style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromARGB(255, 205, 205, 205))),
@@ -91,22 +94,35 @@ class MainPage extends HookConsumerWidget {
                       )
                     ])
                   : (dictCateListWidget[1].isEmpty)
-                      ? const Center(
-                          child: Text(LoanTextConstants.noLoan,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 205, 205, 205))))
+                      ? SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.7,
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            children: const [
+                              Expanded(
+                                child: Center(
+                                    child: Text(LoanTextConstants.noLoan,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(
+                                                255, 205, 205, 205)))),
+                              ),
+                              Spacer()
+                            ],
+                          ),
+                        )
                       : Container(),
               const SizedBox(height: 30),
               if (dictCateListWidget[1].isNotEmpty)
                 Column(children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(LoanTextConstants.returnedLoan,
-                          style: TextStyle(
+                      child: Text(
+                          '${dictCateListWidget[1].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''}',
+                          style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 205, 205, 205))),
@@ -142,8 +158,8 @@ class MainPage extends HookConsumerWidget {
             ])),
         if (isAdmin)
           Positioned(
-            bottom: 20,
-            right: 20,
+            top: 0,
+            right: 30,
             child: GestureDetector(
               onTap: () {
                 pageNotifier.setLoanPage(LoanPage.admin);

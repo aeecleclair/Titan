@@ -56,9 +56,11 @@ class LoanTextConstants {
   static const String no = "Non";
   static const String noAssociationsFounded = "Aucune association trouvée";
   static const String noAvailableItems = "Aucun objet disponible";
+  static const String noBorrower = "Aucun emprunteur";
   static const String noItems = "Aucun objet";
   static const String noItemSelected = "Aucun objet sélectionné";
   static const String noLoan = "Aucun prêt";
+  static const String none = "Aucun";
   static const String note = "Note";
   static const String noValue = "Veuillez entrer une valeur";
   static const String onGoing = "En cours";
@@ -67,10 +69,13 @@ class LoanTextConstants {
   static const String paidCaution = "Caution payée";
   static const String positiveNumber = "Veuillez entrer un nombre positif";
   static const String previous = "Précédent";
+  static const String returned = "Rendu";
   static const String returnedLoan = "Prêt rendu";
   static const String returningError = "Erreur lors du retour";
   static const String returningLoan = "Retour";
   static const String returnLoan = "Rendre le prêt ?";
+  static const String returnLoanDescription = "Voulez-vous rendre ce prêt ?";
+  static const String toReturn = "A rendre";
   static const String unavailable = "Indisponible";
   static const String update = "Modifier";
   static const String updatedItem = "Objet modifié";

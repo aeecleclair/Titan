@@ -23,6 +23,8 @@ class LoanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final shouldReturn =
+        DateTime.now().compareTo(loan.end) > 0 && !loan.returned;
     return GestureDetector(
       onTap: () {
         if (isAdmin) {
@@ -100,13 +102,17 @@ class LoanCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                        DateTime.now().compareTo(loan.end) <= 0
-                            ? LoanTextConstants.onGoing
-                            : LoanTextConstants.ended,
+                        loan.returned
+                            ? LoanTextConstants.returned
+                            : shouldReturn
+                                ? LoanTextConstants.toReturn
+                                : LoanTextConstants.onGoing,
                         style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
-                            color: Colors.grey.shade400)),
+                            color: shouldReturn && !loan.returned
+                                ? const Color.fromARGB(255, 172, 32, 10)
+                                : Colors.grey.shade400)),
                     Text(processDate(loan.end),
                         style: TextStyle(
                             fontSize: 13,
@@ -135,7 +141,8 @@ class LoanCard extends StatelessWidget {
                                   offset: const Offset(2, 3))
                             ],
                           ),
-                          child: const HeroIcon(HeroIcons.pencil, color: Colors.black),
+                          child: const HeroIcon(HeroIcons.pencil,
+                              color: Colors.black),
                         ),
                       ),
                       ShrinkButton(

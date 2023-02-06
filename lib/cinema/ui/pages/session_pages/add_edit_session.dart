@@ -432,37 +432,19 @@ class AddEditSessionPage extends HookConsumerWidget {
     );
   }
 }
-
-_selectDate(BuildContext context, TextEditingController dateController) async {
-  final DateTime now = DateTime.now();
-  final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: now,
-      firstDate: now,
-      lastDate: DateTime(now.year + 1, now.month, now.day),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: ColorConstants.gradient1,
-              onPrimary: Colors.white,
-              surface: Colors.white,
-              onSurface: Colors.black,
-            ),
-            dialogBackgroundColor: Colors.white,
-          ),
-          child: child!,
-        );
-      });
-  if (picked != null) {
-    final time = await showTimePicker(
+_selectDate(
+      BuildContext context, TextEditingController dateController) async {
+    final DateTime now = DateTime.now();
+    showDatePicker(
         context: context,
-        initialTime: TimeOfDay.fromDateTime(picked),
+        initialDate: now,
+        firstDate: now,
+        lastDate: DateTime(now.year + 1, now.month, now.day),
         builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
               colorScheme: const ColorScheme.light(
-                primary: ColorConstants.gradient1,
+                primary: Color.fromARGB(255, 10, 153, 172),
                 onPrimary: Colors.white,
                 surface: Colors.white,
                 onSurface: Colors.black,
@@ -471,13 +453,34 @@ _selectDate(BuildContext context, TextEditingController dateController) async {
             ),
             child: child!,
           );
+        }).then((picked) {
+      if (picked != null) {
+        showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.now(),
+            builder: (BuildContext context, Widget? child) {
+              return Theme(
+                data: ThemeData.light().copyWith(
+                  colorScheme: const ColorScheme.light(
+                    primary: Color.fromARGB(255, 10, 153, 172),
+                    onPrimary: Colors.white,
+                    surface: Colors.white,
+                    onSurface: Colors.black,
+                  ),
+                  dialogBackgroundColor: Colors.white,
+                ),
+                child: child!,
+              );
+            }).then((value) {
+          dateController.text = DateFormat('dd/MM/yyyy HH:mm')
+              .format(DateTimeField.combine(picked, value));
         });
-    dateController.text = DateFormat('dd/MM/yyyy HH:mm')
-        .format(DateTimeField.combine(picked, time));
-  } else {
-    dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
+      } else {
+        dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
+      }
+    });
   }
-}
+
 
 _selectOnlyHour(
     BuildContext context, TextEditingController dateController) async {

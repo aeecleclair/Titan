@@ -18,7 +18,7 @@ class Item {
     caution = json['suggested_caution'];
     available = json['available'];
     suggestedLendingDuration =
-        json['suggested_lending_duration'] / (60 * 60 * 24);
+        json['suggested_lending_duration'];
   }
 
   Map<String, dynamic> toJson() {
@@ -27,7 +27,7 @@ class Item {
     data['name'] = name;
     data['suggested_caution'] = caution;
     data['available'] = available;
-    data['suggested_lending_duration'] = suggestedLendingDuration * (60 * 60 * 24);
+    data['suggested_lending_duration'] = suggestedLendingDuration;
     return data;
   }
 
@@ -47,5 +47,10 @@ class Item {
     caution = 0;
     available = false;
     suggestedLendingDuration = 0;
+  }
+
+  @override
+  String toString() {
+    return 'Item(id: $id, name: $name, caution: $caution, available: $available, suggestedLendingDuration: $suggestedLendingDuration)';
   }
 }

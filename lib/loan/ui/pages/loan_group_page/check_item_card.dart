@@ -18,7 +18,7 @@ class CheckItemCard extends StatelessWidget {
     return GestureDetector(
       onTap: onCheck,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+        margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5),
         padding: const EdgeInsets.all(12.0),
         child: Container(
           width: 140,
@@ -73,7 +73,7 @@ class CheckItemCard extends StatelessWidget {
                         color: Colors.black)),
                 const SizedBox(height: 5),
                 Text(
-                    '${LoanTextConstants.duration} : ${item.suggestedLendingDuration ~/ (24 * 60 * 60)} ${LoanTextConstants.days}',
+                    '${LoanTextConstants.duration} : ${item.suggestedLendingDuration} ${LoanTextConstants.days}',
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
