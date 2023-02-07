@@ -73,15 +73,13 @@ class Boutons extends HookConsumerWidget {
                         context, TypeMsg.error, AMAPTextConstants.noProduct);
                   } else if (order.amount <= b + order.lastAmount) {
                     Order newOrder = order.copyWith(
-                        deliveryId: deliveryId, user: me.toSimpleUser());
+                        deliveryId: deliveryId, user: me.toSimpleUser(), lastAmount: order.amount);
                     await tokenExpireWrapper(ref, () async {
                       final value = isEdit
                           ? await orderListNotifier.updateOrder(
-                              order.copyWith(lastAmount: order.amount),
-                              deliveryId,
-                              me.id)
+                              newOrder)
                           : await orderListNotifier.addOrder(
-                              newOrder, deliveryId, me.id);
+                              newOrder);
                       if (value) {
                         pageNotifier.setAmapPage(AmapPage.main);
                         userAmountNotifier

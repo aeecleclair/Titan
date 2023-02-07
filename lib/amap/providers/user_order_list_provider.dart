@@ -27,17 +27,17 @@ class UserOrderListNotifier extends ListNotifier<Order> {
         () async => _orderListRepository.getDeliveryOrderList(deliveryId));
   }
 
-  Future<bool> addOrder(Order order, String deliveryId, String userId) async {
+  Future<bool> addOrder(Order order) async {
     return await add(
-        (o) async => _orderListRepository.createOrder(deliveryId, o, userId),
+        (o) async => _orderListRepository.createOrder(o.deliveryId, o, o.user.id),
         order);
   }
 
   Future<bool> updateOrder(
-      Order order, String deliveryId, String userId) async {
+      Order order) async {
     return await update(
         (o) async =>
-            _orderListRepository.updateOrder(deliveryId, order, userId),
+            _orderListRepository.updateOrder(order.deliveryId, order, order.user.id),
         (orders, order) =>
             orders..[orders.indexWhere((o) => o.id == order.id)] = order,
         order);

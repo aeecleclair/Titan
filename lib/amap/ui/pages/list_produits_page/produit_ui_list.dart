@@ -79,6 +79,9 @@ class ProductUiInList extends ConsumerWidget {
                     }
                   },
                 ),
+                const SizedBox(
+                  width: 3,
+                ),
                 Container(
                   alignment: Alignment.center,
                   child: Text(
@@ -86,6 +89,9 @@ class ProductUiInList extends ConsumerWidget {
                     style: const TextStyle(
                         fontSize: 15, fontWeight: FontWeight.w700),
                   ),
+                ),
+                const SizedBox(
+                  width: 3,
                 ),
                 GestureDetector(
                   child: Container(

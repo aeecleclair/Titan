@@ -14,9 +14,7 @@ class ListProductPage extends HookConsumerWidget {
     final animation = useAnimationController(
         duration: const Duration(milliseconds: 200), initialValue: 0)
       ..repeat();
-    return SizedBox(
-      height: MediaQuery.of(context).size.height - 82,
-      width: MediaQuery.of(context).size.width,
+    return Expanded(
       child: Stack(
         children: [
           Column(
@@ -24,7 +22,7 @@ class ListProductPage extends HookConsumerWidget {
               Container(
                 margin: const EdgeInsets.only(top: 40),
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height - 122,
+                height: MediaQuery.of(context).size.height - 123,
                 child: CustomPaint(
                   painter: AmapBackgroundPainter(animation: animation),
                 ),
