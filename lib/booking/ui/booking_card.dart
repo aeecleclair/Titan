@@ -23,9 +23,10 @@ class BookingCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final showButton = booking.start.isAfter(DateTime.now());
     return Container(
       padding: const EdgeInsets.all(15.0),
-      height: isDetail ? 180 : 226,
+      height: (showButton || isAdmin) ? 200 : 160,
       child: Container(
         width: 300,
         decoration: BoxDecoration(
@@ -63,7 +64,7 @@ class BookingCard extends HookConsumerWidget {
                     )
                 ],
               ),
-              const SizedBox(height: 3),
+              const SizedBox(height: 6),
               AutoSizeText(
                   formatRecurrenceRule(booking.start, booking.end,
                       booking.recurrenceRule, false),
@@ -73,7 +74,7 @@ class BookingCard extends HookConsumerWidget {
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey.shade400)),
-              const SizedBox(height: 1),
+              const SizedBox(height: 4),
               AutoSizeText(booking.reason,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -81,7 +82,7 @@ class BookingCard extends HookConsumerWidget {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
-              const SizedBox(height: 1),
+              const SizedBox(height: 4),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -108,6 +109,7 @@ class BookingCard extends HookConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    if (showButton || isAdmin)
                     GestureDetector(
                       onTap: onEdit,
                       child: Container(
@@ -128,8 +130,7 @@ class BookingCard extends HookConsumerWidget {
                             color: Colors.black),
                       ),
                     ),
-                    if (isAdmin) const Spacer(),
-                    if (isAdmin)
+                    if (showButton || isAdmin) const Spacer(),
                       GestureDetector(
                         onTap: onCopy,
                         child: Container(
@@ -150,8 +151,8 @@ class BookingCard extends HookConsumerWidget {
                               color: Colors.white),
                         ),
                       ),
-                    if (isAdmin) const Spacer(),
-                    if (isAdmin)
+                    if (showButton && isAdmin) const Spacer(),
+                    if (showButton && isAdmin)
                       GestureDetector(
                         onTap: onConfirm,
                         child: Container(
@@ -179,8 +180,8 @@ class BookingCard extends HookConsumerWidget {
                               color: Colors.black),
                         ),
                       ),
-                    if (isAdmin) const Spacer(),
-                    if (isAdmin)
+                    if (showButton && isAdmin) const Spacer(),
+                    if (showButton && isAdmin)
                       GestureDetector(
                         onTap: onDecline,
                         child: Container(

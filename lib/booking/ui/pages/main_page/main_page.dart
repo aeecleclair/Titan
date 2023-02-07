@@ -33,7 +33,7 @@ class MainPage extends HookConsumerWidget {
       child: Column(children: [
         const SizedBox(height: 20),
         SizedBox(
-            height: MediaQuery.of(context).size.height - 415,
+            height: MediaQuery.of(context).size.height - 370,
             child: const Calendar()),
         SizedBox(
           height: (isAdmin) ? 25 : 30,
@@ -89,7 +89,7 @@ class MainPage extends HookConsumerWidget {
           height: (isAdmin) ? 0 : 10,
         ),
         SizedBox(
-          height: 226,
+          height: 200,
           child: bookings.when(
               data: (List<Booking> data) => ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -109,7 +109,7 @@ class MainPage extends HookConsumerWidget {
                               padding: const EdgeInsets.all(15.0),
                               child: Container(
                                 width: 120,
-                                height: 180,
+                                height: 200,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(30),
@@ -153,7 +153,11 @@ class MainPage extends HookConsumerWidget {
                           },
                           onConfirm: () {},
                           onDecline: () {},
-                          onCopy: () {},
+                          onCopy: () {
+                            bookingNotifier.setBooking(e.copyWith(id: ""));
+                            pageNotifier
+                                .setBookingPage(BookingPage.addEditBooking);
+                          },
                         );
                       }
                     },

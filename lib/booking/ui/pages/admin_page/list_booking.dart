@@ -71,7 +71,7 @@ class ListBooking extends HookConsumerWidget {
                   const SizedBox(width: 10),
                   ...bookings.map((e) => BookingCard(
                         booking: e,
-                        isAdmin: e.start.isAfter(DateTime.now()),
+                        isAdmin: true,
                         isDetail: false,
                         onEdit: () {
                           bookingNotifier.setBooking(e);

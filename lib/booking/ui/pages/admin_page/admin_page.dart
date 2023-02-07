@@ -54,9 +54,9 @@ class AdminPage extends HookConsumerWidget {
         },
         child: Column(
           children: [
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             SizedBox(
-                height: MediaQuery.of(context).size.height - 415,
+                height: MediaQuery.of(context).size.height - 370,
                 child: const Calendar()),
             const SizedBox(height: 30),
             if (pendingBookings.isEmpty &&
@@ -93,7 +93,7 @@ class AdminPage extends HookConsumerWidget {
                         color: Color.fromARGB(255, 149, 149, 149))),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 30),
             roomList.when(
               data: (List<Room> data) => SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
