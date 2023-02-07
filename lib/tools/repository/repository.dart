@@ -125,7 +125,7 @@ abstract class Repository {
       } else if (response.statusCode == 403) {
         FLog.error(
             text:
-                "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+                "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}");
 
         String toDecode = response.body;
         if (host == displayHost) {
@@ -208,7 +208,7 @@ abstract class Repository {
       return true;
     } else if (response.statusCode == 403) {
       FLog.error(
-          text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+          text: "PATCH ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
       String toDecode = response.body;
       if (host == displayHost) {
         toDecode = utf8.decode(response.body.runes.toList());
@@ -235,7 +235,7 @@ abstract class Repository {
       return true;
     } else if (response.statusCode == 403) {
       FLog.error(
-          text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+          text: "DELETE ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
       String toDecode = response.body;
       if (host == displayHost) {
         toDecode = utf8.decode(response.body.runes.toList());
