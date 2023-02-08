@@ -24,6 +24,22 @@ class SignUpBar extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: ShrinkButton(
               onTap: onPressed,
+              waitChild: Row(
+                children: [
+                  Text(
+                    label,
+                    style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white),
+                  ),
+                  Container(
+                      margin: const EdgeInsets.only(left: 20),
+                      child: const CircularProgressIndicator(
+                        color: Colors.white,
+                      )),
+                ],
+              ),
               child: Row(
                 children: [
                   Text(
@@ -37,7 +53,7 @@ class SignUpBar extends StatelessWidget {
                     margin: const EdgeInsets.only(left: 20),
                     child: isLoading
                         ? const CircularProgressIndicator(
-                            color: ColorConstants.gradient2,
+                            color: Colors.white,
                           )
                         : const HeroIcon(
                             HeroIcons.arrowRight,
@@ -69,6 +85,24 @@ class SignInBar extends StatelessWidget {
       height: 50,
       child: ShrinkButton(
         onTap: onPressed,
+        waitChild: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              label,
+              style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                  color: ColorConstants.background2),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20),
+              child: const CircularProgressIndicator(
+                      color: ColorConstants.background2,
+                    )
+            ),
+          ],
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -83,11 +117,11 @@ class SignInBar extends StatelessWidget {
               margin: const EdgeInsets.only(left: 20),
               child: isLoading
                   ? const CircularProgressIndicator(
-                      color: ColorConstants.gradient2,
+                      color: ColorConstants.background2,
                     )
                   : const HeroIcon(
                       HeroIcons.arrowRight,
-                      color: ColorConstants.gradient2,
+                      color: ColorConstants.background2,
                       size: 35.0,
                     ),
             ),
