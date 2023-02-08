@@ -50,12 +50,12 @@ class AdminSessionCard extends HookConsumerWidget {
                     if (data[session] != null) {
                       return data[session]!.when(data: (data) {
                         if (data.isNotEmpty) {
-                          return               Image(
-                image: data.first.image,
-                height: 200,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              );
+                          return Image(
+                            image: data.first.image,
+                            height: 200,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          );
                         } else {
                           sessionPosterNotifier
                               .getLogo(session.id)
@@ -105,6 +105,7 @@ class AdminSessionCard extends HookConsumerWidget {
                     AutoSizeText(
                       session.name,
                       maxLines: 2,
+                      textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 15,

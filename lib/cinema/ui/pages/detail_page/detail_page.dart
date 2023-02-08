@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -5,6 +6,7 @@ import 'package:myecl/cinema/providers/cinema_page_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
+import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 
 class DetailPage extends HookConsumerWidget {
@@ -185,34 +187,34 @@ class DetailPage extends HookConsumerWidget {
                     const SizedBox(
                       height: 15,
                     ),
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            session.name,
-                            style: const TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      alignment: Alignment.center,
+                      child: AutoSizeText(
+                        session.name,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
                         ),
-                        const Spacer(),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            formatDate(session.start),
-                            style: const TextStyle(
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                     const SizedBox(
                       height: 15,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      alignment: Alignment.center,
+                      child: Text(
+                        formatDate(session.start),
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     SizedBox(
                       height: 35,
@@ -254,7 +256,7 @@ class DetailPage extends HookConsumerWidget {
                       child: Text(
                         session.overview == null
                             ? session.overview!
-                            : 'No overview available',
+                            : CinemaTextConstants.noOverview,
                         textAlign: TextAlign.left,
                         style: const TextStyle(
                           fontSize: 15,

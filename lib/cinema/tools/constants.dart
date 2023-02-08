@@ -21,6 +21,7 @@ class CinemaTextConstants {
   static const String name = "Nom";
   static const String noDateError = "Veuillez entrer une date";
   static const String noDuration = "Veuillez entrer une durée";
+  static const String noOverview = "Aucun synopsis";
   static const String noPoster = "Aucune affiche";
   static const String noSession = "Aucune séance";
   static const String overview = "Synopsis";

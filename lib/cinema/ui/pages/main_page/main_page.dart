@@ -105,7 +105,7 @@ class MainPage extends HookConsumerWidget {
                 );
               }
               return SizedBox(
-                height: MediaQuery.of(context).size.height - 252,
+                height: MediaQuery.of(context).size.height - 190,
                 child: PageView.builder(
                     physics: const BouncingScrollPhysics(),
                     controller: pageController,
