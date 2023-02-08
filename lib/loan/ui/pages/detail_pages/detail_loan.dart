@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
@@ -46,8 +47,10 @@ class DetailLoanPage extends HookConsumerWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            AutoSizeText(
                               loan.borrower.getName(),
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
@@ -84,8 +87,7 @@ class DetailLoanPage extends HookConsumerWidget {
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10,
-                                      childAspectRatio: 0.9),
+                                      mainAxisSpacing: 1.25),
                               itemBuilder: (context, index) {
                                 return ItemCard(
                                   item: loan.items[index],

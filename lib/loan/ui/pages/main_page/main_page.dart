@@ -158,7 +158,7 @@ class MainPage extends HookConsumerWidget {
             ])),
         if (isAdmin)
           Positioned(
-            top: 0,
+            top: 30,
             right: 30,
             child: GestureDetector(
               onTap: () {
