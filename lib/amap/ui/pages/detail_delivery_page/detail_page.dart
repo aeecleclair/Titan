@@ -8,6 +8,7 @@ import 'package:myecl/amap/providers/sorted_delivery_product.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/command_ui.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 
 class DetailDeliveryPage extends HookConsumerWidget {
   const DetailDeliveryPage({super.key});
@@ -21,30 +22,39 @@ class DetailDeliveryPage extends HookConsumerWidget {
     deliveryProductListNotifier.loadProductList(delivery.products);
     final sortedByCategoryDeliveryProducts =
         ref.watch(sortedByCategoryDeliveryProductsProvider);
-    return Container(
-      padding: const EdgeInsets.all(30),
+    return Refresher(
+      onRefresh: () async {
+        await deliveryProductListNotifier.loadProductList(delivery.products);
+      },
       child: Column(
         children: [
-          Text(
-            "Date de livraison : ${processDate(delivery.deliveryDate)}",
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text("Produits :",
-                style: TextStyle(
-                    fontSize: 18,
+          Padding(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              children: [
+                Text(
+                  "Date de livraison : ${processDate(delivery.deliveryDate)}",
+                  style: const TextStyle(
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: AMAPColorConstants.textDark)),
-          ),
-          const SizedBox(
-            height: 30,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Produits :",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AMAPColorConstants.textDark)),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
           ),
           ...sortedByCategoryDeliveryProducts
               .map((key, value) {
@@ -75,9 +85,10 @@ class DetailDeliveryPage extends HookConsumerWidget {
           const SizedBox(
             height: 50,
           ),
-          const Align(
+          Container(
             alignment: Alignment.centerLeft,
-            child: Text("Commandes :",
+            margin: const EdgeInsets.only(left: 30),
+            child: const Text("Commandes :",
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -86,72 +97,84 @@ class DetailDeliveryPage extends HookConsumerWidget {
           const SizedBox(
             height: 30,
           ),
-          deliveryOrders.when(
-            data: (data) {
-              final orders = data[delivery.id];
-              if (orders == null) {
-                return const Center(
-                    child: CircularProgressIndicator(
-                  color: AMAPColorConstants.greenGradient2,
-                ));
-              }
-              return orders.item1.when(
-                data: (data) {
-                  if (data.isEmpty) {
-                    return const Center(child: Text("Aucune commande"));
-                  } else {
-                    return Column(
-                      children: [
-                        ...data.map((e) => Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                          padding:
-                                              const EdgeInsets.only(right: 20),
-                                          child: AutoSizeText(
-                                            e.user.getName(),
-                                            maxLines: 2,
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )),
-                                      const SizedBox(
-                                        height: 10,
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: deliveryOrders.when(
+              data: (data) {
+                final orders = data[delivery.id];
+                if (orders == null) {
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: AMAPColorConstants.greenGradient2,
+                  ));
+                }
+                return orders.item1.when(
+                  data: (data) {
+                    if (data.isEmpty) {
+                      return const Center(child: Text("Aucune commande"));
+                    } else {
+                      return Column(
+                        children: [
+                          ...data.map((e) => Container(
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                              padding: const EdgeInsets.only(
+                                                  right: 5),
+                                              child: AutoSizeText(
+                                                e.user.getName(),
+                                                maxLines: 2,
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              )),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          ...e.products.map((e) => Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 5),
+                                              child: Text("- ${e.name}"))),
+                                        ],
                                       ),
-                                      ...e.products.map((e) => Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 5),
-                                          child: Text("- ${e.name}"))),
-                                    ],
-                                  ),
+                                    ),
+                                    CommandeUI(
+                                      order: e,
+                                      onTap: () {},
+                                      onEdit: () {},
+                                      showButton: false,
+                                    ),
+                                  ],
                                 ),
-                                CommandeUI(
-                                  order: e,
-                                  onTap: () {},
-                                  onEdit: () {},
-                                  showButton: false,
-                                ),
-                              ],
-                            )),
-                      ],
-                    );
-                  }
-                },
-                loading: () => const Center(
-                    child: CircularProgressIndicator(
-                  color: AMAPColorConstants.greenGradient2,
-                )),
-                error: (error, stack) => Text(error.toString()),
-              );
-            },
-            loading: () => const Center(
-                child: CircularProgressIndicator(
-              color: AMAPColorConstants.greenGradient2,
-            )),
-            error: (error, stack) => Text(error.toString()),
+                              )),
+                          const SizedBox(
+                            height: 50,
+                          )
+                        ],
+                      );
+                    }
+                  },
+                  loading: () => const Center(
+                      child: CircularProgressIndicator(
+                    color: AMAPColorConstants.greenGradient2,
+                  )),
+                  error: (error, stack) => Text(error.toString()),
+                );
+              },
+              loading: () => const Center(
+                  child: CircularProgressIndicator(
+                color: AMAPColorConstants.greenGradient2,
+              )),
+              error: (error, stack) => Text(error.toString()),
+            ),
           ),
         ],
       ),

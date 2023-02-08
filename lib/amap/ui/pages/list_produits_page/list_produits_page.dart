@@ -15,39 +15,38 @@ class ListProductPage extends HookConsumerWidget {
         duration: const Duration(milliseconds: 200), initialValue: 0)
       ..repeat();
     return Stack(
-        children: [
-          Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 40),
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height - 123,
-                child: CustomPaint(
-                  painter: AmapBackgroundPainter(animation: animation),
-                ),
+      children: [
+        Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 40),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height - 160,
+              child: CustomPaint(
+                painter: AmapBackgroundPainter(animation: animation),
               ),
+            ),
+          ],
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: 100,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            colors: [
+              Colors.white.withOpacity(1.0),
+              Colors.white.withOpacity(0.8),
+              Colors.white.withOpacity(0.0),
             ],
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 100,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-              colors: [
-                Colors.white.withOpacity(1.0),
-                Colors.white.withOpacity(0.8),
-                Colors.white.withOpacity(0.0),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            )),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [ListProducts(), Dots(), Boutons()],
-          ),
-        ],
-      
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          )),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: const [ListProducts(), Dots(), Boutons()],
+        ),
+      ],
     );
   }
 }
