@@ -15,12 +15,13 @@ import 'package:myecl/tools/ui/dialog.dart';
 
 class ListEvent extends HookConsumerWidget {
   final List<Event> events;
-  final bool canToggle = true;
+  final bool canToggle;
   final String title;
   const ListEvent({
     Key? key,
     required this.events,
     required this.title,
+    this.canToggle = true,
   }) : super(key: key);
 
   @override

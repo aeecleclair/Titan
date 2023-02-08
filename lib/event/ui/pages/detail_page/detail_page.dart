@@ -76,6 +76,8 @@ class DetailPage extends HookConsumerWidget {
                             ),
                             AutoSizeText(
                               event.applicant.getName(),
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
@@ -134,7 +136,7 @@ class DetailPage extends HookConsumerWidget {
                                         ),
                                       ),
                                       const Spacer(
-                                        flex: 2,
+                                        flex: 5,
                                       ),
                                       GestureDetector(
                                         onTap: () async {

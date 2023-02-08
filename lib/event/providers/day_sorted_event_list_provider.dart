@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_list_provider.dart';
+import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/tools/functions.dart';
 
 final daySortedEventListProvider = Provider<Map<DateTime, List<Event>>>((ref) {
-  final eventList = ref.watch(eventListProvider);
+  final eventList = ref.watch(confirmedEventListProvider);
   final now = DateTime.now();
   final normalizedNow = normalizedDate(now);
   final sortedEventList = <DateTime, List<Event>>{};

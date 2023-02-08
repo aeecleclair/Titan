@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_list_provider.dart';
+import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/tools/functions.dart';
 
 final sortedEventListProvider = Provider<Map<String, List<Event>>>((ref) {
-  final eventList = ref.watch(eventListProvider);
+  final eventList = ref.watch(confirmedEventListProvider);
   final sortedEventList = <String, List<Event>>{};
   final dateTitle = <String, DateTime>{};
   final now = DateTime.now();

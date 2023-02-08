@@ -62,6 +62,7 @@ class AdminPage extends HookConsumerWidget {
             ListEvent(
               title: EventTextConstants.pending,
               events: pendingEvents,
+              canToggle: false,
             ),
             ListEvent(
               title: EventTextConstants.confirmed,
