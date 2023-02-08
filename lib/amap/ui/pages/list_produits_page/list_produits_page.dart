@@ -14,8 +14,7 @@ class ListProductPage extends HookConsumerWidget {
     final animation = useAnimationController(
         duration: const Duration(milliseconds: 200), initialValue: 0)
       ..repeat();
-    return Expanded(
-      child: Stack(
+    return Stack(
         children: [
           Column(
             children: [
@@ -48,7 +47,7 @@ class ListProductPage extends HookConsumerWidget {
             children: const [ListProducts(), Dots(), Boutons()],
           ),
         ],
-      ),
+      
     );
   }
 }
