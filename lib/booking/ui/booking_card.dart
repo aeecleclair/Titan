@@ -26,7 +26,7 @@ class BookingCard extends HookConsumerWidget {
     final showButton = booking.start.isAfter(DateTime.now());
     return Container(
       padding: const EdgeInsets.all(15.0),
-      height: (showButton || isAdmin) ? 200 : 160,
+      height: ((showButton || isAdmin) && !isDetail) ? 200 : 160,
       child: Container(
         width: 300,
         decoration: BoxDecoration(
@@ -110,47 +110,47 @@ class BookingCard extends HookConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     if (showButton || isAdmin)
-                    GestureDetector(
-                      onTap: onEdit,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        padding: const EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                blurRadius: 10,
-                                offset: const Offset(2, 3))
-                          ],
-                        ),
-                        child: const HeroIcon(HeroIcons.pencil,
-                            color: Colors.black),
-                      ),
-                    ),
-                    if (showButton || isAdmin) const Spacer(),
                       GestureDetector(
-                        onTap: onCopy,
+                        onTap: onEdit,
                         child: Container(
                           width: 40,
                           height: 40,
                           padding: const EdgeInsets.all(7),
                           decoration: BoxDecoration(
-                            color: Colors.black,
+                            color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(30),
                             boxShadow: [
                               BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
+                                  color: Colors.grey.withOpacity(0.2),
                                   blurRadius: 10,
                                   offset: const Offset(2, 3))
                             ],
                           ),
-                          child: const HeroIcon(HeroIcons.documentDuplicate,
-                              color: Colors.white),
+                          child: const HeroIcon(HeroIcons.pencil,
+                              color: Colors.black),
                         ),
                       ),
+                    if (showButton || isAdmin) const Spacer(),
+                    GestureDetector(
+                      onTap: onCopy,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        padding: const EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
+                          ],
+                        ),
+                        child: const HeroIcon(HeroIcons.documentDuplicate,
+                            color: Colors.white),
+                      ),
+                    ),
                     if (showButton && isAdmin) const Spacer(),
                     if (showButton && isAdmin)
                       GestureDetector(

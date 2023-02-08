@@ -14,12 +14,13 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ListBooking extends HookConsumerWidget {
   final List<Booking> bookings;
-  final bool canToggle = true;
+  final bool canToggle;
   final String title;
   const ListBooking({
     Key? key,
     required this.bookings,
     required this.title,
+    this.canToggle = true,
   }) : super(key: key);
 
   @override
@@ -29,29 +30,31 @@ class ListBooking extends HookConsumerWidget {
     final bookingListNotifier = ref.watch(bookingListProvider.notifier);
     final confirmedBookingListNotifier =
         ref.watch(confirmedBookingListProvider.notifier);
-    final toggle = useState(false);
+    final toggle = useState(!canToggle);
     if (bookings.isNotEmpty) {
       return Column(
         children: [
-          if (canToggle)
-            GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
+          GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                if (canToggle) {
                   toggle.value = !toggle.value;
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(title,
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 149, 149, 149))),
-                      ),
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(title,
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 149, 149, 149))),
+                    ),
+                    if (canToggle)
                       HeroIcon(
                         toggle.value
                             ? HeroIcons.chevronUp
@@ -59,9 +62,9 @@ class ListBooking extends HookConsumerWidget {
                         color: const Color.fromARGB(255, 149, 149, 149),
                         size: 30,
                       ),
-                    ],
-                  ),
-                )),
+                  ],
+                ),
+              )),
           if (toggle.value)
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,

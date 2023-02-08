@@ -33,7 +33,7 @@ class MainPage extends HookConsumerWidget {
       child: Column(children: [
         const SizedBox(height: 20),
         SizedBox(
-            height: MediaQuery.of(context).size.height - 370,
+            height: MediaQuery.of(context).size.height - 375,
             child: const Calendar()),
         SizedBox(
           height: (isAdmin) ? 25 : 30,

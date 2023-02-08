@@ -31,29 +31,31 @@ class ListEvent extends HookConsumerWidget {
     final eventListNotifier = ref.watch(eventListProvider.notifier);
     final confirmedEventListNotifier =
         ref.watch(confirmedEventListProvider.notifier);
-    final toggle = useState(false);
+    final toggle = useState(!canToggle);
     if (events.isNotEmpty) {
       return Column(
         children: [
-          if (canToggle)
-            GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
+          GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                if (canToggle) {
                   toggle.value = !toggle.value;
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(title,
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 149, 149, 149))),
-                      ),
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(title,
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 149, 149, 149))),
+                    ),
+                    if (canToggle)
                       HeroIcon(
                         toggle.value
                             ? HeroIcons.chevronUp
@@ -61,9 +63,9 @@ class ListEvent extends HookConsumerWidget {
                         color: const Color.fromARGB(255, 149, 149, 149),
                         size: 30,
                       ),
-                    ],
-                  ),
-                )),
+                  ],
+                ),
+              )),
           if (toggle.value)
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,

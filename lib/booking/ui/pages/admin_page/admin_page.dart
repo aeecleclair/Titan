@@ -72,6 +72,7 @@ class AdminPage extends HookConsumerWidget {
             ListBooking(
               title: BookingTextConstants.pending,
               bookings: pendingBookings,
+              canToggle: false,
             ),
             ListBooking(
               title: BookingTextConstants.confirmed,
