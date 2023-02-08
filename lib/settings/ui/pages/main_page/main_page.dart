@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
@@ -84,22 +85,22 @@ class MainPage extends HookConsumerWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                                Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      me.nickname != null 
+                              Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    me.nickname != null
                                         ? me.nickname!
                                         : me.firstname,
-                                      style: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                    style: const TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
+                              ),
                               const SizedBox(
                                 height: 3,
                               ),
@@ -367,20 +368,21 @@ class MainPage extends HookConsumerWidget {
                 const SizedBox(
                   height: 60,
                 ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("${SettingsTextConstants.version} $titanVersion",
-                          style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black)),
-                      Text(Repository.displayHost,
-                          style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black)),
-                    ]),
+                Text("${SettingsTextConstants.version} $titanVersion",
+                    style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black)),
+                const SizedBox(
+                  height: 10,
+                ),
+                AutoSizeText(Repository.displayHost,
+                    maxLines: 1,
+                    minFontSize: 10,
+                    style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black)),
                 const SizedBox(
                   height: 20,
                 ),
