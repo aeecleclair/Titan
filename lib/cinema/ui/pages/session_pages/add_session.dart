@@ -171,28 +171,27 @@ class AddSessionPage extends HookConsumerWidget {
                       }
                       if (key.currentState!.validate()) {
                         tokenExpireWrapper(ref, () async {
-                          final value = await sessionListNotifier.addSession(
-                            Session(
-                              name: name.text,
-                              duration: parseDuration(duration.text),
-                              genre: genre.text,
-                              id: '',
-                              overview: overview.text,
-                              posterUrl: posterUrl.text,
-                              start:
-                                  DateTime.parse(
-                                  processDateBackWithHour(start.text)),
-                              tagline: '',
-                            ),
-                          );
-                          if (value) {
-                            pageNotifier.setCinemaPage(CinemaPage.admin);
-                            displayToastWithContext(
-                                TypeMsg.msg, CinemaTextConstants.addedSession);
-                          } else {
-                            displayToastWithContext(
-                                TypeMsg.error, CinemaTextConstants.addingError);
-                          }
+                            final value = await sessionListNotifier.addSession(
+                              Session(
+                                name: name.text,
+                                duration: parseDuration(duration.text),
+                                genre: genre.text,
+                                id: '',
+                                overview: overview.text,
+                                posterUrl: posterUrl.text,
+                                start: DateTime.parse(
+                                    processDateBackWithHour(start.text)),
+                                tagline: '',
+                              ),
+                            );
+                            if (value) {
+                              pageNotifier.setCinemaPage(CinemaPage.admin);
+                              displayToastWithContext(TypeMsg.msg,
+                                  CinemaTextConstants.addedSession);
+                            } else {
+                              displayToastWithContext(TypeMsg.error,
+                                  CinemaTextConstants.addingError);
+                            }
                         });
                       } else {
                         displayToast(context, TypeMsg.error,
@@ -270,10 +269,10 @@ _selectDate(BuildContext context, TextEditingController dateController) async {
             child: child!,
           );
         });
-    dateController.text = DateFormat('yyyy-MM-dd HH:mm')
+    dateController.text = DateFormat('dd/MM/yyyy HH:mm')
         .format(DateTimeField.combine(picked, time));
   } else {
-    dateController.text = DateFormat('yyyy-MM-dd HH:mm').format(now);
+    dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
   }
 }
 
