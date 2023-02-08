@@ -49,6 +49,6 @@ class SignUpRepository extends Repository {
   }
 
   Future<bool> resetPassword(RecoverRequest recoverRequest) async {
-    return await create(recoverRequest.toJson(), suffix: "reset-password");
+    return (await create(recoverRequest.toJson(), suffix: "reset-password"))['success'];
   }
 }
