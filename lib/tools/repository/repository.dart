@@ -74,6 +74,8 @@ abstract class Repository {
           } else {
             throw AppException(ErrorType.notFound, decoded["detail"]);
           }
+        } on AppException {
+          rethrow;
         } catch (e) {
           FLog.error(
               text: "GET ${ext + suffix}\nError while decoding response",
@@ -126,16 +128,24 @@ abstract class Repository {
         FLog.error(
             text:
                 "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}");
-
-        String toDecode = response.body;
-        if (host == displayHost) {
-          toDecode = utf8.decode(response.body.runes.toList());
-        }
-        final decoded = jsonDecode(toDecode);
-        if (decoded["detail"] == expiredTokenDetail) {
-          throw AppException(ErrorType.tokenExpire, decoded["detail"]);
-        } else {
-          throw AppException(ErrorType.notFound, decoded["detail"]);
+        try {
+          String toDecode = response.body;
+          if (host == displayHost) {
+            toDecode = utf8.decode(response.body.runes.toList());
+          }
+          final decoded = jsonDecode(toDecode);
+          if (decoded["detail"] == expiredTokenDetail) {
+            throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+          } else {
+            throw AppException(ErrorType.notFound, decoded["detail"]);
+          }
+        } on AppException {
+          rethrow;
+        } catch (e) {
+          FLog.error(
+              text: "GET ${ext + id + suffix}\nError while decoding response",
+              exception: e);
+          throw AppException(ErrorType.notFound, response.body);
         }
       } else {
         FLog.error(
