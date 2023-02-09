@@ -16,7 +16,7 @@ class Cash {
     return data;
   }
 
-  Cash copyWith({user, balance}) {
+  Cash copyWith({SimpleUser? user, double? balance}) {
     return Cash(user: user ?? this.user, balance: balance ?? this.balance);
   }
 

@@ -50,10 +50,14 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
 
   Future<bool> update(Future<bool> Function(T t) f,
       List<T> Function(List<T> listT, T t) replace, T t) async {
+    print(state);
     return state.when(data: (d) async {
+      print(d);
       try {
         await f(t);
+        print("f");
         d = replace(d, t);
+        print(d);
         state = AsyncValue.data(d);
         return true;
       } catch (error) {

@@ -222,11 +222,14 @@ class UserCashUi extends HookConsumerWidget {
                                     color: Color.fromARGB(223, 244, 255, 183),
                                   ),
                                   onTap: () async {
+                                    print("validate");
                                     if (key.currentState == null) {
                                       return;
                                     }
                                     if (key.currentState!.validate()) {
+                                      print("ok");
                                       await tokenExpireWrapper(ref, () async {
+                                        print("update");
                                         await ref
                                             .read(cashProvider.notifier)
                                             .updateCash(
@@ -234,6 +237,7 @@ class UserCashUi extends HookConsumerWidget {
                                               int.parse(amount.text),
                                             )
                                             .then((value) {
+                                          print(value);
                                           if (value) {
                                             key.currentState!.reset();
                                             toggle();
