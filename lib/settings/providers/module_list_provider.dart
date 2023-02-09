@@ -12,8 +12,7 @@ final modulesProvider =
       .map((e) => e.id)
       .contains("39691052-2ae5-4e12-99d0-7a9f5f2b0136");
   ModulesNotifier modulesNotifier = ModulesNotifier();
-  modulesNotifier.loadModules(
-      [ModuleType.vote], [isAEMember]);
+  modulesNotifier.loadModules([ModuleType.vote], [isAEMember]);
   return modulesNotifier;
 });
 
@@ -56,6 +55,11 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
         name: "Cinéma",
         icon: HeroIcons.ticket,
         page: ModuleType.cinema,
+        selected: false),
+    Module(
+        name: "Annonce",
+        icon: HeroIcons.megaphone,
+        page: ModuleType.advert,
         selected: false),
   ];
   ModulesNotifier() : super([]);

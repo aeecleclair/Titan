@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/ui/admin.dart';
+import 'package:myecl/advert/ui/advert.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
@@ -53,6 +54,9 @@ class AppDrawer extends HookConsumerWidget {
             controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.cinema:
         return CinemaHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
+      case ModuleType.advert:
+        return AdvertHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
     }
   }
