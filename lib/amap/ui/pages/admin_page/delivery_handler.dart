@@ -70,6 +70,7 @@ class DeliveryHandler extends HookConsumerWidget {
                   )),
               deliveries.when(
                 data: (data) {
+                  data.sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
                   return Row(
                       children: data
                           .map((e) => DeliveryUi(

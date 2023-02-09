@@ -14,12 +14,13 @@ class DeliverySection extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
-    final orderableDeliveries = deliveries.when(
+    final orderableDeliveries = deliveries.when<List<Delivery>>(
         data: (data) => data
             .where((element) => element.status == DeliveryStatus.orderable)
             .toList(),
         loading: () => [],
-        error: (_, __) => []);
+        error: (_, __) => [])
+      ..sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
     return Column(
       children: [
         Padding(
@@ -68,7 +69,8 @@ class DeliverySection extends HookConsumerWidget {
                 ),
               );
             },
-            loading: () => const Center(child: CircularProgressIndicator(
+            loading: () => const Center(
+                child: CircularProgressIndicator(
               color: AMAPColorConstants.greenGradient2,
             )),
             error: (error, stack) => Text(error.toString()),
