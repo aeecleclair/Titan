@@ -15,7 +15,7 @@ import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/providers/the_movie_db_genre_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
-import 'package:myecl/loan/ui/text_entry.dart';
+import 'package:myecl/cinema/ui/text_entry.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -46,8 +46,6 @@ class AddEditSessionPage extends HookConsumerWidget {
     final logo = useState<String?>(null);
     final logoFile = useState<Image?>(null);
     final posterUrl = useTextEditingController();
-    final sessionPosterMapNotifier =
-        ref.watch(sessionPosterMapProvider.notifier);
     final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
 
     sessionPosterMap.whenData((value) {
@@ -188,6 +186,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   suffix: '',
                   isInt: false,
                   controller: name,
+                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -196,6 +195,10 @@ class AddEditSessionPage extends HookConsumerWidget {
                   suffix: '',
                   isInt: false,
                   controller: posterUrl,
+                  onChanged: (value) {
+                    logo.value = posterUrl.text;
+                    print(logo.value);
+                  },
                 ),
                 const SizedBox(height: 30),
                 GestureDetector(
@@ -271,6 +274,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   isInt: false,
                   controller: genre,
                   canBeEmpty: true,
+                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -280,6 +284,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   isInt: false,
                   controller: overview,
                   canBeEmpty: true,
+                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -289,6 +294,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   isInt: false,
                   controller: tagline,
                   canBeEmpty: true,
+                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 50),
                 ShrinkButton(
@@ -320,6 +326,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                     ),
                   ),
                   onTap: () async {
+                    print(logo.value);
                     if (key.currentState == null) {
                       return;
                     }
@@ -350,7 +357,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                                   if (logo.value != null) {
                                     sessionPosterNotifier.updateLogo(
                                         session.id, logo.value!);
-                                    sessionPosterMapNotifier.setTData(
+                                    ref.watch(sessionPosterMapProvider.notifier).setTData(
                                         session,
                                         AsyncData([
                                           Image.file(
@@ -367,11 +374,14 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 TypeMsg.msg, CinemaTextConstants.addedSession);
                             sessionList.when(
                                 data: (list) {
+                                  print("efgdhfj,");
                                   final newPretendance = list.last;
                                   if (logo.value != null) {
+                                    print(logo.value);
                                     sessionPosterNotifier.updateLogo(
                                         newPretendance.id, logo.value!);
-                                    sessionPosterMapNotifier.setTData(
+                                    print("'rgstgdhf");
+                                    ref.watch(sessionPosterMapProvider.notifier).setTData(
                                         newPretendance,
                                         AsyncData([
                                           Image.file(
@@ -379,6 +389,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                                             fit: BoxFit.cover,
                                           )
                                         ]));
+                                    print('dfsgh');
                                   }
                                 },
                                 error: (error, s) {},
