@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/is_admin.dart';
+import 'package:myecl/auth/providers/is_connected_provider.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
@@ -24,6 +26,7 @@ class TopBar extends HookConsumerWidget {
     final pageNotifier = ref.watch(pageProvider.notifier);
     final hasScrolled = ref.watch(hasScrolledProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
+    final isConnected = ref.watch(isConnectedProvider);
     final animation = useAnimationController(
         duration: const Duration(milliseconds: 250), initialValue: 0.0);
     return Column(children: [
@@ -164,6 +167,14 @@ class TopBar extends HookConsumerWidget {
               ),
             ],
           ),
+          if (!isConnected)
+            Container(
+                margin: const EdgeInsets.only(right: 20),
+                child: const HeroIcon(
+                  HeroIcons.signalSlash,
+                  color: Colors.white,
+                  size: 40,
+                ))
         ],
       ),
       AnimatedBuilder(
