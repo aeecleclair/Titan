@@ -48,7 +48,7 @@ class ListBooking extends HookConsumerWidget {
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(title,
+                      child: Text("$title${bookings.length > 1 ? "s" : ""} (${bookings.length})",
                           style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
