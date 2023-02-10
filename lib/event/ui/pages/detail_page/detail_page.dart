@@ -2,7 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/event/providers/event_provider.dart';
+import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/event_ui.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -92,13 +94,20 @@ class DetailPage extends HookConsumerWidget {
                                   const SizedBox(
                                     height: 30,
                                   ),
+                                  Text(
+                                    event.applicant.phone ??
+                                        EventTextConstants.noPhoneRegistered,
+                                    style: TextStyle(fontSize: 25),
+                                  ),
+                                  SizedBox(
+                                    height: 50,
+                                  ),
                                   Row(
                                     children: [
                                       const Spacer(),
                                       GestureDetector(
                                         onTap: () async {
-                                          if (event
-                                              .applicant.phone.isNotEmpty) {
+                                          if (event.applicant.phone != null) {
                                             try {
                                               await launchUrl(Uri.parse(
                                                   'tel:${event.applicant.phone}'));
@@ -140,8 +149,7 @@ class DetailPage extends HookConsumerWidget {
                                       ),
                                       GestureDetector(
                                         onTap: () async {
-                                          if (event
-                                              .applicant.phone.isNotEmpty) {
+                                          if (event.applicant.phone != null) {
                                             try {
                                               await launchUrl(Uri.parse(
                                                   'sms:${event.applicant.email}'));

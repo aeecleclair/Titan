@@ -3,7 +3,7 @@ import 'package:myecl/user/class/list_users.dart';
 class Applicant extends SimpleUser {
   late final String email;
   late final int? promo;
-  late final String phone;
+  late final String? phone;
   Applicant(
       {required super.name,
       required super.firstname,
@@ -51,6 +51,6 @@ class Applicant extends SimpleUser {
   Applicant.empty() : super.empty() {
     email = '';
     promo = 0;
-    phone = '';
+    phone = null;
   }
 }

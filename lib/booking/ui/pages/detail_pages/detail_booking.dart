@@ -107,12 +107,20 @@ class DetailBookingPage extends HookConsumerWidget {
                             const SizedBox(
                               height: 50,
                             ),
+                            Text(
+                              booking.applicant.phone ??
+                                  BookingTextConstants.noPhoneRegistered,
+                              style: TextStyle(fontSize: 25),
+                            ),
+                            SizedBox(
+                              height: 50,
+                            ),
                             Row(
                               children: [
                                 const Spacer(),
                                 GestureDetector(
                                   onTap: () async {
-                                    if (booking.applicant.phone.isNotEmpty) {
+                                    if (booking.applicant.phone != null) {
                                       try {
                                         await launchUrl(Uri.parse(
                                             'tel:${booking.applicant.phone}'));
@@ -152,7 +160,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () async {
-                                    if (booking.applicant.phone.isNotEmpty) {
+                                    if (booking.applicant.phone != null) {
                                       try {
                                         await launchUrl(Uri.parse(
                                             'sms:${booking.applicant.email}'));
