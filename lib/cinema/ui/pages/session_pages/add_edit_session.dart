@@ -197,7 +197,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                   controller: posterUrl,
                   onChanged: (value) {
                     logo.value = posterUrl.text;
-                    print(logo.value);
                   },
                 ),
                 const SizedBox(height: 30),
@@ -326,7 +325,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                     ),
                   ),
                   onTap: () async {
-                    print(logo.value);
                     if (key.currentState == null) {
                       return;
                     }

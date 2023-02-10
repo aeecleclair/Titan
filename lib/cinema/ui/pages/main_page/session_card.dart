@@ -59,7 +59,6 @@ class SessionCard extends HookConsumerWidget {
                   if (data[session] != null) {
                     return data[session]!.when(data: (data) {
                       if (data.isNotEmpty) {
-                        print(data);
                         return Container(
                           height: maxHeigth * scale,
                           width: double.infinity,
