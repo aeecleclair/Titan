@@ -5,8 +5,8 @@ import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/settings_page_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/loan/class/loaner.dart';
+import 'package:myecl/loan/providers/all_loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
-import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -18,7 +18,7 @@ class AddLoanerPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(adminPageProvider.notifier);
     final loanerListNotifier = ref.watch(loanerListProvider.notifier);
-    final loaners = ref.watch(loanerList);
+    final loaners = ref.watch(allLoanerList);
     final associations = ref.watch(allGroupListProvider);
     final loanersId = loaners.map((x) => x.groupManagerId).toList();
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -81,7 +81,7 @@ class AddLoanerPage extends HookConsumerWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            capitalize(e.name),
+                                            e.name,
                                             style: const TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w500),
