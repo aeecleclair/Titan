@@ -353,18 +353,21 @@ class AddEditSessionPage extends HookConsumerWidget {
                             displayToastWithContext(
                                 TypeMsg.msg, CinemaTextConstants.editedSession);
                             sessionList.when(
-                                data: (list) {
+                                data: (list) async {
                                   if (logo.value != null) {
-                                    sessionPosterNotifier.updateLogo(
-                                        session.id, logo.value!);
-                                    ref.watch(sessionPosterMapProvider.notifier).setTData(
-                                        session,
-                                        AsyncData([
-                                          Image.file(
-                                            File(logo.value!),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ]));
+                                    Image image = await sessionPosterNotifier
+                                        .updateLogo(session.id, logo.value!);
+                                    ref
+                                        .watch(
+                                            sessionPosterMapProvider.notifier)
+                                        .setTData(
+                                            session,
+                                            AsyncData([
+                                              Image(
+                                                image: image.image,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ]));
                                   }
                                 },
                                 error: (error, s) {},
@@ -373,23 +376,23 @@ class AddEditSessionPage extends HookConsumerWidget {
                             displayToastWithContext(
                                 TypeMsg.msg, CinemaTextConstants.addedSession);
                             sessionList.when(
-                                data: (list) {
-                                  print("efgdhfj,");
+                                data: (list) async {
                                   final newPretendance = list.last;
                                   if (logo.value != null) {
-                                    print(logo.value);
-                                    sessionPosterNotifier.updateLogo(
-                                        newPretendance.id, logo.value!);
-                                    print("'rgstgdhf");
-                                    ref.watch(sessionPosterMapProvider.notifier).setTData(
-                                        newPretendance,
-                                        AsyncData([
-                                          Image.file(
-                                            File(logo.value!),
-                                            fit: BoxFit.cover,
-                                          )
-                                        ]));
-                                    print('dfsgh');
+                                    Image image =
+                                        await sessionPosterNotifier.updateLogo(
+                                            newPretendance.id, logo.value!);
+                                    ref
+                                        .watch(
+                                            sessionPosterMapProvider.notifier)
+                                        .setTData(
+                                            newPretendance,
+                                            AsyncData([
+                                              Image(
+                                                image: image.image,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ]));
                                   }
                                 },
                                 error: (error, s) {},

@@ -19,7 +19,7 @@ class OrderSection extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final orders = ref.watch(userOrderListProvider);
     final deliveries = ref.watch(deliveryListProvider);
-    final orderableDeliveries = deliveries.when(
+    final orderableDeliveries = deliveries.when<List<Delivery>>(
         data: (data) => data
             .where((element) => element.status == DeliveryStatus.orderable)
             .toList(),
@@ -90,6 +90,8 @@ class OrderSection extends HookConsumerWidget {
                 ),
                 ...orders.when(
                     data: (data) {
+                      data.sort(
+                          (a, b) => a.deliveryDate.compareTo(b.deliveryDate));
                       return data.map((e) {
                         final canEdit = orderableDeliveries
                             .any((element) => element.id == e.deliveryId);
@@ -100,10 +102,12 @@ class OrderSection extends HookConsumerWidget {
                             showButton: canEdit);
                       }).toList();
                     },
-                    loading: () =>
-                        [const Center(child: CircularProgressIndicator(
+                    loading: () => [
+                          const Center(
+                              child: CircularProgressIndicator(
                             color: AMAPColorConstants.greenGradient2,
-                          ))],
+                          ))
+                        ],
                     error: (error, stack) => [Text(error.toString())]),
                 const SizedBox(
                   width: 25,

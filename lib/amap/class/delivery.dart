@@ -40,7 +40,12 @@ class Delivery {
     return data;
   }
 
-  Delivery copyWith({deliveryDate, products, expanded, id, status}) {
+  Delivery copyWith(
+      {DateTime? deliveryDate,
+      List<Product>? products,
+      bool? expanded,
+      String? id,
+      DeliveryStatus? status}) {
     return Delivery(
         deliveryDate: deliveryDate ?? this.deliveryDate,
         products: products ?? this.products,

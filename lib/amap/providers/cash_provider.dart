@@ -27,7 +27,7 @@ class CashProvider extends ListNotifier<Cash> {
         (cashs, c) => cashs
           ..[cashs.indexWhere((c) => c.user.id == c.user.id)] =
               cash.copyWith(balance: cash.balance + amount),
-        cash.copyWith(balance: amount));
+        cash.copyWith(balance: amount.toDouble()));
   }
 
   Future<AsyncValue<List<Cash>>> filterCashList(String filter) async {
@@ -38,7 +38,8 @@ class CashProvider extends ListNotifier<Cash> {
             .where((cash) =>
                 cash.user.name.toLowerCase().contains(lowerQuery) ||
                 cash.user.firstname.toLowerCase().contains(lowerQuery) ||
-                (cash.user.nickname != null && cash.user.nickname!.toLowerCase().contains(lowerQuery)))
+                (cash.user.nickname != null &&
+                    cash.user.nickname!.toLowerCase().contains(lowerQuery)))
             .toList());
       },
       error: (error, stackTrace) {
