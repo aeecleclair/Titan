@@ -23,7 +23,7 @@ class User {
   late final String id;
   late final String email;
   late final String birthday;
-  late final int? promo;
+  late final int promo;
   late final String floor;
   late final String? phone;
   late final String createdOn;
