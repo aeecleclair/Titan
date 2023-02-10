@@ -96,4 +96,9 @@ class Booking {
         applicant: Applicant.empty(),
         applicantId: '');
   }
+
+  @override
+  String toString() {
+    return 'Booking{id: $id, reason: $reason, start: $start, end: $end, note: $note, room: $room, key: $key, decision: $decision, recurrenceRule: $recurrenceRule, entity: $entity, applicant: $applicant, applicantId: $applicantId}';
+  }
 }

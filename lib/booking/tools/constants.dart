@@ -24,6 +24,9 @@ class BookingTextConstants {
   static const String declineBooking = "Refuser la réservation ?";
   static const String declined = "Refusée";
   static const String deleting = "Suppression";
+  static const String deleteBooking = "Suppression";
+  static const String deleteBookingConfirmation =
+      "Êtes-vous sûr de vouloir supprimer cette réservation ?";
   static const String deletedBooking = "Réservation supprimée";
   static const String deletedRoom = "Salle supprimée";
   static const String deletingBooking = "Supprimer la réservation ?";
@@ -86,5 +89,4 @@ class BookingTextConstants {
     "Samedi",
     "Dimanche"
   ];
-
 }

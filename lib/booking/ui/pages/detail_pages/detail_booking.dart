@@ -213,6 +213,7 @@ class DetailBookingPage extends HookConsumerWidget {
                 onConfirm: () {},
                 onDecline: () {},
                 onCopy: () {},
+                onDelete: () async {},
               ),
             ),
           )
