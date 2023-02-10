@@ -197,7 +197,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                   controller: posterUrl,
                   onChanged: (value) {
                     logo.value = posterUrl.text;
-                    print(logo.value);
                   },
                 ),
                 const SizedBox(height: 30),
@@ -326,7 +325,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                     ),
                   ),
                   onTap: () async {
-                    print(logo.value);
                     if (key.currentState == null) {
                       return;
                     }
@@ -374,13 +372,10 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 TypeMsg.msg, CinemaTextConstants.addedSession);
                             sessionList.when(
                                 data: (list) {
-                                  print("efgdhfj,");
                                   final newPretendance = list.last;
                                   if (logo.value != null) {
-                                    print(logo.value);
                                     sessionPosterNotifier.updateLogo(
                                         newPretendance.id, logo.value!);
-                                    print("'rgstgdhf");
                                     ref.watch(sessionPosterMapProvider.notifier).setTData(
                                         newPretendance,
                                         AsyncData([
@@ -389,7 +384,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                                             fit: BoxFit.cover,
                                           )
                                         ]));
-                                    print('dfsgh');
                                   }
                                 },
                                 error: (error, s) {},

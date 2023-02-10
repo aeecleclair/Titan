@@ -4,7 +4,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/is_admin.dart';
 import 'package:myecl/auth/providers/is_connected_provider.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
