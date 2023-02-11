@@ -30,6 +30,7 @@ dependencies:
   http_parser: ^4.0.2
   image_cropper: ^3.0.1
   image_picker: ^0.8.6
+  image_picker_ios: ^0.8.6+7
   intl: ^0.17.0
   jwt_decoder: ^2.0.1
   numberpicker: ^2.1.1
