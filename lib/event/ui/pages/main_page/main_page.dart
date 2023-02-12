@@ -28,6 +28,7 @@ class MainPage extends HookConsumerWidget {
         child: Column(
           children: [
             events.when(data: (events) {
+              events.sort((a, b) => b.start.compareTo(a.start));
               return Column(
                 children: [
                   Padding(

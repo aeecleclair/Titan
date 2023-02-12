@@ -31,8 +31,10 @@ class ListEvent extends HookConsumerWidget {
     final eventListNotifier = ref.watch(eventListProvider.notifier);
     final confirmedEventListNotifier =
         ref.watch(confirmedEventListProvider.notifier);
+    final incomingEvents =
+        events.where((e) => e.start.isAfter(DateTime.now())).toList();
     final toggle = useState(!canToggle);
-    if (events.isNotEmpty) {
+    if (incomingEvents.isNotEmpty) {
       return Column(
         children: [
           GestureDetector(
@@ -73,10 +75,10 @@ class ListEvent extends HookConsumerWidget {
               child: Row(
                 children: [
                   const SizedBox(width: 10),
-                  ...events.map((e) => EventUi(
+                  ...incomingEvents.map((e) => EventUi(
                         event: e,
                         isDetailPage: true,
-                        isAdmin: e.start.isAfter(DateTime.now()),
+                        isAdmin: true,
                         onEdit: () {
                           eventNotifier.setEvent(e);
                           pageNotifier
