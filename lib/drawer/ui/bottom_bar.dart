@@ -15,6 +15,7 @@ class BottomBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(authTokenProvider.notifier);
+    final isCachingNotifier = ref.watch(isCachingProvider.notifier);
     return Column(
       children: [
         SizedBox(
@@ -32,6 +33,7 @@ class BottomBar extends ConsumerWidget {
                           title: DrawerTextConstants.logOut,
                           onYes: () {
                             auth.deleteToken();
+                            isCachingNotifier.set(false);
                             displayToast(context, TypeMsg.msg,
                                 DrawerTextConstants.logOut);
                           }));

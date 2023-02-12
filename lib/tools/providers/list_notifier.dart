@@ -83,9 +83,7 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
     return state.when(data: (d) async {
       try {
         await f(id);
-        print(d.length);
         d = replace(d, t);
-        print(d.length);
         state = AsyncValue.data(d);
         return true;
       } catch (error) {

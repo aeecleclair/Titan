@@ -163,7 +163,6 @@ class MainPage extends HookConsumerWidget {
                     onDecline: () {},
                     onDelete: () async {
                       await tokenExpireWrapper(ref, () async {
-                        print("delete booking");
                         await showDialog(
                             context: context,
                             builder: (context) => CustomDialogBox(

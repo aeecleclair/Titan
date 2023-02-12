@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -197,7 +195,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                   controller: posterUrl,
                   onChanged: (value) {
                     logo.value = posterUrl.text;
-                    print(logo.value);
                   },
                 ),
                 const SizedBox(height: 30),
@@ -326,7 +323,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                     ),
                   ),
                   onTap: () async {
-                    print(logo.value);
                     if (key.currentState == null) {
                       return;
                     }

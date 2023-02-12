@@ -9,7 +9,10 @@ Future tokenExpireWrapper(WidgetRef ref, Future<dynamic> Function() f) async {
     final askingRefreshTokenNotifier =
         ref.watch(askingRefreshTokenProvider.notifier);
     final askingRefreshToken = ref.watch(askingRefreshTokenProvider);
-    if (error is AppException && error.type == ErrorType.tokenExpire) {
+    final isLoggedIn = ref.watch(isLoggedInProvider);
+    if (error is AppException &&
+        error.type == ErrorType.tokenExpire &&
+        isLoggedIn) {
       if (askingRefreshToken) return;
       askingRefreshTokenNotifier.setbool(true);
       try {
@@ -33,7 +36,10 @@ void tokenExpireWrapperAuth(Ref ref, Future<dynamic> Function() f) async {
     final askingRefreshTokenNotifier =
         ref.watch(askingRefreshTokenProvider.notifier);
     final askingRefreshToken = ref.watch(askingRefreshTokenProvider);
-    if (error is AppException && error.type == ErrorType.tokenExpire) {
+    final isLoggedIn = ref.watch(isLoggedInProvider);
+    if (error is AppException &&
+        error.type == ErrorType.tokenExpire &&
+        isLoggedIn) {
       if (askingRefreshToken) return;
       askingRefreshTokenNotifier.setbool(true);
       try {
