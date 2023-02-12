@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
-import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
+import 'package:myecl/event/ui/pages/event_pages/checkbox_entry.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
@@ -38,12 +38,13 @@ class AddEditEventPage extends HookConsumerWidget {
     final eventType = useState(CalendarEventType.happyHour);
     final name = useTextEditingController(text: event.name);
     final organizer = useTextEditingController(text: event.organizer);
-    final start = useTextEditingController(text: processDate(event.start));
-    final end = useTextEditingController(text: processDate(event.end));
+    final start =
+        useTextEditingController(text: processDateWithHour(event.start));
+    final end = useTextEditingController(text: processDateWithHour(event.end));
     final location = useTextEditingController(text: event.location);
     final description = useTextEditingController(text: event.description);
     final roomId = useState(event.roomId);
-    final allDay = useState(false); //  TODO
+    final allDay = useState(event.start.hour == 0 && event.end.hour == 0 && event.start.minute == 0 && event.end.minute == 0);
     final recurrent = useState(event.recurrenceRule.contains("FREQ"));
     final interval = useTextEditingController(
         text: event.recurrenceRule != ""
@@ -122,14 +123,22 @@ class AddEditEventPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 30),
                     CheckBoxEntry(
-                      title: EventTextConstants.recurrence,
-                      valueNotifier: recurrent,
-                    ),
+                        title: EventTextConstants.recurrence,
+                        valueNotifier: recurrent,
+                        onChanged: () {
+                          start.text = "";
+                          end.text = "";
+                          recurrenceEndDate.text = "";
+                        }),
                     const SizedBox(height: 20),
                     CheckBoxEntry(
-                      title: EventTextConstants.allDay,
-                      valueNotifier: allDay,
-                    ),
+                        title: EventTextConstants.allDay,
+                        valueNotifier: allDay,
+                        onChanged: () {
+                          start.text = "";
+                          end.text = "";
+                          recurrenceEndDate.text = "";
+                        }),
                     const SizedBox(height: 30),
                     recurrent.value
                         ? Column(
@@ -586,17 +595,16 @@ class AddEditEventPage extends HookConsumerWidget {
                           return;
                         }
                         if (key.currentState!.validate()) {
-                          if (start.text == "") {
-                            start.text = now
-                                .subtract(const Duration(minutes: 1))
-                                .toString();
+                          if (allDay.value) {
+                            start.text = processDateWithHour(
+                                now.subtract(const Duration(minutes: 1)));
+                            end.text = processDateWithHour(now);
                           }
-                          if (end.text == "") {
-                            end.text = now.toString();
-                          }
-                          if (processDateBack(start.text)
-                                  .compareTo(processDateBack(end.text)) >
-                              0) {
+                          if ((end.text.contains("/") &&
+                                  processDateBack(start.text).compareTo(
+                                          processDateBack(end.text)) >
+                                      0) ||
+                              (start.text.compareTo(end.text) > 0)) {
                             displayToast(context, TypeMsg.error,
                                 EventTextConstants.invalidDates);
                           } else {
@@ -618,18 +626,20 @@ class AddEditEventPage extends HookConsumerWidget {
                                     RecurrenceType.weekly;
                                 recurrence.recurrenceRange =
                                     RecurrenceRange.endDate;
-                                recurrence.endDate =
-                                    DateTime.parse(recurrenceEndDate.text);
+                                recurrence.endDate = DateTime.parse(
+                                    processDateBack(recurrenceEndDate.text));
                                 recurrence.weekDays = WeekDays.values
                                     .where((element) => selectedDays[
-                                        (WeekDays.values.indexOf(element) + 1) %
+                                        (WeekDays.values.indexOf(element) - 1) %
                                             7])
                                     .toList();
                                 recurrence.interval = int.parse(interval.text);
                                 recurrenceRule = SfCalendar.generateRRule(
                                     recurrence,
-                                    DateTime.parse(startString),
-                                    DateTime.parse(endString));
+                                    DateTime.parse(
+                                        processDateBackWithHour(startString)),
+                                    DateTime.parse(
+                                        processDateBackWithHour(endString)));
                               }
                               Event newEvent = Event(
                                   id: isEdit ? event.id : "",
