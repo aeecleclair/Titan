@@ -43,7 +43,7 @@ class MainPage extends HookConsumerWidget {
       child: Column(children: [
         const SizedBox(height: 20),
         SizedBox(
-            height: MediaQuery.of(context).size.height - 375,
+            height: MediaQuery.of(context).size.height - 385,
             child: const Calendar()),
         SizedBox(
           height: (isAdmin) ? 25 : 30,
@@ -99,7 +99,7 @@ class MainPage extends HookConsumerWidget {
           height: (isAdmin) ? 0 : 10,
         ),
         SizedBox(
-          height: 200,
+          height: 210,
           child: bookings.when(data: (List<Booking> data) {
             data.sort((a, b) => a.start.compareTo(b.start));
             return ListView.builder(

@@ -44,7 +44,7 @@ class AddEditEventPage extends HookConsumerWidget {
     final location = useTextEditingController(text: event.location);
     final description = useTextEditingController(text: event.description);
     final roomId = useState(event.roomId);
-    final allDay = useState(event.start.hour == 0 && event.end.hour == 0 && event.start.minute == 0 && event.end.minute == 0);
+    final allDay = useState(event.allDay);
     final recurrent = useState(event.recurrenceRule.contains("FREQ"));
     final interval = useTextEditingController(
         text: event.recurrenceRule != ""
@@ -607,6 +607,9 @@ class AddEditEventPage extends HookConsumerWidget {
                               (start.text.compareTo(end.text) > 0)) {
                             displayToast(context, TypeMsg.error,
                                 EventTextConstants.invalidDates);
+                          } else if (selectedDays.isEmpty) {
+                            displayToast(context, TypeMsg.error,
+                                EventTextConstants.noDaySelected);
                           } else {
                             await tokenExpireWrapper(ref, () async {
                               String recurrenceRule = "";

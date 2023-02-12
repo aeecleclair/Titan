@@ -26,6 +26,7 @@ class AddEditBookingPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final now = DateTime.now();
     final page = ref.watch(bookingPageProvider);
     final user = ref.watch(userProvider);
     final pageNotifier = ref.watch(bookingPageProvider.notifier);
@@ -43,7 +44,10 @@ class AddEditBookingPage extends HookConsumerWidget {
     final motif = useTextEditingController(text: booking.reason);
     final note = useTextEditingController(text: booking.note);
     final entity = useTextEditingController(text: booking.entity);
-    final allDay = useState(false); // TODO:
+    final allDay = useState(booking.start.hour == 0 &&
+        booking.end.hour == 0 &&
+        booking.start.minute == 0 &&
+        booking.end.minute == 0);
     final recurrent = useState(booking.recurrenceRule != ""
         ? booking.recurrenceRule.contains("BYDAY")
         : false);
@@ -141,16 +145,27 @@ class AddEditBookingPage extends HookConsumerWidget {
                     CheckBoxEntry(
                       title: BookingTextConstants.necessaryKey,
                       valueNotifier: keyRequired,
+                      onChanged: () {},
                     ),
                     const SizedBox(height: 20),
                     CheckBoxEntry(
                       title: BookingTextConstants.recurrence,
                       valueNotifier: recurrent,
+                      onChanged: () {
+                        start.text = "";
+                        end.text = "";
+                        recurrenceEndDate.text = "";
+                      },
                     ),
                     const SizedBox(height: 20),
                     CheckBoxEntry(
                       title: BookingTextConstants.allDay,
                       valueNotifier: allDay,
+                      onChanged: () {
+                        start.text = "";
+                        end.text = "";
+                        recurrenceEndDate.text = "";
+                      },
                     ),
                     const SizedBox(height: 30),
                     recurrent.value
@@ -498,52 +513,56 @@ class AddEditBookingPage extends HookConsumerWidget {
                           return;
                         }
                         if (key.currentState!.validate()) {
-                          if (start.text == "") {
-                            start.text = DateTime.now()
-                                .subtract(const Duration(minutes: 1))
-                                .toString();
-                          } else if (!start.text.contains("/")) {
-                            start.text = DateFormat('HH:mm')
-                                .parse(start.text)
-                                .toString();
+                          if (allDay.value) {
+                            start.text = processDateWithHour(
+                                now.subtract(const Duration(minutes: 1)));
+                            end.text = processDateWithHour(now);
                           }
-                          if (end.text == "") {
-                            end.text = DateTime.now().toString();
-                          } else if (!end.text.contains("/")) {
-                            end.text =
-                                DateFormat('HH:mm').parse(end.text).toString();
-                          }
-                          if (processDateBack(start.text)
-                                  .compareTo(processDateBack(end.text)) >
-                              0) {
+                          if ((end.text.contains("/") &&
+                                  processDateBack(start.text).compareTo(
+                                          processDateBack(end.text)) >
+                                      0) ||
+                              (start.text.compareTo(end.text) > 0)) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidDates);
                           } else if (room.value.id.isEmpty) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidRoom);
+                          } else if (selectedDays.isEmpty) {
+                            displayToast(context, TypeMsg.error, BookingTextConstants.noDaySelected);
                           } else {
                             await tokenExpireWrapper(ref, () async {
                               String recurrenceRule = "";
+                              String startString = start.text;
+                              if (!startString.contains("/")) {
+                                startString =
+                                    "${processDate(now)} $startString";
+                              }
+                              String endString = end.text;
+                              if (!endString.contains("/")) {
+                                endString = "${processDate(now)} $endString";
+                              }
                               if (recurrent.value) {
                                 RecurrenceProperties recurrence =
-                                    RecurrenceProperties(
-                                        startDate: DateTime.now());
+                                    RecurrenceProperties(startDate: now);
                                 recurrence.recurrenceType =
                                     RecurrenceType.weekly;
                                 recurrence.recurrenceRange =
                                     RecurrenceRange.endDate;
-                                recurrence.endDate =
-                                    DateTime.parse(recurrenceEndDate.text);
+                                recurrence.endDate = DateTime.parse(
+                                    processDateBack(recurrenceEndDate.text));
                                 recurrence.weekDays = WeekDays.values
                                     .where((element) => selectedDays[
-                                        (WeekDays.values.indexOf(element) + 1) %
+                                        (WeekDays.values.indexOf(element) - 1) %
                                             7])
                                     .toList();
                                 recurrence.interval = int.parse(interval.text);
                                 recurrenceRule = SfCalendar.generateRRule(
                                     recurrence,
-                                    DateTime.parse(start.text),
-                                    DateTime.parse(end.text));
+                                    DateTime.parse(
+                                        processDateBackWithHour(startString)),
+                                    DateTime.parse(
+                                        processDateBackWithHour(endString)));
                               }
                               Booking newBooking = Booking(
                                   id: isEdit ? booking.id : "",

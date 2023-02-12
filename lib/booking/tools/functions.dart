@@ -76,7 +76,9 @@ String formatRecurrenceRule(
       }
       res += " et ${listDay[listDayShort.indexOf(days[days.length - 1])]}";
     } else {
-      res += listDay[listDayShort.indexOf(days[0]) - 1];
+      if (listDayShort.contains(days[0])) {
+        res += listDay[listDayShort.indexOf(days[0]) - 1];
+      }
     }
     r += "Tous les $res ";
     if (!allDay) {

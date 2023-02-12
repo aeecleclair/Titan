@@ -56,7 +56,7 @@ class AdminPage extends HookConsumerWidget {
           children: [
             const SizedBox(height: 20),
             SizedBox(
-                height: MediaQuery.of(context).size.height - 370,
+                height: MediaQuery.of(context).size.height - 380,
                 child: const Calendar()),
             const SizedBox(height: 30),
             if (pendingBookings.isEmpty &&

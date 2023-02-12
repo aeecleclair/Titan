@@ -57,6 +57,7 @@ class BookingTextConstants {
   static const String no = "Non";
   static const String noCurrentBooking = "Pas de réservation en cours";
   static const String noDateError = "Veuillez choisir une date";
+  static const String noDaySelected = "Aucun jour sélectionné";
   static const String noDescriptionError = "Veuillez entrer une description";
   static const String noKeys = "Aucune clé";
   static const String noNoteError = "Veuillez entrer une note";
