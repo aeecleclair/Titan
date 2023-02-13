@@ -34,6 +34,7 @@ class AddEditBookingPage extends HookConsumerWidget {
     final rooms = ref.watch(roomListProvider);
     final usersBookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final bookingsNotifier = ref.watch(bookingListProvider.notifier);
+    final bookings = ref.watch(bookingListProvider);
     final booking = ref.watch(bookingProvider);
     final isEdit = booking.id != Booking.empty().id;
     final room = useState(booking.room);
@@ -529,7 +530,8 @@ class AddEditBookingPage extends HookConsumerWidget {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidRoom);
                           } else if (selectedDays.isEmpty) {
-                            displayToast(context, TypeMsg.error, BookingTextConstants.noDaySelected);
+                            displayToast(context, TypeMsg.error,
+                                BookingTextConstants.noDaySelected);
                           } else {
                             await tokenExpireWrapper(ref, () async {
                               String recurrenceRule = "";
@@ -597,8 +599,14 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   displayToastWithContext(TypeMsg.msg,
                                       BookingTextConstants.editedBooking);
                                 } else {
-                                  await usersBookingsNotifier
-                                      .addBooking(newBooking);
+                                  newBooking = bookings.when(
+                                      data: (value) => value.last,
+                                      error: (e, s) => Booking.empty(),
+                                      loading: () => Booking.empty());
+                                  if (newBooking.id != Booking.empty().id) {
+                                    await usersBookingsNotifier
+                                        .addBooking(newBooking);
+                                  }
                                   displayToastWithContext(TypeMsg.msg,
                                       BookingTextConstants.addedBooking);
                                 }

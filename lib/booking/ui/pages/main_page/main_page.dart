@@ -172,8 +172,12 @@ class MainPage extends HookConsumerWidget {
                                     final value = await allBookingsNotifier
                                         .deleteBooking(e);
                                     if (value) {
-                                      confirmedbookingsNotifier
-                                          .deleteBooking(e);
+                                      bookingsNotifier.deleteBooking(e);
+                                      if (e.decision == Decision.approved) {
+                                        confirmedbookingsNotifier
+                                            .deleteBooking(e);
+                                      }
+
                                       displayToastWithContext(TypeMsg.msg,
                                           BookingTextConstants.deleteBooking);
                                     } else {

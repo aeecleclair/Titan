@@ -44,6 +44,9 @@ class AdminPage extends HookConsumerWidget {
                 break;
             }
           }
+          confirmedBookings.sort((a, b) => b.start.compareTo(a.start));
+          canceledBookings.sort((a, b) => b.start.compareTo(a.start));
+          pendingBookings.sort((a, b) => b.start.compareTo(a.start));
         },
         error: (e, s) {},
         loading: () {});

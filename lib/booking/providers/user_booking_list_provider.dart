@@ -26,6 +26,7 @@ class UserBookingListProvider extends ListNotifier<Booking> {
     return state.when(
         data: (bookings) async {
           bookings.add(booking);
+          state = AsyncValue.data(bookings);
           return true;
         },
         loading: () async => false,
@@ -38,6 +39,22 @@ class UserBookingListProvider extends ListNotifier<Booking> {
           final index = bookings.indexWhere((b) => b.id == booking.id);
           if (index != -1) {
             bookings[index] = booking;
+            state = AsyncValue.data(bookings);
+            return true;
+          }
+          return false;
+        },
+        loading: () async => false,
+        error: (e, s) async => false);
+  }
+
+  Future<bool> deleteBooking(Booking booking) async {
+    return state.when(
+        data: (bookings) async {
+          final index = bookings.indexWhere((b) => b.id == booking.id);
+          if (index != -1) {
+            bookings.removeAt(index);
+            state = AsyncValue.data(bookings);
             return true;
           }
           return false;
