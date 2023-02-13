@@ -346,8 +346,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                         if (value) {
                           pageNotifier.setCinemaPage(CinemaPage.admin);
                           if (isEdit) {
-                            displayToastWithContext(
-                                TypeMsg.msg, CinemaTextConstants.editedSession);
                             sessionList.when(
                                 data: (list) async {
                                   if (logo.value != null) {
@@ -368,9 +366,9 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 },
                                 error: (error, s) {},
                                 loading: () {});
-                          } else {
                             displayToastWithContext(
-                                TypeMsg.msg, CinemaTextConstants.addedSession);
+                                TypeMsg.msg, CinemaTextConstants.editedSession);
+                          } else {
                             sessionList.when(
                                 data: (list) async {
                                   final newPretendance = list.last;
@@ -393,6 +391,8 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 },
                                 error: (error, s) {},
                                 loading: () {});
+                            displayToastWithContext(
+                                TypeMsg.msg, CinemaTextConstants.addedSession);
                           }
                         } else {
                           if (isEdit) {
