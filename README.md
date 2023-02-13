@@ -12,11 +12,13 @@ Titan is a cross platform frontend for our project Hyperion
 
 ## Change the backend url
 
-In [`lib/tools/repository/repository.dart`](./lib/tools/repository/repository.dart) change:
+In [`.env`](.env) change:
 
-```dart
-final host = "http://10.0.2.2:8000/";
-```
+RELEASE_HOST = "<<Your Production Server Host>>"
+
+You can also specify a debug url :
+
+DEBUG_HOST = "<<Your Debbuging Server Host>>" 
 
 ## Web dev
 

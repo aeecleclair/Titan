@@ -51,7 +51,7 @@ class ListEvent extends HookConsumerWidget {
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(title,
+                      child: Text("$title${events.length > 1 ? "s" : ""} (${events.length})",
                           style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

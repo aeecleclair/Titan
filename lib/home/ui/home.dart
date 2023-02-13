@@ -29,8 +29,12 @@ class HomePage extends HookConsumerWidget {
     return Scaffold(
       body: WillPopScope(
           onWillPop: () async {
-            controllerNotifier.toggle();
-            return false;
+            if (!controller.isCompleted) {
+              controllerNotifier.toggle();
+              return false;
+            } else {
+              return true;
+            }
           },
           child: SafeArea(
             child: IgnorePointer(

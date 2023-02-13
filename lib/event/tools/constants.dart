@@ -42,6 +42,7 @@ class EventTextConstants {
   static const String noNameError = "Veuillez entrer un nom";
   static const String noOrganizerError = "Veuillez entrer un organisateur";
   static const String noPlaceError = "Veuillez entrer un lieu";
+  static const String noPhoneRegistered = "Numéro non renseigné";
   static const String noRuleError = "Veuillez entrer une règle de récurrence";
   static const String organizer = "Organisateur";
   static const String location = "Lieu";
