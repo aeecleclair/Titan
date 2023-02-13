@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -14,6 +15,7 @@ class DeliveryHandler extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
+    final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
     return Column(
       children: [
@@ -41,6 +43,7 @@ class DeliveryHandler extends HookConsumerWidget {
               GestureDetector(
                   onTap: () {
                     selectedNotifier.clear();
+                    deliveryIdNotifier.setId("");
                     pageNotifier.setAmapPage(AmapPage.addEditDelivery);
                   },
                   child: Container(

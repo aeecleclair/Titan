@@ -72,6 +72,7 @@ class AMAPTextConstants {
   static const String deliveryNotLocked = "Livraison non verrouillée";
   static const String deliveryNotDelivered = "Livraison non effectuée";
   static const String deliveryNotOpened = "Livraison non ouverte";
+  static const String editDelivery = "Modifier la livraison";
   static const String editedCommand = "Commande modifiée";
   static const String editingError = "Erreur lors de la modification";
   static const String editProduct = "Modifier le produit";

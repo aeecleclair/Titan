@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
+import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_provider.dart';
+import 'package:myecl/amap/providers/orders_by_delivery_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/providers/sorted_by_category_products.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
@@ -172,8 +174,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                         .toList(),
                                     deliveryDate:
                                         DateTime.parse(processDateBack(date)),
-                                    status:
-                                        DeliveryStatus.creation);
+                                    status: DeliveryStatus.creation);
                                 await tokenExpireWrapper(ref, () async {
                                   final deliveryNotifier =
                                       ref.watch(deliveryListProvider.notifier);
@@ -187,6 +188,15 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                       displayToastWithContext(TypeMsg.msg,
                                           AMAPTextConstants.editedCommand);
                                     } else {
+                                      final deliveryOrdersNotifier = ref.watch(
+                                          adminDeliveryOrderListProvider
+                                              .notifier);
+                                      final deliveryList =
+                                          ref.watch(deliveryListProvider);
+                                      deliveryList.whenData((deliveries) {
+                                        deliveryOrdersNotifier
+                                            .addT(deliveries.last.id);
+                                      });
                                       displayToastWithContext(TypeMsg.msg,
                                           AMAPTextConstants.addedCommand);
                                     }
@@ -207,8 +217,10 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                     AMAPTextConstants.addingError);
                               }
                             },
-                            child: const GreenBtn(
-                                text: AMAPTextConstants.addDelivery)),
+                            child: GreenBtn(
+                                text: isEdit
+                                    ? AMAPTextConstants.editDelivery
+                                    : AMAPTextConstants.addDelivery)),
                         const SizedBox(
                           height: 40,
                         ),
