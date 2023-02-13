@@ -109,7 +109,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                               ),
                             )),
                         const SizedBox(
-                          height: 30,
+                          height: 15,
                         ),
                         const Align(
                           alignment: Alignment.centerLeft,
@@ -122,7 +122,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                           ),
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 35,
                         ),
                         productList.when(
                             data: (products) => Column(
@@ -162,7 +162,10 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                                                         e));
                                                           },
                                                           p: e,
-                                                        ))
+                                                        )),
+                                                    const SizedBox(
+                                                      height: 20,
+                                                    ),
                                                   ],
                                                 )))
                                             .values
