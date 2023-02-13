@@ -33,19 +33,24 @@ class Booking {
       required this.applicant,
       required this.applicantId});
 
-  Booking.fromJson(Map<String, dynamic> json) {
-    id = json["id"];
-    reason = json["reason"];
-    start = DateTime.parse(json["start"]);
-    end = DateTime.parse(json["end"]);
-    note = json["note"];
-    room = Room.fromJson(json["room"]);
-    key = json["key"];
-    decision = stringToDecision(json["decision"]);
-    recurrenceRule = json["recurrence_rule"] ?? "";
-    entity = json["entity"] ?? "";
-    applicantId = json["applicant_id"];
-    applicant = json["applicant"] != null ? Applicant.fromJson(json["applicant"]) : Applicant.empty().copyWith(id: applicantId);
+  static Booking fromJson(Map<String, dynamic> json) {
+    Booking booking = Booking(
+      id: json["id"],
+      reason: json["reason"],
+      start: DateTime.parse(json["start"]),
+      end: DateTime.parse(json["end"]),
+      note: json["note"],
+      room: Room.fromJson(json["room"]),
+      key: json["key"],
+      decision: stringToDecision(json["decision"]),
+      recurrenceRule: json["recurrence_rule"] ?? "",
+      entity: json["entity"] ?? "",
+      applicantId: json["applicant_id"],
+      applicant: json["applicant"] != null
+          ? Applicant.fromJson(json["applicant"])
+          : Applicant.empty().copyWith(id: json["applicant_id"]),
+    );
+    return booking.copyWith(end: getTrueEnd(booking));
   }
 
   Map<String, dynamic> toJson() {
@@ -65,7 +70,18 @@ class Booking {
   }
 
   Booking copyWith(
-      {id, reason, start, end, note, room, key, decision, recurrenceRule, entity, applicant, applicantId}) {
+      {id,
+      reason,
+      start,
+      end,
+      note,
+      room,
+      key,
+      decision,
+      recurrenceRule,
+      entity,
+      applicant,
+      applicantId}) {
     return Booking(
         id: id ?? this.id,
         reason: reason ?? this.reason,

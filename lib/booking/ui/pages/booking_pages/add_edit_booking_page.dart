@@ -14,6 +14,7 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/text_entry.dart';
+import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -38,20 +39,24 @@ class AddEditBookingPage extends HookConsumerWidget {
     final booking = ref.watch(bookingProvider);
     final isEdit = booking.id != Booking.empty().id;
     final room = useState(booking.room);
-    final start = useTextEditingController(
-        text: isEdit ? processDateWithHour(booking.start) : "");
-    final end = useTextEditingController(
-        text: isEdit ? processDateWithHour(booking.end) : "");
-    final motif = useTextEditingController(text: booking.reason);
-    final note = useTextEditingController(text: booking.note);
-    final entity = useTextEditingController(text: booking.entity);
+    final recurrent = useState(booking.recurrenceRule != ""
+        ? booking.recurrenceRule.contains("BYDAY")
+        : false);
     final allDay = useState(booking.start.hour == 0 &&
         booking.end.hour == 0 &&
         booking.start.minute == 0 &&
         booking.end.minute == 0);
-    final recurrent = useState(booking.recurrenceRule != ""
-        ? booking.recurrenceRule.contains("BYDAY")
-        : false);
+    final start = useTextEditingController(
+        text: recurrent.value
+            ? processDateOnlyHour(booking.start)
+            : processDateWithHour(booking.start));
+    final end = useTextEditingController(
+        text: recurrent.value
+            ? processDateOnlyHour(booking.end)
+            : processDateWithHour(booking.end));
+    final motif = useTextEditingController(text: booking.reason);
+    final note = useTextEditingController(text: booking.note);
+    final entity = useTextEditingController(text: booking.entity);
     final keyRequired = useState(booking.key);
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
@@ -61,8 +66,9 @@ class AddEditBookingPage extends HookConsumerWidget {
             : "1");
     final recurrenceEndDate = useTextEditingController(
         text: booking.recurrenceRule != ""
-            ? booking.recurrenceRule.split(";UNTIL=")[1].split(";")[0]
-            : "1");
+            ? processDate(DateTime.parse(
+                booking.recurrenceRule.split(";UNTIL=")[1].split(";")[0]))
+            : "");
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }

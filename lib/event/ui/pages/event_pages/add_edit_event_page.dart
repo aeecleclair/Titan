@@ -38,22 +38,30 @@ class AddEditEventPage extends HookConsumerWidget {
     final eventType = useState(CalendarEventType.happyHour);
     final name = useTextEditingController(text: event.name);
     final organizer = useTextEditingController(text: event.organizer);
-    final start =
-        useTextEditingController(text: processDateWithHour(event.start));
-    final end = useTextEditingController(text: processDateWithHour(event.end));
     final location = useTextEditingController(text: event.location);
     final description = useTextEditingController(text: event.description);
     final roomId = useState(event.roomId);
     final allDay = useState(event.allDay);
-    final recurrent = useState(event.recurrenceRule.contains("FREQ"));
+    final recurrent = useState(event.recurrenceRule != ""
+        ? event.recurrenceRule.contains("BYDAY")
+        : false);
+    final start = useTextEditingController(
+        text: recurrent.value
+            ? processDateOnlyHour(event.start)
+            : processDateWithHour(event.start));
+    final end = useTextEditingController(
+        text: recurrent.value
+            ? processDateOnlyHour(event.end)
+            : processDateWithHour(event.end));
     final interval = useTextEditingController(
         text: event.recurrenceRule != ""
             ? event.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
             : "1");
     final recurrenceEndDate = useTextEditingController(
         text: event.recurrenceRule != ""
-            ? event.recurrenceRule.split(";UNTIL=")[1].split(";")[0]
-            : "1");
+            ? processDate(DateTime.parse(
+                event.recurrenceRule.split(";UNTIL=")[1].split(";")[0]))
+            : "");
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
     final isRoom = useState(false);

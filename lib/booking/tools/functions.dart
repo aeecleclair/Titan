@@ -3,6 +3,7 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 Decision stringToDecision(String s) {
   switch (s) {
@@ -110,4 +111,16 @@ Color generateColor(String uuid) {
 Color invert(Color color) {
   return Color.fromARGB(
       color.alpha, 255 - color.red, 255 - color.green, 255 - color.blue);
+}
+
+List<DateTime> getDateInRecurrence(String recurrenceRule, DateTime start) {
+  return SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
+}
+
+DateTime getTrueEnd(Booking b) {
+  if (b.recurrenceRule.isEmpty) {
+    return b.end;
+  } else {
+    return getDateInRecurrence(b.recurrenceRule, b.start).last;
+  }
 }
