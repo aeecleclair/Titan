@@ -7,6 +7,7 @@ import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/providers/orders_by_delivery_provider.dart';
+import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/providers/sorted_by_category_products.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
@@ -28,7 +29,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
     final isEdit = delivery.id != Delivery.empty().id;
     final dateController = useTextEditingController(
         text: isEdit ? processDate(delivery.deliveryDate) : '');
-    final products = ref.watch(productList);
+    final productList = ref.watch(productListProvider);
     final sortedProductsList = ref.watch(sortedByCategoryProductsProvider);
     final selected = ref.watch(selectedListProvider);
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
@@ -123,104 +124,144 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        if (products.isNotEmpty)
-                          Column(
-                            children: sortedProductsList
-                                .map((key, value) => MapEntry(
-                                    key,
-                                    Column(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            key,
-                                            style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w800,
-                                                color: Colors.black),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        ...value.map((e) => ProductUi(
-                                              isModif:
-                                                  selected[products.indexOf(e)],
-                                              onclick: () {
-                                                selectedNotifier.toggle(
-                                                    products.indexOf(e));
-                                              },
-                                              p: e,
-                                            ))
-                                      ],
-                                    )))
-                                .values
-                                .toList(),
-                          ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        ShrinkButton(
-                            waitChild:
-                                const GreenBtn(text: AMAPTextConstants.waiting),
-                            onTap: () async {
-                              if (formKey.currentState!.validate()) {
-                                final date = dateController.value.text;
-                                final del = Delivery(
-                                    id: isEdit ? delivery.id : '',
-                                    products: products
-                                        .where((element) =>
-                                            selected[products.indexOf(element)])
-                                        .toList(),
-                                    deliveryDate:
-                                        DateTime.parse(processDateBack(date)),
-                                    status: DeliveryStatus.creation);
-                                await tokenExpireWrapper(ref, () async {
-                                  final deliveryNotifier =
-                                      ref.watch(deliveryListProvider.notifier);
-                                  final value = isEdit
-                                      ? await deliveryNotifier
-                                          .updateDelivery(del)
-                                      : await deliveryNotifier.addDelivery(del);
-                                  if (value) {
-                                    pageNotifier.setAmapPage(AmapPage.admin);
-                                    if (isEdit) {
-                                      displayToastWithContext(TypeMsg.msg,
-                                          AMAPTextConstants.editedCommand);
-                                    } else {
-                                      final deliveryOrdersNotifier = ref.watch(
-                                          adminDeliveryOrderListProvider
-                                              .notifier);
-                                      final deliveryList =
-                                          ref.watch(deliveryListProvider);
-                                      deliveryList.whenData((deliveries) {
-                                        deliveryOrdersNotifier
-                                            .addT(deliveries.last.id);
-                                      });
-                                      displayToastWithContext(TypeMsg.msg,
-                                          AMAPTextConstants.addedCommand);
-                                    }
-                                  } else {
-                                    if (isEdit) {
-                                      displayToastWithContext(TypeMsg.error,
-                                          AMAPTextConstants.editingError);
-                                    } else {
-                                      displayToastWithContext(
-                                          TypeMsg.error,
-                                          AMAPTextConstants
-                                              .alreadyExistCommand);
-                                    }
-                                  }
-                                });
-                              } else {
-                                displayToast(context, TypeMsg.error,
-                                    AMAPTextConstants.addingError);
-                              }
+                        productList.when(
+                            data: (products) => Column(
+                                  children: [
+                                    if (products.isNotEmpty)
+                                      Column(
+                                        children: sortedProductsList
+                                            .map((key, value) => MapEntry(
+                                                key,
+                                                Column(
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        key,
+                                                        style: const TextStyle(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    ...value.map((e) =>
+                                                        ProductUi(
+                                                          isModif: selected[
+                                                              products
+                                                                  .indexOf(e)],
+                                                          onclick: () {
+                                                            selectedNotifier
+                                                                .toggle(products
+                                                                    .indexOf(
+                                                                        e));
+                                                          },
+                                                          p: e,
+                                                        ))
+                                                  ],
+                                                )))
+                                            .values
+                                            .toList(),
+                                      ),
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    ShrinkButton(
+                                        waitChild: const GreenBtn(
+                                            text: AMAPTextConstants.waiting),
+                                        onTap: () async {
+                                          if (formKey.currentState!
+                                              .validate()) {
+                                            final date =
+                                                dateController.value.text;
+                                            final del = Delivery(
+                                                id: isEdit ? delivery.id : '',
+                                                products: products
+                                                    .where((element) =>
+                                                        selected[products
+                                                            .indexOf(element)])
+                                                    .toList(),
+                                                deliveryDate: DateTime.parse(
+                                                    processDateBack(date)),
+                                                status:
+                                                    DeliveryStatus.creation);
+                                            await tokenExpireWrapper(ref,
+                                                () async {
+                                              final deliveryNotifier =
+                                                  ref.watch(deliveryListProvider
+                                                      .notifier);
+                                              final value = isEdit
+                                                  ? await deliveryNotifier
+                                                      .updateDelivery(del)
+                                                  : await deliveryNotifier
+                                                      .addDelivery(del);
+                                              if (value) {
+                                                pageNotifier.setAmapPage(
+                                                    AmapPage.admin);
+                                                if (isEdit) {
+                                                  displayToastWithContext(
+                                                      TypeMsg.msg,
+                                                      AMAPTextConstants
+                                                          .editedCommand);
+                                                } else {
+                                                  final deliveryOrdersNotifier =
+                                                      ref.watch(
+                                                          adminDeliveryOrderListProvider
+                                                              .notifier);
+                                                  final deliveryList =
+                                                      ref.watch(
+                                                          deliveryListProvider);
+                                                  deliveryList
+                                                      .whenData((deliveries) {
+                                                    deliveryOrdersNotifier.addT(
+                                                        deliveries.last.id);
+                                                  });
+                                                  displayToastWithContext(
+                                                      TypeMsg.msg,
+                                                      AMAPTextConstants
+                                                          .addedCommand);
+                                                }
+                                              } else {
+                                                if (isEdit) {
+                                                  displayToastWithContext(
+                                                      TypeMsg.error,
+                                                      AMAPTextConstants
+                                                          .editingError);
+                                                } else {
+                                                  displayToastWithContext(
+                                                      TypeMsg.error,
+                                                      AMAPTextConstants
+                                                          .alreadyExistCommand);
+                                                }
+                                              }
+                                            });
+                                          } else {
+                                            displayToast(context, TypeMsg.error,
+                                                AMAPTextConstants.addingError);
+                                          }
+                                        },
+                                        child: GreenBtn(
+                                            text: isEdit
+                                                ? AMAPTextConstants.editDelivery
+                                                : AMAPTextConstants
+                                                    .addDelivery)),
+                                  ],
+                                ),
+                            error: (Object error, StackTrace stackTrace) {
+                              return const Text('error');
                             },
-                            child: GreenBtn(
-                                text: isEdit
-                                    ? AMAPTextConstants.editDelivery
-                                    : AMAPTextConstants.addDelivery)),
+                            loading: () {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  color: AMAPColorConstants.greenGradient2,
+                                ),
+                              );
+                            }),
                         const SizedBox(
                           height: 40,
                         ),
