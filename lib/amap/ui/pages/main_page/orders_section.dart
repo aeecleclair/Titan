@@ -59,7 +59,7 @@ class OrderSection extends HookConsumerWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 15.0),
                       padding: const EdgeInsets.all(12.0),
                       width: 100,
-                      height: 160,
+                      height: 150,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         gradient: const RadialGradient(
