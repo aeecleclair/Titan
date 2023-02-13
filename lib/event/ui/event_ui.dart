@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -153,6 +153,20 @@ class EventUi extends ConsumerWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             color: textColor.withOpacity(0.7), fontSize: 13),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          decisionToString(event.decision),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: textColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       if (!isDetailPage)
                         Column(
