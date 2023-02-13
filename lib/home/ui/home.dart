@@ -72,7 +72,7 @@ class HomePage extends HookConsumerWidget {
                       height: 20,
                     ),
                     SizedBox(
-                        height: MediaQuery.of(context).size.height - 370,
+                        height: MediaQuery.of(context).size.height - 345,
                         child: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
                           controller: daysEventScrollController,
