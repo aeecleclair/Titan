@@ -180,7 +180,7 @@ class CreateAccountPage extends HookConsumerWidget {
         index: 7,
         pageController: pageController,
         currentPage: currentPage,
-        formKey: formKeys[7],
+        formKey: formKeys[6],
         keyboardType: TextInputType.phone,
         autofillHints: const [AutofillHints.telephoneNumber],
         canBeEmpty: true,
@@ -205,36 +205,39 @@ class CreateAccountPage extends HookConsumerWidget {
             height: 8,
           ),
           AutofillGroup(
-            child: DropdownButtonFormField(
-              items: items,
-              value: floor.text,
-              onChanged: (value) {
-                floor.text = value.toString();
-              },
-              dropdownColor: ColorConstants.background2,
-              iconEnabledColor: Colors.grey.shade100.withOpacity(.8),
-              style: const TextStyle(fontSize: 20, color: Colors.white),
-              decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 10),
-                  isDense: true,
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: ColorConstants.background2)),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Colors.white,
-                  )),
-                  errorBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Colors.white,
-                  )),
-                  errorStyle: TextStyle(color: Colors.white)),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return LoginTextConstants.emptyFieldError;
-                }
-                return null;
-              },
+            child: Form(
+              key: formKeys[7],
+              child: DropdownButtonFormField(
+                items: items,
+                value: floor.text,
+                onChanged: (value) {
+                  floor.text = value.toString();
+                },
+                dropdownColor: ColorConstants.background2,
+                iconEnabledColor: Colors.grey.shade100.withOpacity(.8),
+                style: const TextStyle(fontSize: 20, color: Colors.white),
+                decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 10),
+                    isDense: true,
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: ColorConstants.background2)),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.white,
+                    )),
+                    errorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.white,
+                    )),
+                    errorStyle: TextStyle(color: Colors.white)),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return LoginTextConstants.emptyFieldError;
+                  }
+                  return null;
+                },
+              ),
             ),
           ),
         ],
@@ -325,17 +328,18 @@ class CreateAccountPage extends HookConsumerWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         controller: pageController,
-                        onPageChanged: (index) {
-                          if (index < lastIndex.value ||
-                              index == steps.length - 2 ||
-                              formKeys[lastIndex.value]
-                                  .currentState!
-                                  .validate()) {
-                            currentPage.value = index;
-                            lastIndex.value = index;
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          }
-                        },
+                        // onPageChanged: (index) {
+                        //   if (index < lastIndex.value ||
+                        //       index == steps.length - 2 ||
+                        //       (lastIndex.value < formKeys.length - 1 &&
+                        //           formKeys[lastIndex.value]
+                        //               .currentState!
+                        //               .validate())) {
+                        //     currentPage.value = index;
+                        //     lastIndex.value = index;
+                        //     FocusScope.of(context).requestFocus(FocusNode());
+                        //   }
+                        // },
                         children: steps)),
                 const SizedBox(
                   height: 20,
@@ -362,7 +366,7 @@ class CreateAccountPage extends HookConsumerWidget {
                     currentPage.value != len - 1
                         ? GestureDetector(
                             onTap: (() {
-                              if (currentPage.value == steps.length - 2 ||
+                              if (currentPage.value == steps.length - 1 ||
                                   formKeys[lastIndex.value]
                                       .currentState!
                                       .validate()) {
@@ -394,7 +398,7 @@ class CreateAccountPage extends HookConsumerWidget {
                       dotHeight: 12),
                   onDotClicked: (index) {
                     if (index < lastIndex.value ||
-                        index == steps.length - 2 ||
+                        index == steps.length - 1 ||
                         formKeys[lastIndex.value].currentState!.validate()) {
                       FocusScope.of(context).requestFocus(FocusNode());
                       currentPage.value = index;
