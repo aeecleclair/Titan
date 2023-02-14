@@ -60,6 +60,8 @@ class EditPage extends HookConsumerWidget {
                       child: CircularProgressIndicator(),
                     );
                   }
+                  name.text = g[0].name;
+                  description.text = g[0].description;
                   return Column(children: [
                     const Align(
                       alignment: Alignment.centerLeft,
@@ -86,7 +88,7 @@ class EditPage extends HookConsumerWidget {
                                     controller: name,
                                     cursorColor: ColorConstants.gradient1,
                                     decoration: InputDecoration(
-                                        labelText: g[0].name,
+                                        labelText: "Name",
                                         labelStyle: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -134,7 +136,7 @@ class EditPage extends HookConsumerWidget {
                                     controller: description,
                                     cursorColor: ColorConstants.gradient1,
                                     decoration: InputDecoration(
-                                        labelText: g[0].description,
+                                        labelText: "Description",
                                         labelStyle: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -207,6 +209,9 @@ class EditPage extends HookConsumerWidget {
                             ),
                           ),
                           onTap: () async {
+                            if (!key.currentState!.validate()) {
+                              return;
+                            }
                             await tokenExpireWrapper(ref, () async {
                               Group newGroup = g[0].copyWith(
                                   name: name.text,
