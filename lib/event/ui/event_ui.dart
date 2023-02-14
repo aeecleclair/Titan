@@ -8,6 +8,7 @@ import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
+import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/dialog.dart';
@@ -33,7 +34,7 @@ class EventUi extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
     final pageNotifier = ref.watch(eventPageProvider.notifier);
-    final eventListNotifier = ref.watch(eventListProvider.notifier);
+    final eventListNotifier = ref.watch(eventEventListProvider.notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

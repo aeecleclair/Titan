@@ -545,7 +545,7 @@ class AddEditEventPage extends HookConsumerWidget {
                   const SizedBox(height: 20),
                   isRoom.value
                       ? SizedBox(
-                          height: 52,
+                          height: 59,
                           child: rooms.when(
                               data: (rooms) => ListView.builder(
                                   shrinkWrap: true,
@@ -584,12 +584,15 @@ class AddEditEventPage extends HookConsumerWidget {
                               error: (e, s) => Text(e.toString()),
                               loading: () => const SizedBox()),
                         )
-                      : TextEntry(
-                          keyboardType: TextInputType.text,
-                          controller: location,
-                          isInt: false,
-                          label: EventTextConstants.location,
-                          suffix: '',
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: TextEntry(
+                            keyboardType: TextInputType.text,
+                            controller: location,
+                            isInt: false,
+                            label: EventTextConstants.location,
+                            suffix: '',
+                          ),
                         ),
                   const SizedBox(height: 30),
                   Padding(
