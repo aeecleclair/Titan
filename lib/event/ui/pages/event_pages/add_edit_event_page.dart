@@ -652,7 +652,9 @@ class AddEditEventPage extends HookConsumerWidget {
                                   (start.text.compareTo(end.text) > 0)) {
                                 displayToast(context, TypeMsg.error,
                                     EventTextConstants.invalidDates);
-                              } else if (selectedDays.isEmpty) {
+                              } else if (selectedDays
+                                  .where((element) => element)
+                                  .isEmpty) {
                                 displayToast(context, TypeMsg.error,
                                     EventTextConstants.noDaySelected);
                               } else {

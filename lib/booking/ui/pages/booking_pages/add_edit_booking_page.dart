@@ -520,11 +520,12 @@ class AddEditBookingPage extends HookConsumerWidget {
                           return;
                         }
                         if (key.currentState!.validate()) {
-                          if (allDay.value) {
-                            start.text = processDateWithHour(
-                                now.subtract(const Duration(minutes: 1)));
-                            end.text = processDateWithHour(now);
-                          }
+                          // if (allDay.value) {
+                          //   start.text = processDateWithHour(
+                          //       now.subtract(const Duration(minutes: 1)));
+                          //   end.text = processDateWithHour(now);
+                          // }
+                          print(selectedDays);
                           if ((end.text.contains("/") &&
                                   processDateBack(start.text).compareTo(
                                           processDateBack(end.text)) >
@@ -535,7 +536,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                           } else if (room.value.id.isEmpty) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidRoom);
-                          } else if (selectedDays.isEmpty) {
+                          } else if (selectedDays
+                              .where((element) => element)
+                              .isEmpty) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.noDaySelected);
                           } else {
