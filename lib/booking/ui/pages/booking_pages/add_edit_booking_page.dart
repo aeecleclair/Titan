@@ -43,9 +43,9 @@ class AddEditBookingPage extends HookConsumerWidget {
         ? booking.recurrenceRule.contains("BYDAY")
         : false);
     final allDay = useState(booking.start.hour == 0 &&
-        booking.end.hour == 0 &&
+        booking.end.hour == 23 &&
         booking.start.minute == 0 &&
-        booking.end.minute == 0);
+        booking.end.minute == 59);
     final start = useTextEditingController(
         text: recurrent.value
             ? processDateOnlyHour(booking.start)
@@ -520,12 +520,10 @@ class AddEditBookingPage extends HookConsumerWidget {
                           return;
                         }
                         if (key.currentState!.validate()) {
-                          // if (allDay.value) {
-                          //   start.text = processDateWithHour(
-                          //       now.subtract(const Duration(minutes: 1)));
-                          //   end.text = processDateWithHour(now);
-                          // }
-                          print(selectedDays);
+                          if (allDay.value) {
+                            start.text = "${start.text} 00:00";
+                            end.text = "${end.text} 23:59";
+                          }
                           if ((end.text.contains("/") &&
                                   processDateBack(start.text).compareTo(
                                           processDateBack(end.text)) >
@@ -536,9 +534,10 @@ class AddEditBookingPage extends HookConsumerWidget {
                           } else if (room.value.id.isEmpty) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidRoom);
-                          } else if (selectedDays
-                              .where((element) => element)
-                              .isEmpty) {
+                          } else if (recurrent.value &&
+                              selectedDays
+                                  .where((element) => element)
+                                  .isEmpty) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.noDaySelected);
                           } else {

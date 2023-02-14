@@ -641,9 +641,8 @@ class AddEditEventPage extends HookConsumerWidget {
                             }
                             if (key.currentState!.validate()) {
                               if (allDay.value) {
-                                start.text = processDateWithHour(
-                                    now.subtract(const Duration(minutes: 1)));
-                                end.text = processDateWithHour(now);
+                                start.text = "${start.text} 00:00";
+                                end.text = "${end.text} 23:59";
                               }
                               if ((end.text.contains("/") &&
                                       processDateBack(start.text).compareTo(
@@ -652,7 +651,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                   (start.text.compareTo(end.text) > 0)) {
                                 displayToast(context, TypeMsg.error,
                                     EventTextConstants.invalidDates);
-                              } else if (selectedDays
+                              } else if (recurrent.value && selectedDays
                                   .where((element) => element)
                                   .isEmpty) {
                                 displayToast(context, TypeMsg.error,
