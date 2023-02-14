@@ -185,7 +185,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                   if (booking.applicant.phone != null) {
                                     try {
                                       await launchUrl(Uri.parse(
-                                          'sms:${booking.applicant.email}'));
+                                          'sms:${booking.applicant.phone}'));
                                     } catch (e) {
                                       displayToastWithoutContext(
                                           TypeMsg.error, e.toString());
