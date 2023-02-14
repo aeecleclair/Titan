@@ -11,7 +11,6 @@ final sortedByCategoryProductsProvider =
     StateNotifierProvider<SortedByCategoryProvider, Map<String, List<Product>>>(
         (ref) {
   final products = ref.watch(productListProvider);
-  print(products);
   final sortedByCategoryProducts = <String, List<Product>>{};
   products.when(
       data: (products) {
@@ -26,5 +25,4 @@ final sortedByCategoryProductsProvider =
       loading: () {},
       error: (error, stack) {});
   return SortedByCategoryProvider(sortedByCategoryProducts);
-  ;
 });

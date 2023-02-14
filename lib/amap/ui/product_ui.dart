@@ -164,7 +164,7 @@ class ProductCard extends StatelessWidget {
                       ],
                     )
                   : Container(
-                      margin: EdgeInsets.only(bottom: 5),
+                      margin: const EdgeInsets.only(bottom: 5),
                       child: Text("Quantité : ${product.quantity}",
                           style: const TextStyle(
                               fontSize: 15,

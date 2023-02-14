@@ -5,7 +5,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';

@@ -3,9 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/caution_provider.dart';
-import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/add_edit_button.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/caution_text_entry.dart';
@@ -28,18 +26,11 @@ class AddEditLoanPage extends HookConsumerWidget {
     final loan = ref.watch(loanProvider);
     final isEdit = loan.id != Loan.empty().id;
     final note = useTextEditingController(text: loan.notes);
-    final startNotifier = ref.watch(startProvider.notifier);
-    startNotifier.setStart(
-        isEdit ? processDate(loan.start) : processDate(DateTime.now()));
-    final endNotifier = ref.watch(endProvider.notifier);
-    endNotifier.setEnd(isEdit ? processDate(loan.end) : "");
     final cautionNotifier = ref.watch(cautionProvider.notifier);
     cautionNotifier.setCaution(loan.caution);
     final usersNotifier = ref.watch(userList.notifier);
     final queryController =
         useTextEditingController(text: isEdit ? loan.borrower.getName() : "");
-
-    final initialDate = useState(isEdit ? loan.start : DateTime.now());
 
     return SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -98,11 +89,9 @@ class AddEditLoanPage extends HookConsumerWidget {
                 ),
                 SearchResult(queryController: queryController),
                 const SizedBox(height: 30),
-                StartDateEntry(initialDate: initialDate),
+                const StartDateEntry(),
                 const SizedBox(height: 30),
-                EndDateEntry(
-                  initialDate: initialDate,
-                ),
+                const EndDateEntry(),
                 const SizedBox(height: 30),
                 TextEntry(
                   keyboardType: TextInputType.text,

@@ -6,7 +6,6 @@ import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_provider.dart';
-import 'package:myecl/amap/providers/orders_by_delivery_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/providers/sorted_by_category_products.dart';
