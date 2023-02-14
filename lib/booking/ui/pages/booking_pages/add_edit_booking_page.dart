@@ -576,9 +576,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   id: isEdit ? booking.id : "",
                                   reason: motif.text,
                                   start: DateTime.parse(
-                                      processDateBack(start.value.text)),
+                                      processDateBackWithHour(startString)),
                                   end: DateTime.parse(
-                                      processDateBack(end.value.text)),
+                                      processDateBackWithHour(endString)),
                                   note: note.text,
                                   room: room.value,
                                   key: keyRequired.value,

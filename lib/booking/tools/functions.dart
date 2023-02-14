@@ -121,6 +121,7 @@ DateTime getTrueEnd(Booking b) {
   if (b.recurrenceRule.isEmpty) {
     return b.end;
   } else {
-    return getDateInRecurrence(b.recurrenceRule, b.start).last;
+    final date = getDateInRecurrence(b.recurrenceRule, b.start).last;
+    return DateTime(date.year, date.month, date.day, b.end.hour, b.end.minute);
   }
 }
