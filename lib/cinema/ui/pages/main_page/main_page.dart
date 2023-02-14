@@ -92,6 +92,7 @@ class MainPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 20),
             sessionList.when(data: (data) {
+              data.sort((a, b) => a.start.compareTo(b.start));
               if (data.isEmpty) {
                 return const SizedBox(
                   height: 200,
