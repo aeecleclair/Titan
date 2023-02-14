@@ -164,18 +164,20 @@ class AddEditSessionPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 30),
                 (logo.value == null)
-                    ? Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 50, horizontal: 30),
-                        decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: HeroIcon(
-                          HeroIcons.camera,
-                          size: 100,
-                          color: Colors.grey.shade500,
-                        ),
-                      )
+                    ? logoFile.value == null
+                        ? Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 50, horizontal: 30),
+                            decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(20)),
+                            child: HeroIcon(
+                              HeroIcons.camera,
+                              size: 100,
+                              color: Colors.grey.shade500,
+                            ),
+                          )
+                        : Image(image: logoFile.value!.image, fit: BoxFit.cover)
                     : Image.network(logo.value!, fit: BoxFit.cover),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -196,6 +198,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   onChanged: (value) {
                     logo.value = posterUrl.text;
                   },
+                  canBeEmpty: true,
                 ),
                 const SizedBox(height: 30),
                 GestureDetector(
@@ -327,6 +330,11 @@ class AddEditSessionPage extends HookConsumerWidget {
                       return;
                     }
                     if (key.currentState!.validate()) {
+                      if (logo.value == null && logoFile.value == null) {
+                        displayToastWithContext(
+                            TypeMsg.error, CinemaTextConstants.noPoster);
+                        return;
+                      }
                       await tokenExpireWrapper(ref, () async {
                         Session newSession = Session(
                           name: name.text,
