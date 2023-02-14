@@ -91,9 +91,25 @@ class DetailBookingPage extends HookConsumerWidget {
                           const SizedBox(
                             height: 15,
                           ),
-                          Text(
-                            booking.applicant.email,
-                            style: const TextStyle(fontSize: 16),
+                          GestureDetector(
+                            onTap: () async {
+                              if (booking.applicant.phone != null) {
+                                try {
+                                  await launchUrl(Uri.parse(
+                                      'mailto:${booking.applicant.email}'));
+                                } catch (e) {
+                                  displayToastWithoutContext(
+                                      TypeMsg.error, e.toString());
+                                }
+                              }
+                            },
+                            child: Text(
+                              booking.applicant.email,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
                           ),
                           const SizedBox(
                             height: 30,
