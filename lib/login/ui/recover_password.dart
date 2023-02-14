@@ -11,6 +11,7 @@ import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/login_field.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
+import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -28,6 +29,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
     final activationCode = useTextEditingController();
     final password = useTextEditingController();
     final currentPage = useState(0);
+    final lastIndex = useState(0);
     final pageController = usePageController();
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -47,14 +49,26 @@ class RecoverPasswordPage extends HookConsumerWidget {
         currentPage: currentPage,
         formKey: formKeys[0],
       ),
-      CreateAccountField(
-        controller: password,
-        label: LoginTextConstants.newPassword,
-        index: 2,
-        pageController: pageController,
-        currentPage: currentPage,
-        formKey: formKeys[1],
-        keyboardType: TextInputType.visiblePassword,
+      Column(
+        children: [
+          CreateAccountField(
+            controller: password,
+            label: LoginTextConstants.newPassword,
+            index: 2,
+            pageController: pageController,
+            currentPage: currentPage,
+            formKey: formKeys[1],
+            keyboardType: TextInputType.visiblePassword,
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          PasswordStrength(
+            newPassword: password,
+            whiteBar: true,
+            textColor: ColorConstants.background2,
+          )
+        ],
       ),
       SignUpBar(
         label: LoginTextConstants.endResetPassword,
@@ -74,7 +88,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
               onActivationPressed();
             } else {
               displayToastWithContext(
-                  TypeMsg.error, LoginTextConstants.errorResetPassword);
+                  TypeMsg.error, LoginTextConstants.invalidToken);
             }
           } else {
             displayToastWithContext(
@@ -140,10 +154,12 @@ class RecoverPasswordPage extends HookConsumerWidget {
                     currentPage.value != 0
                         ? GestureDetector(
                             onTap: (() {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              currentPage.value--;
+                              lastIndex.value = currentPage.value;
                               pageController.previousPage(
                                   duration: const Duration(milliseconds: 500),
                                   curve: Curves.decelerate);
-                              currentPage.value--;
                             }),
                             child: const HeroIcon(
                               HeroIcons.arrowLeft,
@@ -154,10 +170,18 @@ class RecoverPasswordPage extends HookConsumerWidget {
                     currentPage.value != len - 1
                         ? GestureDetector(
                             onTap: (() {
-                              pageController.nextPage(
-                                  duration: const Duration(milliseconds: 500),
-                                  curve: Curves.decelerate);
-                              currentPage.value++;
+                              if (currentPage.value == steps.length - 1 ||
+                                  formKeys[lastIndex.value]
+                                      .currentState!
+                                      .validate()) {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                pageController.nextPage(
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.decelerate);
+                                currentPage.value++;
+                                lastIndex.value = currentPage.value;
+                              }
                             }),
                             child: const HeroIcon(
                               HeroIcons.arrowRight,
@@ -177,9 +201,16 @@ class RecoverPasswordPage extends HookConsumerWidget {
                       dotWidth: 12,
                       dotHeight: 12),
                   onDotClicked: (index) {
-                    pageController.animateToPage(index,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.decelerate);
+                    if (index < lastIndex.value ||
+                        index == steps.length - 1 ||
+                        formKeys[lastIndex.value].currentState!.validate()) {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      currentPage.value = index;
+                      lastIndex.value = index;
+                      pageController.animateToPage(index,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.decelerate);
+                    }
                   },
                 ),
                 const SizedBox(

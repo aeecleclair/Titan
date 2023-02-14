@@ -328,18 +328,6 @@ class CreateAccountPage extends HookConsumerWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         controller: pageController,
-                        // onPageChanged: (index) {
-                        //   if (index < lastIndex.value ||
-                        //       index == steps.length - 2 ||
-                        //       (lastIndex.value < formKeys.length - 1 &&
-                        //           formKeys[lastIndex.value]
-                        //               .currentState!
-                        //               .validate())) {
-                        //     currentPage.value = index;
-                        //     lastIndex.value = index;
-                        //     FocusScope.of(context).requestFocus(FocusNode());
-                        //   }
-                        // },
                         children: steps)),
                 const SizedBox(
                   height: 20,
