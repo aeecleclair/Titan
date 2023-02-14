@@ -41,17 +41,22 @@ class EditPage extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: simplegroupsGroups.when(data: (value) {
               final g = value[groupId];
+              print(g);
               if (g == null) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
               return g.when(
-                data: (g) {
-                  if (g.isEmpty) {
+                data: (groups) {
+                  print(groups);
+                  if (groups.isEmpty) {
+                    print("empty");
                     tokenExpireWrapper(ref, () async {
-                      final g = await groupNotifier.loadGroup(groupId);
-                      g.whenData((value) {
+                      final loadedGroup =
+                          await groupNotifier.loadGroup(groupId);
+                      print(loadedGroup);
+                      loadedGroup.whenData((value) {
                         simplegroupsGroupsNotifier.setTData(
                             groupId, AsyncData([value]));
                       });
@@ -60,8 +65,8 @@ class EditPage extends HookConsumerWidget {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  name.text = g[0].name;
-                  description.text = g[0].description;
+                  name.text = groups[0].name;
+                  description.text = groups[0].description;
                   return Column(children: [
                     const Align(
                       alignment: Alignment.centerLeft,
@@ -213,7 +218,7 @@ class EditPage extends HookConsumerWidget {
                               return;
                             }
                             await tokenExpireWrapper(ref, () async {
-                              Group newGroup = g[0].copyWith(
+                              Group newGroup = groups[0].copyWith(
                                   name: name.text,
                                   description: description.text);
                               groupNotifier.setGroup(newGroup);

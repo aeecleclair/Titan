@@ -32,13 +32,16 @@ class User {
   User.fromJson(Map<String, dynamic> json) {
     name = capitaliseAll(json['name']);
     firstname = capitaliseAll(json['firstname']);
-    nickname = json['nickname'] != "" ? capitaliseAll(json['nickname']) : null;
+    nickname = (json['nickname'] != "" && json['nickname'] != null)
+        ? capitaliseAll(json['nickname'])
+        : null;
     id = json['id'];
     email = json['email'];
     birthday = json['birthday'];
     promo = json['promo'];
     floor = json['floor'];
-    phone = json['phone'] != "" ? json['phone'] : null;
+    phone =
+        (json['phone'] != "" && json["phone"] != null) ? json['phone'] : null;
     createdOn = json['created_on'];
     groups =
         List.from(json['groups']).map((e) => SimpleGroup.fromJson(e)).toList();
@@ -111,7 +114,7 @@ class User {
   String toString() {
     return "User {name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, birthday: $birthday, promo: $promo, floor: $floor, phone: $phone, createdOn: $createdOn, groups: $groups}";
   }
-  
+
   Applicant toApplicant() {
     return Applicant(
         name: name,
