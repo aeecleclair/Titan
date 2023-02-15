@@ -24,6 +24,7 @@ class LoginTextConstants {
   static const String forgetPassword = 'Mot de passe\noublié';
   static const String forgotPassword = 'Mot de passe oublié ?';
   static const String invalidToken = 'Code d\'activation invalide';
+  static const String loginFailed = 'Échec de la connexion';
   static const String mailSendingError = 'Erreur lors de la création du compte';
   static const String name = 'Nom';
   static const String newPassword = 'Nouveau mot de passe';

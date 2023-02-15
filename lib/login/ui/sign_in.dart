@@ -62,7 +62,7 @@ class SignIn extends HookConsumerWidget {
                                   data: (token) {},
                                   error: (e, s) {
                                     displayToast(
-                                        context, TypeMsg.error, e.toString());
+                                        context, TypeMsg.error, LoginTextConstants.loginFailed);
                                   },
                                   loading: () {});
                             },
