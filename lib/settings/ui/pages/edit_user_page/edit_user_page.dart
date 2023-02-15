@@ -15,7 +15,7 @@ import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/class/floors.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/user/repositories/profile_picture_repository.dart';
+import 'package:myecl/user/providers/profile_picture_provider.dart';
 
 class EditUserPage extends HookConsumerWidget {
   const EditUserPage({Key? key}) : super(key: key);
@@ -87,7 +87,9 @@ class EditUserPage extends HookConsumerWidget {
                           ),
                           child: CircleAvatar(
                             radius: 80,
-                            backgroundImage: Image.memory(profile).image,
+                            backgroundImage: profile.isEmpty ?
+                            const AssetImage('assets/images/profile.png') :
+                            Image.memory(profile).image,
                           ),
                         ),
                         Positioned(

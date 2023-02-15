@@ -11,7 +11,7 @@ import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/user/repositories/profile_picture_repository.dart';
+import 'package:myecl/user/providers/profile_picture_provider.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -75,7 +75,9 @@ class TopBar extends HookConsumerWidget {
                               ),
                               child: CircleAvatar(
                                 radius: 25,
-                                backgroundImage: Image.memory(file).image,
+                                backgroundImage: file.isEmpty ?
+                                const AssetImage("assets/images/logo.png") :
+                                Image.memory(file).image,
                               ),
                             ),
                             if (isAdmin)

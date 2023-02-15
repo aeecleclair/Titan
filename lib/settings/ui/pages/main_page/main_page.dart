@@ -12,7 +12,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/user/repositories/profile_picture_repository.dart';
+import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 
 class MainPage extends HookConsumerWidget {
@@ -58,7 +58,9 @@ class MainPage extends HookConsumerWidget {
                     ),
                     child: CircleAvatar(
                       radius: 70,
-                      backgroundImage: Image.memory(profile).image,
+                      backgroundImage: profile.isEmpty ?
+                      const AssetImage('assets/images/logo.png') :
+                      Image.memory(profile).image,
                     ),
                   ),
                   Positioned(
