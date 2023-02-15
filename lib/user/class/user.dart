@@ -93,13 +93,13 @@ class User {
     return User(
       name: name ?? this.name,
       firstname: firstname ?? this.firstname,
-      nickname: nickname ?? this.nickname,
+      nickname: nickname,
       id: id ?? this.id,
       email: email ?? this.email,
       birthday: birthday ?? this.birthday,
       promo: promo ?? this.promo,
       floor: floor ?? this.floor,
-      phone: phone ?? this.phone,
+      phone: phone,
       createdOn: createdOn ?? this.createdOn,
       groups: groups ?? this.groups,
     );

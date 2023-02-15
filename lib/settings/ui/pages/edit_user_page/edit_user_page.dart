@@ -415,6 +415,19 @@ class EditUserPage extends HookConsumerWidget {
                   ),
                   onTap: () async {
                     await tokenExpireWrapper(ref, () async {
+                      print(phoneController.value.text.isEmpty
+                          ? null
+                          : phoneController.value.text);
+                      print(user.copyWith(
+                        birthday: processDateBack(dateController.value.text),
+                        nickname: nickNameController.value.text.isEmpty
+                            ? null
+                            : nickNameController.value.text,
+                        phone: phoneController.value.text.isEmpty
+                            ? null
+                            : phoneController.value.text,
+                        floor: floorController.value.text,
+                      ));
                       final value =
                           await asyncUserNotifier.updateMe(user.copyWith(
                         birthday: processDateBack(dateController.value.text),
