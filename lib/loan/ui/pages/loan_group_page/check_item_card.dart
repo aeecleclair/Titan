@@ -66,7 +66,8 @@ class CheckItemCard extends StatelessWidget {
                             ? Colors.grey.shade400
                             : const Color.fromARGB(255, 172, 32, 10))),
                 const SizedBox(height: 5),
-                Text('${item.caution.toStringAsFixed(2)} €',
+                AutoSizeText('${item.caution.toStringAsFixed(2)} €',
+                    maxLines: 1,
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
