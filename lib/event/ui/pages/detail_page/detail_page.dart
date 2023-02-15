@@ -91,9 +91,24 @@ class DetailPage extends HookConsumerWidget {
                               if (isAdmin)
                                 Column(
                                   children: [
-                                    Text(event.applicant.email, style: const TextStyle(
-                                      fontSize: 16
-                                    ),),
+                                                              GestureDetector(
+                                      onTap: () async {
+                                        try {
+                                          await launchUrl(Uri.parse(
+                                              'mailto:${event.applicant.email}'));
+                                        } catch (e) {
+                                          displayToastWithoutContext(
+                                              TypeMsg.error, e.toString());
+                                        }
+                                      },
+                                      child: Text(
+                                        event.applicant.email,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                    ),
                                     const SizedBox(
                                       height: 30,
                                     ),
@@ -155,7 +170,7 @@ class DetailPage extends HookConsumerWidget {
                                             if (event.applicant.phone != null) {
                                               try {
                                                 await launchUrl(Uri.parse(
-                                                    'sms:${event.applicant.email}'));
+                                                    'sms:${event.applicant.phone}'));
                                               } catch (e) {
                                                 displayToastWithoutContext(
                                                     TypeMsg.error, e.toString());

@@ -37,103 +37,106 @@ class MainPage extends HookConsumerWidget {
         onRefresh: () async {
           await sessionListNotifier.loadSessions();
         },
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(CinemaTextConstants.incomingSession,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149))),
-                    if (isAdmin)
-                      GestureDetector(
-                        onTap: () {
-                          pageNotifier.setCinemaPage(CinemaPage.admin);
-                          initialPageNotifier.setMainPageIndex(currentPage);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 5))
-                              ]),
-                          child: Row(
-                            children: const [
-                              HeroIcon(HeroIcons.userGroup,
-                                  color: Colors.white, size: 20),
-                              SizedBox(width: 10),
-                              Text("Admin",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white)),
-                            ],
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height - 110,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(CinemaTextConstants.incomingSession,
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 149, 149, 149))),
+                      if (isAdmin)
+                        GestureDetector(
+                          onTap: () {
+                            pageNotifier.setCinemaPage(CinemaPage.admin);
+                            initialPageNotifier.setMainPageIndex(currentPage);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 10,
+                                      offset: const Offset(0, 5))
+                                ]),
+                            child: Row(
+                              children: const [
+                                HeroIcon(HeroIcons.userGroup,
+                                    color: Colors.white, size: 20),
+                                SizedBox(width: 10),
+                                Text("Admin",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)),
+                              ],
+                            ),
                           ),
-                        ),
-                      )
-                  ],
+                        )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            sessionList.when(data: (data) {
-              data.sort((a, b) => a.start.compareTo(b.start));
-              if (data.isEmpty) {
-                return const SizedBox(
-                  height: 200,
-                  child: Center(
-                    child: Text(CinemaTextConstants.noSession,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black)),
-                  ),
+              const SizedBox(height: 20),
+              sessionList.when(data: (data) {
+                data.sort((a, b) => a.start.compareTo(b.start));
+                if (data.isEmpty) {
+                  return const SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: Text(CinemaTextConstants.noSession,
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                    ),
+                  );
+                }
+                return Expanded(
+                  // height: MediaQuery.of(context).size.height - 190,
+                  child: PageView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      controller: pageController,
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        return SessionCard(
+                          session: data[index],
+                          index: index,
+                          onTap: () {
+                            sessionNotifier.setSession(data[index]);
+                            pageNotifier
+                                .setCinemaPage(CinemaPage.detailFromMainPage);
+                            initialPageNotifier.setMainPageIndex(index);
+                          },
+                        );
+                      }),
                 );
-              }
-              return SizedBox(
-                height: MediaQuery.of(context).size.height - 190,
-                child: PageView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    controller: pageController,
-                    itemCount: data.length,
-                    itemBuilder: (context, index) {
-                      return SessionCard(
-                        session: data[index],
-                        index: index,
-                        onTap: () {
-                          sessionNotifier.setSession(data[index]);
-                          pageNotifier
-                              .setCinemaPage(CinemaPage.detailFromMainPage);
-                          initialPageNotifier.setMainPageIndex(index);
-                        },
-                      );
-                    }),
-              );
-            }, loading: () {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }, error: (error, stackTrace) {
-              return Center(
-                child: Text(error.toString()),
-              );
-            }),
-          ],
+              }, loading: () {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }, error: (error, stackTrace) {
+                return Center(
+                  child: Text(error.toString()),
+                );
+              }),
+            ],
+          ),
         ));
   }
 }

@@ -93,14 +93,12 @@ class DetailBookingPage extends HookConsumerWidget {
                           ),
                           GestureDetector(
                             onTap: () async {
-                              if (booking.applicant.phone != null) {
-                                try {
-                                  await launchUrl(Uri.parse(
-                                      'mailto:${booking.applicant.email}'));
-                                } catch (e) {
-                                  displayToastWithoutContext(
-                                      TypeMsg.error, e.toString());
-                                }
+                              try {
+                                await launchUrl(Uri.parse(
+                                    'mailto:${booking.applicant.email}'));
+                              } catch (e) {
+                                displayToastWithoutContext(
+                                    TypeMsg.error, e.toString());
                               }
                             },
                             child: Text(
