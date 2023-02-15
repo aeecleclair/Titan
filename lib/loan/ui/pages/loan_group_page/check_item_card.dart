@@ -73,8 +73,9 @@ class CheckItemCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
                 const SizedBox(height: 5),
-                Text(
+                AutoSizeText(
                     '${LoanTextConstants.duration} : ${item.suggestedLendingDuration.toInt()} ${LoanTextConstants.days}',
+                    maxLines: 1,
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
