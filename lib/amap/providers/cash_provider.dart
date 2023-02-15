@@ -25,7 +25,7 @@ class CashProvider extends ListNotifier<Cash> {
     return await update(
         _cashRepository.updateCash,
         (cashs, c) => cashs
-          ..[cashs.indexWhere((c) => c.user.id == c.user.id)] =
+          ..[cashs.indexWhere((c) => c.user.id == cash.user.id)] =
               cash.copyWith(balance: cash.balance + amount),
         cash.copyWith(balance: amount.toDouble()));
   }
