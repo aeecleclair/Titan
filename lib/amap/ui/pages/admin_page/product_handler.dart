@@ -8,6 +8,7 @@ import 'package:myecl/amap/providers/product_provider.dart';
 import 'package:myecl/amap/providers/sorted_by_category_products.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/product_ui.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -25,6 +26,10 @@ class ProductHandler extends HookConsumerWidget {
         .expand((element) => element)
         .toList();
     final productsNotifier = ref.watch(productListProvider.notifier);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
     return Column(
       children: [
         Container(
@@ -103,7 +108,12 @@ class ProductHandler extends HookConsumerWidget {
                                             "Voulez-vous vraiment supprimer ce produit?",
                                         onYes: () {
                                           tokenExpireWrapper(ref, () async {
-                                            productsNotifier.deleteProduct(e);
+                                            final value = await productsNotifier.deleteProduct(e);
+                                            if (value) {
+                                              displayToastWithContext(TypeMsg.msg, AMAPTextConstants.deletedProduct);
+                                            } else {
+                                              displayToastWithContext(TypeMsg.error, AMAPTextConstants.productInDelivery);
+                                            }
                                           });
                                         },
                                       ));

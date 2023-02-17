@@ -41,7 +41,6 @@ class EditPage extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: simplegroupsGroups.when(data: (value) {
               final g = value[groupId];
-              print(g);
               if (g == null) {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -49,13 +48,10 @@ class EditPage extends HookConsumerWidget {
               }
               return g.when(
                 data: (groups) {
-                  print(groups);
                   if (groups.isEmpty) {
-                    print("empty");
                     tokenExpireWrapper(ref, () async {
                       final loadedGroup =
                           await groupNotifier.loadGroup(groupId);
-                      print(loadedGroup);
                       loadedGroup.whenData((value) {
                         simplegroupsGroupsNotifier.setTData(
                             groupId, AsyncData([value]));
