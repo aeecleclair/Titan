@@ -108,7 +108,7 @@ class AMAPTextConstants {
   static const String presentation = "Présentation";
   static const String price = "Prix";
   static const String product = "produit";
-  static const String productInDelivery = "Produit dans la livraison";
+  static const String productInDelivery = "Produit dans une livraison non terminée";
   static const String quantity = "Quantité";
   static const String requiredDate = "La date est requise";
   static const String seeMore = "Voir plus";
