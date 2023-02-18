@@ -44,7 +44,7 @@ class PasswordStrength extends HookConsumerWidget {
                             weight: 1.0,
                             tween: Tween<Color>(
                               begin: Colors.white,
-                              end: Colors.white,
+                              end: const Color(0xffd31336),
                             ),
                           ),
                         ])
