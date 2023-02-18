@@ -323,7 +323,7 @@ class CreateAccountPage extends HookConsumerWidget {
               children: [
                 const Spacer(),
                 Expanded(
-                    flex: 5,
+                    flex: 6,
                     child: PageView(
                         physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.horizontal,

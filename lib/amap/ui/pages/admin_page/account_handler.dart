@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/providers/focus_provider.dart';
 import 'package:myecl/amap/providers/searching_amap_user_provider.dart';
@@ -38,9 +39,13 @@ class AccountHandler extends HookConsumerWidget {
               tokenExpireWrapper(ref, () async {
                 if (!searchingAmapUser) {
                   if (editingController.text.isNotEmpty) {
-                    await usersNotifier.filterUsers(editingController.text,
-                        excludeGroup: [] // TODO:
-                        );
+                    await usersNotifier
+                        .filterUsers(editingController.text, excludeGroup: [
+                      SimpleGroup(
+                          description: "",
+                          name: "AMAP",
+                          id: "70db65ee-d533-4f6b-9ffa-a4d70a17b7ef")
+                    ]);
                   } else {
                     usersNotifier.clear();
                   }
