@@ -7,6 +7,7 @@ import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
+import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
@@ -30,6 +31,7 @@ class MainPage extends HookConsumerWidget {
     final bookings = ref.watch(userBookingListProvider);
     final allBookingsNotifier = ref.watch(bookingListProvider.notifier);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
+    final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String message) {
       displayToast(context, type, message);
@@ -114,6 +116,7 @@ class MainPage extends HookConsumerWidget {
                         child: GestureDetector(
                           onTap: () {
                             bookingNotifier.setBooking(Booking.empty());
+                            selectedDaysNotifier.clear();
                             pageNotifier
                                 .setBookingPage(BookingPage.addEditBooking);
                           },
@@ -155,6 +158,28 @@ class MainPage extends HookConsumerWidget {
                         isDetail: false,
                         onEdit: () {
                           bookingNotifier.setBooking(e);
+                          final recurrent = e.recurrenceRule != "";
+                          if (recurrent) {
+                            final allDays = [
+                              "MO",
+                              "TU",
+                              "WE",
+                              "TH",
+                              "FR",
+                              "SA",
+                              "SU"
+                            ];
+                            final recurrentDays = e.recurrenceRule
+                                .split(";")
+                                .where((element) => element.contains("BYDAY"))
+                                .first
+                                .split("=")
+                                .last
+                                .split(",");
+                            selectedDaysNotifier.setSelectedDays(allDays
+                                .map((e) => recurrentDays.contains(e))
+                                .toList());
+                          }
                           pageNotifier
                               .setBookingPage(BookingPage.addEditBooking);
                         },
@@ -199,6 +224,28 @@ class MainPage extends HookConsumerWidget {
                         },
                         onCopy: () {
                           bookingNotifier.setBooking(e.copyWith(id: ""));
+                          final recurrent = e.recurrenceRule != "";
+                          if (recurrent) {
+                            final allDays = [
+                              "MO",
+                              "TU",
+                              "WE",
+                              "TH",
+                              "FR",
+                              "SA",
+                              "SU"
+                            ];
+                            final recurrentDays = e.recurrenceRule
+                                .split(";")
+                                .where((element) => element.contains("BYDAY"))
+                                .first
+                                .split("=")
+                                .last
+                                .split(",");
+                            selectedDaysNotifier.setSelectedDays(allDays
+                                .map((e) => recurrentDays.contains(e))
+                                .toList());
+                          }
                           pageNotifier
                               .setBookingPage(BookingPage.addEditBooking);
                         },
