@@ -30,28 +30,27 @@ class CashProvider extends ListNotifier<Cash> {
         cash.copyWith(balance: amount.toDouble()));
   }
 
-  Future<AsyncValue<List<Cash>>> filterCashList(String filter) async {
+  Future<List<Cash>> filterCashList(String filter) async {
     return state.when(
       data: (cashList) async {
         final lowerQuery = filter.toLowerCase();
-        return AsyncValue.data(cashList
+        return cashList
             .where((cash) =>
                 cash.user.name.toLowerCase().contains(lowerQuery) ||
                 cash.user.firstname.toLowerCase().contains(lowerQuery) ||
                 (cash.user.nickname != null &&
                     cash.user.nickname!.toLowerCase().contains(lowerQuery)))
-            .toList());
+            .toList();
       },
       error: (error, stackTrace) {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           throw error;
         } else {
-          return AsyncValue.error(error, stackTrace);
+          return [];
         }
       },
       loading: () {
-        return const AsyncValue.error(
-            "Cannot filter cash while loading", StackTrace.empty);
+        return [];
       },
     );
   }
