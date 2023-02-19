@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/providers/focus_provider.dart';
 import 'package:myecl/amap/providers/searching_amap_user_provider.dart';
@@ -26,8 +27,9 @@ class AccountHandler extends HookConsumerWidget {
     final focus = ref.watch(focusProvider);
     final focusNotifier = ref.watch(focusProvider.notifier);
     final focusNode = useFocusNode();
-    final cashs = useState([]);
+    final cashs = useState(List<Cash>.empty());
     cashNotifier.filterCashList(editingController.text).then((value) {
+      value.sort((a, b) => a.user.getName().compareTo(b.user.getName()));
       cashs.value = value;
     });
     if (focus) {
