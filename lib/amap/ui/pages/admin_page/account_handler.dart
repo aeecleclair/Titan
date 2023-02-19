@@ -145,12 +145,14 @@ class AccountHandler extends HookConsumerWidget {
                                         ),
                                       ),
                                     ),
-                                    AddingUserContainer(onAdd: () {
+                                    AddingUserContainer(onAdd: () async {
                                       searchingAmapUserNotifier
                                           .setProduct(true);
                                       FocusScope.of(context)
                                           .requestFocus(FocusNode());
                                       focusNotifier.setFocus(false);
+                                      await cashNotifier.filterCashList(
+                                          editingController.text);
                                       editingController.clear();
                                     })
                                   ],
