@@ -319,6 +319,10 @@ class CreateAccountPage extends HookConsumerWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         controller: pageController,
+                        onPageChanged: (value) {
+                          lastIndex.value = currentPage.value;
+                          currentPage.value = value;
+                        },
                         children: steps)),
                 const SizedBox(
                   height: 20,

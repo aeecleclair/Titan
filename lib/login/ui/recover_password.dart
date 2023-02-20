@@ -141,6 +141,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
                         scrollDirection: Axis.horizontal,
                         controller: pageController,
                         onPageChanged: (index) {
+                          lastIndex.value = currentPage.value;
                           currentPage.value = index;
                         },
                         physics: const BouncingScrollPhysics(),
