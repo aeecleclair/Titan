@@ -42,12 +42,7 @@ class AccountHandler extends HookConsumerWidget {
                 if (!searchingAmapUser) {
                   if (editingController.text.isNotEmpty) {
                     await usersNotifier
-                        .filterUsers(editingController.text, excludeGroup: [
-                      SimpleGroup(
-                          description: "",
-                          name: "AMAP",
-                          id: "70db65ee-d533-4f6b-9ffa-a4d70a17b7ef")
-                    ]);
+                        .filterUsers(editingController.text);
                   } else {
                     usersNotifier.clear();
                   }
