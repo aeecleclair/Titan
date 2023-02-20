@@ -6,6 +6,7 @@ import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
+import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/orders_by_delivery_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
@@ -25,6 +26,8 @@ class DeliveryUi extends HookConsumerWidget {
     final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
     final deliveryOrders = ref.watch(adminDeliveryOrderListProvider);
+    final deliveryProductListNotifier =
+        ref.watch(deliveryProductListProvider.notifier);
     final deliveryOrdersNotifier =
         ref.watch(adminDeliveryOrderListProvider.notifier);
     final ordersByDeliveryListNotifier =
@@ -43,7 +46,7 @@ class DeliveryUi extends HookConsumerWidget {
                       final ordersByDelivery =
                           await ordersByDeliveryListNotifier
                               .loadDeliveryOrderList(delivery.id);
-                      deliveryOrdersNotifier.setTData(
+                      await deliveryOrdersNotifier.setTData(
                           delivery.id, ordersByDelivery);
                       ordersByDelivery.when(
                         data: (data) {
@@ -63,7 +66,8 @@ class DeliveryUi extends HookConsumerWidget {
           tokenExpireWrapper(ref, () async {
             final ordersByDelivery = await ordersByDeliveryListNotifier
                 .loadDeliveryOrderList(delivery.id);
-            deliveryOrdersNotifier.setTData(delivery.id, ordersByDelivery);
+            await deliveryOrdersNotifier.setTData(
+                delivery.id, ordersByDelivery);
             ordersByDelivery.when(
               data: (data) {
                 orders.addAll(data);
@@ -123,6 +127,8 @@ class DeliveryUi extends HookConsumerWidget {
                       GestureDetector(
                         onTap: () {
                           deliveryIdNotifier.setId(delivery.id);
+                          deliveryProductListNotifier
+                              .loadProductList(delivery.products);
                           pageNotifier.setAmapPage(AmapPage.deliveryDetail);
                         },
                         child: const HeroIcon(

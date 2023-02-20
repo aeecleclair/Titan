@@ -180,7 +180,7 @@ class CreateAccountPage extends HookConsumerWidget {
         index: 7,
         pageController: pageController,
         currentPage: currentPage,
-        formKey: formKeys[7],
+        formKey: formKeys[6],
         keyboardType: TextInputType.phone,
         autofillHints: const [AutofillHints.telephoneNumber],
         canBeEmpty: true,
@@ -229,12 +229,6 @@ class CreateAccountPage extends HookConsumerWidget {
                     color: Colors.white,
                   )),
                   errorStyle: TextStyle(color: Colors.white)),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return LoginTextConstants.emptyFieldError;
-                }
-                return null;
-              },
             ),
           ),
         ],
@@ -320,21 +314,14 @@ class CreateAccountPage extends HookConsumerWidget {
               children: [
                 const Spacer(),
                 Expanded(
-                    flex: 5,
+                    flex: 6,
                     child: PageView(
                         physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         controller: pageController,
-                        onPageChanged: (index) {
-                          if (index < lastIndex.value ||
-                              index == steps.length - 2 ||
-                              formKeys[lastIndex.value]
-                                  .currentState!
-                                  .validate()) {
-                            currentPage.value = index;
-                            lastIndex.value = index;
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          }
+                        onPageChanged: (value) {
+                          lastIndex.value = currentPage.value;
+                          currentPage.value = value;
                         },
                         children: steps)),
                 const SizedBox(
@@ -362,7 +349,7 @@ class CreateAccountPage extends HookConsumerWidget {
                     currentPage.value != len - 1
                         ? GestureDetector(
                             onTap: (() {
-                              if (currentPage.value == steps.length - 2 ||
+                              if (currentPage.value >= steps.length - 2 ||
                                   formKeys[lastIndex.value]
                                       .currentState!
                                       .validate()) {
@@ -394,7 +381,7 @@ class CreateAccountPage extends HookConsumerWidget {
                       dotHeight: 12),
                   onDotClicked: (index) {
                     if (index < lastIndex.value ||
-                        index == steps.length - 2 ||
+                        currentPage.value >= steps.length - 2 ||
                         formKeys[lastIndex.value].currentState!.validate()) {
                       FocusScope.of(context).requestFocus(FocusNode());
                       currentPage.value = index;

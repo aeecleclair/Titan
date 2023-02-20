@@ -74,18 +74,24 @@ class AddEditButton extends HookConsumerWidget {
           )),
       onTap: () async {
         await onAddEdit(() async {
-          if (processDateBack(start.text)
-                  .compareTo(processDateBack(end.text)) >=
-              0) {
+          if (processDateBack(start).compareTo(processDateBack(end)) > 0) {
             displayToast(
                 context, TypeMsg.error, LoanTextConstants.invalidDates);
           } else if (borrower.id.isEmpty) {
-            displayToast(
-                context, TypeMsg.error, LoanTextConstants.noBorrower);
+            displayToast(context, TypeMsg.error, LoanTextConstants.noBorrower);
           } else {
             await items.when(
               data: (itemList) async {
                 await tokenExpireWrapper(ref, () async {
+                  final sortedAvailable = itemList
+                      .where((element) => element.available)
+                      .toList()
+                    ..sort((a, b) => a.name.compareTo(b.name));
+                  final sortedUnavailable = itemList
+                      .where((element) => !element.available)
+                      .toList()
+                    ..sort((a, b) => a.name.compareTo(b.name));
+                  itemList = sortedAvailable + sortedUnavailable;
                   List<Item> selected = itemList
                       .where(
                           (element) => selectedItems[itemList.indexOf(element)])
@@ -96,10 +102,10 @@ class AddEditButton extends HookConsumerWidget {
                       items: selected,
                       borrower: borrower,
                       caution: caution.text,
-                      end: DateTime.parse(processDateBack(end.text)),
+                      end: DateTime.parse(processDateBack(end)),
                       id: isEdit ? loan.id : "",
                       notes: note.text,
-                      start: DateTime.parse(processDateBack(start.text)),
+                      start: DateTime.parse(processDateBack(start)),
                       returned: false,
                     );
                     final value = isEdit

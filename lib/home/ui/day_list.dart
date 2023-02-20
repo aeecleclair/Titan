@@ -33,7 +33,7 @@ class DayList extends HookConsumerWidget {
 
         if (formattedNextDate != formattedDate) {
           if (sortedEventList.keys.contains(formattedDate)) {
-            height = 43 + 170 * sortedEventList[formattedDate]!.length;
+            height = 18 + 170 * sortedEventList[formattedDate]!.length;
           }
         }
         widgetPositions[formattedNextDate] =

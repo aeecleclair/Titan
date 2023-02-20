@@ -141,6 +141,7 @@ class ListBooking extends HookConsumerWidget {
                           pageNotifier.setBookingPage(
                               BookingPage.addEditBookingFromAdmin);
                         },
+                        onDelete: () async {},
                       )),
                   const SizedBox(width: 10),
                 ],

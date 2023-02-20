@@ -47,11 +47,12 @@ class EditPage extends HookConsumerWidget {
                 );
               }
               return g.when(
-                data: (g) {
-                  if (g.isEmpty) {
+                data: (groups) {
+                  if (groups.isEmpty) {
                     tokenExpireWrapper(ref, () async {
-                      final g = await groupNotifier.loadGroup(groupId);
-                      g.whenData((value) {
+                      final loadedGroup =
+                          await groupNotifier.loadGroup(groupId);
+                      loadedGroup.whenData((value) {
                         simplegroupsGroupsNotifier.setTData(
                             groupId, AsyncData([value]));
                       });
@@ -60,6 +61,8 @@ class EditPage extends HookConsumerWidget {
                       child: CircularProgressIndicator(),
                     );
                   }
+                  name.text = groups[0].name;
+                  description.text = groups[0].description;
                   return Column(children: [
                     const Align(
                       alignment: Alignment.centerLeft,
@@ -86,7 +89,7 @@ class EditPage extends HookConsumerWidget {
                                     controller: name,
                                     cursorColor: ColorConstants.gradient1,
                                     decoration: InputDecoration(
-                                        labelText: g[0].name,
+                                        labelText: "Name",
                                         labelStyle: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -134,7 +137,7 @@ class EditPage extends HookConsumerWidget {
                                     controller: description,
                                     cursorColor: ColorConstants.gradient1,
                                     decoration: InputDecoration(
-                                        labelText: g[0].description,
+                                        labelText: "Description",
                                         labelStyle: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -207,8 +210,11 @@ class EditPage extends HookConsumerWidget {
                             ),
                           ),
                           onTap: () async {
+                            if (!key.currentState!.validate()) {
+                              return;
+                            }
                             await tokenExpireWrapper(ref, () async {
-                              Group newGroup = g[0].copyWith(
+                              Group newGroup = groups[0].copyWith(
                                   name: name.text,
                                   description: description.text);
                               groupNotifier.setGroup(newGroup);

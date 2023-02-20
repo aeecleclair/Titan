@@ -53,7 +53,7 @@ class MainPage extends HookConsumerWidget {
               await loanListNotifier.loadLoanList();
             },
             child: Column(children: [
-              const SizedBox(height: 10),
+              const SizedBox(height: 40),
               (dictCateListWidget[0].isNotEmpty)
                   ? Column(children: [
                       Padding(
@@ -113,9 +113,9 @@ class MainPage extends HookConsumerWidget {
                           ),
                         )
                       : Container(),
-              const SizedBox(height: 30),
               if (dictCateListWidget[1].isNotEmpty)
                 Column(children: [
+                  const SizedBox(height: 30),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: Align(

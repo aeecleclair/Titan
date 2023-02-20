@@ -18,4 +18,8 @@ class SelectedDaysProvider extends StateNotifier<List<bool>> {
   void clear() {
     state = List.generate(state.length, (index) => false);
   }
+
+  void setSelectedDays(List<bool> days) {
+    state = days;
+  }
 }

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -166,18 +164,20 @@ class AddEditSessionPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 30),
                 (logo.value == null)
-                    ? Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 50, horizontal: 30),
-                        decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: HeroIcon(
-                          HeroIcons.camera,
-                          size: 100,
-                          color: Colors.grey.shade500,
-                        ),
-                      )
+                    ? logoFile.value == null
+                        ? Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 50, horizontal: 30),
+                            decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(20)),
+                            child: HeroIcon(
+                              HeroIcons.camera,
+                              size: 100,
+                              color: Colors.grey.shade500,
+                            ),
+                          )
+                        : Image(image: logoFile.value!.image, fit: BoxFit.cover)
                     : Image.network(logo.value!, fit: BoxFit.cover),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -198,6 +198,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   onChanged: (value) {
                     logo.value = posterUrl.text;
                   },
+                  canBeEmpty: true,
                 ),
                 const SizedBox(height: 30),
                 GestureDetector(
@@ -329,6 +330,11 @@ class AddEditSessionPage extends HookConsumerWidget {
                       return;
                     }
                     if (key.currentState!.validate()) {
+                      if (logo.value == null && logoFile.value == null) {
+                        displayToastWithContext(
+                            TypeMsg.error, CinemaTextConstants.noPoster);
+                        return;
+                      }
                       await tokenExpireWrapper(ref, () async {
                         Session newSession = Session(
                           name: name.text,
@@ -348,8 +354,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                         if (value) {
                           pageNotifier.setCinemaPage(CinemaPage.admin);
                           if (isEdit) {
-                            displayToastWithContext(
-                                TypeMsg.msg, CinemaTextConstants.editedSession);
                             sessionList.when(
                                 data: (list) async {
                                   if (logo.value != null) {
@@ -370,9 +374,9 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 },
                                 error: (error, s) {},
                                 loading: () {});
-                          } else {
                             displayToastWithContext(
-                                TypeMsg.msg, CinemaTextConstants.addedSession);
+                                TypeMsg.msg, CinemaTextConstants.editedSession);
+                          } else {
                             sessionList.when(
                                 data: (list) async {
                                   final newPretendance = list.last;
@@ -395,6 +399,8 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 },
                                 error: (error, s) {},
                                 loading: () {});
+                            displayToastWithContext(
+                                TypeMsg.msg, CinemaTextConstants.addedSession);
                           }
                         } else {
                           if (isEdit) {

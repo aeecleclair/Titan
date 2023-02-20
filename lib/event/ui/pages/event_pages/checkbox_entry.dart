@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class CheckBoxEntry extends StatelessWidget {
   final String title;
   final ValueNotifier<bool> valueNotifier;
+  final VoidCallback onChanged;
   const CheckBoxEntry(
-      {Key? key, required this.title, required this.valueNotifier})
+      {Key? key, required this.title, required this.valueNotifier, required this.onChanged})
       : super(key: key);
 
   @override
@@ -30,6 +31,7 @@ class CheckBoxEntry extends StatelessWidget {
             value: valueNotifier.value,
             onChanged: (value) {
               valueNotifier.value = value!;
+              onChanged();
             },
           ),
         ],

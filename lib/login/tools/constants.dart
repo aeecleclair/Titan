@@ -23,11 +23,14 @@ class LoginTextConstants {
   static const String floor = 'Étage';
   static const String forgetPassword = 'Mot de passe\noublié';
   static const String forgotPassword = 'Mot de passe oublié ?';
+  static const String invalidToken = 'Code d\'activation invalide';
+  static const String loginFailed = 'Échec de la connexion';
   static const String mailSendingError = 'Erreur lors de la création du compte';
   static const String name = 'Nom';
   static const String newPassword = 'Nouveau mot de passe';
   static const String password = 'Mot de passe';
-  static const String passwordLengthError = 'Le mot de passe doit faire au moins 6 caractères';
+  static const String passwordLengthError =
+      'Le mot de passe doit faire au moins 6 caractères';
   static const String passwordStrengthVeryWeak = 'Très faible';
   static const String passwordStrengthWeak = 'Faible';
   static const String passwordStrengthMedium = 'Moyen';

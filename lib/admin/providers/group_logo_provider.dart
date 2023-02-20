@@ -11,11 +11,16 @@ class GroupLogoNotifier extends SingleNotifier<Image> {
   }
 
   Future<Image> getLogo(String id) async {
-    return await repository.getLogo(id, suffix: "/logo");
+    final uint8List = await repository.getLogo(id, suffix: "/logo");
+    if (uint8List.isEmpty) {
+      return Image.asset("assets/images/logo.png");
+    }
+    return Image.memory(uint8List);
   }
 
   Future<Image> updateLogo(String id, String path) async {
-    return await repository.addLogo(path, id, suffix: "/logo");
+    final uint8List = await repository.addLogo(path, id, suffix: "/logo");
+    return Image.memory(uint8List);
   }
 }
 

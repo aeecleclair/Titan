@@ -2,7 +2,7 @@ name: myecl
 description: A new Flutter project.
 
 publish_to: "none"
-version: 0.4.14+30
+version: 0.5.0+35
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
