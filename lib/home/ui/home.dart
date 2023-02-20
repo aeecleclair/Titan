@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/sorted_event_list_provider.dart';
 import 'package:myecl/home/tools/constants.dart';
@@ -20,7 +21,7 @@ class HomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final eventListNotifier = ref.watch(eventListProvider.notifier);
+    final confimedEventListNotifier = ref.watch(confirmedEventListProvider.notifier);
     final sortedEventList = ref.watch(sortedEventListProvider);
     DateTime now = DateTime.now();
     final ScrollController scrollController = useScrollController();
@@ -41,7 +42,7 @@ class HomePage extends HookConsumerWidget {
               ignoring: controller.isCompleted,
               child: Refresher(
                 onRefresh: () async {
-                  await eventListNotifier.loadEventList();
+                  await confimedEventListNotifier.loadConfirmedEvent();
                   now = DateTime.now();
                 },
                 child: Column(
