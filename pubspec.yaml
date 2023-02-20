@@ -58,7 +58,7 @@ dev_dependencies:
 flutter:
   assets:
     - .env
-    - assets/images/logo_alpha.png
+    - assets/images/logo.png
 
   uses-material-design: true
 
@@ -66,16 +66,16 @@ flutter_icons:
   android: "launcher_icon"
   ios:
     generate: true
-    image_path: "assets/images/logo_alpha.jpg"
-  image_path: "assets/images/logo_alpha.png"
+    image_path: "assets/images/logo.jpg"
+  image_path: "assets/images/logo.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/images/logo_alpha.png"
+    image_path: "assets/images/logo.png"
   windows:
     generate: true
-    image_path: "assets/images/logo_alpha.png"
+    image_path: "assets/images/logo.png"
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-    image_path: "assets/images/logo_alpha.png"
+    image_path: "assets/images/logo.png"
