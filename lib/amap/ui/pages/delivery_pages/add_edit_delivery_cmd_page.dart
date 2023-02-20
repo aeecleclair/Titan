@@ -275,6 +275,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
       BuildContext context, TextEditingController dateController) async {
     final DateTime now = DateTime.now();
     final DateTime? picked = await showDatePicker(
+    locale: const Locale("fr", "FR"),
         context: context,
         initialDate: now,
         firstDate: now,

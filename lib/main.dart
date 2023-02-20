@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -35,6 +36,15 @@ class MyApp extends HookConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MyECL',
+      localizationsDelegates: const [
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+       supportedLocales: const [
+         Locale('en'),
+         Locale('fr')
+       ],
       theme: ThemeData(
           primarySwatch: Colors.orange,
           textTheme: GoogleFonts.latoTextTheme(

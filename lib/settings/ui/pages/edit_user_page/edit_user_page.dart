@@ -476,6 +476,7 @@ class EditUserPage extends HookConsumerWidget {
   _selectDate(BuildContext context, User me,
       TextEditingController dateController) async {
     final DateTime? picked = await showDatePicker(
+      locale: const Locale("fr", "FR"),
         context: context,
         initialDate: DateTime.parse(me.birthday),
         firstDate: DateTime(1900),

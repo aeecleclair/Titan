@@ -406,6 +406,7 @@ class CreateAccountPage extends HookConsumerWidget {
   _selectDate(
       BuildContext context, TextEditingController dateController) async {
     final DateTime? picked = await showDatePicker(
+      locale: const Locale("fr", "FR"),
         context: context,
         initialDate: DateTime.now().subtract(const Duration(days: 365 * 21)),
         firstDate: DateTime(1900),
