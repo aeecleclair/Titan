@@ -9,6 +9,7 @@ import 'package:myecl/amap/providers/focus_provider.dart';
 import 'package:myecl/amap/providers/searching_amap_user_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/adding_user_container.dart';
+import 'package:myecl/amap/ui/pages/admin_page/cash_container.dart';
 import 'package:myecl/amap/ui/pages/admin_page/user_cash_ui.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -27,11 +28,6 @@ class AccountHandler extends HookConsumerWidget {
     final focus = ref.watch(focusProvider);
     final focusNotifier = ref.watch(focusProvider.notifier);
     final focusNode = useFocusNode();
-    final cashs = useState(List<Cash>.empty());
-    cashNotifier.filterCashList(editingController.text).then((value) {
-      value.sort((a, b) => a.user.getName().compareTo(b.user.getName()));
-      cashs.value = value;
-    });
     if (focus) {
       focusNode.requestFocus();
     }
@@ -56,7 +52,11 @@ class AccountHandler extends HookConsumerWidget {
                     usersNotifier.clear();
                   }
                 } else {
-                  await cashNotifier.filterCashList(editingController.text);
+                  if (editingController.text.isNotEmpty) {
+                    await cashNotifier.filterCashList(editingController.text);
+                  } else {
+                    cashNotifier.refreshCashList();
+                  }
                 }
               });
             },
@@ -173,7 +173,7 @@ class AccountHandler extends HookConsumerWidget {
                                   )),
                         ),
                       )),
-                  ...cashs.value.map((e) => UserCashUi(cash: e)),
+                  const CashContainer(),
                   const SizedBox(
                     width: 10,
                   ),
