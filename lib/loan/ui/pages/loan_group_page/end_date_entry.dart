@@ -17,6 +17,7 @@ class EndDateEntry extends HookConsumerWidget {
     selectDate(BuildContext context) async {
       final DateTime now = DateTime.now();
       final DateTime? picked = await showDatePicker(
+        locale: const Locale("fr", "FR"),
           context: context,
           initialDate: initialDate,
           firstDate: initialDate,

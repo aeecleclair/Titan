@@ -2,6 +2,7 @@ import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/applicant.dart';
 import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/floors.dart';
 
 class User {
   User({
@@ -23,7 +24,7 @@ class User {
   late final String id;
   late final String email;
   late final String birthday;
-  late final int promo;
+  late final int? promo;
   late final String floor;
   late final String? phone;
   late final String createdOn;
@@ -70,8 +71,8 @@ class User {
     id = '';
     email = 'empty@ecl.ec-lyon.fr';
     birthday = DateTime.now().toIso8601String().split("T")[0];
-    promo = 22;
-    floor = 'W1';
+    promo = null;
+    floor = capitalize(Floors.values.first.toString().split('.').last);
     phone = null;
     createdOn = '';
     groups = [];
@@ -97,7 +98,7 @@ class User {
       id: id ?? this.id,
       email: email ?? this.email,
       birthday: birthday ?? this.birthday,
-      promo: promo ?? this.promo,
+      promo: promo,
       floor: floor ?? this.floor,
       phone: phone,
       createdOn: createdOn ?? this.createdOn,
