@@ -37,18 +37,14 @@ class MyApp extends HookConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: 'MyECL',
       localizationsDelegates: const [
-    GlobalMaterialLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-  ],
-       supportedLocales: const [
-         Locale('en'),
-         Locale('fr')
-       ],
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('en'), Locale('fr')],
       theme: ThemeData(
           primarySwatch: Colors.orange,
-          textTheme: GoogleFonts.latoTextTheme(
-              Theme.of(context).textTheme)),
+          textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme)),
       home: check.when(
           data: (value) => value
               ? isLoggedIn

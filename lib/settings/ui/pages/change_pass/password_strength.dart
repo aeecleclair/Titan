@@ -39,43 +39,43 @@ class PasswordStrength extends HookConsumerWidget {
                   backgroundColor: Colors.transparent,
                   radius: 10,
                   strengthColors: whiteBar
-                      ? TweenSequence<Color>([
+                      ? TweenSequence<Color?>([
                           TweenSequenceItem(
                             weight: 1.0,
                             tween: ColorTween(
                               begin: Colors.white,
                               end: Colors.white,
-                            ) as Tween<Color>,
+                            ),
                           ),
                         ])
-                      : TweenSequence<Color>([
+                      : TweenSequence<Color?>([
                           TweenSequenceItem(
                             weight: 1.0,
                             tween: ColorTween(
                               begin: const Color(0xffd31336),
                               end: const Color(0xff880e65),
-                            ) as Tween<Color>,
+                            ),
                           ),
                           TweenSequenceItem(
                             weight: 1.0,
                             tween: ColorTween(
                               begin: const Color(0xff880e65),
                               end: const Color(0xff1c1840),
-                            ) as Tween<Color>,
+                            ),
                           ),
                           TweenSequenceItem(
                             weight: 1.0,
                             tween: ColorTween(
                               begin: const Color(0xff1c1840),
                               end: const Color(0xff3a5a81),
-                            ) as Tween<Color>,
+                            ),
                           ),
                           TweenSequenceItem(
                             weight: 1.0,
                             tween: ColorTween(
                               begin: const Color(0xff3a5a81),
                               end: const Color(0xff1791b1),
-                            ) as Tween<Color>,
+                            ),
                           ),
                         ]),
                   strengthCallback: (strength) {
