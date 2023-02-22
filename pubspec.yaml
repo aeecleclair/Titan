@@ -15,7 +15,7 @@ dependencies:
   datetime_picker_formfield: ^2.0.1
   dotenv: ^4.0.1
   f_logs: ^2.0.1
-  fl_chart: ^0.55.2
+  fl_chart: ^0.61.0
   flash: ^2.0.3+2
   flutter:
     sdk: flutter
@@ -25,9 +25,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.1
-  flutter_secure_storage: ^7.0.1
-  google_fonts: ^3.0.1
-  heroicons: ^0.7.0
+  flutter_secure_storage: ^8.0.0
+  google_fonts: ^4.0.3
+  heroicons: ^0.8.0
   hooks_riverpod: ^2.1.1
   http: ^0.13.4
   http_parser: ^4.0.2
