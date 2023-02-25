@@ -6,6 +6,7 @@ import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
@@ -65,40 +66,41 @@ class AppDrawer extends HookConsumerWidget {
     final controllerNotifier =
         ref.watch(swipeControllerProvider(animationController).notifier);
     final page = ref.watch(pageProvider);
+    final isWebFormat = ref.watch(isWebFormatProvider);
     return GestureDetector(
-        onHorizontalDragStart: controllerNotifier.onDragStart,
-        onHorizontalDragUpdate: controllerNotifier.onDragUpdate,
-        onHorizontalDragEnd: (details) => controllerNotifier.onDragEnd(
-            details, MediaQuery.of(context).size.width),
-        onTap: () {},
-        child: AnimatedBuilder(
-            animation: controller,
-            builder: (BuildContext context, _) {
-              double animationVal = controller.value;
-              double translateVal = animationVal * maxSlide;
-              double scaleVal = 1 - (animationVal * 0.3);
-              double cornerval = 30.0 * animationVal;
-              return Stack(
-                children: [
-                  CustomDrawer(controllerNotifier: controllerNotifier),
-                  Transform(
-                      alignment: Alignment.centerLeft,
-                      transform: Matrix4.identity()
-                        ..translate(translateVal)
-                        ..scale(scaleVal),
-                      child: GestureDetector(
-                        onTap: () {
-                          if (controller.isCompleted) {
-                            controllerNotifier.close();
-                          }
-                        },
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(cornerval),
-                          child: getPage(page, controllerNotifier, controller),
-                        ),
-                      ))
-                ],
-              );
-            }));
+            onHorizontalDragStart: controllerNotifier.onDragStart,
+            onHorizontalDragUpdate: controllerNotifier.onDragUpdate,
+            onHorizontalDragEnd: (details) => controllerNotifier.onDragEnd(
+                details, MediaQuery.of(context).size.width),
+            onTap: () {},
+            child: AnimatedBuilder(
+                animation: controller,
+                builder: (BuildContext context, _) {
+                  double animationVal = controller.value;
+                  double translateVal = animationVal * maxSlide;
+                  double scaleVal = 1 - (isWebFormat ? 0 :(animationVal * 0.3));
+                  double cornerval = isWebFormat ? 0 :30.0 * animationVal;
+                  return Stack(
+                    children: [
+                      CustomDrawer(controllerNotifier: controllerNotifier),
+                      Transform(
+                          alignment: Alignment.centerLeft,
+                          transform: Matrix4.identity()
+                            ..translate(translateVal)
+                            ..scale(scaleVal),
+                          child: GestureDetector(
+                            onTap: () {
+                              if (controller.isCompleted) {
+                                controllerNotifier.close();
+                              }
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(cornerval),
+                              child: getPage(page, controllerNotifier, controller),
+                            ),
+                          ))
+                    ],
+                  );
+                }));
   }
 }
