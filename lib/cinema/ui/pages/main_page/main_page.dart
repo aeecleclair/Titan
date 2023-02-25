@@ -61,7 +61,6 @@ class MainPage extends HookConsumerWidget {
                           GestureDetector(
                             onTap: () {
                               pageNotifier.setCinemaPage(CinemaPage.admin);
-                              initialPageNotifier.setMainPageIndex(currentPage);
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(

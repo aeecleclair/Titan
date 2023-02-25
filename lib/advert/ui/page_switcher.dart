@@ -4,7 +4,7 @@ import 'package:myecl/advert/providers/advert_page_provider.dart';
 import 'package:myecl/advert/ui/pages/add_edit_advert_page.dart';
 import 'package:myecl/advert/ui/pages/admin_page.dart';
 import 'package:myecl/advert/ui/pages/detail_dart.dart';
-import 'package:myecl/advert/ui/pages/main_page.dart';
+import 'package:myecl/advert/ui/pages/main_page/main_page.dart';
 
 
 class PageSwitcher extends ConsumerWidget {
