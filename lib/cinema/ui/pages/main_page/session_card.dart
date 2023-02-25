@@ -6,6 +6,7 @@ import 'package:myecl/cinema/providers/scroll_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/tools/functions.dart';
+import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 
 class SessionCard extends HookConsumerWidget {
   final Session session;
@@ -44,133 +45,189 @@ class SessionCard extends HookConsumerWidget {
     }
     height = maxHeigth * (1 - scale) / 2;
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: height,
-            ),
-            sessionPosterMap.when(
-                data: (data) {
-                  if (data[session] != null) {
-                    return data[session]!.when(data: (data) {
-                      if (data.isNotEmpty) {
-                        return Container(
+    return LayoutBuilder(builder: (context, constraints) {
+      final splitCard = constraints.maxWidth > 600;
+      return GestureDetector(
+        onTap: onTap,
+        child: Container(
+          margin: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: height,
+              ),
+              sessionPosterMap.when(
+                  data: (data) {
+                    if (data[session] != null) {
+                      return data[session]!.when(data: (data) {
+                        if (data.isNotEmpty) {
+                          return splitCard
+                              ? Container(
+                                  height: maxHeigth * scale,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        height: maxHeigth * scale,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          image: DecorationImage(
+                                              image: data.first.image,
+                                              fit: splitCard
+                                                  ? BoxFit.fitHeight
+                                                  : BoxFit.cover),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        child: Column(
+                                          children: [
+                                            Text(session.name,
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : Container(
+                                  height: maxHeigth * scale,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    image: DecorationImage(
+                                        image: data.first.image,
+                                        fit: splitCard
+                                            ? BoxFit.fitHeight
+                                            : BoxFit.cover),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: const Offset(
+                                            0, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+
+                                  // if (splitCard)
+                                  //   const Align(
+                                  //     alignment: Alignment.topRight,
+                                  //     child: Padding(
+                                  //       padding: EdgeInsets.all(10),
+                                  //       child: HeroIcon(HeroIcons.play),
+                                  //     ),
+                                  //   ),
+                                );
+                        } else {
+                          sessionPosterNotifier
+                              .getLogo(session.id)
+                              .then((value) {
+                            sessionPosterMapNotifier.setTData(
+                                session, AsyncData([value]));
+                          });
+                          return Container(
+                            height: maxHeigth * scale,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: const Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      }, loading: () {
+                        return SizedBox(
                           height: maxHeigth * scale,
                           width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            image: DecorationImage(
-                                image: data.first.image, fit: BoxFit.cover),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                                offset: const Offset(
-                                    0, 3), // changes position of shadow
-                              ),
-                            ],
+                          child: const Center(
+                            child: CircularProgressIndicator(),
                           ),
                         );
-                      } else {
-                        sessionPosterNotifier.getLogo(session.id).then((value) {
-                          sessionPosterMapNotifier.setTData(
-                              session, AsyncData([value]));
-                        });
-                        return Container(
+                      }, error: (error, stack) {
+                        return SizedBox(
                           height: maxHeigth * scale,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                                offset: const Offset(
-                                    0, 3), // changes position of shadow
-                              ),
-                            ],
+                          width: double.infinity,
+                          child: const Center(
+                            child: HeroIcon(HeroIcons.exclamationCircle),
                           ),
                         );
-                      }
-                    }, loading: () {
-                      return SizedBox(
-                        height: maxHeigth * scale,
-                        width: double.infinity,
-                        child: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    }, error: (error, stack) {
-                      return SizedBox(
-                        height: maxHeigth * scale,
-                        width: double.infinity,
-                        child: const Center(
-                          child: HeroIcon(HeroIcons.exclamationCircle),
-                        ),
-                      );
-                    });
-                  } else {
-                    return const SizedBox.shrink();
-                  }
-                },
-                loading: () => const CircularProgressIndicator(),
-                error: (error, stack) => Text('Error $error')),
-            const SizedBox(
-              height: 15,
-            ),
-            Column(
-              children: [
-                Text(session.name,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    )),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                      });
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
+                  loading: () => const CircularProgressIndicator(),
+                  error: (error, stack) => Text('Error $error')),
+              const SizedBox(
+                height: 15,
+              ),
+              if (!splitCard)
+                Column(
                   children: [
-                    const HeroIcon(
-                      HeroIcons.calendar,
-                      size: 20,
+                    Text(session.name,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const HeroIcon(
+                          HeroIcons.calendar,
+                          size: 20,
+                        ),
+                        const SizedBox(
+                          width: 7,
+                        ),
+                        Text(formatDate(session.start),
+                            style: const TextStyle(fontSize: 16)),
+                      ],
                     ),
                     const SizedBox(
-                      width: 7,
+                      height: 5,
                     ),
-                    Text(formatDate(session.start),
-                        style: const TextStyle(fontSize: 16)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const HeroIcon(
+                          HeroIcons.clock,
+                          size: 20,
+                        ),
+                        const SizedBox(
+                          width: 7,
+                        ),
+                        Text(formatDuration(session.duration),
+                            style: const TextStyle(fontSize: 16)),
+                      ],
+                    ),
                   ],
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const HeroIcon(
-                      HeroIcons.clock,
-                      size: 20,
-                    ),
-                    const SizedBox(
-                      width: 7,
-                    ),
-                    Text(formatDuration(session.duration),
-                        style: const TextStyle(fontSize: 16)),
-                  ],
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
