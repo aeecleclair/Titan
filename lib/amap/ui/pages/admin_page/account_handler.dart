@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -31,151 +32,172 @@ class AccountHandler extends HookConsumerWidget {
     if (focus) {
       focusNode.requestFocus();
     }
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
-          child: TextField(
-            onChanged: (value) {
-              tokenExpireWrapper(ref, () async {
-                if (!searchingAmapUser) {
-                  if (editingController.text.isNotEmpty) {
-                    await usersNotifier
-                        .filterUsers(editingController.text);
-                  } else {
-                    usersNotifier.clear();
-                  }
+    final outerController = useScrollController();
+    final innerController = useScrollController();
+
+    return Column(children: [
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        alignment: Alignment.centerLeft,
+        child: TextField(
+          onChanged: (value) {
+            tokenExpireWrapper(ref, () async {
+              if (!searchingAmapUser) {
+                if (editingController.text.isNotEmpty) {
+                  await usersNotifier.filterUsers(editingController.text);
                 } else {
-                  if (editingController.text.isNotEmpty) {
-                    await cashNotifier.filterCashList(editingController.text);
-                  } else {
-                    cashNotifier.refreshCashList();
-                  }
+                  usersNotifier.clear();
                 }
-              });
-            },
-            focusNode: focusNode,
-            controller: editingController,
-            cursorColor: AMAPColorConstants.textDark,
-            decoration: const InputDecoration(
-                labelText: AMAPTextConstants.accounts,
-                labelStyle: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AMAPColorConstants.textDark),
-                suffixIcon: Icon(
-                  Icons.search,
-                  color: AMAPColorConstants.textDark,
-                  size: 30,
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AMAPColorConstants.textDark,
-                  ),
-                )),
-          ),
-        ),
-        SizedBox(
-            height: 135,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              child: Row(
-                children: [
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          gradient: const RadialGradient(
-                            colors: [
-                              AMAPColorConstants.green1,
-                              AMAPColorConstants.textLight,
-                            ],
-                            center: Alignment.topLeft,
-                            radius: 1.3,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color:
-                                  AMAPColorConstants.textDark.withOpacity(0.2),
-                              spreadRadius: 5,
-                              blurRadius: 10,
-                              offset: const Offset(3, 3),
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 17.0),
-                          child: !searchingAmapUser
-                              ? Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        searchingAmapUserNotifier
-                                            .setProduct(true);
-                                        FocusScope.of(context)
-                                            .requestFocus(FocusNode());
-                                        focusNotifier.setFocus(false);
-                                        editingController.clear();
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 12.0),
-                                        child: const HeroIcon(
-                                          HeroIcons.xMark,
-                                          color: Color.fromARGB(
-                                              223, 244, 255, 183),
-                                          size: 50,
-                                        ),
-                                      ),
-                                    ),
-                                    AddingUserContainer(onAdd: () async {
-                                      searchingAmapUserNotifier
-                                          .setProduct(true);
-                                      FocusScope.of(context)
-                                          .requestFocus(FocusNode());
-                                      focusNotifier.setFocus(false);
-                                      await cashNotifier.filterCashList(
-                                          editingController.text);
-                                      editingController.clear();
-                                    })
-                                  ],
-                                )
-                              : GestureDetector(
-                                  onTap: () {
-                                    searchingAmapUserNotifier.setProduct(false);
-                                    focusNotifier.setFocus(true);
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12.0),
-                                    child: const HeroIcon(
-                                      HeroIcons.plus,
-                                      color: Color.fromARGB(223, 244, 255, 183),
-                                      size: 50,
-                                    ),
-                                  )),
-                        ),
-                      )),
-                  const CashContainer(),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                ],
+              } else {
+                if (editingController.text.isNotEmpty) {
+                  await cashNotifier.filterCashList(editingController.text);
+                } else {
+                  cashNotifier.refreshCashList();
+                }
+              }
+            });
+          },
+          focusNode: focusNode,
+          controller: editingController,
+          cursorColor: AMAPColorConstants.textDark,
+          decoration: const InputDecoration(
+              labelText: AMAPTextConstants.accounts,
+              labelStyle: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AMAPColorConstants.textDark),
+              suffixIcon: Icon(
+                Icons.search,
+                color: AMAPColorConstants.textDark,
+                size: 30,
               ),
-            )),
-      ],
-    );
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                ),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: AMAPColorConstants.textDark,
+                ),
+              )),
+        ),
+      ),
+      SizedBox(
+          height: 135,
+          child: ListView(
+              controller: outerController,
+              clipBehavior: Clip.none,
+              children: [
+                Listener(
+                  onPointerSignal: (event) {
+                    if (event is PointerScrollEvent) {
+                      final offset = event.scrollDelta.dy;
+                      innerController.jumpTo(innerController.offset + offset);
+                      outerController.jumpTo(outerController.offset - offset);
+                    }
+                  },
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    controller: innerController,
+                    clipBehavior: Clip.none,
+                    physics: const BouncingScrollPhysics(),
+                    child: Row(
+                      children: [
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Container(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                gradient: const RadialGradient(
+                                  colors: [
+                                    AMAPColorConstants.green1,
+                                    AMAPColorConstants.textLight,
+                                  ],
+                                  center: Alignment.topLeft,
+                                  radius: 1.3,
+                                ),
+                                borderRadius: BorderRadius.circular(30),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AMAPColorConstants.textDark
+                                        .withOpacity(0.2),
+                                    spreadRadius: 5,
+                                    blurRadius: 10,
+                                    offset: const Offset(3, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 17.0),
+                                child: !searchingAmapUser
+                                    ? Row(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              searchingAmapUserNotifier
+                                                  .setProduct(true);
+                                              FocusScope.of(context)
+                                                  .requestFocus(FocusNode());
+                                              focusNotifier.setFocus(false);
+                                              editingController.clear();
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12.0),
+                                              child: const HeroIcon(
+                                                HeroIcons.xMark,
+                                                color: Color.fromARGB(
+                                                    223, 244, 255, 183),
+                                                size: 50,
+                                              ),
+                                            ),
+                                          ),
+                                          AddingUserContainer(onAdd: () async {
+                                            searchingAmapUserNotifier
+                                                .setProduct(true);
+                                            FocusScope.of(context)
+                                                .requestFocus(FocusNode());
+                                            focusNotifier.setFocus(false);
+                                            await cashNotifier.filterCashList(
+                                                editingController.text);
+                                            editingController.clear();
+                                          })
+                                        ],
+                                      )
+                                    : GestureDetector(
+                                        onTap: () {
+                                          searchingAmapUserNotifier
+                                              .setProduct(false);
+                                          focusNotifier.setFocus(true);
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12.0),
+                                          child: const HeroIcon(
+                                            HeroIcons.plus,
+                                            color: Color.fromARGB(
+                                                223, 244, 255, 183),
+                                            size: 50,
+                                          ),
+                                        )),
+                              ),
+                            )),
+                        const CashContainer(),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ]))
+    ]);
   }
 }
