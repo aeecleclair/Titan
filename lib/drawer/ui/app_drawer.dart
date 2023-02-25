@@ -96,7 +96,26 @@ class AppDrawer extends HookConsumerWidget {
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(cornerval),
-                              child: getPage(page, controllerNotifier, controller),
+                              child: Stack(
+                                children: [
+                                  getPage(page, controllerNotifier, controller),
+                                  MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    onEnter: (event) {
+                                      if (controller.isCompleted) {
+                                        controllerNotifier.close();
+                                      } else {
+                                        controllerNotifier.open();
+                                      }
+                                    },
+                                    child: Container(
+                                      color: Colors.transparent,
+                                      width: 20,
+                                      height: double.infinity,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ))
                     ],
