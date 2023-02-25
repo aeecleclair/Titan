@@ -4,29 +4,29 @@ import 'package:myecl/tools/repository/repository.dart';
 class OrderListRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "amap/orders";
+  final ext = "amap/";
 
   Future<Order> createOrder(Order order) async {
     return Order.fromJson(
-        await create(order.toJson()));
+        await create(order.toJson(), suffix: "orders"));
   }
 
   Future<bool> updateOrder(Order order) async {
-    return await update(order.toJson(), "/${order.id}");
+    return await update(order.toJson(), "orders/${order.id}");
   }
 
   Future<bool> deleteOrder(String orderId) async {
-    return await delete("/$orderId");
+    return await delete("orders/$orderId");
   }
 
   Future<List<Order>> getOrder(String orderId) async {
     return List<Order>.from(
-        (await getList(suffix: "/$orderId"))
+        (await getList(suffix: "orders/$orderId"))
             .map((x) => Order.fromJson(x)));
   }
 
   Future<List<Order>> getDeliveryOrderList(String deliveryId) async {
-    return List<Order>.from((await getList(suffix: "$deliveryId/orders"))
+    return List<Order>.from((await getList(suffix: "deliveries/$deliveryId/orders"))
         .map((x) => Order.fromJson(x)));
   }
 }
