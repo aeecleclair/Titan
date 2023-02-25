@@ -45,7 +45,7 @@ class UserOrderListNotifier extends ListNotifier<Order> {
 
   Future<bool> deleteOrder(Order order) async {
     return await delete(
-        (id) async => _orderListRepository.deleteOrder(order.deliveryId),
+        (id) async => _orderListRepository.deleteOrder(order.id),
         (orders, order) => orders..removeWhere((i) => i.id == order.id),
         order.id,
         order);
