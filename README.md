@@ -12,11 +12,13 @@ Titan is a cross platform frontend for our project Hyperion
 
 ## Change the backend url
 
-In [`lib/tools/repository/repository.dart`](./lib/tools/repository/repository.dart) change:
+In [`.env`](.env) change:
 
-```dart
-final host = "http://10.0.2.2:8000/";
-```
+RELEASE_HOST = "<<Your Production Server Host>>"
+
+You can also specify a debug url :
+
+DEBUG_HOST = "<<Your Debbuging Server Host>>" 
 
 ## Web dev
 
@@ -103,4 +105,13 @@ Add to `AndroidManifest.xml` file in the android/app/src/main folder :
     ...
     android:usesCleartextTraffic="true"
     ...   >
+```
+
+## Mettre à jour l'icon de l'app
+
+On utilise le module [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons), après avoir modifié la config dans [pubspec.yaml](./pubspec.yaml) executer :
+
+```bash
+flutter pub get
+flutter pub run flutter_launcher_icons
 ```

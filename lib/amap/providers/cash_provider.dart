@@ -8,13 +8,13 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class CashProvider extends ListNotifier<Cash> {
   final CashRepository _cashRepository = CashRepository();
-
+   AsyncValue<List<Cash>> _cashList = const AsyncLoading();
   CashProvider({required String token}) : super(const AsyncLoading()) {
     _cashRepository.setToken(token);
   }
 
   Future<AsyncValue<List<Cash>>> loadCashList() async {
-    return await loadList(_cashRepository.getCashList);
+    return _cashList = await loadList(_cashRepository.getCashList);
   }
 
   Future<bool> addCash(Cash cash) async {
@@ -25,34 +25,38 @@ class CashProvider extends ListNotifier<Cash> {
     return await update(
         _cashRepository.updateCash,
         (cashs, c) => cashs
-          ..[cashs.indexWhere((c) => c.user.id == c.user.id)] =
+          ..[cashs.indexWhere((c) => c.user.id == cash.user.id)] =
               cash.copyWith(balance: cash.balance + amount),
-        cash.copyWith(balance: amount));
+        cash.copyWith(balance: amount.toDouble()));
   }
 
   Future<AsyncValue<List<Cash>>> filterCashList(String filter) async {
     return state.when(
       data: (cashList) async {
         final lowerQuery = filter.toLowerCase();
-        return AsyncValue.data(cashList
+        return state = AsyncData(cashList
             .where((cash) =>
                 cash.user.name.toLowerCase().contains(lowerQuery) ||
                 cash.user.firstname.toLowerCase().contains(lowerQuery) ||
-                (cash.user.nickname != null && cash.user.nickname!.toLowerCase().contains(lowerQuery)))
+                (cash.user.nickname != null &&
+                    cash.user.nickname!.toLowerCase().contains(lowerQuery)))
             .toList());
       },
       error: (error, stackTrace) {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           throw error;
         } else {
-          return AsyncValue.error(error, stackTrace);
+          return state;
         }
       },
       loading: () {
-        return const AsyncValue.error(
-            "Cannot filter cash while loading", StackTrace.empty);
+        return state;
       },
     );
+  }
+
+  Future<void> refreshCashList() async {
+    state = _cashList;
   }
 }
 

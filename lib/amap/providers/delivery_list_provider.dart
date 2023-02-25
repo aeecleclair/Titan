@@ -91,6 +91,20 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
       },
     );
   }
+
+  Future<List<Delivery>> copy() async {
+    return state.when(
+      data: (deliveries) async {
+        return List.from(deliveries);
+      },
+      error: (error, stackTrace) async {
+        return [];
+      },
+      loading: () async {
+        return [];
+      },
+    );
+  }
 }
 
 final deliveryListProvider =

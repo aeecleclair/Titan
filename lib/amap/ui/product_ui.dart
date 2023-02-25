@@ -75,49 +75,22 @@ class ProductCard extends StatelessWidget {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 32, 67, 0))),
-              if (showButton) const Spacer(),
-              if (showButton)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: onEdit,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        padding: const EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              AMAPColorConstants.greenGradient2,
-                              AMAPColorConstants.textDark,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                                color: AMAPColorConstants.textDark
-                                    .withOpacity(0.5),
-                                blurRadius: 10,
-                                offset: const Offset(2, 3))
-                          ],
-                        ),
-                        child: const HeroIcon(HeroIcons.pencil,
-                            color: Colors.white),
-                      ),
-                    ),
-                    ShrinkButton(
-                        waitChild: Container(
+              const Spacer(),
+              showButton
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: onEdit,
+                          child: Container(
                             width: 40,
                             height: 40,
                             padding: const EdgeInsets.all(7),
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [
-                                  AMAPColorConstants.redGradient1,
-                                  AMAPColorConstants.redGradient2,
+                                  AMAPColorConstants.greenGradient2,
+                                  AMAPColorConstants.textDark,
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -125,44 +98,79 @@ class ProductCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15),
                               boxShadow: [
                                 BoxShadow(
-                                    color: AMAPColorConstants.redGradient2
+                                    color: AMAPColorConstants.textDark
                                         .withOpacity(0.5),
                                     blurRadius: 10,
                                     offset: const Offset(2, 3))
                               ],
                             ),
-                            child: const Center(
-                              child: CircularProgressIndicator(
-                                  color: Colors.white),
-                            )),
-                        onTap: onDelete,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          padding: const EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [
-                                AMAPColorConstants.redGradient1,
-                                AMAPColorConstants.redGradient2,
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: AMAPColorConstants.redGradient2
-                                      .withOpacity(0.5),
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3))
-                            ],
+                            child: const HeroIcon(HeroIcons.pencil,
+                                color: Colors.white),
                           ),
-                          child: const HeroIcon(HeroIcons.trash,
-                              color: Colors.white),
-                        ))
-                  ],
-                ),
+                        ),
+                        ShrinkButton(
+                            waitChild: Container(
+                                width: 40,
+                                height: 40,
+                                padding: const EdgeInsets.all(7),
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      AMAPColorConstants.redGradient1,
+                                      AMAPColorConstants.redGradient2,
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: AMAPColorConstants.redGradient2
+                                            .withOpacity(0.5),
+                                        blurRadius: 10,
+                                        offset: const Offset(2, 3))
+                                  ],
+                                ),
+                                child: const Center(
+                                  child: CircularProgressIndicator(
+                                      color: Colors.white),
+                                )),
+                            onTap: onDelete,
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              padding: const EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    AMAPColorConstants.redGradient1,
+                                    AMAPColorConstants.redGradient2,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: AMAPColorConstants.redGradient2
+                                          .withOpacity(0.5),
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 3))
+                                ],
+                              ),
+                              child: const HeroIcon(HeroIcons.trash,
+                                  color: Colors.white),
+                            ))
+                      ],
+                    )
+                  : Container(
+                      margin: const EdgeInsets.only(bottom: 5),
+                      child: Text("Quantité : ${product.quantity}",
+                          style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 32, 67, 0))),
+                    ),
               const SizedBox(height: 10),
             ],
           ),

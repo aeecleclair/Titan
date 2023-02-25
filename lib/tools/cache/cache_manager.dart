@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CacheManager {
@@ -27,18 +25,11 @@ class CacheManager {
     return await storage.delete(key: key);
   }
 
-  Future<Image> readImage(String key) async {
+  Future<Uint8List> readImage(String key) async {
     final String? bytes = await storage.read(key: key).then((value) => value);
     if (bytes == null) {
-      Uint8List blankBytes = const Base64Codec().decode(
-          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
-      Image.memory(
-        blankBytes,
-        height: 1,
-      );
-      return Image.memory(blankBytes);
+      return Uint8List(0);
     }
-    final Uint8List uint8list = Uint8List.fromList(bytes.codeUnits);
-    return Image.memory(uint8list);
+    return Uint8List.fromList(List<int>.from(json.decode(bytes)));
   }
 }

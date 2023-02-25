@@ -38,4 +38,9 @@ class SimpleGroup {
     description = 'Description';
     id = '';
   }
+
+  @override
+  String toString() {
+    return 'SimpleGroup(name: $name, description: $description, id: $id)';
+  }
 }

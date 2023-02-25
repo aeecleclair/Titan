@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
@@ -7,11 +9,16 @@ class SessionPosterRepository extends LogoRepository {
   final ext = 'cinema/sessions/';
 
   Future<Image> getPretendenceLogo(String id) async {
-    return await getLogo(id, suffix: "/poster");
+    final uint8List = await getLogo(id, suffix: "/poster");
+    if (uint8List.isEmpty) {
+      return Image.asset("assets/images/logo.png");
+    }
+    return Image.memory(uint8List);
   }
 
   Future<Image> addPretendenceLogo(String path, String id) async {
     final image = await saveLogoToTemp(path);
-    return await addLogo(image.path, id, suffix: "/poster");
+    final uint8List = await addLogo(image.path, id, suffix: "/poster");
+    return Image.memory(uint8List);
   }
 }

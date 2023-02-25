@@ -7,15 +7,20 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class EventEventListProvider extends ListNotifier<Event> {
   final EventRepository _eventRepository = EventRepository();
+  String userId = "";
   EventEventListProvider({required String token})
       : super(const AsyncValue.loading()) {
     _eventRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Event>>> loadConfirmedEvent(String id) async {
-    return await loadList(() async => _eventRepository.getUserEventList(id));
+  void setId(String id) {
+    userId = id;
   }
 
+  Future<AsyncValue<List<Event>>> loadConfirmedEvent() async {
+    return await loadList(
+        () async => _eventRepository.getUserEventList(userId));
+  }
 
   Future<bool> addEvent(Event event) async {
     return await add(_eventRepository.createEvent, event);
@@ -46,7 +51,8 @@ final eventEventListProvider =
   final provider = EventEventListProvider(token: token);
   tokenExpireWrapperAuth(ref, () async {
     userId.whenData((value) async {
-    await provider.loadConfirmedEvent(value);
+      provider.setId(value);
+      await provider.loadConfirmedEvent();
     });
   });
   return provider;

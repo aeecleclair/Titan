@@ -2,6 +2,7 @@ import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/applicant.dart';
 import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/floors.dart';
 
 class User {
   User({
@@ -23,7 +24,7 @@ class User {
   late final String id;
   late final String email;
   late final String birthday;
-  late final int promo;
+  late final int? promo;
   late final String floor;
   late final String? phone;
   late final String createdOn;
@@ -32,13 +33,16 @@ class User {
   User.fromJson(Map<String, dynamic> json) {
     name = capitaliseAll(json['name']);
     firstname = capitaliseAll(json['firstname']);
-    nickname = json['nickname'] != "" ? capitaliseAll(json['nickname']) : null;
+    nickname = (json['nickname'] != "" && json['nickname'] != null)
+        ? capitaliseAll(json['nickname'])
+        : null;
     id = json['id'];
     email = json['email'];
     birthday = json['birthday'];
     promo = json['promo'];
     floor = json['floor'];
-    phone = json['phone'] != "" ? json['phone'] : null;
+    phone =
+        (json['phone'] != "" && json["phone"] != null) ? json['phone'] : null;
     createdOn = json['created_on'];
     groups =
         List.from(json['groups']).map((e) => SimpleGroup.fromJson(e)).toList();
@@ -67,8 +71,8 @@ class User {
     id = '';
     email = 'empty@ecl.ec-lyon.fr';
     birthday = DateTime.now().toIso8601String().split("T")[0];
-    promo = 22;
-    floor = 'W1';
+    promo = null;
+    floor = capitalize(Floors.values.first.toString().split('.').last);
     phone = null;
     createdOn = '';
     groups = [];
@@ -90,13 +94,13 @@ class User {
     return User(
       name: name ?? this.name,
       firstname: firstname ?? this.firstname,
-      nickname: nickname ?? this.nickname,
+      nickname: nickname,
       id: id ?? this.id,
       email: email ?? this.email,
       birthday: birthday ?? this.birthday,
-      promo: promo ?? this.promo,
+      promo: promo,
       floor: floor ?? this.floor,
-      phone: phone ?? this.phone,
+      phone: phone,
       createdOn: createdOn ?? this.createdOn,
       groups: groups ?? this.groups,
     );
@@ -111,7 +115,7 @@ class User {
   String toString() {
     return "User {name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, birthday: $birthday, promo: $promo, floor: $floor, phone: $phone, createdOn: $createdOn, groups: $groups}";
   }
-  
+
   Applicant toApplicant() {
     return Applicant(
         name: name,

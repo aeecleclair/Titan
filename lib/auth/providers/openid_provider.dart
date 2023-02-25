@@ -45,10 +45,24 @@ class IsLoggedInProvider extends StateNotifier<bool> {
   }
 }
 
-final isCachingProvider = FutureProvider<bool>((ref) async {
+class IsCachingProvider extends StateNotifier<bool> {
+  IsCachingProvider(bool b) : super(b);
+
+  void set(bool b) {
+    state = b;
+  }
+}
+
+final isCachingProvider = StateNotifierProvider<IsCachingProvider, bool>((ref) {
+  final IsCachingProvider isCachingProvider = IsCachingProvider(false);
+
   final isConnected = ref.watch(isConnectedProvider);
-  final id = await CacheManager().readCache("id");
-  return !isConnected && id != "";
+  CacheManager().readCache("id").then(
+    (value) {
+      isCachingProvider.set(!isConnected && value != "");
+    },
+  );
+  return isCachingProvider;
 });
 
 final isLoggedInProvider =
@@ -60,8 +74,7 @@ final isLoggedInProvider =
   final isCaching = ref.watch(isCachingProvider);
   if (isConnected) {
     isLoggedInProvider.refresh(authToken);
-  } else if (isCaching.when(
-      data: (data) => data, error: (e, s) => false, loading: () => false)) {
+  } else if (isCaching) {
     return IsLoggedInProvider(true);
   }
   return isLoggedInProvider;
@@ -69,8 +82,7 @@ final isLoggedInProvider =
 
 final loadingrovider = FutureProvider<bool>((ref) {
   final isCaching = ref.watch(isCachingProvider);
-  return isCaching.when(
-          data: (data) => data, error: (e, s) => false, loading: () => true) ||
+  return isCaching ||
       ref.watch(authTokenProvider).when(
         data: (tokens) {
           return tokens["token"] != "" && ref.watch(isLoggedInProvider);
@@ -120,6 +132,7 @@ final tokenProvider = Provider((ref) {
 class OpenIdTokenProvider
     extends StateNotifier<AsyncValue<Map<String, String>>> {
   FlutterAppAuth appAuth = const FlutterAppAuth();
+  final CacheManager cacheManager = CacheManager();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
   final Base64Codec base64 = const Base64Codec.urlSafe();
   final OpenIdRepository openIdRepository = OpenIdRepository();
@@ -290,7 +303,7 @@ class OpenIdTokenProvider
   Future<bool> refreshToken() async {
     return state.when(
       data: (token) async {
-        try {
+        if (token[refreshTokenKey] != null && token[refreshTokenKey] != "") {
           TokenResponse? resp = await appAuth.token(
             TokenRequest(
               clientId,
@@ -311,8 +324,8 @@ class OpenIdTokenProvider
             state = const AsyncValue.error("Error", StackTrace.empty);
             return false;
           }
-        } catch (e) {
-          state = AsyncValue.error(e, StackTrace.empty);
+        } else {
+          state = const AsyncValue.error(e, StackTrace.empty);
           return false;
         }
       },
@@ -341,6 +354,8 @@ class OpenIdTokenProvider
   void deleteToken() {
     try {
       _secureStorage.delete(key: tokenName);
+      cacheManager.deleteCache(tokenName);
+      cacheManager.deleteCache("id");
       state = AsyncValue.data({tokenKey: "", refreshTokenKey: ""});
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.empty);

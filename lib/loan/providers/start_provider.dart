@@ -1,18 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class StartNotifier extends StateNotifier<TextEditingController> {
-  StartNotifier() : super(TextEditingController());
+class StartNotifier extends StateNotifier<String> {
+  StartNotifier() : super("");
 
   void setStart(String start) {
-    state.value = state.value.copyWith(
-      text: start,
-      selection: TextSelection.fromPosition(TextPosition(offset: start.length)),
-    );
+    state = start;
   }
 }
 
 final startProvider =
-    StateNotifierProvider<StartNotifier, TextEditingController>((ref) {
+    StateNotifierProvider<StartNotifier, String>((ref) {
   return StartNotifier();
 });

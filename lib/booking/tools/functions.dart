@@ -3,6 +3,7 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 Decision stringToDecision(String s) {
   switch (s) {
@@ -76,7 +77,9 @@ String formatRecurrenceRule(
       }
       res += " et ${listDay[listDayShort.indexOf(days[days.length - 1])]}";
     } else {
-      res += listDay[listDayShort.indexOf(days[0]) - 1];
+      if (listDayShort.contains(days[0])) {
+        res += listDay[(listDayShort.indexOf(days[0]))];
+      }
     }
     r += "Tous les $res ";
     if (!allDay) {
@@ -108,4 +111,22 @@ Color generateColor(String uuid) {
 Color invert(Color color) {
   return Color.fromARGB(
       color.alpha, 255 - color.red, 255 - color.green, 255 - color.blue);
+}
+
+List<DateTime> getDateInRecurrence(String recurrenceRule, DateTime start) {
+  return SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
+}
+
+DateTime getTrueEnd(Booking b) {
+  if (b.recurrenceRule.isEmpty) {
+    return b.end;
+  } else {
+    final days = b.recurrenceRule.split("BYDAY=")[1].split(";")[0].split(",");
+    if (days.length > 1) {
+      final date = getDateInRecurrence(b.recurrenceRule, b.start).last;
+      return DateTime(
+          date.year, date.month, date.day, b.end.hour, b.end.minute);
+    }
+    return b.end;
+  }
 }

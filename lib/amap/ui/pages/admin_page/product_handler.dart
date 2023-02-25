@@ -5,8 +5,10 @@ import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/product_provider.dart';
+import 'package:myecl/amap/providers/sorted_by_category_products.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/product_ui.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -17,8 +19,17 @@ class ProductHandler extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final productNotifier = ref.watch(productProvider.notifier);
-    final products = ref.watch(productListProvider);
+    final sortedByCategoryProducts =
+        ref.watch(sortedByCategoryProductsProvider);
+    final products = sortedByCategoryProducts.values
+        .toList()
+        .expand((element) => element)
+        .toList();
     final productsNotifier = ref.watch(productListProvider.notifier);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
     return Column(
       children: [
         Container(
@@ -79,40 +90,42 @@ class ProductHandler extends HookConsumerWidget {
                     ),
                   )),
             ),
-            products.when(
-              data: (data) => Row(
-                children: data
-                    .map(
-                      (e) => ProductCard(
-                        product: e,
-                        onDelete: () async {
-                          await showDialog(
-                              context: context,
-                              builder: (context) => CustomDialogBox(
-                                    title: "Supprimer le produit",
-                                    descriptions:
-                                        "Voulez-vous vraiment supprimer ce produit?",
-                                    onYes: () {
-                                      tokenExpireWrapper(ref, () async {
-                                        productsNotifier.deleteProduct(e);
-                                      });
-                                    },
-                                  ));
-                        },
-                        onEdit: () {
-                          productNotifier.setProduct(e);
-                          pageNotifier.setAmapPage(AmapPage.addEditProduct);
-                        },
-                      ),
-                    )
-                    .toList(),
-              ),
-              error: (Object e, StackTrace? s) =>
-                  Text("Error: ${e.toString()}"),
-              loading: () => const CircularProgressIndicator(
-                color: AMAPColorConstants.greenGradient2,
-              ),
-            ),
+            products.isEmpty
+                ? const Center(
+                    child: Text("Aucun produit"),
+                  )
+                : Row(
+                    children: products
+                        .map(
+                          (e) => ProductCard(
+                            product: e,
+                            onDelete: () async {
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) => CustomDialogBox(
+                                        title: "Supprimer le produit",
+                                        descriptions:
+                                            "Voulez-vous vraiment supprimer ce produit?",
+                                        onYes: () {
+                                          tokenExpireWrapper(ref, () async {
+                                            final value = await productsNotifier.deleteProduct(e);
+                                            if (value) {
+                                              displayToastWithContext(TypeMsg.msg, AMAPTextConstants.deletedProduct);
+                                            } else {
+                                              displayToastWithContext(TypeMsg.error, AMAPTextConstants.productInDelivery);
+                                            }
+                                          });
+                                        },
+                                      ));
+                            },
+                            onEdit: () {
+                              productNotifier.setProduct(e);
+                              pageNotifier.setAmapPage(AmapPage.addEditProduct);
+                            },
+                          ),
+                        )
+                        .toList(),
+                  ),
             const SizedBox(
               width: 10,
             )

@@ -64,16 +64,16 @@ class Order {
   }
 
   Order copyWith(
-      {id,
-      orderingDate,
-      deliveryDate,
-      products,
-      expanded,
-      deliveryId,
-      amount,
-      lastAmount,
-      collectionSlot,
-      user}) {
+      {String? id,
+      DateTime? orderingDate,
+      DateTime? deliveryDate,
+      List<Product>? products,
+      bool? expanded,
+      String? deliveryId,
+      double? amount,
+      double? lastAmount,
+      CollectionSlot? collectionSlot,
+      SimpleUser? user}) {
     return Order(
         id: id ?? this.id,
         orderingDate: orderingDate ?? this.orderingDate,

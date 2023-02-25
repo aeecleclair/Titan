@@ -14,6 +14,7 @@ class BookingListProvider extends ListNotifier<Booking> {
   BookingListProvider({required String token})
       : super(const AsyncValue.loading()) {
     _repository.setToken(token);
+    _userRepository.setToken(token);
   }
 
   Future<AsyncValue<List<Booking>>> loadBookings() async {

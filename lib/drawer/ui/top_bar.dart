@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/is_admin.dart';
+import 'package:myecl/auth/providers/is_connected_provider.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
@@ -10,7 +11,7 @@ import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/user/repositories/profile_picture_repository.dart';
+import 'package:myecl/user/providers/profile_picture_provider.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -24,6 +25,7 @@ class TopBar extends HookConsumerWidget {
     final pageNotifier = ref.watch(pageProvider.notifier);
     final hasScrolled = ref.watch(hasScrolledProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
+    final isConnected = ref.watch(isConnectedProvider);
     final animation = useAnimationController(
         duration: const Duration(milliseconds: 250), initialValue: 0.0);
     return Column(children: [
@@ -73,7 +75,9 @@ class TopBar extends HookConsumerWidget {
                               ),
                               child: CircleAvatar(
                                 radius: 25,
-                                backgroundImage: Image.memory(file).image,
+                                backgroundImage: file.isEmpty ?
+                                const AssetImage("assets/images/logo.png") :
+                                Image.memory(file).image,
                               ),
                             ),
                             if (isAdmin)
@@ -164,6 +168,14 @@ class TopBar extends HookConsumerWidget {
               ),
             ],
           ),
+          if (!isConnected)
+            Container(
+                margin: const EdgeInsets.only(right: 20),
+                child: const HeroIcon(
+                  HeroIcons.signalSlash,
+                  color: Colors.white,
+                  size: 40,
+                ))
         ],
       ),
       AnimatedBuilder(

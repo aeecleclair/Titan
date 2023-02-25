@@ -3,7 +3,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AssoUi extends HookConsumerWidget {
@@ -51,7 +50,7 @@ class AssoUi extends HookConsumerWidget {
             ),
           Expanded(
             child: Text(
-              capitalize(group.name),
+              group.name,
               style: const TextStyle(
                   color: Colors.black,
                   fontSize: 20,

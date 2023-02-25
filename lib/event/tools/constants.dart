@@ -36,11 +36,13 @@ class EventTextConstants {
   static const String no = "Non";
   static const String noCurrentEvent = "Aucun événement en cours";
   static const String noDateError = "Veuillez entrer une date";
+  static const String noDaySelected = "Aucun jour sélectionné";
   static const String noDescriptionError = "Veuillez entrer une description";
   static const String noEvent = "Aucun événement";
   static const String noNameError = "Veuillez entrer un nom";
   static const String noOrganizerError = "Veuillez entrer un organisateur";
   static const String noPlaceError = "Veuillez entrer un lieu";
+  static const String noPhoneRegistered = "Numéro non renseigné";
   static const String noRuleError = "Veuillez entrer une règle de récurrence";
   static const String organizer = "Organisateur";
   static const String location = "Lieu";
@@ -66,4 +68,5 @@ class EventTextConstants {
     'Samedi',
     'Dimanche'
   ];
+
 }

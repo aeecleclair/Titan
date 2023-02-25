@@ -124,41 +124,50 @@ class SessionCard extends HookConsumerWidget {
             const SizedBox(
               height: 15,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Column(
               children: [
-                const HeroIcon(
-                  HeroIcons.calendar,
-                  size: 20,
+                Text(session.name,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const HeroIcon(
+                      HeroIcons.calendar,
+                      size: 20,
+                    ),
+                    const SizedBox(
+                      width: 7,
+                    ),
+                    Text(formatDate(session.start),
+                        style: const TextStyle(fontSize: 16)),
+                  ],
                 ),
                 const SizedBox(
-                  width: 7,
+                  height: 5,
                 ),
-                Text(formatDate(session.start),
-                    style: const TextStyle(fontSize: 16)),
-                const SizedBox(
-                  width: 25,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const HeroIcon(
+                      HeroIcons.clock,
+                      size: 20,
+                    ),
+                    const SizedBox(
+                      width: 7,
+                    ),
+                    Text(formatDuration(session.duration),
+                        style: const TextStyle(fontSize: 16)),
+                  ],
                 ),
-                const HeroIcon(
-                  HeroIcons.clock,
-                  size: 20,
-                ),
-                const SizedBox(
-                  width: 7,
-                ),
-                Text(formatDuration(session.duration),
-                    style: const TextStyle(fontSize: 16)),
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(session.name,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )),
           ],
         ),
       ),

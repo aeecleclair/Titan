@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -15,7 +13,7 @@ import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/providers/the_movie_db_genre_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
-import 'package:myecl/loan/ui/text_entry.dart';
+import 'package:myecl/cinema/ui/text_entry.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -46,8 +44,6 @@ class AddEditSessionPage extends HookConsumerWidget {
     final logo = useState<String?>(null);
     final logoFile = useState<Image?>(null);
     final posterUrl = useTextEditingController();
-    final sessionPosterMapNotifier =
-        ref.watch(sessionPosterMapProvider.notifier);
     final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
 
     sessionPosterMap.whenData((value) {
@@ -168,18 +164,20 @@ class AddEditSessionPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 30),
                 (logo.value == null)
-                    ? Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 50, horizontal: 30),
-                        decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: HeroIcon(
-                          HeroIcons.camera,
-                          size: 100,
-                          color: Colors.grey.shade500,
-                        ),
-                      )
+                    ? logoFile.value == null
+                        ? Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 50, horizontal: 30),
+                            decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(20)),
+                            child: HeroIcon(
+                              HeroIcons.camera,
+                              size: 100,
+                              color: Colors.grey.shade500,
+                            ),
+                          )
+                        : Image(image: logoFile.value!.image, fit: BoxFit.cover)
                     : Image.network(logo.value!, fit: BoxFit.cover),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -188,6 +186,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   suffix: '',
                   isInt: false,
                   controller: name,
+                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -196,6 +195,10 @@ class AddEditSessionPage extends HookConsumerWidget {
                   suffix: '',
                   isInt: false,
                   controller: posterUrl,
+                  onChanged: (value) {
+                    logo.value = posterUrl.text;
+                  },
+                  canBeEmpty: true,
                 ),
                 const SizedBox(height: 30),
                 GestureDetector(
@@ -271,6 +274,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   isInt: false,
                   controller: genre,
                   canBeEmpty: true,
+                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -280,6 +284,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   isInt: false,
                   controller: overview,
                   canBeEmpty: true,
+                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -289,6 +294,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   isInt: false,
                   controller: tagline,
                   canBeEmpty: true,
+                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 50),
                 ShrinkButton(
@@ -324,6 +330,11 @@ class AddEditSessionPage extends HookConsumerWidget {
                       return;
                     }
                     if (key.currentState!.validate()) {
+                      if (logo.value == null && logoFile.value == null) {
+                        displayToastWithContext(
+                            TypeMsg.error, CinemaTextConstants.noPoster);
+                        return;
+                      }
                       await tokenExpireWrapper(ref, () async {
                         Session newSession = Session(
                           name: name.text,
@@ -343,46 +354,53 @@ class AddEditSessionPage extends HookConsumerWidget {
                         if (value) {
                           pageNotifier.setCinemaPage(CinemaPage.admin);
                           if (isEdit) {
+                            sessionList.when(
+                                data: (list) async {
+                                  if (logo.value != null) {
+                                    Image image = await sessionPosterNotifier
+                                        .updateLogo(session.id, logo.value!);
+                                    ref
+                                        .watch(
+                                            sessionPosterMapProvider.notifier)
+                                        .setTData(
+                                            session,
+                                            AsyncData([
+                                              Image(
+                                                image: image.image,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ]));
+                                  }
+                                },
+                                error: (error, s) {},
+                                loading: () {});
                             displayToastWithContext(
                                 TypeMsg.msg, CinemaTextConstants.editedSession);
-                            sessionList.when(
-                                data: (list) {
-                                  if (logo.value != null) {
-                                    sessionPosterNotifier.updateLogo(
-                                        session.id, logo.value!);
-                                    sessionPosterMapNotifier.setTData(
-                                        session,
-                                        AsyncData([
-                                          Image.file(
-                                            File(logo.value!),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ]));
-                                  }
-                                },
-                                error: (error, s) {},
-                                loading: () {});
                           } else {
-                            displayToastWithContext(
-                                TypeMsg.msg, CinemaTextConstants.addedSession);
                             sessionList.when(
-                                data: (list) {
+                                data: (list) async {
                                   final newPretendance = list.last;
                                   if (logo.value != null) {
-                                    sessionPosterNotifier.updateLogo(
-                                        newPretendance.id, logo.value!);
-                                    sessionPosterMapNotifier.setTData(
-                                        newPretendance,
-                                        AsyncData([
-                                          Image.file(
-                                            File(logo.value!),
-                                            fit: BoxFit.cover,
-                                          )
-                                        ]));
+                                    Image image =
+                                        await sessionPosterNotifier.updateLogo(
+                                            newPretendance.id, logo.value!);
+                                    ref
+                                        .watch(
+                                            sessionPosterMapProvider.notifier)
+                                        .setTData(
+                                            newPretendance,
+                                            AsyncData([
+                                              Image(
+                                                image: image.image,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ]));
                                   }
                                 },
                                 error: (error, s) {},
                                 loading: () {});
+                            displayToastWithContext(
+                                TypeMsg.msg, CinemaTextConstants.addedSession);
                           }
                         } else {
                           if (isEdit) {
@@ -436,6 +454,7 @@ class AddEditSessionPage extends HookConsumerWidget {
 _selectDate(BuildContext context, TextEditingController dateController) async {
   final DateTime now = DateTime.now();
   showDatePicker(
+  locale: const Locale("fr", "FR"),
       context: context,
       initialDate: now,
       firstDate: now,

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
+import 'package:myecl/amap/class/order.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
+import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/command_ui.dart';
@@ -18,8 +21,10 @@ class OrderSection extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final orders = ref.watch(userOrderListProvider);
+    final orderNotifier = ref.watch(orderProvider.notifier);
+    final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
-    final orderableDeliveries = deliveries.when(
+    final orderableDeliveries = deliveries.when<List<Delivery>>(
         data: (data) => data
             .where((element) => element.status == DeliveryStatus.orderable)
             .toList(),
@@ -54,12 +59,17 @@ class OrderSection extends HookConsumerWidget {
                   width: 15,
                 ),
                 GestureDetector(
-                  onTap: addOrder,
+                  onTap: () {
+                    final e = Order.empty();
+                    deliveryIdNotifier.setId(e.deliveryId);
+                    orderNotifier.setOrder(e);
+                    addOrder();
+                  },
                   child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 15.0),
                       padding: const EdgeInsets.all(12.0),
                       width: 100,
-                      height: 160,
+                      height: 150,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         gradient: const RadialGradient(
@@ -90,20 +100,29 @@ class OrderSection extends HookConsumerWidget {
                 ),
                 ...orders.when(
                     data: (data) {
+                      data.sort(
+                          (a, b) => a.deliveryDate.compareTo(b.deliveryDate));
                       return data.map((e) {
                         final canEdit = orderableDeliveries
                             .any((element) => element.id == e.deliveryId);
                         return CommandeUI(
                             order: e,
-                            onTap: onTap,
-                            onEdit: onEdit,
+                            onTap:
+                              onTap,
+                            onEdit: () {
+                              deliveryIdNotifier.setId(e.deliveryId);
+                              orderNotifier.setOrder(e);
+                              onEdit();
+                            },
                             showButton: canEdit);
                       }).toList();
                     },
-                    loading: () =>
-                        [const Center(child: CircularProgressIndicator(
+                    loading: () => [
+                          const Center(
+                              child: CircularProgressIndicator(
                             color: AMAPColorConstants.greenGradient2,
-                          ))],
+                          ))
+                        ],
                     error: (error, stack) => [Text(error.toString())]),
                 const SizedBox(
                   width: 25,

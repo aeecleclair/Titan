@@ -14,39 +14,45 @@ class ListProductPage extends HookConsumerWidget {
     final animation = useAnimationController(
         duration: const Duration(milliseconds: 200), initialValue: 0)
       ..repeat();
-    return Stack(
-      children: [
-        Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 40),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 160,
-              child: CustomPaint(
-                painter: AmapBackgroundPainter(animation: animation),
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              const SizedBox(
+                height: 150,
               ),
-            ),
-          ],
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: 100,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-            colors: [
-              Colors.white.withOpacity(1.0),
-              Colors.white.withOpacity(0.8),
-              Colors.white.withOpacity(0.0),
+              Expanded(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: CustomPaint(
+                    painter: AmapBackgroundPainter(animation: animation),
+                  ),
+                ),
+              ),
             ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          )),
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const [ListProducts(), Dots(), Boutons()],
-        ),
-      ],
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 100,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+              colors: [
+                Colors.white.withOpacity(1.0),
+                Colors.white.withOpacity(0.8),
+                Colors.white.withOpacity(0.0),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            )),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const [ListProducts(), Dots(), Boutons()],
+          ),
+        ],
+      ),
     );
   }
 }

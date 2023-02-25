@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/providers/focus_provider.dart';
 import 'package:myecl/amap/providers/searching_amap_user_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/adding_user_container.dart';
+import 'package:myecl/amap/ui/pages/admin_page/cash_container.dart';
 import 'package:myecl/amap/ui/pages/admin_page/user_cash_ui.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -16,7 +19,7 @@ class AccountHandler extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cash = ref.watch(cashProvider);
+    final cashNotifier = ref.watch(cashProvider.notifier);
     final usersNotifier = ref.watch(userList.notifier);
     final editingController = useTextEditingController();
     final searchingAmapUser = ref.watch(searchingAmapUserProvider);
@@ -38,11 +41,16 @@ class AccountHandler extends HookConsumerWidget {
               tokenExpireWrapper(ref, () async {
                 if (!searchingAmapUser) {
                   if (editingController.text.isNotEmpty) {
-                    await usersNotifier.filterUsers(editingController.text,
-                        excludeGroup: [] // TODO:
-                        );
+                    await usersNotifier
+                        .filterUsers(editingController.text);
                   } else {
                     usersNotifier.clear();
+                  }
+                } else {
+                  if (editingController.text.isNotEmpty) {
+                    await cashNotifier.filterCashList(editingController.text);
+                  } else {
+                    cashNotifier.refreshCashList();
                   }
                 }
               });
@@ -74,9 +82,8 @@ class AccountHandler extends HookConsumerWidget {
           ),
         ),
         SizedBox(
-          height: 135,
-          child: cash.when(
-            data: (data) => SingleChildScrollView(
+            height: 135,
+            child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               child: Row(
@@ -133,12 +140,14 @@ class AccountHandler extends HookConsumerWidget {
                                         ),
                                       ),
                                     ),
-                                    AddingUserContainer(onAdd: () {
+                                    AddingUserContainer(onAdd: () async {
                                       searchingAmapUserNotifier
                                           .setProduct(true);
                                       FocusScope.of(context)
                                           .requestFocus(FocusNode());
                                       focusNotifier.setFocus(false);
+                                      await cashNotifier.filterCashList(
+                                          editingController.text);
                                       editingController.clear();
                                     })
                                   ],
@@ -159,20 +168,13 @@ class AccountHandler extends HookConsumerWidget {
                                   )),
                         ),
                       )),
-                  ...data.map((e) => UserCashUi(cash: e)),
+                  const CashContainer(),
                   const SizedBox(
                     width: 10,
                   ),
                 ],
               ),
-            ),
-            error: (Object e, StackTrace? s) =>
-                Center(child: Text("Error: ${e.toString()}")),
-            loading: () => const Center(child: CircularProgressIndicator(
-              color: AMAPColorConstants.greenGradient2,
             )),
-          ),
-        ),
       ],
     );
   }

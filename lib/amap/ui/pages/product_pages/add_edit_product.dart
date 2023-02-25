@@ -242,9 +242,12 @@ class AddEditProduct extends HookConsumerWidget {
                                 displayToastWithContext(TypeMsg.msg,
                                     AMAPTextConstants.updatedProduct);
                               } else {
-                                ref.watch(selectedListProvider.notifier).rebuild(
-                                  products.when(data: (data) => data, error: (e, s) => [], loading: () =>[])
-                                );
+                                ref
+                                    .watch(selectedListProvider.notifier)
+                                    .rebuild(products.when(
+                                        data: (data) => data,
+                                        error: (e, s) => [],
+                                        loading: () => []));
                                 displayToastWithContext(TypeMsg.msg,
                                     AMAPTextConstants.addedProduct);
                               }

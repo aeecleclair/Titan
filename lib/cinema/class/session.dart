@@ -62,4 +62,9 @@ class Session {
         genre: "",
         tagline: "");
   }
+
+  @override
+  String toString() {
+    return 'Session{id: $id, name: $name, start: $start, duration: $duration, overview: $overview, genre: $genre, tagline: $tagline}';
+  }
 }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/is_admin.dart';
+import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/event_ui.dart';
 import 'package:myecl/tools/ui/refresher.dart';
@@ -18,8 +18,8 @@ class MainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isEventAdmin);
     final pageNotifier = ref.watch(eventPageProvider.notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
-    final eventListNotifier = ref.watch(confirmedEventListProvider.notifier);
-    final events = ref.watch(confirmedEventListProvider);
+    final eventListNotifier = ref.watch(eventEventListProvider.notifier);
+    final events = ref.watch(eventEventListProvider);
     return Expanded(
       child: Refresher(
         onRefresh: () async {
@@ -28,6 +28,7 @@ class MainPage extends HookConsumerWidget {
         child: Column(
           children: [
             events.when(data: (events) {
+              events.sort((a, b) => b.start.compareTo(a.start));
               return Column(
                 children: [
                   Padding(

@@ -35,7 +35,7 @@ class CommandeUI extends HookConsumerWidget {
         margin: const EdgeInsets.symmetric(horizontal: 15.0),
         padding: const EdgeInsets.all(12.0),
         width: 195,
-        height: isDetail ? 120 : 160,
+        height: isDetail ? 100 : 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           gradient: const RadialGradient(
