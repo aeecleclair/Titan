@@ -38,6 +38,6 @@ class Announcer {
 
   @override
   String toString() {
-    return 'Loaner(name: $name, groupManagerId: $groupManagerId, id: $id)';
+    return 'Announcer(name: $name, groupManagerId: $groupManagerId, id: $id)';
   }
 }

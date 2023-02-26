@@ -13,7 +13,8 @@ class UserAnnouncerListNotifier extends ListNotifier<Announcer> {
       }
 
   Future<AsyncValue<List<Announcer>>> loadMyAnnouncerList() async {
-    return await loadList(_announcerRepository.getMyAnnouncer);
+    //return await loadList(_announcerRepository.getMyAnnouncer);
+    return state = AsyncData([Announcer(name: 'Eclair', groupManagerId: '1', id: '1'),Announcer(name: 'Raid', groupManagerId: '1', id: '2')]);
   }
 
   Future<bool> addAnnouncer(Announcer announcer) async {
@@ -41,19 +42,11 @@ final userAnnouncerListProvider =
     StateNotifierProvider<UserAnnouncerListNotifier, AsyncValue<List<Announcer>>>(
   (ref) {
     final token = ref.watch(tokenProvider);
-    UserAnnouncerListNotifier orderListNotifier =
+    UserAnnouncerListNotifier announcerListNotifier =
         UserAnnouncerListNotifier(token: token);
     tokenExpireWrapperAuth(ref, () async {
-      await orderListNotifier.loadMyAnnouncerList();
+      await announcerListNotifier.loadMyAnnouncerList();
     });
-    return orderListNotifier;
+    return announcerListNotifier;
   },
 );
-
-final announcerList = Provider<List<Announcer>>((ref) {
-  final deliveryProvider = ref.watch(userAnnouncerListProvider);
-  return deliveryProvider.when(
-      data: (adverts) => adverts,
-      error: (error, stackTrace) => [],
-      loading: () => []);
-});

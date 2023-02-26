@@ -12,6 +12,7 @@ class AdvertCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(0);
     return Align(
       alignment: const AlignmentDirectional(0, 0.3),
       child: GestureDetector(
