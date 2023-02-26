@@ -1,39 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/advert_page_provider.dart';
-import 'package:myecl/advert/tools/constants.dart';
+import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/ui/pages/main_page/advert_card.dart';
-import 'package:myecl/cinema/providers/main_page_index_provider.dart';
 import 'package:myecl/tools/ui/refresher.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final advertNotifier = ref.watch(advertProvider.notifier);
     final pageNotifier = ref.watch(advertPageProvider.notifier);
-    final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
-    final initialPage = ref.watch(mainPageIndexProvider);
-    int currentPage = initialPage;
-    final entries = [
-      AdvertCard(onTap: () {
-        pageNotifier.setAdvertPage(AdvertPage.detailFromMainPage);
-      }),
-      AdvertCard(onTap: () {
-        pageNotifier.setAdvertPage(AdvertPage.detailFromMainPage);
-      }),
-      AdvertCard(onTap: () {
-        pageNotifier.setAdvertPage(AdvertPage.detailFromMainPage);
-      }),
-      AdvertCard(onTap: () {
-        pageNotifier.setAdvertPage(AdvertPage.detailFromMainPage);
-      }),
-      AdvertCard(onTap: () {
-        pageNotifier.setAdvertPage(AdvertPage.detailFromMainPage);
-      }),
-    ];
+    final advertList = ref.watch(advertListProvider);
+    final advertListNotifier = ref.watch(advertListProvider.notifier);
 
     return SizedBox(
       height: MediaQuery.of(context).size.height - 117.4,
@@ -41,15 +23,37 @@ class MainPage extends HookConsumerWidget {
         children: [
           Refresher(
             onRefresh: () async {
-              //await sessionListNotifier.loadSessions();
+              await advertListNotifier.loadAdverts();
             },
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                ...entries,
-              ],
+            child: advertList.when(
+              data: (data) {
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ...data
+                        .map((e) => AdvertCard(
+                            onTap: () {
+                              advertNotifier.setAdvert(e);
+                              pageNotifier
+                                  .setAdvertPage(AdvertPage.detailFromMainPage);
+                            },
+                            advert: e))
+                        .toList(),
+                  ],
+                );
+              },
+              loading: () {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+              error: (error, stackTrace) {
+                return Center(
+                  child: Text(error.toString()),
+                );
+              },
             ),
           ),
           if (true)
@@ -59,7 +63,6 @@ class MainPage extends HookConsumerWidget {
               child: GestureDetector(
                 onTap: () {
                   pageNotifier.setAdvertPage(AdvertPage.admin);
-                  initialPageNotifier.setMainPageIndex(currentPage);
                 },
                 child: Container(
                   width: 120,
