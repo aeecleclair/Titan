@@ -9,7 +9,8 @@ enum ModuleType {
   admin,
   event,
   vote,
-  cinema
+  cinema,
+  tombola, 
 }
 
 class Module {
