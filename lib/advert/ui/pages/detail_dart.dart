@@ -101,7 +101,7 @@ class DetailPage extends HookConsumerWidget {
                               const SizedBox(
                                 width: 7,
                               ),
-                              Text(DateFormat('dd/MM/yyyy\nhh:mm').format(advert.date),
+                              Text(DateFormat('dd/MM/yyyy\nHH:mm').format(advert.date),
                                   style: const TextStyle(fontSize: 16),
                                   textAlign: TextAlign.center,),
                             ],

@@ -11,7 +11,6 @@ class AnnouncerBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = ref.watch(announcerProvider);
-    print(selected);
     final selectedNotifier = ref.read(announcerProvider.notifier);
     final userAnnouncerList = ref.watch(userAnnouncerListProvider);
     return userAnnouncerList.when(

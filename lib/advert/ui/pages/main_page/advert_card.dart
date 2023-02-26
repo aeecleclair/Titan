@@ -12,7 +12,6 @@ class AdvertCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(0);
     return Align(
       alignment: const AlignmentDirectional(0, 0.3),
       child: GestureDetector(
@@ -91,7 +90,7 @@ class AdvertCard extends StatelessWidget {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 2),
                                   child: Text(
-                                    DateFormat('dd/MM/yyyy\nhh:mm').format(advert.date),
+                                    DateFormat('dd/MM/yyyy\nHH:mm').format(advert.date),
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
@@ -122,7 +121,7 @@ class AdvertCard extends StatelessWidget {
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
-                        children: advert.tags.map((e) => Tag(tagname: e,)).toList()
+                        children: advert.groups.map((e) => Tag(tagname: e,)).toList()
                         ,
                       ),
                     ),
