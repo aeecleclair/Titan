@@ -9,29 +9,23 @@ class TicketWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 200,
-        margin:const EdgeInsets.only(left: 10),
-        padding: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          boxShadow: [
-              BoxShadow(
-                color: this.color.withOpacity(0.4),
-                spreadRadius: 0,
-                blurRadius: 7,
-                offset: const Offset(4, 4), // changes position of shadow
-              ),
+    return Stack(children: [Container(
+      width: 150,
+      height: 200,
+      margin: const EdgeInsets.only(left: 10),
+      padding: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              this.color.withAlpha(100),
+              this.color,
+              
             ],
-
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                this.color.withOpacity(0.4),
-                this.color,
-              ],
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(20))),
-        );
+            stops:const [0,0.8],
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(20))),
+    )]);
   }
 }

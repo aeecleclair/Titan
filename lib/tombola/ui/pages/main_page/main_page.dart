@@ -12,15 +12,16 @@ class MainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      margin:EdgeInsets.only(top:20),
+      margin: EdgeInsets.only(top: 15),
       child: ListView(
         children: [
           Container(
-              child: Row(mainAxisAlignment: MainAxisAlignment.center,
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                margin: const EdgeInsets.only(left:20),
-                padding: EdgeInsets.symmetric(vertical: 10,horizontal: 30),
+                margin: const EdgeInsets.only(left: 20, top: 10, bottom: 10),
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -39,7 +40,8 @@ class MainPage extends HookConsumerWidget {
             ],
           )),
           Container(
-              margin: const EdgeInsets.only(bottom: 10,top:10),
+            margin:const EdgeInsets.only(bottom: 10, top: 5),
+              padding: const EdgeInsets.only(bottom: 10, top: 5),
               child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -59,15 +61,19 @@ class MainPage extends HookConsumerWidget {
                     ],
                   ))),
           Column(children: [
-            Text(
-              TombolaTextConstants.actualTombolas,
-              style: TextStyle(fontSize: 30),
+            Container(margin: EdgeInsets.only(bottom:10,top:20),
+              child: Text(
+                TombolaTextConstants.actualTombolas,
+                style: TextStyle(fontSize: 30),
+              ),
             ),
             TombolaWidget(name: "Tombola Soli Sida", color: Color(0xffbd7efe)),
             TombolaWidget(name: "Tombola 2", color: Color(0xffed7ede)),
-            Text(
-              TombolaTextConstants.pastTombolas,
-              style: TextStyle(fontSize: 30),
+            Container(margin: EdgeInsets.only(bottom:10,top:30),
+              child: Text(
+                TombolaTextConstants.pastTombolas,
+                style: TextStyle(fontSize: 30),
+              ),
             ),
             TombolaWidget(name: "Tombola 3", color: Colors.blue),
             TombolaWidget(name: "Tombola 4", color: Colors.red),
