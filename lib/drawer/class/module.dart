@@ -11,6 +11,7 @@ enum ModuleType {
   vote,
   tombola,
   cinema,
+  phonebook,
 }
 
 class Module {
