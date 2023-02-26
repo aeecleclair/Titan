@@ -82,9 +82,10 @@ class AdminPage extends HookConsumerWidget {
                                   onTap: () {
                                     advertNotifier.setAdvert(advert);
                                     pageNotifier.setAdvertPage(
-                                        AdvertPage.detailFromMainPage);
+                                        AdvertPage.detailFromAdminPage);
                                   },
                                   onEdit: () {
+                                    advertNotifier.setAdvert(advert);
                                     pageNotifier.setAdvertPage(
                                         AdvertPage.addEditAdvert);
                                   },
