@@ -28,7 +28,7 @@ class TombolaWidget extends HookConsumerWidget {
                     this.color,
                   ],
                 ),
-                borderRadius: const BorderRadius.all(Radius.circular(40))),
+                borderRadius: const BorderRadius.all(Radius.circular(30))),
             child: Center(
               child: Text(
                 name,
