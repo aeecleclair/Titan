@@ -8,7 +8,7 @@ import 'package:myecl/tombola/ui/pages/admin_add_edit_page/admin_add_edit_page.d
 import 'package:myecl/tombola/ui/pages/admin_home_page/admin_home_page.dart';
 import 'package:myecl/tombola/ui/pages/main_page/main_page.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
-import 'package:myecl/tombola/ui/pages/achat_page/achat_page.dart';
+import 'package:myecl/tombola/ui/pages/buy_page/buy_page.dart';
 import 'package:myecl/tombola/ui/pages/simu_tombola_page/simu_tombola_page.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/tombola_page.dart';
 

@@ -18,8 +18,7 @@ class TombolaWidget extends HookConsumerWidget {
     return GestureDetector(onTap: () {pageNotifier.setTombolaPage(TombolaPage.tombola);},child:Center(
         child: Container(
             height: 100,
-            width: 400,
-            margin: const EdgeInsets.symmetric(vertical: 5),
+            margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 50),
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
