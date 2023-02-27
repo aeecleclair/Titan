@@ -111,39 +111,34 @@ class MainPage extends HookConsumerWidget {
                     );
                   }
                   return Expanded(
-                    child: isWebFormat ? 
-                    ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        controller: pageController,
-                        itemCount: data.length,
-                        itemBuilder: (context, index) {
-                          return SessionCard(
-                            session: data[index],
-                            index: index,
-                            onTap: () {
-                              sessionNotifier.setSession(data[index]);
-                              pageNotifier
-                                  .setCinemaPage(CinemaPage.detailFromMainPage);
-                              initialPageNotifier.setMainPageIndex(index);
-                            },
-                          );
-                        })
-                    : PageView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        controller: pageController,
-                        itemCount: data.length,
-                        itemBuilder: (context, index) {
-                          return SessionCard(
-                            session: data[index],
-                            index: index,
-                            onTap: () {
-                              sessionNotifier.setSession(data[index]);
-                              pageNotifier
-                                  .setCinemaPage(CinemaPage.detailFromMainPage);
-                              initialPageNotifier.setMainPageIndex(index);
-                            },
-                          );
-                        }),
+                    child: isWebFormat
+                        ? ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            controller: pageController,
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return SessionCard(
+                                session: data[index],
+                                index: index,
+                                onTap: () {},
+                              );
+                            })
+                        : PageView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            controller: pageController,
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return SessionCard(
+                                session: data[index],
+                                index: index,
+                                onTap: () {
+                                  sessionNotifier.setSession(data[index]);
+                                  pageNotifier.setCinemaPage(
+                                      CinemaPage.detailFromMainPage);
+                                  initialPageNotifier.setMainPageIndex(index);
+                                },
+                              );
+                            }),
                   );
                 }, loading: () {
                   return const Center(
