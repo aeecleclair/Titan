@@ -1,7 +1,4 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
@@ -10,7 +7,6 @@ import 'package:myecl/drawer/ui/bottom_bar.dart';
 import 'package:myecl/drawer/ui/fake_page.dart';
 import 'package:myecl/drawer/ui/list_module.dart';
 import 'package:myecl/drawer/ui/top_bar.dart';
-import 'package:myecl/tools/functions.dart';
 
 class CustomDrawer extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
