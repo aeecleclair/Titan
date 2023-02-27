@@ -22,7 +22,6 @@ class DayList extends HookConsumerWidget {
     final sortedEventList = ref.watch(sortedEventListProvider);
     final days = ref.watch(daysProvider);
     final outerController = useScrollController();
-    final innerController = useScrollController();
     DateTime now = normalizedDate(DateTime.now());
 
     Map<String, double> widgetPositions = {};
@@ -51,44 +50,46 @@ class DayList extends HookConsumerWidget {
             clipBehavior: Clip.none,
             children: [
               Listener(
-                onPointerSignal: (event) {
-                  if (event is PointerScrollEvent) {
-                    final offset = event.scrollDelta.dy;
-                    innerController.jumpTo(innerController.offset + offset);
-                    outerController.jumpTo(outerController.offset - offset);
-                  }
-                },
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  controller: scrollController,
-                  itemCount: numberDay + 2,
-                  itemBuilder: (BuildContext context, int i) {
-                    if (i == 0 || i == days.length + 1) {
-                      return const SizedBox(
-                        width: 15,
-                      );
+                  onPointerSignal: (event) {
+                    if (event is PointerScrollEvent) {
+                      final offset = event.scrollDelta.dy;
+                      scrollController.jumpTo(scrollController.offset + offset);
+                      outerController.jumpTo(outerController.offset - offset);
                     }
-                    final day = days[i - 1];
-                    return DayCard(
-                      isToday: i == 1,
-                      day: day,
-                      numberOfEvent: daySortedEventList.keys.contains(day)
-                          ? daySortedEventList[day]!.length
-                          : 0,
-                      index: i - 1,
-                      onTap: () {
-                        needReload.value = true;
-                        daysEventScrollController.animateTo(
-                            widgetPositions[formatDelayToToday(day, now)] ??
-                                0.0,
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.decelerate);
-                      },
-                    );
                   },
-                ),
-              )
+                  child: SizedBox(
+                    height: 125,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      controller: scrollController,
+                      itemCount: numberDay + 2,
+                      itemBuilder: (BuildContext context, int i) {
+                        if (i == 0 || i == days.length + 1) {
+                          return const SizedBox(
+                            width: 15,
+                          );
+                        }
+                        final day = days[i - 1];
+                        return DayCard(
+                          isToday: i == 1,
+                          day: day,
+                          numberOfEvent: daySortedEventList.keys.contains(day)
+                              ? daySortedEventList[day]!.length
+                              : 0,
+                          index: i - 1,
+                          onTap: () {
+                            needReload.value = true;
+                            daysEventScrollController.animateTo(
+                                widgetPositions[formatDelayToToday(day, now)] ??
+                                    0.0,
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.decelerate);
+                          },
+                        );
+                      },
+                    ),
+                  ))
             ]));
   }
 }

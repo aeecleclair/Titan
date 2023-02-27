@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,59 +21,75 @@ class HomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final confimedEventListNotifier = ref.watch(confirmedEventListProvider.notifier);
+    final confimedEventListNotifier =
+        ref.watch(confirmedEventListProvider.notifier);
     final sortedEventList = ref.watch(sortedEventListProvider);
     DateTime now = DateTime.now();
     final ScrollController scrollController = useScrollController();
     final daysEventScrollController = useScrollController();
+    final outerController = useScrollController();
 
     return Scaffold(
-      body: WillPopScope(
-          onWillPop: () async {
-            if (!controller.isCompleted) {
-              controllerNotifier.toggle();
-              return false;
-            } else {
-              return true;
-            }
-          },
-          child: SafeArea(
-            child: IgnorePointer(
-              ignoring: controller.isCompleted,
-              child: Refresher(
-                onRefresh: () async {
-                  await confimedEventListNotifier.loadConfirmedEvent();
-                  now = DateTime.now();
-                },
-                child: Column(
+        body: WillPopScope(
+      onWillPop: () async {
+        if (!controller.isCompleted) {
+          controllerNotifier.toggle();
+          return false;
+        } else {
+          return true;
+        }
+      },
+      child: SafeArea(
+          child: IgnorePointer(
+        ignoring: controller.isCompleted,
+        child: Refresher(
+            onRefresh: () async {
+              await confimedEventListNotifier.loadConfirmedEvent();
+              now = DateTime.now();
+            },
+            child: Column(children: [
+              TopBar(controllerNotifier: controllerNotifier),
+              MonthBar(
+                  scrollController: scrollController,
+                  width: MediaQuery.of(context).size.width),
+              const SizedBox(
+                height: 10,
+              ),
+              DayList(scrollController, daysEventScrollController),
+              const SizedBox(
+                height: 20,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(HomeTextConstants.incomingEvents,
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black)),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height - 345,
+                width: MediaQuery.of(context).size.width,
+                child: ListView(
+                  controller: outerController,
+                  clipBehavior: Clip.none,
                   children: [
-                    TopBar(controllerNotifier: controllerNotifier),
-                    MonthBar(
-                        scrollController: scrollController,
-                        width: MediaQuery.of(context).size.width),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    DayList(scrollController, daysEventScrollController),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(HomeTextConstants.incomingEvents,
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black)),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                        height: MediaQuery.of(context).size.height - 345,
+                    Listener(
+                        onPointerSignal: (event) {
+                          if (event is PointerScrollEvent) {
+                            final offset = event.scrollDelta.dy;
+                            daysEventScrollController.jumpTo(
+                                daysEventScrollController.offset + offset);
+                            outerController
+                                .jumpTo(outerController.offset - offset);
+                          }
+                        },
                         child: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
                           controller: daysEventScrollController,
@@ -102,8 +119,8 @@ class HomePage extends HookConsumerWidget {
                   ],
                 ),
               ),
-            ),
-          )),
-    );
+            ])),
+      )),
+    ));
   }
 }
