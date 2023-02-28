@@ -2,7 +2,7 @@ name: myecl
 description: A new Flutter project.
 
 publish_to: "none"
-version: 0.5.0+37
+version: 0.5.0+38
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
@@ -15,7 +15,7 @@ dependencies:
   datetime_picker_formfield: ^2.0.1
   dotenv: ^4.0.1
   f_logs: ^2.0.1
-  fl_chart: ^0.55.2
+  fl_chart: ^0.61.0
   flash: ^2.0.3+2
   flutter:
     sdk: flutter
@@ -25,14 +25,15 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.1
-  flutter_secure_storage: ^7.0.1
-  google_fonts: ^3.0.1
-  heroicons: ^0.7.0
+  flutter_secure_storage: ^8.0.0
+  google_fonts: ^4.0.3
+  heroicons: ^0.8.0
   hooks_riverpod: ^2.1.1
   http: ^0.13.4
   http_parser: ^4.0.2
   image_cropper: ^3.0.1
   image_picker: ^0.8.6
+  image_picker_ios: ^0.8.6+7
   intl: ^0.17.0
   jwt_decoder: ^2.0.1
   numberpicker: ^2.1.1
@@ -50,7 +51,7 @@ dependencies:
 
 dev_dependencies:
   dependency_validator: ^3.2.2
-  flutter_launcher_icons: ^0.11.0
+  flutter_launcher_icons: ^0.12.0
   flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
@@ -66,16 +67,16 @@ flutter_icons:
   android: "launcher_icon"
   ios:
     generate: true
-    image_path: "assets/images/logo.jpg"
-  image_path: "assets/images/logo.png"
+    image_path: "assets/images/icon.jpg"
+  image_path: "assets/images/icon.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/images/logo.png"
+    image_path: "assets/images/icon.png"
   windows:
     generate: true
-    image_path: "assets/images/logo.png"
+    image_path: "assets/images/icon.png"
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-    image_path: "assets/images/logo.png"
+    image_path: "assets/images/icon.png"

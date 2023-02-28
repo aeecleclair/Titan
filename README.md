@@ -106,3 +106,12 @@ Add to `AndroidManifest.xml` file in the android/app/src/main folder :
     android:usesCleartextTraffic="true"
     ...   >
 ```
+
+## Mettre à jour l'icon de l'app
+
+On utilise le module [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons), après avoir modifié la config dans [pubspec.yaml](./pubspec.yaml) executer :
+
+```bash
+flutter pub get
+flutter pub run flutter_launcher_icons
+```
