@@ -25,6 +25,9 @@ class PasswordStrength extends HookConsumerWidget {
         builder: (context, value, child) {
           return Column(
             children: [
+              const SizedBox(
+                height: 10,
+              ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -32,7 +35,7 @@ class PasswordStrength extends HookConsumerWidget {
                     style: TextStyle(fontSize: 18, color: textColor)),
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               FlutterPasswordStrength(
                   password: newPassword.text,

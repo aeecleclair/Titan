@@ -41,14 +41,20 @@ class SignUpRepository extends Repository {
 
   Future<bool> activateUser(CreateAccount createAccount) async {
     try {
-      await create(createAccount.toJson(), suffix: "activate");
-      return true;
+      final value = await create(createAccount.toJson(), suffix: "activate");
+      return value["success"];
     } catch (e) {
       return false;
     }
   }
 
   Future<bool> resetPassword(RecoverRequest recoverRequest) async {
-    return await create(recoverRequest.toJson(), suffix: "reset-password");
+    try {
+      final value =
+          await create(recoverRequest.toJson(), suffix: "reset-password");
+      return value["success"];
+    } catch (e) {
+      return false;
+    }
   }
 }
