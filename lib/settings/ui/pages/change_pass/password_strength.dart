@@ -39,7 +39,7 @@ class PasswordStrength extends HookConsumerWidget {
                   backgroundColor: Colors.transparent,
                   radius: 10,
                   strengthColors: whiteBar
-                      ? TweenSequence<Color>([
+                      ? TweenSequence<Color?>([
                           TweenSequenceItem(
                             weight: 1.0,
                             tween: Tween<Color>(
@@ -48,7 +48,7 @@ class PasswordStrength extends HookConsumerWidget {
                             ),
                           ),
                         ])
-                      : TweenSequence<Color>([
+                      : TweenSequence<Color?>([
                           TweenSequenceItem(
                             weight: 1.0,
                             tween: Tween<Color>(
