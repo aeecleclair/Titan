@@ -13,7 +13,7 @@ class FlutterPasswordStrength extends StatefulWidget {
   final double height;
 
   //Strength bar colors are changed depending on strength
-  final Animatable<Color>? strengthColors;
+  final Animatable<Color?> strengthColors;
 
   //Strength bar background color
   final Color backgroundColor;
@@ -32,7 +32,7 @@ class FlutterPasswordStrength extends StatefulWidget {
       required this.password,
       this.width,
       this.height = 5,
-      this.strengthColors,
+      required this.strengthColors,
       this.backgroundColor = Colors.grey,
       this.radius = 0,
       this.duration,
@@ -47,32 +47,7 @@ class FlutterPasswordStrength extends StatefulWidget {
     0.51 ~ 0.75 : blue
     0.76 ~ 1 : green
   */
-  Animatable<Color?> get _strengthColors => (strengthColors ??
-      TweenSequence<Color?>(
-        [
-          TweenSequenceItem(
-            weight: 1.0,
-            tween: ColorTween(
-              begin: Colors.red,
-              end: Colors.yellow,
-            ),
-          ),
-          TweenSequenceItem(
-            weight: 1.0,
-            tween: ColorTween(
-              begin: Colors.yellow,
-              end: Colors.blue,
-            ),
-          ),
-          TweenSequenceItem(
-            weight: 1.0,
-            tween: ColorTween(
-              begin: Colors.blue,
-              end: Colors.green,
-            ),
-          ),
-        ],
-      )) as Animatable<Color?>;
+  Animatable<Color?> get _strengthColors => strengthColors;
 
   //default duration is 300 milliseconds
   Duration? get _duration => duration ?? const Duration(milliseconds: 300);
