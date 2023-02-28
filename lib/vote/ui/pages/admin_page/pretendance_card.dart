@@ -41,7 +41,7 @@ class PretendanceCard extends HookConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(15.0),
       child: Container(
-          width: MediaQuery.of(context).size.width * 0.7,
+          width: 250,
           height: (pretendance.listType != ListType.blank &&
                   status == Status.waiting &&
                   isAdmin)

@@ -10,6 +10,7 @@ import 'package:myecl/cinema/providers/session_list_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/ui/pages/main_page/session_card.dart';
+import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
@@ -28,6 +29,7 @@ class MainPage extends HookConsumerWidget {
         usePageController(viewportFraction: 0.8, initialPage: initialPage);
     final scrollNotifier = ref.watch(scrollProvider.notifier);
     final isAdmin = ref.watch(isCinemaAdmin);
+    final isWebFormat = ref.watch(isWebFormatProvider);
     pageController.addListener(() {
       scrollNotifier.setScroll(pageController.page!);
       currentPage = pageController.page!.round();
@@ -109,23 +111,34 @@ class MainPage extends HookConsumerWidget {
                     );
                   }
                   return Expanded(
-                    // height: MediaQuery.of(context).size.height - 190,
-                    child: PageView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        controller: pageController,
-                        itemCount: data.length,
-                        itemBuilder: (context, index) {
-                          return SessionCard(
-                            session: data[index],
-                            index: index,
-                            onTap: () {
-                              sessionNotifier.setSession(data[index]);
-                              pageNotifier
-                                  .setCinemaPage(CinemaPage.detailFromMainPage);
-                              initialPageNotifier.setMainPageIndex(index);
-                            },
-                          );
-                        }),
+                    child: isWebFormat
+                        ? ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            controller: pageController,
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return SessionCard(
+                                session: data[index],
+                                index: index,
+                                onTap: () {},
+                              );
+                            })
+                        : PageView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            controller: pageController,
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return SessionCard(
+                                session: data[index],
+                                index: index,
+                                onTap: () {
+                                  sessionNotifier.setSession(data[index]);
+                                  pageNotifier.setCinemaPage(
+                                      CinemaPage.detailFromMainPage);
+                                  initialPageNotifier.setMainPageIndex(index);
+                                },
+                              );
+                            }),
                   );
                 }, loading: () {
                   return const Center(
