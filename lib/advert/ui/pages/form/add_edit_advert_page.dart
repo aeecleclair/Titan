@@ -18,14 +18,11 @@ class AddEditAdvertPage extends HookConsumerWidget {
     final isEdit = advert.id != Advert.empty().id;
     final title = useTextEditingController(text: advert.title);
     final content = useTextEditingController(text: advert.content);
-    
+
     final tags = advert.tags;
     var textTags = tags.join(', ');
-    if (textTags.length > 2) {
-      textTags = textTags.substring(2);
-    }
-
     final textTagsController = useTextEditingController(text: textTags);
+    
     final selected = ref.watch(announcerProvider);
 
     return SingleChildScrollView(
