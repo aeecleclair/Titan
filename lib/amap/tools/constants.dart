@@ -123,4 +123,14 @@ class AMAPTextConstants {
   static const String updatingError = "Echec de la modification";
   static const String usersNotFound = "Aucun utilisateur trouvé";
   static const String waiting = "En attente";
+
+  static const String presentation1 = "L'AMAP (association pour le maintien d'une agriculture paysanne) est un service proposé par l'association Planet&Co de l'ECL. Vous pouvez ainsi recevoir des produits (paniers de fruits et légumes, jus, confitures...) directement sur le campus !\n\nLes commandes doivent être passées avant le vendredi 21h et sont livrées sur le campus le mardi de 13h à 13h45 (ou de 18h15 à 18h30 si vous ne pouvez pas passer le midi) dans le hall du M16.\n\nVous ne pouvez commander que si votre solde le permet. Vous pouvez recharger votre solde via la collecte Lydia ou bien avec un chèque que vous pouvez nous transmettre lors des permanences.\n\nLien vers la collecte Lydia pour le rechargement : ";
+
+  static const String errorLink = "Erreur lors de l'ouverture du lien";
+
+  static const String loadingError = "Erreur lors du chargement";
+
+  static const String presentation2 = "\n\nN’hésitez pas à nous contacter en cas de problème !";
+
+  static const String contact = "Contact associatif : ";
 }
