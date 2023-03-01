@@ -4,7 +4,7 @@ import 'package:myecl/tools/repository/repository.dart';
 class InformationRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "amap/informations/";
+  final ext = "amap/information";
 
   Future<Information> getInformation() async {
     return Information.fromJson(await getOne(""));
