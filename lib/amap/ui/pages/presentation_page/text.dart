@@ -12,7 +12,6 @@ class PresentationPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final information = ref.watch(informationProvider);
-    print(information);
     return SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(

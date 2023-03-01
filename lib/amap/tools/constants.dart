@@ -44,6 +44,7 @@ class AMAPTextConstants {
   static const String commandDate = "Date de la commande";
   static const String commandProducts = "Produits de la commande";
   static const String confirm = "Confirmer";
+  static const String contact = "Contact associatif ";
   static const String createCategory = "Créer une catégorie";
   static const String delete = "Supprimer";
   static const String deleteDelivery = "Supprimer la livraison ?";
@@ -77,12 +78,14 @@ class AMAPTextConstants {
   static const String editingError = "Erreur lors de la modification";
   static const String editProduct = "Modifier le produit";
   static const String endingDelivery = "Fin de la livraison";
+  static const String errorLink = "Erreur lors de l'ouverture du lien";
   static const String errorLoadingUser =
       "Erreur lors du chargement des utilisateurs";
   static const String expectingNumber = "Veuillez entrer un nombre";
   static const String fillField = "Veuillez remplir ce champ";
   static const String handlingAccount = "Gérer les comptes";
   static const String loading = "Chargement...";
+  static const String loadingError = "Erreur lors du chargement";
   static const String lock = "Verrouiller";
   static const String locked = "Verrouillée";
   static const String lockedDelivery = "Livraison verrouillée";
@@ -106,9 +109,14 @@ class AMAPTextConstants {
       "Veuillez créer une catégorie ou en choisir une";
   static const String pickDeliveryMoment = "Choisissez un moment de livraison";
   static const String presentation = "Présentation";
+  static const String presentation1 =
+      "L'AMAP (association pour le maintien d'une agriculture paysanne) est un service proposé par l'association Planet&Co de l'ECL. Vous pouvez ainsi recevoir des produits (paniers de fruits et légumes, jus, confitures...) directement sur le campus !\n\nLes commandes doivent être passées avant le vendredi 21h et sont livrées sur le campus le mardi de 13h à 13h45 (ou de 18h15 à 18h30 si vous ne pouvez pas passer le midi) dans le hall du M16.\n\nVous ne pouvez commander que si votre solde le permet. Vous pouvez recharger votre solde via la collecte Lydia ou bien avec un chèque que vous pouvez nous transmettre lors des permanences.\n\nLien vers la collecte Lydia pour le rechargement : ";
+  static const String presentation2 =
+      "\n\nN'hésitez pas à nous contacter en cas de problème !";
   static const String price = "Prix";
   static const String product = "produit";
-  static const String productInDelivery = "Produit dans une livraison non terminée";
+  static const String productInDelivery =
+      "Produit dans une livraison non terminée";
   static const String quantity = "Quantité";
   static const String requiredDate = "La date est requise";
   static const String seeMore = "Voir plus";
@@ -123,14 +131,4 @@ class AMAPTextConstants {
   static const String updatingError = "Echec de la modification";
   static const String usersNotFound = "Aucun utilisateur trouvé";
   static const String waiting = "En attente";
-
-  static const String presentation1 = "L'AMAP (association pour le maintien d'une agriculture paysanne) est un service proposé par l'association Planet&Co de l'ECL. Vous pouvez ainsi recevoir des produits (paniers de fruits et légumes, jus, confitures...) directement sur le campus !\n\nLes commandes doivent être passées avant le vendredi 21h et sont livrées sur le campus le mardi de 13h à 13h45 (ou de 18h15 à 18h30 si vous ne pouvez pas passer le midi) dans le hall du M16.\n\nVous ne pouvez commander que si votre solde le permet. Vous pouvez recharger votre solde via la collecte Lydia ou bien avec un chèque que vous pouvez nous transmettre lors des permanences.\n\nLien vers la collecte Lydia pour le rechargement : ";
-
-  static const String errorLink = "Erreur lors de l'ouverture du lien";
-
-  static const String loadingError = "Erreur lors du chargement";
-
-  static const String presentation2 = "\n\nN’hésitez pas à nous contacter en cas de problème !";
-
-  static const String contact = "Contact associatif : ";
 }
