@@ -63,7 +63,6 @@ class RecoverPasswordPage extends HookConsumerWidget {
           const Spacer(),
           PasswordStrength(
             newPassword: password,
-            whiteBar: true,
             textColor: ColorConstants.background2,
           ),
           const Spacer(),
