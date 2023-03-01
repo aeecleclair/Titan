@@ -1,35 +1,41 @@
 class Information {
   Information({
-    required this.respo,
-    required this.lien,
+    required this.manager,
+    required this.link,
+    required this.description,
   });
-  late final String respo;
-  late final String lien;
+  late final String manager;
+  late final String link;
+  late final String description;
   
   Information.fromJson(Map<String, dynamic> json){
-    respo = json['respo'];
-    lien = json['lien'];
+    manager = json['manager'];
+    link = json['link'];
+    description = json['description'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['respo'] = respo;
-    data['lien'] = lien;
+    data['manager'] = manager;
+    data['link'] = link;
+    data['description'] = description;
     return data;
   }
 
   Information copyWith({
-    String? respo,
-    String? lien,
+    String? manager,
+    String? link,
+    String? description,
   }) {
     return Information(
-      respo: respo ?? this.respo,
-      lien: lien ?? this.lien,
+      manager: manager ?? this.manager,
+      link: link ?? this.link,
+      description: description ?? this.description,
     );
   }
 
   @override
   String toString() {
-    return 'Information{respo: $respo, lien: $lien}';
+    return 'Information{manager: $manager, link: $link, description: $description}';
   }
 }

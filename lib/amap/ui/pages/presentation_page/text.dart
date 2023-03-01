@@ -12,6 +12,7 @@ class PresentationPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final information = ref.watch(informationProvider);
+    print(information);
     return SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
@@ -41,7 +42,7 @@ class PresentationPage extends HookConsumerWidget {
                 ),
                 information.when(
                   data: (info) => TextSpan(
-                      text: info.lien,
+                      text: info.link,
                       style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
@@ -50,7 +51,7 @@ class PresentationPage extends HookConsumerWidget {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
                           try {
-                            await launchUrl(Uri.parse(info.lien));
+                            await launchUrl(Uri.parse(info.link));
                           } catch (e) {
                             displayToast(context, TypeMsg.msg,
                                 AMAPTextConstants.errorLink);
@@ -89,7 +90,7 @@ class PresentationPage extends HookConsumerWidget {
               ),
               information.when(
                 data: (info) => Text(
-                  "${AMAPTextConstants.contact} : ${info.respo}	",
+                  "${AMAPTextConstants.contact} : ${info.manager}	",
                   style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
