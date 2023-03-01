@@ -7,12 +7,10 @@ import 'package:myecl/settings/ui/pages/change_pass/secure_bar.dart';
 class PasswordStrength extends HookConsumerWidget {
   final TextEditingController newPassword;
   final Color textColor;
-  final bool whiteBar;
 
   const PasswordStrength(
       {Key? key,
       required this.newPassword,
-      this.whiteBar = false,
       this.textColor = Colors.black})
       : super(key: key);
 
