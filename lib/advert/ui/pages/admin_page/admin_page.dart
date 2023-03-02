@@ -75,7 +75,7 @@ class AdminPage extends HookConsumerWidget {
                       ...data
                           .map((advert) => selected
                                       .where(
-                                          (e) => advert.groups.contains(e.name))
+                                          (e) => advert.announcer.contains(e.name))
                                       .isNotEmpty ||
                                   selected.isEmpty
                               ? AdminAdvertCard(

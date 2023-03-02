@@ -6,7 +6,7 @@ class AnnouncerRepository extends Repository {
   // ignore: overridden_fields
   final ext = "advert/";
 
-  Future<List<Announcer>> getAnnouncerList() async {
+  Future<List<Announcer>> getAllAnnouncer() async {
     return List<Announcer>.from((await getList(suffix: "announcer/")).map((x) => Announcer.fromJson(x)));
   }
 
