@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class TicketWidget extends HookConsumerWidget {
-  const TicketWidget({
+class LotsCard extends HookConsumerWidget{ 
+  const LotsCard({
     Key? key,
     required this.color,
   }) : super(key: key);
@@ -10,16 +12,17 @@ class TicketWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
-    return Stack(children: [
+    return 
       Container(
-        width: 150,
-        height: 200,
-        margin: const EdgeInsets.symmetric(horizontal: 10),
+        width:100,
+        height: 100,
+        margin: const EdgeInsets.only(left: 10),
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
                 color: this.color,
+                spreadRadius: 0,
                 blurRadius: 8,
                 blurStyle:BlurStyle.outer,
               ),
@@ -34,7 +37,10 @@ class TicketWidget extends HookConsumerWidget {
               stops: const [0, 0.8],
             ),
             borderRadius: const BorderRadius.all(Radius.circular(20))),
-      )
-    ]);
+      );
   }
+}
+
+class RowOfLots{ //Recois des images (ou des wiget LotsCard ? ) de Lots en arguments renvoie la Row des (3?) lots
+
 }

@@ -50,7 +50,10 @@ class TopBar extends HookConsumerWidget {
                             pageNotifier.setTombolaPage(TombolaPage.simuTombola);
                             break;
                           case TombolaPage.addEdit:
-                            pageNotifier.setTombolaPage(TombolaPage.admin);
+                            pageNotifier.setTombolaPage(TombolaPage.create);
+                            break;
+                          case TombolaPage.create:
+                            pageNotifier.setTombolaPage(TombolaPage.main);
                             break;
                         }
                       },

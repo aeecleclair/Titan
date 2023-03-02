@@ -50,6 +50,9 @@ class TombolaHomePage extends HookConsumerWidget {
             case TombolaPage.addEdit:
               pageNotifier.setTombolaPage(TombolaPage.admin);
               break;
+            case TombolaPage.create:
+            pageNotifier.setTombolaPage(TombolaPage.main);
+              break;
           }
           return false;
         },

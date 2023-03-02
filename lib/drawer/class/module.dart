@@ -3,14 +3,14 @@ import 'package:heroicons/heroicons.dart';
 enum ModuleType {
   calendar,
   settings,
-  amap,
+  amap, 
   loan,
   booking,
   admin,
   event,
   vote,
+  tombola,
   cinema,
-  tombola, 
 }
 
 class Module {
