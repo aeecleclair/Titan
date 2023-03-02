@@ -6,7 +6,7 @@ class Advert {
   late final String content;
   late final DateTime date;
   late final String author;
-  late final List<String> groups;
+  late final List<String> announcer;
   late final List<String> tags;
   
   Advert({
@@ -15,7 +15,7 @@ class Advert {
     required this.content,
     required this.date,
     required this.author,
-    required this.groups,
+    required this.announcer,
     required this.tags
   });
 
@@ -25,7 +25,7 @@ class Advert {
     content = json["content"];
     date = DateTime.parse(json["start"]);
     author = json["author"];
-    groups = json["groups"];
+    announcer = json["announcer"];
     tags = json["tags"];
   }
 
@@ -36,7 +36,7 @@ class Advert {
     data["content"] = content;
     data["date"] = processDateToAPI(date);
     data["author"] = author;
-    data["groups"] = groups;
+    data["announcer"] = announcer;
     data["tags"] = tags;
     return data;
   }
@@ -49,7 +49,7 @@ class Advert {
         content: content ?? this.content,
         date: date ?? this.date,
         author: author ?? this.author,
-        groups: groups ?? this.groups,
+        announcer: groups ?? this.announcer,
         tags: tags ?? this.tags);
     }
 
@@ -60,12 +60,12 @@ class Advert {
       content: "",
       date: DateTime.now(),
       author: "",
-      groups: [],
+      announcer: [],
       tags: []);
   }
 
   @override
   String toString() {
-    return 'Advert{id: $id, title: $title, content: $content, date: $date, author: $author, groups: $groups, tags: $tags}';
+    return 'Advert{id: $id, title: $title, content: $content, date: $date, author: $author, announcer: $announcer, tags: $tags}';
   }
 }

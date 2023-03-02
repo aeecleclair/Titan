@@ -121,7 +121,7 @@ class AdvertCard extends StatelessWidget {
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
-                        children: advert.groups.map((e) => Tag(tagname: e,)).toList()
+                        children: advert.announcer.map((e) => Tag(tagname: e,)).toList()
                         ,
                       ),
                     ),

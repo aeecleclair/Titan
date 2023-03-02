@@ -3,9 +3,10 @@ import 'package:myecl/tools/repository/repository.dart';
 
 class TagRepository extends Repository {
   @override
+  // ignore: overridden_fields
   final ext = "advert/tag/";
 
-  Future<List<Tag>> getTagList() async {
+  Future<List<Tag>> getAllTag() async {
     return (await getList()).map((e) => Tag.fromJson(e)).toList();
   }
 
