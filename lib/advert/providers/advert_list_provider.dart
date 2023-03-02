@@ -46,7 +46,7 @@ class AdvertListNotifier extends ListNotifier<Advert> {
           content: 'Le contenu de ding!',
           title: 'Aujourd\'hui on s\'amuse bcp',
           date: DateTime.now(),
-          groups: ['Eclair', 'Raid'],
+          groups: ['Eclair'],
           tags: ['tag1', "tag3"])
     ]);
   }

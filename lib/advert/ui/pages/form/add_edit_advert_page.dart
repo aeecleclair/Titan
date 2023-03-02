@@ -22,12 +22,12 @@ class AddEditAdvertPage extends HookConsumerWidget {
     final tags = advert.tags;
     var textTags = tags.join(', ');
     final textTagsController = useTextEditingController(text: textTags);
-    
+
     final selected = ref.watch(announcerProvider);
 
     return SingleChildScrollView(
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
             TextEntry(
@@ -42,7 +42,7 @@ class AddEditAdvertPage extends HookConsumerWidget {
             ),
             TextEntry(
               minLines: 5,
-              maxLines: 20,
+              maxLines: 50,
               keyboardType: TextInputType.multiline,
               label: AdvertTextConstants.content,
               suffix: '',
@@ -63,6 +63,9 @@ class AddEditAdvertPage extends HookConsumerWidget {
               isInt: false,
               controller: textTagsController,
               onChanged: (value) {},
+            ),
+            const SizedBox(
+              height: 15,
             ),
             ShrinkButton(
               waitChild: Container(
