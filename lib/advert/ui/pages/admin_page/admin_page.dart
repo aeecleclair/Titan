@@ -37,41 +37,40 @@ class AdminPage extends HookConsumerWidget {
                   return Column(
                     children: [
                       GestureDetector(
-                              onTap: () {
-                                advertNotifier.setAdvert(Advert.empty());
-                                pageNotifier.setAdvertPage(
-                                    AdvertPage.addEditAdvert);
-                              },
-                              child: Container(
-                                  margin: const EdgeInsets.only(
-                                      bottom: 10, top: 20, left: 30, right: 30),
-                                  width: double.infinity,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          Colors.white,
-                                          Colors.grey.shade100,
-                                        ],
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.2),
-                                          spreadRadius: 5,
-                                          blurRadius: 10,
-                                          offset: const Offset(3, 3),
-                                        )
-                                      ]),
-                                  child: Center(
-                                      child: HeroIcon(
-                                    HeroIcons.plus,
-                                    size: 40,
-                                    color: Colors.grey.shade500,
-                                  ))),
-                            ),
+                        onTap: () {
+                          advertNotifier.setAdvert(Advert.empty());
+                          pageNotifier.setAdvertPage(AdvertPage.addEditAdvert);
+                        },
+                        child: Container(
+                            margin: const EdgeInsets.only(
+                                bottom: 10, top: 20, left: 30, right: 30),
+                            width: double.infinity,
+                            height: 100,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Colors.white,
+                                    Colors.grey.shade100,
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 5,
+                                    blurRadius: 10,
+                                    offset: const Offset(3, 3),
+                                  )
+                                ]),
+                            child: Center(
+                                child: HeroIcon(
+                              HeroIcons.plus,
+                              size: 40,
+                              color: Colors.grey.shade500,
+                            ))),
+                      ),
                       ...data
                           .map((advert) => selected
                                       .where(
@@ -122,6 +121,16 @@ class AdminPage extends HookConsumerWidget {
                 },
               ),
             ),
+          ),
+        ),
+        Expanded(
+          // A flexible child that will grow to fit the viewport but
+          // still be at least as big as necessary to fit its contents.
+          child: Container(
+            color: const Color(0xffee0000), // Red
+            height: 120.0,
+            alignment: Alignment.center,
+            child: const Text('Flexible Content'),
           ),
         ),
       ],
