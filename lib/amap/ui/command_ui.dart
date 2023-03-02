@@ -169,12 +169,12 @@ class CommandeUI extends HookConsumerWidget {
                                               displayToastWithContext(
                                                   TypeMsg.msg,
                                                   AMAPTextConstants
-                                                      .unlockedDelivery);
+                                                      .deletedOrder);
                                             } else {
                                               displayToastWithContext(
                                                   TypeMsg.error,
                                                   AMAPTextConstants
-                                                      .updatingError);
+                                                      .deletingError);
                                             }
                                           });
                                         });

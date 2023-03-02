@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/cinema/class/session_logo_repository.dart';
+import 'package:myecl/cinema/repositories/session_logo_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 
 class SessionPosterProvider extends SingleNotifier<Image> {
