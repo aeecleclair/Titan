@@ -171,9 +171,9 @@ class DetailPage extends HookConsumerWidget {
                           margin: EdgeInsets.symmetric(horizontal: 30),
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: (advert.groups + advert.tags).length,
+                            itemCount: (advert.announcer + advert.tags).length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Tag(tagname: (advert.groups + advert.tags)[index]);
+                              return Tag(tagname: (advert.announcer + advert.tags)[index]);
                             },
                           ),
                         ),
