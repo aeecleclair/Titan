@@ -3,9 +3,10 @@ import 'package:myecl/tools/repository/repository.dart';
 
 class AdvertRepository extends Repository {
   @override
+  // ignore: overridden_fields
   final ext = 'advert/';
 
-  Future<List<Advert>> getAdverts() async {
+  Future<List<Advert>> getAllAdvert() async {
     return (await getList()).map((e) => Advert.fromJson(e)).toList();
   }
 
