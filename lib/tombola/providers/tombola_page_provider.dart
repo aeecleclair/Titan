@@ -4,12 +4,12 @@ enum TombolaPage {
   main,
   tombola,
   achats,
-  admin,
+  create,
   addEdit,
   addEditLots,
   addEditTypeTickets,
   simuTombola,
-  //information ?
+  admin,
 }
 final tombolaPageProvider = StateNotifierProvider<TombolaPageNotifier, TombolaPage>((ref) {
   return TombolaPageNotifier();

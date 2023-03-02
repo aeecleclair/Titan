@@ -29,9 +29,6 @@ class AppDrawer extends HookConsumerWidget {
   Widget getPage(ModuleType page, SwipeControllerNotifier controllerNotifier,
       AnimationController controller) {
     switch (page) {
-      case ModuleType.tombola:
-        return TombolaHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.settings:
         return SettingsHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
@@ -55,6 +52,9 @@ class AppDrawer extends HookConsumerWidget {
             controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.vote:
         return VoteHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
+      case ModuleType.tombola:
+        return TombolaHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.cinema:
         return CinemaHomePage(
