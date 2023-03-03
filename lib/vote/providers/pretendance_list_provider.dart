@@ -40,6 +40,15 @@ class PretendanceListNotifier extends ListNotifier<Pretendance> {
         pretendance);
   }
 
+  Future<bool> deletePretendances({ListType? type}) async {
+    return await delete(
+        _pretendanceRepository.deletePretendances,
+        (pretendances, pretendance) => pretendances
+          ..removeWhere((p) => type != null ? p.listType == type : true),
+        type?.toString() ?? "",
+        Pretendance.empty());
+  }
+
   Future<AsyncValue<List<Pretendance>>> copy() async {
     return state.when(
       data: (pretendances) async {

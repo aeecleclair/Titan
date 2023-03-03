@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -186,29 +187,30 @@ class AdminPage extends HookConsumerWidget {
                               context: context,
                               builder: (context) {
                                 return CustomDialogBox(
-                                    title: VoteTextConstants.resetVote,
-                                    descriptions: "",
-                                    onYes: () async {
-                                      await tokenExpireWrapper(ref, () async {
-                                        final value =
-                                            await statusNotifier.resetVote();
-                                        ref
-                                            .watch(pretendanceListProvider
-                                                .notifier)
-                                            .loadPretendanceList();
-                                        if (value) {
-                                          showVotesNotifier.toggle(false);
-                                          displayVoteToastWithContext(
-                                              TypeMsg.msg,
-                                              VoteTextConstants.resetedVotes);
-                                        } else {
-                                          displayVoteToastWithContext(
-                                              TypeMsg.error,
-                                              VoteTextConstants
-                                                  .errorResetingVotes);
-                                        }
-                                      });
+                                  title: VoteTextConstants.resetVote,
+                                  descriptions:
+                                      VoteTextConstants.resetVoteDescription,
+                                  onYes: () async {
+                                    await tokenExpireWrapper(ref, () async {
+                                      final value =
+                                          await statusNotifier.resetVote();
+                                      ref
+                                          .watch(
+                                              pretendanceListProvider.notifier)
+                                          .loadPretendanceList();
+                                      if (value) {
+                                        showVotesNotifier.toggle(false);
+                                        displayVoteToastWithContext(TypeMsg.msg,
+                                            VoteTextConstants.resetedVotes);
+                                      } else {
+                                        displayVoteToastWithContext(
+                                            TypeMsg.error,
+                                            VoteTextConstants
+                                                .errorResetingVotes);
+                                      }
                                     });
+                                  },
+                                );
                               });
                         },
                         child: Container(
@@ -231,7 +233,7 @@ class AdminPage extends HookConsumerWidget {
             const SizedBox(height: 20),
             SizedBox(
                 height: MediaQuery.of(context).size.height -
-                    539 +
+                    500 +
                     (status == Status.waiting ? 0 : 50),
                 child: Column(
                   children: [
@@ -429,87 +431,356 @@ class AdminPage extends HookConsumerWidget {
                         ),
                       ),
                     if (status == Status.waiting)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30.0, vertical: 50),
-                        child: ShrinkButton(
-                          waitChild: Container(
-                            padding: const EdgeInsets.only(top: 10, bottom: 12),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Colors.white,
-                                    Colors.grey.shade50,
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 30.0, vertical: 50),
+                          child: Column(
+                            children: [
+                              ShrinkButton(
+                                waitChild: Container(
+                                  padding: const EdgeInsets.only(
+                                      top: 10, bottom: 12),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Colors.white,
+                                          Colors.grey.shade50,
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                          color: Colors.black, width: 2),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          spreadRadius: 5,
+                                          blurRadius: 10,
+                                          offset: const Offset(3, 3),
+                                        )
+                                      ]),
+                                  child: const Center(
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                onTap: () async {
+                                  await tokenExpireWrapper(ref, () async {
+                                    final value =
+                                        await statusNotifier.openVote();
+                                    ref
+                                        .watch(pretendanceListProvider.notifier)
+                                        .loadPretendanceList();
+                                    if (value) {
+                                      displayVoteToastWithContext(TypeMsg.msg,
+                                          VoteTextConstants.votesOpened);
+                                    } else {
+                                      displayVoteToastWithContext(TypeMsg.error,
+                                          VoteTextConstants.errorOpeningVotes);
+                                    }
+                                  });
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.only(
+                                      top: 10, bottom: 12),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Colors.white,
+                                          Colors.grey.shade50,
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                          color: Colors.black, width: 2),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          spreadRadius: 5,
+                                          blurRadius: 10,
+                                          offset: const Offset(3, 3),
+                                        )
+                                      ]),
+                                  child: const Center(
+                                    child: Text(
+                                      VoteTextConstants.openVote,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: ShrinkButton(
+                                          waitChild: Container(
+                                            padding: const EdgeInsets.only(
+                                                top: 10, bottom: 12),
+                                            decoration: BoxDecoration(
+                                                gradient: const LinearGradient(
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight,
+                                                  colors: [
+                                                    AMAPColorConstants
+                                                        .redGradient1,
+                                                    AMAPColorConstants
+                                                        .redGradient2,
+                                                  ],
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                border: Border.all(
+                                                    color: Colors.white,
+                                                    width: 2),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: AMAPColorConstants
+                                                        .redGradient2
+                                                        .withOpacity(0.2),
+                                                    spreadRadius: 5,
+                                                    blurRadius: 10,
+                                                    offset: const Offset(3, 3),
+                                                  )
+                                                ]),
+                                            child: const Center(
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 2,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          onTap: () async {
+                                            await showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    CustomDialogBox(
+                                                        title: VoteTextConstants
+                                                            .deleteAll,
+                                                        descriptions:
+                                                            VoteTextConstants
+                                                                .deleteAllDescription,
+                                                        onYes: () async {
+                                                          await tokenExpireWrapper(
+                                                              ref, () async {
+                                                            final value = await ref
+                                                                .watch(
+                                                                    pretendanceListProvider
+                                                                        .notifier)
+                                                                .deletePretendances();
+                                                            if (value) {
+                                                              displayVoteToastWithContext(
+                                                                  TypeMsg.msg,
+                                                                  VoteTextConstants
+                                                                      .deletedAll);
+                                                            } else {
+                                                              displayVoteToastWithContext(
+                                                                  TypeMsg.error,
+                                                                  VoteTextConstants
+                                                                      .deletingError);
+                                                            }
+                                                          });
+                                                        }));
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.only(
+                                                top: 10, bottom: 12),
+                                            decoration: BoxDecoration(
+                                                gradient: const LinearGradient(
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight,
+                                                  colors: [
+                                                    AMAPColorConstants
+                                                        .redGradient1,
+                                                    AMAPColorConstants
+                                                        .redGradient2,
+                                                  ],
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                border: Border.all(
+                                                    color: Colors.white,
+                                                    width: 2),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: AMAPColorConstants
+                                                        .redGradient2
+                                                        .withOpacity(0.2),
+                                                    spreadRadius: 5,
+                                                    blurRadius: 10,
+                                                    offset: const Offset(3, 3),
+                                                  )
+                                                ]),
+                                            child: Center(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: const [
+                                                  Text(
+                                                    VoteTextConstants.all,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  ),
+                                                  SizedBox(width: 10),
+                                                  HeroIcon(HeroIcons.trash,
+                                                      color: Colors.white,
+                                                      size: 20)
+                                                ],
+                                              ),
+                                            ),
+                                          )),
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Expanded(
+                                      child: ShrinkButton(
+                                        waitChild: Container(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 12),
+                                          decoration: BoxDecoration(
+                                              gradient: const LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  AMAPColorConstants
+                                                      .redGradient1,
+                                                  AMAPColorConstants
+                                                      .redGradient2,
+                                                ],
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              border: Border.all(
+                                                  color: Colors.white,
+                                                  width: 2),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: AMAPColorConstants
+                                                      .redGradient2
+                                                      .withOpacity(0.2),
+                                                  spreadRadius: 5,
+                                                  blurRadius: 10,
+                                                  offset: const Offset(3, 3),
+                                                )
+                                              ]),
+                                          child: const Center(
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        onTap: () async {
+                                          await showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  CustomDialogBox(
+                                                      title: VoteTextConstants
+                                                          .deleteAll,
+                                                      descriptions:
+                                                          VoteTextConstants
+                                                              .deleteAllDescription,
+                                                      onYes: () async {
+                                                        await tokenExpireWrapper(
+                                                            ref, () async {
+                                                          final value = await ref
+                                                              .watch(
+                                                                  pretendanceListProvider
+                                                                      .notifier)
+                                                              .deletePretendances(
+                                                                  type: ListType
+                                                                      .pipo);
+                                                          if (value) {
+                                                            displayVoteToastWithContext(
+                                                                TypeMsg.msg,
+                                                                VoteTextConstants
+                                                                    .deletedAll);
+                                                          } else {
+                                                            displayVoteToastWithContext(
+                                                                TypeMsg.error,
+                                                                VoteTextConstants
+                                                                    .deletingError);
+                                                          }
+                                                        });
+                                                      }));
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 12),
+                                          decoration: BoxDecoration(
+                                              gradient: const LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  AMAPColorConstants
+                                                      .redGradient1,
+                                                  AMAPColorConstants
+                                                      .redGradient2,
+                                                ],
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              border: Border.all(
+                                                  color: Colors.white,
+                                                  width: 2),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: AMAPColorConstants
+                                                      .redGradient2
+                                                      .withOpacity(0.2),
+                                                  spreadRadius: 5,
+                                                  blurRadius: 10,
+                                                  offset: const Offset(3, 3),
+                                                )
+                                              ]),
+                                          child: Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: const [
+                                                Text(
+                                                  VoteTextConstants.pipo,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
+                                                SizedBox(width: 10),
+                                                HeroIcon(HeroIcons.trash,
+                                                    color: Colors.white,
+                                                    size: 20)
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
-                                borderRadius: BorderRadius.circular(20),
-                                border:
-                                    Border.all(color: Colors.black, width: 2),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    spreadRadius: 5,
-                                    blurRadius: 10,
-                                    offset: const Offset(3, 3),
-                                  )
-                                ]),
-                            child: const Center(
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          onTap: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              final value = await statusNotifier.openVote();
-                              ref
-                                  .watch(pretendanceListProvider.notifier)
-                                  .loadPretendanceList();
-                              if (value) {
-                                displayVoteToastWithContext(
-                                    TypeMsg.msg, VoteTextConstants.votesOpened);
-                              } else {
-                                displayVoteToastWithContext(TypeMsg.error,
-                                    VoteTextConstants.errorOpeningVotes);
-                              }
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.only(top: 10, bottom: 12),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Colors.white,
-                                    Colors.grey.shade50,
-                                  ],
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                                border:
-                                    Border.all(color: Colors.black, width: 2),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    spreadRadius: 5,
-                                    blurRadius: 10,
-                                    offset: const Offset(3, 3),
-                                  )
-                                ]),
-                            child: const Center(
-                              child: Text(
-                                VoteTextConstants.openVote,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ),
+                              )
+                            ],
                           ),
                         ),
                       ),

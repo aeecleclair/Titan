@@ -488,8 +488,9 @@ class AddEditPretendancePage extends HookConsumerWidget {
                         ),
                       ],
                     ),
-                    child: const Text(VoteTextConstants.edit,
-                        style: TextStyle(
+                    child: Text(
+                        isEdit ? VoteTextConstants.edit : VoteTextConstants.add,
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 25,
                             fontWeight: FontWeight.bold))),

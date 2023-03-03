@@ -6,14 +6,20 @@ class VoteTextConstants {
   static const String addingError = 'Erreur lors de l\'ajout';
   static const String addPretendance = 'Ajouter une liste';
   static const String addSection = 'Ajouter une section';
+  static const String all = "Tous";
   static const String alreadyAddedMember = 'Membre déjà ajouté';
   static const String alreadyVoted = "Vote enregistré";
   static const String chooseList = 'Choisir une liste';
   static const String clear = 'Réinitialiser';
+  static const String clearVotes = "Réinitialiser les votes";
   static const String closedVote = 'Votes clos';
   static const String closeVote = 'Fermer les votes';
   static const String confirmVote = 'Confirmer le vote';
   static const String countVote = 'Dépouiller les votes';
+  static const String deleteAll = "Supprimer tout";
+  static const String deleteAllDescription =
+      "Voulez-vous vraiment supprimer tout ?";
+  static const String deletedAll = "Tout supprimé";
   static const String deletedSection = 'Section supprimée';
   static const String deletePretendance = 'Supprimer la liste';
   static const String deletePretendanceDesc =
@@ -46,6 +52,7 @@ class VoteTextConstants {
   static const String notOpenedVote = 'Vote non ouvert';
   static const String onGoingCount = 'Dépouillement en cours';
   static const String openVote = 'Ouvrir les votes';
+  static const String pipo = "Pipo";
   static const String pretendance = 'Listes';
   static const String pretendanceDeleted = 'Prétendance supprimée';
   static const String pretendanceNotDeleted = 'Erreur lors de la suppression';
@@ -55,6 +62,7 @@ class VoteTextConstants {
       'Voulez-vous vraiment publier les votes ?';
   static const String resetedVotes = 'Votes réinitialisés';
   static const String resetVote = 'Réinitialiser les votes';
+  static const String resetVoteDescription = "Que voulez-vous faire ?";
   static const String role = 'Rôle';
   static const String sectionDescription = 'Description de la section';
   static const String section = 'Section';
