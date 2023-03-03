@@ -79,23 +79,20 @@ class DetailLoanPage extends HookConsumerWidget {
                         ),
                       ),
                       loan.items.isNotEmpty
-                          ? GridView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: loan.items.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 1.25),
-                              itemBuilder: (context, index) {
-                                return ItemCard(
-                                  item: loan.items[index],
-                                  showButtons: false,
-                                  onDelete: () async {},
-                                  onEdit: () {},
-                                );
-                              },
+                          ? SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              child: Wrap(
+                                children: loan.items
+                                    .map(
+                                      (item) => ItemCard(
+                                        item: item,
+                                        showButtons: false,
+                                        onDelete: () async {},
+                                        onEdit: () {},
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
                             )
                           : const SizedBox(),
                     ],
