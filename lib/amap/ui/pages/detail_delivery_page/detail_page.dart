@@ -152,7 +152,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                     } else {
                       return cash.when(
                         data: (cash) {
-                          return Column(
+                          return Wrap(
                             children: data.map((e) {
                               final userCash = cash.firstWhere(
                                   (element) => element.user.id == e.user.id);
