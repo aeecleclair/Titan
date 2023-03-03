@@ -15,7 +15,7 @@ class AddingUserContainer extends HookConsumerWidget {
       data: (users) {
         return users.map((e) => AddingUserCard(user: e, onAdd: onAdd)).toList();
       },
-      error: (error, stack) => [const Text('Error')],
+      error: (error, stack) => [Text('$error')],
       loading: () => [const Text('Loading')],
     ));
   }
