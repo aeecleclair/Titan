@@ -7,7 +7,7 @@ import 'package:myecl/amap/providers/scroll_controller_provider.dart';
 import 'package:myecl/amap/providers/scroll_provider.dart';
 import 'package:myecl/amap/providers/sorted_delivery_product.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/list_produits_page/produit_ui_list.dart';
+import 'package:myecl/amap/ui/pages/list_products_page/produit_ui_list.dart';
 import 'package:myecl/tools/functions.dart';
 
 class CategoryPage extends HookConsumerWidget {

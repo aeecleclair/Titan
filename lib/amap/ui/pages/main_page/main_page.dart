@@ -1,9 +1,7 @@
-import 'dart:math';
 import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/providers/orderable_deliveries.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
-import 'package:vector_math/vector_math_64.dart' show Vector3;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -48,8 +46,6 @@ class MainPage extends HookConsumerWidget {
       begin: 0.0,
       end: 1.0,
     ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic));
-    final shakingAnimation = useAnimationController(
-        duration: const Duration(milliseconds: 700), initialValue: 0);
 
     final orderableDeliveries = ref.watch(orderableDeliveriesProvider);
     final orderableDeliveriesIds = orderableDeliveries
@@ -78,39 +74,16 @@ class MainPage extends HookConsumerWidget {
                   children: [
                     Container(
                         padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: AnimatedBuilder(
-                          builder: (context, child) {
-                            return Transform(
-                                alignment: Alignment.center,
-                                transform: Matrix4.translation(Vector3(
-                                        sin(shakingAnimation.value *
-                                                pi *
-                                                10.0) *
-                                            10,
-                                        0.0,
-                                        0.0)) *
-                                    Matrix4.rotationZ(
-                                      sin(shakingAnimation.value * pi * 3.0) /
-                                          4,
-                                    ),
-                                child: Text(
-                                    solde.when(
-                                        data: (s) =>
-                                            "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
-                                        error: (e, s) => "Erreur",
-                                        loading: () =>
-                                            AMAPTextConstants.loading),
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: shakingAnimation.value !=
-                                                shakingAnimation.value.round()
-                                            ? AMAPColorConstants.redGradient1
-                                            : AMAPColorConstants
-                                                .greenGradient1)));
-                          },
-                          animation: shakingAnimation,
-                        )),
+                        child: Text(
+                            solde.when(
+                                data: (s) =>
+                                    "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
+                                error: (e, s) => "Erreur",
+                                loading: () => AMAPTextConstants.loading),
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: AMAPColorConstants.greenGradient1))),
                     if (isAdmin)
                       GestureDetector(
                         onTap: () {
@@ -165,19 +138,14 @@ class MainPage extends HookConsumerWidget {
                         animation.forward();
                       },
                       onTap: () {
-
                         pageNotifier.setAmapPage(AmapPage.detailPage);
                       },
                       addOrder: () {
                         solde.whenData(
                           (s) {
-                            if (s.balance > 0) {
-                              orderNotifier.setOrder(Order.empty());
-                              animation.forward();
-                              showPanel.value = true;
-                            } else {
-                              shakingAnimation.forward(from: 0);
-                            }
+                            orderNotifier.setOrder(Order.empty());
+                            animation.forward();
+                            showPanel.value = true;
                           },
                         );
                       },
@@ -299,7 +267,7 @@ class MainPage extends HookConsumerWidget {
                                 pageNotifier.setAmapPage(AmapPage.addProducts);
                               } else {
                                 displayToastWithoutContext(TypeMsg.error,
-                                    AMAPTextConstants.notPlannedDelivery);
+                                    AMAPTextConstants.noSelectedDelivery);
                               }
                             },
                             waitChild: Container(
