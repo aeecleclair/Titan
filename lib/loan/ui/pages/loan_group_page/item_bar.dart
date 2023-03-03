@@ -49,7 +49,7 @@ class ItemBar extends HookConsumerWidget {
                           if (selected.isNotEmpty) {
                             cautionNotifier.setCaution(
                                 "${selected.fold<double>(0, (previousValue, element) => previousValue + element.caution).toStringAsFixed(2)}€");
-                            endNotifier.setEndFromSelected(start.text, selected);
+                            endNotifier.setEndFromSelected(start, selected);
                           } else {
                             endNotifier.setEnd("");
                             cautionNotifier.setCaution("");

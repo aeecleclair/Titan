@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,6 +21,7 @@ class DayList extends HookConsumerWidget {
     final daySortedEventList = ref.watch(daySortedEventListProvider);
     final sortedEventList = ref.watch(sortedEventListProvider);
     final days = ref.watch(daysProvider);
+    final outerController = useScrollController();
     DateTime now = normalizedDate(DateTime.now());
 
     Map<String, double> widgetPositions = {};
@@ -33,7 +35,7 @@ class DayList extends HookConsumerWidget {
 
         if (formattedNextDate != formattedDate) {
           if (sortedEventList.keys.contains(formattedDate)) {
-            height = 43 + 170 * sortedEventList[formattedDate]!.length;
+            height = 18 + 170 * sortedEventList[formattedDate]!.length;
           }
         }
         widgetPositions[formattedNextDate] =
@@ -42,36 +44,52 @@ class DayList extends HookConsumerWidget {
     }
 
     return SizedBox(
-      height: 125,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        controller: scrollController,
-        itemCount: numberDay + 2,
-        itemBuilder: (BuildContext context, int i) {
-          if (i == 0 || i == days.length + 1) {
-            return const SizedBox(
-              width: 15,
-            );
-          }
-          final day = days[i - 1];
-          return DayCard(
-            isToday: i == 1,
-            day: day,
-            numberOfEvent: daySortedEventList.keys.contains(day)
-                ? daySortedEventList[day]!.length
-                : 0,
-            index: i - 1,
-            onTap: () {
-              needReload.value = true;
-              daysEventScrollController.animateTo(
-                  widgetPositions[formatDelayToToday(day, now)] ?? 0.0,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.decelerate);
-            },
-          );
-        },
-      ),
-    );
+        height: 125,
+        child: ListView(
+            controller: outerController,
+            clipBehavior: Clip.none,
+            children: [
+              Listener(
+                  onPointerSignal: (event) {
+                    if (event is PointerScrollEvent) {
+                      final offset = event.scrollDelta.dy;
+                      scrollController.jumpTo(scrollController.offset + offset);
+                      outerController.jumpTo(outerController.offset - offset);
+                    }
+                  },
+                  child: SizedBox(
+                    height: 125,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      controller: scrollController,
+                      itemCount: numberDay + 2,
+                      itemBuilder: (BuildContext context, int i) {
+                        if (i == 0 || i == days.length + 1) {
+                          return const SizedBox(
+                            width: 15,
+                          );
+                        }
+                        final day = days[i - 1];
+                        return DayCard(
+                          isToday: i == 1,
+                          day: day,
+                          numberOfEvent: daySortedEventList.keys.contains(day)
+                              ? daySortedEventList[day]!.length
+                              : 0,
+                          index: i - 1,
+                          onTap: () {
+                            needReload.value = true;
+                            daysEventScrollController.animateTo(
+                                widgetPositions[formatDelayToToday(day, now)] ??
+                                    0.0,
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.decelerate);
+                          },
+                        );
+                      },
+                    ),
+                  ))
+            ]));
   }
 }

@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/amap/class/order.dart';
+import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_provider.dart';
@@ -19,7 +21,6 @@ class DetailDeliveryPage extends HookConsumerWidget {
     final deliveryOrders = ref.watch(adminDeliveryOrderListProvider);
     final deliveryProductListNotifier =
         ref.watch(deliveryProductListProvider.notifier);
-    deliveryProductListNotifier.loadProductList(delivery.products);
     final sortedByCategoryDeliveryProducts =
         ref.watch(sortedByCategoryDeliveryProductsProvider);
     return Refresher(
@@ -50,14 +51,29 @@ class DetailDeliveryPage extends HookConsumerWidget {
                           fontWeight: FontWeight.bold,
                           color: AMAPColorConstants.textDark)),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
               ],
             ),
           ),
           ...sortedByCategoryDeliveryProducts
               .map((key, value) {
+                Map<String, int> productsQuantity = {};
+                deliveryOrders.when(
+                  data: (orderMap) {
+                    final deliveryOrderList = orderMap[delivery.id];
+                    if (deliveryOrderList != null) {
+                      deliveryOrderList.item1.when(data: (listOrders) {
+                        for (Order o in listOrders) {
+                          for (Product p in o.products) {
+                            if (!productsQuantity.containsKey(p.id)) {
+                              productsQuantity.addEntries({p.id: 0}.entries);
+                            }
+                            productsQuantity[p.id] = productsQuantity[p.id]! + 1;
+                          }
+                        }
+                      }, error: (e, s) {}, loading: (){});
+                    }
+                  }, error: (Object error, StackTrace stackTrace) {  }, loading: () {  }
+                );
                 return MapEntry(
                   key,
                   Column(
@@ -74,8 +90,11 @@ class DetailDeliveryPage extends HookConsumerWidget {
                       ),
                       ...value.map((e) => Container(
                             padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Text("- ${e.name}"),
+                            child: Text("- ${e.name} : ${productsQuantity[e.id] ?? 0} (${((productsQuantity[e.id] ?? 0) * e.price).toStringAsFixed(2)}€)"),
                           )),
+                      const SizedBox(
+                        height: 20,
+                      ),
                     ],
                   ),
                 );
@@ -83,7 +102,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
               .values
               .toList(),
           const SizedBox(
-            height: 50,
+            height: 20,
           ),
           Container(
             alignment: Alignment.centerLeft,
@@ -111,7 +130,9 @@ class DetailDeliveryPage extends HookConsumerWidget {
                 return orders.item1.when(
                   data: (data) {
                     if (data.isEmpty) {
-                      return const Center(child: Text("Aucune commande"));
+                      return Container(
+                          margin: const EdgeInsets.only(bottom: 50),
+                          child: const Center(child: Text("Aucune commande")));
                     } else {
                       return Column(
                         children: [
@@ -142,7 +163,8 @@ class DetailDeliveryPage extends HookConsumerWidget {
                                               padding:
                                                   const EdgeInsets.symmetric(
                                                       vertical: 5),
-                                              child: Text("- ${e.name}"))),
+                                              child: Text(
+                                                  "- ${e.name} (${e.quantity})"))),
                                         ],
                                       ),
                                     ),

@@ -24,4 +24,9 @@ class Room {
   }
 
   Room.empty() : this(name: '', id: '');
+
+  @override
+  String toString() {
+    return 'Room{name: $name, id: $id}';
+  }
 }

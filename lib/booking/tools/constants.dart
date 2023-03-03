@@ -24,6 +24,9 @@ class BookingTextConstants {
   static const String declineBooking = "Refuser la réservation ?";
   static const String declined = "Refusée";
   static const String deleting = "Suppression";
+  static const String deleteBooking = "Suppression";
+  static const String deleteBookingConfirmation =
+      "Êtes-vous sûr de vouloir supprimer cette réservation ?";
   static const String deletedBooking = "Réservation supprimée";
   static const String deletedRoom = "Salle supprimée";
   static const String deletingBooking = "Supprimer la réservation ?";
@@ -54,6 +57,7 @@ class BookingTextConstants {
   static const String no = "Non";
   static const String noCurrentBooking = "Pas de réservation en cours";
   static const String noDateError = "Veuillez choisir une date";
+  static const String noDaySelected = "Aucun jour sélectionné";
   static const String noDescriptionError = "Veuillez entrer une description";
   static const String noKeys = "Aucune clé";
   static const String noNoteError = "Veuillez entrer une note";
@@ -87,6 +91,4 @@ class BookingTextConstants {
     "Samedi",
     "Dimanche"
   ];
-
-
 }

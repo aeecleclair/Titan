@@ -19,7 +19,7 @@ class DetailPage extends HookConsumerWidget {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 80,
+                  height: 60,
                 ),
                 Container(
                   width: double.infinity,
@@ -63,7 +63,7 @@ class DetailPage extends HookConsumerWidget {
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 0,
                                       mainAxisSpacing: 5,
-                                      childAspectRatio: 1.1),
+                                      childAspectRatio: 0.9),
                               itemBuilder: (context, index) {
                                 return ProductCard(
                                   product: order.products[index],

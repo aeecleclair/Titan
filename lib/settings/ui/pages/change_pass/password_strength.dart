@@ -7,12 +7,10 @@ import 'package:myecl/settings/ui/pages/change_pass/secure_bar.dart';
 class PasswordStrength extends HookConsumerWidget {
   final TextEditingController newPassword;
   final Color textColor;
-  final bool whiteBar;
 
   const PasswordStrength(
       {Key? key,
       required this.newPassword,
-      this.whiteBar = false,
       this.textColor = Colors.black})
       : super(key: key);
 
@@ -25,6 +23,9 @@ class PasswordStrength extends HookConsumerWidget {
         builder: (context, value, child) {
           return Column(
             children: [
+              const SizedBox(
+                height: 10,
+              ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -32,50 +33,41 @@ class PasswordStrength extends HookConsumerWidget {
                     style: TextStyle(fontSize: 18, color: textColor)),
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               FlutterPasswordStrength(
                   password: newPassword.text,
                   backgroundColor: Colors.transparent,
                   radius: 10,
-                  strengthColors: whiteBar
-                      ? TweenSequence<Color>([
+                  strengthColors: 
+                  TweenSequence<Color?>([
                           TweenSequenceItem(
                             weight: 1.0,
-                            tween: ColorTween(
-                              begin: Colors.white,
-                              end: Colors.white,
-                            ) as Tween<Color>,
-                          ),
-                        ])
-                      : TweenSequence<Color>([
-                          TweenSequenceItem(
-                            weight: 1.0,
-                            tween: ColorTween(
+                            tween: Tween<Color>(
                               begin: const Color(0xffd31336),
                               end: const Color(0xff880e65),
-                            ) as Tween<Color>,
+                            ),
                           ),
                           TweenSequenceItem(
                             weight: 1.0,
-                            tween: ColorTween(
+                            tween: Tween<Color>(
                               begin: const Color(0xff880e65),
                               end: const Color(0xff1c1840),
-                            ) as Tween<Color>,
+                            ),
                           ),
                           TweenSequenceItem(
                             weight: 1.0,
-                            tween: ColorTween(
+                            tween: Tween<Color>(
                               begin: const Color(0xff1c1840),
                               end: const Color(0xff3a5a81),
-                            ) as Tween<Color>,
+                            ),
                           ),
                           TweenSequenceItem(
                             weight: 1.0,
-                            tween: ColorTween(
+                            tween: Tween<Color>(
                               begin: const Color(0xff3a5a81),
                               end: const Color(0xff1791b1),
-                            ) as Tween<Color>,
+                            ),
                           ),
                         ]),
                   strengthCallback: (strength) {

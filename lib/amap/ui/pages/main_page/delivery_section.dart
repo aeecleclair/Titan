@@ -8,7 +8,8 @@ import 'package:myecl/amap/ui/pages/main_page/delivery_ui.dart';
 
 class DeliverySection extends HookConsumerWidget {
   final bool showSelected;
-  const DeliverySection({super.key, this.showSelected = true});
+  final bool editable;
+  const DeliverySection({super.key, this.showSelected = true, this.editable = true});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -57,10 +58,10 @@ class DeliverySection extends HookConsumerWidget {
                         child: DeliveryUi(
                           delivery: orderableDeliveries[i],
                           onTap: () {
-                            if (showSelected) {
+                            {if (editable && showSelected) {
                               deliveryIdNotifier
                                   .setId(orderableDeliveries[i].id);
-                            }
+                            }}
                           },
                           showSelected: showSelected,
                         ),

@@ -5,10 +5,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 
 class BookingCard extends HookConsumerWidget {
   final Booking booking;
   final Function() onEdit, onConfirm, onDecline, onCopy, onInfo;
+  final Future Function() onDelete;
   final bool isAdmin, isDetail;
   const BookingCard(
       {super.key,
@@ -18,6 +20,7 @@ class BookingCard extends HookConsumerWidget {
       required this.onDecline,
       required this.onInfo,
       required this.onCopy,
+      required this.onDelete,
       required this.isAdmin,
       required this.isDetail});
 
@@ -26,7 +29,7 @@ class BookingCard extends HookConsumerWidget {
     final showButton = booking.start.isAfter(DateTime.now());
     return Container(
       padding: const EdgeInsets.all(15.0),
-      height: ((showButton || isAdmin) && !isDetail) ? 200 : 160,
+      height: ((showButton || isAdmin) && !isDetail) ? 210 : 180,
       child: Container(
         width: 250,
         decoration: BoxDecoration(
@@ -206,6 +209,47 @@ class BookingCard extends HookConsumerWidget {
                             ],
                           ),
                           child: const HeroIcon(HeroIcons.xMark,
+                              color: Colors.white),
+                        ),
+                      ),
+                    if (!isAdmin) const Spacer(),
+                    if (!isAdmin)
+                      ShrinkButton(
+                        onTap: onDelete,
+                        waitChild: Container(
+                          width: 40,
+                          height: 40,
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: const Offset(2, 3))
+                            ],
+                          ),
+                          child: const CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
+                          ),
+                        ),
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: const Offset(2, 3))
+                            ],
+                          ),
+                          child: const HeroIcon(HeroIcons.trash,
                               color: Colors.white),
                         ),
                       ),

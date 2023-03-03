@@ -20,7 +20,8 @@ class BookingRepository extends Repository {
   }
 
   Future<bool> confirmBooking(Booking booking, Decision value) async {
-    return await update({}, "/${booking.id}", suffix: '/reply/${value.toString().split('.')[1]}');
+    return await update({}, "/${booking.id}",
+        suffix: '/reply/${value.toString().split('.')[1]}');
   }
 
   Future<bool> deleteBooking(String bookingId) async {

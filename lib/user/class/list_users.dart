@@ -15,8 +15,9 @@ class SimpleUser {
   SimpleUser.fromJson(Map<String, dynamic> json) {
     name = capitaliseAll(json['name']);
     firstname = capitaliseAll(json['firstname']);
-    nickname =
-        json['nickname'] != "" ? capitaliseAll(json['nickname']) : null;
+    nickname = (json['nickname'] != "" && json['nickname'] != null)
+        ? capitaliseAll(json['nickname'])
+        : null;
     id = json['id'];
   }
 

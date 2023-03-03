@@ -36,6 +36,7 @@ class EventTextConstants {
   static const String no = "Non";
   static const String noCurrentEvent = "Aucun événement en cours";
   static const String noDateError = "Veuillez entrer une date";
+  static const String noDaySelected = "Aucun jour sélectionné";
   static const String noDescriptionError = "Veuillez entrer une description";
   static const String noEvent = "Aucun événement";
   static const String noNameError = "Veuillez entrer un nom";

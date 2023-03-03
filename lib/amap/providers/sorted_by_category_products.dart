@@ -2,25 +2,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 
-final sortedByCategoryProductsProvider =
-    Provider<Map<String, List<Product>>>((ref) {
-  final products = ref.watch(productList);
-  final sortedByCategoryProducts = <String, List<Product>>{};
-  for (var product in products) {
-    if (sortedByCategoryProducts.containsKey(product.category)) {
-      sortedByCategoryProducts[product.category]!.add(product);
-    } else {
-      sortedByCategoryProducts[product.category] = [product];
-    }
-  }
-  return sortedByCategoryProducts;
-});
+class SortedByCategoryProvider
+    extends StateNotifier<Map<String, List<Product>>> {
+  SortedByCategoryProvider(Map<String, List<Product>> p) : super(p);
+}
 
-final productList = Provider<List<Product>>((ref) {
+final sortedByCategoryProductsProvider =
+    StateNotifierProvider<SortedByCategoryProvider, Map<String, List<Product>>>(
+        (ref) {
   final products = ref.watch(productListProvider);
-  return products.when(
-    data: (products) => products,
-    loading: () => [],
-    error: (error, stack) => [],
-  );
+  final sortedByCategoryProducts = <String, List<Product>>{};
+  products.when(
+      data: (products) {
+        for (var product in products) {
+          if (sortedByCategoryProducts.containsKey(product.category)) {
+            sortedByCategoryProducts[product.category]!.add(product);
+          } else {
+            sortedByCategoryProducts[product.category] = [product];
+          }
+        }
+      },
+      loading: () {},
+      error: (error, stack) {});
+  return SortedByCategoryProvider(sortedByCategoryProducts);
 });

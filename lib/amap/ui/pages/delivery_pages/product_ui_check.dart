@@ -8,10 +8,7 @@ class ProductUi extends ConsumerWidget {
   final Function onclick;
   final bool isModif;
   const ProductUi(
-      {Key? key,
-      required this.p,
-      required this.onclick,
-      required this.isModif})
+      {Key? key, required this.p, required this.onclick, required this.isModif})
       : super(key: key);
 
   @override
@@ -35,7 +32,7 @@ class ProductUi extends ConsumerWidget {
                   width: 15,
                 ),
                 Container(
-                  width: 40,
+                  width: 50,
                   alignment: Alignment.centerRight,
                   child: Text(
                     "${p.price.toStringAsFixed(2)}€",

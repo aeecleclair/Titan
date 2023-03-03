@@ -1,7 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -14,83 +17,107 @@ class DeliveryHandler extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
+    final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
-          child: const Text("Livraisons",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AMAPColorConstants.textDark)),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
-          child: Row(
-            children: [
-              const SizedBox(
-                width: 15,
-                height: 195,
-              ),
-              GestureDetector(
-                  onTap: () {
-                    selectedNotifier.clear();
-                    pageNotifier.setAmapPage(AmapPage.addEditDelivery);
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(12.0),
-                    height: 160,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: AMAPColorConstants.textDark.withOpacity(0.2),
-                          spreadRadius: 5,
-                          blurRadius: 10,
-                          offset: const Offset(3, 3),
-                        ),
-                      ],
+    final outerController = useScrollController();
+    final innerController = useScrollController();
+    return Column(children: [
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        alignment: Alignment.centerLeft,
+        child: const Text("Livraisons",
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AMAPColorConstants.textDark)),
+      ),
+      const SizedBox(
+        height: 10,
+      ),
+      SizedBox(
+        height: 200,
+        child: ListView(
+          controller: outerController,
+          clipBehavior: Clip.none,
+          children: [
+            Listener(
+              onPointerSignal: (event) {
+                if (event is PointerScrollEvent) {
+                  final offset = event.scrollDelta.dy;
+                  innerController.jumpTo(innerController.offset + offset);
+                  outerController.jumpTo(outerController.offset - offset);
+                }
+              },
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                controller: innerController,
+                clipBehavior: Clip.none,
+                physics: const BouncingScrollPhysics(),
+                child: Row(
+                  children: [
+                    const SizedBox(
+                      width: 15,
+                      height: 195,
                     ),
-                    child: const Center(
-                      child: HeroIcon(
-                        HeroIcons.plus,
-                        color: AMAPColorConstants.textDark,
-                        size: 50,
+                    GestureDetector(
+                        onTap: () {
+                          selectedNotifier.clear();
+                          deliveryIdNotifier.setId("");
+                          pageNotifier.setAmapPage(AmapPage.addEditDelivery);
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.all(12.0),
+                          height: 160,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AMAPColorConstants.textDark
+                                    .withOpacity(0.2),
+                                spreadRadius: 5,
+                                blurRadius: 10,
+                                offset: const Offset(3, 3),
+                              ),
+                            ],
+                          ),
+                          child: const Center(
+                            child: HeroIcon(
+                              HeroIcons.plus,
+                              color: AMAPColorConstants.textDark,
+                              size: 50,
+                            ),
+                          ),
+                        )),
+                    deliveries.when(
+                      data: (data) {
+                        data.sort(
+                            (a, b) => a.deliveryDate.compareTo(b.deliveryDate));
+                        return Row(
+                            children: data
+                                .map((e) => DeliveryUi(
+                                      delivery: e,
+                                    ))
+                                .toList());
+                      },
+                      error: (Object e, StackTrace? s) =>
+                          Text("Error: ${e.toString()}"),
+                      loading: () => const CircularProgressIndicator(
+                        color: AMAPColorConstants.greenGradient2,
                       ),
                     ),
-                  )),
-              deliveries.when(
-                data: (data) {
-                  data.sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
-                  return Row(
-                      children: data
-                          .map((e) => DeliveryUi(
-                                delivery: e,
-                              ))
-                          .toList());
-                },
-                error: (Object e, StackTrace? s) =>
-                    Text("Error: ${e.toString()}"),
-                loading: () => const CircularProgressIndicator(
-                  color: AMAPColorConstants.greenGradient2,
+                    const SizedBox(
+                      width: 5,
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(
-                width: 5,
-              ),
-            ],
-          ),
+            )
+          ],
         ),
-      ],
-    );
+      )
+    ]);
   }
 }

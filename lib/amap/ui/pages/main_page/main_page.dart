@@ -165,6 +165,7 @@ class MainPage extends HookConsumerWidget {
                         animation.forward();
                       },
                       onTap: () {
+
                         pageNotifier.setAmapPage(AmapPage.detailPage);
                       },
                       addOrder: () {
@@ -281,7 +282,9 @@ class MainPage extends HookConsumerWidget {
                         const SizedBox(
                           height: 30,
                         ),
-                        const DeliverySection(),
+                        DeliverySection(
+                          editable: order.id == Order.empty().id,
+                        ),
                         const SizedBox(
                           height: 20,
                         ),
@@ -289,9 +292,6 @@ class MainPage extends HookConsumerWidget {
                             onTap: () async {
                               if (orderableDeliveriesIds
                                   .contains(delivery.id)) {
-                                orderNotifier.setOrder(order.copyWith(
-                                  deliveryId: delivery.id,
-                                ));
                                 await tokenExpireWrapper(ref, () async {
                                   await deliveryProductListNotifier
                                       .loadProductList(delivery.products);
