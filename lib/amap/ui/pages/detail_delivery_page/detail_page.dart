@@ -1,14 +1,15 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/providers/sorted_delivery_product.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/command_ui.dart';
+import 'package:myecl/amap/ui/pages/detail_delivery_page/order_detail_ui.dart';
+import 'package:myecl/amap/ui/pages/detail_delivery_page/product_detail_ui.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
@@ -23,6 +24,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
         ref.watch(deliveryProductListProvider.notifier);
     final sortedByCategoryDeliveryProducts =
         ref.watch(sortedByCategoryDeliveryProductsProvider);
+    final cash = ref.watch(cashProvider);
     return Refresher(
       onRefresh: () async {
         await deliveryProductListNotifier.loadProductList(delivery.products);
@@ -58,22 +60,28 @@ class DetailDeliveryPage extends HookConsumerWidget {
               .map((key, value) {
                 Map<String, int> productsQuantity = {};
                 deliveryOrders.when(
-                  data: (orderMap) {
-                    final deliveryOrderList = orderMap[delivery.id];
-                    if (deliveryOrderList != null) {
-                      deliveryOrderList.item1.when(data: (listOrders) {
-                        for (Order o in listOrders) {
-                          for (Product p in o.products) {
-                            if (!productsQuantity.containsKey(p.id)) {
-                              productsQuantity.addEntries({p.id: 0}.entries);
-                            }
-                            productsQuantity[p.id] = productsQuantity[p.id]! + 1;
-                          }
-                        }
-                      }, error: (e, s) {}, loading: (){});
-                    }
-                  }, error: (Object error, StackTrace stackTrace) {  }, loading: () {  }
-                );
+                    data: (orderMap) {
+                      final deliveryOrderList = orderMap[delivery.id];
+                      if (deliveryOrderList != null) {
+                        deliveryOrderList.item1.when(
+                            data: (listOrders) {
+                              for (Order o in listOrders) {
+                                for (Product p in o.products) {
+                                  if (!productsQuantity.containsKey(p.id)) {
+                                    productsQuantity
+                                        .addEntries({p.id: 0}.entries);
+                                  }
+                                  productsQuantity[p.id] =
+                                      productsQuantity[p.id]! + 1;
+                                }
+                              }
+                            },
+                            error: (e, s) {},
+                            loading: () {});
+                      }
+                    },
+                    error: (Object error, StackTrace stackTrace) {},
+                    loading: () {});
                 return MapEntry(
                   key,
                   Column(
@@ -86,14 +94,22 @@ class DetailDeliveryPage extends HookConsumerWidget {
                         ),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 5,
                       ),
-                      ...value.map((e) => Container(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Text("- ${e.name} : ${productsQuantity[e.id] ?? 0} (${((productsQuantity[e.id] ?? 0) * e.price).toStringAsFixed(2)}€)"),
-                          )),
+                      Wrap(
+                        children: value
+                            .map((e) => Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: ProductDetailCard(
+                                    product: e,
+                                    quantity: productsQuantity[e.id] ?? 0,
+                                  ),
+                                ))
+                            .toList(),
+                      ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                     ],
                   ),
@@ -134,53 +150,24 @@ class DetailDeliveryPage extends HookConsumerWidget {
                           margin: const EdgeInsets.only(bottom: 50),
                           child: const Center(child: Text("Aucune commande")));
                     } else {
-                      return Column(
-                        children: [
-                          ...data.map((e) => Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                              padding: const EdgeInsets.only(
-                                                  right: 5),
-                                              child: AutoSizeText(
-                                                e.user.getName(),
-                                                maxLines: 2,
-                                                textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              )),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ...e.products.map((e) => Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 5),
-                                              child: Text(
-                                                  "- ${e.name} (${e.quantity})"))),
-                                        ],
-                                      ),
-                                    ),
-                                    CommandeUI(
-                                      order: e,
-                                      onTap: () {},
-                                      onEdit: () {},
-                                      showButton: false,
-                                    ),
-                                  ],
-                                ),
-                              )),
-                          const SizedBox(
-                            height: 50,
-                          )
-                        ],
+                      return cash.when(
+                        data: (cash) {
+                          return Column(
+                            children: data.map((e) {
+                              final userCash = cash.firstWhere(
+                                  (element) => element.user.id == e.user.id);
+                              return DetailOrderUI(
+                                order: e,
+                                userCash: userCash,
+                              );
+                            }).toList(),
+                          );
+                        },
+                        loading: () => const Center(
+                            child: CircularProgressIndicator(
+                          color: AMAPColorConstants.greenGradient2,
+                        )),
+                        error: (error, stack) => Text(error.toString()),
                       );
                     }
                   },

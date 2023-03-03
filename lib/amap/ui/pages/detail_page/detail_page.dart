@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
-import 'package:myecl/amap/ui/command_ui.dart';
+import 'package:myecl/amap/ui/order_ui.dart';
 import 'package:myecl/amap/ui/product_ui.dart';
 
 class DetailPage extends HookConsumerWidget {
