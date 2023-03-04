@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/advert/class/advert.dart';
-import 'package:myecl/advert/ui/pages/main_page/tag.dart';
+import 'package:myecl/advert/ui/tools/tag.dart';
 
 class AdvertCard extends StatelessWidget {
   final VoidCallback onTap;

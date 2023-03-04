@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/advert/providers/advert_page_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
-import 'package:myecl/advert/ui/pages/main_page/tag.dart';
+import 'package:myecl/advert/ui/tools/tag.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});

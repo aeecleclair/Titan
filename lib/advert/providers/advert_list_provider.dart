@@ -23,7 +23,7 @@ class AdvertListNotifier extends ListNotifier<Advert> {
           title: 'C\'est mon titre à moi',
           date: DateTime.now(),
           announcer: ['Eclair'],
-          tags: ['tag1', "tag2", 'tags3']),
+          tags: ['tag1', "tag2", 'tag3']),
       Advert(
           id: '2',
           author: 'moi',
@@ -31,7 +31,7 @@ class AdvertListNotifier extends ListNotifier<Advert> {
           title: 'C\'est mon titre à moi',
           date: DateTime.now(),
           announcer: ['Raid'],
-          tags: ['tag1', "tag2", 'tags3']),
+          tags: ['tag1', "tag2", 'tag3']),
       Advert(
           id: '3',
           author: 'moi',
@@ -39,7 +39,7 @@ class AdvertListNotifier extends ListNotifier<Advert> {
           title: 'C\'est mon titre à moi',
           date: DateTime.now(),
           announcer: ['Eclair'],
-          tags: ['tag1', "tag2", 'tags3']),
+          tags: ['tag1', "tag2", 'tag3']),
       Advert(
           id: '4',
           author: 'oui',
@@ -47,7 +47,25 @@ class AdvertListNotifier extends ListNotifier<Advert> {
           title: 'Aujourd\'hui on s\'amuse bcp',
           date: DateTime.now(),
           announcer: ['Eclair'],
-          tags: ['tag1', "tag3"])
+          tags: ['tag1', "tag3"]),
+      Advert(
+          id: '5',
+          author: 'Chef',
+          content:
+              '''ibus accumsan. Vivamus id sollicitudin nunc, eget ornare neque. Suspendisse aliquet, justo eu suscipit varius, neque tortor tempus leo, a consectetur turpis ante et elit. Aenean aliquet dolor id sem condimentum, at pellentesque enim ornare. Sed tempus nisl at turpis egestas, id imperdiet dolor tincidunt. Nam a enim in dui facilisis placerat. Pellentesque vel magna a ipsum dignissim convallis ac nec velit. Donec rutrum vulputate leo, vel mattis orci varius nec. Quisque nec elit pellentesque, bibendum eros vitae, blandit metus. ''',
+          title: 'Vive les fusées !!!',
+          date: DateTime.now(),
+          announcer: ['Cosmos'],
+          tags: ['tag3', "tag4"]),
+      Advert(
+          id: '6',
+          author: 'JE',
+          content:
+              '''ibus accumsan. Vivamus id sollicitudin nunc, eget ornare neque. Suspendisse aliquet, justo eu suscipit varius, neque tortor tempus leo, a consectetur turpis ante et elit. Aenean aliquet dolor id sem condimentum, at pellentesque enim ornare. Sed tempus nisl at turpis egestas, id imperdiet dolor tincidunt. Nam a enim in dui facilisis placerat. Pellentesque vel magna a ipsum dignissim convallis ac nec velit. Donec rutrum vulputate leo, vel mattis orci varius nec. Quisque nec elit pellentesque, bibendum eros vitae, blandit metus. ''',
+          title: 'Serious Business.',
+          date: DateTime.now(),
+          announcer: ['JE'],
+          tags: ['tag3', "tag4"])
     ]);
   }
 
