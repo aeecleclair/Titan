@@ -19,6 +19,7 @@ class MainPage extends HookConsumerWidget {
     final advertList = ref.watch(advertListProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final selected = ref.watch(announcerProvider);
+    final selectedNotifier = ref.watch(announcerProvider.notifier);
     return SizedBox(
       height: MediaQuery.of(context).size.height - 117.4,
       child: Stack(
@@ -71,6 +72,7 @@ class MainPage extends HookConsumerWidget {
               right: 10,
               child: GestureDetector(
                 onTap: () {
+                  selectedNotifier.clearAnnounce();
                   pageNotifier.setAdvertPage(AdvertPage.admin);
                 },
                 child: Container(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/providers/advert_page_provider.dart';
+import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 
@@ -13,6 +14,7 @@ class TopBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(advertPageProvider);
     final pageNotifier = ref.watch(advertPageProvider.notifier);
+    final selectedNotifier = ref.watch(announcerProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -32,6 +34,7 @@ class TopBar extends HookConsumerWidget {
                             controllerNotifier.toggle();
                             break;
                           case AdvertPage.admin:
+                            selectedNotifier.clearAnnounce();
                             pageNotifier.setAdvertPage(AdvertPage.main);
                             break;
                           case AdvertPage.detailFromMainPage:
