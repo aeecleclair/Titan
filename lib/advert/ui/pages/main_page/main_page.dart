@@ -4,7 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/advert_page_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
-import 'package:myecl/advert/ui/pages/main_page/advert_card.dart';
+import 'package:myecl/advert/providers/announcer_provider.dart';
+import 'package:myecl/advert/ui/tools/announcer_bar.dart';
+import 'package:myecl/advert/ui/tools/advert_card.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
@@ -16,7 +18,7 @@ class MainPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(advertPageProvider.notifier);
     final advertList = ref.watch(advertListProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
-
+    final selected = ref.watch(announcerProvider);
     return SizedBox(
       height: MediaQuery.of(context).size.height - 117.4,
       child: Stack(
@@ -29,18 +31,25 @@ class MainPage extends HookConsumerWidget {
               data: (data) {
                 return Column(
                   children: [
+                    const AnnouncerBar(useUserAnnouncers:false),
                     const SizedBox(
                       height: 20,
                     ),
                     ...data
-                        .map((e) => AdvertCard(
+                        .map((advert) => selected
+                                    .where(
+                                        (e) => advert.announcer.contains(e.name))
+                                    .isNotEmpty ||
+                                selected.isEmpty
+                            ? AdvertCard(
                             onTap: () {
-                              advertNotifier.setAdvert(e);
+                              advertNotifier.setAdvert(advert);
                               pageNotifier
                                   .setAdvertPage(AdvertPage.detailFromMainPage);
                             },
-                            advert: e))
-                        .toList(),
+                            advert: advert)
+                            : Container())
+                        .toList()
                   ],
                 );
               },

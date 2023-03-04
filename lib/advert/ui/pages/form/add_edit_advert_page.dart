@@ -5,7 +5,7 @@ import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
-import 'package:myecl/advert/ui/pages/admin_page/announcer_bar.dart';
+import 'package:myecl/advert/ui/tools/announcer_bar.dart';
 import 'package:myecl/advert/ui/pages/form/text_entry.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
@@ -53,7 +53,7 @@ class AddEditAdvertPage extends HookConsumerWidget {
             const SizedBox(
               height: 15,
             ),
-            const AnnouncerBar(),
+            const AnnouncerBar(useUserAnnouncers:true,),
             TextEntry(
               minLines: 1,
               maxLines: 1,

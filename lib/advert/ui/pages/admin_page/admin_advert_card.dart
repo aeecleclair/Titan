@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/class/advert.dart';
-import 'package:myecl/advert/ui/pages/main_page/advert_card.dart';
+import 'package:myecl/advert/ui/tools/advert_card.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AdminAdvertCard extends HookConsumerWidget {
