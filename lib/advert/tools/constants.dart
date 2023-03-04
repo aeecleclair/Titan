@@ -12,4 +12,8 @@ class AdvertTextConstants {
   static const String noValue = "Veuillez entrer une valeur";
   static const String positiveNumber = "Veuillez entrer un nombre positif";
   static const String invalidNumber = "Veuillez entrer un nombre";
+
+  static const String by = "Par";
+
+  static const String the = "Le";
 }
