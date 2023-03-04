@@ -86,10 +86,10 @@ class MainPage extends HookConsumerWidget {
                   decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.orange, width: 1),
+                      border: Border.all(color: Colors.white, width: 1),
                       boxShadow: [
                         BoxShadow(
-                            color: Colors.orange.withOpacity(0.2),
+                            color: Colors.grey.shade200.withOpacity(0.2),
                             blurRadius: 10,
                             offset: const Offset(0, 5))
                       ]),
