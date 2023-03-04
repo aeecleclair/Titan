@@ -48,7 +48,7 @@ const AdminAdvertCard(
                     child: const HeroIcon(HeroIcons.pencil, color: Colors.black),
                   ),
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 ShrinkButton(
                   onTap: onDelete,
                   waitChild: Container(

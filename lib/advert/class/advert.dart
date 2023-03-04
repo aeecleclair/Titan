@@ -42,14 +42,14 @@ class Advert {
   }
 
   Advert copyWith(
-    {id, title, content, date, author, groups, tags}) {
+    {id, title, content, date, author, announcer, tags}) {
       return Advert(
         id: id ?? this.id,
         title: title ?? this.title,
         content: content ?? this.content,
         date: date ?? this.date,
         author: author ?? this.author,
-        announcer: groups ?? this.announcer,
+        announcer: announcer ?? this.announcer,
         tags: tags ?? this.tags);
     }
 
