@@ -584,7 +584,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   note: note.text,
                                   room: room.value,
                                   key: keyRequired.value,
-                                  decision: Decision.pending,
+                                  decision: booking.decision,
                                   recurrenceRule: recurrenceRule,
                                   entity: entity.text,
                                   applicant: user.toApplicant(),
@@ -602,18 +602,22 @@ class AddEditBookingPage extends HookConsumerWidget {
                                       .setBookingPage(BookingPage.admin);
                                 }
                                 if (isEdit) {
-                                  await usersBookingsNotifier
-                                      .updateBooking(newBooking);
+                                  if (page == BookingPage.addEditBooking) {
+                                    await usersBookingsNotifier
+                                        .updateBooking(newBooking);
+                                  }
                                   displayToastWithContext(TypeMsg.msg,
                                       BookingTextConstants.editedBooking);
                                 } else {
-                                  newBooking = bookings.when(
-                                      data: (value) => value.last,
-                                      error: (e, s) => Booking.empty(),
-                                      loading: () => Booking.empty());
-                                  if (newBooking.id != Booking.empty().id) {
-                                    await usersBookingsNotifier
-                                        .addBooking(newBooking);
+                                  if (page == BookingPage.addEditBooking) {
+                                    newBooking = bookings.when(
+                                        data: (value) => value.last,
+                                        error: (e, s) => Booking.empty(),
+                                        loading: () => Booking.empty());
+                                    if (newBooking.id != Booking.empty().id) {
+                                      await usersBookingsNotifier
+                                          .addBooking(newBooking);
+                                    }
                                   }
                                   displayToastWithContext(TypeMsg.msg,
                                       BookingTextConstants.addedBooking);
@@ -671,7 +675,7 @@ class AddEditBookingPage extends HookConsumerWidget {
       BuildContext context, TextEditingController dateController) async {
     final DateTime now = DateTime.now();
     final DateTime? picked = await showDatePicker(
-    locale: const Locale("fr", "FR"),
+        locale: const Locale("fr", "FR"),
         context: context,
         initialDate: now,
         firstDate: now,
