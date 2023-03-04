@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class AdvertTextConstants {
   static const String add = "Ajouter";
   static const String edit = "Modifier";
@@ -16,4 +18,10 @@ class AdvertTextConstants {
   static const String by = "Par";
 
   static const String the = "Le";
+}
+
+
+class AdvertColorConstants {
+  static const Color redGradient1 = Color(0xFF9E131F);
+  static const Color redGradient2 = Color(0xFF590512);
 }

@@ -63,33 +63,40 @@ class AdvertCard extends StatelessWidget {
                       child: Column(
                         children: [
                           const SizedBox(
-                            height: 1,
+                            height: 12,
                           ),
-                          AutoSizeText(
-                            advert.title,
-                            textAlign: TextAlign.start,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            minFontSize: 18,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 17),
+                            child: AutoSizeText(
+                              advert.title,
+                              textAlign: TextAlign.start,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              minFontSize: 18,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 5),
-                          AutoSizeText(
-                            "${AdvertTextConstants.the} ${DateFormat('dd/MM/yyyy\tHH:mm').format(advert.date)} - ${AdvertTextConstants.by} ${advert.author}",
-                            maxLines: 1,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 17),
+                            child: AutoSizeText(
+                              "${AdvertTextConstants.the} ${DateFormat('dd/MM/yyyy\tHH:mm').format(advert.date)} - ${AdvertTextConstants.by} ${advert.author}",
+                              maxLines: 1,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                         ],
                       ),
                     )),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 17),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 17),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: advert.announcer
@@ -122,7 +129,7 @@ class AdvertCard extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 30, bottom: 10, left: 12, right: 12),
+                      top: 30, bottom: 12, left: 17, right: 17),
                   child: AutoSizeText(
                       overflow: TextOverflow.ellipsis,
                       advert.content,
