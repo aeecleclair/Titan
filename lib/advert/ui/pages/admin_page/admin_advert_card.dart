@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/class/advert.dart';
+import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/tools/advert_card.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
@@ -10,7 +11,7 @@ class AdminAdvertCard extends HookConsumerWidget {
   final Future Function() onDelete;
   final Advert advert;
 
-const AdminAdvertCard(
+  const AdminAdvertCard(
       {super.key,
       required this.advert,
       required this.onTap,
@@ -23,10 +24,10 @@ const AdminAdvertCard(
       children: [
         AdvertCard(onTap: onTap, advert: advert),
         Positioned(
-          right: 40,
-          child: SizedBox(
-            height: 270,
-            child: Column(
+          right: 15,
+          child: Container(
+            margin: const EdgeInsets.only(top: 130),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
@@ -36,19 +37,29 @@ const AdminAdvertCard(
                     height: 40,
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Colors.grey.shade100,
+                          Colors.grey.shade400,
+                        ],
+                      ),
                       borderRadius: BorderRadius.circular(30),
                       boxShadow: [
                         BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
+                            color: Colors.grey.shade300.withOpacity(0.2),
                             blurRadius: 10,
                             offset: const Offset(2, 3))
                       ],
                     ),
-                    child: const HeroIcon(HeroIcons.pencil, color: Colors.black),
+                    child:
+                        const HeroIcon(HeroIcons.pencil, color: Colors.black),
                   ),
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 ShrinkButton(
                   onTap: onDelete,
                   waitChild: Container(
@@ -56,11 +67,19 @@ const AdminAdvertCard(
                     height: 40,
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.black,
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          AdvertColorConstants.redGradient1,
+                          AdvertColorConstants.redGradient2,
+                        ],
+                      ),
                       borderRadius: BorderRadius.circular(30),
                       boxShadow: [
                         BoxShadow(
-                            color: Colors.black.withOpacity(1),
+                            color: AdvertColorConstants.redGradient2
+                                .withOpacity(0.2),
                             blurRadius: 10,
                             offset: const Offset(2, 3))
                       ],
@@ -75,11 +94,19 @@ const AdminAdvertCard(
                     height: 40,
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          AdvertColorConstants.redGradient1,
+                          AdvertColorConstants.redGradient2,
+                        ],
+                      ),
                       borderRadius: BorderRadius.circular(30),
                       boxShadow: [
                         BoxShadow(
-                            color: Colors.red.withOpacity(0.2),
+                            color: AdvertColorConstants.redGradient2
+                                .withOpacity(0.2),
                             blurRadius: 10,
                             offset: const Offset(2, 3))
                       ],
