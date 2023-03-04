@@ -24,7 +24,6 @@ class MainPage extends HookConsumerWidget {
     final sessionNotifier = ref.watch(sessionProvider.notifier);
     final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
     final initialPage = ref.watch(mainPageIndexProvider);
-    int currentPage = initialPage;
     final pageController =
         usePageController(viewportFraction: 0.8, initialPage: initialPage);
     final scrollNotifier = ref.watch(scrollProvider.notifier);
@@ -32,7 +31,6 @@ class MainPage extends HookConsumerWidget {
     final isWebFormat = ref.watch(isWebFormatProvider);
     pageController.addListener(() {
       scrollNotifier.setScroll(pageController.page!);
-      currentPage = pageController.page!.round();
     });
 
     return Expanded(
