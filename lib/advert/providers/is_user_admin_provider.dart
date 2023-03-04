@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/advert/providers/user_announcer_list_provider.dart';
+import 'package:myecl/advert/providers/announcer_list_provider.dart';
 
 final isUserAdmin = StateProvider<bool>((ref) {
   final admins = ref.watch(userAnnouncerListProvider);

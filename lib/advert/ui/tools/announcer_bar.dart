@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/advert/class/announcer.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
-import 'package:myecl/advert/providers/user_announcer_list_provider.dart';
+import 'package:myecl/advert/providers/announcer_list_provider.dart';
 
 class AnnouncerBar extends HookConsumerWidget {
-  const AnnouncerBar({Key? key}) : super(key: key);
+  final bool useUserAnnouncers;
+  const AnnouncerBar({super.key, required this.useUserAnnouncers});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = ref.watch(announcerProvider);
     final selectedNotifier = ref.read(announcerProvider.notifier);
-    final userAnnouncerList = ref.watch(userAnnouncerListProvider);
-    return userAnnouncerList.when(
+    final announcerList = useUserAnnouncers? ref.watch(userAnnouncerListProvider):ref.watch(announcerListProvider);
+    return announcerList.when(
       data: (userAnnouncers) => SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
