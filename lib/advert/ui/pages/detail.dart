@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/advert/providers/advert_page_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
-import 'package:myecl/advert/ui/tools/tag.dart';
+import 'package:myecl/advert/ui/tools/tag_chip.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});
@@ -168,12 +168,12 @@ class DetailPage extends HookConsumerWidget {
                         ),
                         Container(
                           height: 35,
-                          margin: EdgeInsets.symmetric(horizontal: 30),
+                          margin: const EdgeInsets.symmetric(horizontal: 30),
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: (advert.announcer + advert.tags).length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Tag(tagname: (advert.announcer + advert.tags)[index]);
+                              return TagChip(tagname: (advert.announcer + advert.tags)[index]);
                             },
                           ),
                         ),

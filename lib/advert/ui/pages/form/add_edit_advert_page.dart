@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
-import 'package:myecl/advert/providers/announcer_provider.dart';
+//import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/tools/announcer_bar.dart';
 import 'package:myecl/advert/ui/pages/form/text_entry.dart';
@@ -23,7 +23,7 @@ class AddEditAdvertPage extends HookConsumerWidget {
     var textTags = tags.join(', ');
     final textTagsController = useTextEditingController(text: textTags);
 
-    final selected = ref.watch(announcerProvider);
+    //final selected = ref.watch(announcerProvider);
 
     return SingleChildScrollView(
       child: Container(
