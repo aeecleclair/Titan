@@ -20,8 +20,8 @@ class MainPage extends HookConsumerWidget {
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final selected = ref.watch(announcerProvider);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
-    return SizedBox(
-      height: MediaQuery.of(context).size.height - 117.4,
+    final isAdmin = true;
+    return Expanded(
       child: Stack(
         children: [
           Refresher(
@@ -32,25 +32,28 @@ class MainPage extends HookConsumerWidget {
               data: (data) {
                 return Column(
                   children: [
-                    const AnnouncerBar(useUserAnnouncers:false),
+                    const AnnouncerBar(useUserAnnouncers: false),
                     const SizedBox(
                       height: 20,
                     ),
-                    ...data
-                        .map((advert) => selected
-                                    .where(
-                                        (e) => advert.announcer.contains(e.name))
-                                    .isNotEmpty ||
-                                selected.isEmpty
-                            ? AdvertCard(
-                            onTap: () {
-                              advertNotifier.setAdvert(advert);
-                              pageNotifier
-                                  .setAdvertPage(AdvertPage.detailFromMainPage);
-                            },
-                            advert: advert)
-                            : Container())
-                        .toList()
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Column(
+                            children: data
+                                .map((advert) => selected
+                                            .where((e) => advert.announcer
+                                                .contains(e.name))
+                                            .isNotEmpty ||
+                                        selected.isEmpty
+                                    ? AdvertCard(
+                                        onTap: () {
+                                          advertNotifier.setAdvert(advert);
+                                          pageNotifier.setAdvertPage(
+                                              AdvertPage.detailFromMainPage);
+                                        },
+                                        advert: advert)
+                                    : Container())
+                                .toList()))
                   ],
                 );
               },
@@ -66,10 +69,10 @@ class MainPage extends HookConsumerWidget {
               },
             ),
           ),
-          if (true)
+          if (isAdmin)
             Positioned(
-              bottom: 30,
-              right: 10,
+              bottom: 20,
+              right: 0,
               child: GestureDetector(
                 onTap: () {
                   selectedNotifier.clearAnnounce();
