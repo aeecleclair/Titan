@@ -7,6 +7,7 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
+import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
@@ -34,6 +35,7 @@ class AddEditBookingPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
     final usersBookingsNotifier = ref.watch(userBookingListProvider.notifier);
+    final confirmedBookingListNotifier = ref.watch(confirmedBookingListProvider.notifier);
     final bookingsNotifier = ref.watch(bookingListProvider.notifier);
     final bookings = ref.watch(bookingListProvider);
     final booking = ref.watch(bookingProvider);
@@ -602,6 +604,11 @@ class AddEditBookingPage extends HookConsumerWidget {
                                       .setBookingPage(BookingPage.admin);
                                 }
                                 if (isEdit) {
+                                  if (booking.decision ==
+                                      Decision.approved) {
+                                    await confirmedBookingListNotifier
+                                        .updateBooking(newBooking);
+                                  }
                                   if (page == BookingPage.addEditBooking) {
                                     await usersBookingsNotifier
                                         .updateBooking(newBooking);
