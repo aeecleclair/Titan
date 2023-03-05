@@ -83,7 +83,7 @@ class AdvertCard extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 17),
                             child: AutoSizeText(
-                              "${AdvertTextConstants.the} ${DateFormat('dd/MM/yyyy\tHH:mm').format(advert.date)} - ${AdvertTextConstants.by} ${advert.author}",
+                              "${AdvertTextConstants.the} ${DateFormat('dd/MM/yyyy').format(advert.date)} ${AdvertTextConstants.at} ${DateFormat('HH:mm').format(advert.date)} - ${AdvertTextConstants.by} ${advert.author}",
                               maxLines: 1,
                               style: const TextStyle(
                                 color: Colors.white,
