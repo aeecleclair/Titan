@@ -53,7 +53,10 @@ class MainPage extends HookConsumerWidget {
                                         },
                                         advert: advert)
                                     : Container())
-                                .toList()))
+                                .toList())),
+                    const SizedBox(
+                      height: 20,
+                    ),
                   ],
                 );
               },
@@ -72,7 +75,7 @@ class MainPage extends HookConsumerWidget {
           if (isAdmin)
             Positioned(
               bottom: 20,
-              right: 0,
+              right: 30,
               child: GestureDetector(
                 onTap: () {
                   selectedNotifier.clearAnnounce();
