@@ -25,119 +25,123 @@ class AddEditAdvertPage extends HookConsumerWidget {
 
     //final selected = ref.watch(announcerProvider);
 
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            children: [
-              TextEntry(
-                minLines: 1,
-                maxLines: 1,
-                keyboardType: TextInputType.text,
-                label: AdvertTextConstants.title,
-                suffix: '',
-                isInt: false,
-                controller: title,
-                onChanged: (value) {},
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextEntry(
-                minLines: 5,
-                maxLines: 50,
-                keyboardType: TextInputType.multiline,
-                label: AdvertTextConstants.content,
-                suffix: '',
-                isInt: false,
-                controller: content,
-                onChanged: (value) {},
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 50,
-        ),
-        const AnnouncerBar(
-          useUserAnnouncers: true,
-        ),
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              children: [
-                TextEntry(
-                  minLines: 1,
-                  maxLines: 1,
-                  keyboardType: TextInputType.text,
-                  label: AdvertTextConstants.tags,
-                  suffix: '',
-                  isInt: false,
-                  controller: textTagsController,
-                  onChanged: (value) {},
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                ShrinkButton(
-                  waitChild: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(top: 8, bottom: 12),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 10,
-                          offset:
-                              const Offset(3, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: const Center(
-                      child: SizedBox(
-                        height: 30,
-                        width: 30,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                children: [
+                  TextEntry(
+                    minLines: 1,
+                    maxLines: 1,
+                    keyboardType: TextInputType.text,
+                    label: AdvertTextConstants.title,
+                    suffix: '',
+                    isInt: false,
+                    controller: title,
+                    onChanged: (value) {},
                   ),
-                  onTap: () async {},
-                  child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(top: 8, bottom: 12),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(
-                                3, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Text(
-                          isEdit
-                              ? AdvertTextConstants.edit
-                              : AdvertTextConstants.add,
-                          style: const TextStyle(
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextEntry(
+                    minLines: 5,
+                    maxLines: 50,
+                    keyboardType: TextInputType.multiline,
+                    label: AdvertTextConstants.content,
+                    suffix: '',
+                    isInt: false,
+                    controller: content,
+                    onChanged: (value) {},
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            const AnnouncerBar(
+              useUserAnnouncers: true,
+            ),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  children: [
+                    TextEntry(
+                      minLines: 1,
+                      maxLines: 1,
+                      keyboardType: TextInputType.text,
+                      label: AdvertTextConstants.tags,
+                      suffix: '',
+                      isInt: false,
+                      controller: textTagsController,
+                      onChanged: (value) {},
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    ShrinkButton(
+                      waitChild: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.only(top: 8, bottom: 12),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 10,
+                              offset:
+                                  const Offset(3, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: const Center(
+                          child: SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: CircularProgressIndicator(
                               color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold))),
-                ),
-              ],
-            ))
-      ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () async {},
+                      child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.only(top: 8, bottom: 12),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 10,
+                                offset: const Offset(
+                                    3, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                              isEdit
+                                  ? AdvertTextConstants.edit
+                                  : AdvertTextConstants.add,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold))),
+                    ),
+                  ],
+                ))
+          ],
+        ),
+      ),
     );
   }
 }
