@@ -15,8 +15,8 @@ class AdvertTextConstants {
   static const String positiveNumber = "Veuillez entrer un nombre positif";
   static const String invalidNumber = "Veuillez entrer un nombre";
 
-  static const String by = "Par";
-
+  static const String by = "par";
+  static const String at = "à";
   static const String the = "Le";
 }
 
