@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/post.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/providers/post_provider.dart';
+import 'package:myecl/phonebook/tools/constants.dart';
 
 
 class RoleMemberPage extends HookConsumerWidget {
@@ -19,7 +20,7 @@ class RoleMemberPage extends HookConsumerWidget {
     final roleList = useState([["Rôle 1","1"], ["Rôle 2","2"], ["Rôle 3","3"]]);
     return Column(
       children: [
-        const Text("Association :"),
+        const Text(PhonebookTextConstants.postAssociation),
         const SizedBox(width: 10),
         SizedBox(
           width: 200,
@@ -39,7 +40,7 @@ class RoleMemberPage extends HookConsumerWidget {
             },)),
         
         const SizedBox(width: 30),
-        const Text("Rôle :"),
+        const Text(PhonebookTextConstants.postRole),
         const SizedBox(width: 10),
         SizedBox(
           width: 200,
@@ -60,11 +61,11 @@ class RoleMemberPage extends HookConsumerWidget {
         ElevatedButton(
           onPressed: () {
             if (newPost.association.name == "") {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Veuillez choisir une association")));
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text(PhonebookTextConstants.postAssociationError)));
               return;
             }
             else if (newPost.role.name == "") {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Veuillez choisir un rôle")));
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text(PhonebookTextConstants.postRoleError)));
               return;
             }
             else {
@@ -72,7 +73,7 @@ class RoleMemberPage extends HookConsumerWidget {
             pageNotifier.setPhonebookPage(PhonebookPage.memberDetail);
             }
           },
-         child: const Text("Valider"),
+         child: const Text(PhonebookTextConstants.validation),
          )
       ],
     );
