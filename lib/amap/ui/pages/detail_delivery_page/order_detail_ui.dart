@@ -25,6 +25,7 @@ class DetailOrderUI extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final orderList = ref.watch(userOrderListProvider);
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
     final deliveryOrdersNotifier =
         ref.watch(adminDeliveryOrderListProvider.notifier);
@@ -136,15 +137,19 @@ class DetailOrderUI extends HookConsumerWidget {
                           descriptions: AMAPTextConstants.deletingOrder,
                           onYes: () async {
                             await tokenExpireWrapper(ref, () async {
+                              final index = orderList.when(
+                                  data: (data) => data.indexWhere(
+                                      (element) => element.id == order.id),
+                                  loading: () => -1,
+                                  error: (error, stack) => -1);
                               await orderListNotifier
                                   .deleteOrder(order)
                                   .then((value) {
                                 if (value) {
-                                  orderListNotifier.copy().then((value) {
-                                    print(value);
-                                    deliveryOrdersNotifier.setTData(
-                                        deliveryId, value);
-                                  });
+                                  if (index != -1) {
+                                    deliveryOrdersNotifier.deleteE(
+                                        deliveryId, index);
+                                  }
                                   displayToastWithContext(TypeMsg.msg,
                                       AMAPTextConstants.deletedOrder);
                                 } else {
