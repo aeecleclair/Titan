@@ -43,7 +43,7 @@ class MainPage extends HookConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: groups.when(data: (g) {
-          g.sort((a, b) => a.name.compareTo(b.name));
+          g.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
           return Column(children: [
             Column(
               children: [
