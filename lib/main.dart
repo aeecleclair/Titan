@@ -37,7 +37,7 @@ class MyApp extends HookConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MyECL',
-            localizationsDelegates: const [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

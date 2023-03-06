@@ -7,18 +7,18 @@ class ToggleMapNotifier<T, E> extends StateNotifier<
   ToggleMapNotifier({required String token}) : super(const AsyncLoading());
 
   Future loadTList(List<T> tList) async {
-    Map<T, Tuple2<AsyncValue<List<E>>, bool>> loanersItems = {};
+    Map<T, Tuple2<AsyncValue<List<E>>, bool>> tMap = {};
     for (T l in tList) {
-      loanersItems[l] = const Tuple2(AsyncValue.data([]), false);
+      tMap[l] = const Tuple2(AsyncValue.data([]), false);
     }
-    state = AsyncValue.data(loanersItems);
+    state = AsyncValue.data(tMap);
   }
 
   Future addT(T t) async {
     state.when(
-      data: (loanersItems) async {
-        loanersItems[t] = const Tuple2(AsyncValue.data([]), false);
-        state = AsyncValue.data(loanersItems);
+      data: (tMap) async {
+        tMap[t] = const Tuple2(AsyncValue.data([]), false);
+        state = AsyncValue.data(tMap);
       },
       loading: () {},
       error: (e, s) {},
@@ -28,10 +28,42 @@ class ToggleMapNotifier<T, E> extends StateNotifier<
   Future addE(T t, E e) {
     return state.when(data: (d) async {
       try {
-        List<E> currentLoans = d[t]!
+        List<E> eList = d[t]!
             .item1
             .when(data: (d) => d, error: (e, s) => [], loading: () => []);
-        d[t] = Tuple2(AsyncValue.data(currentLoans + [e]), d[t]!.item2);
+        d[t] = Tuple2(AsyncValue.data(eList + [e]), d[t]!.item2);
+        state = AsyncValue.data(d);
+        return true;
+      } catch (error) {
+        state = AsyncValue.data(d);
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          rethrow;
+        } else {
+          return false;
+        }
+      }
+    }, error: (error, s) async {
+      if (error is AppException && error.type == ErrorType.tokenExpire) {
+        throw error;
+      } else {
+        state = AsyncValue.error(error, s);
+        return false;
+      }
+    }, loading: () async {
+      state =
+          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
+      return false;
+    });
+  }
+
+  Future<bool> deleteE(T t, int index) {
+    return state.when(data: (d) async {
+      try {
+        List<E> eList = d[t]!
+            .item1
+            .when(data: (d) => d, error: (e, s) => [], loading: () => []);
+        eList.removeAt(index);
+        d[t] = Tuple2(AsyncValue.data(eList), d[t]!.item2);
         state = AsyncValue.data(d);
         return true;
       } catch (error) {

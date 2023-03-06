@@ -5,7 +5,7 @@ import 'package:myecl/amap/ui/pages/delivery_pages/add_edit_delivery_cmd_page.da
 import 'package:myecl/amap/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/amap/ui/pages/detail_delivery_page/detail_page.dart';
 import 'package:myecl/amap/ui/pages/detail_page/detail_page.dart';
-import 'package:myecl/amap/ui/pages/list_produits_page/list_produits_page.dart';
+import 'package:myecl/amap/ui/pages/list_products_page/list_products_page.dart';
 import 'package:myecl/amap/ui/pages/main_page/main_page.dart';
 import 'package:myecl/amap/ui/pages/presentation_page/text.dart';
 import 'package:myecl/amap/ui/pages/product_pages/add_edit_product.dart';

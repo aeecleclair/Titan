@@ -27,7 +27,8 @@ class AdminSessionCard extends HookConsumerWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: MediaQuery.of(context).size.width / 2,
+        width: 175,
+        height: 300,
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -98,8 +99,8 @@ class AdminSessionCard extends HookConsumerWidget {
                   error: (error, stack) => Text('Error $error')),
               Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                height: MediaQuery.of(context).size.width - 260,
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                height: 90,
                 child: Column(
                   children: [
                     AutoSizeText(

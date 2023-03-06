@@ -105,8 +105,9 @@ class AccountHandler extends HookConsumerWidget {
                           width: 15,
                         ),
                         Container(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
+                            height: 135,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 17),
                             child: Container(
                               height: 100,
                               decoration: BoxDecoration(
@@ -139,10 +140,6 @@ class AccountHandler extends HookConsumerWidget {
                                             onTap: () {
                                               searchingAmapUserNotifier
                                                   .setProduct(true);
-                                              FocusScope.of(context)
-                                                  .requestFocus(FocusNode());
-                                              focusNotifier.setFocus(false);
-                                              editingController.clear();
                                             },
                                             child: Container(
                                               padding:
@@ -159,19 +156,20 @@ class AccountHandler extends HookConsumerWidget {
                                           AddingUserContainer(onAdd: () async {
                                             searchingAmapUserNotifier
                                                 .setProduct(true);
-                                            FocusScope.of(context)
-                                                .requestFocus(FocusNode());
-                                            focusNotifier.setFocus(false);
-                                            await cashNotifier.filterCashList(
-                                                editingController.text);
-                                            editingController.clear();
                                           })
                                         ],
                                       )
                                     : GestureDetector(
-                                        onTap: () {
+                                        onTap: () async {
                                           searchingAmapUserNotifier
                                               .setProduct(false);
+                                          if (editingController
+                                              .text.isNotEmpty) {
+                                            await usersNotifier.filterUsers(
+                                                editingController.text);
+                                          } else {
+                                            usersNotifier.clear();
+                                          }
                                           focusNotifier.setFocus(true);
                                         },
                                         child: Container(

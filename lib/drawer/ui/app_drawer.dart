@@ -67,6 +67,9 @@ class AppDrawer extends HookConsumerWidget {
         ref.watch(swipeControllerProvider(animationController).notifier);
     final page = ref.watch(pageProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);
+    if (isWebFormat) {
+      controllerNotifier.close();
+    }
     return GestureDetector(
             onHorizontalDragStart: controllerNotifier.onDragStart,
             onHorizontalDragUpdate: controllerNotifier.onDragUpdate,
