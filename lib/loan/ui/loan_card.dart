@@ -83,7 +83,7 @@ class LoanCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                   ]),
-                SizedBox(height: !isAdmin ? 10 : 15),
+                SizedBox(height: !isAdmin ? 5 : 10),
                 AutoSizeText(loan.borrower.getName(),
                     maxLines: 1,
                     style: const TextStyle(
