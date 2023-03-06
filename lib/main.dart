@@ -32,6 +32,7 @@ class MyApp extends HookConsumerWidget {
     final check = versionVerifier.whenData((value) {
       return value.minimalTitanVersion <= titanVersion;
     });
+    
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
