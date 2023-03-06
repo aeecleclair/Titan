@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/cinema/providers/scroll_provider.dart';
+import 'package:myecl/cinema/providers/main_page_index_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/cinema/providers/cinema_page_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
@@ -13,6 +15,8 @@ class TopBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(cinemaPageProvider);
     final pageNotifier = ref.watch(cinemaPageProvider.notifier);
+    final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
+    final scrollNotifier = ref.watch(scrollProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -30,6 +34,8 @@ class TopBar extends HookConsumerWidget {
                         switch (page) {
                           case CinemaPage.main:
                             controllerNotifier.toggle();
+                            initialPageNotifier.reset();
+                            scrollNotifier.reset();
                             break;
                           case CinemaPage.admin:
                             pageNotifier.setCinemaPage(CinemaPage.main);

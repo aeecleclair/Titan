@@ -1,13 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/cinema/providers/main_page_index_provider.dart';
 
 class ScrollNotifier extends StateNotifier<double> {
-  ScrollNotifier() : super(0);
+  double startScroll = 0.0;
+  ScrollNotifier(double i) : super(i) {
+    startScroll = i;
+  }
 
   void setScroll(double event) {
     state = event;
   }
+
+  void reset() {
+    state = startScroll;
+  }
 }
 
 final scrollProvider = StateNotifierProvider<ScrollNotifier, double>((ref) {
-  return ScrollNotifier();
+    final mainPageIndex = ref.watch(mainPageIndexProvider.notifier);
+  return ScrollNotifier(mainPageIndex.startpage.toDouble());
 });

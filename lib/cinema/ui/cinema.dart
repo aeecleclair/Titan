@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/cinema/providers/main_page_index_provider.dart';
+import 'package:myecl/cinema/providers/scroll_provider.dart';
 import 'package:myecl/cinema/ui/top_bar.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/cinema/ui/page_switcher.dart';
@@ -16,6 +18,8 @@ class CinemaHomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(cinemaPageProvider);
     final pageNotifier = ref.watch(cinemaPageProvider.notifier);
+    final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
+    final scrollNotifier = ref.watch(scrollProvider.notifier);
     return Scaffold(
         body: WillPopScope(
       onWillPop: () async {
@@ -23,6 +27,8 @@ class CinemaHomePage extends ConsumerWidget {
           case CinemaPage.main:
             if (!controller.isCompleted) {
               controllerNotifier.toggle();
+              initialPageNotifier.reset();
+              scrollNotifier.reset();
               break;
             } else {
               return true;
