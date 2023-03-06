@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -87,9 +88,9 @@ class EditUserPage extends HookConsumerWidget {
                           ),
                           child: CircleAvatar(
                             radius: 80,
-                            backgroundImage: profile.isEmpty ?
-                            const AssetImage('assets/images/profile.png') :
-                            Image.memory(profile).image,
+                            backgroundImage: profile.isEmpty
+                                ? const AssetImage('assets/images/profile.png')
+                                : Image.memory(profile).image,
                           ),
                         ),
                         Positioned(
@@ -266,6 +267,23 @@ class EditUserPage extends HookConsumerWidget {
                     child: Text(SettingsTextConstants.errorProfilePicture),
                   );
                 }),
+                const SizedBox(height: 50),
+                Text(
+                  '${SettingsTextConstants.promo} ${user.promo}',
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                ),
+                const SizedBox(height: 20),
+                AutoSizeText(
+                  '${SettingsTextConstants.email} : ${user.email}',
+                  maxLines: 1,
+                  style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                ),
                 const SizedBox(height: 50),
                 UserFieldModifier(
                     label: SettingsTextConstants.nickname,
@@ -475,7 +493,7 @@ class EditUserPage extends HookConsumerWidget {
   _selectDate(BuildContext context, User me,
       TextEditingController dateController) async {
     final DateTime? picked = await showDatePicker(
-      locale: const Locale("fr", "FR"),
+        locale: const Locale("fr", "FR"),
         context: context,
         initialDate: DateTime.parse(me.birthday),
         firstDate: DateTime(1900),
