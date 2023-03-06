@@ -51,7 +51,7 @@ class ProductCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
-              AutoSizeText(product.name,
+              AutoSizeText(product.category,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -59,7 +59,7 @@ class ProductCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 32, 67, 0))),
               const SizedBox(height: 4),
-              AutoSizeText(product.category,
+              AutoSizeText(product.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
