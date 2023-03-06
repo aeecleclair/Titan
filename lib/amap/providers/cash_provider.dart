@@ -8,7 +8,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class CashProvider extends ListNotifier<Cash> {
   final CashRepository _cashRepository = CashRepository();
-   AsyncValue<List<Cash>> _cashList = const AsyncLoading();
+  AsyncValue<List<Cash>> _cashList = const AsyncLoading();
   CashProvider({required String token}) : super(const AsyncLoading()) {
     _cashRepository.setToken(token);
   }
@@ -28,6 +28,14 @@ class CashProvider extends ListNotifier<Cash> {
           ..[cashs.indexWhere((c) => c.user.id == cash.user.id)] =
               cash.copyWith(balance: cash.balance + amount),
         cash.copyWith(balance: amount.toDouble()));
+  }
+
+  Future<bool> fakeUpdateCash(Cash cash) async {
+    return await update(
+        (_) async => true,
+        (cashs, c) =>
+            cashs..[cashs.indexWhere((c) => c.user.id == cash.user.id)] = cash,
+        cash);
   }
 
   Future<AsyncValue<List<Cash>>> filterCashList(String filter) async {
