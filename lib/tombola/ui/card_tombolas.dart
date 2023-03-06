@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tombola/tools/constants.dart';
 
 import '../providers/tombola_page_provider.dart';
 
@@ -7,10 +8,8 @@ class TombolaWidget extends HookConsumerWidget {
   const TombolaWidget({
     Key? key,
     required this.name,
-    required this.color,
   }) : super(key: key);
   final String name;
-  final Color color;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,30 +20,35 @@ class TombolaWidget extends HookConsumerWidget {
         },
         child: Center(
             child: Container(
-                height: 100,
-                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 50),
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: this.color,
-                        blurRadius: 6,
-                        blurStyle: BlurStyle.outer,
-                      ),
-                    ],
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        this.color.withOpacity(0.6),
-                        this.color,
-                      ],
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(30))),
-                child: Center(
-                  child: Text(
-                    name,
-                    style: const TextStyle(color: Colors.white, fontSize: 30),
-                  ),
-                ))));
+          height: 100,
+          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromARGB(105, 80, 81, 81),
+                    blurRadius: 6,
+                    offset: Offset(1, 1)),
+              ],
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromARGB(255, 250, 244, 244),
+                  Color.fromARGB(255, 250, 246, 246),
+                ],
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10))),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(
+                      color: TombolaColorConstants.darkGradientBlueButton,
+                      fontSize: 20),
+                ),
+                Image.asset("assets/images/logo.png"),
+              ]),
+        )));
   }
 }

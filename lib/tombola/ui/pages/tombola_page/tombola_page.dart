@@ -27,9 +27,9 @@ class TombolaInfoPage extends HookConsumerWidget {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                  LotsCard(color: Colors.red),
-                  LotsCard(color: Colors.blue),
-                  LotsCard(color: Colors.yellowAccent),
+                  PrizeCard(color: Colors.red),
+                  PrizeCard(color: Colors.blue),
+                  PrizeCard(color: Colors.yellowAccent),
                 ])),
                 Text(
                 "Description",

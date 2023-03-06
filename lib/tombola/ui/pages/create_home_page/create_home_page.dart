@@ -18,6 +18,10 @@ class CreateHomePage extends HookConsumerWidget {
       margin: EdgeInsets.only(top: 15),
       child: Stack(children: [
         ListView(physics: const BouncingScrollPhysics(), children: [
+          Text(
+              TombolaTextConstants.createYourRaffle,
+              style: TextStyle(fontSize: 30),
+            ),
           Text(TombolaTextConstants.modifTombola),
           Center(
             child: Text(
@@ -27,17 +31,17 @@ class CreateHomePage extends HookConsumerWidget {
           ),
           TombolaWidget(
               name: "Tombola Soli Sida",
-              color: Color.fromARGB(255, 126, 149, 254)),
+              ),
           TombolaWidget(
-              name: "Tombola 4", color: Color.fromARGB(255, 41, 6, 216)),
+              name: "Tombola 4"),
           TombolaWidget(
-              name: "Tombola 4", color: Color.fromARGB(255, 48, 63, 228)),
+              name: "Tombola 4"),
           TombolaWidget(
-              name: "Tombola 4", color: Color.fromARGB(255, 23, 41, 199)),
+              name: "Tombola 4"),
           TombolaWidget(
-              name: "Tombola 4", color: Color.fromARGB(255, 51, 30, 210)),
+              name: "Tombola 4"),
           TombolaWidget(
-              name: "Tombola 4", color: Color.fromARGB(255, 148, 145, 245)),
+              name: "Tombola 4"),
         ]),
         Positioned(
             bottom: 5,

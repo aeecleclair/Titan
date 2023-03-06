@@ -28,8 +28,8 @@ class TicketWidget extends HookConsumerWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                this.color.withOpacity(0.4),
-                this.color,
+                this.color.withOpacity(0.1),
+                this.color.withOpacity(0.2),
               ],
               stops: const [0, 0.8],
             ),
