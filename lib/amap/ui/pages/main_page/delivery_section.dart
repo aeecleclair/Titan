@@ -40,7 +40,6 @@ class DeliverySection extends HookConsumerWidget {
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height - 560,
           child: deliveries.when(
             data: (data) {
               if (orderableDeliveries.isEmpty) {
