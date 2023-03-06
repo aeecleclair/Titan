@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
+import 'package:myecl/amap/providers/cash_provider.dart';
+import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -27,6 +29,7 @@ class CommandeUI extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
     final orderNotifier = ref.watch(orderProvider.notifier);
+    final soldeNotifier = ref.watch(userAmountProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -166,6 +169,8 @@ class CommandeUI extends HookConsumerWidget {
                                               .deleteOrder(order)
                                               .then((value) {
                                             if (value) {
+                                              soldeNotifier
+                                                  .updateCash(order.amount);
                                               displayToastWithContext(
                                                   TypeMsg.msg,
                                                   AMAPTextConstants
