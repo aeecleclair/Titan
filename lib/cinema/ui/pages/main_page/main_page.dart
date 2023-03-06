@@ -6,6 +6,7 @@ import 'package:myecl/cinema/providers/cinema_page_provider.dart';
 import 'package:myecl/cinema/providers/is_cinema_admin.dart';
 import 'package:myecl/cinema/providers/main_page_index_provider.dart';
 import 'package:myecl/cinema/providers/scroll_provider.dart';
+import 'package:myecl/cinema/providers/session_list_page_provider.dart';
 import 'package:myecl/cinema/providers/session_list_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
@@ -25,8 +26,7 @@ class MainPage extends HookConsumerWidget {
     final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
     final initialPage = ref.watch(mainPageIndexProvider);
     int currentPage = initialPage;
-    final pageController =
-        usePageController(viewportFraction: 0.8, initialPage: initialPage);
+    final pageController = ref.watch(sessionListPageControllerProvider);
     final scrollNotifier = ref.watch(scrollProvider.notifier);
     final isAdmin = ref.watch(isCinemaAdmin);
     final isWebFormat = ref.watch(isWebFormatProvider);
