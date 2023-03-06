@@ -39,42 +39,40 @@ class DeliverySection extends HookConsumerWidget {
             ),
           ),
         ),
-        SizedBox(
-          child: deliveries.when(
-            data: (data) {
-              if (orderableDeliveries.isEmpty) {
-                return const Center(
-                  child: Text('Aucune livraison prévue'),
-                );
-              }
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    for (var i = 0; i < orderableDeliveries.length; i++)
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: DeliveryUi(
-                          delivery: orderableDeliveries[i],
-                          onTap: () {
-                            {if (editable && showSelected) {
-                              deliveryIdNotifier
-                                  .setId(orderableDeliveries[i].id);
-                            }}
-                          },
-                          showSelected: showSelected,
-                        ),
-                      ),
-                  ],
-                ),
+        deliveries.when(
+          data: (data) {
+            if (orderableDeliveries.isEmpty) {
+              return const Center(
+                child: Text('Aucune livraison prévue'),
               );
-            },
-            loading: () => const Center(
-                child: CircularProgressIndicator(
-              color: AMAPColorConstants.greenGradient2,
-            )),
-            error: (error, stack) => Text(error.toString()),
-          ),
+            }
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  for (var i = 0; i < orderableDeliveries.length; i++)
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: DeliveryUi(
+                        delivery: orderableDeliveries[i],
+                        onTap: () {
+                          {if (editable && showSelected) {
+                            deliveryIdNotifier
+                                .setId(orderableDeliveries[i].id);
+                          }}
+                        },
+                        showSelected: showSelected,
+                      ),
+                    ),
+                ],
+              ),
+            );
+          },
+          loading: () => const Center(
+              child: CircularProgressIndicator(
+            color: AMAPColorConstants.greenGradient2,
+          )),
+          error: (error, stack) => Text(error.toString()),
         ),
       ],
     );
