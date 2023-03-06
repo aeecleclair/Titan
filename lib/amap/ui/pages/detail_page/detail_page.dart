@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
-import 'package:myecl/amap/ui/command_ui.dart';
+import 'package:myecl/amap/ui/order_ui.dart';
 import 'package:myecl/amap/ui/product_ui.dart';
 
 class DetailPage extends HookConsumerWidget {
@@ -54,24 +54,15 @@ class DetailPage extends HookConsumerWidget {
                         height: 10,
                       ),
                       order.products.isNotEmpty
-                          ? GridView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: order.products.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 0,
-                                      mainAxisSpacing: 5,
-                                      childAspectRatio: 0.9),
-                              itemBuilder: (context, index) {
-                                return ProductCard(
-                                  product: order.products[index],
-                                  onDelete: () async {},
-                                  onEdit: () {},
-                                  showButton: false,
-                                );
-                              },
+                          ? Wrap(
+                              children: order.products
+                                  .map((product) => ProductCard(
+                                        product: product,
+                                        onDelete: () async {},
+                                        onEdit: () {},
+                                        showButton: false,
+                                      ))
+                                  .toList(),
                             )
                           : const SizedBox(),
                       const SizedBox(

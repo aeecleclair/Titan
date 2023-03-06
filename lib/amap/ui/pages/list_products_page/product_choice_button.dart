@@ -24,21 +24,12 @@ class Boutons extends HookConsumerWidget {
     final pageNotifier = ref.watch(amapPageProvider.notifier);
     final deliveryId = ref.watch(deliveryIdProvider);
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
-    final userAmount = ref.watch(userAmountProvider);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);
     final isEdit = order.id != Order.empty().id;
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
-
-    double b = 0;
-    userAmount.when(
-        data: (u) {
-          b = u.balance;
-        },
-        error: (e, s) {},
-        loading: () {});
 
     return Container(
         height: 60,
@@ -71,7 +62,7 @@ class Boutons extends HookConsumerWidget {
                   if (order.amount == 0.0) {
                     displayToast(
                         context, TypeMsg.error, AMAPTextConstants.noProduct);
-                  } else if (order.amount <= b + order.lastAmount) {
+                  } else {
                     Order newOrder = order.copyWith(
                         deliveryId: deliveryId, user: me.toSimpleUser(), lastAmount: order.amount);
                     await tokenExpireWrapper(ref, () async {
@@ -101,9 +92,6 @@ class Boutons extends HookConsumerWidget {
                         }
                       }
                     });
-                  } else {
-                    displayToast(context, TypeMsg.error,
-                        AMAPTextConstants.notEnoughMoney);
                   }
                 },
                 child: Container(

@@ -6,7 +6,7 @@ import 'package:myecl/amap/providers/sorted_delivery_product.dart';
 import 'package:myecl/amap/providers/page_controller_provider.dart';
 import 'package:myecl/amap/providers/scroll_controller_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/list_produits_page/category_page.dart';
+import 'package:myecl/amap/ui/pages/list_products_page/category_page.dart';
 
 class ListProducts extends HookConsumerWidget {
   const ListProducts({Key? key}) : super(key: key);

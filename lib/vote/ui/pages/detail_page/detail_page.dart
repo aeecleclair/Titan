@@ -108,7 +108,8 @@ class DetailPage extends HookConsumerWidget {
                                         height: 50,
                                         width: 50,
                                         child: Center(
-                                          child: HeroIcon(HeroIcons.exclamationCircle),
+                                          child: HeroIcon(
+                                              HeroIcons.exclamationCircle),
                                         ),
                                       );
                                     });
@@ -149,24 +150,20 @@ class DetailPage extends HookConsumerWidget {
                         ),
                       ),
                       pretendance.members.isNotEmpty
-                          ? GridView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: pretendance.members.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 0,
-                                      mainAxisSpacing: 5,
-                                      childAspectRatio: 1),
-                              itemBuilder: (context, index) {
-                                return MemberCard(
-                                    member: pretendance.members[index],
-                                    isAdmin: false,
-                                    onDelete: () {},
-                                    onEdit: () {});
-                              },
-                            )
+                          ? SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              child: Wrap(
+                                children: pretendance.members
+                                    .map(
+                                      (e) => MemberCard(
+                                        member: e,
+                                        isAdmin: false,
+                                        onDelete: () {},
+                                        onEdit: () {},
+                                      ),
+                                    )
+                                    .toList(),
+                              ))
                           : const SizedBox(),
                       const SizedBox(
                         height: 20,

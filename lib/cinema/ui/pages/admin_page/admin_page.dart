@@ -23,24 +23,18 @@ class AdminPage extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: sessionList.when(
             data: (data) {
-              return GridView.builder(
+              return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: data.length + 1,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: .5,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == 0) {
-                    return GestureDetector(
+                child: Wrap(
+                  children: [
+                    GestureDetector(
                         onTap: () {
                           sessionNotifier.setSession(Session.empty());
                           pageNotifier.setCinemaPage(CinemaPage.addEditSession);
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width / 2,
+                          width: 175,
+                          height: 300,
                           margin: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -59,34 +53,36 @@ class AdminPage extends HookConsumerWidget {
                             HeroIcons.plus,
                             size: 50,
                           )),
-                        ));
-                  }
-                  return AdminSessionCard(
-                      session: data[index - 1],
-                      onEdit: () {
-                        sessionNotifier.setSession(data[index - 1]);
-                        pageNotifier.setCinemaPage(CinemaPage.addEditSession);
-                      },
-                      onDelete: () async {
-                        await showDialog(
-                            context: context,
-                            builder: (context) {
-                              return CustomDialogBox(
-                                title: CinemaTextConstants.deleting,
-                                descriptions: CinemaTextConstants.deleteSession,
-                                onYes: () {
-                                  sessionListNotifier
-                                      .deleteSession(data[index - 1]);
-                                },
-                              );
-                            });
-                      },
-                      onTap: () {
-                        sessionNotifier.setSession(data[index - 1]);
-                        pageNotifier
-                            .setCinemaPage(CinemaPage.detailFromAdminPage);
-                      });
-                },
+                        )),
+                    ...data.map(
+                      (session) => AdminSessionCard(
+                          session: session,
+                          onEdit: () {
+                            sessionNotifier.setSession(session);
+                            pageNotifier.setCinemaPage(CinemaPage.addEditSession);
+                          },
+                          onDelete: () async {
+                            await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CustomDialogBox(
+                                    title: CinemaTextConstants.deleting,
+                                    descriptions:
+                                        CinemaTextConstants.deleteSession,
+                                    onYes: () {
+                                      sessionListNotifier.deleteSession(session);
+                                    },
+                                  );
+                                });
+                          },
+                          onTap: () {
+                            sessionNotifier.setSession(session);
+                            pageNotifier
+                                .setCinemaPage(CinemaPage.detailFromAdminPage);
+                          }),
+                    )
+                  ],
+                ),
               );
             },
             error: (Object error, StackTrace? stackTrace) {
