@@ -250,7 +250,6 @@ class EditUserPage extends HookConsumerWidget {
                               child: const HeroIcon(
                                 HeroIcons.sparkles,
                                 color: Colors.white,
-                                size: 10,
                               ),
                             ),
                           ),
