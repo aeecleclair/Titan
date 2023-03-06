@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/loan/class/loan.dart';
@@ -63,7 +64,8 @@ class LoanCard extends StatelessWidget {
                         Container(
                           width: 25,
                         ),
-                        Text(capitalize(loan.loaner.name),
+                        AutoSizeText(capitalize(loan.loaner.name),
+                            maxLines: 1,
                             style: const TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
@@ -82,7 +84,8 @@ class LoanCard extends StatelessWidget {
                     const SizedBox(height: 5),
                   ]),
                 SizedBox(height: !isAdmin ? 10 : 15),
-                Text(loan.borrower.getName(),
+                AutoSizeText(loan.borrower.getName(),
+                    maxLines: 1,
                     style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
