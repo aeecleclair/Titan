@@ -59,7 +59,9 @@ class ToggleMapNotifier<T, E> extends StateNotifier<
   Future<bool> setTData(T t, AsyncValue<List<E>> asyncEList) async {
     return state.when(data: (d) async {
       try {
+        print(d[t]);
         d[t] = Tuple2(asyncEList, d[t]!.item2);
+        print(d[t]);
         state = AsyncValue.data(d);
         return true;
       } catch (error) {
