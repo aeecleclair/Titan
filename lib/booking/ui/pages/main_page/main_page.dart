@@ -102,156 +102,159 @@ class MainPage extends HookConsumerWidget {
             SizedBox(
               height: (isAdmin) ? 0 : 10,
             ),
-            SizedBox(
-              height: 210,
-              child: bookings.when(data: (List<Booking> data) {
-                data.sort((a, b) => a.start.compareTo(b.start));
-                return WebListView(
-                    child: Row(children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 15),
-                    child: GestureDetector(
-                      onTap: () {
-                        bookingNotifier.setBooking(Booking.empty());
-                        selectedDaysNotifier.clear();
-                        pageNotifier.setBookingPage(BookingPage.addEditBooking);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(15.0),
+            bookings.when(data: (List<Booking> data) {
+              data.sort((a, b) => a.start.compareTo(b.start));
+              return SizedBox(
+                  height: 210,
+                  child: WebListView(
+                      child: Row(children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 15),
+                      child: GestureDetector(
+                        onTap: () {
+                          bookingNotifier.setBooking(Booking.empty());
+                          selectedDaysNotifier.clear();
+                          pageNotifier
+                              .setBookingPage(BookingPage.addEditBooking);
+                        },
                         child: Container(
-                          width: 120,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.shade200.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 10,
-                                offset: const Offset(3, 3),
-                              ),
-                            ],
+                          padding: const EdgeInsets.all(15.0),
+                          child: Container(
+                            width: 120,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.shade200.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 10,
+                                  offset: const Offset(3, 3),
+                                ),
+                              ],
+                            ),
+                            child: const Center(
+                                child: HeroIcon(
+                              HeroIcons.plus,
+                              size: 40.0,
+                              color: Colors.black,
+                            )),
                           ),
-                          child: const Center(
-                              child: HeroIcon(
-                            HeroIcons.plus,
-                            size: 40.0,
-                            color: Colors.black,
-                          )),
                         ),
                       ),
                     ),
-                  ),
-                  ...data.map((e) => BookingCard(
-                        booking: e,
-                        isAdmin: false,
-                        isDetail: false,
-                        onEdit: () {
-                          bookingNotifier.setBooking(e);
-                          final recurrent = e.recurrenceRule != "";
-                          if (recurrent) {
-                            final allDays = [
-                              "MO",
-                              "TU",
-                              "WE",
-                              "TH",
-                              "FR",
-                              "SA",
-                              "SU"
-                            ];
-                            final recurrentDays = e.recurrenceRule
-                                .split(";")
-                                .where((element) => element.contains("BYDAY"))
-                                .first
-                                .split("=")
-                                .last
-                                .split(",");
-                            selectedDaysNotifier.setSelectedDays(allDays
-                                .map((e) => recurrentDays.contains(e))
-                                .toList());
-                          }
-                          pageNotifier
-                              .setBookingPage(BookingPage.addEditBooking);
-                        },
-                        onInfo: () {
-                          bookingNotifier.setBooking(e);
-                          pageNotifier.setBookingPage(
-                              BookingPage.detailBookingFromMain);
-                        },
-                        onConfirm: () {},
-                        onDecline: () {},
-                        onDelete: () async {
-                          await tokenExpireWrapper(ref, () async {
-                            await showDialog(
-                                context: context,
-                                builder: (context) => CustomDialogBox(
-                                      descriptions: BookingTextConstants
-                                          .deleteBookingConfirmation,
-                                      onYes: () async {
-                                        final value = await allBookingsNotifier
-                                            .deleteBooking(e);
-                                        if (value) {
-                                          bookingsNotifier.deleteBooking(e);
-                                          if (e.decision == Decision.approved) {
-                                            confirmedbookingsNotifier
-                                                .deleteBooking(e);
-                                          }
+                    ...data.map((e) => BookingCard(
+                          booking: e,
+                          isAdmin: false,
+                          isDetail: false,
+                          onEdit: () {
+                            bookingNotifier.setBooking(e);
+                            final recurrent = e.recurrenceRule != "";
+                            if (recurrent) {
+                              final allDays = [
+                                "MO",
+                                "TU",
+                                "WE",
+                                "TH",
+                                "FR",
+                                "SA",
+                                "SU"
+                              ];
+                              final recurrentDays = e.recurrenceRule
+                                  .split(";")
+                                  .where((element) => element.contains("BYDAY"))
+                                  .first
+                                  .split("=")
+                                  .last
+                                  .split(",");
+                              selectedDaysNotifier.setSelectedDays(allDays
+                                  .map((e) => recurrentDays.contains(e))
+                                  .toList());
+                            }
+                            pageNotifier
+                                .setBookingPage(BookingPage.addEditBooking);
+                          },
+                          onInfo: () {
+                            bookingNotifier.setBooking(e);
+                            pageNotifier.setBookingPage(
+                                BookingPage.detailBookingFromMain);
+                          },
+                          onConfirm: () {},
+                          onDecline: () {},
+                          onDelete: () async {
+                            await tokenExpireWrapper(ref, () async {
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) => CustomDialogBox(
+                                        descriptions: BookingTextConstants
+                                            .deleteBookingConfirmation,
+                                        onYes: () async {
+                                          final value =
+                                              await allBookingsNotifier
+                                                  .deleteBooking(e);
+                                          if (value) {
+                                            bookingsNotifier.deleteBooking(e);
+                                            if (e.decision ==
+                                                Decision.approved) {
+                                              confirmedbookingsNotifier
+                                                  .deleteBooking(e);
+                                            }
 
-                                          displayToastWithContext(
-                                              TypeMsg.msg,
-                                              BookingTextConstants
-                                                  .deleteBooking);
-                                        } else {
-                                          displayToastWithContext(
-                                              TypeMsg.error,
-                                              BookingTextConstants
-                                                  .deletingError);
-                                        }
-                                      },
-                                      title: BookingTextConstants.deleteBooking,
-                                    ));
-                          });
-                        },
-                        onCopy: () {
-                          bookingNotifier.setBooking(e.copyWith(id: ""));
-                          final recurrent = e.recurrenceRule != "";
-                          if (recurrent) {
-                            final allDays = [
-                              "MO",
-                              "TU",
-                              "WE",
-                              "TH",
-                              "FR",
-                              "SA",
-                              "SU"
-                            ];
-                            final recurrentDays = e.recurrenceRule
-                                .split(";")
-                                .where((element) => element.contains("BYDAY"))
-                                .first
-                                .split("=")
-                                .last
-                                .split(",");
-                            selectedDaysNotifier.setSelectedDays(allDays
-                                .map((e) => recurrentDays.contains(e))
-                                .toList());
-                          }
-                          pageNotifier
-                              .setBookingPage(BookingPage.addEditBooking);
-                        },
-                      )),
-                  const SizedBox(width: 15)
-                ]));
-              }, error: (Object error, StackTrace? stackTrace) {
-                return Center(child: Text("Error $error"));
-              }, loading: () {
-                return const Center(
-                    child: CircularProgressIndicator(
-                  color: ColorConstants.background2,
-                ));
-              }),
-            )
+                                            displayToastWithContext(
+                                                TypeMsg.msg,
+                                                BookingTextConstants
+                                                    .deleteBooking);
+                                          } else {
+                                            displayToastWithContext(
+                                                TypeMsg.error,
+                                                BookingTextConstants
+                                                    .deletingError);
+                                          }
+                                        },
+                                        title:
+                                            BookingTextConstants.deleteBooking,
+                                      ));
+                            });
+                          },
+                          onCopy: () {
+                            bookingNotifier.setBooking(e.copyWith(id: ""));
+                            final recurrent = e.recurrenceRule != "";
+                            if (recurrent) {
+                              final allDays = [
+                                "MO",
+                                "TU",
+                                "WE",
+                                "TH",
+                                "FR",
+                                "SA",
+                                "SU"
+                              ];
+                              final recurrentDays = e.recurrenceRule
+                                  .split(";")
+                                  .where((element) => element.contains("BYDAY"))
+                                  .first
+                                  .split("=")
+                                  .last
+                                  .split(",");
+                              selectedDaysNotifier.setSelectedDays(allDays
+                                  .map((e) => recurrentDays.contains(e))
+                                  .toList());
+                            }
+                            pageNotifier
+                                .setBookingPage(BookingPage.addEditBooking);
+                          },
+                        )),
+                    const SizedBox(width: 15)
+                  ])));
+            }, error: (Object error, StackTrace? stackTrace) {
+              return Center(child: Text("Error $error"));
+            }, loading: () {
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: ColorConstants.background2,
+              ));
+            }),
           ]),
         ),
       ),
