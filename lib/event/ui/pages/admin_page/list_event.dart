@@ -13,6 +13,7 @@ import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/ui/event_ui.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/web_list_view.dart';
 
 class ListEvent extends HookConsumerWidget {
   final List<Event> events;
@@ -34,143 +35,125 @@ class ListEvent extends HookConsumerWidget {
         ref.watch(confirmedEventListProvider.notifier);
     final incomingEvents =
         events.where((e) => e.start.isAfter(DateTime.now())).toList();
-    final outerController = useScrollController();
-    final innerController = useScrollController();
+
     final toggle = useState(!canToggle);
     if (incomingEvents.isNotEmpty) {
-      return Column(children: [
-        GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              if (canToggle) {
-                toggle.value = !toggle.value;
-              }
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        "$title${incomingEvents.length > 1 ? "s" : ""} (${incomingEvents.length})",
-                        style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149))),
-                  ),
-                  if (canToggle)
-                    HeroIcon(
-                      toggle.value
-                          ? HeroIcons.chevronUp
-                          : HeroIcons.chevronDown,
-                      color: const Color.fromARGB(255, 149, 149, 149),
-                      size: 30,
+      return Column(
+        children: [
+          GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                if (canToggle) {
+                  toggle.value = !toggle.value;
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                          "$title${incomingEvents.length > 1 ? "s" : ""} (${incomingEvents.length})",
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 149, 149, 149))),
                     ),
-                ],
-              ),
-            )),
-        if (toggle.value)
-          SizedBox(
-            height: 200,
-            child: ListView(
-              controller: outerController,
-              clipBehavior: Clip.none,
-              children: [
-                Listener(
-                    onPointerSignal: (event) {
-                      if (event is PointerScrollEvent) {
-                        final offset = event.scrollDelta.dy;
-                        innerController.jumpTo(innerController.offset + offset);
-                        outerController.jumpTo(outerController.offset - offset);
-                      }
-                    },
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      controller: innerController,
-                      clipBehavior: Clip.none,
-                      physics: const BouncingScrollPhysics(),
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 10),
-                          ...incomingEvents.map((e) => EventUi(
-                                event: e,
-                                isDetailPage: true,
-                                isAdmin: true,
-                                onEdit: () {
-                                  eventNotifier.setEvent(e);
-                                  pageNotifier.setEventPage(
-                                      EventPage.addEditEventFromAdmin);
-                                },
-                                onInfo: () {
-                                  eventNotifier.setEvent(e);
-                                  pageNotifier.setEventPage(
-                                      EventPage.eventDetailfromModuleFromAdmin);
-                                },
-                                onConfirm: () async {
-                                  await showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return CustomDialogBox(
-                                            title: BookingTextConstants.confirm,
-                                            descriptions: BookingTextConstants
-                                                .confirmBooking,
-                                            onYes: () async {
-                                              await tokenExpireWrapper(ref,
-                                                  () async {
-                                                eventListNotifier
-                                                    .toggleConfirmed(
-                                                        e, Decision.approved)
-                                                    .then((value) {
-                                                  if (value) {
-                                                    confirmedEventListNotifier
-                                                        .addEvent(e);
-                                                  }
-                                                });
-                                              });
-                                            });
-                                      });
-                                },
-                                onDecline: () async {
-                                  await showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return CustomDialogBox(
-                                            title: BookingTextConstants.decline,
-                                            descriptions: BookingTextConstants
-                                                .declineBooking,
-                                            onYes: () async {
-                                              await tokenExpireWrapper(ref,
-                                                  () async {
-                                                eventListNotifier
-                                                    .toggleConfirmed(
-                                                        e, Decision.declined)
-                                                    .then((value) {
-                                                  if (value) {
-                                                    confirmedEventListNotifier
-                                                        .deleteEvent(e);
-                                                  }
-                                                });
-                                              });
-                                            });
-                                      });
-                                },
-                                onCopy: () {
-                                  eventNotifier.setEvent(e.copyWith(id: ""));
-                                  pageNotifier.setEventPage(
-                                      EventPage.addEditEventFromAdmin);
-                                },
-                              )),
-                          const SizedBox(width: 10),
-                        ],
+                    if (canToggle)
+                      HeroIcon(
+                        toggle.value
+                            ? HeroIcons.chevronUp
+                            : HeroIcons.chevronDown,
+                        color: const Color.fromARGB(255, 149, 149, 149),
+                        size: 30,
                       ),
-                    )),
-                const SizedBox(height: 30),
-              ],
-            ),
-          )
-      ]);
+                  ],
+                ),
+              )),
+          if (toggle.value)
+            SizedBox(
+                height: 200,
+                child: WebListView(
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 10),
+                      ...incomingEvents.map((e) => EventUi(
+                            event: e,
+                            isDetailPage: true,
+                            isAdmin: true,
+                            onEdit: () {
+                              eventNotifier.setEvent(e);
+                              pageNotifier.setEventPage(
+                                  EventPage.addEditEventFromAdmin);
+                            },
+                            onInfo: () {
+                              eventNotifier.setEvent(e);
+                              pageNotifier.setEventPage(
+                                  EventPage.eventDetailfromModuleFromAdmin);
+                            },
+                            onConfirm: () async {
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomDialogBox(
+                                        title: BookingTextConstants.confirm,
+                                        descriptions:
+                                            BookingTextConstants.confirmBooking,
+                                        onYes: () async {
+                                          await tokenExpireWrapper(ref,
+                                              () async {
+                                            eventListNotifier
+                                                .toggleConfirmed(
+                                                    e, Decision.approved)
+                                                .then((value) {
+                                              if (value) {
+                                                confirmedEventListNotifier
+                                                    .addEvent(e);
+                                              }
+                                            });
+                                          });
+                                        });
+                                  });
+                            },
+                            onDecline: () async {
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomDialogBox(
+                                        title: BookingTextConstants.decline,
+                                        descriptions:
+                                            BookingTextConstants.declineBooking,
+                                        onYes: () async {
+                                          await tokenExpireWrapper(ref,
+                                              () async {
+                                            eventListNotifier
+                                                .toggleConfirmed(
+                                                    e, Decision.declined)
+                                                .then((value) {
+                                              if (value) {
+                                                confirmedEventListNotifier
+                                                    .deleteEvent(e);
+                                              }
+                                            });
+                                          });
+                                        });
+                                  });
+                            },
+                            onCopy: () {
+                              eventNotifier.setEvent(e.copyWith(id: ""));
+                              pageNotifier.setEventPage(
+                                  EventPage.addEditEventFromAdmin);
+                            },
+                          )),
+                      const SizedBox(width: 10),
+                    ],
+                  ),
+                )),
+          const SizedBox(height: 30),
+        ],
+      );
     } else {
       return const SizedBox();
     }

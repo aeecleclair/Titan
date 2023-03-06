@@ -15,6 +15,7 @@ import 'package:myecl/loan/ui/item_card.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/web_list_view.dart';
 
 class LoanersItems extends HookConsumerWidget {
   const LoanersItems({super.key});
@@ -28,9 +29,6 @@ class LoanersItems extends HookConsumerWidget {
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final itemNotifier = ref.watch(itemProvider.notifier);
-
-    final outerController = useScrollController();
-    final innerController = useScrollController();
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -46,119 +44,90 @@ class LoanersItems extends HookConsumerWidget {
               }
               return SizedBox(
                   height: 170,
-                  child: ListView(
-                      controller: outerController,
-                      clipBehavior: Clip.none,
+                  child: WebListView(
+                    child: Row(
                       children: [
-                        Listener(
-                            onPointerSignal: (event) {
-                              if (event is PointerScrollEvent) {
-                                final offset = event.scrollDelta.dy;
-                                innerController
-                                    .jumpTo(innerController.offset + offset);
-                                outerController
-                                    .jumpTo(outerController.offset - offset);
-                              }
-                            },
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              controller: innerController,
-                              clipBehavior: Clip.none,
-                              physics: const BouncingScrollPhysics(),
-                              child: Row(
-                                children: [
-                                  const SizedBox(width: 10),
-                                  GestureDetector(
-                                    onTap: () {
-                                      loanNotifier.setLoan(Loan.empty());
-                                      pageNotifier
-                                          .setLoanPage(LoanPage.addEditItem);
-                                    },
-                                    child: Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 5.0),
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Container(
-                                        width: 120,
-                                        height: 160,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.shade200
-                                                  .withOpacity(0.5),
-                                              spreadRadius: 5,
-                                              blurRadius: 10,
-                                              offset: const Offset(3, 3),
-                                            ),
-                                          ],
-                                        ),
-                                        child: const Center(
-                                          child: HeroIcon(
-                                            HeroIcons.plus,
-                                            size: 40.0,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                        const SizedBox(width: 10),
+                        GestureDetector(
+                          onTap: () {
+                            loanNotifier.setLoan(Loan.empty());
+                            pageNotifier.setLoanPage(LoanPage.addEditItem);
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                            padding: const EdgeInsets.all(12.0),
+                            child: Container(
+                              width: 120,
+                              height: 160,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(30),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                        Colors.grey.shade200.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 10,
+                                    offset: const Offset(3, 3),
                                   ),
-                                  ...data.map((e) => ItemCard(
-                                        item: e,
-                                        showButtons: true,
-                                        onDelete: () async {
-                                          showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return CustomDialogBox(
-                                                    descriptions:
-                                                        LoanTextConstants
-                                                            .deletingItem,
-                                                    onYes: () {
-                                                      tokenExpireWrapper(ref,
-                                                          () async {
-                                                        final value =
-                                                            await itemListNotifier
-                                                                .deleteItem(e,
-                                                                    loaner.id);
-                                                        if (value) {
-                                                          itemListNotifier
-                                                              .copy()
-                                                              .then((value) {
-                                                            loanersitemsNotifier
-                                                                .setTData(
-                                                                    loaner,
-                                                                    value);
-                                                          });
-                                                          displayToastWithContext(
-                                                              TypeMsg.msg,
-                                                              LoanTextConstants
-                                                                  .deletedItem);
-                                                        } else {
-                                                          displayToastWithContext(
-                                                              TypeMsg.error,
-                                                              LoanTextConstants
-                                                                  .deletingError);
-                                                        }
-                                                      });
-                                                    },
-                                                    title: LoanTextConstants
-                                                        .delete);
-                                              });
-                                        },
-                                        onEdit: () {
-                                          pageNotifier.setLoanPage(
-                                              LoanPage.addEditItem);
-                                          itemNotifier.setItem(e);
-                                        },
-                                      )),
-                                  const SizedBox(width: 10),
                                 ],
                               ),
-                            ))
-                      ]));
+                              child: const Center(
+                                child: HeroIcon(
+                                  HeroIcons.plus,
+                                  size: 40.0,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        ...data.map((e) => ItemCard(
+                              item: e,
+                              showButtons: true,
+                              onDelete: () async {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CustomDialogBox(
+                                          descriptions:
+                                              LoanTextConstants.deletingItem,
+                                          onYes: () {
+                                            tokenExpireWrapper(ref, () async {
+                                              final value =
+                                                  await itemListNotifier
+                                                      .deleteItem(e, loaner.id);
+                                              if (value) {
+                                                itemListNotifier
+                                                    .copy()
+                                                    .then((value) {
+                                                  loanersitemsNotifier.setTData(
+                                                      loaner, value);
+                                                });
+                                                displayToastWithContext(
+                                                    TypeMsg.msg,
+                                                    LoanTextConstants
+                                                        .deletedItem);
+                                              } else {
+                                                displayToastWithContext(
+                                                    TypeMsg.error,
+                                                    LoanTextConstants
+                                                        .deletingError);
+                                              }
+                                            });
+                                          },
+                                          title: LoanTextConstants.delete);
+                                    });
+                              },
+                              onEdit: () {
+                                pageNotifier.setLoanPage(LoanPage.addEditItem);
+                                itemNotifier.setItem(e);
+                              },
+                            )),
+                        const SizedBox(width: 10),
+                      ],
+                    ),
+                  ));
             },
             error: (Object error, StackTrace? stackTrace) {
               return Center(child: Text('Error $error'));

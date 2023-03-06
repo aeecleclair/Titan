@@ -14,6 +14,7 @@ import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
 import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/web_list_view.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -26,10 +27,6 @@ class MainPage extends HookConsumerWidget {
     final loanListNotifier = ref.watch(loanListProvider.notifier);
     final isAdmin = ref.watch(isLoanAdmin);
 
-    final outerController = useScrollController();
-    final innerController = useScrollController();
-    final outerController2 = useScrollController();
-    final innerController2 = useScrollController();
     ref.watch(adminLoanListProvider);
     ref.watch(itemListProvider);
     ref.watch(loanerLoanListProvider);
@@ -77,50 +74,28 @@ class MainPage extends HookConsumerWidget {
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
-                        height: 190,
-                        child: ListView(
-                            controller: outerController2,
-                            clipBehavior: Clip.none,
-                            children: [
-                              Listener(
-                                  onPointerSignal: (event) {
-                                    if (event is PointerScrollEvent) {
-                                      final offset = event.scrollDelta.dy;
-                                      innerController2.jumpTo(
-                                          innerController2.offset + offset);
-                                      outerController2.jumpTo(
-                                          outerController2.offset - offset);
-                                    }
-                                  },
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    controller: innerController2,
-                                    clipBehavior: Clip.none,
-                                    physics: const BouncingScrollPhysics(),
-                                    child: Row(
-                                      children: [
-                                        const SizedBox(width: 10),
-                                        ...dictCateListWidget[0]
-                                            .map((e) => LoanCard(
-                                                  loan: e,
-                                                  isAdmin: false,
-                                                  isDetail: false,
-                                                  onEdit: () {},
-                                                  onCalendar: () async {},
-                                                  onReturn: () async {},
-                                                  onInfo: () {
-                                                    loanNotifier.setLoan(e);
-                                                    pageNotifier.setLoanPage(
-                                                        LoanPage
-                                                            .detailLoanFromMain);
-                                                  },
-                                                )),
-                                        const SizedBox(width: 10),
-                                      ],
-                                    ),
-                                  ))
-                            ]),
-                      )
+                          height: 190,
+                          child: WebListView(
+                            child: Row(
+                              children: [
+                                const SizedBox(width: 10),
+                                ...dictCateListWidget[0].map((e) => LoanCard(
+                                      loan: e,
+                                      isAdmin: false,
+                                      isDetail: false,
+                                      onEdit: () {},
+                                      onCalendar: () async {},
+                                      onReturn: () async {},
+                                      onInfo: () {
+                                        loanNotifier.setLoan(e);
+                                        pageNotifier.setLoanPage(
+                                            LoanPage.detailLoanFromMain);
+                                      },
+                                    )),
+                                const SizedBox(width: 10),
+                              ],
+                            ),
+                          ))
                     ])
                   : (dictCateListWidget[1].isEmpty)
                       ? SizedBox(
@@ -160,49 +135,29 @@ class MainPage extends HookConsumerWidget {
                   const SizedBox(height: 10),
                   SizedBox(
                       height: 190,
-                      child: ListView(
-                          controller: outerController,
-                          clipBehavior: Clip.none,
+                      child: WebListView(
+                        child: Row(
                           children: [
-                            Listener(
-                                onPointerSignal: (event) {
-                                  if (event is PointerScrollEvent) {
-                                    final offset = event.scrollDelta.dy;
-                                    innerController.jumpTo(
-                                        innerController.offset + offset);
-                                    outerController.jumpTo(
-                                        outerController.offset - offset);
-                                  }
-                                },
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  controller: innerController,
-                                  clipBehavior: Clip.none,
-                                  physics: const BouncingScrollPhysics(),
-                                  child: Row(
-                                    children: [
-                                      const SizedBox(width: 10),
-                                      ...dictCateListWidget[1]
-                                          .map((e) => LoanCard(
-                                                loan: e,
-                                                isAdmin: false,
-                                                isDetail: false,
-                                                onEdit: () {},
-                                                onCalendar: () async {},
-                                                onReturn: () async {},
-                                                onInfo: () {
-                                                  loanNotifier.setLoan(e);
-                                                  pageNotifier.setLoanPage(
-                                                      LoanPage
-                                                          .detailLoanFromMain);
-                                                },
-                                              ))
-                                          .toList(),
-                                      const SizedBox(width: 10),
-                                    ],
-                                  ),
-                                ))
-                          ]))
+                            const SizedBox(width: 10),
+                            ...dictCateListWidget[1]
+                                .map((e) => LoanCard(
+                                      loan: e,
+                                      isAdmin: false,
+                                      isDetail: false,
+                                      onEdit: () {},
+                                      onCalendar: () async {},
+                                      onReturn: () async {},
+                                      onInfo: () {
+                                        loanNotifier.setLoan(e);
+                                        pageNotifier.setLoanPage(
+                                            LoanPage.detailLoanFromMain);
+                                      },
+                                    ))
+                                .toList(),
+                            const SizedBox(width: 10),
+                          ],
+                        ),
+                      ))
                 ])
             ])),
         if (isAdmin)

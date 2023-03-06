@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/web_list_view.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
 import 'package:myecl/vote/providers/pretendance_members.dart';
@@ -31,8 +32,7 @@ class SectionPretendenceItems extends HookConsumerWidget {
     final sectionPretendanceListNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
     final pretendanceNotifier = ref.watch(pretendanceProvider.notifier);
-    final outerController = useScrollController();
-    final innerController = useScrollController();
+
     final asyncStatus = ref.watch(statusProvider);
     Status status = Status.open;
     asyncStatus.whenData((value) => status = value);
@@ -47,138 +47,112 @@ class SectionPretendenceItems extends HookConsumerWidget {
           if (sections[section] != null) {
             return sections[section]!.when(
                 data: (data) => SizedBox(
-                  height: 190,
-                  child: ListView(
-                          controller: outerController,
-                          clipBehavior: Clip.none,
+                      height: 190,
+                      child: WebListView(
+                        child: Row(
                           children: [
-                            Listener(
-                              onPointerSignal: (event) {
-                                if (event is PointerScrollEvent) {
-                                  final offset = event.scrollDelta.dy;
-                                  innerController
-                                      .jumpTo(innerController.offset + offset);
-                                  outerController
-                                      .jumpTo(outerController.offset - offset);
-                                }
-                              },
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                controller: innerController,
-                                clipBehavior: Clip.none,
-                                physics: const BouncingScrollPhysics(),
-                                child: Row(
-                                  children: [
-                                    const SizedBox(width: 10),
-                                    if (status == Status.waiting)
-                                      GestureDetector(
-                                        onTap: () {
-                                          pretendanceNotifier
-                                              .setId(Pretendance.empty());
-                                          membersNotifier.setMembers([]);
-                                          pageNotifier.setVotePage(
-                                              VotePage.addEditPretendance);
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.all(15.0),
-                                          child: Container(
-                                            width: 120,
-                                            height: 180,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.grey.shade200
-                                                      .withOpacity(0.5),
-                                                  spreadRadius: 5,
-                                                  blurRadius: 10,
-                                                  offset: const Offset(3, 3),
-                                                ),
-                                                BoxShadow(
-                                                  color: Colors.grey.shade200
-                                                      .withOpacity(0.5),
-                                                  spreadRadius: 5,
-                                                  blurRadius: 10,
-                                                  offset: const Offset(3, 3),
-                                                ),
-                                              ],
-                                            ),
-                                            child: const Center(
-                                                child: HeroIcon(
-                                              HeroIcons.plus,
-                                              size: 40.0,
-                                              color: Colors.black,
-                                            )),
-                                          ),
+                            const SizedBox(width: 10),
+                            if (status == Status.waiting)
+                              GestureDetector(
+                                onTap: () {
+                                  pretendanceNotifier
+                                      .setId(Pretendance.empty());
+                                  membersNotifier.setMembers([]);
+                                  pageNotifier
+                                      .setVotePage(VotePage.addEditPretendance);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Container(
+                                    width: 120,
+                                    height: 180,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(30),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.shade200
+                                              .withOpacity(0.5),
+                                          spreadRadius: 5,
+                                          blurRadius: 10,
+                                          offset: const Offset(3, 3),
                                         ),
-                                      ),
-                                    ...data
-                                        .map((e) => PretendanceCard(
-                                              pretendance: e,
-                                              isAdmin: true,
-                                              isDetail: false,
-                                              onEdit: () {
-                                                tokenExpireWrapper(ref, () async {
-                                                  pretendanceNotifier.setId(e);
-                                                  membersNotifier
-                                                      .setMembers(e.members);
-                                                  pageNotifier.setVotePage(
-                                                      VotePage
-                                                          .addEditPretendance);
-                                                });
-                                              },
-                                              onDelete: () async {
-                                                await showDialog(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return CustomDialogBox(
-                                                          title: VoteTextConstants
-                                                              .deletePretendance,
-                                                          descriptions:
-                                                              VoteTextConstants
-                                                                  .deletePretendanceDesc,
-                                                          onYes: () {
-                                                            tokenExpireWrapper(
-                                                                ref, () async {
-                                                              final value =
-                                                                  await pretendanceListNotifier
-                                                                      .deletePretendance(
-                                                                          e);
-                                                              if (value) {
-                                                                displayVoteToastWithContext(
-                                                                    TypeMsg.msg,
-                                                                    VoteTextConstants
-                                                                        .pretendanceDeleted);
-                                                                pretendanceListNotifier
-                                                                    .copy()
-                                                                    .then(
-                                                                        (value) {
-                                                                  sectionPretendanceListNotifier
-                                                                      .setTData(
-                                                                          section,
-                                                                          value);
-                                                                });
-                                                              } else {
-                                                                displayVoteToastWithContext(
-                                                                    TypeMsg.error,
-                                                                    VoteTextConstants
-                                                                        .pretendanceNotDeleted);
-                                                              }
-                                                            });
-                                                          });
-                                                    });
-                                              },
-                                            ))
-                                        .toList(),
-                                    const SizedBox(width: 10),
-                                  ],
+                                        BoxShadow(
+                                          color: Colors.grey.shade200
+                                              .withOpacity(0.5),
+                                          spreadRadius: 5,
+                                          blurRadius: 10,
+                                          offset: const Offset(3, 3),
+                                        ),
+                                      ],
+                                    ),
+                                    child: const Center(
+                                        child: HeroIcon(
+                                      HeroIcons.plus,
+                                      size: 40.0,
+                                      color: Colors.black,
+                                    )),
+                                  ),
                                 ),
                               ),
-                            )
-                          ]),
-                ),
+                            ...data
+                                .map((e) => PretendanceCard(
+                                      pretendance: e,
+                                      isAdmin: true,
+                                      isDetail: false,
+                                      onEdit: () {
+                                        tokenExpireWrapper(ref, () async {
+                                          pretendanceNotifier.setId(e);
+                                          membersNotifier.setMembers(e.members);
+                                          pageNotifier.setVotePage(
+                                              VotePage.addEditPretendance);
+                                        });
+                                      },
+                                      onDelete: () async {
+                                        await showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return CustomDialogBox(
+                                                  title: VoteTextConstants
+                                                      .deletePretendance,
+                                                  descriptions: VoteTextConstants
+                                                      .deletePretendanceDesc,
+                                                  onYes: () {
+                                                    tokenExpireWrapper(ref,
+                                                        () async {
+                                                      final value =
+                                                          await pretendanceListNotifier
+                                                              .deletePretendance(
+                                                                  e);
+                                                      if (value) {
+                                                        displayVoteToastWithContext(
+                                                            TypeMsg.msg,
+                                                            VoteTextConstants
+                                                                .pretendanceDeleted);
+                                                        pretendanceListNotifier
+                                                            .copy()
+                                                            .then((value) {
+                                                          sectionPretendanceListNotifier
+                                                              .setTData(section,
+                                                                  value);
+                                                        });
+                                                      } else {
+                                                        displayVoteToastWithContext(
+                                                            TypeMsg.error,
+                                                            VoteTextConstants
+                                                                .pretendanceNotDeleted);
+                                                      }
+                                                    });
+                                                  });
+                                            });
+                                      },
+                                    ))
+                                .toList(),
+                            const SizedBox(width: 10),
+                          ],
+                        ),
+                      ),
+                    ),
                 error: (Object error, StackTrace? stackTrace) {
                   return Center(child: Text('Error $error'));
                 },

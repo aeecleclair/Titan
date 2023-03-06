@@ -10,6 +10,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/adding_user_container.dart';
 import 'package:myecl/amap/ui/pages/admin_page/cash_container.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/web_list_view.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AccountHandler extends HookConsumerWidget {
@@ -29,8 +30,6 @@ class AccountHandler extends HookConsumerWidget {
     if (focus) {
       focusNode.requestFocus();
     }
-    final outerController = useScrollController();
-    final innerController = useScrollController();
 
     return Column(children: [
       Container(
@@ -81,118 +80,92 @@ class AccountHandler extends HookConsumerWidget {
         ),
       ),
       SizedBox(
-          height: 135,
-          child: ListView(
-              controller: outerController,
-              clipBehavior: Clip.none,
-              children: [
-                Listener(
-                  onPointerSignal: (event) {
-                    if (event is PointerScrollEvent) {
-                      final offset = event.scrollDelta.dy;
-                      innerController.jumpTo(innerController.offset + offset);
-                      outerController.jumpTo(outerController.offset - offset);
-                    }
-                  },
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    controller: innerController,
-                    clipBehavior: Clip.none,
-                    physics: const BouncingScrollPhysics(),
-                    child: Row(
-                      children: [
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        Container(
-                            height: 135,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0, vertical: 17),
-                            child: Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                gradient: const RadialGradient(
-                                  colors: [
-                                    AMAPColorConstants.green1,
-                                    AMAPColorConstants.textLight,
-                                  ],
-                                  center: Alignment.topLeft,
-                                  radius: 1.3,
-                                ),
-                                borderRadius: BorderRadius.circular(30),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AMAPColorConstants.textDark
-                                        .withOpacity(0.2),
-                                    spreadRadius: 5,
-                                    blurRadius: 10,
-                                    offset: const Offset(3, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 17.0),
-                                child: !searchingAmapUser
-                                    ? Row(
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              searchingAmapUserNotifier
-                                                  .setProduct(true);
-                                            },
-                                            child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12.0),
-                                              child: const HeroIcon(
-                                                HeroIcons.xMark,
-                                                color: Color.fromARGB(
-                                                    223, 244, 255, 183),
-                                                size: 50,
-                                              ),
-                                            ),
-                                          ),
-                                          AddingUserContainer(onAdd: () async {
-                                            searchingAmapUserNotifier
-                                                .setProduct(true);
-                                          })
-                                        ],
-                                      )
-                                    : GestureDetector(
-                                        onTap: () async {
-                                          searchingAmapUserNotifier
-                                              .setProduct(false);
-                                          if (editingController
-                                              .text.isNotEmpty) {
-                                            await usersNotifier.filterUsers(
-                                                editingController.text);
-                                          } else {
-                                            usersNotifier.clear();
-                                          }
-                                          focusNotifier.setFocus(true);
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 12.0),
-                                          child: const HeroIcon(
-                                            HeroIcons.plus,
-                                            color: Color.fromARGB(
-                                                223, 244, 255, 183),
-                                            size: 50,
-                                          ),
-                                        )),
-                              ),
-                            )),
-                        const CashContainer(),
-                        const SizedBox(
-                          width: 10,
+        height: 135,
+        child: WebListView(
+          child: Row(
+            children: [
+              const SizedBox(
+                width: 15,
+              ),
+              Container(
+                  height: 135,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 17),
+                  child: Container(
+                    height: 100,
+                    decoration: BoxDecoration(
+                      gradient: const RadialGradient(
+                        colors: [
+                          AMAPColorConstants.green1,
+                          AMAPColorConstants.textLight,
+                        ],
+                        center: Alignment.topLeft,
+                        radius: 1.3,
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AMAPColorConstants.textDark.withOpacity(0.2),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset: const Offset(3, 3),
                         ),
                       ],
                     ),
-                  ),
-                )
-              ]))
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                      child: !searchingAmapUser
+                          ? Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    searchingAmapUserNotifier.setProduct(true);
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12.0),
+                                    child: const HeroIcon(
+                                      HeroIcons.xMark,
+                                      color: Color.fromARGB(223, 244, 255, 183),
+                                      size: 50,
+                                    ),
+                                  ),
+                                ),
+                                AddingUserContainer(onAdd: () async {
+                                  searchingAmapUserNotifier.setProduct(true);
+                                })
+                              ],
+                            )
+                          : GestureDetector(
+                              onTap: () async {
+                                searchingAmapUserNotifier.setProduct(false);
+                                if (editingController.text.isNotEmpty) {
+                                  await usersNotifier
+                                      .filterUsers(editingController.text);
+                                } else {
+                                  usersNotifier.clear();
+                                }
+                                focusNotifier.setFocus(true);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
+                                child: const HeroIcon(
+                                  HeroIcons.plus,
+                                  color: Color.fromARGB(223, 244, 255, 183),
+                                  size: 50,
+                                ),
+                              )),
+                    ),
+                  )),
+              const CashContainer(),
+              const SizedBox(
+                width: 10,
+              ),
+            ],
+          ),
+        ),
+      )
     ]);
   }
 }
