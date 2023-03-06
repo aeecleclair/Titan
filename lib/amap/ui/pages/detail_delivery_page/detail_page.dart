@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/cash_provider.dart';
+import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_provider.dart';
@@ -20,6 +21,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final delivery = ref.watch(deliveryProvider);
     final deliveryOrders = ref.watch(adminDeliveryOrderListProvider);
+    final deliveryListNotifier = ref.read(deliveryListProvider.notifier);
     final deliveryProductListNotifier =
         ref.watch(deliveryProductListProvider.notifier);
     final sortedByCategoryDeliveryProducts =
@@ -28,6 +30,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
     return Refresher(
       onRefresh: () async {
         await deliveryProductListNotifier.loadProductList(delivery.products);
+        await deliveryListNotifier.loadDeliveriesList();
       },
       child: Column(
         children: [
@@ -159,6 +162,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                               return DetailOrderUI(
                                 order: e,
                                 userCash: userCash,
+                                deliveryId: delivery.id,
                               );
                             }).toList(),
                           );

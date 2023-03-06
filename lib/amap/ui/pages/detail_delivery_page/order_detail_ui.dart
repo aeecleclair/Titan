@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/class/order.dart';
+import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/ui/dialog.dart';
@@ -14,15 +15,19 @@ import 'package:myecl/tools/ui/shrink_button.dart';
 class DetailOrderUI extends HookConsumerWidget {
   final Order order;
   final Cash userCash;
+  final String deliveryId;
   const DetailOrderUI({
     super.key,
     required this.order,
     required this.userCash,
+    required this.deliveryId,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
+    final deliveryOrdersNotifier =
+        ref.watch(adminDeliveryOrderListProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -131,10 +136,15 @@ class DetailOrderUI extends HookConsumerWidget {
                           descriptions: AMAPTextConstants.deletingOrder,
                           onYes: () async {
                             await tokenExpireWrapper(ref, () async {
-                              orderListNotifier
+                              await orderListNotifier
                                   .deleteOrder(order)
                                   .then((value) {
                                 if (value) {
+                                  orderListNotifier.copy().then((value) {
+                                    print(value);
+                                    deliveryOrdersNotifier.setTData(
+                                        deliveryId, value);
+                                  });
                                   displayToastWithContext(TypeMsg.msg,
                                       AMAPTextConstants.deletedOrder);
                                 } else {
