@@ -78,14 +78,12 @@ class CreateAccountPage extends HookConsumerWidget {
             formKey: formKeys[1],
             keyboardType: TextInputType.visiblePassword,
           ),
-          const SizedBox(
-            height: 15,
-          ),
+          const Spacer(),
           PasswordStrength(
             newPassword: password,
-            whiteBar: true,
             textColor: ColorConstants.background2,
-          )
+          ),
+          const Spacer(),
         ],
       ),
       CreateAccountField(

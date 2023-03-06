@@ -15,7 +15,7 @@ class RoomRepository extends Repository {
   }
 
   Future<bool> updateRoom(Room room) async {
-    return await update(room.toJson(), "");
+    return await update(room.toJson(), "/${room.id}");
   }
 
   Future<bool> deleteRoom(String roomId) async {

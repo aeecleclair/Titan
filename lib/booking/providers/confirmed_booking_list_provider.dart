@@ -29,6 +29,14 @@ class ConfirmedBookingListProvider extends ListNotifier<Booking> {
         booking.id,
         booking);
   }
+
+  Future<bool> updateBooking(Booking booking) async {
+    return await update(
+        (_) async => true,
+        (bookings, booking) => bookings
+          ..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
+        booking);
+  }
 }
 
 final confirmedBookingListProvider = StateNotifierProvider<

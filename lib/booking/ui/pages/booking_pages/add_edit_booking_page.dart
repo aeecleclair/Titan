@@ -7,6 +7,7 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
+import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
@@ -34,6 +35,7 @@ class AddEditBookingPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
     final usersBookingsNotifier = ref.watch(userBookingListProvider.notifier);
+    final confirmedBookingListNotifier = ref.watch(confirmedBookingListProvider.notifier);
     final bookingsNotifier = ref.watch(bookingListProvider.notifier);
     final bookings = ref.watch(bookingListProvider);
     final booking = ref.watch(bookingProvider);
@@ -584,7 +586,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   note: note.text,
                                   room: room.value,
                                   key: keyRequired.value,
-                                  decision: Decision.pending,
+                                  decision: booking.decision,
                                   recurrenceRule: recurrenceRule,
                                   entity: entity.text,
                                   applicant: user.toApplicant(),
@@ -602,18 +604,27 @@ class AddEditBookingPage extends HookConsumerWidget {
                                       .setBookingPage(BookingPage.admin);
                                 }
                                 if (isEdit) {
-                                  await usersBookingsNotifier
-                                      .updateBooking(newBooking);
+                                  if (booking.decision ==
+                                      Decision.approved) {
+                                    await confirmedBookingListNotifier
+                                        .updateBooking(newBooking);
+                                  }
+                                  if (page == BookingPage.addEditBooking) {
+                                    await usersBookingsNotifier
+                                        .updateBooking(newBooking);
+                                  }
                                   displayToastWithContext(TypeMsg.msg,
                                       BookingTextConstants.editedBooking);
                                 } else {
-                                  newBooking = bookings.when(
-                                      data: (value) => value.last,
-                                      error: (e, s) => Booking.empty(),
-                                      loading: () => Booking.empty());
-                                  if (newBooking.id != Booking.empty().id) {
-                                    await usersBookingsNotifier
-                                        .addBooking(newBooking);
+                                  if (page == BookingPage.addEditBooking) {
+                                    newBooking = bookings.when(
+                                        data: (value) => value.last,
+                                        error: (e, s) => Booking.empty(),
+                                        loading: () => Booking.empty());
+                                    if (newBooking.id != Booking.empty().id) {
+                                      await usersBookingsNotifier
+                                          .addBooking(newBooking);
+                                    }
                                   }
                                   displayToastWithContext(TypeMsg.msg,
                                       BookingTextConstants.addedBooking);
@@ -671,7 +682,7 @@ class AddEditBookingPage extends HookConsumerWidget {
       BuildContext context, TextEditingController dateController) async {
     final DateTime now = DateTime.now();
     final DateTime? picked = await showDatePicker(
-    locale: const Locale("fr", "FR"),
+        locale: const Locale("fr", "FR"),
         context: context,
         initialDate: now,
         firstDate: now,

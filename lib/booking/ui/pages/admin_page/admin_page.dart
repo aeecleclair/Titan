@@ -5,6 +5,7 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
@@ -54,6 +55,8 @@ class AdminPage extends HookConsumerWidget {
       child: Refresher(
         onRefresh: () async {
           await ref.watch(bookingListProvider.notifier).loadBookings();
+          await ref.watch(roomListProvider.notifier).loadRooms();
+          await ref.watch(confirmedBookingListProvider.notifier).loadConfirmedBooking();
         },
         child: Column(
           children: [
