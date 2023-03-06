@@ -24,7 +24,7 @@ class ProductCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       child: Container(
         width: 130,
-        height: 145,
+        height: showButton ? 160 : 130,
         decoration: BoxDecoration(
           gradient: const RadialGradient(
             colors: [

@@ -47,7 +47,7 @@ class ProductHandler extends HookConsumerWidget {
           height: 10,
         ),
         SizedBox(
-          height: 150,
+          height: 185,
           child: WebListView(
             child: Row(children: [
               const SizedBox(
@@ -63,7 +63,6 @@ class ProductHandler extends HookConsumerWidget {
                     padding: const EdgeInsets.all(12.0),
                     child: Container(
                       width: 100,
-                      height: 145,
                       decoration: BoxDecoration(
                         gradient: const RadialGradient(
                           colors: [
