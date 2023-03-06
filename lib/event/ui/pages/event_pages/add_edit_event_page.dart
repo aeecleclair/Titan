@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/event/ui/pages/event_pages/checkbox_entry.dart';
 import 'package:myecl/event/class/event.dart';
@@ -35,13 +36,14 @@ class AddEditEventPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(eventPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final eventListNotifier = ref.watch(eventEventListProvider.notifier);
-    final eventType = useState(CalendarEventType.happyHour);
+    final eventType = useState(event.type);
     final name = useTextEditingController(text: event.name);
     final organizer = useTextEditingController(text: event.organizer);
     final location = useTextEditingController(text: event.location);
     final description = useTextEditingController(text: event.description);
-    final roomId = useState(event.roomId);
     final allDay = useState(event.allDay);
+    final roomId = useState(Room.empty().id);
+    final isRoom = useState(false);
     final recurrent = useState(event.recurrenceRule != ""
         ? event.recurrenceRule.contains("BYDAY")
         : false);
@@ -64,7 +66,17 @@ class AddEditEventPage extends HookConsumerWidget {
             : "");
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
-    final isRoom = useState(false);
+    final id = rooms.when(
+        data: (data) => data
+            .firstWhere(
+              (element) => element.name == event.location,
+              orElse: () => Room.empty(),
+            )
+            .id,
+        loading: () => "",
+        error: (e, s) => "");
+    roomId.value = id;
+    isRoom.value = roomId.value != Room.empty().id;
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -651,9 +663,10 @@ class AddEditEventPage extends HookConsumerWidget {
                                   (start.text.compareTo(end.text) > 0)) {
                                 displayToast(context, TypeMsg.error,
                                     EventTextConstants.invalidDates);
-                              } else if (recurrent.value && selectedDays
-                                  .where((element) => element)
-                                  .isEmpty) {
+                              } else if (recurrent.value &&
+                                  selectedDays
+                                      .where((element) => element)
+                                      .isEmpty) {
                                 displayToast(context, TypeMsg.error,
                                     EventTextConstants.noDaySelected);
                               } else {
@@ -784,7 +797,7 @@ class AddEditEventPage extends HookConsumerWidget {
       BuildContext context, TextEditingController dateController) async {
     final DateTime now = DateTime.now();
     final DateTime? picked = await showDatePicker(
-    locale: const Locale("fr", "FR"),
+        locale: const Locale("fr", "FR"),
         context: context,
         initialDate: now,
         firstDate: now,

@@ -43,7 +43,6 @@ class MyApp extends HookConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [Locale('en'), Locale('fr')],
-      
       theme: ThemeData(
           primarySwatch: Colors.orange,
           textTheme: GoogleFonts.latoTextTheme(

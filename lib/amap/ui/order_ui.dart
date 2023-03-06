@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/providers/order_provider.dart';

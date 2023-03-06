@@ -123,12 +123,17 @@ class Event {
     end = DateTime.now();
     allDay = false;
     location = '';
-    type = CalendarEventType.eventAE;
+    type = CalendarEventType.happyHour;
     description = '';
     recurrenceRule = '';
     applicantId = '';
     applicant = Applicant.empty();
     decision = Decision.pending;
     roomId = '';
+  }
+
+  @override
+  String toString() {
+    return 'Event{id: $id, name: $name, organizer: $organizer, start: $start, end: $end, allDay: $allDay, location: $location, type: $type, description: $description, recurrenceRule: $recurrenceRule, applicantId: $applicantId, applicant: $applicant, decision: $decision, roomId: $roomId}';
   }
 }
