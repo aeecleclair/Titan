@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class PrizeCard extends HookConsumerWidget{ 
-  const PrizeCard({
+class PrizeCardEdit extends HookConsumerWidget{ 
+  const PrizeCardEdit({
     Key? key,
     required this.color,
   }) : super(key: key);
@@ -41,6 +41,6 @@ class PrizeCard extends HookConsumerWidget{
   }
 }
 
-class RowOfPrize{ //Recois des images (ou des wiget LotsCard ? ) de Lots en arguments renvoie la Row des (3?) lots
+class RowOfLots{ //Recois des images (ou des wiget LotsCard ? ) de Lots en arguments renvoie la Row des (3?) lots
 
 }

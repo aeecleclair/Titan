@@ -22,9 +22,9 @@ class AddButton extends StatelessWidget {
           decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(125, 3, 2, 69),
+                  color: Color.fromARGB(125, 63, 2, 9),
                   spreadRadius: 0,
-                  blurRadius: 8,
+                  blurRadius: 6,
                   blurStyle: BlurStyle.outer,
                 ),
               ],

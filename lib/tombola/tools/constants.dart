@@ -5,8 +5,8 @@ import 'package:myecl/tools/constants.dart';
 class TombolaColorConstants extends ColorConstants {
 
   
-  static final Color lightGradientBlueButton = Color.fromARGB(255, 90, 176, 246);
-  static final Color darkGradientBlueButton = Color.fromARGB(255, 2, 42, 153);
+  static final Color lightGradientBlueButton = Color.fromARGB(255, 192, 6, 18);
+  static final Color darkGradientBlueButton = Color.fromARGB(255, 97, 15, 0);
   static final Color writtenDark = Color.fromARGB(255, 10, 9, 30);
   static final Color writtenWhite = Color(0xfffafaeb);
 
@@ -30,11 +30,14 @@ class TombolaTextConstants {
   static const String takeTickets =  "Prendre vos tickets";
 
   //Create Home
-  static const String modifTombola = "Vous pouvez proposez de modifiez vos tombolas ou proposez à ??? d'en créer de nouvelles";
+  static const String modifTombola = "Vous pouvez modifiez vos tombolas ou en créer de nouvelles, toute décision doit ensuite être prise par les admins";
+  static const String createYourRaffle = "Votre menu de création de tombolas";
   //Add Edit Page
   static const String possiblePrice = "Prix possible";
 
   static const String  information = "Information et Statistiques";
+
+
 
   
 }

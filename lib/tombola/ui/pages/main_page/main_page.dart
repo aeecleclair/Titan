@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
+import '../../../class/raffle.dart';
 import '../../../providers/tombola_page_provider.dart';
 
 import 'carte_ticket.dart';
@@ -19,7 +20,7 @@ class MainPage extends HookConsumerWidget {
     final eventListNotifier = ref.watch(raffleListProvider.notifier);
     final tombolas = ref.watch(raffleListProvider);
     return Container(
-      margin: EdgeInsets.only(top: 15),
+      margin: const EdgeInsets.only(top: 15),
       child: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
@@ -27,7 +28,7 @@ class MainPage extends HookConsumerWidget {
               child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
+              const SizedBox(
                   width: 100,
                   child: Center(
                       child: Text(TombolaTextConstants.tickets,
@@ -37,7 +38,7 @@ class MainPage extends HookConsumerWidget {
                   onTap: () {
                     pageNotifier.setTombolaPage(TombolaPage.create);
                   },
-                  child: SizedBox(
+                  child: const SizedBox(
                       width: 200,
                       child:
                           PersoButton(text: TombolaTextConstants.createMenu))),
@@ -67,42 +68,43 @@ class MainPage extends HookConsumerWidget {
                         ],
                       )))),
           Column(
-            children: [
-              tombolas.when(data: (tombola) {
-                return Text("tombola :  $tombola");
+            children: tombolas.when(data: (tombolas) {
+                return tombolas.map((e) =>  Text("tombola :  ${e.toJson()['name']}")).toList();
               }, loading: () {
-                return const Center(
+                 return [const Center(
                   child: CircularProgressIndicator(
                     color: Colors.blue,
                   ),
-                );
+                )];
               }, error: (error, stack) {
-                return Center(
+                 return [Center(
                   child: Text("Error $error"),
-                );
+                )];
               })
-            ],
+            
           ),
-          Column(children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
             Container(
-              margin: EdgeInsets.only(bottom: 10, top: 20),
-              child: Text(
+              margin: const EdgeInsets.only(bottom: 10, top: 20,left:5),
+              child: const Text(
                 TombolaTextConstants.actualTombolas,
                 style: TextStyle(fontSize: 30),
               ),
             ),
-            TombolaWidget(name: "Tombola Soli Sida", color: Color(0xffbd7efe)),
-            TombolaWidget(
-                name: "Tombola 2", color: Color.fromARGB(255, 247, 219, 6)),
+            
+            const TombolaWidget(name: "Tombola Soli Sida"),
+            const TombolaWidget(
+                name: "Tombola 2"),
             Container(
-              margin: EdgeInsets.only(bottom: 10, top: 30),
-              child: Text(
+              margin: const EdgeInsets.only(bottom: 10, top: 30,left:5),
+              child: const Text(
                 TombolaTextConstants.pastTombolas,
                 style: TextStyle(fontSize: 30),
               ),
             ),
-            TombolaWidget(name: "Tombola 3", color: Colors.blue),
-            TombolaWidget(name: "Tombola 4", color: Color(0xffed7ede)),
+            const TombolaWidget(name: "Tombola 3"),
+            const TombolaWidget(name: "Tombola 4"),
           ]),
         ],
       ),
