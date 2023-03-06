@@ -51,7 +51,7 @@ class EventUi extends ConsumerWidget {
         },
         child: Container(
             margin: EdgeInsets.symmetric(
-                horizontal: isDetailPage ? 20 : 40.0, vertical: 15),
+                horizontal: isDetailPage ? 20 : 40.0, vertical: 10),
             width: 250,
             decoration: BoxDecoration(
                 gradient: LinearGradient(

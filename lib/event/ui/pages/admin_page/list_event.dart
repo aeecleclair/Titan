@@ -73,7 +73,7 @@ class ListEvent extends HookConsumerWidget {
               )),
           if (toggle.value)
             SizedBox(
-                height: 200,
+                height: 215,
                 child: WebListView(
                   child: Row(
                     children: [
