@@ -4,7 +4,7 @@ import 'package:myecl/tools/repository/repository.dart';
 class RaffleRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "raffles";
+  final ext = "tombola/raffles";
 
   Future<List<Raffle>> getRaffleList(raffleId) async {
     return List<Raffle>.from((await getList(suffix: "$raffleId/items"))

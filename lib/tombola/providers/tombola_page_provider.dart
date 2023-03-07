@@ -7,7 +7,9 @@ enum TombolaPage {
   addEdit,
   admin,
 }
-final tombolaPageProvider = StateNotifierProvider<TombolaPageNotifier, TombolaPage>((ref) {
+
+final tombolaPageProvider =
+    StateNotifierProvider<TombolaPageNotifier, TombolaPage>((ref) {
   return TombolaPageNotifier();
 });
 
