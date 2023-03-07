@@ -22,7 +22,7 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
     return state = AsyncData([
       Raffle(id: '1', name: 'Tombola Soli Sida', startDate: DateTime.now().subtract(Duration(days: 15)), groupId: '', endDate: DateTime.now().add(Duration(days: 2)), ),
       Raffle(id: '2', name: 'Tombola Test', startDate: DateTime.now().subtract(Duration(days: 1)), groupId: '', endDate: DateTime.now().add(Duration(days: 20)), ),
-      Raffle(id: '3', name: 'Tombola Test2', startDate: DateTime.now().add(Duration(days: 10)), groupId: '', endDate: DateTime.now().add(Duration(days: 32)), ),
+      Raffle(id: 'azertyuiop', name: 'Tombola Test2', startDate: DateTime.now().add(Duration(days: 10)), groupId: '', endDate: DateTime.now().add(Duration(days: 32)), ),
     ]);
   }
 }

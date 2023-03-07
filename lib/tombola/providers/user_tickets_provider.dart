@@ -21,9 +21,33 @@ class UserTicketListNotifier extends ListNotifier<Ticket> {
     // return await loadList(
     //     () async => _ticketsRepository.getTicketsListbyUserId(userId));
     return state = AsyncData([
-      Ticket(id: '1', typeId: '', winningLot: '', userId: ''),
-      Ticket(id: '2', typeId: '', winningLot: '', userId: ''),
-      Ticket(id: '3', typeId: '', winningLot: '', userId: '')
+      Ticket(
+        id: '1',
+        typeId: '1',
+        winningLot: '',
+        userId: '',
+        raffleId: "1",
+        price: 1,
+        nbTicket: 1,
+      ),
+      Ticket(
+        id: '2',
+        typeId: '2',
+        winningLot: '',
+        userId: '',
+        raffleId: "1",
+        price: 2,
+        nbTicket: 3,
+      ),
+      Ticket(
+        id: '3',
+        typeId: '3',
+        winningLot: '',
+        userId: '',
+        raffleId: "azertyuiop",
+        price: 20,
+        nbTicket: 50,
+      )
     ]);
   }
 }

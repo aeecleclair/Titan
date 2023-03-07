@@ -18,6 +18,7 @@ class TombolaTextConstants {
   static const String tickets = "Tous vos tickets";
   static const String createMenu = "Menu de Création";
   static const String nextTombolas = "Prochaines tombolas";
+  static const String noTicket = "Vous n'avez pas de ticket";
 
   //Tombola page
   static const String majorPrize = "Lots Majeurs";
@@ -31,5 +32,6 @@ class TombolaTextConstants {
   static const String possiblePrice = "Prix possible";
 
   static const String information = "Information et Statistiques";
+
 
 }

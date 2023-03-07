@@ -18,8 +18,15 @@ class TypeTicketsListNotifier extends ListNotifier<TypeTicket> {
 
   Future<AsyncValue<List<TypeTicket>>> loadTypeTicketList(
       String raffleId) async {
-    return await loadList(
-        () async => _typeTicketsRepository.getTypeTicketsList(raffleId));
+    // return await loadList(
+    //     () async => _typeTicketsRepository.getTypeTicketsList(raffleId));
+    return state = AsyncData([
+      TypeTicket(raffleId: "1", price: 1, nbTicket: 1, id: "1"),
+      TypeTicket(raffleId: "1", price: 2, nbTicket: 3, id: "2"),
+      TypeTicket(raffleId: "1", price: 5, nbTicket: 10, id: "3"),
+      TypeTicket(raffleId: "1", price: 10, nbTicket: 25, id: "4"),
+      TypeTicket(raffleId: "1", price: 20, nbTicket: 50, id: "5"),
+    ]);
   }
 
   Future<bool> addTypeTicket(TypeTicket typeTicket) async {
