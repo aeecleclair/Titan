@@ -2,26 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TicketWidget extends HookConsumerWidget {
-  const TicketWidget({
-    Key? key,
-    required this.color,
-  }) : super(key: key);
   final Color color;
+  const TicketWidget({Key? key, required this.color}) : super(key: key);
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Stack(children: [
       Container(
         width: 150,
         height: 200,
-        margin: const EdgeInsets.symmetric(horizontal: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 15),
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: color,
+                color: color.withOpacity(0.3),
                 blurRadius: 8,
-                blurStyle:BlurStyle.outer,
+                offset: const Offset(2, 3),
               ),
             ],
             gradient: LinearGradient(

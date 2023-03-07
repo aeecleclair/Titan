@@ -19,6 +19,9 @@ class MainPage extends HookConsumerWidget {
       child: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
+          const SizedBox(
+            height: 10,
+          ),
           Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: const Align(
@@ -37,7 +40,7 @@ class MainPage extends HookConsumerWidget {
               scrollDirection: Axis.horizontal,
               child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 15),
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: const [
                       TicketWidget(
