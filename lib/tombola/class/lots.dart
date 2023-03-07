@@ -9,8 +9,8 @@ class Lots {
   late final String raffleId;
   late final String description;
   late final int quantity;
-  
-  Lots.fromJson(Map<String, dynamic> json){
+
+  Lots.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     raffleId = json['raffle_id'];
     description = json['description'];
@@ -18,11 +18,11 @@ class Lots {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['raffle_id'] = raffleId;
-    _data['description'] = description;
-    _data['quantity'] = quantity;
-    return _data;
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['raffle_id'] = raffleId;
+    data['description'] = description;
+    data['quantity'] = quantity;
+    return data;
   }
 }

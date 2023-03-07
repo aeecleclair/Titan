@@ -1,20 +1,20 @@
 class Cash {
   Cash({
     required this.balance,
-    required this.user_id,
+    required this.userId,
   });
   late final double balance;
-  late final String user_id;
+  late final String userId;
 
   Cash.fromJson(Map<String, dynamic> json) {
     balance = json['balance'];
-    user_id = json['user_id'];
+    userId = json['userId'];
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['user_id'] = user_id;
-    _data['balance'] = balance;
-    return _data;
+    final data = <String, dynamic>{};
+    data['userId'] = userId;
+    data['balance'] = balance;
+    return data;
   }
 }

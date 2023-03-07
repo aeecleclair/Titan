@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/ui/page_switcher.dart';
 import 'package:myecl/tombola/ui/top_bar.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 
-import '../providers/tombola_page_provider.dart';
 
 class TombolaHomePage extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -34,7 +34,6 @@ class TombolaHomePage extends HookConsumerWidget {
               break;
             case TombolaPage.admin:
               pageNotifier.setTombolaPage(TombolaPage.main);
-              break;
               break;
             case TombolaPage.addEdit:
               pageNotifier.setTombolaPage(TombolaPage.admin);

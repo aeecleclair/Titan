@@ -16,11 +16,12 @@ class AddButton extends StatelessWidget {
           height: size,
         ),
         Container(
-          padding: EdgeInsets.only(left: size/2.1,right:size/2.1,bottom:size/10),
+          padding: EdgeInsets.only(
+              left: size / 2.1, right: size / 2.1, bottom: size / 10),
           margin:
               const EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
           decoration: BoxDecoration(
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Color.fromARGB(125, 63, 2, 9),
                   spreadRadius: 0,
@@ -28,7 +29,7 @@ class AddButton extends StatelessWidget {
                   blurStyle: BlurStyle.outer,
                 ),
               ],
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [

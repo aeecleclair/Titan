@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PrizeCard extends HookConsumerWidget{ 
@@ -21,7 +20,7 @@ class PrizeCard extends HookConsumerWidget{
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: this.color,
+                color: color,
                 spreadRadius: 0,
                 blurRadius: 8,
                 blurStyle:BlurStyle.outer,
@@ -31,8 +30,8 @@ class PrizeCard extends HookConsumerWidget{
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                this.color.withOpacity(0.4),
-                this.color,
+                color.withOpacity(0.4),
+                color,
               ],
               stops: const [0, 0.8],
             ),
