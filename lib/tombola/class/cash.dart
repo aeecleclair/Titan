@@ -17,4 +17,22 @@ class Cash {
     data['balance'] = balance;
     return data;
   }
+
+  Cash.copyWith({
+    double? balance,
+    String? userId,
+  }) {
+    this.balance = balance ?? this.balance;
+    this.userId = userId ?? this.userId;
+  }
+
+  Cash.empty() {
+    balance = 0;
+    userId = '';
+  }
+
+  @override
+  String toString() {
+    return 'Cash{balance: $balance, userId: $userId}';
+  }
 }
