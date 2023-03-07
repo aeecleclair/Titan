@@ -1,4 +1,4 @@
-name: Build Mobile
+name: Builds
 
 on:
   workflow_dispatch:
@@ -11,16 +11,22 @@ on:
   push:
     branches: [main]
 
+permissions: read-all
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-sign-android:
-    name: Build and sign Android
+  build:
+    name: Build ${{ matrix.target }}
     # Skip when PR from a fork
     if: ${{ !github.event.pull_request.head.repo.fork }}
-    runs-on: macos-12
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ["apk --debug", "appbundle --debug", "ios --no-codesign", web]
 
     steps:
       - name: Determine ref
@@ -48,28 +54,10 @@ jobs:
           flutter-version: "3.7.6"
           cache: true
 
-      - name: Create the Keystore
-        env:
-          KEY_JKS: ${{ secrets.KEY_JKS }}e
-        run: echo $KEY_JKS | base64 -d > android/key.jks
-
       - name: Get Packages
         run: flutter pub get
 
-      - name: Build Android App Bundle
-        env:
-          ALIAS: ${{ secrets.ALIAS }}
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
-        run: flutter build apk --release --no-codesign
-
       - name: Build ios app bundle
-        run: flutter build --release --no-codesign
-
-      - name: Publish Android & ios Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-apk
-          path: mobile/build/app/outputs/flutter-apk/app-release.apk
+        run: flutter build ${{ matrix.target }}
 
       
