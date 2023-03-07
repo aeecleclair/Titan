@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/add_button.dart';
-import 'package:myecl/tombola/ui/card_tombolas.dart';
+import 'package:myecl/tombola/ui/pages/main_page/card_tombolas.dart';
 
 
 class CreateHomePage extends HookConsumerWidget {

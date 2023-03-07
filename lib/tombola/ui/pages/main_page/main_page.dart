@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/card_tombolas.dart';
+import 'package:myecl/tombola/ui/pages/main_page/card_tombolas.dart';
 import 'package:myecl/tombola/ui/pages/main_page/carte_ticket.dart';
 
 class MainPage extends HookConsumerWidget {
@@ -19,7 +19,7 @@ class MainPage extends HookConsumerWidget {
         physics: const BouncingScrollPhysics(),
         children: [
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
           Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -57,7 +57,7 @@ class MainPage extends HookConsumerWidget {
                     ],
                   ))),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -96,7 +96,7 @@ class MainPage extends HookConsumerWidget {
                       if (incommingRaffles.isNotEmpty)
                         Container(
                             margin: const EdgeInsets.only(
-                                bottom: 10, top: 30, left: 5),
+                                bottom: 10, top: 20, left: 5),
                             child: const Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(TombolaTextConstants.nextTombolas,
@@ -111,7 +111,7 @@ class MainPage extends HookConsumerWidget {
                       if (pastRaffles.isNotEmpty)
                         Container(
                             margin: const EdgeInsets.only(
-                                bottom: 10, top: 30, left: 5),
+                                bottom: 10, top: 20, left: 5),
                             child: const Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(TombolaTextConstants.pastTombolas,
