@@ -18,8 +18,13 @@ class UserTicketListNotifier extends ListNotifier<Ticket> {
   }
 
   Future<AsyncValue<List<Ticket>>> loadTicketList() async {
-    return await loadList(
-        () async => _ticketsRepository.getTicketsListbyUserId(userId));
+    // return await loadList(
+    //     () async => _ticketsRepository.getTicketsListbyUserId(userId));
+    return state = AsyncData([
+      Ticket(id: '1', typeId: '', winningLot: '', userId: ''),
+      Ticket(id: '2', typeId: '', winningLot: '', userId: ''),
+      Ticket(id: '3', typeId: '', winningLot: '', userId: '')
+    ]);
   }
 }
 
