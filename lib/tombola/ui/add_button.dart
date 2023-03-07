@@ -33,8 +33,8 @@ class AddButton extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  TombolaColorConstants.lightGradientBlueButton,
-                  TombolaColorConstants.darkGradientBlueButton,
+                  TombolaColorConstants.lightGradientButton,
+                  TombolaColorConstants.darkGradientButton,
                 ],
               ),
               borderRadius: BorderRadius.all(Radius.circular(size))),
