@@ -57,7 +57,7 @@ jobs:
       - name: Get Packages
         run: flutter pub get
 
-      - name: Build ios app bundle
+      - name: Build
         run: flutter build ${{ matrix.target }}
 
       
