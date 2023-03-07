@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
@@ -27,8 +28,9 @@ class ProductUiInList extends ConsumerWidget {
               width: 20,
             ),
             Expanded(
-              child: Text(
+              child: AutoSizeText(
                 p.name,
+                maxLines: 2,
                 style: const TextStyle(fontSize: 15),
                 overflow: TextOverflow.ellipsis,
               ),

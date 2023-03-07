@@ -21,7 +21,7 @@ class ListProductPage extends HookConsumerWidget {
           Column(
             children: [
               const SizedBox(
-                height: 150,
+                height: 50,
               ),
               Expanded(
                 child: SizedBox(
