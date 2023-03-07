@@ -25,4 +25,28 @@ class Ticket {
     data['id'] = id;
     return data;
   }
+
+  Ticket.copyWith({
+    String? typeId,
+    String? userId,
+    String? winningLot,
+    String? id,
+  }) {
+    this.typeId = typeId ?? this.typeId;
+    this.userId = userId ?? this.userId;
+    this.winningLot = winningLot ?? this.winningLot;
+    this.id = id ?? this.id;
+  }
+
+  Ticket.empty() {
+    typeId = '';
+    userId = '';
+    winningLot = '';
+    id = '';
+  }
+
+  @override
+  String toString() {
+    return 'Ticket{typeId: $typeId, userId: $userId, winningLot: $winningLot, id: $id}';
+  }
 }

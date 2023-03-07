@@ -25,4 +25,28 @@ class Lots {
     data['quantity'] = quantity;
     return data;
   }
+
+  Lots.copyWith({
+    String? id,
+    String? raffleId,
+    String? description,
+    int? quantity,
+  }) {
+    this.id = id ?? this.id;
+    this.raffleId = raffleId ?? this.raffleId;
+    this.description = description ?? this.description;
+    this.quantity = quantity ?? this.quantity;
+  }
+
+  Lots.empty() {
+    id = '';
+    raffleId = '';
+    description = '';
+    quantity = 0;
+  }
+
+  @override
+  String toString() {
+    return 'Lots{id: $id, raffleId: $raffleId, description: $description, quantity: $quantity}';
+  }
 }
