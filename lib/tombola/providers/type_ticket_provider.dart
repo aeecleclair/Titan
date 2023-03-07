@@ -6,14 +6,9 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 
 class TypeTicketsListNotifier extends ListNotifier<TypeTicket> {
   final TypeTicketRepository _typeTicketsRepository = TypeTicketRepository();
-  late final String raffleId;
   TypeTicketsListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _typeTicketsRepository.setToken(token);
-  }
-
-  void setId(String id) {
-    raffleId = id;
   }
 
   Future<AsyncValue<List<TypeTicket>>> loadTypeTicketList(

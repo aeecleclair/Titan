@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
-import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
-import 'package:myecl/tombola/providers/type_ticket_provider.dart';
 import 'package:myecl/tombola/providers/user_tickets_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/main_page/card_tombolas.dart';
@@ -17,7 +15,6 @@ class MainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final raffleList = ref.watch(raffleListProvider);
     final userTicketList = ref.watch(userTicketListProvider);
-    final typeTicketsList = ref.watch(typeTicketsListProvider);
     return Container(
       margin: const EdgeInsets.only(top: 15),
       child: ListView(
@@ -112,7 +109,7 @@ class MainPage extends HookConsumerWidget {
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold)))),
                       ...onGoingRaffles
-                          .map((e) => TombolaWidget(name: e.name))
+                          .map((e) => TombolaWidget(raffle: e))
                           .toList(),
                       if (incommingRaffles.isNotEmpty)
                         Container(
@@ -127,7 +124,7 @@ class MainPage extends HookConsumerWidget {
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold)))),
                       ...incommingRaffles
-                          .map((e) => TombolaWidget(name: e.name))
+                          .map((e) => TombolaWidget(raffle: e))
                           .toList(),
                       if (pastRaffles.isNotEmpty)
                         Container(
@@ -142,7 +139,7 @@ class MainPage extends HookConsumerWidget {
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold)))),
                       ...pastRaffles
-                          .map((e) => TombolaWidget(name: e.name))
+                          .map((e) => TombolaWidget(raffle: e))
                           .toList(),
                     ],
                   );

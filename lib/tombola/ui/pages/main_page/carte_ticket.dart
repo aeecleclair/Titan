@@ -44,10 +44,11 @@ class TicketWidget extends HookConsumerWidget {
                         BoxShadow(
                           color: Colors.white.withOpacity(0.3),
                           blurRadius: 8,
-                          offset: Offset(2, 3),
+                          offset: const Offset(2, 3),
                         ),
                       ],
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(15))),
                   child: Center(
                     child: Image.asset("assets/images/logo.png", height: 40),
                   ),
