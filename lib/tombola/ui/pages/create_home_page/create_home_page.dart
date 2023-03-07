@@ -4,8 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/add_button.dart';
-import 'package:myecl/tombola/ui/pages/main_page/card_tombolas.dart';
-
 
 class CreateHomePage extends HookConsumerWidget {
   const CreateHomePage({Key? key}) : super(key: key);
@@ -18,9 +16,9 @@ class CreateHomePage extends HookConsumerWidget {
       child: Stack(children: [
         ListView(physics: const BouncingScrollPhysics(), children: const [
           Text(
-              TombolaTextConstants.createYourRaffle,
-              style: TextStyle(fontSize: 30),
-            ),
+            TombolaTextConstants.createYourRaffle,
+            style: TextStyle(fontSize: 30),
+          ),
           Text(TombolaTextConstants.modifTombola),
           Center(
             child: Text(
@@ -28,19 +26,6 @@ class CreateHomePage extends HookConsumerWidget {
               style: TextStyle(fontSize: 30),
             ),
           ),
-          TombolaWidget(
-              name: "Tombola Soli Sida",
-              ),
-          TombolaWidget(
-              name: "Tombola 4"),
-          TombolaWidget(
-              name: "Tombola 4"),
-          TombolaWidget(
-              name: "Tombola 4"),
-          TombolaWidget(
-              name: "Tombola 4"),
-          TombolaWidget(
-              name: "Tombola 4"),
         ]),
         Positioned(
             bottom: 5,
