@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
+import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
+import 'package:myecl/tombola/providers/type_ticket_provider.dart';
+import 'package:myecl/tombola/providers/user_tickets_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/main_page/card_tombolas.dart';
 import 'package:myecl/tombola/ui/pages/main_page/carte_ticket.dart';
@@ -13,6 +16,8 @@ class MainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffleList = ref.watch(raffleListProvider);
+    final userTicketList = ref.watch(userTicketListProvider);
+    final typeTicketsList = ref.watch(typeTicketsListProvider);
     return Container(
       margin: const EdgeInsets.only(top: 15),
       child: ListView(
@@ -34,31 +39,47 @@ class MainPage extends HookConsumerWidget {
           const SizedBox(
             height: 10,
           ),
-          SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 15),
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    children: const [
-                      TicketWidget(
-                        color: Color.fromARGB(255, 132, 63, 206),
-                      ),
-                      TicketWidget(
-                        color: Color.fromARGB(255, 212, 100, 186),
-                      ),
-                      TicketWidget(
-                        color: Color.fromARGB(255, 232, 168, 147),
-                      ),
-                      TicketWidget(
-                        color: Color.fromARGB(255, 117, 229, 192),
+          userTicketList.when(
+              data: (tickets) {
+                return tickets.isEmpty
+                    ? const Center(
+                        child: Text(TombolaTextConstants.noTicket),
                       )
-                    ],
-                  ))),
-          const SizedBox(
-            height: 10,
-          ),
+                    : SizedBox(
+                        height: 210,
+                        child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: tickets.length + 2,
+                            itemBuilder: (context, index) {
+                              if (index == 0 || index == tickets.length + 1) {
+                                return const SizedBox(
+                                  width: 15,
+                                );
+                              }
+                              final raffle = raffleList.when(
+                                  data: (raffles) => raffles.firstWhere(
+                                      (element) =>
+                                          element.id ==
+                                          tickets[index - 1].raffleId,
+                                      orElse: () => Raffle.empty()),
+                                  error: (e, s) => Raffle.empty(),
+                                  loading: () => Raffle.empty());
+                              return Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  child: TicketWidget(
+                                    ticket: tickets[index - 1],
+                                    raffle: raffle,
+                                  ));
+                            }));
+              },
+              loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+              error: (error, stack) => const Center(
+                    child: Text('Error'),
+                  )),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: raffleList.when(
