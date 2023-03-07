@@ -21,8 +21,8 @@ class PersoButton extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              TombolaColorConstants.lightGradientBlueButton,
-              TombolaColorConstants.darkGradientBlueButton,
+              TombolaColorConstants.lightGradientButton,
+              TombolaColorConstants.darkGradientButton,
             ],
           ),
           borderRadius: const BorderRadius.all(Radius.circular(40))),

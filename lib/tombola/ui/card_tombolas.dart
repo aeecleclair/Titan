@@ -33,22 +33,33 @@ class TombolaWidget extends HookConsumerWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Color.fromARGB(255, 250, 244, 244),
+                  Color.fromARGB(255, 255, 255, 255),
                   Color.fromARGB(255, 250, 246, 246),
                 ],
               ),
               borderRadius: const BorderRadius.all(Radius.circular(10))),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Container(
+              margin: EdgeInsets.only(left: 10),
+              child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                 Text(
                   name,
                   style: TextStyle(
-                      color: TombolaColorConstants.darkGradientBlueButton,
+                      color: TombolaColorConstants.darkText,
                       fontSize: 20),
                 ),
-                Image.asset("assets/images/logo.png"),
+                Text(
+                  "Lot principal : ",
+                  style: TextStyle(
+                      color: TombolaColorConstants.darkText,
+                      fontSize: 20),
+                ),
               ]),
+            ),
+            Image.asset("assets/images/logo.png"),
+          ]),
         )));
   }
 }

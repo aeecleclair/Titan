@@ -67,22 +67,7 @@ class MainPage extends HookConsumerWidget {
                           )
                         ],
                       )))),
-          Column(
-            children: tombolas.when(data: (tombolas) {
-                return tombolas.map((e) =>  Text("tombola :  ${e.toJson()['name']}")).toList();
-              }, loading: () {
-                 return [const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.blue,
-                  ),
-                )];
-              }, error: (error, stack) {
-                 return [Center(
-                  child: Text("Error $error"),
-                )];
-              })
-            
-          ),
+          
           Column(crossAxisAlignment: CrossAxisAlignment.start,
             children: [
             Container(
@@ -103,9 +88,24 @@ class MainPage extends HookConsumerWidget {
                 style: TextStyle(fontSize: 30),
               ),
             ),
-            const TombolaWidget(name: "Tombola 3"),
-            const TombolaWidget(name: "Tombola 4"),
+            Column(crossAxisAlignment: CrossAxisAlignment.start,
+            children: tombolas.when(data: (tombolas) {
+                return tombolas.map((e) =>  TombolaWidget(name:"tombola :  ${e.toJson()['name']}")).toList();
+              }, loading: () {
+                 return [const Center(
+                  child: CircularProgressIndicator(
+                    color: Color.fromARGB(255, 114, 21, 4),
+                  ),
+                )];
+              }, error: (error, stack) {
+                 return [Center(
+                  child: Text("Error $error"),
+                )];
+              })
+            
+          ),
           ]),
+          
         ],
       ),
     );
