@@ -19,7 +19,7 @@ class TicketWidget extends HookConsumerWidget {
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: this.color,
+                color: color,
                 blurRadius: 8,
                 blurStyle:BlurStyle.outer,
               ),
@@ -28,8 +28,8 @@ class TicketWidget extends HookConsumerWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                this.color.withOpacity(0.1),
-                this.color.withOpacity(0.2),
+                color.withOpacity(0.1),
+                color.withOpacity(0.2),
               ],
               stops: const [0, 0.8],
             ),

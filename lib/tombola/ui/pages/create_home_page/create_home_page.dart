@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
+import 'package:myecl/tombola/ui/add_button.dart';
+import 'package:myecl/tombola/ui/card_tombolas.dart';
 
-import '../../add_button.dart';
-import '../../card_tombolas.dart';
 
 class CreateHomePage extends HookConsumerWidget {
   const CreateHomePage({Key? key}) : super(key: key);
@@ -15,9 +14,9 @@ class CreateHomePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     return Container(
-      margin: EdgeInsets.only(top: 15),
+      margin: const EdgeInsets.only(top: 15),
       child: Stack(children: [
-        ListView(physics: const BouncingScrollPhysics(), children: [
+        ListView(physics: const BouncingScrollPhysics(), children: const [
           Text(
               TombolaTextConstants.createYourRaffle,
               style: TextStyle(fontSize: 30),
@@ -52,7 +51,7 @@ class CreateHomePage extends HookConsumerWidget {
                     onTap: () {
                       pageNotifier.setTombolaPage(TombolaPage.addEdit);
                     },
-                    child: AddButton(
+                    child: const AddButton(
                       text: "+",
                       size: 50,
                     )))),

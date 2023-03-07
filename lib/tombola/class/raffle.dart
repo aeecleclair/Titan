@@ -1,5 +1,3 @@
-
-
 class Raffle {
   Raffle({
     required this.name,
@@ -13,8 +11,8 @@ class Raffle {
   late final DateTime endDate;
   late final String groupId;
   late final String id;
-  
-  Raffle.fromJson(Map<String, dynamic> json){
+
+  Raffle.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     startDate = DateTime.parse(json['start_date']);
     endDate = DateTime.parse(json['end_date']);
@@ -23,12 +21,12 @@ class Raffle {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['name'] = name;
-    _data['start_date'] = startDate;
-    _data['end_date'] = endDate;
-    _data['group_id'] = groupId;
-    _data['id'] = id;
-    return _data;
+    final data = <String, dynamic>{};
+    data['name'] = name;
+    data['start_date'] = startDate;
+    data['end_date'] = endDate;
+    data['group_id'] = groupId;
+    data['id'] = id;
+    return data;
   }
 }

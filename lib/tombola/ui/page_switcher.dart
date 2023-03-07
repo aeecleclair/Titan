@@ -1,6 +1,4 @@
-
-
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tombola/ui/pages/create_add_edit_page/create_add_edit_page.dart';
 import 'package:myecl/tombola/ui/pages/create_home_page/create_home_page.dart';
@@ -14,9 +12,9 @@ class PageSwitcher extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(tombolaPageProvider); //Returns the value exposed by a provider and rebuild the widget when that value changes. 
+    final page = ref.watch(
+        tombolaPageProvider); //Returns the value exposed by a provider and rebuild the widget when that value changes.
     switch (page) {
-      
       case TombolaPage.main:
         return const MainPage();
       case TombolaPage.tombola:
@@ -25,10 +23,9 @@ class PageSwitcher extends ConsumerWidget {
         return const CreateHomePage();
 
       case TombolaPage.addEdit:
-      return const CreateAddEditPage();
+        return const CreateAddEditPage();
       case TombolaPage.admin:
-      return const AdminHomePage();
-      
+        return const AdminHomePage();
     }
   }
 }

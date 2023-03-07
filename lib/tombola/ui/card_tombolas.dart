@@ -22,7 +22,7 @@ class TombolaWidget extends HookConsumerWidget {
             child: Container(
           height: 100,
           margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               boxShadow: [
                 BoxShadow(
                     color: Color.fromARGB(105, 80, 81, 81),
@@ -37,18 +37,17 @@ class TombolaWidget extends HookConsumerWidget {
                   Color.fromARGB(255, 250, 246, 246),
                 ],
               ),
-              borderRadius: const BorderRadius.all(Radius.circular(10))),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  name,
-                  style: TextStyle(
-                      color: TombolaColorConstants.darkGradientBlueButton,
-                      fontSize: 20),
-                ),
-                Image.asset("assets/images/logo.png"),
-              ]),
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text(
+              name,
+              style: const TextStyle(
+                  color: TombolaColorConstants.darkGradientBlueButton,
+                  fontSize: 20),
+            ),
+            Image.asset("assets/images/logo.png"),
+          ]),
         )));
   }
 }

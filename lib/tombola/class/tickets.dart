@@ -9,8 +9,8 @@ class Ticket {
   late final String userId;
   late final String winningLot;
   late final String id;
-  
-  Ticket.fromJson(Map<String, dynamic> json){
+
+  Ticket.fromJson(Map<String, dynamic> json) {
     typeId = json['type_id'];
     userId = json['user_id'];
     winningLot = json['winning_lot'];
@@ -18,11 +18,11 @@ class Ticket {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['type_id'] = typeId;
-    _data['user_id'] = userId;
-    _data['winning_lot'] = winningLot;
-    _data['id'] = id;
-    return _data;
+    final data = <String, dynamic>{};
+    data['type_id'] = typeId;
+    data['user_id'] = userId;
+    data['winning_lot'] = winningLot;
+    data['id'] = id;
+    return data;
   }
 }

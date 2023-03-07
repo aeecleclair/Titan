@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AdminHomePage extends HookConsumerWidget {
@@ -8,7 +7,6 @@ class AdminHomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    return Text("AdminHomePage page");
+    return const Text("AdminHomePage page");
   }
 }

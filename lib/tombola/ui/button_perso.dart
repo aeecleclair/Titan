@@ -8,8 +8,8 @@ class PersoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: Color.fromARGB(125, 3, 2, 69),
@@ -25,11 +25,12 @@ class PersoButton extends StatelessWidget {
               TombolaColorConstants.darkGradientBlueButton,
             ],
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(40))),
+          borderRadius: BorderRadius.all(Radius.circular(40))),
       child: Text(
         text,
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 20,color:TombolaColorConstants.writtenWhite),
+        style: const TextStyle(
+            fontSize: 20, color: TombolaColorConstants.writtenWhite),
       ),
     );
   }
