@@ -64,6 +64,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: titan-${{ matrix.target }}-${{ steps.git_short_hash.outputs.result }}
-          path: *.apk
+          path: /build/**/*.apk
 
       
