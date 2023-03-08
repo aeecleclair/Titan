@@ -30,7 +30,7 @@ class LotHandler extends HookConsumerWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           alignment: Alignment.centerLeft,
-          child: const Text("Produits",
+          child: const Text("Lots",
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
