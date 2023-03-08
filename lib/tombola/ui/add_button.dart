@@ -29,7 +29,7 @@ class AddButton extends StatelessWidget {
                   blurStyle: BlurStyle.outer,
                 ),
               ],
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
