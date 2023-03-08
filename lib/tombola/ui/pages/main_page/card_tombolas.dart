@@ -5,6 +5,7 @@ import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
+import 'package:myecl/tombola/tools/constants.dart';
 
 class TombolaWidget extends HookConsumerWidget {
   final Raffle raffle;
@@ -23,15 +24,45 @@ class TombolaWidget extends HookConsumerWidget {
         },
         child: Center(
             child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          height: 100,
+          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromARGB(105, 80, 81, 81),
+                    blurRadius: 6,
+                    offset: Offset(1, 1)),
+              ],
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromARGB(255, 255, 255, 255),
+                  Color.fromARGB(255, 250, 246, 246),
+                ],
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10))),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Image.asset("assets/images/logo.png", height: 80),
-            AutoSizeText(
-              raffle.name,
-              maxLines: 2,
-              style: const TextStyle(color: Colors.black, fontSize: 20),
+            Container(
+              margin: EdgeInsets.only(left: 10),
+              child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                Text(
+                  raffle.name,
+                  style: TextStyle(
+                      color: TombolaColorConstants.darkText,
+                      fontSize: 20),
+                ),
+                Text(
+                  "Lot principal : ",
+                  style: TextStyle(
+                      color: TombolaColorConstants.darkText,
+                      fontSize: 20),
+                ),
+              ]),
             ),
+            Image.asset("assets/images/logo.png"),
           ]),
         )));
   }
