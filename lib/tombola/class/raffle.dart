@@ -60,4 +60,30 @@ class Raffle {
   String toString() {
     return 'Raffle{name: $name, startDate: $startDate, endDate: $endDate, groupId: $groupId, id: $id}';
   }
+  Raffle.copyWith({
+    String? name,
+    DateTime? startDate,
+    DateTime? endDate,
+    String? groupId,
+    String? id,
+  }) {
+    this.name = name ?? this.name;
+    this.startDate = startDate ?? this.startDate;
+    this.endDate = endDate ?? this.endDate;
+    this.groupId = groupId ?? this.groupId;
+    this.id = id ?? this.id;
+  }
+
+  Raffle.empty() {
+    name = '';
+    startDate = DateTime.now();
+    endDate = DateTime.now();
+    groupId = '';
+    id = '';
+  }
+
+  @override
+  String toString() {
+    return 'Raffle{name: $name, startDate: $startDate, endDate: $endDate, groupId: $groupId, id: $id}';
+  }
 }
