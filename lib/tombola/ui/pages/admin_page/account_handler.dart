@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/providers/cash_provider.dart';
-import 'package:myecl/amap/providers/focus_provider.dart';
-import 'package:myecl/amap/providers/searching_amap_user_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/admin_page/adding_user_container.dart';
-import 'package:myecl/amap/ui/pages/admin_page/cash_container.dart';
+import 'package:myecl/tombola/providers/cash_provider.dart';
+import 'package:myecl/tombola/providers/focus_provider.dart';
+import 'package:myecl/tombola/providers/searching_amap_user_provider.dart';
+import 'package:myecl/tombola/tools/constants.dart';
+import 'package:myecl/tombola/ui/pages/admin_page/adding_user_container.dart';
+import 'package:myecl/tombola/ui/pages/admin_page/cash_container.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
@@ -53,16 +53,16 @@ class AccountHandler extends HookConsumerWidget {
             },
             focusNode: focusNode,
             controller: editingController,
-            cursorColor: AMAPColorConstants.textDark,
+            cursorColor: TombolaColorConstants.textDark,
             decoration: const InputDecoration(
-                labelText: AMAPTextConstants.accounts,
+                labelText: TombolaTextConstants.accounts,
                 labelStyle: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: AMAPColorConstants.textDark),
+                    color: TombolaColorConstants.textDark),
                 suffixIcon: Icon(
                   Icons.search,
-                  color: AMAPColorConstants.textDark,
+                  color: TombolaColorConstants.textDark,
                   size: 30,
                 ),
                 enabledBorder: UnderlineInputBorder(
@@ -72,7 +72,7 @@ class AccountHandler extends HookConsumerWidget {
                 ),
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-                    color: AMAPColorConstants.textDark,
+                    color: TombolaColorConstants.textDark,
                   ),
                 )),
           ),
@@ -94,17 +94,17 @@ class AccountHandler extends HookConsumerWidget {
                         decoration: BoxDecoration(
                           gradient: const RadialGradient(
                             colors: [
-                              AMAPColorConstants.green1,
-                              AMAPColorConstants.textLight,
+                              TombolaColorConstants.gradient1,
+                              TombolaColorConstants.gradient2,
                             ],
                             center: Alignment.topLeft,
-                            radius: 1.3,
+                            radius: 1.8,
                           ),
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
-                              color:
-                                  AMAPColorConstants.textDark.withOpacity(0.2),
+                              color: TombolaColorConstants.textDark
+                                  .withOpacity(0.2),
                               spreadRadius: 5,
                               blurRadius: 10,
                               offset: const Offset(3, 3),
@@ -130,8 +130,7 @@ class AccountHandler extends HookConsumerWidget {
                                             horizontal: 12.0),
                                         child: const HeroIcon(
                                           HeroIcons.xMark,
-                                          color: Color.fromARGB(
-                                              223, 244, 255, 183),
+                                          color: Colors.white,
                                           size: 50,
                                         ),
                                       ),
@@ -158,7 +157,7 @@ class AccountHandler extends HookConsumerWidget {
                                         horizontal: 12.0),
                                     child: const HeroIcon(
                                       HeroIcons.plus,
-                                      color: Color.fromARGB(223, 244, 255, 183),
+                                      color: Colors.white,
                                       size: 50,
                                     ),
                                   )),

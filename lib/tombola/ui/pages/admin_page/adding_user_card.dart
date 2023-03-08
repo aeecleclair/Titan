@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/cash.dart';
-import 'package:myecl/amap/providers/cash_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/tombola/class/cash.dart';
+import 'package:myecl/tombola/providers/cash_provider.dart';
+import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class AddingUserCard extends HookConsumerWidget {
@@ -46,7 +46,7 @@ class AddingUserCard extends HookConsumerWidget {
                           style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: AMAPColorConstants.textLight)),
+                              color: TombolaColorConstants.gradient2)),
                       const SizedBox(height: 2),
                       AutoSizeText(
                           user.nickname != null
@@ -57,7 +57,7 @@ class AddingUserCard extends HookConsumerWidget {
                           style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
-                              color: AMAPColorConstants.textDark)),
+                              color: TombolaColorConstants.textDark)),
                       const SizedBox(height: 3),
                     ],
                   )))),

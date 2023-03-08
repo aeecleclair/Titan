@@ -1,11 +1,12 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/providers/cash_provider.dart';
-import 'package:myecl/amap/providers/delivery_list_provider.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
-import 'package:myecl/amap/ui/pages/admin_page/account_handler.dart';
-import 'package:myecl/amap/ui/pages/admin_page/delivery_handler.dart';
-import 'package:myecl/amap/ui/pages/admin_page/product_handler.dart';
+import 'package:myecl/tombola/providers/cash_provider.dart';
+import 'package:myecl/tombola/providers/raffle_provider.dart';
+import 'package:myecl/tombola/providers/ticket_list_provider.dart';
+import 'package:myecl/tombola/providers/type_ticket_provider.dart';
+import 'package:myecl/tombola/ui/pages/admin_page/account_handler.dart';
+import 'package:myecl/tombola/ui/pages/admin_page/delivery_handler.dart';
+import 'package:myecl/tombola/ui/pages/admin_page/product_handler.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
 class AdminPage extends HookConsumerWidget {
@@ -13,14 +14,14 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final raffle = ref.watch(raffleProvider);
     final cashNotifier = ref.read(cashProvider.notifier);
-    final deliveryListNotifier = ref.read(deliveryListProvider.notifier);
-    final productListNotifier = ref.read(productListProvider.notifier);
+    final typeTicketsListProviderNotifier = ref.read(typeTicketsListProvider.notifier);
     return Refresher(
         onRefresh: () async {
           await cashNotifier.loadCashList();
-          await deliveryListNotifier.loadDeliveriesList();
-          await productListNotifier.loadProductList();
+          await typeTicketsListProviderNotifier.loadTypeTicketList(raffle.id);
+          // TODO: lots
         },
         child: Column(
           children: const [
@@ -28,11 +29,11 @@ class AdminPage extends HookConsumerWidget {
             SizedBox(
               height: 12,
             ),
-            DeliveryHandler(),
+            // DeliveryHandler(),
             SizedBox(
               height: 12,
             ),
-            ProductHandler(),
+            // ProductHandler(),
           ],
         ));
   }

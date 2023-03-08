@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/cash.dart';
-import 'package:myecl/amap/providers/cash_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/tombola/class/cash.dart';
+import 'package:myecl/tombola/providers/cash_provider.dart';
+import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -72,8 +72,8 @@ class UserCashUi extends HookConsumerWidget {
                         decoration: BoxDecoration(
                           gradient: const RadialGradient(
                             colors: [
-                              AMAPColorConstants.green1,
-                              AMAPColorConstants.textLight,
+                              TombolaColorConstants.gradient1,
+                              TombolaColorConstants.gradient2,
                             ],
                             center: Alignment.topLeft,
                             radius: 1.5,
@@ -82,7 +82,7 @@ class UserCashUi extends HookConsumerWidget {
                           boxShadow: [
                             BoxShadow(
                               color:
-                                  AMAPColorConstants.textDark.withOpacity(0.2),
+                                  TombolaColorConstants.textDark.withOpacity(0.2),
                               spreadRadius: 5,
                               blurRadius: 10,
                               offset: const Offset(3, 3),
@@ -106,8 +106,7 @@ class UserCashUi extends HookConsumerWidget {
                                     style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
-                                        color: Color.fromARGB(
-                                            223, 244, 255, 183))),
+                                        color: Colors.white)),
                                 const SizedBox(height: 5),
                                 AutoSizeText(
                                     cash.user.nickname != null
@@ -118,7 +117,7 @@ class UserCashUi extends HookConsumerWidget {
                                     style: const TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
-                                        color: AMAPColorConstants.textDark)),
+                                        color: TombolaColorConstants.textDark)),
                                 const SizedBox(height: 5),
                                 Row(
                                   mainAxisAlignment:
@@ -132,11 +131,10 @@ class UserCashUi extends HookConsumerWidget {
                                         style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
-                                            color: Color.fromARGB(
-                                                223, 244, 255, 183))),
+                                            color: Colors.white)),
                                     const HeroIcon(
                                       HeroIcons.plus,
-                                      color: Color.fromARGB(223, 244, 255, 183),
+                                      color: Colors.white,
                                       size: 20,
                                     ),
                                   ],
@@ -156,8 +154,8 @@ class UserCashUi extends HookConsumerWidget {
                         decoration: BoxDecoration(
                           gradient: const RadialGradient(
                             colors: [
-                              AMAPColorConstants.green1,
-                              AMAPColorConstants.textLight,
+                              TombolaColorConstants.gradient1,
+                              TombolaColorConstants.gradient2,
                             ],
                             center: Alignment.topLeft,
                             radius: 1.5,
@@ -166,7 +164,7 @@ class UserCashUi extends HookConsumerWidget {
                           boxShadow: [
                             BoxShadow(
                               color:
-                                  AMAPColorConstants.textDark.withOpacity(0.2),
+                                  TombolaColorConstants.textDark.withOpacity(0.2),
                               spreadRadius: 5,
                               blurRadius: 10,
                               offset: const Offset(3, 3),
@@ -187,27 +185,26 @@ class UserCashUi extends HookConsumerWidget {
                                     controller: amount,
                                     keyboardType: TextInputType.number,
                                     validator: (value) => value!.isEmpty
-                                        ? AMAPTextConstants.add
+                                        ? TombolaTextConstants.add
                                         : null,
-                                    cursorColor: AMAPColorConstants.textDark,
+                                    cursorColor: TombolaColorConstants.textDark,
                                     decoration: const InputDecoration(
                                       suffixText: '€',
                                       suffixStyle: TextStyle(
-                                        color: AMAPColorConstants.textDark,
+                                        color: TombolaColorConstants.textDark,
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       contentPadding: EdgeInsets.all(0),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: AMAPColorConstants.textDark,
+                                          color: TombolaColorConstants.textDark,
                                           width: 2,
                                         ),
                                       ),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: Color.fromARGB(
-                                              223, 244, 255, 183),
+                                          color: Colors.white,
                                           width: 2,
                                         ),
                                       ),
@@ -219,7 +216,7 @@ class UserCashUi extends HookConsumerWidget {
                                 ),
                                 ShrinkButton(
                                   waitChild: const CircularProgressIndicator(
-                                    color: Color.fromARGB(223, 244, 255, 183),
+                                    color: Colors.white,
                                   ),
                                   onTap: () async {
                                     if (key.currentState == null) {
@@ -239,12 +236,12 @@ class UserCashUi extends HookConsumerWidget {
                                             toggle();
                                             displayVoteWithContext(
                                                 TypeMsg.msg,
-                                                AMAPTextConstants
+                                                TombolaTextConstants
                                                     .updatedAmount);
                                           } else {
                                             displayVoteWithContext(
                                                 TypeMsg.error,
-                                                AMAPTextConstants
+                                                TombolaTextConstants
                                                     .updatingError);
                                           }
                                         });
@@ -253,7 +250,7 @@ class UserCashUi extends HookConsumerWidget {
                                   },
                                   child: const Icon(
                                     Icons.add,
-                                    color: Color.fromARGB(223, 244, 255, 183),
+                                    color: Colors.white,
                                     size: 30,
                                   ),
                                 ),
