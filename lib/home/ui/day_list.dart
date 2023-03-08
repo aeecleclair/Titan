@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,7 +20,7 @@ class DayList extends HookConsumerWidget {
     final daySortedEventList = ref.watch(daySortedEventListProvider);
     final sortedEventList = ref.watch(sortedEventListProvider);
     final days = ref.watch(daysProvider);
-    final outerController = useScrollController();
+
     DateTime now = normalizedDate(DateTime.now());
 
     Map<String, double> widgetPositions = {};
@@ -45,20 +44,7 @@ class DayList extends HookConsumerWidget {
 
     return SizedBox(
         height: 125,
-        child: ListView(
-            controller: outerController,
-            children: [
-              Listener(
-                  onPointerSignal: (event) {
-                    if (event is PointerScrollEvent) {
-                      final offset = event.scrollDelta.dy;
-                      scrollController.jumpTo(scrollController.offset + offset);
-                      outerController.jumpTo(outerController.offset - offset);
-                    }
-                  },
-                  child: SizedBox(
-                    height: 125,
-                    child: ListView.builder(
+        child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       physics: const BouncingScrollPhysics(),
                       controller: scrollController,
@@ -88,7 +74,6 @@ class DayList extends HookConsumerWidget {
                         );
                       },
                     ),
-                  ))
-            ]));
+                  );
   }
 }
