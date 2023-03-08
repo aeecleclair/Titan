@@ -32,6 +32,16 @@ jobs:
       - name: Build 🔧
         run: flutter build web --release
 
+      - name: Configure env
+        run: |
+          echo "THE_MOVIE_DB_API=$THE_MOVIE_DB_API" >> .env
+          echo "DEBUG_HOST=$DEBUG_HOST" >> .env
+          echo "RELEASE_HOST=$RELEASE_HOST" >> .env
+        env:
+          THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
+          DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
+          RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
