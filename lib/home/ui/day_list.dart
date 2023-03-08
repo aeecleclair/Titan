@@ -47,7 +47,6 @@ class DayList extends HookConsumerWidget {
         height: 125,
         child: ListView(
             controller: outerController,
-            clipBehavior: Clip.none,
             children: [
               Listener(
                   onPointerSignal: (event) {
