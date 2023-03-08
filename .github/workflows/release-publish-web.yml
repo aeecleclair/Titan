@@ -29,9 +29,6 @@ jobs:
       - name: Cleanup 🧹
         run: flutter clean
 
-      - name: Build 🔧
-        run: flutter build web --release
-
       - name: Configure env
         run: |
           echo "THE_MOVIE_DB_API=$THE_MOVIE_DB_API" >> .env
@@ -41,7 +38,9 @@ jobs:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
-        working-directory: build/web
+
+      - name: Build 🔧
+        run: flutter build web --release
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
