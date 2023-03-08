@@ -3,6 +3,7 @@ name: Build and Deploy Web
 on:
   # Enable manual run
   workflow_dispatch:
+  [push]
 
 permissions:
   contents: write
