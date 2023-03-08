@@ -4,7 +4,7 @@ import 'package:myecl/tools/repository/repository.dart';
 class CashRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "amap/users/";
+  final ext = "tombola/users/";
 
   Future<List<Cash>> getCashList() async {
     return List<Cash>.from((await getList(suffix: "cash")).map((x) => Cash.fromJson(x)));

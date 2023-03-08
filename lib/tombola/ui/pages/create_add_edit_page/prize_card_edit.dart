@@ -39,6 +39,6 @@ class PrizeCardEdit extends HookConsumerWidget {
   }
 }
 
-class RowOfLots {
-  //Recois des images (ou des wiget LotsCard ? ) de Lots en arguments renvoie la Row des (3?) lots
+class RowOfLot {
+  //Recois des images (ou des wiget LotCard ? ) de Lot en arguments renvoie la Row des (3?) Lot
 }
