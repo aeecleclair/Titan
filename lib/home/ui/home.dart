@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -27,7 +26,6 @@ class HomePage extends HookConsumerWidget {
     DateTime now = DateTime.now();
     final ScrollController scrollController = useScrollController();
     final daysEventScrollController = useScrollController();
-    final outerController = useScrollController();
 
     return Scaffold(
         body: WillPopScope(
@@ -74,51 +72,32 @@ class HomePage extends HookConsumerWidget {
                 height: 20,
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height - 345,
-                width: MediaQuery.of(context).size.width,
-                child: ListView(
-                  controller: outerController,
-                  clipBehavior: Clip.none,
-                  children: [
-                    Listener(
-                        onPointerSignal: (event) {
-                          if (event is PointerScrollEvent) {
-                            final offset = event.scrollDelta.dy;
-                            daysEventScrollController.jumpTo(
-                                daysEventScrollController.offset + offset);
-                            outerController
-                                .jumpTo(outerController.offset - offset);
-                          }
-                        },
-                        child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          controller: daysEventScrollController,
-                          child: sortedEventList.keys.isNotEmpty
-                              ? Column(
-                                  children: sortedEventList
-                                      .map((key, value) => MapEntry(
-                                          key,
-                                          DaysEvent(
-                                            day: key,
-                                            now: now,
-                                            events: value,
-                                          )))
-                                      .values
-                                      .toList())
-                              : const Center(
-                                  child: Text(
-                                    HomeTextConstants.noEvents,
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color:
-                                            Color.fromARGB(255, 149, 149, 149)),
-                                  ),
-                                ),
-                        ))
-                  ],
-                ),
-              ),
+                  height: MediaQuery.of(context).size.height - 345,
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    controller: daysEventScrollController,
+                    child: sortedEventList.keys.isNotEmpty
+                        ? Column(
+                            children: sortedEventList
+                                .map((key, value) => MapEntry(
+                                    key,
+                                    DaysEvent(
+                                      day: key,
+                                      now: now,
+                                      events: value,
+                                    )))
+                                .values
+                                .toList())
+                        : const Center(
+                            child: Text(
+                              HomeTextConstants.noEvents,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 149, 149, 149)),
+                            ),
+                          ),
+                  ))
             ])),
       )),
     ));
