@@ -5,16 +5,16 @@ class Raffle {
     required this.endDate,
     required this.groupId,
     required this.id,
-    this.description,
+    required this.description,
   });
   late final String name;
   late final DateTime startDate;
   late final DateTime endDate;
   late final String groupId;
   late final String id;
-  late String? description;
+  late final String? description;
 
-  Raffle.fromJson(Map<String, dynamic> json){
+  Raffle.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     startDate = DateTime.parse(json['start_date']);
     endDate = DateTime.parse(json['end_date']);
@@ -60,18 +60,21 @@ class Raffle {
   String toString() {
     return 'Raffle{name: $name, startDate: $startDate, endDate: $endDate, groupId: $groupId, id: $id}';
   }
+
   Raffle.copyWith({
     String? name,
     DateTime? startDate,
     DateTime? endDate,
     String? groupId,
     String? id,
+    String? description,
   }) {
     this.name = name ?? this.name;
     this.startDate = startDate ?? this.startDate;
     this.endDate = endDate ?? this.endDate;
     this.groupId = groupId ?? this.groupId;
     this.id = id ?? this.id;
+    this.description = description ?? this.description;
   }
 
   Raffle.empty() {
@@ -80,10 +83,11 @@ class Raffle {
     endDate = DateTime.now();
     groupId = '';
     id = '';
+    description = '';
   }
 
   @override
   String toString() {
-    return 'Raffle{name: $name, startDate: $startDate, endDate: $endDate, groupId: $groupId, id: $id}';
+    return 'Raffle{name: $name, startDate: $startDate, endDate: $endDate, groupId: $groupId, id: $id, description: $description}';
   }
 }
