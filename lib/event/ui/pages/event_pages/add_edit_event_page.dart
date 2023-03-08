@@ -49,12 +49,20 @@ class AddEditEventPage extends HookConsumerWidget {
         : false);
     final start = useTextEditingController(
         text: recurrent.value
-            ? processDateOnlyHour(event.start)
-            : processDateWithHour(event.start));
+            ? allDay.value
+                ? ""
+                : processDateOnlyHour(event.start)
+            : allDay.value
+                ? processDate(event.start)
+                : processDateWithHour(event.start));
     final end = useTextEditingController(
         text: recurrent.value
-            ? processDateOnlyHour(event.end)
-            : processDateWithHour(event.end));
+            ? allDay.value
+                ? ""
+                : processDateOnlyHour(event.end)
+            : allDay.value
+                ? processDate(event.end)
+                : processDateWithHour(event.end));
     final interval = useTextEditingController(
         text: event.recurrenceRule != ""
             ? event.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
@@ -652,10 +660,17 @@ class AddEditEventPage extends HookConsumerWidget {
                               return;
                             }
                             if (key.currentState!.validate()) {
+                              print("validated");
                               if (allDay.value) {
-                                start.text = "${start.text} 00:00";
-                                end.text = "${end.text} 23:59";
+                                if (!start.text.contains(" ")) {
+                                  start.text = "${start.text} 00:00";
+                                }
+                                if (!end.text.contains(" ")) {
+                                  end.text = "${end.text} 23:59";
+                                }
                               }
+                              print("start: ${start.text}");
+                              print("end: ${end.text}");
                               if ((end.text.contains("/") &&
                                       processDateBack(start.text).compareTo(
                                               processDateBack(end.text)) >
@@ -670,6 +685,8 @@ class AddEditEventPage extends HookConsumerWidget {
                                 displayToast(context, TypeMsg.error,
                                     EventTextConstants.noDaySelected);
                               } else {
+                                print("start: ${start.text}");
+                                print("end: ${end.text}");
                                 await tokenExpireWrapper(ref, () async {
                                   String recurrenceRule = "";
                                   String startString = start.text;
@@ -682,6 +699,8 @@ class AddEditEventPage extends HookConsumerWidget {
                                     endString =
                                         "${processDate(now)} $endString";
                                   }
+                                  print("startString: $startString");
+                                  print("endString: $endString");
                                   if (recurrent.value) {
                                     RecurrenceProperties recurrence =
                                         RecurrenceProperties(startDate: now);
@@ -707,6 +726,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                         DateTime.parse(processDateBackWithHour(
                                             endString)));
                                   }
+                                  print("recurrenceRule: $recurrenceRule");
                                   Event newEvent = Event(
                                       id: isEdit ? event.id : "",
                                       description: description.text,

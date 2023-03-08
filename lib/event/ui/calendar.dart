@@ -168,6 +168,7 @@ class Calendar extends HookConsumerWidget {
 _AppointmentDataSource _getCalendarDataSource(List<Event> res) {
   List<Appointment> appointments = <Appointment>[];
   res.map((e) {
+    print(e);
     if (e.recurrenceRule != "") {
       final dates = getDateInRecurrence(e.recurrenceRule, e.start);
       final dayDuration = e.start.difference(e.end);
