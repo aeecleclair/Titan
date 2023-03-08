@@ -25,7 +25,7 @@ class TombolaWidget extends HookConsumerWidget {
         child: Center(
             child: Container(
           height: 100,
-          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          margin: const EdgeInsets.symmetric(vertical: 5),
           decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(

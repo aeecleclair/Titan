@@ -16,9 +16,9 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
     // return await loadList(
     //     () async => _rafflerepository.getRaffleList(raffleId));
     return state = AsyncData([
-      Raffle(id: '1', name: 'Tombola Soli Sida', startDate: DateTime.now().subtract(Duration(days: 15)), groupId: '', endDate: DateTime.now().add(Duration(days: 2)), ),
+      Raffle(id: '1', name: 'Tombola Soli Sida', startDate: DateTime.now().subtract(Duration(days: 15)), groupId: '', endDate: DateTime.now().add(Duration(days: 2)),description: "Ceci est la description de la tombola soli, c'est un test. Je le fais long pour tester plusieurs lignes mais le problème est que je manque un peu d'inspiration mais pas vraiment en faite. Bon voilà ca devrait suffire je l'espère" ),
       Raffle(id: '2', name: 'Tombola Test', startDate: DateTime.now().subtract(Duration(days: 1)), groupId: '', endDate: DateTime.now().add(Duration(days: 20)), ),
-      Raffle(id: 'azertyuiop', name: 'Tombola Test2', startDate: DateTime.now().add(Duration(days: 10)), groupId: '', endDate: DateTime.now().add(Duration(days: 32)), ),
+      Raffle(id: 'azertyuiop', name: 'Tombola Test2', startDate: DateTime.now().add(Duration(days: 10)), groupId: '', endDate: DateTime.now().add(Duration(days: 32)),),
     ]);
   }
 }

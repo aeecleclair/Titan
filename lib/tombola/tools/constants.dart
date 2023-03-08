@@ -28,14 +28,15 @@ class TombolaTextConstants {
   //Tombola page
   static const String majorPrize = "Lots Majeurs";
   static const String takeTickets = "Prendre vos tickets";
+  static const String noTicketBuyable = "Vous ne pouvez pas achetez de billets pour l'instant, voir avec les organisateurs de la tombola";
 
   //Create Home
   static const String modifTombola =
       "Vous pouvez modifiez vos tombolas ou en créer de nouvelles, toute décision doit ensuite être prise par les admins";
   static const String createYourRaffle = "Votre menu de création de tombolas";
+
   //Add Edit Page
   static const String possiblePrice = "Prix possible";
-
   static const String information = "Information et Statistiques";
 
 

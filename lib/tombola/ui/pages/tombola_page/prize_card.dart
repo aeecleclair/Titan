@@ -30,8 +30,8 @@ class PrizeCard extends HookConsumerWidget{
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                color.withOpacity(0.4),
-                color,
+                color.withOpacity(0.1),
+                color.withOpacity(0.2),
               ],
               stops: const [0, 0.8],
             ),
