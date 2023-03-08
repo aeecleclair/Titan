@@ -63,7 +63,8 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: titan-${{ steps.git_short_hash.outputs.result }}
+          name: titan-debug
           path: build/app/outputs/apk/debug/*.apk
+          if-no-files-found: ignore
 
       
