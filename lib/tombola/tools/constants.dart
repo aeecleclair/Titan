@@ -3,11 +3,11 @@ import 'package:myecl/tools/constants.dart';
 
 class TombolaColorConstants extends ColorConstants {
 
-  static final Color lightGradientButton = Color.fromARGB(255, 192, 6, 18);
-  static final Color darkGradientButton = Color.fromARGB(255, 97, 15, 0);
-  static final Color darkText = Color.fromARGB(255, 4, 1, 50);
-  static final Color writtenDark = Color.fromARGB(255, 10, 9, 30);
-  static final Color writtenWhite = Color(0xfffafaeb);
+  static const Color lightGradientButton = Color.fromARGB(255, 192, 6, 18);
+  static const Color darkGradientButton = Color.fromARGB(255, 97, 15, 0);
+  static const Color darkText = Color.fromARGB(255, 50, 9, 1);
+  static const Color writtenDark = Color.fromARGB(255, 10, 9, 30);
+  static const Color writtenWhite = Color(0xfffafaeb);
 
   
   
@@ -26,17 +26,16 @@ class TombolaTextConstants {
   static const String noTicket = "Vous n'avez pas de ticket";
 
   //Tombola page
-  static const String actualPrize = "Lots actuels";
+  static const String majorPrize = "Lots Majeurs";
   static const String takeTickets = "Prendre vos tickets";
-  static const String noTicketBuyable = "Vous ne pouvez pas achetez de billets pour l'instant, voir avec les organisateurs de la tombola";
-  static const String noPrize = "Il n'y a aucun lots actuellement, honte aux organisateurs de la tombola";
+
   //Create Home
   static const String modifTombola =
       "Vous pouvez modifiez vos tombolas ou en créer de nouvelles, toute décision doit ensuite être prise par les admins";
   static const String createYourRaffle = "Votre menu de création de tombolas";
-
   //Add Edit Page
   static const String possiblePrice = "Prix possible";
+
   static const String information = "Information et Statistiques";
 
 
