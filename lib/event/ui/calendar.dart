@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
@@ -168,7 +167,7 @@ class Calendar extends HookConsumerWidget {
 
 _AppointmentDataSource _getCalendarDataSource(List<Event> res) {
   List<Appointment> appointments = <Appointment>[];
-  res.where((e) => e.decision == Decision.approved).map((e) {
+  res.map((e) {
     appointments.add(Appointment(
         startTime: e.start,
         endTime: e.end,

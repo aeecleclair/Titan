@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/ui/calendar.dart';
+import 'package:myecl/event/ui/calendar.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
@@ -18,9 +18,7 @@ class AdminPage extends HookConsumerWidget {
         confirmedEvents = [],
         canceledEvents = [];
     events.when(
-        data: (
-          events,
-        ) {
+        data: (events) {
           for (Event b in events) {
             switch (b.decision) {
               case Decision.approved:
