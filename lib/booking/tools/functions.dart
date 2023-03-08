@@ -130,3 +130,7 @@ DateTime getTrueEnd(Booking b) {
     return b.end;
   }
 }
+
+DateTime combineDate(DateTime date, DateTime time) {
+  return DateTime(date.year, date.month, date.day, time.hour, time.minute);
+}
