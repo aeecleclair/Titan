@@ -41,6 +41,7 @@ jobs:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
+        working-directory: build/web
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
