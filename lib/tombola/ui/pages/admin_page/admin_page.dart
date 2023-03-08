@@ -5,6 +5,7 @@ import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/account_handler.dart';
+import 'package:myecl/tombola/ui/pages/admin_page/ticket_handler.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/lot_handler.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
@@ -30,7 +31,7 @@ class AdminPage extends HookConsumerWidget {
             SizedBox(
               height: 12,
             ),
-            // DeliveryHandler(),
+            TicketHandler(),
             SizedBox(
               height: 12,
             ),
