@@ -3,11 +3,11 @@ import 'package:myecl/tools/constants.dart';
 
 class TombolaColorConstants extends ColorConstants {
 
-  static final Color lightGradientButton = Color.fromARGB(255, 192, 6, 18);
-  static final Color darkGradientButton = Color.fromARGB(255, 97, 15, 0);
-  static final Color darkText = Color.fromARGB(255, 50, 9, 1);
-  static final Color writtenDark = Color.fromARGB(255, 10, 9, 30);
-  static final Color writtenWhite = Color(0xfffafaeb);
+  static const Color lightGradientButton = Color.fromARGB(255, 192, 6, 18);
+  static const Color darkGradientButton = Color.fromARGB(255, 97, 15, 0);
+  static const Color darkText = Color.fromARGB(255, 50, 9, 1);
+  static const Color writtenDark = Color.fromARGB(255, 10, 9, 30);
+  static const Color writtenWhite = Color(0xfffafaeb);
 
   
   

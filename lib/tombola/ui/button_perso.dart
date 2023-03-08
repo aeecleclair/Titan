@@ -9,7 +9,7 @@ class PersoButton extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: Color.fromARGB(125, 3, 2, 69),
@@ -29,7 +29,7 @@ class PersoButton extends StatelessWidget {
       child: Text(
         text,
         textAlign: TextAlign.center,
-        style: TextStyle(
+        style: const TextStyle(
             fontSize: 20, color: TombolaColorConstants.writtenWhite),
       ),
     );

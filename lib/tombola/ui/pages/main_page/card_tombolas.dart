@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
@@ -52,13 +51,13 @@ class TombolaWidget extends HookConsumerWidget {
                 children: [
                   Text(
                     raffle.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: TombolaColorConstants.darkText, fontSize: 20),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
+                  const Text(
                     "Lot principal : ",
                     style: TextStyle(
                         color: TombolaColorConstants.darkText, fontSize: 15),
