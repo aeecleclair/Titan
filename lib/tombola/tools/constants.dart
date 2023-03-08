@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:myecl/tools/constants.dart';
 
 class TombolaColorConstants extends ColorConstants {
-  static const Color lightGradientBlueButton = Color.fromARGB(255, 192, 6, 18);
-  static const Color darkGradientBlueButton = Color.fromARGB(255, 97, 15, 0);
-  static const Color writtenDark = Color.fromARGB(255, 10, 9, 30);
-  static const Color writtenWhite = Color(0xfffafaeb);
+
+  static final Color lightGradientButton = Color.fromARGB(255, 192, 6, 18);
+  static final Color darkGradientButton = Color.fromARGB(255, 97, 15, 0);
+  static final Color darkText = Color.fromARGB(255, 79, 15, 2);
+  static final Color writtenDark = Color.fromARGB(255, 10, 9, 30);
+  static final Color writtenWhite = Color(0xfffafaeb);
+
+  
+  
 }
 
 class TombolaTextConstants {

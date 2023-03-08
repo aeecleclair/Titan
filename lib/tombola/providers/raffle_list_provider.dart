@@ -7,13 +7,9 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class RaffleListNotifier extends ListNotifier<Raffle> {
   final RaffleRepository _rafflerepository = RaffleRepository();
-  late final String raffleId;
   RaffleListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _rafflerepository.setToken(token);
-  }
-  void setId(String id) {
-    raffleId = id;
   }
 
   Future<AsyncValue<List<Raffle>>> loadRaffleList() async {
