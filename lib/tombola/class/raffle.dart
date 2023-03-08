@@ -5,7 +5,7 @@ class Raffle {
     required this.endDate,
     required this.groupId,
     required this.id,
-    required this.description,
+    this.description,
   });
   late final String name;
   late final DateTime startDate;
@@ -67,14 +67,13 @@ class Raffle {
     DateTime? endDate,
     String? groupId,
     String? id,
-    String? description,
+    this.description,
   }) {
     this.name = name ?? this.name;
     this.startDate = startDate ?? this.startDate;
     this.endDate = endDate ?? this.endDate;
     this.groupId = groupId ?? this.groupId;
     this.id = id ?? this.id;
-    this.description = description ?? this.description;
   }
 
   Raffle.empty() {
