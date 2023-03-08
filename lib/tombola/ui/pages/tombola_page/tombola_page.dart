@@ -1,7 +1,12 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
+import 'package:myecl/tombola/providers/type_ticket_provider.dart';
+import 'package:myecl/tombola/providers/user_tickets_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
+import 'package:myecl/tombola/ui/pages/main_page/carte_ticket.dart';
+import 'package:myecl/tombola/ui/pages/tombola_page/buy_type_ticket_card.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/prize_card.dart';
 
 class TombolaInfoPage extends HookConsumerWidget {
@@ -10,14 +15,52 @@ class TombolaInfoPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffle = ref.watch(raffleProvider);
+    final userTicketList = ref.watch(userTicketListProvider);
+    final typeTicketList = ref.watch(typeTicketsListProvider);
     return Container(
         margin: const EdgeInsets.only(top: 15),
         child: ListView(children: [
           Center(
-              child: Text(raffle.name, style: const TextStyle(fontSize: 30))),
-          const Center(
+              child: Text(raffle.name,
+                  style: const TextStyle(
+                      fontSize: 30, fontWeight: FontWeight.bold))),
+          typeTicketList.when(
+              data: (type_tickets) {
+                return type_tickets.isEmpty
+                    ? const Center(
+                        child: Text(TombolaTextConstants.noTicketBuyable),
+                      )
+                    : SizedBox(
+                        height: 210,
+                        child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: type_tickets.length + 2,
+                            itemBuilder: (context, index) {
+                              if (index == 0 ||
+                                  index == type_tickets.length + 1) {
+                                return const SizedBox(
+                                  width: 15,
+                                );
+                              }
+                              return Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  child: BuyTypeTicket(
+                                      type_ticket: type_tickets[index - 1],
+                                      raffle: raffle));
+                            }));
+              },
+              loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+              error: (error, stack) => const Center(
+                    child: Text('Error'),
+                  )),
+          Container(
+              padding: EdgeInsets.only(bottom: 10, left: 20, right: 20),
               child: Text(TombolaTextConstants.majorPrize,
-                  style: TextStyle(fontSize: 20))),
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: const [
@@ -25,20 +68,24 @@ class TombolaInfoPage extends HookConsumerWidget {
                 PrizeCard(color: Colors.blue),
                 PrizeCard(color: Colors.yellowAccent),
               ]),
-          const Text("Description", style: TextStyle(fontSize: 30)),
-          const SizedBox(
-            height: 100,
-          ),
+          if (raffle.description != null)
+            Container(
+              padding:
+                  EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
+              child: Text("Description",
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            ),
+          Container(
+              padding:
+                  EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
+              child: Text(raffle.description ?? "",
+                  style: TextStyle(fontSize: 15))),
         ]));
     //   const Positioned(
     //     bottom: 10,
     //     right: 10,
     //     child: PersoButton(text: "Modifiez votre tombola [SI CREATEUR]"),
-    //   ),const Positioned(
-    //     bottom: 60,
-    //     right: 10,
-    //     child: PersoButton(text: TombolaTextConstants.takeTickets),
-    //   ),
+    //   )
     // ]);
   }
 }
