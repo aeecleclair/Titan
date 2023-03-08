@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
+import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
@@ -14,10 +15,12 @@ class TombolaWidget extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final raffleNotifier = ref.watch(raffleProvider.notifier);
+    final lotListNotifier = ref.read(lotListProvider.notifier);
     final typeTicketListNotifier = ref.watch(typeTicketsListProvider.notifier);
     return GestureDetector(
         onTap: () {
           raffleNotifier.setRaffle(raffle);
+          lotListNotifier.loadLotList(raffle.id);
           typeTicketListNotifier.loadTypeTicketList(raffle.id);
           pageNotifier.setTombolaPage(TombolaPage.tombola);
         },

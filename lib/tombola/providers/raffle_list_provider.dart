@@ -41,6 +41,25 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
               "Dolorum et consectetur. Maxime asperiores ratione delectus labore. Officiis mollitia consequatur qui et voluptas. Aut aliquam et tempore rerum saepe quam."),
     ]);
   }
+
+  Future<bool> createRaffle(Raffle raffle) async {
+    return await add(_rafflerepository.createRaffle, raffle);
+  }
+
+  Future<bool> updateRaffle(Raffle raffle) async {
+    return await update(
+        _rafflerepository.updateRaffle,
+        (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
+        raffle);
+  }
+
+  Future<bool> deleteRaffle(Raffle raffle) async {
+    return await delete(
+        _rafflerepository.deleteRaffle,
+        (raffles, r) => raffles..removeWhere((e) => e.id == r.id),
+        raffle.id,
+        raffle);
+  }
 }
 
 final raffleListProvider =

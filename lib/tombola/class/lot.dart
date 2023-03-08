@@ -1,5 +1,5 @@
-class Lots {
-  Lots({
+class Lot {
+  Lot({
     required this.id,
     required this.raffleId,
     required this.description,
@@ -10,7 +10,7 @@ class Lots {
   late final String description;
   late final int quantity;
 
-  Lots.fromJson(Map<String, dynamic> json) {
+  Lot.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     raffleId = json['raffle_id'];
     description = json['description'];
@@ -26,7 +26,7 @@ class Lots {
     return data;
   }
 
-  Lots.copyWith({
+  Lot.copyWith({
     String? id,
     String? raffleId,
     String? description,
@@ -38,7 +38,7 @@ class Lots {
     this.quantity = quantity ?? this.quantity;
   }
 
-  Lots.empty() {
+  Lot.empty() {
     id = '';
     raffleId = '';
     description = '';
@@ -47,6 +47,6 @@ class Lots {
 
   @override
   String toString() {
-    return 'Lots{id: $id, raffleId: $raffleId, description: $description, quantity: $quantity}';
+    return 'Lot{id: $id, raffleId: $raffleId, description: $description, quantity: $quantity}';
   }
 }

@@ -10,4 +10,20 @@ class RaffleRepository extends Repository {
     return List<Raffle>.from((await getList(suffix: "$raffleId/items"))
         .map((x) => Raffle.fromJson(x)));
   }
+
+  Future<Raffle> getRaffle(String raffleId) async {
+    return Raffle.fromJson(await getOne(raffleId, suffix: "/items"));
+  }
+
+  Future<Raffle> createRaffle(Raffle raffle) async {
+    return Raffle.fromJson(await create(raffle.toJson()));
+  }
+
+  Future<bool> updateRaffle(Raffle raffle) async {
+    return await update(raffle.toJson(), raffle.id);
+  }
+
+  Future<bool> deleteRaffle(String raffleId) async {
+    return await delete(raffleId);
+  }
 }

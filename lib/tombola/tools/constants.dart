@@ -10,12 +10,14 @@ class TombolaColorConstants extends ColorConstants {
   static const Color gradient1 = Color(0xff1aa6b7);
   static const Color gradient2 = Color(0xff002d40);
   static const Color textDark = Color.fromARGB(255, 0, 23, 32);
+  static const Color redGradient1 = Color(0xFFfb6d10);
+  static const Color redGradient2 = Color.fromARGB(255, 155, 51, 10);
 }
 
 class TombolaTextConstants {
   //general
   static const String raffle = "Tombola";
-  static const String prize = "Lots";
+  static const String prize = "Lot";
   //Home page
   static const String actualTombolas = "Tombola en cours";
   static const String pastTombolas = "Tombola passés";
@@ -25,7 +27,7 @@ class TombolaTextConstants {
   static const String noTicket = "Vous n'avez pas de ticket";
 
   //Tombola page
-  static const String majorPrize = "Lots Majeurs";
+  static const String majorPrize = "Lot Majeurs";
   static const String takeTickets = "Prendre vos tickets";
 
   //Create Home
@@ -45,4 +47,10 @@ class TombolaTextConstants {
   static const String updatedAmount = "Montant mis à jour";
 
   static const String updatingError = "Erreur lors de la mise à jour";
+
+  static const String deletedlot = "Lot supprimé";
+
+  static const String deletingError = "Erreur lors de la suppression";
+
+  static const String quantity = "Quantité";
 }
