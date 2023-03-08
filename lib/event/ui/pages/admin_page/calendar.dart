@@ -168,25 +168,22 @@ class Calendar extends HookConsumerWidget {
 _AppointmentDataSource _getCalendarDataSource(List<Event> res) {
   List<Appointment> appointments = <Appointment>[];
   res.map((e) {
-    print(e);
     if (e.recurrenceRule != "") {
       final dates = getDateInRecurrence(e.recurrenceRule, e.start);
-      final dayDuration = e.start.difference(e.end);
       dates.map((data) {
         appointments.add(Appointment(
-            startTime: combineDate(data, e.start),
-            endTime: combineDate(data, e.end)
-                .add(Duration(days: dayDuration.inDays)),
-            subject: '${e.name} - ${e.organizer}',
-            isAllDay: e.allDay,
-            startTimeZone: "Europe/Paris",
-            endTimeZone: "Europe/Paris",
-            notes: e.description,
-            color: generateColor(e.location),
-            recurrenceRule: ""));
+          startTime: combineDate(data, e.start),
+          endTime: combineDate(data, e.end),
+          subject: '${e.name} - ${e.organizer}',
+          isAllDay: e.allDay,
+          startTimeZone: "Europe/Paris",
+          endTimeZone: "Europe/Paris",
+          notes: e.description,
+          color: generateColor(e.location),
+        ));
       }).toList();
     } else {
-    appointments.add(Appointment(
+      appointments.add(Appointment(
         startTime: e.start,
         endTime: e.end,
         subject: '${e.name} - ${e.organizer}',
@@ -195,7 +192,7 @@ _AppointmentDataSource _getCalendarDataSource(List<Event> res) {
         endTimeZone: "Europe/Paris",
         notes: e.description,
         color: generateColor(e.location),
-        recurrenceRule: e.recurrenceRule));
+      ));
     }
   }).toList();
   return _AppointmentDataSource(appointments);

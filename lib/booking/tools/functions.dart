@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
@@ -101,11 +103,10 @@ String formatRecurrenceRule(
 Color generateColor(String uuid) {
   int hash = 0;
   for (int i = 0; i < uuid.length; i++) {
-    hash = 20 * hash + uuid.codeUnitAt(i);
+    hash = (10 * hash + uuid.codeUnitAt(i)) % 0xFFFFFF;
   }
-  Color color = Color(hash & 0xFFFFFF).withOpacity(1.0);
-  double luminance = color.computeLuminance();
-  return luminance < 0.5 ? color : invert(color);
+  Color color = Color(hash & 0xFFAAFF).withOpacity(1.0);
+  return color;
 }
 
 Color invert(Color color) {
