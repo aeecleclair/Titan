@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/ui/pages/admin_page/adding_user_card.dart';
+import 'package:myecl/tombola/ui/pages/admin_page/adding_user_card.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AddingUserContainer extends HookConsumerWidget {

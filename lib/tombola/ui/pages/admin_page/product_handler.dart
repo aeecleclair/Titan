@@ -30,6 +30,7 @@ class ProductHandler extends HookConsumerWidget {
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
+
     return Column(
       children: [
         Container(
@@ -108,11 +109,18 @@ class ProductHandler extends HookConsumerWidget {
                                             "Voulez-vous vraiment supprimer ce produit?",
                                         onYes: () {
                                           tokenExpireWrapper(ref, () async {
-                                            final value = await productsNotifier.deleteProduct(e);
+                                            final value = await productsNotifier
+                                                .deleteProduct(e);
                                             if (value) {
-                                              displayToastWithContext(TypeMsg.msg, AMAPTextConstants.deletedProduct);
+                                              displayToastWithContext(
+                                                  TypeMsg.msg,
+                                                  AMAPTextConstants
+                                                      .deletedProduct);
                                             } else {
-                                              displayToastWithContext(TypeMsg.error, AMAPTextConstants.productInDelivery);
+                                              displayToastWithContext(
+                                                  TypeMsg.error,
+                                                  AMAPTextConstants
+                                                      .productInDelivery);
                                             }
                                           });
                                         },

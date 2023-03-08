@@ -6,7 +6,7 @@ import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/admin_page/delivery_ui.dart';
+import 'package:myecl/tombola/ui/pages/admin_page/delivery_ui.dart';
 
 class DeliveryHandler extends HookConsumerWidget {
   const DeliveryHandler({super.key});
