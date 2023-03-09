@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/tombola/providers/cash_provider.dart';
 import 'package:myecl/tombola/providers/lot_list_provider.dart';
-import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/account_handler.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/ticket_handler.dart';
@@ -14,7 +13,6 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final raffle = ref.watch(raffleProvider);
     final cashNotifier = ref.read(cashProvider.notifier);
     final typeTicketsListNotifier =
         ref.read(typeTicketsListProvider.notifier);
@@ -22,8 +20,8 @@ class AdminPage extends HookConsumerWidget {
     return Refresher(
         onRefresh: () async {
           await cashNotifier.loadCashList();
-          await typeTicketsListNotifier.loadTypeTicketList(raffle.id);
-          await lotListNotifier.loadLotList(raffle.id);
+          await typeTicketsListNotifier.loadTypeTicketList();
+          await lotListNotifier.loadLotList();
         },
         child: Column(
           children: const [
