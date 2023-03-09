@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/tombola/class/raffle.dart';
+import 'package:myecl/tombola/providers/lots_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
 import 'package:myecl/tombola/providers/user_tickets_provider.dart';
@@ -17,9 +18,11 @@ class TombolaInfoPage extends HookConsumerWidget {
     final raffle = ref.watch(raffleProvider);
     final userTicketList = ref.watch(userTicketListProvider);
     final typeTicketList = ref.watch(typeTicketsListProvider);
+    final lotsList = ref.watch(lotsListProvider);
     return Container(
         margin: const EdgeInsets.only(top: 15),
         child: ListView(children: [
+          Text("Votre solde [Copie amap]"),
           Center(
               child: Text(raffle.name,
                   style: const TextStyle(
@@ -57,17 +60,43 @@ class TombolaInfoPage extends HookConsumerWidget {
               error: (error, stack) => const Center(
                     child: Text('Error'),
                   )),
-          Container(
-              padding: EdgeInsets.only(bottom: 10, left: 20, right: 20),
-              child: Text(TombolaTextConstants.majorPrize,
+          
+          lotsList.when(
+              data: (lots) {
+                return lots.isEmpty
+                    ? const Center(
+                        child: Text(TombolaTextConstants.noPrize),
+                      )
+                    : SizedBox(
+                        height: 210,
+                        child:Column(children: [Container(
+              padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
+              child: Text(lots.isEmpty ? TombolaTextConstants.noPrize : TombolaTextConstants.actualPrize,
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                PrizeCard(color: Colors.red),
-                PrizeCard(color: Colors.blue),
-                PrizeCard(color: Colors.yellowAccent),
-              ]),
+                          ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: lots.length + 2,
+                            itemBuilder: (context, index) {
+                              if (index == 0 || index == lots.length + 1) {
+                                return const SizedBox(
+                                  width: 15,
+                                );
+                              }
+                              return Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  child: PrizeCard(
+                                    prize: lots[index - 1],
+                                  ));
+                            })]));
+              },
+              loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+              error: (error, stack) => const Center(
+                    child: Text('Error'),
+                  )),
           if (raffle.description != null)
             Container(
               padding:
