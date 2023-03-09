@@ -16,10 +16,10 @@ class LotsListNotifier extends ListNotifier<Lot> {
     // return await loadList(
     //     () async => _LotsRepository.getLotsList(raffleId));
     return state = AsyncData([
-      Lot(raffleId: "1", id: "1", description: 'maison', quantity: 1),
-      Lot(raffleId: "1", id: "2", description: 'ordinateur', quantity: 5),
-      Lot(raffleId: "1", id: "3", description: 'Chaise de jardins avec tables', quantity: 5),
-      Lot(raffleId: "2", id: "4", description: 'maison', quantity: 1),
+      Lot(raffleId: "1", id: "1", name: 'maison', quantity: 1),
+      Lot(raffleId: "1", id: "2", name: 'ordinateur', quantity: 5),
+      Lot(raffleId: "1", id: "3", name: 'Chaise de jardins avec tables', quantity: 5),
+      Lot(raffleId: "2", id: "4", name: 'maison', quantity: 1),
 
     ]);
   }
