@@ -2,18 +2,21 @@ class Lot {
   Lot({
     required this.id,
     required this.raffleId,
-    required this.description,
     required this.quantity,
+    required this.name,
+    this.description,
   });
   late final String id;
   late final String raffleId;
-  late final String description;
+  late final String? description;
   late final int quantity;
+  late final String name;
 
   Lot.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     raffleId = json['raffle_id'];
     description = json['description'];
+    name = json['name'];
     quantity = json['quantity'];
   }
 
@@ -23,6 +26,7 @@ class Lot {
     data['raffle_id'] = raffleId;
     data['description'] = description;
     data['quantity'] = quantity;
+    data['name'] = name;
     return data;
   }
 
@@ -43,6 +47,7 @@ class Lot {
     raffleId = '';
     description = '';
     quantity = 0;
+    name = '';
   }
 
   @override
