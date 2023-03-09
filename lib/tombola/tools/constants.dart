@@ -53,4 +53,25 @@ class TombolaTextConstants {
   static const String deletingError = "Erreur lors de la suppression";
 
   static const String quantity = "Quantité";
+
+  // Add Edit type ticket
+  static const String addTypeTicket = "Ajouter";
+
+  static const String addingError = "Erreur lors de l'ajout";
+
+  static const String editTypeTicket = "Modifier";
+
+  static const String fillField = "Le champ ne peut pas être vide";
+
+  static const String waiting = "Chargement";
+
+  static const String editingError = "Erreur lors de la modification";
+
+  static const String addedTicket = "Ticket ajouté";
+
+  static const String editedTicket = "Ticket modifié";
+
+  static const String alreadyExistTicket = "Le ticket existe déjà";
+
+  static const String numberExpected = "Un entier est attendu";
 }

@@ -34,20 +34,21 @@ class Raffle {
     return data;
   }
 
-  Raffle.copyWith({
+  Raffle copyWith({
     String? name,
     DateTime? startDate,
     DateTime? endDate,
     String? groupId,
     String? id,
-    this.description,
-  }) {
-    this.name = name ?? this.name;
-    this.startDate = startDate ?? this.startDate;
-    this.endDate = endDate ?? this.endDate;
-    this.groupId = groupId ?? this.groupId;
-    this.id = id ?? this.id;
-  }
+    String? description,
+  }) =>
+      Raffle(
+          name: name ?? this.name,
+          startDate: startDate ?? this.startDate,
+          endDate: endDate ?? this.endDate,
+          groupId: groupId ?? this.groupId,
+          id: id ?? this.id,
+          description: description);
 
   Raffle.empty() {
     name = '';

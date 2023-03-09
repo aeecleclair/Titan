@@ -38,7 +38,7 @@ class TicketHandler extends HookConsumerWidget {
               ),
               GestureDetector(
                   onTap: () {
-                    pageNotifier.setTombolaPage(TombolaPage.addEdit);
+                    pageNotifier.setTombolaPage(TombolaPage.addEditTypeTicket);
                   },
                   child: Container(
                     margin: const EdgeInsets.all(15.0),

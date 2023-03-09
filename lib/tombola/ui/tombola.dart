@@ -28,18 +28,17 @@ class TombolaHomePage extends HookConsumerWidget {
               } else {
                 return true;
               }
-
-            case TombolaPage.tombola:
+            case TombolaPage.detail:
               pageNotifier.setTombolaPage(TombolaPage.main);
               break;
             case TombolaPage.admin:
               pageNotifier.setTombolaPage(TombolaPage.main);
               break;
-            case TombolaPage.addEdit:
+            case TombolaPage.addEditLot:
               pageNotifier.setTombolaPage(TombolaPage.admin);
               break;
-            case TombolaPage.create:
-            pageNotifier.setTombolaPage(TombolaPage.main);
+            case TombolaPage.addEditTypeTicket:
+              pageNotifier.setTombolaPage(TombolaPage.admin);
               break;
           }
           return false;
