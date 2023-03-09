@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tombola/class/lots.dart';
 
 class PrizeCard extends HookConsumerWidget{ 
   const PrizeCard({
     Key? key,
-    required this.color,
+    required this.prize,
   }) : super(key: key);
-  final Color color;
+  final Lot prize;
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
+    final color = Colors.cyan;
     return 
       Container(
         width:100,
