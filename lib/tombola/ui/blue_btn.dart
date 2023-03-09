@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/tombola/tools/constants.dart';
 
 class BlueBtn extends StatelessWidget {
   final String text;
@@ -15,12 +15,12 @@ class BlueBtn extends StatelessWidget {
         height: 60,
         decoration: BoxDecoration(
           gradient: const LinearGradient(colors: [
-            AMAPColorConstants.greenGradient1,
-            AMAPColorConstants.greenGradient2
+            TombolaColorConstants.gradient1,
+            TombolaColorConstants.gradient2
           ], begin: Alignment.topLeft, end: Alignment.bottomRight),
           boxShadow: [
             BoxShadow(
-                color: AMAPColorConstants.greenGradient2.withOpacity(0.4),
+                color: TombolaColorConstants.gradient2.withOpacity(0.4),
                 offset: const Offset(2, 3),
                 blurRadius: 5)
           ],
@@ -30,9 +30,7 @@ class BlueBtn extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: AMAPColorConstants.background),
+              fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
         ),
       ),
     );

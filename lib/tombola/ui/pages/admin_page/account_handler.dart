@@ -78,7 +78,7 @@ class AccountHandler extends HookConsumerWidget {
           ),
         ),
         SizedBox(
-            height: 135,
+            height: 100,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
@@ -170,6 +170,9 @@ class AccountHandler extends HookConsumerWidget {
                 ],
               ),
             )),
+        const SizedBox(
+          height: 10,
+        ),
       ],
     );
   }

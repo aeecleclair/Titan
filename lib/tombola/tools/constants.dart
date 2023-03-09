@@ -12,6 +12,7 @@ class TombolaColorConstants extends ColorConstants {
   static const Color textDark = Color.fromARGB(255, 0, 23, 32);
   static const Color redGradient1 = Color(0xFFfb6d10);
   static const Color redGradient2 = Color.fromARGB(255, 155, 51, 10);
+  static const Color ticketback = Color(0xff000031);
 }
 
 class TombolaTextConstants {
@@ -74,4 +75,10 @@ class TombolaTextConstants {
   static const String alreadyExistTicket = "Le ticket existe déjà";
 
   static const String numberExpected = "Un entier est attendu";
+
+  static const String deletedTicket = "Ticket supprimé";
+
+  static const String addlot = "Ajouter";
+
+  static const String editlot = "Modifier";
 }
