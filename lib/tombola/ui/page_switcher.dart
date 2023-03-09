@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/admin_page.dart';
+import 'package:myecl/tombola/ui/pages/lots_pages/add_edit_lot_page.dart';
 import 'package:myecl/tombola/ui/pages/main_page/main_page.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/tombola_page.dart';
@@ -18,7 +19,7 @@ class PageSwitcher extends ConsumerWidget {
       case TombolaPage.detail:
         return const TombolaInfoPage();
       case TombolaPage.addEditLot:
-        return Container();
+        return const AddEditLotPage();
       case TombolaPage.addEditTypeTicket:
         return const AddEditTypeTicketPage();
       case TombolaPage.admin:

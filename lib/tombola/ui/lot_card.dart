@@ -51,7 +51,7 @@ class LotCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
-              AutoSizeText(lot.description,
+              AutoSizeText(lot.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(

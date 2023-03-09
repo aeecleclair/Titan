@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/providers/ticket_type_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/ticket_ui.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 
 class TicketHandler extends HookConsumerWidget {
   const TicketHandler({super.key});
@@ -12,7 +17,14 @@ class TicketHandler extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
-    final tickets = ref.watch(typeTicketsListProvider);
+    final typeTickets = ref.watch(typeTicketsListProvider);
+    final typeTicketsNotifier = ref.watch(typeTicketsListProvider.notifier);
+    final typeTicketNotifier = ref.watch(typeTicketProvider.notifier);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     return Column(
       children: [
         Container(
@@ -34,44 +46,76 @@ class TicketHandler extends HookConsumerWidget {
             children: [
               const SizedBox(
                 width: 15,
-                height: 110,
+                height: 125,
               ),
               GestureDetector(
                   onTap: () {
+                    typeTicketNotifier.setLot(TypeTicket.empty());
                     pageNotifier.setTombolaPage(TombolaPage.addEditTypeTicket);
                   },
                   child: Container(
                     margin: const EdgeInsets.all(15.0),
                     padding: const EdgeInsets.all(12.0),
-                    height: 100,
+                    height: 125,
                     width: 100,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Colors.white,
+                      color: TombolaColorConstants.ticketback,
                       boxShadow: [
                         BoxShadow(
                           color:
-                              TombolaColorConstants.textDark.withOpacity(0.2),
-                          spreadRadius: 5,
-                          blurRadius: 10,
-                          offset: const Offset(3, 3),
+                              TombolaColorConstants.ticketback.withOpacity(0.3),
+                          blurRadius: 8,
+                          offset: const Offset(2, 3),
                         ),
                       ],
                     ),
                     child: const Center(
                       child: HeroIcon(
                         HeroIcons.plus,
-                        color: TombolaColorConstants.textDark,
+                        color: Colors.white,
                         size: 50,
                       ),
                     ),
                   )),
-              tickets.when(
+              typeTickets.when(
                 data: (data) {
                   return Row(
                       children: data
                           .map((e) => TicketUI(
                                 typeTicket: e,
+                                onEdit: () {
+                                  typeTicketNotifier.setLot(e);
+                                  pageNotifier.setTombolaPage(
+                                      TombolaPage.addEditTypeTicket);
+                                },
+                                onDelete: () async {
+                                  await showDialog(
+                                      context: context,
+                                      builder: (context) => CustomDialogBox(
+                                            title: "Supprimer le ticket",
+                                            descriptions:
+                                                "Voulez-vous vraiment supprimer ce ticket?",
+                                            onYes: () {
+                                              tokenExpireWrapper(ref, () async {
+                                                final value =
+                                                    await typeTicketsNotifier
+                                                        .deleteTypeTicket(e);
+                                                if (value) {
+                                                  displayToastWithContext(
+                                                      TypeMsg.msg,
+                                                      TombolaTextConstants
+                                                          .deletedTicket);
+                                                } else {
+                                                  displayToastWithContext(
+                                                      TypeMsg.error,
+                                                      TombolaTextConstants
+                                                          .deletingError);
+                                                }
+                                              });
+                                            },
+                                          ));
+                                },
                               ))
                           .toList());
                 },
