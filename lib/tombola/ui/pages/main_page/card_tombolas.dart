@@ -22,7 +22,7 @@ class TombolaWidget extends HookConsumerWidget {
           raffleIdNotifier.setId(raffle.id);
           lotListNotifier.loadLotList();
           typeTicketListNotifier.loadTypeTicketList();
-          pageNotifier.setTombolaPage(TombolaPage.tombola);
+          pageNotifier.setTombolaPage(TombolaPage.detail);
         },
         child: Center(
             child: Container(

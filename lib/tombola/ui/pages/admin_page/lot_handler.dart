@@ -49,7 +49,7 @@ class LotHandler extends HookConsumerWidget {
             GestureDetector(
               onTap: () {
                 lotNotifier.setLot(Lot.empty());
-                pageNotifier.setTombolaPage(TombolaPage.addEdit);
+                pageNotifier.setTombolaPage(TombolaPage.addEditLot);
               },
               child: Container(
                   margin: const EdgeInsets.only(left: 5.0, bottom: 10),
@@ -125,7 +125,7 @@ class LotHandler extends HookConsumerWidget {
                               onEdit: () {
                                 lotNotifier.setLot(e);
                                 pageNotifier
-                                    .setTombolaPage(TombolaPage.addEdit);
+                                    .setTombolaPage(TombolaPage.addEditLot);
                               },
                             ),
                           )

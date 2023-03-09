@@ -1,0 +1,155 @@
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/providers/ticket_type_provider.dart';
+import 'package:myecl/tombola/providers/tombola_page_provider.dart';
+import 'package:myecl/tombola/providers/type_ticket_provider.dart';
+import 'package:myecl/tombola/tools/constants.dart';
+import 'package:myecl/tombola/ui/green_btn.dart';
+import 'package:myecl/tombola/ui/pages/type_ticket_pages/text_entry.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
+
+class AddEditTypeTicketPage extends HookConsumerWidget {
+  const AddEditTypeTicketPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final formKey = GlobalKey<FormState>();
+    final pageNotifier = ref.watch(tombolaPageProvider.notifier);
+    final typeTicket = ref.watch(typeTicketProvider);
+    final isEdit = typeTicket.id != TypeTicket.empty().id;
+    final quantity =
+        useTextEditingController(text: typeTicket.nbTicket.toString());
+    final price = useTextEditingController(text: typeTicket.price.toString());
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 30),
+      child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Form(
+              key: formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Container(
+                  alignment: Alignment.center,
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            TombolaTextConstants.addTypeTicket,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 18,
+                              color: TombolaColorConstants.gradient2,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 35,
+                        ),
+                        TextEntry(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return TombolaTextConstants.fillField;
+                              }
+                              return null;
+                            },
+                            textEditingController: quantity,
+                            keyboardType: TextInputType.number),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        TextEntry(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return TombolaTextConstants.fillField;
+                              }
+                              if (int.tryParse(value) == null) {
+                                return TombolaTextConstants.numberExpected;
+                              }
+                              return null;
+                            },
+                            suffixText: "€",
+                            textEditingController: price,
+                            keyboardType: TextInputType.number),
+                        ShrinkButton(
+                            waitChild: const BlueBtn(
+                                text: TombolaTextConstants.waiting),
+                            onTap: () async {
+                              if (formKey.currentState!.validate()) {
+                                await tokenExpireWrapper(ref, () async {
+                                  final newTypeTicket = typeTicket.copyWith(
+                                      price: int.parse(price.text),
+                                      nbTicket: int.parse(quantity.text));
+                                  final typeTicketNotifier = ref
+                                      .watch(typeTicketsListProvider.notifier);
+                                  final value = isEdit
+                                      ? await typeTicketNotifier
+                                          .updateTypeTicket(newTypeTicket)
+                                      : await typeTicketNotifier
+                                          .addTypeTicket(newTypeTicket);
+                                  if (value) {
+                                    pageNotifier
+                                        .setTombolaPage(TombolaPage.admin);
+                                    if (isEdit) {
+                                      displayToastWithContext(TypeMsg.msg,
+                                          TombolaTextConstants.editedTicket);
+                                    } else {
+                                      displayToastWithContext(TypeMsg.msg,
+                                          TombolaTextConstants.addedTicket);
+                                    }
+                                  } else {
+                                    if (isEdit) {
+                                      displayToastWithContext(TypeMsg.error,
+                                          TombolaTextConstants.editingError);
+                                    } else {
+                                      displayToastWithContext(
+                                          TypeMsg.error,
+                                          TombolaTextConstants
+                                              .alreadyExistTicket);
+                                    }
+                                  }
+                                });
+                              } else {
+                                displayToast(context, TypeMsg.error,
+                                    TombolaTextConstants.addingError);
+                              }
+                            },
+                            child: BlueBtn(
+                                text: isEdit
+                                    ? TombolaTextConstants.editTypeTicket
+                                    : TombolaTextConstants.addTypeTicket)),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                      ],
+                    ),
+                  )))),
+    );
+  }
+
+  _selectDate(
+      BuildContext context, TextEditingController dateController) async {
+    final DateTime now = DateTime.now();
+    final DateTime? picked = await showDatePicker(
+        locale: const Locale("fr", "FR"),
+        context: context,
+        initialDate: now,
+        firstDate: now,
+        lastDate: DateTime(now.year + 1, now.month, now.day));
+    dateController.text = DateFormat('dd/MM/yyyy').format(picked ?? now);
+  }
+}

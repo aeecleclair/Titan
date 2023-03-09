@@ -30,17 +30,18 @@ class Lot {
     return data;
   }
 
-  Lot.copyWith({
+  Lot copyWith({
     String? id,
     String? raffleId,
     String? description,
     int? quantity,
-  }) {
-    this.id = id ?? this.id;
-    this.raffleId = raffleId ?? this.raffleId;
-    this.description = description ?? this.description;
-    this.quantity = quantity ?? this.quantity;
-  }
+  }) =>
+      Lot(
+        id: id ?? this.id,
+        raffleId: raffleId ?? this.raffleId,
+        description: description ?? this.description,
+        quantity: quantity ?? this.quantity,
+      );
 
   Lot.empty() {
     id = '';

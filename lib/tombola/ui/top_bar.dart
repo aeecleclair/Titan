@@ -31,17 +31,17 @@ class TopBar extends HookConsumerWidget {
                           case TombolaPage.main:
                             controllerNotifier.toggle();
                             break;
-                          case TombolaPage.tombola:
+                          case TombolaPage.detail:
                             pageNotifier.setTombolaPage(TombolaPage.main);
                             break;
                           case TombolaPage.admin:
                             pageNotifier.setTombolaPage(TombolaPage.main);
                             break;
-                          case TombolaPage.addEdit:
-                            pageNotifier.setTombolaPage(TombolaPage.create);
+                          case TombolaPage.addEditLot:
+                            pageNotifier.setTombolaPage(TombolaPage.admin);
                             break;
-                          case TombolaPage.create:
-                            pageNotifier.setTombolaPage(TombolaPage.main);
+                          case TombolaPage.addEditTypeTicket:
+                            pageNotifier.setTombolaPage(TombolaPage.admin);
                             break;
                         }
                       },
