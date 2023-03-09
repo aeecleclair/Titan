@@ -1,7 +1,6 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/providers/ticket_type_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';

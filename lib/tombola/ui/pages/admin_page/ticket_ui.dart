@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
