@@ -26,12 +26,13 @@ class TombolaWidget extends HookConsumerWidget {
             child: Container(
           height: 100,
           margin: const EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          decoration: const BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                    color: Color.fromARGB(105, 80, 81, 81),
+                    color: Color.fromARGB(105, 193, 193, 193),
                     blurRadius: 6,
-                    offset: Offset(1, 1)),
+                    offset: Offset(2, 3)),
               ],
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -41,28 +42,28 @@ class TombolaWidget extends HookConsumerWidget {
                   Color.fromARGB(255, 250, 246, 246),
                 ],
               ),
-              borderRadius: const BorderRadius.all(Radius.circular(10))),
+              borderRadius: BorderRadius.all(Radius.circular(20))),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Container(
-              margin: EdgeInsets.only(left: 10),
-              child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                Text(
-                  raffle.name,
-                  style: TextStyle(
-                      color: TombolaColorConstants.darkText,
-                      fontSize: 20),
-                ),
-                Text(
-                  "Lot principal : ",
-                  style: TextStyle(
-                      color: TombolaColorConstants.darkText,
-                      fontSize: 20),
-                ),
-              ]),
-            ),
             Image.asset("assets/images/logo.png"),
+            Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    raffle.name,
+                    style: TextStyle(
+                        color: TombolaColorConstants.darkText, fontSize: 20),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Lot principal : ",
+                    style: TextStyle(
+                        color: TombolaColorConstants.darkText, fontSize: 15),
+                  ),
+                ]),
           ]),
         )));
   }
