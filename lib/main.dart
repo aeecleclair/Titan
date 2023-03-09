@@ -46,7 +46,8 @@ class MyApp extends HookConsumerWidget {
       theme: ThemeData(
           primarySwatch: Colors.orange,
           textTheme: GoogleFonts.latoTextTheme(
-              Theme.of(context).textTheme)),
+              Theme.of(context).textTheme),
+          brightness: Brightness.light),
       home: check.when(
           data: (value) => value
               ? isLoggedIn
