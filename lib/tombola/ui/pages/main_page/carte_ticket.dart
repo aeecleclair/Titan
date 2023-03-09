@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/tickets.dart';
+import 'package:myecl/tombola/tools/constants.dart';
 
 class TicketWidget extends HookConsumerWidget {
   final Ticket ticket;
@@ -13,7 +13,7 @@ class TicketWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final color = generateColor(ticket.raffleId);
+    final isWinningTicket = ticket.winningLot != "";
     return Stack(children: [
       Container(
         width: 150,
@@ -23,12 +23,27 @@ class TicketWidget extends HookConsumerWidget {
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: color.withOpacity(0.3),
+                color: isWinningTicket
+                    ? const Color.fromARGB(255, 209, 178, 0).withOpacity(0.3)
+                    : TombolaColorConstants.ticketback.withOpacity(0.3),
                 blurRadius: 8,
                 offset: const Offset(2, 3),
               ),
             ],
-            color: color,
+            gradient: RadialGradient(
+                colors: isWinningTicket
+                    ? [
+                        const Color.fromARGB(255, 255, 227, 71),
+                        const Color.fromARGB(255, 255, 215, 0),
+                        const Color.fromARGB(255, 209, 178, 0),
+                      ]
+                    : [
+                        TombolaColorConstants.ticketback,
+                        TombolaColorConstants.ticketback
+                      ],
+                stops: isWinningTicket ? [0.0, 0.1, 1.0] : [0.0, 1.0],
+                center: Alignment.topLeft,
+                radius: 2),
             borderRadius: const BorderRadius.all(Radius.circular(20))),
         child: Column(
           children: [

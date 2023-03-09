@@ -29,7 +29,7 @@ class BlueBtn extends StatelessWidget {
         alignment: Alignment.center,
         child: Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
         ),
       ),
