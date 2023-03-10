@@ -9,28 +9,36 @@ class BlueBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.center,
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
+      height: 60,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(colors: [
+          TombolaColorConstants.gradient1,
+          TombolaColorConstants.gradient2
+        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        boxShadow: [
+          BoxShadow(
+              color: TombolaColorConstants.gradient2.withOpacity(0.4),
+              offset: const Offset(2, 3),
+              blurRadius: 5)
+        ],
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
+      ),
       child: Container(
-        width: double.infinity,
-        height: 60,
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(colors: [
-            TombolaColorConstants.gradient1,
-            TombolaColorConstants.gradient2
-          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-          boxShadow: [
-            BoxShadow(
-                color: TombolaColorConstants.gradient2.withOpacity(0.4),
-                offset: const Offset(2, 3),
-                blurRadius: 5)
-          ],
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
-        ),
         alignment: Alignment.center,
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(13)),
+          color: Colors.white,
+        ),
         child: Text(
           text,
           style: const TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: TombolaColorConstants.gradient2),
         ),
       ),
     );
