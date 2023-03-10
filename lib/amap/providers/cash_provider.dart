@@ -21,13 +21,13 @@ class CashProvider extends ListNotifier<Cash> {
     return await add(_cashRepository.createCash, cash);
   }
 
-  Future<bool> updateCash(Cash cash, int amount) async {
+  Future<bool> updateCash(Cash cash, double amount) async {
     return await update(
         _cashRepository.updateCash,
         (cashs, c) => cashs
           ..[cashs.indexWhere((c) => c.user.id == cash.user.id)] =
               cash.copyWith(balance: cash.balance + amount),
-        cash.copyWith(balance: amount.toDouble()));
+        cash.copyWith(balance: amount));
   }
 
   Future<bool> fakeUpdateCash(Cash cash) async {
