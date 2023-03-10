@@ -59,6 +59,7 @@ class ProductHandler extends HookConsumerWidget {
                   pageNotifier.setAmapPage(AmapPage.addEditProduct);
                 },
                 child: Container(
+                    height: 185,
                     margin: const EdgeInsets.only(left: 5.0, bottom: 10),
                     padding: const EdgeInsets.all(12.0),
                     child: Container(
