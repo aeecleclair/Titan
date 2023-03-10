@@ -13,34 +13,34 @@ class WebListView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kIsWeb) {
-      final outerController = useScrollController();
-      final innerController = useScrollController();
-      return ListView(
-          controller: outerController,
-          clipBehavior: Clip.none,
-          children: [
-            Listener(
-                onPointerSignal: (event) {
-                  if (event is PointerScrollEvent) {
-                    final offset = event.scrollDelta.dy;
-                    innerController.jumpTo(innerController.offset + offset);
-                    outerController.jumpTo(outerController.offset - offset);
-                  }
-                },
-                child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    controller: innerController,
-                    clipBehavior: Clip.none,
-                    physics: const BouncingScrollPhysics(),
-                    child: child))
-          ]);
-    } else {
+    // if (kIsWeb) {
+    //   final outerController = useScrollController();
+    //   final innerController = useScrollController();
+    //   return ListView(
+    //       controller: outerController,
+    //       clipBehavior: Clip.none,
+    //       children: [
+    //         Listener(
+    //             onPointerSignal: (event) {
+    //               if (event is PointerScrollEvent) {
+    //                 final offset = event.scrollDelta.dy;
+    //                 innerController.jumpTo(innerController.offset + offset);
+    //                 outerController.jumpTo(outerController.offset - offset);
+    //               }
+    //             },
+    //             child: SingleChildScrollView(
+    //                 scrollDirection: Axis.horizontal,
+    //                 controller: innerController,
+    //                 clipBehavior: Clip.none,
+    //                 physics: const BouncingScrollPhysics(),
+    //                 child: child))
+    //       ]);
+    // } else {
       return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           clipBehavior: Clip.none,
           physics: const BouncingScrollPhysics(),
           child: child);
-    }
+    // }
   }
 }

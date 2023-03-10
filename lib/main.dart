@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -33,10 +34,10 @@ class MyApp extends HookConsumerWidget {
       return value.minimalTitanVersion <= titanVersion;
     });
     
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MyECL',
+      scrollBehavior: MyCustomScrollBehavior(),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -62,4 +63,17 @@ class MyApp extends HookConsumerWidget {
           error: (error, stack) => const Scaffold(body: NoInternetPage())),
     );
   }
+}
+
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => { 
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.trackpad,
+    PointerDeviceKind.stylus,
+    PointerDeviceKind.invertedStylus
+  };
 }
