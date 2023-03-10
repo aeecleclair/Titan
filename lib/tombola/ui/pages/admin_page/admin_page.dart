@@ -76,6 +76,9 @@ class AdminPage extends HookConsumerWidget {
                   },
                   child: const BlueBtn(text: "Ouvrir")),
             ),
+            const SizedBox(
+              height: 50,
+            ),
           ],
         ));
   }
