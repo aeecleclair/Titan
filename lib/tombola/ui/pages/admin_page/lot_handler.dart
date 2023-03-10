@@ -70,7 +70,7 @@ class LotHandler extends HookConsumerWidget {
                       boxShadow: [
                         BoxShadow(
                           color:
-                              TombolaColorConstants.textDark.withOpacity(0.3),
+                              TombolaColorConstants.textDark.withOpacity(0.2),
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset: const Offset(3, 3),
