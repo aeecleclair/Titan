@@ -106,7 +106,7 @@ class MainPage extends HookConsumerWidget {
               data.sort((a, b) => a.start.compareTo(b.start));
               return SizedBox(
                   height: 210,
-                  child: WebListView(
+                  child: HorizontalListView(
                       child: Row(children: [
                     Container(
                       margin: const EdgeInsets.only(left: 15),
