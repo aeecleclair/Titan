@@ -37,7 +37,7 @@ class LotCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
-              color: TombolaColorConstants.textDark.withOpacity(0.3),
+              color: TombolaColorConstants.textDark.withOpacity(0.2),
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),
