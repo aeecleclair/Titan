@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/scroll_provider.dart';
 import 'package:myecl/amap/providers/sorted_delivery_product.dart';
@@ -7,6 +8,7 @@ import 'package:myecl/amap/providers/page_controller_provider.dart';
 import 'package:myecl/amap/providers/scroll_controller_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/list_products_page/category_page.dart';
+import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 
 class ListProducts extends HookConsumerWidget {
   const ListProducts({Key? key}) : super(key: key);
@@ -20,42 +22,108 @@ class ListProducts extends HookConsumerWidget {
         ref.watch(sortedByCategoryDeliveryProductsProvider);
     final scrollNotifier = ref.watch(scrollProvider.notifier);
     final pageController = ref.watch(amapPageControllerProvider);
+    final isWebFormat = ref.watch(isWebFormatProvider);
     pageController.addListener(() {
       scrollNotifier.setScroll(pageController.page!);
     });
 
-    return SizedBox(
-      height: MediaQuery.of(context).size.height - 275,
-      child: PageView(
-        scrollDirection: Axis.horizontal,
-        controller: pageController,
-        onPageChanged: (index) {
-          if (scrollController.positions.isNotEmpty) {
-            scrollController.jumpTo(0);
-          }
-
-          hideAnimation.animateTo(1);
-        },
-        physics: const BouncingScrollPhysics(),
-        children: sortedDeliveryProductsList.isEmpty
-            ? [
-                const Center(
-                  child: Text(
-                    AMAPTextConstants.noProduct,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height - 275,
+          child: PageView(
+            scrollDirection: Axis.horizontal,
+            controller: pageController,
+            onPageChanged: (index) {
+              if (scrollController.positions.isNotEmpty) {
+                scrollController.jumpTo(0);
+              }
+              hideAnimation.animateTo(1);
+            },
+            physics: const BouncingScrollPhysics(),
+            children: sortedDeliveryProductsList.isEmpty
+                ? [
+                    const Center(
+                      child: Text(
+                        AMAPTextConstants.noProduct,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
+                  ]
+                : sortedDeliveryProductsList.keys
+                    .map((c) => CategoryPage(
+                        index:
+                            sortedDeliveryProductsList.keys.toList().indexOf(c),
+                        hideAnimation: hideAnimation,
+                        category: c))
+                    .toList(),
+          ),
+        ),
+        if (isWebFormat)
+          Positioned(
+            right: 20,
+            bottom: 0,
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                  color: AMAPColorConstants.enabled,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                        color: AMAPColorConstants.enabled.withOpacity(0.3),
+                        blurRadius: 5,
+                        spreadRadius: 1)
+                  ]),
+              child: IconButton(
+                onPressed: () {
+                  pageController.nextPage(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.decelerate);
+                },
+                icon: const HeroIcon(
+                  HeroIcons.arrowRight,
+                  size: 25,
+                  color: Colors.white,
                 ),
-              ]
-            : sortedDeliveryProductsList.keys
-                .map((c) => CategoryPage(
-                    index: sortedDeliveryProductsList.keys.toList().indexOf(c),
-                    hideAnimation: hideAnimation,
-                    category: c))
-                .toList(),
-      ),
+              ),
+            ),
+          ),
+        if (isWebFormat)
+          Positioned(
+            left: 20,
+            bottom: 0,
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                  color: AMAPColorConstants.enabled,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                        color: AMAPColorConstants.enabled.withOpacity(0.3),
+                        blurRadius: 5,
+                        spreadRadius: 1)
+                  ]),
+              child: IconButton(
+                onPressed: () {
+                  pageController.previousPage(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.decelerate);
+                },
+                icon: const HeroIcon(
+                  HeroIcons.arrowLeft,
+                  size: 25,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
