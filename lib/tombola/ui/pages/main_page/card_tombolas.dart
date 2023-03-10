@@ -28,23 +28,7 @@ class TombolaWidget extends HookConsumerWidget {
             child: Container(
           height: 100,
           margin: const EdgeInsets.symmetric(vertical: 5),
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          decoration: const BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                    color: Color.fromARGB(105, 193, 193, 193),
-                    blurRadius: 6,
-                    offset: Offset(2, 3)),
-              ],
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromARGB(255, 255, 255, 255),
-                  Color.fromARGB(255, 250, 246, 246),
-                ],
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(20))),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Image.asset("assets/images/logo.png"),
