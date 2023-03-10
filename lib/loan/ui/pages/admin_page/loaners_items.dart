@@ -42,7 +42,7 @@ class LoanersItems extends HookConsumerWidget {
               }
               return SizedBox(
                   height: 170,
-                  child: WebListView(
+                  child: HorizontalListView(
                     child: Row(
                       children: [
                         const SizedBox(width: 10),

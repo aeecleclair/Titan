@@ -48,7 +48,7 @@ class ProductHandler extends HookConsumerWidget {
         ),
         SizedBox(
           height: 185,
-          child: WebListView(
+          child: HorizontalListView(
             child: Row(children: [
               const SizedBox(
                 width: 10,
