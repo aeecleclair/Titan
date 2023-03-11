@@ -23,6 +23,7 @@ dependencies:
   flutter_appauth: ^6.0.0
   flutter_dotenv: ^5.0.2
   flutter_hooks: ^0.20.0
+  flutter_local_notifications: ^13.0.0
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.1
@@ -41,10 +42,12 @@ dependencies:
   package_info_plus: ^4.0.2
   path: ^1.8.2
   path_provider: ^2.0.11
+  rxdart: ^0.27.7
   qlevar_router: ^1.9.0
   shared_preferences: ^2.1.1
   smooth_page_indicator: ^1.0.0+2
   syncfusion_flutter_calendar: ^22.1.36
+  timezone: ^0.9.0
   tuple: ^2.0.0
   universal_html: ^2.0.8
   url_launcher: ^6.1.7

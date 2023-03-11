@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/router.dart';
 import 'package:myecl/tools/ui/app_template.dart';
+import 'package:myecl/service/local_notification_service.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 void main() async {
@@ -37,6 +38,9 @@ class MyApp extends HookConsumerWidget {
     Future(() {
       animationNotifier.setController(animationController);
     });
+
+    final localNotificationService = listenToNotiffication();
+    localNotificationService.showNotification(0, "test", "Hello World !");
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
