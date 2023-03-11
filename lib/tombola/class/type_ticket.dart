@@ -26,17 +26,17 @@ class TypeTicket {
     return data;
   }
 
-  TypeTicket copyWith({
+  TypeTicket.copyWith({
     String? raffleId,
     int? price,
     int? nbTicket,
     String? id,
-  }) =>
-      TypeTicket(
-          raffleId: raffleId ?? this.raffleId,
-          price: price ?? this.price,
-          nbTicket: nbTicket ?? this.nbTicket,
-          id: id ?? this.id);
+  }) {
+    this.raffleId = raffleId ?? this.raffleId;
+    this.price = price ?? this.price;
+    this.nbTicket = nbTicket ?? this.nbTicket;
+    this.id = id ?? this.id;
+  }
 
   TypeTicket.empty() {
     raffleId = '';
