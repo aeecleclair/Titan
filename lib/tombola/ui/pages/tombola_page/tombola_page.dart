@@ -22,16 +22,15 @@ class TombolaInfoPage extends HookConsumerWidget {
     final typeTicketList = ref.watch(typeTicketsListProvider);
     final lotsList = ref.watch(lotListProvider);
 
-
     return Container(
-        margin: const EdgeInsets.only(top: 15),
+        margin: const EdgeInsets.only(top: 20),
         child: ListView(children: [
           Center(
               child: Text(raffle.name,
                   style: const TextStyle(
                       fontSize: 30, fontWeight: FontWeight.bold))),
           Container(
-              margin: const EdgeInsets.only(left: 10),
+              margin: const EdgeInsets.only(left: 10, top: 20),
               child: Text(
                   solde.when(
                       data: (s) =>
@@ -81,37 +80,39 @@ class TombolaInfoPage extends HookConsumerWidget {
                     ? const Center(
                         child: Text(TombolaTextConstants.noPrize),
                       )
-                    : SizedBox(
-                        height: 210,
-                        child: Column(children: [
-                          Container(
-                              padding: const EdgeInsets.only(
-                                  bottom: 10, left: 20, right: 20),
-                              child: Text(
-                                  lots.isEmpty
-                                      ? TombolaTextConstants.noPrize
-                                      : TombolaTextConstants.actualPrize,
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold))),
-                          ListView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: lots.length + 2,
-                              itemBuilder: (context, index) {
-                                if (index == 0 || index == lots.length + 1) {
-                                  return const SizedBox(
-                                    width: 15,
-                                  );
-                                }
-                                return Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
-                                    child: PrizeCard(
-                                      prize: lots[index - 1],
-                                    ));
-                              })
-                        ]));
+                    : Column(children: [
+                        Container(
+                            padding: const EdgeInsets.only(
+                                bottom: 10, left: 20, right: 20),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                    lots.isEmpty
+                                        ? TombolaTextConstants.noPrize
+                                        : TombolaTextConstants.actualPrize,
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold)))),
+                        SizedBox(
+                            height: 160,
+                            child: ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: lots.length + 2,
+                                itemBuilder: (context, index) {
+                                  if (index == 0 || index == lots.length + 1) {
+                                    return const SizedBox(
+                                      width: 15,
+                                    );
+                                  }
+                                  return Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 10),
+                                      child: PrizeCard(
+                                        prize: lots[index - 1],
+                                      ));
+                                }))
+                      ]);
               },
               loading: () => const Center(
                     child: CircularProgressIndicator(),
@@ -124,7 +125,7 @@ class TombolaInfoPage extends HookConsumerWidget {
               padding:
                   EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
               child: Text("Description",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
             ),
           Container(
               padding:
