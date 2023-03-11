@@ -53,3 +53,4 @@ final typeTicketsListProvider = StateNotifierProvider<TypeTicketsListNotifier,
   final token = ref.watch(tokenProvider);
   return TypeTicketsListNotifier(token: token);
 });
+
