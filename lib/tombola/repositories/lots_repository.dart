@@ -1,4 +1,4 @@
-import 'package:myecl/tombola/class/lots.dart';
+import 'package:myecl/tombola/class/lot.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class LotRepository extends Repository {
@@ -6,13 +6,18 @@ class LotRepository extends Repository {
   // ignore: overridden_fields
   final ext = "tombola/lots/";
 
-  Future<List<Lot>> getLotsList(String raffleId) async {
-    return List<Lot>.from((await getList(suffix: "$raffleId/"))
-        .map((x) => Lot.fromJson(x)));
+  Future<List<Lot>> getLotList() async {
+    return List<Lot>.from(
+        (await getList()).map((x) => Lot.fromJson(x)));
   }
 
-  Future<Lot> getLot(String id) async {
-    return Lot.fromJson(await getOne(id));
+  Future<List<Lot>> getLotListbyRaffle(String raffleId) async {
+    return List<Lot>.from(
+        (await getList(suffix: "$raffleId/")).map((x) => Lot.fromJson(x)));
+  }
+
+  Future<Lot> getLot(String userId) async {
+    return Lot.fromJson(await getOne(userId, suffix: "/Lot"));
   }
 
   Future<Lot> createLot(Lot lot) async {
@@ -20,10 +25,10 @@ class LotRepository extends Repository {
   }
 
   Future<bool> updateLot(Lot lot) async {
-    return await update(lot.toJson(), "TODO");
+    return await update(lot.toJson(), lot.id);
   }
 
-  Future<bool> deleteLot(String id) async {
-    return await delete(id);
+  Future<bool> deleteLot(String lotId) async {
+    return await delete(lotId);
   }
 }
