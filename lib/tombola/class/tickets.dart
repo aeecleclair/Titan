@@ -38,7 +38,7 @@ class Ticket {
     return data;
   }
 
-  Ticket.copyWith({
+  Ticket copyWith({
     String? typeId,
     String? userId,
     String? winningLot,
@@ -46,15 +46,15 @@ class Ticket {
     String? raffleId,
     int? price,
     int? nbTicket,
-  }) {
-    this.typeId = typeId ?? this.typeId;
-    this.userId = userId ?? this.userId;
-    this.winningLot = winningLot ?? this.winningLot;
-    this.id = id ?? this.id;
-    this.raffleId = raffleId ?? this.raffleId;
-    this.price = price ?? this.price;
-    this.nbTicket = nbTicket ?? this.nbTicket;
-  }
+  }) =>
+      Ticket(
+          typeId: typeId ?? this.typeId,
+          userId: userId ?? this.userId,
+          winningLot: winningLot ?? this.winningLot,
+          id: id ?? this.id,
+          raffleId: raffleId ?? this.raffleId,
+          price: price ?? this.price,
+          nbTicket: nbTicket ?? this.nbTicket);
 
   Ticket.empty() {
     typeId = '';

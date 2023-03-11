@@ -5,7 +5,7 @@ class Raffle {
     required this.endDate,
     required this.groupId,
     required this.id,
-    required this.description,
+    this.description,
   });
   late final String name;
   late final DateTime startDate;
@@ -61,21 +61,21 @@ class Raffle {
     return 'Raffle{name: $name, startDate: $startDate, endDate: $endDate, groupId: $groupId, id: $id}';
   }
 
-  Raffle.copyWith({
+  Raffle copyWith({
     String? name,
     DateTime? startDate,
     DateTime? endDate,
     String? groupId,
     String? id,
     String? description,
-  }) {
-    this.name = name ?? this.name;
-    this.startDate = startDate ?? this.startDate;
-    this.endDate = endDate ?? this.endDate;
-    this.groupId = groupId ?? this.groupId;
-    this.id = id ?? this.id;
-    this.description = description ?? this.description;
-  }
+  }) =>
+      Raffle(
+          name: name ?? this.name,
+          startDate: startDate ?? this.startDate,
+          endDate: endDate ?? this.endDate,
+          groupId: groupId ?? this.groupId,
+          id: id ?? this.id,
+          description: description);
 
   Raffle.empty() {
     name = '';
