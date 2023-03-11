@@ -24,7 +24,7 @@ class LotListNotifier extends ListNotifier<Lot> {
     return state = AsyncData([
       Lot(raffleId: "1", id: "1", name: 'aspernatur', quantity: 5, description: ""),
       Lot(raffleId: "1", id: "2", name: 'dolores', quantity: 3, description: null),
-      Lot(raffleId: "1", id: "3", name: 'fugit', quantity: 7, description: "dsdgftgfygukilgkyfutdstbrqefsrydxtufy"),
+      Lot(raffleId: "2", id: "3", name: 'fugit', quantity: 7, description: "dsdgftgfygukilgkyfutdstbrqefsrydxtufy"),
     ]);
   }
 

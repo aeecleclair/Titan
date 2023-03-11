@@ -16,7 +16,7 @@ class TicketsListNotifier extends ListNotifier<Ticket> {
     raffleId = id;
   }
 
-  Future<AsyncValue<List<Ticket>>> loadTicketList() async {
+  Future<AsyncValue<List<Ticket>>> loadTicketList(String raffleId) async {
     return await loadList(
         () async => _ticketsRepository.getTicketsListbyRaffleId(raffleId));
   }

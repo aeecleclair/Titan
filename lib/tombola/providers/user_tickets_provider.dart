@@ -24,7 +24,7 @@ class UserTicketListNotifier extends ListNotifier<Ticket> {
       Ticket(
         id: '1',
         typeId: '1',
-        winningLot: 'ezrfggnhtryhg',
+        winningLot: '',
         userId: '',
         raffleId: "1",
         price: 1,

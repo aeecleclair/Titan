@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:myecl/amap/providers/user_amount_provider.dart';
 
-import 'package:myecl/tombola/providers/lots_list_provider.dart';
+import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
 import 'package:myecl/tombola/providers/user_tickets_provider.dart';
@@ -20,8 +20,7 @@ class TombolaInfoPage extends HookConsumerWidget {
     final userTicketList = ref.watch(userTicketListProvider);
     final solde = ref.watch(userAmountProvider);
     final typeTicketList = ref.watch(typeTicketsListProvider);
-    final lotsList = ref.watch(lotsListProvider);
-    lotsList.loadLotsList();
+    final lotsList = ref.watch(lotListProvider);
 
 
     return Container(

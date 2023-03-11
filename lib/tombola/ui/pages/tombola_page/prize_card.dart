@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/lots.dart';
+import 'package:myecl/tombola/class/lot.dart';
 
 class PrizeCard extends HookConsumerWidget{ 
   const PrizeCard({
