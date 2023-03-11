@@ -1,12 +1,13 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/tombola/class/raffle.dart';
+
+import 'package:myecl/amap/providers/user_amount_provider.dart';
+
 import 'package:myecl/tombola/providers/lots_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
 import 'package:myecl/tombola/providers/user_tickets_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/pages/main_page/carte_ticket.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/buy_type_ticket_card.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/prize_card.dart';
 
@@ -17,16 +18,31 @@ class TombolaInfoPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final raffle = ref.watch(raffleProvider);
     final userTicketList = ref.watch(userTicketListProvider);
+    final solde = ref.watch(userAmountProvider);
     final typeTicketList = ref.watch(typeTicketsListProvider);
     final lotsList = ref.watch(lotsListProvider);
+    lotsList.loadLotsList();
+
+
     return Container(
         margin: const EdgeInsets.only(top: 15),
         child: ListView(children: [
-          Text("Votre solde [Copie amap]"),
           Center(
               child: Text(raffle.name,
                   style: const TextStyle(
                       fontSize: 30, fontWeight: FontWeight.bold))),
+          Container(
+              margin: const EdgeInsets.only(left: 10),
+              child: Text(
+                  solde.when(
+                      data: (s) =>
+                          "Solde : ${s.balance.toStringAsFixed(2)}€", //Attention là c'est les soldes AMAP à finir
+                      error: (e, s) => "Erreur",
+                      loading: () => "Loading"),
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black))),
           typeTicketList.when(
               data: (type_tickets) {
                 return type_tickets.isEmpty
@@ -60,7 +76,6 @@ class TombolaInfoPage extends HookConsumerWidget {
               error: (error, stack) => const Center(
                     child: Text('Error'),
                   )),
-          
           lotsList.when(
               data: (lots) {
                 return lots.isEmpty
@@ -69,27 +84,35 @@ class TombolaInfoPage extends HookConsumerWidget {
                       )
                     : SizedBox(
                         height: 210,
-                        child:Column(children: [Container(
-              padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
-              child: Text(lots.isEmpty ? TombolaTextConstants.noPrize : TombolaTextConstants.actualPrize,
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
+                        child: Column(children: [
+                          Container(
+                              padding: const EdgeInsets.only(
+                                  bottom: 10, left: 20, right: 20),
+                              child: Text(
+                                  lots.isEmpty
+                                      ? TombolaTextConstants.noPrize
+                                      : TombolaTextConstants.actualPrize,
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold))),
                           ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: lots.length + 2,
-                            itemBuilder: (context, index) {
-                              if (index == 0 || index == lots.length + 1) {
-                                return const SizedBox(
-                                  width: 15,
-                                );
-                              }
-                              return Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  child: PrizeCard(
-                                    prize: lots[index - 1],
-                                  ));
-                            })]));
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: lots.length + 2,
+                              itemBuilder: (context, index) {
+                                if (index == 0 || index == lots.length + 1) {
+                                  return const SizedBox(
+                                    width: 15,
+                                  );
+                                }
+                                return Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    child: PrizeCard(
+                                      prize: lots[index - 1],
+                                    ));
+                              })
+                        ]));
               },
               loading: () => const Center(
                     child: CircularProgressIndicator(),
