@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
-import 'package:myecl/tombola/ui/pages/tombola_page/confir_payment.dart';
+import 'package:myecl/tombola/ui/pages/tombola_page/confirm_payment.dart';
 
 class BuyTypeTicket extends HookConsumerWidget {
   final TypeTicket type_ticket;
@@ -104,8 +104,8 @@ class BuyTypeTicket extends HookConsumerWidget {
                           end: Alignment.bottomCenter,
                           colors: [
                             Color.fromARGB(255, 245, 183, 40),
-                            Colors.deepOrange,
-                            Color.fromARGB(255, 254, 72, 54)
+                            Color.fromARGB(255, 235, 74, 25),
+                            Color.fromARGB(255, 206, 39, 24)
                           ],
                           stops: [
                             0,

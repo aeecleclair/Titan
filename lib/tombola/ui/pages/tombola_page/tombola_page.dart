@@ -94,7 +94,7 @@ class TombolaInfoPage extends HookConsumerWidget {
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold)))),
                         SizedBox(
-                            height: 160,
+                            height: 120,
                             child: ListView.builder(
                                 physics: const BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
@@ -107,7 +107,7 @@ class TombolaInfoPage extends HookConsumerWidget {
                                   }
                                   return Container(
                                       margin: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
+                                          horizontal: 5,vertical: 10),
                                       child: PrizeCard(
                                         prize: lots[index - 1],
                                       ));
