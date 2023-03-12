@@ -27,13 +27,14 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                     blurStyle: BlurStyle.outer,
                   ),
                 ],
+                
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
                 gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Color.fromARGB(237, 0, 12, 41),
-                      Color.fromARGB(237, 0, 1, 6)
+                      Color.fromARGB(157, 0, 12, 41),
+                      Color.fromARGB(197, 0, 1, 16)
                     ])),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,9 +52,9 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                               color: Colors.white,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.white.withOpacity(0.3),
-                                  blurRadius: 8,
-                                  offset: const Offset(1, 2),
+                                  color: Colors.white.withOpacity(0.5),
+                                  blurRadius: 15,
+                                  offset: const Offset(2, 3),
                                 ),
                               ],
                               borderRadius:
@@ -82,7 +83,8 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 30),
-                  AutoSizeText(
+                  Container(padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: AutoSizeText(
                     raffle.name,
                     maxLines: 2,
                     textAlign: TextAlign.center,
@@ -90,7 +92,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                         color: Colors.white,
                         fontSize: 50,
                         fontWeight: FontWeight.bold),
-                  ),
+                  )),
                   const Spacer(),
 
                   Row(
@@ -100,13 +102,6 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                           padding: const EdgeInsets.symmetric(
                               vertical: 7, horizontal: 12),
                           decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromARGB(87, 255, 255, 255),
-                                  blurRadius: 8,
-                                  offset: const Offset(1, 2),
-                                ),
-                              ],
                               gradient: LinearGradient(
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
@@ -133,13 +128,6 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                               vertical: 7, horizontal: 12),
                               margin: EdgeInsets.only(left:5),
                           decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromARGB(87, 255, 255, 255),
-                                  blurRadius: 8,
-                                  offset: const Offset(1, 2),
-                                ),
-                              ],
                               gradient: LinearGradient(
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
