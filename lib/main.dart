@@ -12,7 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/router.dart';
 import 'package:myecl/tools/ui/app_template.dart';
-import 'package:myecl/service/local_notification_service.dart';
+import 'package:myecl/tools/service/local_notification_service.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 void main() async {
@@ -39,8 +39,13 @@ class MyApp extends HookConsumerWidget {
       animationNotifier.setController(animationController);
     });
 
-    final localNotificationService = listenToNotiffication();
-    localNotificationService.showNotification(0, "test", "Hello World !");
+    final localNotificationService = LocalNotificationService(
+      channelId: "qdswfdxgfhcjg",
+      channelName: "Home",
+      channelDescription: "Home Description"
+    );
+    // localNotificationService.showNotification(0, "test", "Hello World !");
+    // localNotificationService.showNotification(1, "test2", "fegrhtjyku");
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -4,10 +4,18 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
 class LocalNotificationService {
-  LocalNotificationService();
+  LocalNotificationService(
+      {required this.channelId,
+      required this.channelName,
+      required this.channelDescription});
+
+  final String channelId;
+  final String channelName;
+  final String channelDescription;
 
   final _localNotificationService = FlutterLocalNotificationsPlugin();
-  final BehaviorSubject<String?> onNotificationClick = BehaviorSubject();
+  final BehaviorSubject<String?> onNotificationClick = BehaviorSubject()
+    ..listen(onNotificationClickListener);
 
   Future<void> init() async {
     _localNotificationService
@@ -17,7 +25,6 @@ class LocalNotificationService {
     tz.initializeTimeZones();
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/launcher_icon');
-
     final DarwinInitializationSettings initializationSettingsDarwin =
         DarwinInitializationSettings(
             onDidReceiveLocalNotification: onDidReceiveLocalNotification);
@@ -30,19 +37,25 @@ class LocalNotificationService {
             linux: initializationSettingsLinux);
     _localNotificationService.initialize(initializationSettings,
         onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
+
+    final details =
+        await _localNotificationService.getNotificationAppLaunchDetails();
+    if (details != null && details.didNotificationLaunchApp) {
+      onNotificationClick.add(details.notificationResponse!.payload);
+    }
   }
 
   Future<NotificationDetails> _notificationDetails() async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('channelId', 'channelName',
-            channelDescription: "decription",
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(channelId, channelName,
+            channelDescription: channelDescription,
             importance: Importance.max,
             priority: Priority.max,
             playSound: true);
     const DarwinNotificationDetails darwinNotificationDetails =
         DarwinNotificationDetails();
 
-    return const NotificationDetails(
+    return NotificationDetails(
         android: androidNotificationDetails, iOS: darwinNotificationDetails);
   }
 
@@ -64,6 +77,36 @@ class LocalNotificationService {
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
+  }
+
+  Future<void> showPeriodicNotification(int id, String title, String body,
+      String? payload, RepeatInterval repeatInterval) async {
+    await _localNotificationService.periodicallyShow(
+        id, title, body, repeatInterval, await _notificationDetails(),
+        payload: payload, androidAllowWhileIdle: true);
+  }
+
+  Future<void> showNotificationWithImage(int id, String title, String body,
+      String payload, String imageUrl, String largeIcon) async {
+    final BigPictureStyleInformation bigPictureStyleInformation =
+        BigPictureStyleInformation(FilePathAndroidBitmap(imageUrl),
+            largeIcon: FilePathAndroidBitmap(largeIcon),
+            hideExpandedLargeIcon: true,
+            contentTitle: title,
+            htmlFormatContentTitle: true,
+            summaryText: body,
+            htmlFormatSummaryText: true);
+    final AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(channelId, channelName,
+            channelDescription: channelDescription,
+            importance: Importance.max,
+            priority: Priority.max,
+            styleInformation: bigPictureStyleInformation,
+            playSound: true);
+    final NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    await _localNotificationService
+        .show(id, title, body, platformChannelSpecifics, payload: payload);
   }
 
   Future<List<PendingNotificationRequest>> pendingNotificationRequests() async {
@@ -93,19 +136,13 @@ class LocalNotificationService {
       onNotificationClick.add(response.payload!);
     }
   }
-}
 
-LocalNotificationService listenToNotiffication() {
-  final LocalNotificationService localNotificationService =
-      LocalNotificationService();
-  localNotificationService.init();
-  localNotificationService.onNotificationClick.listen((payload) {
+  static void onNotificationClickListener(String? payload) {
     if (payload == null) {
       return;
     }
     if (payload.isNotEmpty) {
       // do something
     }
-  });
-  return localNotificationService;
+  }
 }
