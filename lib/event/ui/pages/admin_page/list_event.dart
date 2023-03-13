@@ -73,7 +73,7 @@ class ListEvent extends HookConsumerWidget {
               )),
           if (toggle.value)
             SizedBox(
-                height: 215,
+                height: 235,
                 child: HorizontalListView(
                   child: Row(
                     children: [
