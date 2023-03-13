@@ -140,6 +140,13 @@ String processDateToAPIWitoutHour(DateTime date) {
   return date.toIso8601String().split('T')[0];
 }
 
+
+int generateIntFromString(String s) {
+  return s.codeUnits.reduce(
+    (value, element) => value + 100 * element,
+  );
+}
+
 bool isEmailInValid(String email) {
   final regex = RegExp(previousEmailRegex);
   return regex.hasMatch(email);

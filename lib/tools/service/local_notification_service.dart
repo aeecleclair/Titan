@@ -1,17 +1,11 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
-class LocalNotificationService {
-  LocalNotificationService(
-      {required this.channelId,
-      required this.channelName,
-      required this.channelDescription});
-
-  final String channelId;
-  final String channelName;
-  final String channelDescription;
+abstract class LocalNotificationService {
+  LocalNotificationService();
 
   final _localNotificationService = FlutterLocalNotificationsPlugin();
   final BehaviorSubject<String?> onNotificationClick = BehaviorSubject()
@@ -47,8 +41,8 @@ class LocalNotificationService {
 
   Future<NotificationDetails> _notificationDetails() async {
     AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(channelId, channelName,
-            channelDescription: channelDescription,
+        const AndroidNotificationDetails("fr.myecl.titan", "TitanNotification",
+            channelDescription: "Notifications channel forr Titan",
             importance: Importance.max,
             priority: Priority.max,
             playSound: true);
@@ -59,34 +53,39 @@ class LocalNotificationService {
         android: androidNotificationDetails, iOS: darwinNotificationDetails);
   }
 
-  Future<void> showNotification(int id, String title, String body) async {
+  Future<void> showNotification(String id, String title, String body) async {
     await _localNotificationService.show(
-        id, title, body, await _notificationDetails());
+        generateIntFromString(id), title, body, await _notificationDetails());
   }
 
   Future<void> showNotificationWithPayload(
-      int id, String title, String body, String payload) async {
-    await _localNotificationService
-        .show(id, title, body, await _notificationDetails(), payload: payload);
+      String id, String title, String body, String payload) async {
+    await _localNotificationService.show(
+        generateIntFromString(id), title, body, await _notificationDetails(),
+        payload: payload);
   }
 
   Future<void> showScheduledNotification(
-      int id, String title, String body, DateTime date) async {
-    await _localNotificationService.zonedSchedule(id, title, body,
-        tz.TZDateTime.from(date, tz.local), await _notificationDetails(),
+      String id, String title, String body, DateTime date) async {
+    await _localNotificationService.zonedSchedule(
+        generateIntFromString(id),
+        title,
+        body,
+        tz.TZDateTime.from(date, tz.local),
+        await _notificationDetails(),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }
 
-  Future<void> showPeriodicNotification(int id, String title, String body,
+  Future<void> showPeriodicNotification(String id, String title, String body,
       String? payload, RepeatInterval repeatInterval) async {
-    await _localNotificationService.periodicallyShow(
-        id, title, body, repeatInterval, await _notificationDetails(),
+    await _localNotificationService.periodicallyShow(generateIntFromString(id),
+        title, body, repeatInterval, await _notificationDetails(),
         payload: payload, androidAllowWhileIdle: true);
   }
 
-  Future<void> showNotificationWithImage(int id, String title, String body,
+  Future<void> showNotificationWithImage(String id, String title, String body,
       String payload, String imageUrl, String largeIcon) async {
     final BigPictureStyleInformation bigPictureStyleInformation =
         BigPictureStyleInformation(FilePathAndroidBitmap(imageUrl),
@@ -97,24 +96,25 @@ class LocalNotificationService {
             summaryText: body,
             htmlFormatSummaryText: true);
     final AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(channelId, channelName,
-            channelDescription: channelDescription,
+        AndroidNotificationDetails("fr.myecl.titan", "TitanNotification",
+            channelDescription: "Notifications channel forr Titan",
             importance: Importance.max,
             priority: Priority.max,
             styleInformation: bigPictureStyleInformation,
             playSound: true);
     final NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
-    await _localNotificationService
-        .show(id, title, body, platformChannelSpecifics, payload: payload);
+    await _localNotificationService.show(
+        generateIntFromString(id), title, body, platformChannelSpecifics,
+        payload: payload);
   }
 
   Future<List<PendingNotificationRequest>> pendingNotificationRequests() async {
     return await _localNotificationService.pendingNotificationRequests();
   }
 
-  Future<void> cancelNotificationById(int id) async {
-    await _localNotificationService.cancel(id);
+  Future<void> cancelNotificationById(String id) async {
+    await _localNotificationService.cancel(generateIntFromString(id));
   }
 
   Future<void> cancelAllNotifications() async {
@@ -128,7 +128,7 @@ class LocalNotificationService {
   }
 
   void onDidReceiveNotificationResponse(NotificationResponse response) async {
-    print(response);
+    print(response.payload);
     if (response.payload == null) {
       return;
     }
