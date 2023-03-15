@@ -27,7 +27,7 @@ class PrizeCard extends HookConsumerWidget {
             width: 100,
             margin: const EdgeInsets.only(left: 10),
             padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/images/gift.png"),
                     fit: BoxFit.cover),
@@ -39,19 +39,18 @@ class PrizeCard extends HookConsumerWidget {
                     blurStyle: BlurStyle.outer,
                   ),
                 ],
-                borderRadius: const BorderRadius.all(Radius.circular(20))),
+                borderRadius: BorderRadius.all(Radius.circular(20))),
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Container(
-                  child: Center(
-                      child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            prize.name,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold),
-                          )))),
+              Center(
+                  child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                        prize.name,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                      ))),
               const SizedBox(height: 10),
             ])));
   }
@@ -73,7 +72,7 @@ class PrizeDialog extends HookConsumerWidget {
             margin: const EdgeInsets.only(left: 10),
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: TombolaColorConstants.darkText,
                     spreadRadius: 0,
@@ -95,7 +94,7 @@ class PrizeDialog extends HookConsumerWidget {
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     border: Border(
                       bottom: BorderSide(color: Colors.white, width: 3),
                     ),
@@ -105,7 +104,7 @@ class PrizeDialog extends HookConsumerWidget {
                           fit: BoxFit.fitWidth,
                           child: Text(
                             prize.name,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: TombolaColorConstants.darkText,
                                 fontSize: 60,
                                 fontWeight: FontWeight.bold),
@@ -118,7 +117,7 @@ class PrizeDialog extends HookConsumerWidget {
                       fit: BoxFit.fitWidth,
                       child: Text(
                         "${prize.quantity} lots gagnables",
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: TombolaColorConstants.darkText,
                             fontSize: 50,
                             fontWeight: FontWeight.bold),
@@ -128,7 +127,7 @@ class PrizeDialog extends HookConsumerWidget {
                 textAlign: TextAlign.justify,
                 prize.description ?? "Pas de description",
                 maxLines: 3,
-                style: TextStyle(
+                style: const TextStyle(
                     color: TombolaColorConstants.darkText, fontSize: 30, fontWeight: FontWeight.bold),
               ),
             ])));

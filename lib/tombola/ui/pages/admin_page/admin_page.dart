@@ -8,7 +8,6 @@ import 'package:myecl/tombola/ui/blue_btn.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/account_handler.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/ticket_handler.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/lot_handler.dart';
-import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -21,10 +20,6 @@ class AdminPage extends HookConsumerWidget {
     final cashNotifier = ref.read(cashProvider.notifier);
     final typeTicketsListNotifier = ref.read(typeTicketsListProvider.notifier);
     final lotListNotifier = ref.read(lotListProvider.notifier);
-
-    void displayToastWithContext(TypeMsg type, String msg) {
-      displayToast(context, type, msg);
-    }
 
     return Refresher(
         onRefresh: () async {
