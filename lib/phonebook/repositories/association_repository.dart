@@ -10,9 +10,13 @@ class AssociationRepository extends Repository {
   // ignore: overridden_fields
   final ext = "phonebook/association/";
 
-  Future<List<Association>> getAssociationList() async {
+  Future<List<Association>> getAssociationList([String? filter]) async {
+    String suffix = "";
+    if (filter != null) {
+      suffix = "?filter=$filter";
+    }
     return List<Association>.from(
-        (await getList()).map((x) => Association.fromJSON(x)));
+        (await getList(suffix: suffix)).map((x) => Association.fromJSON(x)));
   }
 
   Future<Association> getAssociation(String associationId) async {
@@ -29,25 +33,5 @@ class AssociationRepository extends Repository {
 
 Future<Association> createAssociation(Association association) async {
     return Association.fromJSON(await create(association.toJSON()));
-  }
-
-  Future<bool> addMember(Association association, SimpleUser user) async {
-    await create({"user_id": user.id, "association_id": association.id},
-        suffix: "membership");
-    return true;
-  }
-
-  Future<bool> deleteMember(Association association, SimpleUser user) async {
-    final response = await http.delete(
-        Uri.parse("$host${ext}membership"),
-        headers: headers,
-        body: json.encode({"user_id": user.id, "association_id": association.id}));
-    if (response.statusCode == 204) {
-      return true;
-    } else if (response.statusCode == 403) {
-      throw AppException(ErrorType.tokenExpire, response.body);
-    } else {
-      throw AppException(ErrorType.notFound, "Failed to update item");
-    }
   }
 }

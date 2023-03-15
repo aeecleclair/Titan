@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum PhonebookPage { main, admin, memberDetail, addEditAssociation, addEditRoleMember, editRole, associationEditor}
+enum PhonebookPage { main, admin, memberDetail, addEditRoleMember, editRole, associationEditor, associationPage}
 
 
 final phonebookPageProvider = StateNotifierProvider<PhonebookPageNotifier, PhonebookPage>((ref) {
