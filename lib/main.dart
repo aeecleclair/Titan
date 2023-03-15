@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
@@ -29,10 +29,8 @@ class MyApp extends HookConsumerWidget {
     final versionVerifier = ref.watch(versionVerifierProvider);
     final titanVersion = ref.watch(titanVersionProvider);
     final isLoggedIn = ref.watch(isLoggedInProvider);
-    final check = versionVerifier.whenData((value) {
-      return value.minimalTitanVersion <= titanVersion;
-    });
-    
+    final check = versionVerifier
+        .whenData((value) => value.minimalTitanVersion <= titanVersion);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -45,8 +43,7 @@ class MyApp extends HookConsumerWidget {
       supportedLocales: const [Locale('en'), Locale('fr')],
       theme: ThemeData(
           primarySwatch: Colors.orange,
-          textTheme: GoogleFonts.latoTextTheme(
-              Theme.of(context).textTheme)),
+          textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme)),
       home: check.when(
           data: (value) => value
               ? isLoggedIn
