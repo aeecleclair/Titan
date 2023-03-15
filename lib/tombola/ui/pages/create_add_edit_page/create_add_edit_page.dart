@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/button_perso.dart';
 
 import 'price_ticket_card.dart';
 import 'prize_card_edit.dart';
@@ -29,7 +28,6 @@ class CreateAddEditPage extends HookConsumerWidget {
                   TombolaTextConstants.prize,
                   style: TextStyle(fontSize: 40),
                 ),
-                PersoButton(text: "Ajouter")
               ],
             ),
           ),
@@ -47,7 +45,6 @@ class CreateAddEditPage extends HookConsumerWidget {
                   TombolaTextConstants.possiblePrice,
                   style: TextStyle(fontSize: 40),
                 ),
-                PersoButton(text: "Ajouter")
               ],
             ),
           ),
