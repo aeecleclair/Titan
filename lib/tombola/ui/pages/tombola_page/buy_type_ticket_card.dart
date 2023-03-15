@@ -80,7 +80,7 @@ class BuyTypeTicket extends HookConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
               Text(
                 "${typeTicket.nbTicket} tickets",
                 style: TextStyle(
@@ -90,14 +90,13 @@ class BuyTypeTicket extends HookConsumerWidget {
               ),
               const Spacer(),
               Container(
-                  margin: EdgeInsets.symmetric(horizontal: 12),
+                  margin: const EdgeInsets.symmetric(horizontal: 12),
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   width: 150,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: Colors.white,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(15))),
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
                   child: const FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Text("Prendre ce ticket",
