@@ -23,7 +23,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
             decoration: const BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: Color.fromARGB(191, 255, 255, 255),
+                    color: TombolaColorConstants.gradient2,
                     blurRadius: 15,
                     blurStyle: BlurStyle.outer,
                   ),
@@ -38,7 +38,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.symmetric(
-                        horizontal: 35, vertical: 30),
+                        horizontal: 20, vertical: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -55,7 +55,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                 ),
                               ],
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(15))),
+                                  const BorderRadius.all(Radius.circular(25))),
                           child: Center(
                             child: Image.asset("assets/images/logo.png",
                                 height: 100),
@@ -92,61 +92,72 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                             fontWeight: FontWeight.bold),
                       )),
                   const Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 7, horizontal: 12),
-                          decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 20.0, right: 20, bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 15),
+                            decoration: BoxDecoration(
+                                gradient: const LinearGradient(
                                   colors: [
-                                    Color.fromARGB(255, 40, 245, 211),
-                                    Color.fromARGB(255, 11, 94, 188),
-                                    Color.fromARGB(255, 1, 10, 133)
+                                    TombolaColorConstants.textDark,
+                                    Colors.black
                                   ],
-                                  stops: [
-                                    0,
-                                    0.7,
-                                    1
-                                  ]),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                          child: const Text("Annuler",
-                              maxLines: 1,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold))),
-                      Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 7, horizontal: 12),
-                          margin: const EdgeInsets.only(left: 5),
-                          decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    Color.fromARGB(255, 245, 183, 40),
-                                    Color.fromARGB(255, 255, 54, 34),
-                                    Color.fromARGB(255, 255, 21, 0)
-                                  ],
-                                  stops: [
-                                    0,
-                                    0.7,
-                                    1
-                                  ]),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                          child: const Text("Confirmer la prise du billet",
-                              maxLines: 2,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold))),
-                    ],
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black.withOpacity(0.3),
+                                      blurRadius: 5,
+                                      spreadRadius: 2,
+                                      offset: const Offset(2, 3))
+                                ],
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(15))),
+                            child: const Text("Annuler",
+                                maxLines: 1,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold))),
+                        Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 15),
+                            decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomLeft,
+                                    colors: [
+                                      Color.fromARGB(255, 245, 183, 40),
+                                      Color.fromARGB(255, 255, 54, 34),
+                                      Color.fromARGB(255, 255, 21, 0)
+                                    ],
+                                    stops: [
+                                      0,
+                                      0.7,
+                                      1
+                                    ]),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: const Color.fromARGB(255, 255, 21, 0)
+                                          .withOpacity(0.3),
+                                      blurRadius: 5,
+                                      spreadRadius: 2,
+                                      offset: const Offset(2, 3))
+                                ],
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(15))),
+                            child: const Text("Confirmer",
+                                maxLines: 2,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold))),
+                      ],
+                    ),
                   )
                 ])));
   }
