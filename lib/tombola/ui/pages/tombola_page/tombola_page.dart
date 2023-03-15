@@ -100,7 +100,7 @@ class TombolaInfoPage extends HookConsumerWidget {
                             itemBuilder: (context, index) {
                               if (index == 0 || index == lots.length + 1) {
                                 return const SizedBox(
-                                  width: 15,
+                                  width: 20,
                                 );
                               }
                               return Container(

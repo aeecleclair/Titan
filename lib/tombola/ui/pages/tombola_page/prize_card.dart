@@ -24,7 +24,7 @@ class PrizeCard extends HookConsumerWidget {
         },
         child: Container(
             width: 100,
-            margin: const EdgeInsets.only(left: 10),
+            margin: const EdgeInsets.only(left: 5, right: 5),
             decoration: BoxDecoration(
                 image: const DecorationImage(
                     image: AssetImage("assets/images/gift.png"),
