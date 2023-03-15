@@ -6,7 +6,7 @@ import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/lot_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/lot_card.dart';
+import 'package:myecl/tombola/ui/pages/admin_page/lot_card.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
