@@ -1,12 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-
 import 'package:myecl/amap/providers/user_amount_provider.dart';
-
 import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
-import 'package:myecl/tombola/providers/user_tickets_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/buy_type_ticket_card.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/prize_card.dart';
@@ -17,7 +14,6 @@ class TombolaInfoPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffle = ref.watch(raffleProvider);
-    final userTicketList = ref.watch(userTicketListProvider);
     final solde = ref.watch(userAmountProvider);
     final typeTicketList = ref.watch(typeTicketsListProvider);
     final lotsList = ref.watch(lotListProvider);
@@ -37,13 +33,13 @@ class TombolaInfoPage extends HookConsumerWidget {
                           "Solde : ${s.balance.toStringAsFixed(2)}€", //Attention là c'est les soldes AMAP à finir
                       error: (e, s) => "Erreur",
                       loading: () => "Loading"),
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.black))),
           typeTicketList.when(
-              data: (type_tickets) {
-                return type_tickets.isEmpty
+              data: (typeTickets) {
+                return typeTickets.isEmpty
                     ? const Center(
                         child: Text(TombolaTextConstants.noTicketBuyable),
                       )
@@ -52,10 +48,10 @@ class TombolaInfoPage extends HookConsumerWidget {
                         child: ListView.builder(
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
-                            itemCount: type_tickets.length + 2,
+                            itemCount: typeTickets.length + 2,
                             itemBuilder: (context, index) {
                               if (index == 0 ||
-                                  index == type_tickets.length + 1) {
+                                  index == typeTickets.length + 1) {
                                 return const SizedBox(
                                   width: 15,
                                 );
@@ -64,7 +60,7 @@ class TombolaInfoPage extends HookConsumerWidget {
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 10),
                                   child: BuyTypeTicket(
-                                      type_ticket: type_tickets[index - 1],
+                                      typeTicket: typeTickets[index - 1],
                                       raffle: raffle));
                             }));
               },
@@ -90,7 +86,7 @@ class TombolaInfoPage extends HookConsumerWidget {
                                     lots.isEmpty
                                         ? TombolaTextConstants.noPrize
                                         : TombolaTextConstants.actualPrize,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold)))),
                         SizedBox(
@@ -107,7 +103,7 @@ class TombolaInfoPage extends HookConsumerWidget {
                                   }
                                   return Container(
                                       margin: const EdgeInsets.symmetric(
-                                          horizontal: 5,vertical: 10),
+                                          horizontal: 5, vertical: 10),
                                       child: PrizeCard(
                                         prize: lots[index - 1],
                                       ));
@@ -122,16 +118,16 @@ class TombolaInfoPage extends HookConsumerWidget {
                   )),
           if (raffle.description != null)
             Container(
-              padding:
-                  EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
-              child: Text("Description",
+              padding: const EdgeInsets.only(
+                  top: 20, bottom: 10, left: 20, right: 20),
+              child: const Text("Description",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
             ),
           Container(
-              padding:
-                  EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
+              padding: const EdgeInsets.only(
+                  top: 20, bottom: 10, left: 20, right: 20),
               child: Text(raffle.description ?? "",
-                  style: TextStyle(fontSize: 15))),
+                  style: const TextStyle(fontSize: 15))),
         ]));
     //   const Positioned(
     //     bottom: 10,

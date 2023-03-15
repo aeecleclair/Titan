@@ -6,10 +6,10 @@ import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 
 class ConfirmPaymentDialog extends HookConsumerWidget {
-  final TypeTicket type_ticket;
+  final TypeTicket typeTicket;
   final Raffle raffle;
   const ConfirmPaymentDialog(
-      {Key? key, required this.type_ticket, required this.raffle})
+      {Key? key, required this.typeTicket, required this.raffle})
       : super(key: key);
 
   @override
@@ -28,7 +28,6 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                     blurStyle: BlurStyle.outer,
                   ),
                 ],
-                
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 gradient: RadialGradient(colors: [
                   TombolaColorConstants.gradient1,
@@ -63,7 +62,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                           ),
                         ),
                         Text(
-                          "${type_ticket.price} €",
+                          "${typeTicket.price} €",
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 40,
@@ -74,32 +73,32 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    "${type_ticket.nbTicket} tickets",
+                    "${typeTicket.nbTicket} tickets",
                     style: TextStyle(
                         color: Colors.white.withOpacity(0.8),
                         fontSize: 38,
                         fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 30),
-                  Container(padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: AutoSizeText(
-                    raffle.name,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold),
-                  )),
+                  Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: AutoSizeText(
+                        raffle.name,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 50,
+                            fontWeight: FontWeight.bold),
+                      )),
                   const Spacer(),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 7, horizontal: 12),
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
@@ -115,7 +114,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                   ]),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
-                          child: Text("Annuler",
+                          child: const Text("Annuler",
                               maxLines: 1,
                               style: TextStyle(
                                   color: Colors.white,
@@ -124,8 +123,8 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                       Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 7, horizontal: 12),
-                              margin: EdgeInsets.only(left:5),
-                          decoration: BoxDecoration(
+                          margin: const EdgeInsets.only(left: 5),
+                          decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
@@ -133,7 +132,6 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                     Color.fromARGB(255, 245, 183, 40),
                                     Color.fromARGB(255, 255, 54, 34),
                                     Color.fromARGB(255, 255, 21, 0)
-                                    
                                   ],
                                   stops: [
                                     0,
@@ -142,7 +140,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                   ]),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
-                          child: Text("Confirmer la prise du billet",
+                          child: const Text("Confirmer la prise du billet",
                               maxLines: 2,
                               style: TextStyle(
                                   color: Colors.white,
