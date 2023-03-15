@@ -12,17 +12,25 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:path_provider/path_provider.dart';
 
+final associationPictureProvider =
+    StateNotifierProvider<AssociationPictureNotifier, AsyncValue<Uint8List>>((ref) {
+  final token = ref.watch(tokenProvider);
+  AssociationPictureNotifier notifier = AssociationPictureNotifier(token);
+  return notifier;
+});
+
+
 class AssociationPictureNotifier extends SingleNotifier<Uint8List> {
-  final AssociationPictureRepository _associationPictureRepository =
+  final AssociationPictureRepository associationPictureRepository =
       AssociationPictureRepository();
   final ImagePicker _picker = ImagePicker();
   AssociationPictureNotifier(String token) : super(const AsyncLoading()) {
-    _associationPictureRepository.setToken(token);
+    associationPictureRepository.setToken(token);
   }
 
-  Future<AsyncValue<Uint8List>> getAssociationPicture(String userId) async {
+  Future<AsyncValue<Uint8List>> getAssociationPicture(String associationId) async {
     return await load(
-        () async => _associationPictureRepository.getAssociationPicture(userId));
+        () async => associationPictureRepository.getAssociationPicture(associationId));
   }
 
   Future<bool?> setAssociationPicture(ImageSource source, String associationId) async {
@@ -32,7 +40,7 @@ class AssociationPictureNotifier extends SingleNotifier<Uint8List> {
         await _picker.pickImage(source: source, imageQuality: 20);
     if (image != null) {
       try {
-        final i = await _associationPictureRepository.addAssociationPicture(image.path, associationId);
+        final i = await associationPictureRepository.addAssociationPicture(image.path, associationId);
         state = AsyncValue.data(i);
         return true;
       } catch (e) {
@@ -75,7 +83,7 @@ class AssociationPictureNotifier extends SingleNotifier<Uint8List> {
       );
       if (croppedFile != null) {
         try {
-          final i = await _associationPictureRepository
+          final i = await associationPictureRepository
               .addAssociationPicture(croppedFile.path, associationId);
           state = AsyncValue.data(i);
           return true;
@@ -93,9 +101,4 @@ class AssociationPictureNotifier extends SingleNotifier<Uint8List> {
   }
 }
 
-final associationPictureProvider =
-    StateNotifierProvider<AssociationPictureNotifier, AsyncValue<Uint8List>>((ref) {
-  final token = ref.watch(tokenProvider);
-  AssociationPictureNotifier notifier = AssociationPictureNotifier(token);
-  return notifier;
-});
+

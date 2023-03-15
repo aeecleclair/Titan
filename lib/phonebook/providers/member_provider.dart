@@ -1,15 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/phonebook/class/completeMember.dart';
+import 'package:myecl/phonebook/class/member.dart';
+import 'package:myecl/phonebook/repositories/member_repository.dart';
 
 
-final completeMemberProvider = StateNotifierProvider<CompleteMemberProvider, CompleteMember>((ref) {
-  return CompleteMemberProvider();
+final memberProvider = StateNotifierProvider<MemberProvider, Member>((ref) {
+  return MemberProvider();
 });
 
-class CompleteMemberProvider extends StateNotifier<CompleteMember> {
-  CompleteMemberProvider() : super(CompleteMember.empty());
+class MemberProvider extends StateNotifier<Member> {
+  MemberProvider() : super(Member.empty());
 
-  void setCompleteMember(CompleteMember i) {
+  void setMember(Member i) {
     state = i;
+  }
+
+  void getMember(String id) async {
+    state = await MemberRepository().getMember(id);
   }
 }
