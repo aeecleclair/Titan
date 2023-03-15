@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
@@ -94,68 +95,63 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   const Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(
-                        left: 20.0, right: 20, bottom: 10),
+                        left: 20.0, right: 20, bottom: 12),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        const Spacer(),
                         Container(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 12, horizontal: 15),
+                                vertical: 10, horizontal: 12),
                             decoration: BoxDecoration(
-                                gradient: const LinearGradient(
+                                gradient: LinearGradient(
                                   colors: [
-                                    TombolaColorConstants.textDark,
-                                    Colors.black
+                                    Colors.grey.shade100,
+                                    Colors.grey.shade200,
                                   ],
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Colors.black.withOpacity(0.3),
-                                      blurRadius: 5,
-                                      spreadRadius: 2,
+                                      color:
+                                          Colors.grey.shade300.withOpacity(0.5),
+                                      blurRadius: 10,
                                       offset: const Offset(2, 3))
                                 ],
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(15))),
-                            child: const Text("Annuler",
-                                maxLines: 1,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold))),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(15))),
+                            child: const HeroIcon(
+                              HeroIcons.check,
+                              color: TombolaColorConstants.textDark,
+                              size: 40,
+                            )),
+                        const Spacer(
+                          flex: 3,
+                        ),
                         Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12, horizontal: 15),
-                            decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomLeft,
-                                    colors: [
-                                      Color.fromARGB(255, 245, 183, 40),
-                                      Color.fromARGB(255, 255, 54, 34),
-                                      Color.fromARGB(255, 255, 21, 0)
-                                    ],
-                                    stops: [
-                                      0,
-                                      0.7,
-                                      1
-                                    ]),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: const Color.fromARGB(255, 255, 21, 0)
-                                          .withOpacity(0.3),
-                                      blurRadius: 5,
-                                      spreadRadius: 2,
-                                      offset: const Offset(2, 3))
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 12),
+                          decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  TombolaColorConstants.redGradient1,
+                                  TombolaColorConstants.redGradient2,
                                 ],
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(15))),
-                            child: const Text("Confirmer",
-                                maxLines: 2,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold))),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: TombolaColorConstants.redGradient2
+                                        .withOpacity(0.5),
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 3))
+                              ],
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(15))),
+                          child: const HeroIcon(HeroIcons.xMark,
+                              color: Colors.white, size: 40),
+                        ),
+                        const Spacer(),
                       ],
                     ),
                   )
