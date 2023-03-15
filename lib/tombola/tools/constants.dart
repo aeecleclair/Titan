@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:myecl/tools/constants.dart';
 
 class TombolaColorConstants extends ColorConstants {  
-  static const Color lightGradientButton = Color.fromARGB(255, 192, 6, 18);
-  static const Color darkGradientButton = Color.fromARGB(255, 97, 15, 0);
   static const Color darkText = Color.fromARGB(255, 50, 9, 1);
   static const Color writtenDark = Color.fromARGB(255, 10, 9, 30);
   static const Color writtenWhite = Color(0xfffafaeb);
@@ -12,6 +10,7 @@ class TombolaColorConstants extends ColorConstants {
   static const Color textDark = Color.fromARGB(255, 0, 23, 32);
   static const Color redGradient1 = Color(0xFFfb6d10);
   static const Color redGradient2 = Color.fromARGB(255, 155, 51, 10);
+  static const Color redGradient3 = Color.fromARGB(255, 255, 34, 34);
   static const Color ticketback = Color(0xff000031);
 }
 
@@ -26,6 +25,7 @@ class TombolaTextConstants {
   static const String createMenu = "Menu de Création";
   static const String nextTombolas = "Prochaines tombolas";
   static const String noTicket = "Vous n'avez pas de ticket";
+  static const String seeRaffleDetail = "Voir lots/tickets";
 
   //Tombola page
   static const String actualPrize = "Lots actuels";

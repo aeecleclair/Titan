@@ -45,7 +45,7 @@ class TombolaWidget extends HookConsumerWidget {
                     height: 10,
                   ),
                   const Text(
-                    "Lot principal : ",
+                    TombolaTextConstants.seeRaffleDetail,
                     style: TextStyle(
                         color: TombolaColorConstants.darkText, fontSize: 15),
                   ),

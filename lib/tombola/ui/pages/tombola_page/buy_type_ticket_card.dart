@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/confirm_payment.dart';
 
 class BuyTypeTicket extends HookConsumerWidget {
@@ -29,18 +30,15 @@ class BuyTypeTicket extends HookConsumerWidget {
           decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(231, 4, 0, 11).withOpacity(0.4),
+                  color: const Color.fromARGB(231, 4, 0, 11).withOpacity(0.4),
                   blurRadius: 8,
                   offset: const Offset(2, 3),
                 ),
               ],
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color.fromARGB(201, 2, 1, 42),
-                    Color.fromARGB(241, 4, 0, 11)
-                  ]),
+              gradient: const RadialGradient(colors: [
+                  TombolaColorConstants.gradient1,
+                  TombolaColorConstants.gradient2,
+                ], center: Alignment.topLeft, radius: 1.5),
               borderRadius: const BorderRadius.all(Radius.circular(20))),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,7 +77,7 @@ class BuyTypeTicket extends HookConsumerWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 "${type_ticket.nbTicket} tickets",
                 style: TextStyle(
@@ -87,31 +85,26 @@ class BuyTypeTicket extends HookConsumerWidget {
                     fontSize: 18,
                     fontWeight: FontWeight.bold),
               ),
-              Spacer(),
+              const Spacer(),
               Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
                   decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(87, 255, 255, 255),
-                          blurRadius: 8,
-                          offset: const Offset(1, 2),
-                        ),
-                      ],
+                      
                       gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Color.fromARGB(255, 245, 183, 40),
-                            Color.fromARGB(255, 235, 74, 25),
-                            Color.fromARGB(255, 206, 39, 24)
-                          ],
-                          stops: [
-                            0,
-                            0.7,
-                            1
-                          ]),
+                                    Color.fromARGB(255, 245, 183, 40),
+                                    Color.fromARGB(255, 255, 54, 34),
+                                    Color.fromARGB(255, 140, 13, 1)
+                                    
+                                  ],
+                                  stops: [
+                                    0,
+                                    0.7,
+                                    1
+                                  ]),
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                   child: FittedBox(
                       fit: BoxFit.fitWidth,

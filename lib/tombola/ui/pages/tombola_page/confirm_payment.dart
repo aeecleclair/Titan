@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/tools/constants.dart';
 
 class ConfirmPaymentDialog extends HookConsumerWidget {
   final TypeTicket type_ticket;
@@ -16,10 +17,10 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
     return Dialog(
         backgroundColor: Colors.transparent,
         child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             width: 300,
             height: 450,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 boxShadow: [
                   BoxShadow(
                     color: Color.fromARGB(191, 255, 255, 255),
@@ -28,14 +29,11 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   ),
                 ],
                 
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color.fromARGB(157, 0, 12, 41),
-                      Color.fromARGB(197, 0, 1, 16)
-                    ])),
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                gradient: RadialGradient(colors: [
+                  TombolaColorConstants.gradient1,
+                  TombolaColorConstants.gradient2,
+                ], center: Alignment.topLeft, radius: 1.5)),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -74,7 +72,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Text(
                     "${type_ticket.nbTicket} tickets",
                     style: TextStyle(
@@ -82,8 +80,8 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                         fontSize: 38,
                         fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 30),
-                  Container(padding: EdgeInsets.symmetric(horizontal: 10),
+                  const SizedBox(height: 30),
+                  Container(padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: AutoSizeText(
                     raffle.name,
                     maxLines: 2,
@@ -133,8 +131,8 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                   end: Alignment.bottomCenter,
                                   colors: [
                                     Color.fromARGB(255, 245, 183, 40),
-                                    Color.fromARGB(255, 255, 34, 34),
-                                    Color.fromARGB(255, 140, 13, 1)
+                                    Color.fromARGB(255, 255, 54, 34),
+                                    Color.fromARGB(255, 255, 21, 0)
                                     
                                   ],
                                   stops: [
