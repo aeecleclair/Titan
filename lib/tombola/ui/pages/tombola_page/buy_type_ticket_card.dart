@@ -91,22 +91,10 @@ class BuyTypeTicket extends HookConsumerWidget {
               const Spacer(),
               Container(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color.fromARGB(255, 245, 183, 40),
-                            Color.fromARGB(255, 255, 54, 34),
-                            Color.fromARGB(255, 140, 13, 1)
-                          ],
-                          stops: [
-                            0,
-                            0.7,
-                            1
-                          ]),
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                  decoration: BoxDecoration(
+                      color: TombolaColorConstants.gradient2.withOpacity(0.8),
+                      borderRadius: const BorderRadius.all(Radius.circular(15))),
                   child: const FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Text("Prendre ce billet",
