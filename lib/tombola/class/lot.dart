@@ -1,19 +1,20 @@
 class Lot {
   Lot({
     required this.id,
+    required this.name,
     required this.raffleId,
     required this.quantity,
-    required this.name,
     this.description,
   });
   late final String id;
+  late final String name;
   late final String raffleId;
   late final String? description;
   late final int quantity;
-  late final String name;
 
   Lot.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    name = json['name'];
     raffleId = json['raffle_id'];
     description = json['description'];
     name = json['name'];
@@ -23,6 +24,7 @@ class Lot {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
+    data['name'] = name;
     data['raffle_id'] = raffleId;
     data['description'] = description;
     data['quantity'] = quantity;
@@ -30,20 +32,24 @@ class Lot {
     return data;
   }
 
-  Lot.copyWith({
+  Lot copyWith({
     String? id,
+    String? name,
     String? raffleId,
     String? description,
     int? quantity,
-  }) {
-    this.id = id ?? this.id;
-    this.raffleId = raffleId ?? this.raffleId;
-    this.description = description ?? this.description;
-    this.quantity = quantity ?? this.quantity;
-  }
+  }) =>
+      Lot(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        raffleId: raffleId ?? this.raffleId,
+        description: description,
+        quantity: quantity ?? this.quantity,
+      );
 
   Lot.empty() {
     id = '';
+    name = '';
     raffleId = '';
     description = '';
     quantity = 0;
@@ -52,6 +58,6 @@ class Lot {
 
   @override
   String toString() {
-    return 'Lots{id: $id, raffleId: $raffleId, description: $description, quantity: $quantity}';
+    return 'Lot{id: $id, name: $name, raffleId: $raffleId, description: $description, quantity: $quantity}';
   }
 }

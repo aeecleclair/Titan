@@ -165,7 +165,6 @@ class MainPage extends HookConsumerWidget {
                         animation.forward();
                       },
                       onTap: () {
-
                         pageNotifier.setAmapPage(AmapPage.detailPage);
                       },
                       addOrder: () {
@@ -275,7 +274,7 @@ class MainPage extends HookConsumerWidget {
                               ),
                               child: Row(
                                   children: CollectionSlot.values
-                                      .map((e) => CollectionSlotSelector(
+                                      .map((e) => CollectionSLotelector(
                                           collectionSlot: e))
                                       .toList())),
                         ),

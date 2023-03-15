@@ -1,11 +1,29 @@
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
-import 'package:http/http.dart' as http;
-
 class RaffleRepository extends Repository {
   @override
-  Future<List<Raffle>> getRaffleList() async {
-    return List<Raffle>.from((await getList(suffix: "tombola/raffle")).map((x) => Raffle.fromJson(x)));
+  // ignore: overridden_fields
+  final ext = "tombola/raffles";
+
+  Future<List<Raffle>> getRaffleList(raffleId) async {
+    return List<Raffle>.from((await getList(suffix: "$raffleId/items"))
+        .map((x) => Raffle.fromJson(x)));
+  }
+
+  Future<Raffle> getRaffle(String raffleId) async {
+    return Raffle.fromJson(await getOne(raffleId, suffix: "/items"));
+  }
+
+  Future<Raffle> createRaffle(Raffle raffle) async {
+    return Raffle.fromJson(await create(raffle.toJson()));
+  }
+
+  Future<bool> updateRaffle(Raffle raffle) async {
+    return await update(raffle.toJson(), raffle.id);
+  }
+
+  Future<bool> deleteRaffle(String raffleId) async {
+    return await delete(raffleId);
   }
 }
