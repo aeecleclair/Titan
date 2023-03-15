@@ -33,7 +33,7 @@ class PrizeCard extends HookConsumerWidget {
                   BoxShadow(
                     color: Colors.black.withOpacity(0.5),
                     spreadRadius: 0,
-                    blurRadius: 8,
+                    blurRadius: 5,
                     offset: const Offset(1, 2),
                   ),
                 ],
