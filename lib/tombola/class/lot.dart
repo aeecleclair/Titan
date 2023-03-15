@@ -53,7 +53,6 @@ class Lot {
     raffleId = '';
     description = '';
     quantity = 0;
-    name = '';
   }
 
   @override
