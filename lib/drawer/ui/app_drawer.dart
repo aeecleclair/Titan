@@ -11,6 +11,7 @@ import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
 import 'package:myecl/event/ui/event.dart';
+import 'package:myecl/flap/ui/flap.dart';
 import 'package:myecl/home/ui/home.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/settings/ui/settings.dart';
@@ -54,6 +55,9 @@ class AppDrawer extends HookConsumerWidget {
             controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.cinema:
         return CinemaHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
+      case ModuleType.flap:
+        return FlapHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
     }
   }

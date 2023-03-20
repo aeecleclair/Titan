@@ -57,6 +57,11 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
         icon: HeroIcons.ticket,
         page: ModuleType.cinema,
         selected: false),
+    Module(
+        name: "Flap",
+        icon: HeroIcons.bookmark,
+        page: ModuleType.flap,
+        selected: false),
   ];
   ModulesNotifier() : super([]);
 
