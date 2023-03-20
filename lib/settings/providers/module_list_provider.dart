@@ -44,6 +44,11 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     RaffleRouter.module,
     RecommendationRouter.module,
     PhonebookRouter.module,
+    Module(
+        name: "Flap",
+        icon: HeroIcons.bookmark,
+        page: ModuleType.flap,
+        selected: false),
   ];
   ModulesNotifier() : super([]);
 
