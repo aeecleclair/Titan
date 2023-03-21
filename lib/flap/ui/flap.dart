@@ -30,7 +30,7 @@ class FlapHomePage extends HookConsumerWidget {
             ignoring: controller.isCompleted,
             child: Stack(
               children: [
-                const GamePage(),
+                GamePage(),
                 TopBar(
                   controllerNotifier: controllerNotifier,
                 ),

@@ -4,9 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image/image.dart' as External;
 
 class BirdImageNotifier extends StateNotifier<Uint8List> {
-  final MaterialColor color;
 
-  BirdImageNotifier({required this.color}) : super(Uint8List.fromList([]));
+  BirdImageNotifier() : super(Uint8List.fromList([]));
 
   void setBird(Uint8List bird) {
     state = bird;
@@ -17,7 +16,7 @@ class BirdImageNotifier extends StateNotifier<Uint8List> {
     state = image.buffer.asUint8List();
   }
 
-  Future<Uint8List> switchColor() async {
+  Future<Uint8List> switchColor(MaterialColor color) async {
     // Decode the bytes to [Image] type
     final image = External.decodeImage(state);
 
@@ -62,7 +61,7 @@ class BirdImageNotifier extends StateNotifier<Uint8List> {
 
 final birdImageProvider =
     StateNotifierProvider<BirdImageNotifier, Uint8List>((ref) {
-  BirdImageNotifier notifier = BirdImageNotifier(color: Colors.green);
+  BirdImageNotifier notifier = BirdImageNotifier();
   notifier.getBirdImage();
   return notifier;
 });

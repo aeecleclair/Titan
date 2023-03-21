@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/flap/providers/bird_provider.dart';
+import 'package:myecl/flap/providers/user_score_provider.dart';
 
-class GameScore extends StatelessWidget {
-  final int score;
-  final int scoreRecord;
+class GameScore extends HookConsumerWidget {
   const GameScore({
     Key? key,
-    required this.score,
-    required this.scoreRecord,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _TextWidget(title: 'S C O R E', number: score.toString()),
-        _TextWidget(title: 'R E C O R D', number: scoreRecord.toString())
-      ],
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bird = ref.watch(birdProvider);
+    final record = ref.watch(userScoreProvider);
+    return Expanded(
+        child: Container(
+            color: Colors.brown,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _TextWidget(title: 'S C O R E', number: bird.score.toString()),
+                record.when(
+                    data: (scoreRecord) => _TextWidget(
+                        title: 'R E C O R D', number: scoreRecord.toString()),
+                    error: (Object error, StackTrace stackTrace) => const Text(
+                        'Something went wrong! Please try again later.'),
+                    loading: () => const Text('Loading...')),
+              ],
+            )));
   }
 }
 
