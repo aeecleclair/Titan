@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image/image.dart' as External;
+
+class BirdImageNotifier extends StateNotifier<Uint8List> {
+  final MaterialColor color;
+
+  BirdImageNotifier({required this.color}) : super(Uint8List.fromList([]));
+
+  void setBird(Uint8List bird) {
+    state = bird;
+  }
+
+  Future<void> getBirdImage() async {
+    final image = await rootBundle.load("images/bird_2.png");
+    state = image.buffer.asUint8List();
+  }
+
+  Future<Uint8List> switchColor() async {
+    // Decode the bytes to [Image] type
+    final image = External.decodeImage(state);
+
+    // Convert the [Image] to RGBA formatted pixels
+    final pixels = image!.getBytes(order: External.ChannelOrder.rgba);
+
+    // Get the Pixel Length
+    final int length = pixels.lengthInBytes;
+
+
+    for (var i = 0; i < length; i += 4) {
+      ///           PIXELS
+      /// =============================
+      /// | i | i + 1 | i + 2 | i + 3 |
+      /// =============================
+
+      // pixels[i] represents Red
+      // pixels[i + 1] represents Green
+      // pixels[i + 2] represents Blue
+      // pixels[i + 3] represents Alpha
+      if (pixels[i] >= 250 && pixels[i + 1] >= 250 && pixels[i + 2] >= 250) {
+        continue;
+      }
+
+      // Detect the light blue color & switch it with the desired color's RGB value.
+      else if (pixels[i] >= 250 && pixels[i + 1] >= 230 && pixels[i + 2] >= 50) {
+        pixels[i] = color.shade300.red;
+        pixels[i + 1] = color.shade300.green;
+        pixels[i + 2] = color.shade300.blue;
+      }
+
+        // Detect the darkish blue shade & switch it with the desired color's RGB value.
+      else if (pixels[i] >= 200 && pixels[i + 1] >= 100 && pixels[i + 2] >= 0) {
+        pixels[i] = color.shade900.red;
+        pixels[i + 1] = color.shade900.green;
+        pixels[i + 2] = color.shade900.blue;
+      }
+    }
+    return External.encodePng(image);
+  }
+}
+
+final birdImageProvider =
+    StateNotifierProvider<BirdImageNotifier, Uint8List>((ref) {
+  BirdImageNotifier notifier = BirdImageNotifier(color: Colors.green);
+  notifier.getBirdImage();
+  return notifier;
+});
