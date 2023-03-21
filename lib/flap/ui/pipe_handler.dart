@@ -20,7 +20,8 @@ class PipeHandler extends HookConsumerWidget {
                       xPipeAlignment: e.position,
                     ),
                     PipeDisplay(
-                      pipeHeight: constraints - e.height - 200,
+                      pipeHeight:
+                          constraints - e.height - 200,
                       xPipeAlignment: e.position,
                     )
                   ],
