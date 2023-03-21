@@ -19,23 +19,13 @@ class GamePage extends HookConsumerWidget {
   int scoreRecord = 0;
   bool pipePassed = false;
   bool _gameStarted = false;
-  List<double> xPipeAlignment = [
-    1.0,
-    2.2,
-    3.4,
-  ];
+
   late double height = MediaQuery.of(context).size.height * 0.75;
   late final List<List<double>> _pipeHeights = [
     generateRandomPipeHeights(height),
     generateRandomPipeHeights(height),
     generateRandomPipeHeights(height),
   ];
-
-  List<double> generateRandomPipeHeights(double screenHeight) {
-    final random = Random();
-    final randomHeight = random.nextInt(300).toDouble() + 50;
-    return [randomHeight, screenHeight - randomHeight - 200];
-  }
 
   bool _birdHitPipe() {
     final width = MediaQuery.of(context).size.width;
@@ -197,7 +187,7 @@ class GamePage extends HookConsumerWidget {
                       Container(
                           alignment: const Alignment(0, -0.4),
                           child: Text(
-                            'T A P  T O  P L A Y',
+                            'T A P   T O   P L A Y',
                             style: GoogleFonts.silkscreen(
                               textStyle: const TextStyle(
                                 color: Colors.white,
