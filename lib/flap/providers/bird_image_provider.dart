@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image/image.dart' as External;
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class BirdImageNotifier extends StateNotifier<Uint8List> {
-
   BirdImageNotifier() : super(Uint8List.fromList([]));
 
-  void setBird(Uint8List bird) {
-    state = bird;
+  void setList(Uint8List list) {
+    state = list;
   }
 
   Future<void> getBirdImage() async {
@@ -26,7 +26,6 @@ class BirdImageNotifier extends StateNotifier<Uint8List> {
     // Get the Pixel Length
     final int length = pixels.lengthInBytes;
 
-
     for (var i = 0; i < length; i += 4) {
       ///           PIXELS
       /// =============================
@@ -42,13 +41,15 @@ class BirdImageNotifier extends StateNotifier<Uint8List> {
       }
 
       // Detect the light blue color & switch it with the desired color's RGB value.
-      else if (pixels[i] >= 250 && pixels[i + 1] >= 230 && pixels[i + 2] >= 50) {
+      else if (pixels[i] >= 250 &&
+          pixels[i + 1] >= 230 &&
+          pixels[i + 2] >= 50) {
         pixels[i] = color.shade300.red;
         pixels[i + 1] = color.shade300.green;
         pixels[i + 2] = color.shade300.blue;
       }
 
-        // Detect the darkish blue shade & switch it with the desired color's RGB value.
+      // Detect the darkish blue shade & switch it with the desired color's RGB value.
       else if (pixels[i] >= 200 && pixels[i + 1] >= 100 && pixels[i + 2] >= 0) {
         pixels[i] = color.shade900.red;
         pixels[i + 1] = color.shade900.green;

@@ -28,10 +28,16 @@ class BirdNotifier extends StateNotifier<Bird> {
 final birdProvider = StateNotifierProvider<BirdNotifier, Bird>((ref) {
   BirdNotifier notifier = BirdNotifier();
   final user = ref.watch(userProvider);
-  final birdImage = ref.watch(birdImageProvider.notifier);
+  final birdImage = ref.watch(birdImageProvider);
+  final birdImageNotifier = ref.watch(birdImageProvider.notifier);
   notifier.setUser(user.toSimpleUser());
-  birdImage.switchColor(notifier.state.color).then((value) {
-    notifier.setBirdImage(Image.memory(value));
-  });
+  if (birdImage.isNotEmpty) {
+    birdImageNotifier.switchColor(notifier.state.color).then((value) {
+      print("Bird Image Switched");
+      notifier.setBirdImage(Image.memory(value));
+      print("Bird Image Set");
+      return notifier;
+    });
+  }
   return notifier;
 });
