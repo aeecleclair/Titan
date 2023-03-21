@@ -25,4 +25,9 @@ class Pipe {
       height: randomHeight,
     );
   }
+
+  @override
+  String toString() {
+    return 'Pipe{position: $position, height: $height}';
+  }
 }
