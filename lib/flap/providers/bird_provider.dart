@@ -13,11 +13,15 @@ class BirdNotifier extends StateNotifier<Bird> {
   }
 
   void setBirdImage(Widget birdImage) {
-    state.setImage(birdImage);
+    state = state.copyWith(birdImage: birdImage);
   }
 
   void setUser(SimpleUser user) {
-    state.setUser(user);
+    state = state.copyWith(user: user);
+  }
+
+  void jump() {
+    state.jump();
   }
 }
 
