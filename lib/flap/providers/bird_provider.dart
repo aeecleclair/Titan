@@ -45,6 +45,15 @@ class BirdNotifier extends StateNotifier<Bird> {
       score: state.score + 1,
     );
   }
+
+  void resetBird() {
+    state = state.copyWith(
+      birdPosition: 0,
+      time: 0,
+      angle: 0,
+      score: 0,
+    );
+  }
 }
 
 final birdProvider = StateNotifierProvider<BirdNotifier, Bird>((ref) {

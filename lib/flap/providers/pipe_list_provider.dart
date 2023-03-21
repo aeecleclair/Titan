@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/flap/class/pipe.dart';
 
@@ -38,6 +36,14 @@ class PipeListNotifier extends StateNotifier<List<Pipe>> {
       }
     }
     return false;
+  }
+
+  void clearPipe() {
+    state = [
+      Pipe.random(position: 1),
+      Pipe.random(position: 2.2),
+      Pipe.random(position: 3.4),
+    ];
   }
 }
 

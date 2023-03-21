@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flap/class/bird.dart';
 import 'package:myecl/flap/providers/bird_provider.dart';
 import 'package:myecl/flap/providers/game_loop_provider.dart';
 import 'package:myecl/flap/providers/game_state_provider.dart';
@@ -14,10 +12,6 @@ import 'package:myecl/flap/ui/bird.dart';
 import 'package:myecl/flap/ui/pipe_handler.dart';
 import 'package:myecl/flap/ui/score.dart';
 import 'package:myecl/flap/ui/start_screen.dart';
-
-import 'pipe.dart';
-
-const _pipeWidth = 80.0;
 
 class GamePage extends HookConsumerWidget {
   const GamePage({Key? key}) : super(key: key);
@@ -96,6 +90,8 @@ class GamePage extends HookConsumerWidget {
           newBird.birdPosition < -1 ||
           pipeListNotifier.birdHitPipe(width, height, newBird)) {
         timerNotifier.stop();
+        birdNotifier.resetBird();
+        pipeListNotifier.clearPipe();
         // showGameOverDialog();
         gameStartNotifier.setState(false);
       }

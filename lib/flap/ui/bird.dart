@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flap/class/bird.dart';
 import 'package:myecl/flap/providers/bird_provider.dart';
 
 class BirdDisplay extends HookConsumerWidget {
