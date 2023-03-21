@@ -3,31 +3,19 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/flap/class/bird.dart';
+import 'package:myecl/flap/providers/bird_provider.dart';
 import 'package:myecl/flap/ui/bird.dart';
 import 'package:myecl/flap/ui/score.dart';
 
 import 'pipe.dart';
 
 const _pipeWidth = 80.0;
-const _gravity = -2;
-const _velocity = 1;
 
-class GamePage extends StatefulWidget {
-  const GamePage({Key? key}) : super(key: key);
+class GamePage extends HookConsumerWidget {
+  GamePage({Key? key}) : super(key: key);
 
-  @override
-  State<GamePage> createState() => _MyGamePageState();
-}
-
-class _MyGamePageState extends State<GamePage> {
-  Bird bird = Bird.empty();
-  double initialPosition = 0.0;
-  double time = 0.0;
-  double _birdY = 0.0;
-
-  int score = 0;
-  double angle = 0.0;
   int scoreRecord = 0;
   bool pipePassed = false;
   bool _gameStarted = false;
@@ -56,8 +44,9 @@ class _MyGamePageState extends State<GamePage> {
     for (int pipeNumber = 0; pipeNumber < xPipeAlignment.length; pipeNumber++) {
       if (xPipeAlignment[pipeNumber] - _pipeWidth / width <= -0.45 &&
           xPipeAlignment[pipeNumber] + _pipeWidth / width >= -0.65 &&
-          (_birdY >= 1 - (_pipeHeights[pipeNumber][0]) / height ||
-              _birdY <= -1 + (_pipeHeights[pipeNumber][1]) / height)) {
+          (bird.birdPosition >= 1 - (_pipeHeights[pipeNumber][0]) / height ||
+              bird.birdPosition <=
+                  -1 + (_pipeHeights[pipeNumber][1]) / height)) {
         return true;
       }
     }
@@ -66,13 +55,8 @@ class _MyGamePageState extends State<GamePage> {
 
   void restartGame() {
     setState(() {
-      _birdY = 0.0;
       _gameStarted = false;
       pipePassed = false;
-      score = 0;
-      time = 0.0;
-      angle = 0.0;
-      initialPosition = 0.0;
       xPipeAlignment = [1.0, 2.2, 3.4];
     });
   }
@@ -93,7 +77,7 @@ class _MyGamePageState extends State<GamePage> {
                 child: Text(
                   'Game over!'.toUpperCase(),
                   style: GoogleFonts.silkscreen(
-                    textStyle:const TextStyle(color: Colors.white)),
+                      textStyle: const TextStyle(color: Colors.white)),
                 ),
               ),
               actions: [
@@ -121,30 +105,33 @@ class _MyGamePageState extends State<GamePage> {
     }
   }
 
+  void countPoint() {
+    for (int i = 0; i < xPipeAlignment.length; i++) {
+      if (xPipeAlignment[i] < -0.37) {
+        if (!pipePassed) {
+          bird.score++;
+          _checkScoreRecord(bird.score);
+          pipePassed = true;
+        }
+      }
+      if (xPipeAlignment[i] < -2) {
+        xPipeAlignment[i] += 3.5;
+        _pipeHeights[i] = generateRandomPipeHeights(
+            MediaQuery.of(context).size.height * 0.75);
+        pipePassed = false;
+      } else {
+        xPipeAlignment[i] -= 0.01;
+      }
+    }
+  }
+
   void _startGame() {
     _gameStarted = true;
     Timer.periodic(const Duration(milliseconds: 10), (timer) {
       double height = _gravity * time * time + _velocity * time;
       setState(() {
-        _birdY = initialPosition - height;
-        for (int i = 0; i < xPipeAlignment.length; i++) {
-          if (xPipeAlignment[i] < -0.37) {
-            if (!pipePassed) {
-              score++;
-              _checkScoreRecord(score);
-              pipePassed = true;
-            }
-          }
-          if (xPipeAlignment[i] < -2) {
-            xPipeAlignment[i] += 3.5;
-            _pipeHeights[i] = generateRandomPipeHeights(
-                MediaQuery.of(context).size.height * 0.75);
-            pipePassed = false;
-          } else {
-            xPipeAlignment[i] -= 0.01;
-            angle += 0.005;
-          }
-        }
+        bird.birdPosition = initialPosition - height;
+        countPoint();
       });
       if (_birdIsDead()) {
         timer.cancel();
@@ -154,24 +141,17 @@ class _MyGamePageState extends State<GamePage> {
     });
   }
 
-  void _jump() {
-    setState(() {
-      initialPosition = _birdY;
-      time = 0.0;
-      angle = -pi / 4;
-    });
-  }
-
   bool _birdIsDead() {
     return _birdHitGroundOrTop() || _birdHitPipe();
   }
 
   bool _birdHitGroundOrTop() {
-    return _birdY > 1 || _birdY < -1;
+    return bird.birdPosition > 1 || bird.birdPosition < -1;
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bird = ref.watch(birdProvider);
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: GestureDetector(
@@ -179,7 +159,7 @@ class _MyGamePageState extends State<GamePage> {
           if (!_gameStarted) {
             _startGame();
           } else {
-            _jump();
+            bird.jump();
           }
         },
         child: Column(
@@ -191,10 +171,9 @@ class _MyGamePageState extends State<GamePage> {
                 child: Stack(
                   children: [
                     Container(
-                      alignment: Alignment(-0.5, _birdY),
+                      alignment: Alignment(-0.5, bird.birdPosition),
                       child: BirdDisplay(
                         bird: bird,
-                        angle: angle,
                       ),
                     ),
                     ..._pipeHeights.map((e) => Stack(
@@ -216,28 +195,21 @@ class _MyGamePageState extends State<GamePage> {
                         )),
                     if (!_gameStarted)
                       Container(
-                        alignment: const Alignment(0, -0.4),
-                        child:  Text(
-                          'T A P  T O  P L A Y',
-                          style: GoogleFonts.silkscreen(
-                    textStyle: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                        ),)
-                      )
+                          alignment: const Alignment(0, -0.4),
+                          child: Text(
+                            'T A P  T O  P L A Y',
+                            style: GoogleFonts.silkscreen(
+                              textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ))
                   ],
                 ),
               ),
             ),
-            Expanded(
-              child: Container(
-                  color: Colors.brown,
-                  child: GameScore(
-                    score: score,
-                    scoreRecord: scoreRecord,
-                  )),
-            )
+            const GameScore(),
           ],
         ),
       ),
