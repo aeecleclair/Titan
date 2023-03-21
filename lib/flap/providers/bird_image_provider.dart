@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image/image.dart' as externalImage;
+import 'package:image/image.dart' as external_image;
 
 class BirdImageNotifier extends StateNotifier<Uint8List> {
   BirdImageNotifier() : super(Uint8List.fromList([]));
@@ -17,10 +17,10 @@ class BirdImageNotifier extends StateNotifier<Uint8List> {
 
   Future<Uint8List> switchColor(MaterialColor color) async {
     // Decode the bytes to [Image] type
-    final image = externalImage.decodeImage(state);
+    final image = external_image.decodeImage(state);
 
     // Convert the [Image] to RGBA formatted pixels
-    final pixels = image!.getBytes(order: externalImage.ChannelOrder.rgba);
+    final pixels = image!.getBytes(order: external_image.ChannelOrder.rgba);
 
     // Get the Pixel Length
     final int length = pixels.lengthInBytes;
@@ -55,7 +55,7 @@ class BirdImageNotifier extends StateNotifier<Uint8List> {
         pixels[i + 2] = color.shade900.blue;
       }
     }
-    return externalImage.encodePng(image);
+    return external_image.encodePng(image);
   }
 }
 

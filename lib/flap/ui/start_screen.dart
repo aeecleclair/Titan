@@ -9,7 +9,6 @@ class StartScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gameStarted = ref.watch(gameStateProvider);
-    print('StartScreen: $gameStarted');
     return !gameStarted
         ? Container(
             alignment: const Alignment(0, -0.4),
