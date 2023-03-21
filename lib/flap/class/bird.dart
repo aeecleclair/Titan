@@ -10,7 +10,7 @@ class Bird {
   final double birdSize = 50;
   final double gravity = -4.9;
   final double velocity = 2.5;
-  Widget birdImage = const CircularProgressIndicator();
+  Widget birdImage;
   double time = 0;
   double angle = 0;
   double birdPosition = 0;
@@ -19,26 +19,19 @@ class Bird {
   Bird({
     required this.user,
     required this.color,
+    this.birdImage = const CircularProgressIndicator(),
   });
 
   Bird copyWith({
     SimpleUser? user,
-    int? score,
     MaterialColor? color,
-    double? birdSize,
+    Widget? birdImage,
   }) {
     return Bird(
       user: user ?? this.user,
       color: color ?? this.color,
+      birdImage: birdImage ?? this.birdImage,
     );
-  }
-
-  void setImage(Widget image) {
-    birdImage = image;
-  }
-
-  void setUser(SimpleUser user) {
-    this.user = user;
   }
 
   void jump() {
@@ -53,8 +46,11 @@ class Bird {
     angle += 0.005;
   }
 
-  Bird.empty() {
-    user = SimpleUser.empty();
-    color = Colors.blue;
+  static Bird empty() {
+    return Bird(
+      user: SimpleUser.empty(),
+      color: Colors.blue,
+      birdImage: const CircularProgressIndicator(),
+    );
   }
 }

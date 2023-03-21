@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
-class Pipe extends StatelessWidget {
-  const Pipe({
+class PipeDisplay extends StatelessWidget {
+  const PipeDisplay({
     Key? key,
     required this.pipeHeight,
-    required this.pipeWidth,
-    this.isBottomPipe = false,
     required this.xPipeAlignment,
+    this.isBottomPipe = false,
   }) : super(key: key);
 
   final double pipeHeight;
-  final double pipeWidth;
   final bool isBottomPipe;
   final double xPipeAlignment;
 
@@ -21,7 +19,7 @@ class Pipe extends StatelessWidget {
       child: Container(
         color: Colors.green,
         height: pipeHeight,
-        width: pipeWidth,
+        width: 80,
       ),
     );
   }
