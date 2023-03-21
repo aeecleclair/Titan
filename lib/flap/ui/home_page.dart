@@ -3,9 +3,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myecl/flap/class/bird.dart';
+import 'package:myecl/flap/ui/bird.dart';
 import 'package:myecl/flap/ui/score.dart';
 
-import 'bird.dart';
 import 'pipe.dart';
 
 const _pipeWidth = 80.0;
@@ -20,6 +21,7 @@ class GamePage extends StatefulWidget {
 }
 
 class _MyGamePageState extends State<GamePage> {
+  Bird bird = Bird.empty();
   double initialPosition = 0.0;
   double time = 0.0;
   double _birdY = 0.0;
@@ -190,8 +192,8 @@ class _MyGamePageState extends State<GamePage> {
                   children: [
                     Container(
                       alignment: Alignment(-0.5, _birdY),
-                      child: Bird(
-                        birdSize: 50,
+                      child: BirdDisplay(
+                        bird: bird,
                         angle: angle,
                       ),
                     ),
