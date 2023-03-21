@@ -29,15 +29,16 @@ class GamePage extends HookConsumerWidget {
     final pipePassed = useState(false);
     final width = MediaQuery.of(context).size.width;
 
-    void showGameOverDialog(void Function(Timer) gameLoop) {
+    void showGameOverDialog() {
       showDialog(
           context: context,
           barrierDismissible: false,
           builder: (context) {
             return GestureDetector(
               onTap: () {
+                birdNotifier.resetBird();
+                pipeListNotifier.clearPipe();
                 Navigator.of(context).pop();
-                timerNotifier.restart(gameLoop);
               },
               child: AlertDialog(
                 backgroundColor: Colors.brown,
@@ -52,7 +53,8 @@ class GamePage extends HookConsumerWidget {
                   MaterialButton(
                     color: Colors.grey[100],
                     onPressed: () {
-                      timerNotifier.restart(gameLoop);
+                      birdNotifier.resetBird();
+                      pipeListNotifier.clearPipe();
                       Navigator.pop(context);
                     },
                     child: const Icon(
@@ -77,7 +79,6 @@ class GamePage extends HookConsumerWidget {
             // if (bird.score > scoreRecord) {
             //   // scoreRecord = score;
             // }
-            // _checkScoreRecord(bird.score);
             pipePassed.value = true;
           }
         }
@@ -90,9 +91,7 @@ class GamePage extends HookConsumerWidget {
           newBird.birdPosition < -1 ||
           pipeListNotifier.birdHitPipe(width, height, newBird)) {
         timerNotifier.stop();
-        birdNotifier.resetBird();
-        pipeListNotifier.clearPipe();
-        // showGameOverDialog();
+        showGameOverDialog();
         gameStartNotifier.setState(false);
       }
     }

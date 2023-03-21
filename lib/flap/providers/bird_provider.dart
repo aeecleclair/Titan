@@ -28,7 +28,7 @@ class BirdNotifier extends StateNotifier<Bird> {
       birdPosition: state.initialPosition -
           state.gravity * state.time * state.time -
           state.velocity * state.time,
-      angle: state.angle + 0.005,
+      angle: state.angle + 0.01,
     );
   }
 
@@ -49,6 +49,7 @@ class BirdNotifier extends StateNotifier<Bird> {
   void resetBird() {
     state = state.copyWith(
       birdPosition: 0,
+      initialPosition: 0,
       time: 0,
       angle: 0,
       score: 0,
