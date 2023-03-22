@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/flap/providers/bird_provider.dart';
+import 'package:myecl/flap/providers/current_best_score.dart';
 import 'package:myecl/flap/providers/user_score_provider.dart';
 
 class GameScore extends HookConsumerWidget {
@@ -12,7 +13,7 @@ class GameScore extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bird = ref.watch(birdProvider);
-    final record = ref.watch(userScoreProvider);
+    final record = ref.watch(bestScoreProvider);
     return Expanded(
         child: Container(
             color: Colors.brown,
@@ -20,13 +21,7 @@ class GameScore extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _TextWidget(title: 'S C O R E', number: bird.score.toString()),
-                _TextWidget(
-                    title: 'R E C O R D',
-                    number: record.when(
-                        data: (scoreRecord) => scoreRecord.toString(),
-                        error: (Object error, StackTrace stackTrace) =>
-                            "Erreur",
-                        loading: () => 'Loading...')),
+                _TextWidget(title: 'R E C O R D', number: record.toString()),
               ],
             )));
   }
