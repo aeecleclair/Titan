@@ -20,12 +20,13 @@ class GameScore extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _TextWidget(title: 'S C O R E', number: bird.score.toString()),
-                record.when(
-                    data: (scoreRecord) => _TextWidget(
-                        title: 'R E C O R D', number: scoreRecord.toString()),
-                    error: (Object error, StackTrace stackTrace) => const Text(
-                        'Something went wrong! Please try again later.'),
-                    loading: () => const Text('Loading...')),
+                _TextWidget(
+                    title: 'R E C O R D',
+                    number: record.when(
+                        data: (scoreRecord) => scoreRecord.toString(),
+                        error: (Object error, StackTrace stackTrace) =>
+                            "Erreur",
+                        loading: () => 'Loading...')),
               ],
             )));
   }
