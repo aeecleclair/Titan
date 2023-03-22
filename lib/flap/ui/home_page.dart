@@ -75,18 +75,22 @@ class GamePage extends HookConsumerWidget {
     void gameLoop(Timer timer, double height) {
       final newBird = birdNotifier.update();
       final newPipes = pipeListNotifier.update();
-      for (int i = 0; i < newPipes.length; i++) {
-        if (newPipes[i].position < -0.37) {
-          if (!pipePassed.value) {
+      if (!pipePassed.value) {
+        for (int i = 0; i < newPipes.length; i++) {
+          if (newPipes[i].position < -0.37 && newPipes[i].position > -0.63) {
             birdNotifier.increaseScore();
             // if (bird.score > scoreRecord) {
             //   // scoreRecord = score;
             // }
             pipePassed.value = true;
+            break;
           }
         }
-        if (newPipes[i].position < -2) {
+      }
+      for (int i = 0; i < newPipes.length; i++) {
+        if (newPipes[i].position < -.7 && newPipes[i].position > -.8) {
           pipePassed.value = false;
+          break;
         }
       }
       pipeListNotifier.resetPipe();
@@ -107,6 +111,7 @@ class GamePage extends HookConsumerWidget {
               onTap: () {
                 if (!gameStarted) {
                   gameStartNotifier.setState(true);
+                  pipePassed.value = false;
                   timerNotifier
                       .start((timer) => gameLoop(timer, constraints.maxHeight));
                 } else {
