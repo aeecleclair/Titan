@@ -15,17 +15,14 @@ class PipeListNotifier extends StateNotifier<List<Pipe>> {
     }).toList();
   }
 
-  bool resetPipe() {
-    bool reset = false;
+  void resetPipe() {
     state = state.map((e) {
       if (e.position < -2) {
-        reset = true;
         return Pipe.random(position: e.position + 3.5);
       } else {
         return e;
       }
     }).toList();
-    return reset;
   }
 
   bool birdHitPipe(width, height, bird) {
