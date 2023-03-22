@@ -23,7 +23,7 @@ class Bird {
     this.birdImage = const CircularProgressIndicator(),
     this.score = 0,
     this.time = 0,
-    this.angle = 0,
+    this.angle = -pi / 6,
     this.birdPosition = 0,
     this.initialPosition = 0,
   });
