@@ -50,16 +50,19 @@ class GamePage extends HookConsumerWidget {
                   ),
                 ),
                 actions: [
-                  MaterialButton(
-                    color: Colors.grey[100],
-                    onPressed: () {
-                      birdNotifier.resetBird();
-                      pipeListNotifier.clearPipe();
-                      Navigator.pop(context);
-                    },
-                    child: const Icon(
-                      Icons.refresh,
-                      color: Colors.brown,
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: MaterialButton(
+                      color: Colors.grey[100],
+                      onPressed: () {
+                        birdNotifier.resetBird();
+                        pipeListNotifier.clearPipe();
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(
+                        Icons.refresh,
+                        color: Colors.brown,
+                      ),
                     ),
                   )
                 ],
@@ -98,7 +101,7 @@ class GamePage extends HookConsumerWidget {
     return Column(
       children: [
         Expanded(
-          flex: 3,
+          flex: 4,
           child: LayoutBuilder(builder: (context, constraints) {
             return GestureDetector(
               onTap: () {
