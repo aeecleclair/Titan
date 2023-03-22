@@ -5,9 +5,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/flap/providers/bird_provider.dart';
+import 'package:myecl/flap/providers/current_best_score.dart';
 import 'package:myecl/flap/providers/game_loop_provider.dart';
 import 'package:myecl/flap/providers/game_state_provider.dart';
 import 'package:myecl/flap/providers/pipe_list_provider.dart';
+import 'package:myecl/flap/providers/user_score_provider.dart';
 import 'package:myecl/flap/ui/bird.dart';
 import 'package:myecl/flap/ui/pipe_handler.dart';
 import 'package:myecl/flap/ui/score.dart';
@@ -22,11 +24,12 @@ class GamePage extends HookConsumerWidget {
     final gameStartNotifier = ref.read(gameStateProvider.notifier);
     final birdNotifier = ref.watch(birdProvider.notifier);
     final bird = ref.watch(birdProvider);
-    final pipes = ref.watch(pipeListProvider);
     final pipeListNotifier = ref.read(pipeListProvider.notifier);
     final timerNotifier = ref.watch(timerProvider.notifier);
 
     final pipePassed = useState(false);
+    final bestScore = ref.watch(bestScoreProvider);
+    final bestScoreNotifier = ref.read(bestScoreProvider.notifier);
     final width = MediaQuery.of(context).size.width;
 
     void showGameOverDialog() {
@@ -79,9 +82,9 @@ class GamePage extends HookConsumerWidget {
         for (int i = 0; i < newPipes.length; i++) {
           if (newPipes[i].position < -0.37 && newPipes[i].position > -0.63) {
             birdNotifier.increaseScore();
-            // if (bird.score > scoreRecord) {
-            //   // scoreRecord = score;
-            // }
+            if (newBird.score + 1 > bestScore) {
+              bestScoreNotifier.setBest(newBird.score + 1);
+            }
             pipePassed.value = true;
             break;
           }
