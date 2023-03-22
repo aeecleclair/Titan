@@ -28,11 +28,14 @@ class PipeListNotifier extends StateNotifier<List<Pipe>> {
   bool birdHitPipe(width, height, bird) {
     for (int pipeNumber = 0; pipeNumber < state.length; pipeNumber++) {
       if (state[pipeNumber].position - 80 / width <= -0.45 &&
-          state[pipeNumber].position + 80 / width >= -0.65 &&
-          (bird.birdPosition >= 1 - (state[pipeNumber].height) / height ||
-              bird.birdPosition <=
-                  -1 + (height - state[pipeNumber].height - 200) / height)) {
-        return true;
+          state[pipeNumber].position + 80 / width >= -0.65) {
+        if (bird.birdPosition + bird.birdSize / (2 * height) >=
+                1 - 2 * state[pipeNumber].height / height ||
+            bird.birdPosition - bird.birdSize / (2 * height) <=
+                1 - 2 * (state[pipeNumber].height + 200) / height) {
+          return true;
+        }
+        return false;
       }
     }
     return false;

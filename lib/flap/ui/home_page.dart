@@ -87,8 +87,7 @@ class GamePage extends HookConsumerWidget {
         }
       }
       pipeListNotifier.resetPipe();
-      if (newBird.birdPosition > 1 ||
-          newBird.birdPosition < -1 ||
+      if ((newBird.birdPosition).abs() > 1 ||
           pipeListNotifier.birdHitPipe(width, height, newBird)) {
         timerNotifier.stop();
         showGameOverDialog();
