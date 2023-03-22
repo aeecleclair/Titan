@@ -17,7 +17,7 @@ class PipeDisplay extends StatelessWidget {
     return Container(
       alignment: Alignment(xPipeAlignment, isBottomPipe ? 1 : -1),
       child: Container(
-        color: isBottomPipe ? Colors.green : Colors.red,
+        color: Colors.green,
         height: pipeHeight,
         width: 80,
       ),
