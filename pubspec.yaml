@@ -86,5 +86,6 @@ flutter:
     - assets/web/Tombola.webp
     - assets/web/Vote.webp
     - assets/images/bird_2.png
+    - assets/images/pipe.png
 
   uses-material-design: true
