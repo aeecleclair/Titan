@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class PipeDisplay extends StatelessWidget {
@@ -15,12 +17,22 @@ class PipeDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment(xPipeAlignment, isBottomPipe ? 1 : -1),
-      child: Container(
-        color: Colors.green,
-        height: pipeHeight,
-        width: 80,
-      ),
-    );
+        alignment: Alignment(xPipeAlignment, isBottomPipe ? 1 : -1),
+        child: SizedBox(
+          height: pipeHeight,
+          width: 80,
+          child: FittedBox(
+            alignment:
+                isBottomPipe ? Alignment.topCenter : Alignment.bottomCenter,
+            fit: BoxFit.fitWidth,
+            clipBehavior: Clip.hardEdge,
+            child: Transform.rotate(
+              angle: isBottomPipe ? 0 : pi,
+              child: Image.asset(
+                "images/pipe.png",
+              ),
+            ),
+          ),
+        ));
   }
 }
