@@ -10,7 +10,7 @@ class PipeImageNotifier extends StateNotifier<Uint8List> {
   }
 
   Future<void> getPipeImage() async {
-    final image = await rootBundle.load("images/pipe.png");
+    final image = await rootBundle.load("assets/images/pipe.png");
     external_image.Image? img =
         external_image.decodeImage(image.buffer.asUint8List());
     external_image.Image resized = external_image.copyResize(img!, width: 80);

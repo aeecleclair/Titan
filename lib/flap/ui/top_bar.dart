@@ -37,8 +37,10 @@ class TopBar extends HookConsumerWidget {
                             break;
                         }
                       },
-                      icon: const HeroIcon(
-                        HeroIcons.bars3BottomLeft,
+                      icon: HeroIcon(
+                        page == FlapPage.main
+                            ? HeroIcons.bars3BottomLeft
+                            : HeroIcons.chevronLeft,
                         color: Colors.white,
                         size: 30,
                       ));
@@ -51,11 +53,10 @@ class TopBar extends HookConsumerWidget {
                         fontSize: 40,
                         fontWeight: FontWeight.w700,
                         color: Colors.white))),
-            SizedBox(
-              width: 70,
-              child: Builder(
-                builder: (BuildContext appBarContext) {
-                  return IconButton(
+            page == FlapPage.main
+                ? SizedBox(
+                    width: 70,
+                    child: IconButton(
                       onPressed: () {
                         pageNotifier.setFlapPage(FlapPage.leaderBoard);
                       },
@@ -63,10 +64,11 @@ class TopBar extends HookConsumerWidget {
                         HeroIcons.trophy,
                         color: Colors.white,
                         size: 30,
-                      ));
-                },
-              ),
-            ),
+                      ),
+                    ))
+                : const SizedBox(
+                    width: 70,
+                  ),
           ],
         ),
       ],

@@ -23,7 +23,6 @@ class GamePage extends HookConsumerWidget {
     final gameStarted = ref.watch(gameStateProvider);
     final gameStartNotifier = ref.read(gameStateProvider.notifier);
     final birdNotifier = ref.watch(birdProvider.notifier);
-    final bird = ref.watch(birdProvider);
     final pipeListNotifier = ref.read(pipeListProvider.notifier);
     final timerNotifier = ref.watch(timerProvider.notifier);
 
