@@ -109,6 +109,44 @@ abstract class LocalNotificationService {
         payload: payload);
   }
 
+  Future<void> groupNotifications() async {
+    AndroidNotificationChannelGroup channelGroup =
+        const AndroidNotificationChannelGroup('com.my.app.alert1', 'mychannel1');
+    await _localNotificationService
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannelGroup(channelGroup);
+    List<ActiveNotification>? activeNotifications =
+        await _localNotificationService
+            .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin>()
+            ?.getActiveNotifications();
+
+    if (activeNotifications != null && activeNotifications.isNotEmpty) {
+      List<String> lines =
+          activeNotifications.map((e) => e.title.toString()).toList();
+      InboxStyleInformation inboxStyleInformation = InboxStyleInformation(
+        lines,
+        contentTitle: "${activeNotifications.length - 1} Updates",
+        summaryText: "${activeNotifications.length - 1} Updates",
+      );
+      AndroidNotificationDetails groupNotificationDetails =
+          AndroidNotificationDetails(
+        channelGroup.id,
+        channelGroup.name,
+        channelDescription: channelGroup.description,
+        styleInformation: inboxStyleInformation,
+        setAsGroupSummary: true,
+        groupKey: channelGroup.id,
+        // onlyAlertOnce: true,
+      );
+      NotificationDetails groupNotificationDetailsPlatformSpefics =
+          NotificationDetails(android: groupNotificationDetails);
+      await _localNotificationService.show(
+          0, '', '', groupNotificationDetailsPlatformSpefics);
+    }
+  }
+
   Future<List<PendingNotificationRequest>> pendingNotificationRequests() async {
     return await _localNotificationService.pendingNotificationRequests();
   }
