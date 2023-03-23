@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/flap/ui/home_page.dart';
+import 'package:myecl/flap/ui/page_switcher.dart';
 import 'package:myecl/flap/ui/top_bar.dart';
 
 class FlapHomePage extends HookConsumerWidget {
@@ -30,7 +31,7 @@ class FlapHomePage extends HookConsumerWidget {
             ignoring: controller.isCompleted,
             child: Stack(
               children: [
-                const GamePage(),
+                const PageSwitcher(),
                 TopBar(
                   controllerNotifier: controllerNotifier,
                 ),
