@@ -12,7 +12,9 @@ class BirdImageNotifier extends StateNotifier<Uint8List> {
 
   Future<void> getBirdImage() async {
     final image = await rootBundle.load("images/bird_2.png");
-    state = image.buffer.asUint8List();
+    external_image.Image? img = external_image.decodeImage(image.buffer.asUint8List());
+    external_image.Image resized = external_image.copyResize(img!, width: 50);
+    state = Uint8List.fromList(external_image.encodePng(resized));
   }
 
   Future<Uint8List> switchColor(MaterialColor color) async {
