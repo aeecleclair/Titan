@@ -31,7 +31,8 @@ class PipeDisplay extends HookConsumerWidget {
             clipBehavior: Clip.hardEdge,
             child: Transform.rotate(
               angle: isBottomPipe ? 0 : pi,
-              child: Image.memory(pipeImage),
+              child:
+                  pipeImage.isNotEmpty ? Image.memory(pipeImage) : Container(),
             ),
           ),
         ));
