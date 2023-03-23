@@ -31,6 +31,7 @@ dependencies:
   hooks_riverpod: ^2.1.1
   http: ^0.13.4
   http_parser: ^4.0.2
+  image: ^4.0.15
   image_cropper: ^3.0.1
   image_picker: ^0.8.6
   image_picker_ios: ^0.8.6+7
@@ -60,6 +61,8 @@ flutter:
   assets:
     - .env
     - assets/images/logo.png
+    - assets/images/bird_2.png
+    - assets/images/pipe.png
 
   uses-material-design: true
 
