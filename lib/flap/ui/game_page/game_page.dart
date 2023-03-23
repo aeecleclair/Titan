@@ -9,11 +9,11 @@ import 'package:myecl/flap/providers/current_best_score.dart';
 import 'package:myecl/flap/providers/game_loop_provider.dart';
 import 'package:myecl/flap/providers/game_state_provider.dart';
 import 'package:myecl/flap/providers/pipe_list_provider.dart';
-import 'package:myecl/flap/providers/user_score_provider.dart';
-import 'package:myecl/flap/ui/bird.dart';
-import 'package:myecl/flap/ui/pipe_handler.dart';
-import 'package:myecl/flap/ui/score.dart';
-import 'package:myecl/flap/ui/start_screen.dart';
+import 'package:myecl/flap/ui/game_page/pipe_handler.dart';
+import 'package:myecl/flap/ui/game_page/score.dart';
+import 'package:myecl/flap/ui/game_page/start_screen.dart';
+
+import 'bird.dart';
 
 class GamePage extends HookConsumerWidget {
   const GamePage({Key? key}) : super(key: key);
