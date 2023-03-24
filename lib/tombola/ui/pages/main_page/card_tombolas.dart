@@ -28,16 +28,6 @@ class TombolaWidget extends HookConsumerWidget {
             child: Container(
           height: 100,
           margin: const EdgeInsets.symmetric(vertical: 5),
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: TombolaColorConstants.gradient2.withOpacity(0.3),
-                  blurRadius: 5,
-                  blurStyle: BlurStyle.outer,
-                ),
-              ],
-              borderRadius: BorderRadius.circular(10)),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Image.asset("assets/images/logo.png"),
@@ -48,7 +38,7 @@ class TombolaWidget extends HookConsumerWidget {
                   Text(
                     raffle.name,
                     style: const TextStyle(
-                        color: TombolaColorConstants.darkText, fontSize: 25),
+                        color: TombolaColorConstants.textDark, fontSize: 25),
                   ),
                   const SizedBox(
                     height: 10,
@@ -56,7 +46,7 @@ class TombolaWidget extends HookConsumerWidget {
                   const Text(
                     TombolaTextConstants.seeRaffleDetail,
                     style: TextStyle(
-                        color: TombolaColorConstants.darkText, fontSize: 20),
+                        color: TombolaColorConstants.textDark, fontSize: 20),
                   ),
                 ]),
           ]),

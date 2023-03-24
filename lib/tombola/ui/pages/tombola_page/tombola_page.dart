@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/providers/user_amount_provider.dart';
+import 'package:myecl/tombola/providers/user_amount_provider.dart';
 import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
@@ -21,11 +21,22 @@ class TombolaInfoPage extends HookConsumerWidget {
     return ListView(children: [
       Container(
         margin: const EdgeInsets.only(left: 30, top: 20),
-        child: Text(raffle.name,
-            style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: TombolaColorConstants.gradient1)),
+        child: ShaderMask(
+            blendMode: BlendMode.srcIn,
+            shaderCallback: (bounds) => const RadialGradient(
+                  colors: [
+                    TombolaColorConstants.gradient1,
+                    TombolaColorConstants.gradient2
+                  ],
+                  radius: 6.0,
+                  tileMode: TileMode.mirror,
+                  center: Alignment.topLeft,
+                ).createShader(bounds),
+            child: Text(raffle.name,
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ))),
       ),
       Container(
           margin: const EdgeInsets.only(left: 30, top: 20),
