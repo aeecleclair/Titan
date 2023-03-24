@@ -54,7 +54,7 @@ class TombolaInfoPage extends HookConsumerWidget {
                     child: Text(TombolaTextConstants.noTicketBuyable),
                   )
                 : SizedBox(
-                    height: 210,
+                    height: 190,
                     child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -87,8 +87,8 @@ class TombolaInfoPage extends HookConsumerWidget {
                   )
                 : Column(children: [
                     Container(
-                        padding: const EdgeInsets.only(
-                            bottom: 10, left: 30, right: 30, top: 20),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 30),
                         child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
