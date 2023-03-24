@@ -23,11 +23,14 @@ class TombolaInfoPage extends HookConsumerWidget {
         margin: const EdgeInsets.only(left: 30, top: 20),
         child: ShaderMask(
             blendMode: BlendMode.srcIn,
-            shaderCallback: (bounds) => RadialGradient(
-                  colors: [TombolaColorConstants.gradient1, Colors.purple],
-                  radius: 2.0,
+            shaderCallback: (bounds) => const RadialGradient(
+                  colors: [
+                    TombolaColorConstants.gradient1,
+                    TombolaColorConstants.gradient2
+                  ],
+                  radius: 6.0,
                   tileMode: TileMode.mirror,
-                  center: Alignment.center,
+                  center: Alignment.topLeft,
                 ).createShader(bounds),
             child: Text(raffle.name,
                 style: const TextStyle(
