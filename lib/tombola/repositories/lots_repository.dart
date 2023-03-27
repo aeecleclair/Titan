@@ -1,4 +1,5 @@
 import 'package:myecl/tombola/class/lot.dart';
+import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class LotRepository extends Repository {
@@ -7,8 +8,7 @@ class LotRepository extends Repository {
   final ext = "tombola/lots";
 
   Future<List<Lot>> getLotList() async {
-    return List<Lot>.from(
-        (await getList()).map((x) => Lot.fromJson(x)));
+    return List<Lot>.from((await getList()).map((x) => Lot.fromJson(x)));
   }
 
   Future<Lot> getLot(String userId) async {
@@ -27,7 +27,8 @@ class LotRepository extends Repository {
     return await delete("/$lotId");
   }
 
-  Future<bool> drawLot(String lotId) async {
-    return await update({}, "/$lotId/draw");
+  Future<Ticket> drawLot(Ticket lot) async {
+    return Ticket.fromJson(
+        await create(lot.toJson(), suffix: "${lot.id}/draw"));
   }
 }

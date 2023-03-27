@@ -12,7 +12,7 @@ class Ticket {
   late final String typeId;
   late final String userId;
   late final String groupId;
-  late final String winningLot;
+  late final String? winningLot;
   late final String id;
   late final String raffleId;
   late final int unitPrice;
@@ -56,7 +56,7 @@ class Ticket {
           typeId: typeId ?? this.typeId,
           userId: userId ?? this.userId,
           groupId: groupId ?? this.groupId,
-          winningLot: winningLot ?? this.winningLot,
+          winningLot: winningLot,
           id: id ?? this.id,
           raffleId: raffleId ?? this.raffleId,
           unitPrice: unitPrice ?? this.unitPrice,
@@ -66,7 +66,7 @@ class Ticket {
     typeId = '';
     userId = '';
     groupId = '';
-    winningLot = '';
+    winningLot = null;
     id = '';
     raffleId = '';
     unitPrice = 0;
