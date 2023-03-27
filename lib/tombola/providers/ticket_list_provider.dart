@@ -6,7 +6,7 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 
 class TicketsListNotifier extends ListNotifier<Ticket> {
   final TicketRepository _ticketsRepository = TicketRepository();
-  late final String raffleId;
+  late String raffleId;
   TicketsListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _ticketsRepository.setToken(token);

@@ -49,7 +49,6 @@ class LotCard extends StatelessWidget {
           padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
               AutoSizeText(lot.name,
