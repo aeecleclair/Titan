@@ -4,20 +4,15 @@ import 'package:myecl/tools/repository/repository.dart';
 class LotRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "tombola/lots/";
+  final ext = "tombola/lots";
 
   Future<List<Lot>> getLotList() async {
     return List<Lot>.from(
         (await getList()).map((x) => Lot.fromJson(x)));
   }
 
-  Future<List<Lot>> getLotListbyRaffle(String raffleId) async {
-    return List<Lot>.from(
-        (await getList(suffix: "$raffleId/")).map((x) => Lot.fromJson(x)));
-  }
-
   Future<Lot> getLot(String userId) async {
-    return Lot.fromJson(await getOne(userId, suffix: "/Lot"));
+    return Lot.fromJson(await getOne(userId, suffix: "/lot"));
   }
 
   Future<Lot> createLot(Lot lot) async {
@@ -25,10 +20,14 @@ class LotRepository extends Repository {
   }
 
   Future<bool> updateLot(Lot lot) async {
-    return await update(lot.toJson(), lot.id);
+    return await update(lot.toJson(), "/${lot.id}");
   }
 
   Future<bool> deleteLot(String lotId) async {
-    return await delete(lotId);
+    return await delete("/$lotId");
+  }
+
+  Future<bool> drawLot(String lotId) async {
+    return await update({}, "/$lotId/draw");
   }
 }

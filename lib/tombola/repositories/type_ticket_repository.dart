@@ -4,12 +4,13 @@ import 'package:myecl/tools/repository/repository.dart';
 class TypeTicketRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "tombola/type-tickets/";
+  final ext = "tombola/type-tickets";
 
   Future<List<TypeTicket>> getTypeTicketsList(String raffleId) async {
-    return List<TypeTicket>.from((await getList(suffix: "$raffleId/"))
+    return List<TypeTicket>.from((await getList(suffix: "/$raffleId/"))
         .map((x) => TypeTicket.fromJson(x)));
   }
+
 
   Future<TypeTicket> getTypeTicket(String id) async {
     return TypeTicket.fromJson(await getOne(id));
@@ -20,10 +21,10 @@ class TypeTicketRepository extends Repository {
   }
 
   Future<bool> updateTypeTicket(TypeTicket ticket) async {
-    return await update(ticket.toJson(), "TODO");
+    return await update(ticket.toJson(), "/${ticket.id}");
   }
 
   Future<bool> deleteTypeTicket(String id) async {
-    return await delete(id);
+    return await delete("/$id");
   }
 }
