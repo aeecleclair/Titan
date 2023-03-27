@@ -35,4 +35,8 @@ class TicketRepository extends Repository {
   Future<bool> deleteTicket(String id) async {
     return await delete("/$id");
   }
+
+  Future<bool> buyTicket(Ticket ticket, String userId) async {
+    return await create(ticket, suffix: "/buy");
+  }
 }

@@ -187,9 +187,9 @@ class LotCard extends StatelessWidget {
                                   )),
                               onTap: onDelete,
                               child: Container(
-                                width: 90,
                                 height: 40,
-                                padding: const EdgeInsets.all(7),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 7, horizontal: 12),
                                 decoration: BoxDecoration(
                                   gradient: const LinearGradient(
                                     colors: [
@@ -212,7 +212,7 @@ class LotCard extends StatelessWidget {
                                   children: const [
                                     HeroIcon(HeroIcons.envelopeOpen,
                                         color: Colors.white),
-                                    SizedBox(width: 10),
+                                    SizedBox(width: 15),
                                     Text("Tirer",
                                         style: TextStyle(
                                             color: Colors.white,

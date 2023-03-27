@@ -15,7 +15,7 @@ class TicketUI extends HookConsumerWidget {
       required this.typeTicket,
       required this.onEdit,
       required this.onDelete,
-      this.showButton = true})
+      required this.showButton})
       : super(key: key);
 
   @override
@@ -39,22 +39,26 @@ class TicketUI extends HookConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(
-              "${typeTicket.price} €",
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: showButton ? 5 : 10,
-            ),
-            Text(
-              "${typeTicket.value} tickets",
-              style: TextStyle(
-                  color: Colors.white.withOpacity(0.8),
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
+            Column(
+              children: [
+                Text(
+                  "${typeTicket.price} €",
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: showButton ? 5 : 10,
+                ),
+                Text(
+                  "${typeTicket.value} tickets",
+                  style: TextStyle(
+                      color: Colors.white.withOpacity(0.8),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
             if (showButton) const Spacer(),
             if (showButton)
