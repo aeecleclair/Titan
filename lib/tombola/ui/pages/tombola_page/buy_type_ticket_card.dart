@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
+import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/confirm_payment.dart';
@@ -16,15 +17,17 @@ class BuyTypeTicket extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
         onTap: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return ConfirmPaymentDialog(
-                raffle: raffle,
-                typeTicket: typeTicket,
-              );
-            },
-          );
+          if (raffle.raffleStatusType == RaffleStatusType.open) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return ConfirmPaymentDialog(
+                  raffle: raffle,
+                  typeTicket: typeTicket,
+                );
+              },
+            );
+          }
         },
         child: Container(
           width: 150,
@@ -94,14 +97,32 @@ class BuyTypeTicket extends HookConsumerWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   width: 150,
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                  child: const FittedBox(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors:
+                              raffle.raffleStatusType != RaffleStatusType.open
+                                  ? [
+                                      TombolaColorConstants.redGradient1,
+                                      TombolaColorConstants.redGradient2,
+                                    ]
+                                  : [Colors.white, Colors.white],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight),
+                      borderRadius: const BorderRadius.all(Radius.circular(15))),
+                  child: FittedBox(
                       fit: BoxFit.fitWidth,
-                      child: Text("Prendre ce ticket",
+                      child: Text(
+                          raffle.raffleStatusType == RaffleStatusType.open
+                              ? "Acheter ce ticket"
+                              : raffle.raffleStatusType ==
+                                      RaffleStatusType.locked
+                                  ? "Tombola fermée"
+                                  : "Pas encore disponible",
                           style: TextStyle(
-                              color: TombolaColorConstants.gradient2,
+                              color: raffle.raffleStatusType !=
+                                      RaffleStatusType.open
+                                  ? Colors.white
+                                  : TombolaColorConstants.gradient2,
                               fontWeight: FontWeight.bold)))),
             ],
           ),
