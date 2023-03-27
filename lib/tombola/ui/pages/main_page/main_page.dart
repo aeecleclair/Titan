@@ -68,7 +68,6 @@ class MainPage extends HookConsumerWidget {
                                           horizontal: 10, vertical: 10),
                                       child: TicketWidget(
                                         ticket: tickets[index - 1],
-                                        raffle: tickets[index - 1].typeTicket.raffle,
                                       ));
                                 }));
                   },

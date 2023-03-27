@@ -1,19 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tombola/ui/pages/main_page/ticket_card_background.dart';
 
 class TicketWidget extends HookConsumerWidget {
   final Ticket ticket;
-  final Raffle raffle;
-  const TicketWidget({Key? key, required this.ticket, required this.raffle})
+  const TicketWidget({Key? key, required this.ticket})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isWinningTicket = ticket.winningLot != "";
+    final isWinningTicket = ticket.winningLot != null;
     return Stack(children: [
       TicketCardBackground(
           isWinningTicket: isWinningTicket,
@@ -66,7 +64,7 @@ class TicketWidget extends HookConsumerWidget {
                   height: 10,
                 ),
                 AutoSizeText(
-                  raffle.name,
+                  ticket.typeTicket.raffle.name,
                   maxLines: 2,
                   textAlign: TextAlign.center,
                   style: TextStyle(

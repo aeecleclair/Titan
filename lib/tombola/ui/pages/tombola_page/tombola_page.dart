@@ -1,6 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/user_amount_provider.dart';
 import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
@@ -73,8 +72,7 @@ class TombolaInfoPage extends HookConsumerWidget {
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 10),
                               child: BuyTypeTicket(
-                                  typeTicket: typeTickets[index - 1],
-                                  raffle: raffle));
+                                  typeTicket: typeTickets[index - 1]));
                         }));
           },
           loading: () => const Center(

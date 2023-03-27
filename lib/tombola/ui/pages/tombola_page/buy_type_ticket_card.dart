@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/tools/constants.dart';
@@ -8,21 +7,19 @@ import 'package:myecl/tombola/ui/pages/tombola_page/confirm_payment.dart';
 
 class BuyTypeTicket extends HookConsumerWidget {
   final TypeTicket typeTicket;
-  final Raffle raffle;
   const BuyTypeTicket(
-      {Key? key, required this.typeTicket, required this.raffle})
+      {Key? key, required this.typeTicket})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
         onTap: () {
-          if (raffle.raffleStatusType == RaffleStatusType.open) {
+          if (typeTicket.raffle.raffleStatusType == RaffleStatusType.open) {
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return ConfirmPaymentDialog(
-                  raffle: raffle,
                   typeTicket: typeTicket,
                 );
               },
@@ -100,7 +97,7 @@ class BuyTypeTicket extends HookConsumerWidget {
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                           colors:
-                              raffle.raffleStatusType != RaffleStatusType.open
+                              typeTicket.raffle.raffleStatusType != RaffleStatusType.open
                                   ? [
                                       TombolaColorConstants.redGradient1,
                                       TombolaColorConstants.redGradient2,
@@ -112,14 +109,14 @@ class BuyTypeTicket extends HookConsumerWidget {
                   child: FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Text(
-                          raffle.raffleStatusType == RaffleStatusType.open
+                          typeTicket.raffle.raffleStatusType == RaffleStatusType.open
                               ? "Acheter ce ticket"
-                              : raffle.raffleStatusType ==
+                              : typeTicket.raffle.raffleStatusType ==
                                       RaffleStatusType.locked
                                   ? "Tombola fermée"
                                   : "Pas encore disponible",
                           style: TextStyle(
-                              color: raffle.raffleStatusType !=
+                              color: typeTicket.raffle.raffleStatusType !=
                                       RaffleStatusType.open
                                   ? Colors.white
                                   : TombolaColorConstants.gradient2,
