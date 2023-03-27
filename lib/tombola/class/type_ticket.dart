@@ -2,18 +2,18 @@ class TypeTicket {
   TypeTicket({
     required this.raffleId,
     required this.price,
-    required this.nbTicket,
+    required this.value,
     required this.id,
   });
   late final String raffleId;
   late final int price;
-  late final int nbTicket;
+  late final int value;
   late final String id;
 
   TypeTicket.fromJson(Map<String, dynamic> json) {
     raffleId = json['raffle_id'];
     price = json['price'];
-    nbTicket = json['nb_ticket'];
+    value = json['nb_valueticket'];
     id = json['id'];
   }
 
@@ -21,7 +21,7 @@ class TypeTicket {
     final data = <String, dynamic>{};
     data['raffle_id'] = raffleId;
     data['price'] = price;
-    data['nb_ticket'] = nbTicket;
+    data['value'] = value;
     data['id'] = id;
     return data;
   }
@@ -29,24 +29,24 @@ class TypeTicket {
   TypeTicket copyWith({
     String? raffleId,
     int? price,
-    int? nbTicket,
+    int? value,
     String? id,
   }) =>
       TypeTicket(
           raffleId: raffleId ?? this.raffleId,
           price: price ?? this.price,
-          nbTicket: nbTicket ?? this.nbTicket,
+          value: value ?? this.value,
           id: id ?? this.id);
 
   TypeTicket.empty() {
     raffleId = '';
     price = 0;
-    nbTicket = 0;
+    value = 0;
     id = '';
   }
 
   @override
   String toString() {
-    return 'TypeTicket(raffleId: $raffleId, price: $price, nbTicket: $nbTicket, id: $id)';
+    return 'TypeTicket(raffleId: $raffleId, price: $price, value: $value, id: $id)';
   }
 }

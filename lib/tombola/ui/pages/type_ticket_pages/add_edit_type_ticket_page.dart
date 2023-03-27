@@ -22,7 +22,7 @@ class AddEditTypeTicketPage extends HookConsumerWidget {
     final typeTicket = ref.watch(typeTicketProvider);
     final isEdit = typeTicket.id != TypeTicket.empty().id;
     final quantity = useTextEditingController(
-        text: isEdit ? typeTicket.nbTicket.toString() : "");
+        text: isEdit ? typeTicket.value.toString() : "");
     final price = useTextEditingController(
         text: isEdit ? typeTicket.price.toString() : "");
 
@@ -118,7 +118,7 @@ class AddEditTypeTicketPage extends HookConsumerWidget {
                                 await tokenExpireWrapper(ref, () async {
                                   final newTypeTicket = typeTicket.copyWith(
                                       price: int.parse(price.text),
-                                      nbTicket: int.parse(quantity.text));
+                                      value: int.parse(quantity.text));
                                   final typeTicketNotifier = ref
                                       .watch(typeTicketsListProvider.notifier);
                                   final value = isEdit

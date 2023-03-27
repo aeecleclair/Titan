@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
+import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/is_tombola_admin.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
@@ -93,12 +94,16 @@ class MainPage extends HookConsumerWidget {
                       final pastRaffles = <Raffle>[];
                       final onGoingRaffles = <Raffle>[];
                       for (final tombola in tombolas) {
-                        if (tombola.startDate.isAfter(DateTime.now())) {
-                          incommingRaffles.add(tombola);
-                        } else if (tombola.endDate.isBefore(DateTime.now())) {
-                          pastRaffles.add(tombola);
-                        } else {
-                          onGoingRaffles.add(tombola);
+                        switch (tombola.raffleStatusType) {
+                          case RaffleStatusType.creation:
+                            incommingRaffles.add(tombola);
+                            break;
+                          case RaffleStatusType.open:
+                            onGoingRaffles.add(tombola);
+                            break;
+                          case RaffleStatusType.locked:
+                            pastRaffles.add(tombola);
+                            break;
                         }
                       }
                       return Column(

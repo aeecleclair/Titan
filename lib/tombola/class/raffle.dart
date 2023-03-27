@@ -1,24 +1,24 @@
+import 'package:myecl/tombola/class/raffle_status_type.dart';
+import 'package:myecl/tombola/tools/functions.dart';
+
 class Raffle {
   Raffle({
     required this.name,
-    required this.startDate,
-    required this.endDate,
     required this.groupId,
+    required this.raffleStatusType,
     required this.id,
     this.description,
   });
   late final String name;
-  late final DateTime startDate;
-  late final DateTime endDate;
   late final String groupId;
+  late final RaffleStatusType raffleStatusType;
   late final String id;
   late final String? description;
 
   Raffle.fromJson(Map<String, dynamic> json) {
     name = json['name'];
-    startDate = DateTime.parse(json['start_date']);
-    endDate = DateTime.parse(json['end_date']);
     groupId = json['group_id'];
+    raffleStatusType = stringToRaffleStatusType(json['raffles_status_type']);
     id = json['id'];
     description = json['description'];
   }
@@ -26,9 +26,8 @@ class Raffle {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
-    data['start_date'] = startDate;
-    data['end_date'] = endDate;
     data['group_id'] = groupId;
+    data['raffles_status_type'] = raffleStatusTypeToString(raffleStatusType);
     data['id'] = id;
     data['description'] = description;
     return data;
@@ -36,31 +35,28 @@ class Raffle {
 
   Raffle copyWith({
     String? name,
-    DateTime? startDate,
-    DateTime? endDate,
     String? groupId,
+    RaffleStatusType? raffleStatusType,
     String? id,
     String? description,
   }) =>
       Raffle(
           name: name ?? this.name,
-          startDate: startDate ?? this.startDate,
-          endDate: endDate ?? this.endDate,
           groupId: groupId ?? this.groupId,
+          raffleStatusType: raffleStatusType ?? this.raffleStatusType,
           id: id ?? this.id,
           description: description);
 
   Raffle.empty() {
     name = '';
-    startDate = DateTime.now();
-    endDate = DateTime.now();
     groupId = '';
+    raffleStatusType = RaffleStatusType.creation;
     id = '';
     description = '';
   }
 
   @override
   String toString() {
-    return 'Raffle{name: $name, startDate: $startDate, endDate: $endDate, groupId: $groupId, id: $id, description: $description}';
+    return 'Raffle(name: $name, groupId: $groupId, raffleStatusType: $raffleStatusType, id: $id, description: $description)';
   }
 }

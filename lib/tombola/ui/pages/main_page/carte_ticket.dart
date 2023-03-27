@@ -44,7 +44,7 @@ class TicketWidget extends HookConsumerWidget {
                       ),
                     ),
                     Text(
-                      "${ticket.price} €",
+                      "${ticket.unitPrice} €",
                       style: TextStyle(
                           color: isWinningTicket ? Colors.black : Colors.white,
                           fontSize: 20,

@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/tombola/class/raffle_status_type.dart';
 
-Color generateColor(String uuid) {
-  int hash = 0;
-  for (int i = 0; i < uuid.length; i++) {
-    hash = 20 * hash + uuid.codeUnitAt(i);
+RaffleStatusType stringToRaffleStatusType(String raffleStatusType) {
+  switch (raffleStatusType) {
+    case 'creation':
+      return RaffleStatusType.creation;
+    case 'open':
+      return RaffleStatusType.open;
+    case 'locked':
+      return RaffleStatusType.locked;
+    default:
+      return RaffleStatusType.creation;
   }
-  Color color = Color(hash & 0xFFFFFF).withOpacity(1.0);
-  double luminance = color.computeLuminance();
-  return luminance < 0.5 ? color : invert(color);
 }
 
-Color invert(Color color) {
-  return Color.fromARGB(
-      color.alpha, 255 - color.red, 255 - color.green, 255 - color.blue);
+String raffleStatusTypeToString(RaffleStatusType raffleStatusType) {
+  switch (raffleStatusType) {
+    case RaffleStatusType.creation:
+      return 'creation';
+    case RaffleStatusType.open:
+      return 'open';
+    case RaffleStatusType.locked:
+      return 'locked';
+    default:
+      return 'creation';
+  }
 }

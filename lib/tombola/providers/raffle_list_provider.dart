@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/raffle.dart';
+import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/repositories/raffle_repositories.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -19,24 +20,21 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
       Raffle(
           id: '1',
           name: 'Tombola Soli Sida',
-          startDate: DateTime.now().subtract(const Duration(days: 15)),
+          raffleStatusType: RaffleStatusType.creation,
           groupId: '',
-          endDate: DateTime.now().add(const Duration(days: 2)),
           description: "SDRFTGHYUJIKRTJRSTHEQRG"),
       Raffle(
           id: '2',
           name: 'Tombola Test',
-          startDate: DateTime.now().subtract(const Duration(days: 1)),
+          raffleStatusType: RaffleStatusType.open,
           groupId: '',
-          endDate: DateTime.now().add(const Duration(days: 20)),
           description:
               "Facilis error amet. Quia sint aspernatur aut. Asperiores expedita dolorem."),
       Raffle(
           id: 'azertyuiop',
           name: 'Tombola Test2',
-          startDate: DateTime.now().add(const Duration(days: 10)),
+          raffleStatusType: RaffleStatusType.locked,
           groupId: '',
-          endDate: DateTime.now().add(const Duration(days: 32)),
           description:
               "Dolorum et consectetur. Maxime asperiores ratione delectus labore. Officiis mollitia consequatur qui et voluptas. Aut aliquam et tempore rerum saepe quam."),
     ]);

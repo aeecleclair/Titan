@@ -82,7 +82,7 @@ class BuyTypeTicket extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                "${typeTicket.nbTicket} tickets",
+                "${typeTicket.value} tickets",
                 style: TextStyle(
                     color: Colors.white.withOpacity(0.8),
                     fontSize: 18,

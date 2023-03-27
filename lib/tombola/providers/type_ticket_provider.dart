@@ -23,12 +23,12 @@ class TypeTicketsListNotifier extends ListNotifier<TypeTicket> {
     // return await loadList(
     //     () async => _typeTicketsRepository.getTypeTicketsList(raffleId));
     return state = AsyncData([
-      TypeTicket(raffleId: "1", price: 1, nbTicket: 1, id: "1"),
-      TypeTicket(raffleId: "1", price: 2, nbTicket: 3, id: "2"),
-      TypeTicket(raffleId: "1", price: 5, nbTicket: 10, id: "3"),
-      TypeTicket(raffleId: "2", price: 10, nbTicket: 25, id: "4"),
-      TypeTicket(raffleId: "2", price: 20, nbTicket: 50, id: "5"),
-      TypeTicket(raffleId: "2", price: 1, nbTicket: 1, id: "6"),
+      TypeTicket(raffleId: "1", price: 1, value: 1, id: "1"),
+      TypeTicket(raffleId: "1", price: 2, value: 3, id: "2"),
+      TypeTicket(raffleId: "1", price: 5, value: 10, id: "3"),
+      TypeTicket(raffleId: "2", price: 10, value: 25, id: "4"),
+      TypeTicket(raffleId: "2", price: 20, value: 50, id: "5"),
+      TypeTicket(raffleId: "2", price: 1, value: 1, id: "6"),
     ]);
   }
 
@@ -40,8 +40,8 @@ class TypeTicketsListNotifier extends ListNotifier<TypeTicket> {
     return delete(
       _typeTicketsRepository.deleteTypeTicket,
       (typeTickets, t) =>
-          typeTickets..removeWhere((e) => e.nbTicket == t.nbTicket),
-      "TODO",
+          typeTickets..removeWhere((e) => e.value == t.value),
+      typeTicket.id,
       typeTicket,
     );
   }
@@ -50,7 +50,7 @@ class TypeTicketsListNotifier extends ListNotifier<TypeTicket> {
     return update(
         _typeTicketsRepository.updateTypeTicket,
         (typeTickets, t) => typeTickets
-          ..[typeTickets.indexWhere((e) => e.nbTicket == t.nbTicket)] = t,
+          ..[typeTickets.indexWhere((e) => e.value == t.value)] = t,
         typeTicket);
   }
 }
