@@ -7,7 +7,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserTicketListNotifier extends ListNotifier<Ticket> {
   final TicketRepository _ticketsRepository = TicketRepository();
-  late final String userId;
+  late String userId;
   UserTicketListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _ticketsRepository.setToken(token);
