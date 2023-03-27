@@ -2,15 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 
 class ConfirmPaymentDialog extends HookConsumerWidget {
   final TypeTicket typeTicket;
-  final Raffle raffle;
   const ConfirmPaymentDialog(
-      {Key? key, required this.typeTicket, required this.raffle})
+      {Key? key, required this.typeTicket})
       : super(key: key);
 
   @override
@@ -84,7 +82,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: AutoSizeText(
-                        raffle.name,
+                        typeTicket.raffle.name,
                         maxLines: 2,
                         textAlign: TextAlign.center,
                         style: const TextStyle(

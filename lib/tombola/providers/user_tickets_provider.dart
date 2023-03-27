@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tombola/class/raffle.dart';
+import 'package:myecl/tombola/class/lot.dart';
 import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/repositories/tickets_repository.dart';
@@ -31,7 +30,7 @@ class UserTicketListNotifier extends ListNotifier<Ticket> {
         typeTicket: TypeTicket.empty(),
         unitPrice: 3,
         user: SimpleUser.empty(),
-        winningLot: null,
+        winningLot: Lot.empty(),
       ),
       Ticket(
         id: "2",

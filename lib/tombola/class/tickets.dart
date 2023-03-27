@@ -1,6 +1,4 @@
-import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/tombola/class/lot.dart';
-import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/user/class/list_users.dart';
 
