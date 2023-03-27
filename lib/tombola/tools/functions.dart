@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 
 RaffleStatusType stringToRaffleStatusType(String raffleStatusType) {

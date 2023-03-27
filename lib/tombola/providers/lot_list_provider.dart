@@ -30,20 +30,20 @@ class LotListNotifier extends ListNotifier<Lot> {
   }
 
   Future<bool> addLot(Lot lot) async {
-    return add(_lotRepository.createLot, lot);
+    return await add(_lotRepository.createLot, lot);
   }
 
   Future<bool> deleteLot(Lot lot) async {
-    return delete(
+    return await delete(
       _lotRepository.deleteLot,
       (lot, t) => lot..removeWhere((e) => e.id == t.id),
-      "TODO",
+      lot.id,
       lot,
     );
   }
 
   Future<bool> updateLot(Lot lot) async {
-    return update(_lotRepository.updateLot,
+    return await update(_lotRepository.updateLot,
         (lot, t) => lot..[lot.indexWhere((e) => e.id == t.id)] = t, lot);
   }
 }

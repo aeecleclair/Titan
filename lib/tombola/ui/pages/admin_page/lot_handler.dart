@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/lot.dart';
 import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/lot_provider.dart';
+import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/lot_card.dart';
@@ -16,6 +17,7 @@ class LotHandler extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final raffle = ref.watch(raffleProvider);
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final lotNotifier = ref.watch(lotProvider.notifier);
     final lotsNotifier = ref.watch(lotListProvider.notifier);
@@ -127,6 +129,7 @@ class LotHandler extends HookConsumerWidget {
                                 pageNotifier
                                     .setTombolaPage(TombolaPage.addEditLot);
                               },
+                              status: raffle.raffleStatusType,
                             ),
                           )
                           .toList(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/ticket_type_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
@@ -16,6 +17,7 @@ class TicketHandler extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final raffle = ref.watch(raffleProvider);
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final typeTickets = ref.watch(typeTicketsListProvider);
     final typeTicketsNotifier = ref.watch(typeTicketsListProvider.notifier);
