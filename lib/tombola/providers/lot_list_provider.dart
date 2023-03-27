@@ -22,9 +22,10 @@ class LotListNotifier extends ListNotifier<Lot> {
     // return await loadList(
     //     () async => _lotRepository.getLotList(raffleId));
     return state = AsyncData([
-      Lot(raffleId: "1", id: "1", name: 'aspernatur', quantity: 5, description: ""),
-      Lot(raffleId: "1", id: "2", name: 'dolores', quantity: 3, description: null),
-      Lot(raffleId: "1", id: "3", name: 'fugit', quantity: 7, description: "dsdgftgfygukilgkyfutdstbrqefsrydxtufy"),
+      Lot(raffle: Raffle.empty(), id: "4", name: 'Petite voiture', quantity: 1, description: "Ceci est une Clio, c'est un beau cadeau pour une simple tombola quand même"),
+      Lot(raffle: Raffle.empty(), id: "1", name: 'Aspernatur', quantity: 5, description: ""),
+      Lot(raffle: Raffle.empty(), id: "2", name: 'Dolores', quantity: 3, description: null),
+      Lot(raffle: Raffle.empty(), id: "3", name: 'Chaise de Jardin', quantity: 7, description: "dsdgftgfygukilgkyfutdstbrqefsrydxtufy"),
     ]);
   }
 

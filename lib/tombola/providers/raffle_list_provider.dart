@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
@@ -21,20 +22,20 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
           id: '1',
           name: 'Tombola Soli Sida',
           raffleStatusType: RaffleStatusType.creation,
-          groupId: '',
+          group: SimpleGroup.empty(),
           description: "SDRFTGHYUJIKRTJRSTHEQRG"),
       Raffle(
           id: '2',
           name: 'Tombola Test',
           raffleStatusType: RaffleStatusType.open,
-          groupId: '',
+          group: SimpleGroup.empty(),
           description:
               "Facilis error amet. Quia sint aspernatur aut. Asperiores expedita dolorem."),
       Raffle(
           id: 'azertyuiop',
           name: 'Tombola Test2',
           raffleStatusType: RaffleStatusType.locked,
-          groupId: '',
+          group: SimpleGroup.empty(),
           description:
               "Dolorum et consectetur. Maxime asperiores ratione delectus labore. Officiis mollitia consequatur qui et voluptas. Aut aliquam et tempore rerum saepe quam."),
     ]);

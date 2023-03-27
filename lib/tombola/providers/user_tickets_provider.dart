@@ -1,9 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/tickets.dart';
+import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/repositories/tickets_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class UserTicketListNotifier extends ListNotifier<Ticket> {
   final TicketRepository _ticketsRepository = TicketRepository();
@@ -22,35 +26,29 @@ class UserTicketListNotifier extends ListNotifier<Ticket> {
     //     () async => _ticketsRepository.getTicketsListbyUserId(userId));
     return state = AsyncData([
       Ticket(
-        id: '1',
-        typeId: '1',
-        groupId: '1',
-        winningLot: 'ezrfggnhtryhg',
-        userId: '',
-        raffleId: "1",
-        unitPrice: 1,
+        id: "1",
+        nbTicket: 2,
+        typeTicket: TypeTicket.empty(),
+        unitPrice: 3,
+        user: SimpleUser.empty(),
+        winningLot: null,
+      ),
+      Ticket(
+        id: "2",
         nbTicket: 1,
+        typeTicket: TypeTicket.empty(),
+        unitPrice: 10,
+        user: SimpleUser.empty(),
+        winningLot: null,
       ),
       Ticket(
-        id: '2',
-        typeId: '2',
-        groupId: '1',
-        winningLot: '',
-        userId: '',
-        raffleId: "1",
-        unitPrice: 2,
-        nbTicket: 3,
+        id: "3",
+        nbTicket: 2,
+        typeTicket: TypeTicket.empty(),
+        unitPrice: 4,
+        user: SimpleUser.empty(),
+        winningLot: null,
       ),
-      Ticket(
-        id: '3',
-        typeId: '3',
-        groupId: '1',
-        winningLot: '',
-        userId: '',
-        raffleId: "azertyuiop",
-        unitPrice: 20,
-        nbTicket: 50,
-      )
     ]);
   }
 }

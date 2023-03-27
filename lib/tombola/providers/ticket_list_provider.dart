@@ -1,8 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/tickets.dart';
+import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/repositories/tickets_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class TicketsListNotifier extends ListNotifier<Ticket> {
   final TicketRepository _ticketsRepository = TicketRepository();
@@ -22,24 +26,20 @@ class TicketsListNotifier extends ListNotifier<Ticket> {
     return state = AsyncData([
       Ticket(
         id: "1",
-        raffleId: "1",
-        userId: "1",
-        groupId: '',
-        nbTicket: 1,
-        typeId: '',
-        unitPrice: 1,
-        winningLot: '',
+        nbTicket: 2,
+        typeTicket: TypeTicket.empty(),
+        unitPrice: 3,
+        user: SimpleUser.empty(),
+        winningLot: null,
       ),
       Ticket(
-        id: "1",
-        raffleId: "1",
-        userId: "1",
-        groupId: '',
-        nbTicket: 3,
-        typeId: '',
-        unitPrice: 2,
-        winningLot: '',
-      )
+        id: "2",
+        nbTicket: 5,
+        typeTicket: TypeTicket.empty(),
+        unitPrice: 1,
+        user: SimpleUser.empty(),
+        winningLot: null,
+      ),
     ]);
   }
 

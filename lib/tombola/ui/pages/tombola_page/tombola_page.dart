@@ -1,5 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/user_amount_provider.dart';
 import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
@@ -41,7 +42,7 @@ class TombolaInfoPage extends HookConsumerWidget {
       Container(
           margin: const EdgeInsets.only(left: 30, top: 20),
           child: Text(
-              solde.when(
+            solde.when(
                   data: (s) =>
                       "Solde : ${s.balance.toStringAsFixed(2)}€", //Attention là c'est les soldes AMAP à finir
                   error: (e, s) => "Erreur",
