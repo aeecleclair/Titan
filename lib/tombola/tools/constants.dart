@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/tools/constants.dart';
 
-class TombolaColorConstants extends ColorConstants {  
+class TombolaColorConstants extends ColorConstants {
   static const Color darkText = Color.fromARGB(255, 50, 9, 1);
   static const Color writtenDark = Color.fromARGB(255, 10, 9, 30);
   static const Color writtenWhite = Color(0xfffafaeb);
@@ -31,8 +31,10 @@ class TombolaTextConstants {
   static const String actualPrize = "Lots actuels";
   static const String majorPrize = "Lot Majeurs";
   static const String takeTickets = "Prendre vos tickets";
-  static const String noTicketBuyable = "Vous ne pouvez pas achetez de billets pour l'instant, voir avec les organisateurs de la tombola";
-  static const String noPrize = "Il n'y a aucun lots actuellement, honte aux organisateurs de la tombola";
+  static const String noTicketBuyable =
+      "Vous ne pouvez pas achetez de billets pour l'instant, voir avec les organisateurs de la tombola";
+  static const String noPrize =
+      "Il n'y a aucun lots actuellement, honte aux organisateurs de la tombola";
   //Create Home
   static const String modifTombola =
       "Vous pouvez modifiez vos tombolas ou en créer de nouvelles, toute décision doit ensuite être prise par les admins";
@@ -56,6 +58,10 @@ class TombolaTextConstants {
   static const String deletingError = "Erreur lors de la suppression";
 
   static const String quantity = "Quantité";
+
+  static const String close = "Fermer";
+
+  static const String open = "Ouvrir";
 
   // Add Edit type ticket
   static const String addTypeTicket = "Ajouter";

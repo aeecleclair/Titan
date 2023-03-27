@@ -9,11 +9,13 @@ class TicketUI extends HookConsumerWidget {
   final TypeTicket typeTicket;
   final VoidCallback onEdit;
   final Future Function() onDelete;
+  final bool showButton;
   const TicketUI(
       {Key? key,
       required this.typeTicket,
       required this.onEdit,
-      required this.onDelete})
+      required this.onDelete,
+      this.showButton = true})
       : super(key: key);
 
   @override
@@ -35,6 +37,7 @@ class TicketUI extends HookConsumerWidget {
             color: TombolaColorConstants.ticketback,
             borderRadius: const BorderRadius.all(Radius.circular(30))),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
               "${typeTicket.price} €",
@@ -43,8 +46,8 @@ class TicketUI extends HookConsumerWidget {
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
-            const SizedBox(
-              height: 5,
+            SizedBox(
+              height: showButton ? 5 : 10,
             ),
             Text(
               "${typeTicket.value} tickets",
@@ -53,37 +56,64 @@ class TicketUI extends HookConsumerWidget {
                   fontSize: 18,
                   fontWeight: FontWeight.bold),
             ),
-            const Spacer(),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              GestureDetector(
-                onTap: onEdit,
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  padding: const EdgeInsets.all(7),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.grey.shade100,
-                        Colors.grey.shade200,
+            if (showButton) const Spacer(),
+            if (showButton)
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                GestureDetector(
+                  onTap: onEdit,
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    padding: const EdgeInsets.all(7),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.grey.shade100,
+                          Colors.grey.shade200,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.grey.shade300.withOpacity(0.5),
+                            blurRadius: 10,
+                            offset: const Offset(2, 3))
                       ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
                     ),
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey.shade300.withOpacity(0.5),
-                          blurRadius: 10,
-                          offset: const Offset(2, 3))
-                    ],
+                    child: const HeroIcon(HeroIcons.pencil,
+                        color: TombolaColorConstants.textDark),
                   ),
-                  child: const HeroIcon(HeroIcons.pencil,
-                      color: TombolaColorConstants.textDark),
                 ),
-              ),
-              ShrinkButton(
-                  waitChild: Container(
+                ShrinkButton(
+                    waitChild: Container(
+                        width: 40,
+                        height: 40,
+                        padding: const EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [
+                              TombolaColorConstants.redGradient1,
+                              TombolaColorConstants.redGradient2,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                                color: TombolaColorConstants.redGradient2
+                                    .withOpacity(0.5),
+                                blurRadius: 10,
+                                offset: const Offset(2, 3))
+                          ],
+                        ),
+                        child: const Center(
+                          child: CircularProgressIndicator(color: Colors.white),
+                        )),
+                    onTap: onDelete,
+                    child: Container(
                       width: 40,
                       height: 40,
                       padding: const EdgeInsets.all(7),
@@ -105,35 +135,10 @@ class TicketUI extends HookConsumerWidget {
                               offset: const Offset(2, 3))
                         ],
                       ),
-                      child: const Center(
-                        child: CircularProgressIndicator(color: Colors.white),
-                      )),
-                  onTap: onDelete,
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    padding: const EdgeInsets.all(7),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [
-                          TombolaColorConstants.redGradient1,
-                          TombolaColorConstants.redGradient2,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                            color: TombolaColorConstants.redGradient2
-                                .withOpacity(0.5),
-                            blurRadius: 10,
-                            offset: const Offset(2, 3))
-                      ],
-                    ),
-                    child: const HeroIcon(HeroIcons.trash, color: Colors.white),
-                  ))
-            ])
+                      child:
+                          const HeroIcon(HeroIcons.trash, color: Colors.white),
+                    ))
+              ])
           ],
         ),
       )
