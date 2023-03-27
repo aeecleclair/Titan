@@ -63,20 +63,12 @@ class MainPage extends HookConsumerWidget {
                                       width: 15,
                                     );
                                   }
-                                  final raffle = raffleList.when(
-                                      data: (raffles) => raffles.firstWhere(
-                                          (element) =>
-                                              element.id ==
-                                              tickets[index - 1].raffleId,
-                                          orElse: () => Raffle.empty()),
-                                      error: (e, s) => Raffle.empty(),
-                                      loading: () => Raffle.empty());
                                   return Container(
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 10, vertical: 10),
                                       child: TicketWidget(
                                         ticket: tickets[index - 1],
-                                        raffle: raffle,
+                                        raffle: tickets[index - 1].typeTicket.raffle,
                                       ));
                                 }));
                   },

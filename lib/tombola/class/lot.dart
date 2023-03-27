@@ -1,21 +1,23 @@
+import 'package:myecl/tombola/class/raffle.dart';
+
 class Lot {
   Lot({
     required this.id,
     required this.name,
-    required this.raffleId,
+    required this.raffle,
     required this.quantity,
     this.description,
   });
   late final String id;
   late final String name;
-  late final String raffleId;
+  late final Raffle raffle;
   late final String? description;
   late final int quantity;
 
   Lot.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    raffleId = json['raffle_id'];
+    raffle = Raffle.fromJson(json['raffle']);
     description = json['description'];
     quantity = json['quantity'];
   }
@@ -24,7 +26,7 @@ class Lot {
     final data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
-    data['raffle_id'] = raffleId;
+    data['raffle_id'] = raffle.id;
     data['description'] = description;
     data['quantity'] = quantity;
     return data;
@@ -33,28 +35,28 @@ class Lot {
   Lot copyWith({
     String? id,
     String? name,
-    String? raffleId,
+    Raffle? raffle,
     String? description,
     int? quantity,
   }) =>
       Lot(
         id: id ?? this.id,
         name: name ?? this.name,
-        raffleId: raffleId ?? this.raffleId,
+        raffle: raffle ?? this.raffle,
         description: description,
         quantity: quantity ?? this.quantity,
       );
 
   Lot.empty() {
     id = '';
-    name = '';
-    raffleId = '';
-    description = '';
+    name = 'Lot';
+    raffle = Raffle.empty();
+    description = null;
     quantity = 0;
   }
 
   @override
   String toString() {
-    return 'Lot{id: $id, name: $name, raffleId: $raffleId, description: $description, quantity: $quantity}';
+    return 'Lot{id: $id, name: $name, raffle: $raffle, description: $description, quantity: $quantity}';
   }
 }

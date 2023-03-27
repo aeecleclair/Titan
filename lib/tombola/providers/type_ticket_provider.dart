@@ -23,12 +23,12 @@ class TypeTicketsListNotifier extends ListNotifier<TypeTicket> {
     // return await loadList(
     //     () async => _typeTicketsRepository.getTypeTicketsList(raffleId));
     return state = AsyncData([
-      TypeTicket(raffleId: "1", price: 1, value: 1, id: "1"),
-      TypeTicket(raffleId: "1", price: 2, value: 3, id: "2"),
-      TypeTicket(raffleId: "1", price: 5, value: 10, id: "3"),
-      TypeTicket(raffleId: "2", price: 10, value: 25, id: "4"),
-      TypeTicket(raffleId: "2", price: 20, value: 50, id: "5"),
-      TypeTicket(raffleId: "2", price: 1, value: 1, id: "6"),
+      TypeTicket(raffle: Raffle.empty(), price: 1, value: 1, id: "1"),
+      TypeTicket(raffle: Raffle.empty(), price: 2, value: 3, id: "2"),
+      TypeTicket(raffle: Raffle.empty(), price: 5, value: 10, id: "3"),
+      TypeTicket(raffle: Raffle.empty(), price: 10, value: 25, id: "4"),
+      TypeTicket(raffle: Raffle.empty(), price: 20, value: 50, id: "5"),
+      TypeTicket(raffle: Raffle.empty(), price: 1, value: 1, id: "6"),
     ]);
   }
 
