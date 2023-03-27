@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/ticket_type_provider.dart';
@@ -92,6 +93,8 @@ class TicketHandler extends HookConsumerWidget {
                                   pageNotifier.setTombolaPage(
                                       TombolaPage.addEditTypeTicket);
                                 },
+                                showButton: raffle.raffleStatusType ==
+                                    RaffleStatusType.creation,
                                 onDelete: () async {
                                   await showDialog(
                                       context: context,
