@@ -17,7 +17,6 @@ class Lot {
     name = json['name'];
     raffleId = json['raffle_id'];
     description = json['description'];
-    name = json['name'];
     quantity = json['quantity'];
   }
 
@@ -28,7 +27,6 @@ class Lot {
     data['raffle_id'] = raffleId;
     data['description'] = description;
     data['quantity'] = quantity;
-    data['name'] = name;
     return data;
   }
 
