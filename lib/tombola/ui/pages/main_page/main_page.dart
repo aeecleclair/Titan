@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
+import 'package:myecl/tombola/providers/is_tombola_admin.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/providers/user_tickets_provider.dart';
@@ -18,7 +19,7 @@ class MainPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final raffleList = ref.watch(raffleListProvider);
     final userTicketList = ref.watch(userTicketListProvider);
-    final isAdmin = true;
+    final isAdmin = ref.watch(isTombolaAdmin);
     return Stack(
       children: [
         Container(
