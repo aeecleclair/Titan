@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
-import 'package:myecl/tombola/class/tickets.dart';
-import 'package:myecl/tombola/class/type_ticket.dart';
-import 'package:myecl/tombola/providers/cash_provider.dart';
+import 'package:myecl/tombola/class/type_ticket_simple.dart';
 import 'package:myecl/tombola/providers/user_amount_provider.dart';
 import 'package:myecl/tombola/providers/user_tickets_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
@@ -15,7 +13,7 @@ import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class ConfirmPaymentDialog extends HookConsumerWidget {
-  final TypeTicket typeTicket;
+  final TypeTicketSimple typeTicket;
   final Raffle raffle;
   const ConfirmPaymentDialog(
       {Key? key, required this.typeTicket, required this.raffle})
@@ -159,18 +157,12 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                               displayToastWithContext(TypeMsg.error,
                                   "Vous n'avez pas assez d'argent");
                             } else {
-                              Ticket newTicket = Ticket(
-                                id: '',
-                                typeTicket: typeTicket,
-                                user: me.toSimpleUser(),
-                                winningLot: null,
-                              );
                               await tokenExpireWrapper(ref, () async {
-                                final value = await userTicketListNotifier
-                                    .addTicket(newTicket);
+                                final value =
+                                    await userTicketListNotifier.addTicket(typeTicket);
                                 if (value) {
-                                  userAmountNotifier.updateCash(
-                                      -newTicket.typeTicket.price.toDouble());
+                                  userAmountNotifier
+                                      .updateCash(-typeTicket.price.toDouble());
                                   displayToastWithContext(TypeMsg.msg,
                                       TombolaTextConstants.boughtTicket);
                                 } else {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/class/type_ticket_simple.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class TicketUI extends HookConsumerWidget {
-  final TypeTicket typeTicket;
+  final TypeTicketSimple typeTicket;
   final VoidCallback onEdit;
   final Future Function() onDelete;
   final bool showButton;

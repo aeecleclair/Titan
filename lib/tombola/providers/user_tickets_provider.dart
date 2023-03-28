@@ -1,19 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/tickets.dart';
+import 'package:myecl/tombola/class/type_ticket_simple.dart';
 import 'package:myecl/tombola/repositories/raffle_detail_repository.dart';
 import 'package:myecl/tombola/repositories/tickets_repository.dart';
+import 'package:myecl/tombola/repositories/user_tickets_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserTicketListNotifier extends ListNotifier<Ticket> {
-  final RaffleDetailRepository _raffleDetailRepository =
-      RaffleDetailRepository();
+  final UserDetailRepository _userDetailRepository =
+      UserDetailRepository();
   final TicketRepository _ticketsRepository = TicketRepository();
   late String userId;
   UserTicketListNotifier({required String token})
       : super(const AsyncValue.loading()) {
-    _raffleDetailRepository.setToken(token);
+    _userDetailRepository.setToken(token);
+    _ticketsRepository.setToken(token);
   }
 
   void setId(String id) {
@@ -22,14 +25,14 @@ class UserTicketListNotifier extends ListNotifier<Ticket> {
 
   Future<AsyncValue<List<Ticket>>> loadTicketList() async {
     return await loadList(
-        () async => _raffleDetailRepository.getTicketListFromRaffle(userId));
+        () async => _userDetailRepository.getTicketsListbyUserId(userId));
   }
 
   
-  Future<bool> addTicket(Ticket ticket) async {
+  Future<bool> addTicket(TypeTicketSimple typeTicketSimple) async {
     return add(
-      (ticket) async => _ticketsRepository.buyTicket(ticket, userId),
-      ticket);
+      (_) async => _ticketsRepository.buyTicket(typeTicketSimple.id, userId),
+      Ticket.empty());
   }
 }
 

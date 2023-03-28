@@ -40,7 +40,7 @@ class TopBar extends HookConsumerWidget {
                           case TombolaPage.addEditLot:
                             pageNotifier.setTombolaPage(TombolaPage.admin);
                             break;
-                          case TombolaPage.addEditTypeTicket:
+                          case TombolaPage.addEditTypeTicketSimple:
                             pageNotifier.setTombolaPage(TombolaPage.admin);
                             break;
                         }

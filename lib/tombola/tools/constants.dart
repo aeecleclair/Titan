@@ -64,11 +64,11 @@ class TombolaTextConstants {
   static const String open = "Ouvrir";
 
   // Add Edit type ticket
-  static const String addTypeTicket = "Ajouter";
+  static const String addTypeTicketSimple = "Ajouter";
 
   static const String addingError = "Erreur lors de l'ajout";
 
-  static const String editTypeTicket = "Modifier";
+  static const String editTypeTicketSimple = "Modifier";
 
   static const String fillField = "Le champ ne peut pas être vide";
 

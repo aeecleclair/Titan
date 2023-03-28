@@ -20,8 +20,8 @@ class PageSwitcher extends ConsumerWidget {
         return const TombolaInfoPage();
       case TombolaPage.addEditLot:
         return const AddEditLotPage();
-      case TombolaPage.addEditTypeTicket:
-        return const AddEditTypeTicketPage();
+      case TombolaPage.addEditTypeTicketSimple:
+        return const AddEditTypeTicketSimplePage();
       case TombolaPage.admin:
         return const AdminPage();
     }

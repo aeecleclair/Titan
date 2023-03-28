@@ -1,24 +1,24 @@
-import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/class/type_ticket_simple.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
-class TypeTicketRepository extends Repository {
+class TypeTicketSimpleRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "tombola/type_tickets";
 
-  Future<TypeTicket> getTypeTicket(String id) async {
-    return TypeTicket.fromJson(await getOne(id));
+  Future<TypeTicketSimple> getTypeTicketSimple(String id) async {
+    return TypeTicketSimple.fromJson(await getOne(id));
   }
 
-  Future<TypeTicket> createTypeTicket(TypeTicket ticket) async {
-    return TypeTicket.fromJson(await create(ticket.toJson()));
+  Future<TypeTicketSimple> createTypeTicketSimple(TypeTicketSimple ticket) async {
+    return TypeTicketSimple.fromJson(await create(ticket.toJson()));
   }
 
-  Future<bool> updateTypeTicket(TypeTicket ticket) async {
+  Future<bool> updateTypeTicketSimple(TypeTicketSimple ticket) async {
     return await update(ticket.toJson(), "/${ticket.id}");
   }
 
-  Future<bool> deleteTypeTicket(String id) async {
+  Future<bool> deleteTypeTicketSimple(String id) async {
     return await delete("/$id");
   }
 }

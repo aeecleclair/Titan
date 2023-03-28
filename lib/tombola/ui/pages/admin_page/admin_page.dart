@@ -32,7 +32,7 @@ class AdminPage extends HookConsumerWidget {
     return Refresher(
         onRefresh: () async {
           await cashNotifier.loadCashList();
-          await typeTicketsListNotifier.loadTypeTicketList();
+          await typeTicketsListNotifier.loadTypeTicketSimpleList();
           await lotListNotifier.loadLotList();
         },
         child: Column(
