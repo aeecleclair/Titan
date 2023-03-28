@@ -179,14 +179,26 @@ class MainPage extends HookConsumerWidget {
                       ...pastRaffles
                           .map((e) => TombolaWidget(raffle: e))
                           .toList(),
+                      if (onGoingRaffles.isEmpty &&
+                          incommingRaffles.isEmpty &&
+                          pastRaffles.isEmpty)
+                        const SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: Text(
+                              TombolaTextConstants.noCurrentTombola,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        )
                     ],
                   );
                 },
                 error: (Object error, StackTrace stackTrace) =>
-                    Text("Error $error"),
+                    Center(child: Text("Error $error")),
                 loading: () => const Center(
                       child: CircularProgressIndicator(
-                        color: Colors.blue,
+                        color: Colors.black,
                       ),
                     )),
           ),

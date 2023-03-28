@@ -1,8 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/raffle.dart';
-import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/repositories/raffle_repositories.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -15,30 +13,8 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
   }
 
   Future<AsyncValue<List<Raffle>>> loadRaffleList() async {
-    // return await loadList(
-    //     () async => _rafflerepository.getRaffleList(raffleId));
-    return state = AsyncData([
-      Raffle(
-          id: '1',
-          name: 'Tombola Soli Sida',
-          raffleStatusType: RaffleStatusType.creation,
-          group: SimpleGroup.empty(),
-          description: "SDRFTGHYUJIKRTJRSTHEQRG"),
-      Raffle(
-          id: '2',
-          name: 'Tombola Test',
-          raffleStatusType: RaffleStatusType.open,
-          group: SimpleGroup.empty(),
-          description:
-              "Facilis error amet. Quia sint aspernatur aut. Asperiores expedita dolorem."),
-      Raffle(
-          id: 'azertyuiop',
-          name: 'Tombola Test2',
-          raffleStatusType: RaffleStatusType.locked,
-          group: SimpleGroup.empty(),
-          description:
-              "Dolorum et consectetur. Maxime asperiores ratione delectus labore. Officiis mollitia consequatur qui et voluptas. Aut aliquam et tempore rerum saepe quam."),
-    ]);
+    return await loadList(
+        () async => _rafflerepository.getRaffleList());
   }
 
   Future<bool> createRaffle(Raffle raffle) async {
