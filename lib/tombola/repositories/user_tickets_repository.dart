@@ -8,6 +8,7 @@ class UserDetailRepository extends Repository {
   final ext = "tombola/users";
 
   Future<List<Ticket>> getTicketsListbyUserId(String userId) async {
+    print((await getList(suffix: "/$userId/tickets")));
     return List<Ticket>.from(
         (await getList(suffix: "/$userId/tickets")).map((x) => Ticket.fromJson(x)));
   }

@@ -1,5 +1,5 @@
 import 'package:myecl/tombola/class/lot.dart';
-import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/class/type_ticket_simple.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class Ticket {
@@ -9,15 +9,15 @@ class Ticket {
     required this.winningLot,
     required this.id,
   });
-  late final TypeTicket typeTicket;
+  late final TypeTicketSimple typeTicket;
   late final SimpleUser user;
   late final Lot? winningLot;
   late final String id;
 
   Ticket.fromJson(Map<String, dynamic> json) {
-    typeTicket = TypeTicket.fromJson(json['type']);
+    typeTicket = TypeTicketSimple.fromJson(json['type_ticket']);
     user = SimpleUser.fromJson(json['user']);
-    winningLot = json['winning_lot'] != null ? Lot.fromJson(json['winning_lot']) : null;
+    winningLot = json['lot'] != null ? Lot.fromJson(json['lot']) : null;
     id = json['id'];
   }
 
@@ -25,13 +25,13 @@ class Ticket {
     final data = <String, dynamic>{};
     data['type_id'] = typeTicket.id;
     data['user_id'] = user.id;
-    data['winning_lot'] = winningLot != null ? winningLot!.id : null;
+    data['lot'] = winningLot != null ? winningLot!.id : null;
     data['id'] = id;
     return data;
   }
 
   Ticket copyWith({
-    TypeTicket? typeTicket,
+    TypeTicketSimple? typeTicket,
     SimpleUser? user,
     Lot? winningLot,
     String? id,
@@ -45,7 +45,7 @@ class Ticket {
           id: id ?? this.id,);
 
   Ticket.empty() {
-    typeTicket = TypeTicket.empty();
+    typeTicket = TypeTicketSimple.empty();
     user = SimpleUser.empty();
     winningLot = null;
     id = '';
