@@ -119,7 +119,7 @@ class AddEditTypeTicketPage extends HookConsumerWidget {
                               if (formKey.currentState!.validate()) {
                                 await tokenExpireWrapper(ref, () async {
                                   final newTypeTicket = typeTicket.copyWith(
-                                      price: int.parse(price.text),
+                                      price: double.parse(price.text),
                                       value: int.parse(quantity.text),
                                       raffleId: isEdit
                                           ? typeTicket.raffleId

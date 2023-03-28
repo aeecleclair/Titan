@@ -2,12 +2,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tombola/repositories/raffle_detail_repository.dart';
+import 'package:myecl/tombola/repositories/tickets_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserTicketListNotifier extends ListNotifier<Ticket> {
   final RaffleDetailRepository _raffleDetailRepository =
       RaffleDetailRepository();
+  final TicketRepository _ticketsRepository = TicketRepository();
   late String userId;
   UserTicketListNotifier({required String token})
       : super(const AsyncValue.loading()) {
@@ -21,6 +23,13 @@ class UserTicketListNotifier extends ListNotifier<Ticket> {
   Future<AsyncValue<List<Ticket>>> loadTicketList() async {
     return await loadList(
         () async => _raffleDetailRepository.getTicketListFromRaffle(userId));
+  }
+
+  
+  Future<bool> addTicket(Ticket ticket) async {
+    return add(
+      (ticket) async => _ticketsRepository.buyTicket(ticket, userId),
+      ticket);
   }
 }
 

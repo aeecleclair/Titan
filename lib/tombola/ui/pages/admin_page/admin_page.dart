@@ -109,7 +109,7 @@ class AdminPage extends HookConsumerWidget {
                                             0,
                                             (previousValue, element) =>
                                                 previousValue +
-                                                element.nbTicket)
+                                                element.typeTicket.value)
                                         .toString(),
                                     style: const TextStyle(
                                         color: TombolaColorConstants.textDark,
@@ -135,7 +135,7 @@ class AdminPage extends HookConsumerWidget {
                           data: (tickets) => Column(
                                 children: [
                                   Text(
-                                    "${tickets.fold<int>(0, (previousValue, element) => previousValue + element.nbTicket * element.unitPrice)}€",
+                                    "${tickets.fold<double>(0, (previousValue, element) => previousValue + element.typeTicket.value * element.typeTicket.price).toStringAsFixed(2)}€",
                                     style: const TextStyle(
                                         color: TombolaColorConstants.textDark,
                                         fontSize: 30),

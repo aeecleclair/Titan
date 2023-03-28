@@ -101,4 +101,6 @@ class TombolaTextConstants {
       "Vous allez fermer la tombola, les utilisateurs ne pourront plus acheter de tickets. Êtes-vous sûr de vouloir continuer ?";
 
   static const String noCurrentTombola = "Il n'y a aucune tombola en cours";
+
+  static const String boughtTicket = "Ticket acheté";
 }
