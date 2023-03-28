@@ -89,4 +89,14 @@ class TombolaTextConstants {
   static const String addlot = "Ajouter";
 
   static const String editlot = "Modifier";
+
+  static const String openRaffle = "Ouvrir la tombola";
+
+  static const String closeRaffle = "Fermer la tombola";
+
+  static const String openRaffleDescription =
+      "Vous allez ouvrir la tombola, les utilisateurs pourront acheter des tickets. Vous ne pourrez plus modifier la tombola. Êtes-vous sûr de vouloir continuer ?";
+
+  static const String closeRaffleDescription =
+      "Vous allez fermer la tombola, les utilisateurs ne pourront plus acheter de tickets. Êtes-vous sûr de vouloir continuer ?";
 }

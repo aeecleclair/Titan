@@ -60,7 +60,6 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
     return await delete(
         // _rafflerepository.deleteRaffle,
         (raffle) async => true,
-        
         (raffles, r) => raffles..removeWhere((e) => e.id == r.id),
         raffle.id,
         raffle);
@@ -68,16 +67,14 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
 
   Future<bool> openRaffle(Raffle opennedRaffle) async {
     return await update(
-        // _rafflerepository.updateRaffle,
-        (raffle) async => true,
+        _rafflerepository.updateRaffle,
         (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
         opennedRaffle);
   }
 
   Future<bool> lockRaffle(Raffle lockedRaffle) async {
     return await update(
-        // _rafflerepository.updateRaffle,
-        (raffle) async => true,
+        _rafflerepository.updateRaffle,
         (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
         lockedRaffle);
   }
