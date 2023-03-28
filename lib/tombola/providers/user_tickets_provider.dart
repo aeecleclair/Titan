@@ -1,13 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tombola/class/lot.dart';
 import 'package:myecl/tombola/class/tickets.dart';
-import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/repositories/raffle_detail_repository.dart';
-import 'package:myecl/tombola/repositories/tickets_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/class/list_users.dart';
 
 class UserTicketListNotifier extends ListNotifier<Ticket> {
   final RaffleDetailRepository _raffleDetailRepository =

@@ -1,12 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tombola/ui/pages/main_page/ticket_card_background.dart';
 
 class TicketWidget extends HookConsumerWidget {
   final Ticket ticket;
-  const TicketWidget({Key? key, required this.ticket})
+  final Raffle raffle;
+  const TicketWidget({Key? key, required this.ticket, required this.raffle})
       : super(key: key);
 
   @override
@@ -64,7 +66,7 @@ class TicketWidget extends HookConsumerWidget {
                   height: 10,
                 ),
                 AutoSizeText(
-                  ticket.typeTicket.raffle.name,
+                  raffle.name,
                   maxLines: 2,
                   textAlign: TextAlign.center,
                   style: TextStyle(

@@ -20,7 +20,6 @@ class AddEditTypeTicketPage extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final typeTicket = ref.watch(typeTicketProvider);
-    print(typeTicket);
     final isEdit = typeTicket.id != TypeTicket.empty().id;
     final quantity = useTextEditingController(
         text: isEdit ? typeTicket.value.toString() : "");

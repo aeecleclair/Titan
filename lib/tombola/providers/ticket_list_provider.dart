@@ -1,10 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/tickets.dart';
-import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/repositories/tickets_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/user/class/list_users.dart';
 
 class TicketsListNotifier extends ListNotifier<Ticket> {
   final TicketRepository _ticketsRepository = TicketRepository();
@@ -20,7 +18,8 @@ class TicketsListNotifier extends ListNotifier<Ticket> {
 
   Future<AsyncValue<List<Ticket>>> loadTicketList() async {
     return await loadList(
-        () async => _ticketsRepository.getTicketsListbyRaffleId(raffleId));
+        () async => _ticketsRepository.getTicketsListbyRaffleId(raffleId)
+        );
   }
 
   Future<bool> addTicket(Ticket ticket) async {
