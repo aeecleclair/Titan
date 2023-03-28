@@ -200,8 +200,6 @@ class LotHandler extends HookConsumerWidget {
                                                       .drawLot(e);
                                               value.when(
                                                   data: (winningTicketList) {
-                                                    print(
-                                                        "winningTicketList : $winningTicketList");
                                                     lotsNotifier.updateLot(e
                                                         .copyWith(quantity: 0));
                                                     displayWinningsDialog(
