@@ -136,7 +136,6 @@ class AddEditLotPage extends HookConsumerWidget {
                                       description: description.text,
                                       raffleId: isEdit ? lot.raffleId : raffle.id,
                                       quantity: int.parse(quantity.text));
-                                  print(newlot.toJson());
                                   final lotNotifier = ref
                                       .watch(lotListProvider.notifier);
                                   final value = isEdit

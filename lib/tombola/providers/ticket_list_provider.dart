@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/tickets.dart';
+import 'package:myecl/tombola/providers/raffle_id_provider.dart';
 import 'package:myecl/tombola/repositories/tickets_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 
@@ -33,5 +35,11 @@ class TicketsListNotifier extends ListNotifier<Ticket> {
 final ticketsListProvider =
     StateNotifierProvider<TicketsListNotifier, AsyncValue<List<Ticket>>>((ref) {
   final token = ref.watch(tokenProvider);
-  return TicketsListNotifier(token: token);
+  final notifier = TicketsListNotifier(token: token);
+      final raffleId = ref.watch(raffleIdProvider);
+    if (raffleId != Raffle.empty().id) {
+      notifier.setId(raffleId);
+      notifier.loadTicketList();
+    }
+  return notifier;
 });

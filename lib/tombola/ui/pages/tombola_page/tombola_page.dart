@@ -83,6 +83,7 @@ class TombolaInfoPage extends HookConsumerWidget {
               )),
       lotsList.when(
           data: (lots) {
+            lots = lots.where((element) => element.raffleId == raffle.id).toList();
             return lots.isEmpty
                 ? const Center(
                     child: Text(TombolaTextConstants.noPrize),

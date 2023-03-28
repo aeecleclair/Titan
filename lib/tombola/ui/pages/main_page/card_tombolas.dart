@@ -22,7 +22,6 @@ class TombolaWidget extends HookConsumerWidget {
     return GestureDetector(
         onTap: () {
           raffleIdNotifier.setId(raffle.id);
-          ticketListNotifier.setId(raffle.id);
           lotListNotifier.loadLotList();
           ticketListNotifier.loadTicketList();
           typeTicketListNotifier.loadTypeTicketList();
