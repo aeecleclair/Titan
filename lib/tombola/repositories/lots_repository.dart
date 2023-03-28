@@ -29,7 +29,7 @@ class LotRepository extends Repository {
 
   Future<List<Ticket>> drawLot(Lot lot) async {
     return List<Ticket>.from(
-        (await create(lot.toJson(), suffix: "${lot.id}/draw"))
+        (await create(lot.toJson(), suffix: "/${lot.id}/draw"))
             .map((x) => Ticket.fromJson(x)));
   }
 }

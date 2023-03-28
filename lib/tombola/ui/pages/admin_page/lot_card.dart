@@ -9,14 +9,15 @@ import 'package:myecl/tools/ui/shrink_button.dart';
 class LotCard extends StatelessWidget {
   final Lot lot;
   final Function() onEdit;
-  final Future Function() onDelete;
+  final Future Function() onDelete, onDraw;
   final RaffleStatusType status;
   const LotCard(
       {super.key,
       required this.lot,
       required this.onEdit,
       required this.onDelete,
-      required this.status});
+      required this.status,
+      required this.onDraw});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,10 @@ class LotCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: TombolaColorConstants.textDark)),
               const SizedBox(height: 4),
-              AutoSizeText("${TombolaTextConstants.quantity} : ${lot.quantity}",
+              AutoSizeText(
+                  lot.quantity > 0
+                      ? "${TombolaTextConstants.quantity} : ${lot.quantity}"
+                      : "",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -156,70 +160,89 @@ class LotCard extends StatelessWidget {
                       ],
                     )
                   : status == RaffleStatusType.locked
-                      ? Center(
-                          child: ShrinkButton(
-                              waitChild: Container(
-                                  width: 40,
-                                  height: 40,
-                                  padding: const EdgeInsets.all(7),
-                                  decoration: BoxDecoration(
-                                    gradient: const LinearGradient(
-                                      colors: [
-                                        TombolaColorConstants.gradient2,
-                                        TombolaColorConstants.textDark,
+                      ? lot.quantity > 0
+                          ? Center(
+                              child: ShrinkButton(
+                                  waitChild: Container(
+                                      width: 40,
+                                      height: 40,
+                                      padding: const EdgeInsets.all(7),
+                                      decoration: BoxDecoration(
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            TombolaColorConstants.gradient2,
+                                            TombolaColorConstants.textDark,
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: TombolaColorConstants
+                                                  .textDark
+                                                  .withOpacity(0.5),
+                                              blurRadius: 10,
+                                              offset: const Offset(2, 3))
+                                        ],
+                                      ),
+                                      child: const Center(
+                                        child: CircularProgressIndicator(
+                                            color: Colors.white),
+                                      )),
+                                  onTap: onDraw,
+                                  child: Container(
+                                    height: 40,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 7, horizontal: 12),
+                                    decoration: BoxDecoration(
+                                      gradient: const LinearGradient(
+                                        colors: [
+                                          TombolaColorConstants.gradient2,
+                                          TombolaColorConstants.textDark,
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: TombolaColorConstants
+                                                .textDark
+                                                .withOpacity(0.5),
+                                            blurRadius: 10,
+                                            offset: const Offset(2, 3))
                                       ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
                                     ),
-                                    borderRadius: BorderRadius.circular(15),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: TombolaColorConstants.textDark
-                                              .withOpacity(0.5),
-                                          blurRadius: 10,
-                                          offset: const Offset(2, 3))
-                                    ],
-                                  ),
-                                  child: const Center(
-                                    child: CircularProgressIndicator(
-                                        color: Colors.white),
+                                    child: Row(
+                                      children: const [
+                                        HeroIcon(HeroIcons.envelopeOpen,
+                                            color: Colors.white),
+                                        SizedBox(width: 15),
+                                        Text("Tirer",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
                                   )),
-                              onTap: onDelete,
-                              child: Container(
-                                height: 40,
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 7, horizontal: 12),
-                                decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      TombolaColorConstants.gradient2,
-                                      TombolaColorConstants.textDark,
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: TombolaColorConstants.textDark
-                                            .withOpacity(0.5),
-                                        blurRadius: 10,
-                                        offset: const Offset(2, 3))
-                                  ],
-                                ),
-                                child: Row(
-                                  children: const [
-                                    HeroIcon(HeroIcons.envelopeOpen,
-                                        color: Colors.white),
-                                    SizedBox(width: 15),
-                                    Text("Tirer",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold)),
-                                  ],
-                                ),
-                              )),
-                        )
+                            )
+                          : Container(
+                              height: 40,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 7, horizontal: 12),
+                              child: Row(
+                                children: const [
+                                  HeroIcon(HeroIcons.check,
+                                      color: Colors.white),
+                                  SizedBox(width: 15),
+                                  Text("Tiré",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)),
+                                ],
+                              ),
+                            )
                       : Expanded(
                           child: Column(
                             children: const [

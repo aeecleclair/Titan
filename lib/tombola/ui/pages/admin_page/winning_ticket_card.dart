@@ -36,7 +36,7 @@ class WinningTicketUI extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
-              "${ticket.winningLot!.name} €",
+              "${ticket.lot!.name} €",
               style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,

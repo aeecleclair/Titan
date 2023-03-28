@@ -3,10 +3,12 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/lot.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
+import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/lot_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
+import 'package:myecl/tombola/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/lot_card.dart';
 import 'package:myecl/tools/functions.dart';
@@ -23,9 +25,55 @@ class LotHandler extends HookConsumerWidget {
     final lotNotifier = ref.watch(lotProvider.notifier);
     final lotsNotifier = ref.watch(lotListProvider.notifier);
     final lotList = ref.watch(lotListProvider);
+    final winningTicketListNotifier =
+        ref.watch(winningTicketListProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
+    }
+
+    void displayWinningsDialog(List<Ticket> winningTickets) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
+              child: Container(
+                height: 100 + winningTickets.length * 32.0,
+                padding: const EdgeInsets.all(30.0),
+                child: Column(
+                  children: [
+                    Text(
+                      "Gagnant${winningTickets.length > 1 ? 's' : ''}",
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: TombolaColorConstants.textDark),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: winningTickets.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Center(
+                              child: Text(
+                                winningTickets[index].user.getName(),
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: TombolaColorConstants.textDark),
+                              ),
+                            ),
+                          );
+                        }),
+                  ],
+                ),
+              ),
+            );
+          });
     }
 
     return Column(
@@ -138,6 +186,38 @@ class LotHandler extends HookConsumerWidget {
                                     .setTombolaPage(TombolaPage.addEditLot);
                               },
                               status: raffle.raffleStatusType,
+                              onDraw: () async {
+                                await showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogBox(
+                                          title: "Tirage",
+                                          descriptions:
+                                              "Tirer le gagnant de ce lot ?",
+                                          onYes: () {
+                                            tokenExpireWrapper(ref, () async {
+                                              final value =
+                                                  await winningTicketListNotifier
+                                                      .drawLot(e);
+                                              value.when(
+                                                  data: (winningTicketList) {
+                                                    print(
+                                                        "winningTicketList : $winningTicketList");
+                                                    lotsNotifier.updateLot(e
+                                                        .copyWith(quantity: 0));
+                                                    displayWinningsDialog(
+                                                        winningTicketList);
+                                                  },
+                                                  error: (e, s) {
+                                                    displayToastWithContext(
+                                                        TypeMsg.error,
+                                                        TombolaTextConstants
+                                                            .drawingError);
+                                                  },
+                                                  loading: () {});
+                                            });
+                                          },
+                                        ));
+                              },
                             ),
                           )
                           .toList(),
