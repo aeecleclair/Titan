@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/tools/amap_backgorund_painter.dart';
+import 'package:myecl/tombola/tools/winning_ticket_backgorund_painter.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 
 class TicketCardBackground extends HookConsumerWidget {

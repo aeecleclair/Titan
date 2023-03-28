@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/lot.dart';
+import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/lot_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
@@ -48,46 +49,47 @@ class LotHandler extends HookConsumerWidget {
             const SizedBox(
               width: 10,
             ),
-            GestureDetector(
-              onTap: () {
-                lotNotifier.setLot(Lot.empty());
-                pageNotifier.setTombolaPage(TombolaPage.addEditLot);
-              },
-              child: Container(
-                  margin: const EdgeInsets.only(left: 5.0, bottom: 10),
-                  padding: const EdgeInsets.all(12.0),
-                  child: Container(
-                    width: 100,
-                    height: 125,
-                    decoration: BoxDecoration(
-                      gradient: const RadialGradient(
-                        colors: [
-                          Color(0xff0193a5),
-                          Color(0xff004a59),
-                        ],
-                        center: Alignment.topLeft,
-                        radius: 1.2,
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color:
-                              TombolaColorConstants.textDark.withOpacity(0.2),
-                          spreadRadius: 5,
-                          blurRadius: 10,
-                          offset: const Offset(3, 3),
+            if (raffle.raffleStatusType == RaffleStatusType.creation)
+              GestureDetector(
+                onTap: () {
+                  lotNotifier.setLot(Lot.empty());
+                  pageNotifier.setTombolaPage(TombolaPage.addEditLot);
+                },
+                child: Container(
+                    margin: const EdgeInsets.only(left: 5.0, bottom: 10),
+                    padding: const EdgeInsets.all(12.0),
+                    child: Container(
+                      width: 100,
+                      height: 125,
+                      decoration: BoxDecoration(
+                        gradient: const RadialGradient(
+                          colors: [
+                            Color(0xff0193a5),
+                            Color(0xff004a59),
+                          ],
+                          center: Alignment.topLeft,
+                          radius: 1.2,
                         ),
-                      ],
-                    ),
-                    child: const Center(
-                      child: HeroIcon(
-                        HeroIcons.plus,
-                        color: Colors.white,
-                        size: 50,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                TombolaColorConstants.textDark.withOpacity(0.2),
+                            spreadRadius: 5,
+                            blurRadius: 10,
+                            offset: const Offset(3, 3),
+                          ),
+                        ],
                       ),
-                    ),
-                  )),
-            ),
+                      child: const Center(
+                        child: HeroIcon(
+                          HeroIcons.plus,
+                          color: Colors.white,
+                          size: 50,
+                        ),
+                      ),
+                    )),
+              ),
             lotList.when(data: (lots) {
               return lots.isEmpty
                   ? const Center(

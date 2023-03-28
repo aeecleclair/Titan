@@ -24,7 +24,7 @@ class TicketUI extends HookConsumerWidget {
       Container(
         width: 130,
         height: 125,
-        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 17),
         decoration: BoxDecoration(
             boxShadow: [

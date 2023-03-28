@@ -51,37 +51,39 @@ class TicketHandler extends HookConsumerWidget {
                 width: 15,
                 height: 125,
               ),
-              GestureDetector(
-                  onTap: () {
-                    typeTicketNotifier.setLot(TypeTicket.empty());
-                    pageNotifier.setTombolaPage(TombolaPage.addEditTypeTicket);
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        left: 12.0, right: 12.0, bottom: 12, top: 8),
-                    padding: const EdgeInsets.all(12.0),
-                    height: 125,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: TombolaColorConstants.ticketback,
-                      boxShadow: [
-                        BoxShadow(
-                          color:
-                              TombolaColorConstants.ticketback.withOpacity(0.3),
-                          blurRadius: 8,
-                          offset: const Offset(2, 3),
-                        ),
-                      ],
-                    ),
-                    child: const Center(
-                      child: HeroIcon(
-                        HeroIcons.plus,
-                        color: Colors.white,
-                        size: 50,
+              if (raffle.raffleStatusType == RaffleStatusType.creation)
+                GestureDetector(
+                    onTap: () {
+                      typeTicketNotifier.setLot(TypeTicket.empty());
+                      pageNotifier
+                          .setTombolaPage(TombolaPage.addEditTypeTicket);
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          left: 12.0, right: 12.0, bottom: 12, top: 8),
+                      padding: const EdgeInsets.all(12.0),
+                      height: 125,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: TombolaColorConstants.ticketback,
+                        boxShadow: [
+                          BoxShadow(
+                            color: TombolaColorConstants.ticketback
+                                .withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(2, 3),
+                          ),
+                        ],
                       ),
-                    ),
-                  )),
+                      child: const Center(
+                        child: HeroIcon(
+                          HeroIcons.plus,
+                          color: Colors.white,
+                          size: 50,
+                        ),
+                      ),
+                    )),
               typeTickets.when(
                 data: (data) {
                   return Row(
