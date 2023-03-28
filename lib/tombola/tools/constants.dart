@@ -103,4 +103,6 @@ class TombolaTextConstants {
   static const String noCurrentTombola = "Il n'y a aucune tombola en cours";
 
   static const String boughtTicket = "Ticket acheté";
+
+  static const String drawingError = "Erreur lors du tirage";
 }

@@ -13,7 +13,7 @@ class TicketWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isWinningTicket = ticket.winningLot != null;
+    final isWinningTicket = ticket.lot != null;
     return Stack(children: [
       TicketCardBackground(
           isWinningTicket: isWinningTicket,

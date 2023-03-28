@@ -6,18 +6,18 @@ class Ticket {
   Ticket({
     required this.typeTicket,
     required this.user,
-    required this.winningLot,
+    required this.lot,
     required this.id,
   });
   late final TypeTicketSimple typeTicket;
   late final SimpleUser user;
-  late final Lot? winningLot;
+  late final Lot? lot;
   late final String id;
 
   Ticket.fromJson(Map<String, dynamic> json) {
     typeTicket = TypeTicketSimple.fromJson(json['type_ticket']);
     user = SimpleUser.fromJson(json['user']);
-    winningLot = json['lot'] != null ? Lot.fromJson(json['lot']) : null;
+    lot = json['lot'] != null ? Lot.fromJson(json['lot']) : null;
     id = json['id'];
   }
 
@@ -25,7 +25,7 @@ class Ticket {
     final data = <String, dynamic>{};
     data['type_id'] = typeTicket.id;
     data['user_id'] = user.id;
-    data['lot'] = winningLot != null ? winningLot!.id : null;
+    data['lot'] = lot != null ? lot!.id : null;
     data['id'] = id;
     return data;
   }
@@ -33,7 +33,7 @@ class Ticket {
   Ticket copyWith({
     TypeTicketSimple? typeTicket,
     SimpleUser? user,
-    Lot? winningLot,
+    Lot? lot,
     String? id,
     int? unitPrice,
     int? nbTicket,
@@ -41,18 +41,18 @@ class Ticket {
       Ticket(
           typeTicket: typeTicket ?? this.typeTicket,
           user: user ?? this.user,
-          winningLot: winningLot,
+          lot: lot,
           id: id ?? this.id,);
 
   Ticket.empty() {
     typeTicket = TypeTicketSimple.empty();
     user = SimpleUser.empty();
-    winningLot = null;
+    lot = null;
     id = '';
   }
 
   @override
   String toString() {
-    return 'Ticket(typeTicket: $typeTicket, user: $user, winningLot: $winningLot, id: $id)';
+    return 'Ticket(typeTicket: $typeTicket, user: $user, lot: $lot, id: $id)';
   }
 }
