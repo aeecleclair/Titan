@@ -91,9 +91,15 @@ class LotHandler extends HookConsumerWidget {
                     )),
               ),
             lotList.when(data: (lots) {
+              lots = lots
+                  .where((element) => element.raffleId == raffle.id)
+                  .toList();
               return lots.isEmpty
-                  ? const Center(
-                      child: Text("Aucun produit"),
+                  ? const SizedBox(
+                      height: 150,
+                      child: Center(
+                        child: Text("Aucun Lot"),
+                      ),
                     )
                   : Row(
                       children: lots

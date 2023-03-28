@@ -12,6 +12,7 @@ import 'package:myecl/tombola/ui/blue_btn.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/account_handler.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/ticket_handler.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/lot_handler.dart';
+import 'package:myecl/tombola/ui/pages/admin_page/winning_ticket_handler.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/refresher.dart';
@@ -41,7 +42,9 @@ class AdminPage extends HookConsumerWidget {
             const SizedBox(
               height: 12,
             ),
-            const TicketHandler(),
+            raffle.raffleStatusType != RaffleStatusType.locked
+                ? const TicketHandler()
+                : const WinningTicketHandler(),
             const SizedBox(
               height: 12,
             ),
@@ -75,16 +78,16 @@ class AdminPage extends HookConsumerWidget {
                                           case RaffleStatusType.creation:
                                             await raffleListNotifier.openRaffle(
                                                 raffle.copyWith(
-                                                  description: raffle
-                                                      .description,
+                                                    description:
+                                                        raffle.description,
                                                     raffleStatusType:
                                                         RaffleStatusType.open));
                                             break;
                                           case RaffleStatusType.open:
                                             await raffleListNotifier.lockRaffle(
                                               raffle.copyWith(
-                                                  description: raffle
-                                                      .description,
+                                                  description:
+                                                      raffle.description,
                                                   raffleStatusType:
                                                       RaffleStatusType.locked),
                                             );
