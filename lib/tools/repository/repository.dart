@@ -174,6 +174,7 @@ abstract class Repository {
   Future<dynamic> create(dynamic t, {String suffix = ""}) async {
     final response = await http.post(Uri.parse(host + ext + suffix),
         headers: headers, body: jsonEncode(t));
+    print(response.body);
     if (response.statusCode == 201) {
       try {
         String toDecode = response.body;

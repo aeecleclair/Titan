@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:myecl/tombola/class/lot.dart';
 import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/lot_provider.dart';
+import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/blue_btn.dart';
@@ -19,6 +20,7 @@ class AddEditLotPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
+    final raffle = ref.watch(raffleProvider);
     final lot = ref.watch(lotProvider);
     final isEdit = lot.id != Lot.empty().id;
     final quantity = useTextEditingController(
@@ -132,7 +134,9 @@ class AddEditLotPage extends HookConsumerWidget {
                                   final newlot = lot.copyWith(
                                       name: name.text,
                                       description: description.text,
+                                      raffleId: isEdit ? lot.raffleId : raffle.id,
                                       quantity: int.parse(quantity.text));
+                                  print(newlot.toJson());
                                   final lotNotifier = ref
                                       .watch(lotListProvider.notifier);
                                   final value = isEdit
@@ -158,7 +162,7 @@ class AddEditLotPage extends HookConsumerWidget {
                                       displayToastWithContext(
                                           TypeMsg.error,
                                           TombolaTextConstants
-                                              .alreadyExistTicket);
+                                              .addingError);
                                     }
                                   }
                                 });
