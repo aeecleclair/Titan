@@ -24,7 +24,7 @@ class TombolaWidget extends HookConsumerWidget {
           raffleIdNotifier.setId(raffle.id);
           lotListNotifier.loadLotList();
           ticketListNotifier.loadTicketList();
-          typeTicketListNotifier.loadTypeTicketList();
+          typeTicketListNotifier.loadTypeTicketSimpleList();
           pageNotifier.setTombolaPage(TombolaPage.detail);
         },
         behavior: HitTestBehavior.opaque,

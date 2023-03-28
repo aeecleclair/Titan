@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
-import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/class/type_ticket_simple.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/ticket_type_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
@@ -54,9 +54,9 @@ class TicketHandler extends HookConsumerWidget {
               if (raffle.raffleStatusType == RaffleStatusType.creation)
                 GestureDetector(
                     onTap: () {
-                      typeTicketNotifier.setLot(TypeTicket.empty());
+                      typeTicketNotifier.setLot(TypeTicketSimple.empty());
                       pageNotifier
-                          .setTombolaPage(TombolaPage.addEditTypeTicket);
+                          .setTombolaPage(TombolaPage.addEditTypeTicketSimple);
                     },
                     child: Container(
                       margin: const EdgeInsets.only(
@@ -93,7 +93,7 @@ class TicketHandler extends HookConsumerWidget {
                                 onEdit: () {
                                   typeTicketNotifier.setLot(e);
                                   pageNotifier.setTombolaPage(
-                                      TombolaPage.addEditTypeTicket);
+                                      TombolaPage.addEditTypeTicketSimple);
                                 },
                                 showButton: raffle.raffleStatusType ==
                                     RaffleStatusType.creation,
@@ -108,7 +108,7 @@ class TicketHandler extends HookConsumerWidget {
                                               tokenExpireWrapper(ref, () async {
                                                 final value =
                                                     await typeTicketsNotifier
-                                                        .deleteTypeTicket(e);
+                                                        .deleteTypeTicketSimple(e);
                                                 if (value) {
                                                   displayToastWithContext(
                                                       TypeMsg.msg,

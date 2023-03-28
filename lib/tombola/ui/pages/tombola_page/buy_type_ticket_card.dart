@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
-import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/class/type_ticket_simple.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/confirm_payment.dart';
 
-class BuyTypeTicket extends HookConsumerWidget {
-  final TypeTicket typeTicket;
+class BuyTypeTicketSimple extends HookConsumerWidget {
+  final TypeTicketSimple typeTicket;
   final Raffle raffle;
-  const BuyTypeTicket(
+  const BuyTypeTicketSimple(
       {Key? key, required this.typeTicket,
       required this.raffle})
       : super(key: key);

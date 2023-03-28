@@ -1,19 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/raffle.dart';
-import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/class/type_ticket_simple.dart';
 import 'package:myecl/tombola/providers/raffle_id_provider.dart';
 import 'package:myecl/tombola/repositories/raffle_detail_repository.dart';
 import 'package:myecl/tombola/repositories/type_ticket_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class TypeTicketsListNotifier extends ListNotifier<TypeTicket> {
-  final TypeTicketRepository _typeTicketsRepository = TypeTicketRepository();
+class TypeTicketSimplesListNotifier extends ListNotifier<TypeTicketSimple> {
+  final TypeTicketSimpleRepository _typeTicketsRepository = TypeTicketSimpleRepository();
   final RaffleDetailRepository _raffleDetailRepository =
       RaffleDetailRepository();
   late String raffleId;
-  TypeTicketsListNotifier({required String token})
+  TypeTicketSimplesListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _typeTicketsRepository.setToken(token);
     _raffleDetailRepository.setToken(token);
@@ -23,42 +23,42 @@ class TypeTicketsListNotifier extends ListNotifier<TypeTicket> {
     raffleId = id;
   }
 
-  Future<AsyncValue<List<TypeTicket>>> loadTypeTicketList() async {
+  Future<AsyncValue<List<TypeTicketSimple>>> loadTypeTicketSimpleList() async {
     return await loadList(() async =>
-        _raffleDetailRepository.getTypeTicketListFromRaffle(raffleId));
+        _raffleDetailRepository.getTypeTicketSimpleListFromRaffle(raffleId));
   }
 
-  Future<bool> addTypeTicket(TypeTicket typeTicket) async {
-    return add(_typeTicketsRepository.createTypeTicket, typeTicket);
+  Future<bool> addTypeTicketSimple(TypeTicketSimple typeTicket) async {
+    return add(_typeTicketsRepository.createTypeTicketSimple, typeTicket);
   }
 
-  Future<bool> deleteTypeTicket(TypeTicket typeTicket) async {
+  Future<bool> deleteTypeTicketSimple(TypeTicketSimple typeTicket) async {
     return delete(
-      _typeTicketsRepository.deleteTypeTicket,
+      _typeTicketsRepository.deleteTypeTicketSimple,
       (typeTickets, t) => typeTickets..removeWhere((e) => e.id == t.id),
       typeTicket.id,
       typeTicket,
     );
   }
 
-  Future<bool> updateTypeTicket(TypeTicket typeTicket) async {
+  Future<bool> updateTypeTicketSimple(TypeTicketSimple typeTicket) async {
     return update(
-        _typeTicketsRepository.updateTypeTicket,
+        _typeTicketsRepository.updateTypeTicketSimple,
         (typeTickets, t) =>
             typeTickets..[typeTickets.indexWhere((e) => e.id == t.id)] = t,
         typeTicket);
   }
 }
 
-final typeTicketsListProvider = StateNotifierProvider<TypeTicketsListNotifier,
-    AsyncValue<List<TypeTicket>>>((ref) {
+final typeTicketsListProvider = StateNotifierProvider<TypeTicketSimplesListNotifier,
+    AsyncValue<List<TypeTicketSimple>>>((ref) {
   final token = ref.watch(tokenProvider);
-  final notifier = TypeTicketsListNotifier(token: token);
+  final notifier = TypeTicketSimplesListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     final raffleId = ref.watch(raffleIdProvider);
     if (raffleId != Raffle.empty().id) {
       notifier.setRaffleId(raffleId);
-      notifier.loadTypeTicketList();
+      notifier.loadTypeTicketSimpleList();
     }
   });
   return notifier;

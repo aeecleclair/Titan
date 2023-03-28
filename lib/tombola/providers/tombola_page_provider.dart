@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum TombolaPage {
   main,
-  addEditTypeTicket,
+  addEditTypeTicketSimple,
   addEditLot,
   detail,
   admin,

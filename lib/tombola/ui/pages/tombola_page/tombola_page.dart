@@ -71,7 +71,7 @@ class TombolaInfoPage extends HookConsumerWidget {
                           return Container(
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 10),
-                              child: BuyTypeTicket(
+                              child: BuyTypeTicketSimple(
                                   typeTicket: typeTickets[index - 1],
                                   raffle: raffle));
                         }));

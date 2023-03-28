@@ -1,7 +1,7 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/class/type_ticket_simple.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/ticket_type_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
@@ -13,8 +13,8 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
-class AddEditTypeTicketPage extends HookConsumerWidget {
-  const AddEditTypeTicketPage({Key? key}) : super(key: key);
+class AddEditTypeTicketSimplePage extends HookConsumerWidget {
+  const AddEditTypeTicketSimplePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +22,7 @@ class AddEditTypeTicketPage extends HookConsumerWidget {
     final raffle = ref.watch(raffleProvider);
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final typeTicket = ref.watch(typeTicketProvider);
-    final isEdit = typeTicket.id != TypeTicket.empty().id;
+    final isEdit = typeTicket.id != TypeTicketSimple.empty().id;
     final quantity = useTextEditingController(
         text: isEdit ? typeTicket.value.toString() : "");
     final price = useTextEditingController(
@@ -50,7 +50,7 @@ class AddEditTypeTicketPage extends HookConsumerWidget {
                         const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            TombolaTextConstants.addTypeTicket,
+                            TombolaTextConstants.addTypeTicketSimple,
                             style: TextStyle(
                               fontWeight: FontWeight.w800,
                               fontSize: 25,
@@ -118,7 +118,7 @@ class AddEditTypeTicketPage extends HookConsumerWidget {
                             onTap: () async {
                               if (formKey.currentState!.validate()) {
                                 await tokenExpireWrapper(ref, () async {
-                                  final newTypeTicket = typeTicket.copyWith(
+                                  final newTypeTicketSimple = typeTicket.copyWith(
                                       price: double.parse(price.text),
                                       value: int.parse(quantity.text),
                                       raffleId: isEdit
@@ -129,9 +129,9 @@ class AddEditTypeTicketPage extends HookConsumerWidget {
                                       .watch(typeTicketsListProvider.notifier);
                                   final value = isEdit
                                       ? await typeTicketNotifier
-                                          .updateTypeTicket(newTypeTicket)
+                                          .updateTypeTicketSimple(newTypeTicketSimple)
                                       : await typeTicketNotifier
-                                          .addTypeTicket(newTypeTicket);
+                                          .addTypeTicketSimple(newTypeTicketSimple);
                                   if (value) {
                                     pageNotifier
                                         .setTombolaPage(TombolaPage.admin);
@@ -161,8 +161,8 @@ class AddEditTypeTicketPage extends HookConsumerWidget {
                             },
                             child: BlueBtn(
                                 text: isEdit
-                                    ? TombolaTextConstants.editTypeTicket
-                                    : TombolaTextConstants.addTypeTicket)),
+                                    ? TombolaTextConstants.editTypeTicketSimple
+                                    : TombolaTextConstants.addTypeTicketSimple)),
                         const SizedBox(
                           height: 40,
                         ),
