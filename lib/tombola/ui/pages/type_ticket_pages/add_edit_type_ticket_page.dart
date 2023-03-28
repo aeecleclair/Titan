@@ -20,6 +20,7 @@ class AddEditTypeTicketPage extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final typeTicket = ref.watch(typeTicketProvider);
+    print(typeTicket);
     final isEdit = typeTicket.id != TypeTicket.empty().id;
     final quantity = useTextEditingController(
         text: isEdit ? typeTicket.value.toString() : "");
@@ -118,7 +119,8 @@ class AddEditTypeTicketPage extends HookConsumerWidget {
                                 await tokenExpireWrapper(ref, () async {
                                   final newTypeTicket = typeTicket.copyWith(
                                       price: int.parse(price.text),
-                                      value: int.parse(quantity.text));
+                                      value: int.parse(quantity.text),
+                                      id: isEdit ? typeTicket.id : "");
                                   final typeTicketNotifier = ref
                                       .watch(typeTicketsListProvider.notifier);
                                   final value = isEdit
