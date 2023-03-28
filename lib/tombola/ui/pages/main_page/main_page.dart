@@ -80,37 +80,43 @@ class MainPage extends HookConsumerWidget {
             height: 10,
           ),
           userTicketList.when(
-              data: (tickets) {
-                return tickets.isEmpty
-                    ? const Center(
-                        child: Text(TombolaTextConstants.noTicket),
-                      )
-                    : SizedBox(
-                        height: 210,
-                        child: ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: tickets.length + 2,
-                            itemBuilder: (context, index) {
-                              if (index == 0 || index == tickets.length + 1) {
-                                return const SizedBox(
-                                  width: 15,
-                                );
-                              }
-                              return Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  child: TicketWidget(
-                                    ticket: tickets[index - 1],
-                                  ));
-                            }));
-              },
-              loading: () => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-              error: (error, stack) => const Center(
-                    child: Text('Error'),
-                  )),
+            data: (tickets) {
+              return tickets.isEmpty
+                  ? const Center(
+                      child: Text(TombolaTextConstants.noTicket),
+                    )
+                  : SizedBox(
+                      height: 210,
+                      child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: tickets.length + 2,
+                          itemBuilder: (context, index) {
+                            if (index == 0 || index == tickets.length + 1) {
+                              return const SizedBox(
+                                width: 15,
+                              );
+                            }
+                            return Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: TicketWidget(
+                                  ticket: tickets[index - 1],
+                                ));
+                          }));
+            },
+            loading: () => const SizedBox(
+              height: 120,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+            error: (error, stack) => SizedBox(
+                height: 120,
+                child: Center(
+                  child: Text('Error $error', style: TextStyle(fontSize: 20)),
+                )),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: raffleList.when(
@@ -194,13 +200,18 @@ class MainPage extends HookConsumerWidget {
                     ],
                   );
                 },
-                error: (Object error, StackTrace stackTrace) =>
-                    Center(child: Text("Error $error")),
+                error: (Object error, StackTrace stackTrace) => Center(
+                    child: SizedBox(
+                        height: 120,
+                        child: Text("Error $error",
+                            style: const TextStyle(fontSize: 20)))),
                 loading: () => const Center(
+                        child: SizedBox(
+                      height: 120,
                       child: CircularProgressIndicator(
                         color: Colors.black,
                       ),
-                    )),
+                    ))),
           ),
         ],
       ),
