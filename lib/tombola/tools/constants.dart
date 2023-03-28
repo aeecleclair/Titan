@@ -32,9 +32,9 @@ class TombolaTextConstants {
   static const String majorPrize = "Lot Majeurs";
   static const String takeTickets = "Prendre vos tickets";
   static const String noTicketBuyable =
-      "Vous ne pouvez pas achetez de billets pour l'instant, voir avec les organisateurs de la tombola";
+      "Vous ne pouvez pas achetez de billets pour l'instant";
   static const String noPrize =
-      "Il n'y a aucun lots actuellement, honte aux organisateurs de la tombola";
+      "Il n'y a aucun lots actuellement";
   //Create Home
   static const String modifTombola =
       "Vous pouvez modifiez vos tombolas ou en créer de nouvelles, toute décision doit ensuite être prise par les admins";

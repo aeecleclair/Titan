@@ -41,7 +41,7 @@ class TombolaInfoPage extends HookConsumerWidget {
       Container(
           margin: const EdgeInsets.only(left: 30, top: 20),
           child: Text(
-            solde.when(
+              solde.when(
                   data: (s) =>
                       "Solde : ${s.balance.toStringAsFixed(2)}€", //Attention là c'est les soldes AMAP à finir
                   error: (e, s) => "Erreur",
@@ -52,13 +52,16 @@ class TombolaInfoPage extends HookConsumerWidget {
                   color: TombolaColorConstants.gradient2))),
       typeTicketList.when(
           data: (typeTickets) {
-            return typeTickets.isEmpty
-                ? const Center(
-                    child: Text(TombolaTextConstants.noTicketBuyable),
-                  )
-                : SizedBox(
-                    height: 190,
-                    child: ListView.builder(
+            return SizedBox(
+                height: 190,
+                child: typeTickets.isEmpty
+                    ? Container(
+                        height: 190,
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: const Text(TombolaTextConstants.noTicketBuyable),
+                      )
+                    : ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         itemCount: typeTickets.length + 2,
@@ -76,19 +79,39 @@ class TombolaInfoPage extends HookConsumerWidget {
                                   raffle: raffle));
                         }));
           },
-          loading: () => const Center(
+          loading: () => Container(
+              height: 190,
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: const Center(
                 child: CircularProgressIndicator(),
-              ),
-          error: (error, stack) => const Center(
-                child: Text('Error'),
+              )),
+          error: (error, stack) => Container(
+                height: 190,
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Text('Error $error'),
               )),
       lotsList.when(
           data: (lots) {
-            lots = lots.where((element) => element.raffleId == raffle.id).toList();
+            lots =
+                lots.where((element) => element.raffleId == raffle.id).toList();
             return lots.isEmpty
-                ? const Center(
-                    child: Text(TombolaTextConstants.noPrize),
-                  )
+                ? Container(
+                    height: 120,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 30),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(TombolaTextConstants.actualPrize,
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color: TombolaColorConstants.gradient2,
+                                  fontWeight: FontWeight.bold)),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(TombolaTextConstants.noPrize),
+                        ]))
                 : Column(children: [
                     Container(
                         padding: const EdgeInsets.symmetric(
@@ -124,12 +147,40 @@ class TombolaInfoPage extends HookConsumerWidget {
                             }))
                   ]);
           },
-          loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
-          error: (error, stack) => const Center(
-                child: Text('Error'),
-              )),
+          loading: () => Container(
+              height: 120,
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(TombolaTextConstants.actualPrize,
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: TombolaColorConstants.gradient2,
+                            fontWeight: FontWeight.bold)),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  ])),
+          error: (error, stack) => Container(
+              height: 120,
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(TombolaTextConstants.actualPrize,
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: TombolaColorConstants.gradient2,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text('Error $error'),
+                  ]))),
       if (raffle.description != null)
         Container(
           padding:
