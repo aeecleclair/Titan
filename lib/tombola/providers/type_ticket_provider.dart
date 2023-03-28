@@ -3,16 +3,20 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
 import 'package:myecl/tombola/providers/raffle_id_provider.dart';
+import 'package:myecl/tombola/repositories/raffle_detail_repository.dart';
 import 'package:myecl/tombola/repositories/type_ticket_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class TypeTicketsListNotifier extends ListNotifier<TypeTicket> {
   final TypeTicketRepository _typeTicketsRepository = TypeTicketRepository();
+  final RaffleDetailRepository _raffleDetailRepository =
+      RaffleDetailRepository();
   late String raffleId;
   TypeTicketsListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _typeTicketsRepository.setToken(token);
+    _raffleDetailRepository.setToken(token);
   }
 
   void setRaffleId(String id) {
@@ -20,21 +24,18 @@ class TypeTicketsListNotifier extends ListNotifier<TypeTicket> {
   }
 
   Future<AsyncValue<List<TypeTicket>>> loadTypeTicketList() async {
-    return await loadList(
-        () async => _typeTicketsRepository.getTypeTicketsList(raffleId));
+    return await loadList(() async =>
+        _raffleDetailRepository.getTypeTicketListFromRaffle(raffleId));
   }
 
   Future<bool> addTypeTicket(TypeTicket typeTicket) async {
-    return add(
-      _typeTicketsRepository.createTypeTicket,
-      typeTicket);
+    return add(_typeTicketsRepository.createTypeTicket, typeTicket);
   }
 
   Future<bool> deleteTypeTicket(TypeTicket typeTicket) async {
     return delete(
       _typeTicketsRepository.deleteTypeTicket,
-      (typeTickets, t) =>
-          typeTickets..removeWhere((e) => e.id == t.id),
+      (typeTickets, t) => typeTickets..removeWhere((e) => e.id == t.id),
       typeTicket.id,
       typeTicket,
     );
@@ -43,8 +44,8 @@ class TypeTicketsListNotifier extends ListNotifier<TypeTicket> {
   Future<bool> updateTypeTicket(TypeTicket typeTicket) async {
     return update(
         _typeTicketsRepository.updateTypeTicket,
-        (typeTickets, t) => typeTickets
-          ..[typeTickets.indexWhere((e) => e.id == t.id)] = t,
+        (typeTickets, t) =>
+            typeTickets..[typeTickets.indexWhere((e) => e.id == t.id)] = t,
         typeTicket);
   }
 }
@@ -62,4 +63,3 @@ final typeTicketsListProvider = StateNotifierProvider<TypeTicketsListNotifier,
   });
   return notifier;
 });
-
