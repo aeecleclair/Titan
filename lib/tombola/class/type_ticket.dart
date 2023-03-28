@@ -13,15 +13,17 @@ class TypeTicket {
   late final String id;
 
   TypeTicket.fromJson(Map<String, dynamic> json) {
-    raffle = Raffle.fromJson(json['raffle']);
+    raffle = json['raffle'] != null
+        ? Raffle.fromJson(json['raffle'])
+        : Raffle.empty().copyWith(id: json['raffle_id']);
     price = json['price'];
-    value = json['nb_valueticket'];
+    value = json['value'];
     id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['raffle_id'] = raffle.toJson();
+    data['raffle_id'] = raffle.id;
     data['price'] = price;
     data['value'] = value;
     data['id'] = id;
