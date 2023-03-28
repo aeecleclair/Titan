@@ -19,7 +19,7 @@ class Raffle {
   Raffle.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     group = SimpleGroup.fromJson(json['group']);
-    raffleStatusType = stringToRaffleStatusType(json['raffles_status_type']);
+    raffleStatusType = stringToRaffleStatusType(json['status']);
     id = json['id'];
     description = json['description'];
   }
@@ -28,7 +28,7 @@ class Raffle {
     final data = <String, dynamic>{};
     data['name'] = name;
     data['group_id'] = group.id;
-    data['raffles_status_type'] = raffleStatusTypeToString(raffleStatusType);
+    data['status'] = raffleStatusTypeToString(raffleStatusType);
     data['id'] = id;
     data['description'] = description;
     return data;
