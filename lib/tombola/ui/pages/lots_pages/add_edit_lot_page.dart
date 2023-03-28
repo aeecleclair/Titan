@@ -102,7 +102,7 @@ class AddEditLotPage extends HookConsumerWidget {
                               return null;
                             },
                             textEditingController: name,
-                            keyboardType: TextInputType.number),
+                            keyboardType: TextInputType.text),
                         const SizedBox(
                           height: 50,
                         ),
@@ -119,7 +119,7 @@ class AddEditLotPage extends HookConsumerWidget {
                         TextEntry(
                             validator: (value) => null,
                             textEditingController: description,
-                            keyboardType: TextInputType.number),
+                            keyboardType: TextInputType.text),
                         const SizedBox(
                           height: 50,
                         ),

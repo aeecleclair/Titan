@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/providers/cash_provider.dart';
 import 'package:myecl/tombola/providers/focus_provider.dart';
-import 'package:myecl/tombola/providers/searching_amap_user_provider.dart';
+import 'package:myecl/tombola/providers/searching_raffle_user_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/adding_user_container.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/cash_container.dart';

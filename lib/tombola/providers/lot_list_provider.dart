@@ -30,12 +30,14 @@ class LotListNotifier extends ListNotifier<Lot> {
   }
 
   Future<bool> addLot(Lot lot) async {
-    return await add(_lotRepository.createLot, lot);
+    // return await add(_lotRepository.createLot, lot);
+    return await add((l) async => lot , lot);
   }
 
   Future<bool> deleteLot(Lot lot) async {
     return await delete(
-      _lotRepository.deleteLot,
+      // _lotRepository.deleteLot,
+      (_) async => true,
       (lot, t) => lot..removeWhere((e) => e.id == t.id),
       lot.id,
       lot,
@@ -43,7 +45,9 @@ class LotListNotifier extends ListNotifier<Lot> {
   }
 
   Future<bool> updateLot(Lot lot) async {
-    return await update(_lotRepository.updateLot,
+    return await update(
+      // _lotRepository.updateLot,
+      (_) async => true,
         (lot, t) => lot..[lot.indexWhere((e) => e.id == t.id)] = t, lot);
   }
 }
