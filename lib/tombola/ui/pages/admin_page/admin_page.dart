@@ -75,12 +75,16 @@ class AdminPage extends HookConsumerWidget {
                                           case RaffleStatusType.creation:
                                             await raffleListNotifier.openRaffle(
                                                 raffle.copyWith(
+                                                  description: raffle
+                                                      .description,
                                                     raffleStatusType:
                                                         RaffleStatusType.open));
                                             break;
                                           case RaffleStatusType.open:
                                             await raffleListNotifier.lockRaffle(
                                               raffle.copyWith(
+                                                  description: raffle
+                                                      .description,
                                                   raffleStatusType:
                                                       RaffleStatusType.locked),
                                             );

@@ -3,15 +3,16 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tombola/providers/raffle_id_provider.dart';
-import 'package:myecl/tombola/repositories/tickets_repository.dart';
+import 'package:myecl/tombola/repositories/raffle_detail_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 
 class TicketsListNotifier extends ListNotifier<Ticket> {
-  final TicketRepository _ticketsRepository = TicketRepository();
+  final RaffleDetailRepository _raffleDetailRepository =
+      RaffleDetailRepository();
   late String raffleId;
   TicketsListNotifier({required String token})
       : super(const AsyncValue.loading()) {
-    _ticketsRepository.setToken(token);
+    _raffleDetailRepository.setToken(token);
   }
 
   void setId(String id) {
@@ -20,10 +21,8 @@ class TicketsListNotifier extends ListNotifier<Ticket> {
 
   Future<AsyncValue<List<Ticket>>> loadTicketList() async {
     return await loadList(
-        () async => _ticketsRepository.getTicketsListbyRaffleId(raffleId)
-        );
+        () async => _raffleDetailRepository.getTicketListFromRaffle(raffleId));
   }
-
 }
 
 final ticketsListProvider =

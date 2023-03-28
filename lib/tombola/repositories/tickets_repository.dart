@@ -6,11 +6,6 @@ class TicketRepository extends Repository {
   // ignore: overridden_fields
   final ext = "tombola/tickets";
 
-  Future<List<Ticket>> getTicketsListbyRaffleId(String raffleId) async {
-    return List<Ticket>.from(
-        (await getList(suffix: "/$raffleId/")).map((x) => Ticket.fromJson(x)));
-  }
-
   Future<Ticket> getTicket(String id) async {
     return Ticket.fromJson(await getOne("/$id"));
   }
