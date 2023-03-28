@@ -10,7 +10,6 @@ import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
-import 'package:myecl/user/providers/user_provider.dart';
 
 class ConfirmPaymentDialog extends HookConsumerWidget {
   final TypeTicketSimple typeTicket;
@@ -21,7 +20,6 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final me = ref.watch(userProvider);
     final userAmount = ref.watch(userAmountProvider);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final userTicketListNotifier = ref.watch(userTicketListProvider.notifier);

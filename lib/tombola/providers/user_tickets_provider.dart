@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tombola/class/type_ticket_simple.dart';
-import 'package:myecl/tombola/repositories/raffle_detail_repository.dart';
 import 'package:myecl/tombola/repositories/tickets_repository.dart';
 import 'package:myecl/tombola/repositories/user_tickets_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
