@@ -19,14 +19,8 @@ class LotListNotifier extends ListNotifier<Lot> {
   }
 
   Future<AsyncValue<List<Lot>>> loadLotList() async {
-    // return await loadList(
-    //     () async => _lotRepository.getLotList(raffleId));
-    return state = AsyncData([
-      Lot(raffle: Raffle.empty(), id: "4", name: 'Petite voiture', quantity: 1, description: "Ceci est une Clio, c'est un beau cadeau pour une simple tombola quand même"),
-      Lot(raffle: Raffle.empty(), id: "1", name: 'Aspernatur', quantity: 5, description: ""),
-      Lot(raffle: Raffle.empty(), id: "2", name: 'Dolores', quantity: 3, description: null),
-      Lot(raffle: Raffle.empty(), id: "3", name: 'Chaise de Jardin', quantity: 7, description: "dsdgftgfygukilgkyfutdstbrqefsrydxtufy"),
-    ]);
+    return await loadList(
+        () async => _lotRepository.getLotList());
   }
 
   Future<bool> addLot(Lot lot) async {
