@@ -3,17 +3,19 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/lot.dart';
 import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/repositories/raffle_detail_repository.dart';
 import 'package:myecl/tombola/repositories/tickets_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class UserTicketListNotifier extends ListNotifier<Ticket> {
-  final TicketRepository _ticketsRepository = TicketRepository();
+  final RaffleDetailRepository _raffleDetailRepository =
+      RaffleDetailRepository();
   late String userId;
   UserTicketListNotifier({required String token})
       : super(const AsyncValue.loading()) {
-    _ticketsRepository.setToken(token);
+    _raffleDetailRepository.setToken(token);
   }
 
   void setId(String id) {
@@ -22,7 +24,7 @@ class UserTicketListNotifier extends ListNotifier<Ticket> {
 
   Future<AsyncValue<List<Ticket>>> loadTicketList() async {
     return await loadList(
-        () async => _ticketsRepository.getTicketsListbyUserId(userId));
+        () async => _raffleDetailRepository.getTicketListFromRaffle(userId));
   }
 }
 
