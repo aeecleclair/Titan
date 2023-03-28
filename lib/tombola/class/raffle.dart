@@ -49,7 +49,7 @@ class Raffle {
           description: description);
 
   Raffle.empty() {
-    name = 'Raffle';
+    name = '';
     group = SimpleGroup.empty();
     raffleStatusType = RaffleStatusType.creation;
     id = '';

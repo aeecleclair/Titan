@@ -33,12 +33,16 @@ class TypeTicketsListNotifier extends ListNotifier<TypeTicket> {
   }
 
   Future<bool> addTypeTicket(TypeTicket typeTicket) async {
-    return add(_typeTicketsRepository.createTypeTicket, typeTicket);
+    return add(
+      // _typeTicketsRepository.createTypeTicket,
+      (typeTicket) async => typeTicket,
+      typeTicket);
   }
 
   Future<bool> deleteTypeTicket(TypeTicket typeTicket) async {
     return delete(
-      _typeTicketsRepository.deleteTypeTicket,
+      // _typeTicketsRepository.deleteTypeTicket,
+      (typeTicket) async => true,
       (typeTickets, t) =>
           typeTickets..removeWhere((e) => e.value == t.value),
       typeTicket.id,
@@ -48,7 +52,8 @@ class TypeTicketsListNotifier extends ListNotifier<TypeTicket> {
 
   Future<bool> updateTypeTicket(TypeTicket typeTicket) async {
     return update(
-        _typeTicketsRepository.updateTypeTicket,
+        // _typeTicketsRepository.updateTypeTicket,
+        (typeTicket) async => true,
         (typeTickets, t) => typeTickets
           ..[typeTickets.indexWhere((e) => e.value == t.value)] = t,
         typeTicket);

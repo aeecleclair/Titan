@@ -51,7 +51,7 @@ class Lot {
 
   Lot.empty() {
     id = '';
-    name = 'Lot';
+    name = '';
     raffle = Raffle.empty();
     description = null;
     quantity = 0;

@@ -42,19 +42,25 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
   }
 
   Future<bool> createRaffle(Raffle raffle) async {
-    return await add(_rafflerepository.createRaffle, raffle);
+    return await add(
+      // _rafflerepository.createRaffle,
+      (raffle) async => raffle,
+      raffle);
   }
 
   Future<bool> updateRaffle(Raffle raffle) async {
     return await update(
-        _rafflerepository.updateRaffle,
+        // _rafflerepository.updateRaffle,
+        (raffle) async => true,
         (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
         raffle);
   }
 
   Future<bool> deleteRaffle(Raffle raffle) async {
     return await delete(
-        _rafflerepository.deleteRaffle,
+        // _rafflerepository.deleteRaffle,
+        (raffle) async => true,
+        
         (raffles, r) => raffles..removeWhere((e) => e.id == r.id),
         raffle.id,
         raffle);
@@ -62,14 +68,16 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
 
   Future<bool> openRaffle(Raffle opennedRaffle) async {
     return await update(
-        _rafflerepository.updateRaffle,
+        // _rafflerepository.updateRaffle,
+        (raffle) async => true,
         (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
         opennedRaffle);
   }
 
   Future<bool> lockRaffle(Raffle lockedRaffle) async {
     return await update(
-        _rafflerepository.updateRaffle,
+        // _rafflerepository.updateRaffle,
+        (raffle) async => true,
         (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
         lockedRaffle);
   }

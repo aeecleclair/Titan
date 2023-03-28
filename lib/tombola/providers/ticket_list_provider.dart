@@ -42,23 +42,10 @@ class TicketsListNotifier extends ListNotifier<Ticket> {
   }
 
   Future<bool> addTicket(Ticket ticket) async {
-    return add(_ticketsRepository.createTicket, ticket);
-  }
-
-  Future<bool> deleteTicket(Ticket ticket) async {
-    return delete(
-      _ticketsRepository.deleteTicket,
-      (tickets, t) => tickets..removeWhere((e) => e.id == t.id),
-      ticket.id,
-      ticket,
-    );
-  }
-
-  Future<bool> updateTicket(Ticket ticket) async {
-    return update(
-        _ticketsRepository.updateTicket,
-        (tickets, t) => tickets..[tickets.indexWhere((e) => e.id == t.id)] = t,
-        ticket);
+    return add(
+      // _ticketsRepository.createTicket,
+      (ticket) async => ticket,
+      ticket);
   }
 }
 
