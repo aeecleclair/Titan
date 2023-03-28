@@ -3,8 +3,8 @@ import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 
 final raffleIdProvider =
     StateNotifierProvider<RaffleIdProvider, String>((ref) {
-  final deliveries = ref.watch(raffleListProvider);
-  return deliveries.when(
+  final raffles = ref.watch(raffleListProvider);
+  return raffles.when(
       data: (data) {
         return RaffleIdProvider(data.first.id);
       },

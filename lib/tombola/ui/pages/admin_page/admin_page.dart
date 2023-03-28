@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/cash_provider.dart';
 import 'package:myecl/tombola/providers/lot_list_provider.dart';
+import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/ticket_list_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
@@ -12,6 +13,7 @@ import 'package:myecl/tombola/ui/pages/admin_page/account_handler.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/ticket_handler.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/lot_handler.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
@@ -21,6 +23,7 @@ class AdminPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffle = ref.watch(raffleProvider);
+    final raffleListNotifier = ref.read(raffleListProvider.notifier);
     final ticketList = ref.watch(ticketsListProvider);
     final cashNotifier = ref.read(cashProvider.notifier);
     final typeTicketsListNotifier = ref.read(typeTicketsListProvider.notifier);
@@ -53,7 +56,40 @@ class AdminPage extends HookConsumerWidget {
                         waitChild:
                             const BlueBtn(text: TombolaTextConstants.waiting),
                         onTap: () async {
-                          await tokenExpireWrapper(ref, () async {});
+                          await tokenExpireWrapper(ref, () async {
+                            await showDialog(
+                                context: context,
+                                builder: (context) => CustomDialogBox(
+                                      title: raffle.raffleStatusType ==
+                                              RaffleStatusType.creation
+                                          ? TombolaTextConstants.openRaffle
+                                          : TombolaTextConstants.closeRaffle,
+                                      descriptions: raffle.raffleStatusType ==
+                                              RaffleStatusType.creation
+                                          ? TombolaTextConstants
+                                              .openRaffleDescription
+                                          : TombolaTextConstants
+                                              .closeRaffleDescription,
+                                      onYes: () async {
+                                        switch (raffle.raffleStatusType) {
+                                          case RaffleStatusType.creation:
+                                            await raffleListNotifier.openRaffle(
+                                                raffle.copyWith(
+                                                    raffleStatusType:
+                                                        RaffleStatusType.open));
+                                            break;
+                                          case RaffleStatusType.open:
+                                            await raffleListNotifier.lockRaffle(
+                                              raffle.copyWith(
+                                                  raffleStatusType:
+                                                      RaffleStatusType.locked),
+                                            );
+                                            break;
+                                          default:
+                                        }
+                                      },
+                                    ));
+                          });
                         },
                         child: BlueBtn(
                             text:
