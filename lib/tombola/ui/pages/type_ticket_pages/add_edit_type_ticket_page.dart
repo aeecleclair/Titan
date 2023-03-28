@@ -121,9 +121,9 @@ class AddEditTypeTicketPage extends HookConsumerWidget {
                                   final newTypeTicket = typeTicket.copyWith(
                                       price: int.parse(price.text),
                                       value: int.parse(quantity.text),
-                                      raffle: isEdit
-                                          ? typeTicket.raffle
-                                          : raffle,
+                                      raffleId: isEdit
+                                          ? typeTicket.raffleId
+                                          : raffle.id,
                                       id: isEdit ? typeTicket.id : "");
                                   final typeTicketNotifier = ref
                                       .watch(typeTicketsListProvider.notifier);
