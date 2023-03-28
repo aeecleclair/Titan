@@ -24,12 +24,6 @@ class TicketsListNotifier extends ListNotifier<Ticket> {
         );
   }
 
-  Future<bool> addTicket(Ticket ticket) async {
-    return add(
-      // _ticketsRepository.createTicket,
-      (ticket) async => ticket,
-      ticket);
-  }
 }
 
 final ticketsListProvider =

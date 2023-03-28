@@ -44,7 +44,7 @@ class TicketWidget extends HookConsumerWidget {
                       ),
                     ),
                     Text(
-                      "${ticket.unitPrice} €",
+                      "${ticket.typeTicket.price} €",
                       style: TextStyle(
                           color: isWinningTicket ? Colors.black : Colors.white,
                           fontSize: 20,
@@ -54,7 +54,7 @@ class TicketWidget extends HookConsumerWidget {
                 ),
                 const Spacer(),
                 Text(
-                  "${ticket.nbTicket} tickets",
+                  "${ticket.typeTicket.value} tickets",
                   style: TextStyle(
                       color: isWinningTicket
                           ? Colors.black.withOpacity(0.8)

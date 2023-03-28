@@ -3,19 +3,47 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
+import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tombola/class/type_ticket.dart';
+import 'package:myecl/tombola/providers/cash_provider.dart';
+import 'package:myecl/tombola/providers/user_amount_provider.dart';
+import 'package:myecl/tombola/providers/user_tickets_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
 class ConfirmPaymentDialog extends HookConsumerWidget {
   final TypeTicket typeTicket;
   final Raffle raffle;
   const ConfirmPaymentDialog(
-      {Key? key, required this.typeTicket,
-      required this.raffle})
+      {Key? key, required this.typeTicket, required this.raffle})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final me = ref.watch(userProvider);
+    final userAmount = ref.watch(userAmountProvider);
+    final userAmountNotifier = ref.watch(userAmountProvider.notifier);
+    final userTicketListNotifier = ref.watch(userTicketListProvider.notifier);
+
+    double b = 0;
+    userAmount.when(
+        data: (u) {
+          b = u.balance;
+        },
+        error: (e, s) {},
+        loading: () {});
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
+    void navigationPop() {
+      Navigator.pop(context);
+    }
+
     return Dialog(
         backgroundColor: Colors.transparent,
         child: Container(
@@ -101,30 +129,83 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Spacer(),
-                        Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 12),
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Colors.grey.shade100,
-                                    Colors.grey.shade200,
+                        ShrinkButton(
+                          waitChild: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 12),
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.grey.shade100,
+                                      Colors.grey.shade200,
+                                    ],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.shade300
+                                            .withOpacity(0.5),
+                                        blurRadius: 10,
+                                        offset: const Offset(2, 3))
                                   ],
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15))),
+                              child: const Center(
+                                child: CircularProgressIndicator(
+                                  color: TombolaColorConstants.textDark,
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color:
-                                          Colors.grey.shade300.withOpacity(0.5),
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 3))
-                                ],
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(15))),
-                            child: const HeroIcon(
-                              HeroIcons.check,
-                              color: TombolaColorConstants.textDark,
-                              size: 40,
-                            )),
+                              )),
+                          onTap: () async {
+                            if (b < typeTicket.price) {
+                              displayToastWithContext(TypeMsg.error,
+                                  "Vous n'avez pas assez d'argent");
+                            } else {
+                              Ticket newTicket = Ticket(
+                                id: '',
+                                typeTicket: typeTicket,
+                                user: me.toSimpleUser(),
+                                winningLot: null,
+                              );
+                              await tokenExpireWrapper(ref, () async {
+                                final value = await userTicketListNotifier
+                                    .addTicket(newTicket);
+                                if (value) {
+                                  userAmountNotifier.updateCash(
+                                      -newTicket.typeTicket.price.toDouble());
+                                  displayToastWithContext(TypeMsg.msg,
+                                      TombolaTextConstants.boughtTicket);
+                                } else {
+                                  displayToastWithContext(TypeMsg.error,
+                                      TombolaTextConstants.addingError);
+                                }
+                                navigationPop();
+                              });
+                            }
+                          },
+                          child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 12),
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.grey.shade100,
+                                      Colors.grey.shade200,
+                                    ],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.shade300
+                                            .withOpacity(0.5),
+                                        blurRadius: 10,
+                                        offset: const Offset(2, 3))
+                                  ],
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15))),
+                              child: const HeroIcon(
+                                HeroIcons.check,
+                                color: TombolaColorConstants.textDark,
+                                size: 40,
+                              )),
+                        ),
                         const Spacer(
                           flex: 3,
                         ),

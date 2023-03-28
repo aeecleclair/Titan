@@ -27,7 +27,8 @@ class TicketRepository extends Repository {
     return await delete("/$id");
   }
 
-  Future<bool> buyTicket(Ticket ticket, String userId) async {
-    return await create(ticket, suffix: "/buy");
+  Future<Ticket> buyTicket(Ticket ticket, String userId) async {
+    return Ticket.fromJson(
+        await create(ticket, suffix: "/buy/${ticket.typeTicket.id}"));
   }
 }

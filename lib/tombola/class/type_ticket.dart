@@ -6,7 +6,7 @@ class TypeTicket {
     required this.id,
   });
   late final String raffleId;
-  late final int price;
+  late final double price;
   late final int value;
   late final String id;
 
@@ -28,7 +28,7 @@ class TypeTicket {
 
   TypeTicket copyWith({
     String? raffleId,
-    int? price,
+    double? price,
     int? value,
     String? id,
   }) =>
