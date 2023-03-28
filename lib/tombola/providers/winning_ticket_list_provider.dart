@@ -28,7 +28,6 @@ final winningTicketListProvider =
   final token = ref.watch(tokenProvider);
   WinningTicketNotifier notifier = WinningTicketNotifier(token: token);
   final ticketFromRaffle = ref.watch(ticketsListProvider);
-  print("ticketFromRaffle: $ticketFromRaffle");
   final winningTickets = ticketFromRaffle.when<List<Ticket>>(
       data: (data) =>
           data.where((element) => element.lot != null).toList(),
