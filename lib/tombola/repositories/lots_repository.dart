@@ -27,8 +27,9 @@ class LotRepository extends Repository {
     return await delete("/$lotId");
   }
 
-  Future<Ticket> drawLot(Ticket lot) async {
-    return Ticket.fromJson(
-        await create(lot.toJson(), suffix: "${lot.id}/draw"));
+  Future<List<Ticket>> drawLot(Lot lot) async {
+    return List<Ticket>.from(
+        (await create(lot.toJson(), suffix: "${lot.id}/draw"))
+            .map((x) => Ticket.fromJson(x)));
   }
 }
