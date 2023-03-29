@@ -61,6 +61,7 @@ flutter:
     - .env
     - assets/images/logo.png
     - assets/images/gift.png
+    - assets/images/soli.png
 
   uses-material-design: true
 
