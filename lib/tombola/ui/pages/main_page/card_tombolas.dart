@@ -34,7 +34,7 @@ class TombolaWidget extends HookConsumerWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Image.asset("assets/images/logo.png"),
+            Image.asset("assets/images/soli.png"),
             Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,

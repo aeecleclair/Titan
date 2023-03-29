@@ -71,7 +71,7 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
                               const BorderRadius.all(Radius.circular(15))),
                       child: Center(
                         child:
-                            Image.asset("assets/images/logo.png", height: 40),
+                            Image.asset("assets/images/soli.png", height: 40),
                       ),
                     ),
                     Text(

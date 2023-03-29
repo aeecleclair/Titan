@@ -83,7 +83,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(25))),
                           child: Center(
-                            child: Image.asset("assets/images/logo.png",
+                            child: Image.asset("assets/images/soli.png",
                                 height: 100),
                           ),
                         ),
