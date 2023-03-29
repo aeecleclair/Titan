@@ -10,8 +10,7 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
   final TypeTicketSimple typeTicket;
   final Raffle raffle;
   const BuyTypeTicketSimple(
-      {Key? key, required this.typeTicket,
-      required this.raffle})
+      {Key? key, required this.typeTicket, required this.raffle})
       : super(key: key);
 
   @override
@@ -31,7 +30,7 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
           }
         },
         child: Container(
-          width: 150,
+          width: 160,
           margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
@@ -75,10 +74,10 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
                       ),
                     ),
                     Text(
-                      "${typeTicket.price} €",
+                      "${typeTicket.price.toStringAsFixed(2)}€",
                       style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 30,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -109,7 +108,8 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
                                   : [Colors.white, Colors.white],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight),
-                      borderRadius: const BorderRadius.all(Radius.circular(15))),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(15))),
                   child: FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Text(

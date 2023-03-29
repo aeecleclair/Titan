@@ -12,6 +12,7 @@ import 'package:myecl/tombola/providers/user_tickets_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/main_page/card_tombolas.dart';
 import 'package:myecl/tombola/ui/pages/main_page/carte_ticket.dart';
+import 'package:myecl/tools/ui/refresher.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -21,15 +22,19 @@ class MainPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final raffle = ref.watch(raffleProvider);
     final raffleList = ref.watch(raffleListProvider);
+    final raffleListNotifier = ref.watch(raffleListProvider.notifier);
     final userTicketList = ref.watch(userTicketListProvider);
+    final userTicketListNotifier = ref.watch(userTicketListProvider.notifier);
     final isAdmin = ref.watch(isTombolaAdmin);
-    return Container(
-      margin: const EdgeInsets.only(top: 15),
-      child: ListView(
-        physics: const BouncingScrollPhysics(),
+    return Refresher(
+      onRefresh: () async {
+        await userTicketListNotifier.loadTicketList();
+        await raffleListNotifier.loadRaffleList();
+      },
+      child: Column(
         children: [
           const SizedBox(
-            height: 15,
+            height: 30,
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -117,7 +122,8 @@ class MainPage extends HookConsumerWidget {
             error: (error, stack) => SizedBox(
                 height: 120,
                 child: Center(
-                  child: Text('Error $error', style: const TextStyle(fontSize: 20)),
+                  child: Text('Error $error',
+                      style: const TextStyle(fontSize: 20)),
                 )),
           ),
           Padding(
