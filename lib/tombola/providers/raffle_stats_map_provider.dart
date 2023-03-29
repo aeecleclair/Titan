@@ -8,7 +8,7 @@ class RaffleStatsMapNotifier extends MapNotifier<String, RaffleStats> {
   RaffleStatsMapNotifier() : super();
 }
 
-final raffleStatsMapNotifierProvider = StateNotifierProvider<
+final raffleStatsMapProvider = StateNotifierProvider<
     RaffleStatsMapNotifier,
     AsyncValue<Map<String, AsyncValue<List<RaffleStats>>>>>((ref) {
   RaffleStatsMapNotifier notifier = RaffleStatsMapNotifier();
