@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
@@ -58,11 +59,15 @@ class TombolaWidget extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.asset("assets/images/soli.png"),
-                      Text(
-                        raffle.name,
-                        style: const TextStyle(
-                            color: TombolaColorConstants.textDark,
-                            fontSize: 30),
+                      Expanded(
+                        child: AutoSizeText(
+                          raffle.name,
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              color: TombolaColorConstants.textDark,
+                              fontSize: 30),
+                        ),
                       ),
                     ]),
               ),
