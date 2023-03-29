@@ -7,14 +7,13 @@ import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
 
 class PretendanceLogoNotifier extends MapNotifier<Pretendance, Image> {
-  PretendanceLogoNotifier({required String token}) : super(token: token);
+  PretendanceLogoNotifier() : super();
 }
 
 final pretendanceLogosProvider = StateNotifierProvider<PretendanceLogoNotifier,
     AsyncValue<Map<Pretendance, AsyncValue<List<Image>>>>>((ref) {
-  final token = ref.watch(tokenProvider);
   PretendanceLogoNotifier pretendanceLogoNotifier =
-      PretendanceLogoNotifier(token: token);
+      PretendanceLogoNotifier();
   tokenExpireWrapperAuth(ref, () async {
     ref.watch(pretendanceListProvider).when(data: (pretendance) {
       pretendanceLogoNotifier.loadTList(pretendance);

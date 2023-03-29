@@ -30,7 +30,7 @@ class TombolaWidget extends HookConsumerWidget {
         behavior: HitTestBehavior.opaque,
         child: Center(
             child: Container(
-          height: 100,
+          height: 200,
           margin: const EdgeInsets.symmetric(vertical: 5),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
