@@ -4,7 +4,6 @@ class Lot {
     required this.name,
     required this.raffleId,
     required this.quantity,
-    required this.name,
     this.description,
   });
   late final String id;
@@ -12,7 +11,6 @@ class Lot {
   late final String raffleId;
   late final String? description;
   late final int quantity;
-  late final String name;
 
   Lot.fromJson(Map<String, dynamic> json) {
     id = json['id'];
