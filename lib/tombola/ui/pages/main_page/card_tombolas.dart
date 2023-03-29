@@ -62,7 +62,7 @@ class TombolaWidget extends HookConsumerWidget {
                       Expanded(
                         child: AutoSizeText(
                           raffle.name,
-                          maxLines: 1,
+                          maxLines: 2,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                               color: TombolaColorConstants.textDark,
