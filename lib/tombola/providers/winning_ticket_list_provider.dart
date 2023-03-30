@@ -27,7 +27,7 @@ class WinningTicketNotifier extends ListNotifier<Ticket> {
         loading: () {
           state = AsyncValue.data(drawnList);
         });
-    return state;
+    return AsyncData(drawnList);
   }
 }
 

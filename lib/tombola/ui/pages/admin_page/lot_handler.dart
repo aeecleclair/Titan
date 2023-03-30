@@ -38,7 +38,7 @@ class LotHandler extends HookConsumerWidget {
           builder: (context) {
             return Dialog(
               child: Container(
-                height: 100 + winningTickets.length * 32.0,
+                height: 100 + winningTickets.length * 35.0,
                 padding: const EdgeInsets.all(30.0),
                 child: Column(
                   children: [
@@ -200,8 +200,10 @@ class LotHandler extends HookConsumerWidget {
                                                       .drawLot(e);
                                               value.when(
                                                   data: (winningTicketList) {
-                                                    lotsNotifier.updateLot(e
-                                                        .copyWith(quantity: 0));
+                                                    lotsNotifier
+                                                        .setLotToZeroQuantity(
+                                                            e.copyWith(
+                                                                quantity: 0));
                                                     displayWinningsDialog(
                                                         winningTicketList);
                                                   },

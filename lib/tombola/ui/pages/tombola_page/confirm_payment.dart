@@ -156,8 +156,8 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                   "Vous n'avez pas assez d'argent");
                             } else {
                               await tokenExpireWrapper(ref, () async {
-                                final value =
-                                    await userTicketListNotifier.addTicket(typeTicket);
+                                final value = await userTicketListNotifier
+                                    .addTicket(typeTicket);
                                 if (value) {
                                   userAmountNotifier
                                       .updateCash(-typeTicket.price.toDouble());
@@ -199,29 +199,34 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                         const Spacer(
                           flex: 3,
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 12),
-                          decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  TombolaColorConstants.redGradient1,
-                                  TombolaColorConstants.redGradient2,
+                        GestureDetector(
+                          onTap: () {
+                            navigationPop();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 12),
+                            decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    TombolaColorConstants.redGradient1,
+                                    TombolaColorConstants.redGradient2,
+                                  ],
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: TombolaColorConstants.redGradient2
+                                          .withOpacity(0.5),
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 3))
                                 ],
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: TombolaColorConstants.redGradient2
-                                        .withOpacity(0.5),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(15))),
-                          child: const HeroIcon(HeroIcons.xMark,
-                              color: Colors.white, size: 40),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(15))),
+                            child: const HeroIcon(HeroIcons.xMark,
+                                color: Colors.white, size: 40),
+                          ),
                         ),
                         const Spacer(),
                       ],

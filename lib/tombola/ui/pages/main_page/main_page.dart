@@ -6,7 +6,6 @@ import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/is_tombola_admin.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
-import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/providers/user_tickets_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
@@ -20,12 +19,21 @@ class MainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
-    final raffle = ref.watch(raffleProvider);
     final raffleList = ref.watch(raffleListProvider);
     final raffleListNotifier = ref.watch(raffleListProvider.notifier);
     final userTicketList = ref.watch(userTicketListProvider);
     final userTicketListNotifier = ref.watch(userTicketListProvider.notifier);
     final isAdmin = ref.watch(isTombolaAdmin);
+
+    final rafflesStatus = {};
+    raffleList.whenData(
+      (raffles) {
+        for (var raffle in raffles) {
+          rafflesStatus[raffle.id] = raffle.raffleStatusType;
+        }
+      },
+    );
+
     return Refresher(
       onRefresh: () async {
         await userTicketListNotifier.loadTicketList();
@@ -88,6 +96,13 @@ class MainPage extends HookConsumerWidget {
           ),
           userTicketList.when(
             data: (tickets) {
+              tickets = tickets
+                  .where((t) =>
+                      t.lot != null ||
+                      (rafflesStatus.containsKey(t.typeTicket.raffleId) &&
+                          rafflesStatus[t.typeTicket.raffleId] !=
+                              RaffleStatusType.locked))
+                  .toList();
               return tickets.isEmpty
                   ? const Center(
                       child: Text(TombolaTextConstants.noTicket),
@@ -109,7 +124,6 @@ class MainPage extends HookConsumerWidget {
                                     horizontal: 10, vertical: 10),
                                 child: TicketWidget(
                                   ticket: tickets[index - 1],
-                                  raffle: raffle,
                                 ));
                           }));
             },

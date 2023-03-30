@@ -3,17 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/tickets.dart';
+import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/ui/pages/main_page/ticket_card_background.dart';
 
 class TicketWidget extends HookConsumerWidget {
   final Ticket ticket;
-  final Raffle raffle;
-  const TicketWidget({Key? key, required this.ticket, required this.raffle})
+  const TicketWidget({Key? key, required this.ticket})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isWinningTicket = ticket.lot != null;
+    final raffleList = ref.watch(raffleListProvider);
+    final raffle = raffleList.when(
+        data: (data) => data
+            .firstWhere((element) => element.id == ticket.typeTicket.raffleId),
+        loading: () => Raffle.empty(),
+        error: (_, __) => Raffle.empty());
     return Stack(children: [
       TicketCardBackground(
           isWinningTicket: isWinningTicket,

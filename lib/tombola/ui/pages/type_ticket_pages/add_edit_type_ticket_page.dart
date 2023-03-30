@@ -117,43 +117,52 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                                 text: TombolaTextConstants.waiting),
                             onTap: () async {
                               if (formKey.currentState!.validate()) {
-                                await tokenExpireWrapper(ref, () async {
-                                  final newTypeTicketSimple = typeTicket.copyWith(
-                                      price: double.parse(price.text),
-                                      value: int.parse(quantity.text),
-                                      raffleId: isEdit
-                                          ? typeTicket.raffleId
-                                          : raffle.id,
-                                      id: isEdit ? typeTicket.id : "");
-                                  final typeTicketNotifier = ref
-                                      .watch(typeTicketsListProvider.notifier);
-                                  final value = isEdit
-                                      ? await typeTicketNotifier
-                                          .updateTypeTicketSimple(newTypeTicketSimple)
-                                      : await typeTicketNotifier
-                                          .addTypeTicketSimple(newTypeTicketSimple);
-                                  if (value) {
-                                    pageNotifier
-                                        .setTombolaPage(TombolaPage.admin);
-                                    if (isEdit) {
-                                      displayToastWithContext(TypeMsg.msg,
-                                          TombolaTextConstants.editedTicket);
+                                final ticketPrice = double.tryParse(price.text.replaceAll(',', '.'));
+                                if (ticketPrice != null && ticketPrice > 0) {
+                                  await tokenExpireWrapper(ref, () async {
+                                    final newTypeTicketSimple =
+                                        typeTicket.copyWith(
+                                            price: double.parse(price.text),
+                                            value: int.parse(quantity.text),
+                                            raffleId: isEdit
+                                                ? typeTicket.raffleId
+                                                : raffle.id,
+                                            id: isEdit ? typeTicket.id : "");
+                                    final typeTicketNotifier = ref.watch(
+                                        typeTicketsListProvider.notifier);
+                                    final value = isEdit
+                                        ? await typeTicketNotifier
+                                            .updateTypeTicketSimple(
+                                                newTypeTicketSimple)
+                                        : await typeTicketNotifier
+                                            .addTypeTicketSimple(
+                                                newTypeTicketSimple);
+                                    if (value) {
+                                      pageNotifier
+                                          .setTombolaPage(TombolaPage.admin);
+                                      if (isEdit) {
+                                        displayToastWithContext(TypeMsg.msg,
+                                            TombolaTextConstants.editedTicket);
+                                      } else {
+                                        displayToastWithContext(TypeMsg.msg,
+                                            TombolaTextConstants.addedTicket);
+                                      }
                                     } else {
-                                      displayToastWithContext(TypeMsg.msg,
-                                          TombolaTextConstants.addedTicket);
+                                      if (isEdit) {
+                                        displayToastWithContext(TypeMsg.error,
+                                            TombolaTextConstants.editingError);
+                                      } else {
+                                        displayToastWithContext(
+                                            TypeMsg.error,
+                                            TombolaTextConstants
+                                                .alreadyExistTicket);
+                                      }
                                     }
-                                  } else {
-                                    if (isEdit) {
-                                      displayToastWithContext(TypeMsg.error,
-                                          TombolaTextConstants.editingError);
-                                    } else {
-                                      displayToastWithContext(
-                                          TypeMsg.error,
-                                          TombolaTextConstants
-                                              .alreadyExistTicket);
-                                    }
-                                  }
-                                });
+                                  });
+                                } else {
+                                  displayToast(context, TypeMsg.error,
+                                      TombolaTextConstants.invalidPrice);
+                                }
                               } else {
                                 displayToast(context, TypeMsg.error,
                                     TombolaTextConstants.addingError);
@@ -162,7 +171,8 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                             child: BlueBtn(
                                 text: isEdit
                                     ? TombolaTextConstants.editTypeTicketSimple
-                                    : TombolaTextConstants.addTypeTicketSimple)),
+                                    : TombolaTextConstants
+                                        .addTypeTicketSimple)),
                         const SizedBox(
                           height: 40,
                         ),

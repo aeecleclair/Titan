@@ -45,9 +45,6 @@ class WinningTicketUI extends HookConsumerWidget {
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
-            const SizedBox(
-              height: 15,
-            ),
             Column(
               children: [
                 AutoSizeText(
@@ -66,6 +63,8 @@ class WinningTicketUI extends HookConsumerWidget {
                       ? "${ticket.user.firstname} ${ticket.user.name}"
                       : ticket.user.name,
                   maxLines: 2,
+                  textAlign: TextAlign.center,
+                  minFontSize: 10,
                   style: TextStyle(
                       color: Colors.white.withOpacity(0.8),
                       fontSize: 15,

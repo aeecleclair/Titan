@@ -19,8 +19,7 @@ class LotListNotifier extends ListNotifier<Lot> {
   }
 
   Future<AsyncValue<List<Lot>>> loadLotList() async {
-    return await loadList(
-        () async => _lotRepository.getLotList(raffleId));
+    return await loadList(() async => _lotRepository.getLotList(raffleId));
   }
 
   Future<bool> addLot(Lot lot) async {
@@ -37,8 +36,12 @@ class LotListNotifier extends ListNotifier<Lot> {
   }
 
   Future<bool> updateLot(Lot lot) async {
-    return await update(
-      _lotRepository.updateLot,
+    return await update(_lotRepository.updateLot,
+        (lot, t) => lot..[lot.indexWhere((e) => e.id == t.id)] = t, lot);
+  }
+
+  Future<bool> setLotToZeroQuantity(Lot lot) async {
+    return await update((_) async => true,
         (lot, t) => lot..[lot.indexWhere((e) => e.id == t.id)] = t, lot);
   }
 }
