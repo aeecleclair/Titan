@@ -78,6 +78,8 @@ class DetailOrderUI extends HookConsumerWidget {
               children: [
                 AutoSizeText(
                   product.name,
+                  minFontSize: 10,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
