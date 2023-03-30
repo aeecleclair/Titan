@@ -20,7 +20,7 @@ class TicketCardBackground extends HookConsumerWidget {
       ..repeat();
     return isWinningTicket
         ? Container(
-            width: 150,
+            width: 160,
             height: 200,
             decoration: BoxDecoration(
                 boxShadow: [
@@ -48,7 +48,7 @@ class TicketCardBackground extends HookConsumerWidget {
                   ],
                 )))
         : Container(
-            width: 150,
+            width: 160,
             height: 200,
             margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(

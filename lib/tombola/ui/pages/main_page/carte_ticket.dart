@@ -18,7 +18,9 @@ class TicketWidget extends HookConsumerWidget {
       TicketCardBackground(
           isWinningTicket: isWinningTicket,
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 17),
+            padding: EdgeInsets.symmetric(
+                vertical: isWinningTicket ? 9 : 12,
+                horizontal: isWinningTicket ? 14 : 17),
             child: Column(
               children: [
                 Row(
@@ -27,6 +29,7 @@ class TicketWidget extends HookConsumerWidget {
                     Container(
                       width: 50,
                       height: 50,
+                      margin: const EdgeInsets.only(right: 8),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           boxShadow: [
@@ -43,18 +46,28 @@ class TicketWidget extends HookConsumerWidget {
                             Image.asset("assets/images/soli.png", height: 40),
                       ),
                     ),
-                    Text(
-                      "${ticket.typeTicket.price} €",
-                      style: TextStyle(
-                          color: isWinningTicket ? Colors.black : Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: AutoSizeText(
+                        isWinningTicket
+                            ? "Gagnant !"
+                            : "${ticket.typeTicket.price.toStringAsFixed(2)} €",
+                        maxLines: 1,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                            color:
+                                isWinningTicket ? Colors.black : Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),
                 const Spacer(),
-                Text(
-                  "${ticket.typeTicket.value} tickets",
+                AutoSizeText(
+                  isWinningTicket
+                      ? ticket.lot!.name
+                      : "${ticket.typeTicket.value} tickets",
+                  maxLines: 2,
                   style: TextStyle(
                       color: isWinningTicket
                           ? Colors.black.withOpacity(0.8)
