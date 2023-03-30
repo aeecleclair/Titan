@@ -18,7 +18,16 @@ class WinningTicketNotifier extends ListNotifier<Ticket> {
   }
 
   Future<AsyncValue<List<Ticket>>> drawLot(Lot lot) async {
-    return await loadList(() => _lotRepository.drawLot(lot));
+    final drawnList = await _lotRepository.drawLot(lot);
+    state.when(
+        data: (list) {
+          state = AsyncValue.data(list + drawnList);
+        },
+        error: (e, s) {},
+        loading: () {
+          state = AsyncValue.data(drawnList);
+        });
+    return state;
   }
 }
 
@@ -29,8 +38,7 @@ final winningTicketListProvider =
   WinningTicketNotifier notifier = WinningTicketNotifier(token: token);
   final ticketFromRaffle = ref.watch(ticketsListProvider);
   final winningTickets = ticketFromRaffle.when<List<Ticket>>(
-      data: (data) =>
-          data.where((element) => element.lot != null).toList(),
+      data: (data) => data.where((element) => element.lot != null).toList(),
       loading: () => [],
       error: (Object e, StackTrace? s) => []);
   notifier.setData(winningTickets);

@@ -15,7 +15,7 @@ class WinningTicketHandler extends HookConsumerWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           alignment: Alignment.centerLeft,
-          child: const Text("Tickets",
+          child: const Text("Tickets gagnants",
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -38,8 +38,8 @@ class WinningTicketHandler extends HookConsumerWidget {
                   if (data.isEmpty) {
                     return const SizedBox(
                         height: 150,
-                        child: Text(
-                            "Les tickets gagnants seront affichés ici"));
+                        child:
+                            Text("Les tickets gagnants seront affichés ici"));
                   }
                   return Row(
                       children: data

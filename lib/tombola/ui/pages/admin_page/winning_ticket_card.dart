@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/tickets.dart';
@@ -33,36 +34,47 @@ class WinningTicketUI extends HookConsumerWidget {
             color: TombolaColorConstants.ticketback,
             borderRadius: const BorderRadius.all(Radius.circular(30))),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "${ticket.lot!.name} €",
+            AutoSizeText(
+              ticket.lot == null ? "Lot" : ticket.lot!.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
             const SizedBox(
-              height: 10,
+              height: 15,
             ),
-            Text(
-              ticket.user.nickname ?? ticket.user.firstname,
-              style: TextStyle(
-                  color: Colors.white.withOpacity(0.8),
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              ticket.user.nickname != null
-                  ? "${ticket.user.firstname} ${ticket.user.name}"
-                  : ticket.user.name,
-              style: TextStyle(
-                  color: Colors.white.withOpacity(0.8),
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
+            Column(
+              children: [
+                AutoSizeText(
+                  ticket.user.nickname ?? ticket.user.firstname,
+                  maxLines: 2,
+                  style: TextStyle(
+                      color: Colors.white.withOpacity(0.8),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                AutoSizeText(
+                  ticket.user.nickname != null
+                      ? "${ticket.user.firstname} ${ticket.user.name}"
+                      : ticket.user.name,
+                  maxLines: 2,
+                  style: TextStyle(
+                      color: Colors.white.withOpacity(0.8),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+              ],
             ),
           ],
         ),
