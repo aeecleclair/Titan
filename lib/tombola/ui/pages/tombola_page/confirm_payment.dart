@@ -157,7 +157,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                             } else {
                               await tokenExpireWrapper(ref, () async {
                                 final value = await userTicketListNotifier
-                                    .addTicket(typeTicket);
+                                    .buyTicket(typeTicket);
                                 if (value) {
                                   userAmountNotifier
                                       .updateCash(-typeTicket.price.toDouble());

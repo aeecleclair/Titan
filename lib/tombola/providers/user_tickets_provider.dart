@@ -8,8 +8,7 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserTicketListNotifier extends ListNotifier<Ticket> {
-  final UserDetailRepository _userDetailRepository =
-      UserDetailRepository();
+  final UserDetailRepository _userDetailRepository = UserDetailRepository();
   final TicketRepository _ticketsRepository = TicketRepository();
   late String userId;
   UserTicketListNotifier({required String token})
@@ -27,11 +26,10 @@ class UserTicketListNotifier extends ListNotifier<Ticket> {
         () async => _userDetailRepository.getTicketsListbyUserId(userId));
   }
 
-  
-  Future<bool> addTicket(TypeTicketSimple typeTicketSimple) async {
-    return add(
-      (_) async => _ticketsRepository.buyTicket(typeTicketSimple.id, userId),
-      Ticket.empty());
+  Future<bool> buyTicket(TypeTicketSimple typeTicketSimple) async {
+    return addAll(
+        (_) async => _ticketsRepository.buyTicket(typeTicketSimple.id, userId),
+        []);
   }
 }
 
