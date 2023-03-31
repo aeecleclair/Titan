@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
+import 'package:myecl/phonebook/providers/association_picture_provider.dart';
+import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
@@ -17,6 +19,8 @@ class AssoUi extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final associationPicture =
+        ref.watch(associationPictureProvider);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       padding: const EdgeInsets.all(10),
@@ -34,6 +38,23 @@ class AssoUi extends HookConsumerWidget {
           const SizedBox(
             width: 10,
           ),
+          associationPicture.when(data: (picture){
+                return CircleAvatar(
+                radius: 80,
+                backgroundImage: picture.isEmpty ?
+                const AssetImage('assets/images/profile.png') :
+                Image.memory(picture).image,
+              );
+              }, loading: () {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }, error: (e, s) {
+              return const Center(
+                child: Text(PhonebookTextConstants.errorLoadAssociationPicture),
+              );
+            }, 
+            ),
           Expanded(
             child: Text(
               association.name,

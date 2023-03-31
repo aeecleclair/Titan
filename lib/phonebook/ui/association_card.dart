@@ -2,27 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
-import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 
-class AssociationCards extends HookConsumerWidget {
-  const AssociationCards({super.key,
-      required this.association
+class AssociationCard extends HookConsumerWidget {
+  const AssociationCard({super.key,
+      required this.association,
+      required this.onClicked,
   });
 
   final Association association;
+  final VoidCallback onClicked;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.watch(phonebookPageProvider.notifier);
-    final associationNotifier = ref.watch(associationProvider.notifier);
     final associationPicture = ref.watch(associationPictureProvider);
     
     return GestureDetector(
       onTap: () {
-        associationNotifier.setAssociation(association);
-        pageNotifier.setPhonebookPage(PhonebookPage.associationPage);
+        onClicked();
       },
       child: Container(
         margin: const EdgeInsets.all(10),
