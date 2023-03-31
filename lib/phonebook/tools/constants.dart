@@ -12,10 +12,10 @@ class PhonebookTextConstants {
   static const String updatedAssociationPicture = "La photo d'association a  été changée";
   static const String tooHeavyAssociationPicture =
       "L'image est trop lourde (max 4Mo)";
-  static const String postAssociation = "Association :";
-  static const String postRole = "Rôle :";
-  static const String postAssociationError = "Veuillez choisir une association";
-  static const String postRoleError = "Veuillez choisir un rôle";
+  static const String membershipAssociation = "Association :";
+  static const String membershipRole = "Rôle :";
+  static const String membershipAssociationError = "Veuillez choisir une association";
+  static const String membershipRoleError = "Veuillez choisir un rôle";
   static const String validation = "Valider";
   static const String cancel = "Annuler";
   static const String association = "Association :";
@@ -39,8 +39,12 @@ class PhonebookTextConstants {
   static const String deletingError = "Erreur lors de la suppression";
   static const String errorLoadAssociationList = "Erreur lors du chargement de la liste des associations";
   static const String associationDetail = "Détail de l'association :";
-
   static const String errorLoadAssociationMember = "Erreur lors du chargement des membres de l'association";
+  static const String errorLoadRoleList = "Erreur lors du chargement de la liste des rôles";
+  static const String editRoleName = "Modifier le nom du rôle";
+  static const String deleteRole = "Supprimer le rôle ?";
+  static const String deletedRole = "Rôle supprimé";
+  static const String errorLoadProfilePicture = "Erreur";
 }
 
 class PhonebookColorConstants{

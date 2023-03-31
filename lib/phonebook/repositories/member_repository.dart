@@ -1,6 +1,6 @@
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/member.dart';
-import 'package:myecl/phonebook/class/post.dart';
+import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class MemberRepository extends Repository {
@@ -8,9 +8,9 @@ class MemberRepository extends Repository {
   // ignore: overridden_fields
   final ext = "phonebook/member/";
 
-  Future<List<Post>> getMemberPostList(int memberId) async {
-    return List<Post>.from(
-        (await getList(suffix: "/$memberId/posts")).map((x) => Post.fromJSON(x)));
+  Future<List<Membership>> getMemberMembershipList(int memberId) async {
+    return List<Membership>.from(
+        (await getList(suffix: "/$memberId/posts")).map((x) => Membership.fromJSON(x)));
   }
 
   Future<Member> getMember(String memberId) async {
