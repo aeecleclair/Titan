@@ -23,8 +23,8 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final typeTicket = ref.watch(typeTicketProvider);
     final isEdit = typeTicket.id != TypeTicketSimple.empty().id;
-    final quantity = useTextEditingController(
-        text: isEdit ? typeTicket.value.toString() : "");
+    final packSize = useTextEditingController(
+        text: isEdit ? typeTicket.packSize.toString() : "");
     final price = useTextEditingController(
         text: isEdit ? typeTicket.price.toString() : "");
 
@@ -81,7 +81,7 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                               }
                               return null;
                             },
-                            textEditingController: quantity,
+                            textEditingController: packSize,
                             keyboardType: TextInputType.number),
                         const SizedBox(
                           height: 50,
@@ -123,7 +123,7 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                                     final newTypeTicketSimple =
                                         typeTicket.copyWith(
                                             price: double.parse(price.text),
-                                            value: int.parse(quantity.text),
+                                            packSize: int.parse(packSize.text),
                                             raffleId: isEdit
                                                 ? typeTicket.raffleId
                                                 : raffle.id,

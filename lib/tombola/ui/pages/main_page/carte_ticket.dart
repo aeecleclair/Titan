@@ -72,7 +72,7 @@ class TicketWidget extends HookConsumerWidget {
                 AutoSizeText(
                   isWinningTicket
                       ? ticket.lot!.name
-                      : "${ticket.typeTicket.value} tickets",
+                      : "${ticket.typeTicket.packSize} tickets",
                   maxLines: 2,
                   style: TextStyle(
                       color: isWinningTicket

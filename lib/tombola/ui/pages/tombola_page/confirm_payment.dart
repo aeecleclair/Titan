@@ -99,7 +99,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    "${typeTicket.value} tickets",
+                    "${typeTicket.packSize} tickets",
                     style: TextStyle(
                         color: Colors.white.withOpacity(0.8),
                         fontSize: 38,
