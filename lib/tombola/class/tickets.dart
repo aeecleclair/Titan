@@ -35,8 +35,6 @@ class Ticket {
     SimpleUser? user,
     Lot? lot,
     String? id,
-    int? unitPrice,
-    int? nbTicket,
   }) =>
       Ticket(
           typeTicket: typeTicket ?? this.typeTicket,

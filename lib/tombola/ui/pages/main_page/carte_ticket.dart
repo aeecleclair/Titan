@@ -7,17 +7,18 @@ import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/ui/pages/main_page/ticket_card_background.dart';
 
 class TicketWidget extends HookConsumerWidget {
-  final Ticket ticket;
-  const TicketWidget({Key? key, required this.ticket})
+  final List<Ticket> ticket;
+  final double price;
+  const TicketWidget({Key? key, required this.ticket, required this.price})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isWinningTicket = ticket.lot != null;
+    final isWinningTicket = ticket[0].lot != null;
     final raffleList = ref.watch(raffleListProvider);
     final raffle = raffleList.when(
-        data: (data) => data
-            .firstWhere((element) => element.id == ticket.typeTicket.raffleId),
+        data: (data) => data.firstWhere(
+            (element) => element.id == ticket[0].typeTicket.raffleId),
         loading: () => Raffle.empty(),
         error: (_, __) => Raffle.empty());
     return Stack(children: [
@@ -56,7 +57,7 @@ class TicketWidget extends HookConsumerWidget {
                       child: AutoSizeText(
                         isWinningTicket
                             ? "Gagnant !"
-                            : "${ticket.typeTicket.price.toStringAsFixed(2)} €",
+                            : "${price.toStringAsFixed(2)} €",
                         maxLines: 1,
                         textAlign: TextAlign.right,
                         style: TextStyle(
@@ -71,8 +72,8 @@ class TicketWidget extends HookConsumerWidget {
                 const Spacer(),
                 AutoSizeText(
                   isWinningTicket
-                      ? ticket.lot!.name
-                      : "${ticket.typeTicket.packSize} tickets",
+                      ? ticket[0].lot!.name
+                      : "${ticket.length} ticket${ticket.length > 1 ? "s" : ""}",
                   maxLines: 2,
                   style: TextStyle(
                       color: isWinningTicket

@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
+import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tombola/providers/is_tombola_admin.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
@@ -103,7 +104,28 @@ class MainPage extends HookConsumerWidget {
                           rafflesStatus[t.typeTicket.raffleId] !=
                               RaffleStatusType.locked))
                   .toList();
-              return tickets.isEmpty
+              final ticketSum = <String, List<Ticket>>{};
+              final ticketPrice = <String, double>{};
+              for (final ticket in tickets) {
+                if (ticket.lot == null) {
+                  final id = ticket.typeTicket.raffleId;
+                  if (ticketSum.containsKey(id)) {
+                    ticketSum[id]!.add(ticket);
+                    ticketPrice[id] = ticketPrice[id]! +
+                        ticket.typeTicket.price / ticket.typeTicket.packSize;
+                  } else {
+                    ticketSum[id] = [ticket];
+                    ticketPrice[id] =
+                        ticket.typeTicket.price / ticket.typeTicket.packSize;
+                  }
+                } else {
+                  final id = ticketSum.length.toString();
+                  ticketSum[id] = [ticket];
+                  ticketPrice[id] =
+                      ticket.typeTicket.price / ticket.typeTicket.packSize;
+                }
+              }
+              return ticketSum.isEmpty
                   ? const Center(
                       child: Text(TombolaTextConstants.noTicket),
                     )
@@ -112,18 +134,20 @@ class MainPage extends HookConsumerWidget {
                       child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          itemCount: tickets.length + 2,
+                          itemCount: ticketSum.length + 2,
                           itemBuilder: (context, index) {
-                            if (index == 0 || index == tickets.length + 1) {
+                            if (index == 0 || index == ticketSum.length + 1) {
                               return const SizedBox(
                                 width: 15,
                               );
                             }
+                            final key = ticketSum.keys.toList()[index - 1];
                             return Container(
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
                                 child: TicketWidget(
-                                  ticket: tickets[index - 1],
+                                  ticket: ticketSum[key]!,
+                                  price: ticketPrice[key]!,
                                 ));
                           }));
             },

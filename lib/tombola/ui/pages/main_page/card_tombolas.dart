@@ -60,13 +60,16 @@ class TombolaWidget extends HookConsumerWidget {
                     children: [
                       Image.asset("assets/images/soli.png"),
                       Expanded(
-                        child: AutoSizeText(
-                          raffle.name,
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              color: TombolaColorConstants.textDark,
-                              fontSize: 30),
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          child: AutoSizeText(
+                            raffle.name,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                color: TombolaColorConstants.textDark,
+                                fontSize: 30),
+                          ),
                         ),
                       ),
                     ]),
