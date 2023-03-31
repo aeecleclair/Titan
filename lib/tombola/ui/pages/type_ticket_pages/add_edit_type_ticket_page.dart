@@ -79,6 +79,9 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                               if (int.tryParse(value) == null) {
                                 return TombolaTextConstants.numberExpected;
                               }
+                              if (int.parse(value) < 1) {
+                                return TombolaTextConstants.mustBePositive;
+                              }
                               return null;
                             },
                             textEditingController: packSize,
@@ -101,7 +104,7 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                               if (value == null || value.isEmpty) {
                                 return TombolaTextConstants.fillField;
                               }
-                              if (int.tryParse(value) == null) {
+                              if (double.tryParse(value) == null) {
                                 return TombolaTextConstants.numberExpected;
                               }
                               return null;
@@ -117,7 +120,8 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                                 text: TombolaTextConstants.waiting),
                             onTap: () async {
                               if (formKey.currentState!.validate()) {
-                                final ticketPrice = double.tryParse(price.text.replaceAll(',', '.'));
+                                final ticketPrice = double.tryParse(
+                                    price.text.replaceAll(',', '.'));
                                 if (ticketPrice != null && ticketPrice > 0) {
                                   await tokenExpireWrapper(ref, () async {
                                     final newTypeTicketSimple =

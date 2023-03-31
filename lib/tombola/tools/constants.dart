@@ -106,4 +106,7 @@ class TombolaTextConstants {
   static const String drawingError = "Erreur lors du tirage";
 
   static const String invalidPrice = "Le prix doit être supérieur à 0";
+
+  static const String mustBePositive =
+      "Le nombre doit être strictement positif";
 }

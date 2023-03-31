@@ -79,6 +79,9 @@ class AddEditLotPage extends HookConsumerWidget {
                               if (int.tryParse(value) == null) {
                                 return TombolaTextConstants.numberExpected;
                               }
+                              if (int.parse(value) < 1) {
+                                return TombolaTextConstants.mustBePositive;
+                              }
                               return null;
                             },
                             textEditingController: quantity,
