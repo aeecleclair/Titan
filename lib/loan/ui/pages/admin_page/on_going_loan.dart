@@ -63,7 +63,7 @@ class OnGoingLoan extends HookConsumerWidget {
               const SizedBox(height: 15),
               SizedBox(
                 height: 190,
-                child: WebListView(
+                child: HorizontalListView(
                   child: Row(
                     children: [
                       const SizedBox(width: 10),

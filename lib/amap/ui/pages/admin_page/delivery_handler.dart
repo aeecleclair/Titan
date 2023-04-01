@@ -34,7 +34,7 @@ class DeliveryHandler extends HookConsumerWidget {
         ),
         SizedBox(
           height: 200,
-          child: WebListView(
+          child: HorizontalListView(
             child: Row(
               children: [
                 const SizedBox(

@@ -73,7 +73,7 @@ class MainPage extends HookConsumerWidget {
                       const SizedBox(height: 10),
                       SizedBox(
                           height: 190,
-                          child: WebListView(
+                          child: HorizontalListView(
                             child: Row(
                               children: [
                                 const SizedBox(width: 10),
@@ -133,7 +133,7 @@ class MainPage extends HookConsumerWidget {
                   const SizedBox(height: 10),
                   SizedBox(
                       height: 190,
-                      child: WebListView(
+                      child: HorizontalListView(
                         child: Row(
                           children: [
                             const SizedBox(width: 10),

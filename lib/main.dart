@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -31,10 +32,10 @@ class MyApp extends HookConsumerWidget {
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final check = versionVerifier
         .whenData((value) => value.minimalTitanVersion <= titanVersion);
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MyECL',
+      scrollBehavior: MyCustomScrollBehavior(),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -43,7 +44,9 @@ class MyApp extends HookConsumerWidget {
       supportedLocales: const [Locale('en'), Locale('fr')],
       theme: ThemeData(
           primarySwatch: Colors.orange,
-          textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme)),
+          textTheme: GoogleFonts.latoTextTheme(
+              Theme.of(context).textTheme),
+          brightness: Brightness.light),
       home: check.when(
           data: (value) => value
               ? isLoggedIn
@@ -58,4 +61,17 @@ class MyApp extends HookConsumerWidget {
           error: (error, stack) => const Scaffold(body: NoInternetPage())),
     );
   }
+}
+
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => { 
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.trackpad,
+    PointerDeviceKind.stylus,
+    PointerDeviceKind.invertedStylus
+  };
 }

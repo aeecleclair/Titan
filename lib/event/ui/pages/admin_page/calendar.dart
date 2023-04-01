@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/tools/constants.dart';
@@ -14,6 +15,7 @@ class Calendar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final events = ref.watch(confirmedEventListProvider);
+    final isWebFormat = ref.watch(isWebFormatProvider);
 
     void calendarTapped(CalendarTapDetails details, BuildContext context) {
       if (details.targetElement == CalendarElement.appointment ||
@@ -91,6 +93,7 @@ class Calendar extends HookConsumerWidget {
 
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
+      final CalendarController calendarController = CalendarController();
       return SizedBox(
         height: constraints.maxHeight,
         width: constraints.maxWidth,
@@ -103,6 +106,7 @@ class Calendar extends HookConsumerWidget {
                   onTap: (details) => calendarTapped(details, context),
                   dataSource: _getCalendarDataSource(res),
                   view: CalendarView.week,
+                  controller: calendarController,
                   selectionDecoration: BoxDecoration(
                     color: Colors.transparent,
                     border: Border.all(color: Colors.black, width: 2),
@@ -137,15 +141,60 @@ class Calendar extends HookConsumerWidget {
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 10,
-                  left: 10,
-                  child: Container(
-                    height: 20,
-                    width: 20,
-                    color: Colors.white,
+                if (isWebFormat)
+                  Positioned(
+                    right: 30,
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.shade700.withOpacity(0.3),
+                                blurRadius: 5,
+                                spreadRadius: 1)
+                          ]),
+                      child: IconButton(
+                        onPressed: () {
+                          calendarController.forward!();
+                        },
+                        icon: const HeroIcon(
+                          HeroIcons.arrowRight,
+                          size: 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
-                )
+                if (isWebFormat)
+                  Positioned(
+                    left: 30,
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.shade700.withOpacity(0.3),
+                                blurRadius: 5,
+                                spreadRadius: 1)
+                          ]),
+                      child: IconButton(
+                        onPressed: () {
+                          calendarController.backward!();
+                        },
+                        icon: const HeroIcon(
+                          HeroIcons.arrowLeft,
+                          size: 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           );
