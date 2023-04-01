@@ -42,6 +42,11 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
         icon: HeroIcons.shoppingCart,
         page: ModuleType.amap,
         selected: false),
+            Module(
+        name: "Tombola",
+        icon: HeroIcons.gift,
+        page: ModuleType.tombola,
+        selected: false),
     Module(
         name: "Évenements",
         icon: HeroIcons.calendar,

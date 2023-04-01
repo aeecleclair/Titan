@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SimpleGroupLogoNotifier extends MapNotifier<SimpleGroup, Image> {
-  SimpleGroupLogoNotifier({required String token}) : super(token: token);
+  SimpleGroupLogoNotifier() : super();
 }
 
 final allgroupLogosProvider = StateNotifierProvider<SimpleGroupLogoNotifier,
     AsyncValue<Map<SimpleGroup, AsyncValue<List<Image>>>>>((ref) {
-  final token = ref.watch(tokenProvider);
   SimpleGroupLogoNotifier simpleGroupLogoNotifier =
-      SimpleGroupLogoNotifier(token: token);
+      SimpleGroupLogoNotifier();
   tokenExpireWrapperAuth(ref, () async {
     ref.watch(allGroupListProvider).when(data: (allgroup) {
       simpleGroupLogoNotifier.loadTList(allgroup);

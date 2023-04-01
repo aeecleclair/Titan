@@ -15,6 +15,7 @@ import 'package:myecl/home/ui/home.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/vote/ui/vote.dart';
+import 'package:myecl/tombola/ui/tombola.dart';
 
 class AppDrawer extends HookConsumerWidget {
   static Duration duration = const Duration(milliseconds: 200);
@@ -51,6 +52,9 @@ class AppDrawer extends HookConsumerWidget {
             controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.vote:
         return VoteHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
+      case ModuleType.tombola:
+        return TombolaHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.cinema:
         return CinemaHomePage(
