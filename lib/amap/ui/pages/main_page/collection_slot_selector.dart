@@ -5,9 +5,9 @@ import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 
-class CollectionSlotSelector extends HookConsumerWidget {
+class CollectionSLotelector extends HookConsumerWidget {
   final CollectionSlot collectionSlot;
-  const CollectionSlotSelector({super.key, required this.collectionSlot});
+  const CollectionSLotelector({super.key, required this.collectionSlot});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

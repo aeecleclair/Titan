@@ -3,7 +3,7 @@ import 'package:myecl/tools/exception.dart';
 
 class MapNotifier<T, E>
     extends StateNotifier<AsyncValue<Map<T, AsyncValue<List<E>>>>> {
-  MapNotifier({required String token}) : super(const AsyncLoading());
+  MapNotifier() : super(const AsyncLoading());
 
   void loadTList(List<T> tList) async {
     Map<T, AsyncValue<List<E>>> loanersItems = {};
