@@ -52,11 +52,11 @@ class RoleListNotifier extends ListNotifier<Role> {
         role);
   }
 
-  void setRole(Role role) {
+  void setRoleList(List<Role> roleList) {
     state.whenData(
       (d) {
         state =
-            AsyncValue.data(d..[d.indexWhere((g) => g.id == role.id)] = role);
+            AsyncValue.data(roleList);
       },
     );
   }
