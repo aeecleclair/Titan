@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/phonebook/class/role.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/providers/role_list_provider.dart';
+import 'package:myecl/phonebook/providers/role_provider.dart';
+import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/tools/fake_class.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/association_research_bar.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/role_research_bar.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/role_card.dart';
 import 'package:myecl/phonebook/ui/association_card.dart';
+import 'package:myecl/phonebook/ui/text_input_dialog.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
 class AdminPage extends HookConsumerWidget {
@@ -22,7 +27,14 @@ class AdminPage extends HookConsumerWidget {
     final rolesNotifier = ref.watch(roleListProvider.notifier);
     final associations = ref.watch(associationListProvider);
     final associationsNotifier = ref.watch(associationListProvider.notifier);
+    final roleNotifier = ref.watch(roleProvider.notifier);
     final controller = ScrollController();
+    final roleCreationController = TextEditingController();
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     return Refresher(
       onRefresh: () async {
       await associationsNotifier.loadAssociations();
@@ -39,7 +51,41 @@ class AdminPage extends HookConsumerWidget {
               child: roles.when(
                   data: (data) {
                     return Row(
-                      children: data.map((e) => RoleCard(role: e)).toList(),
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return TextInputDialog(
+                                  controller: roleCreationController,
+                                  title: PhonebookTextConstants.newRole,
+                                  text: PhonebookTextConstants.chooseRoleName,
+                                  defaultText: "",
+                                  onConfirm: (){
+                                    if (roleCreationController.text == ""){
+                                      displayToastWithContext(TypeMsg.error,
+                                        PhonebookTextConstants.errorRoleNameEmpty);
+                                    }
+                                    else if (data.any((element) => element.name == roleCreationController.text)){
+                                      displayToastWithContext(TypeMsg.error,
+                                        PhonebookTextConstants.errorRoleNameAlreadyExists);
+                                    }
+                                    else {
+                                      displayToastWithContext(TypeMsg.msg,
+                                        PhonebookTextConstants.roleCreated);
+                                      roleNotifier.createRole(Role(name : roleCreationController.text, id: ""));
+                                      rolesNotifier.loadRoles();
+                                      Navigator.of(context).pop();
+                                    }
+                                  },);
+                                });
+                          },
+                          child: const SizedBox(
+                          width: 100,
+                          child: Icon(Icons.add),
+                          ),
+                    )] + data.map((e) => RoleCard(role: e)).toList(),
                     );
                   },
                   loading: () {
@@ -48,12 +94,12 @@ class AdminPage extends HookConsumerWidget {
                     );
                   },
                   error: (e, s) {
-                    //return const Center(
-                    //  child: Text(PhonebookTextConstants.errorLoadRoleList),
-                    //);
-                    return Row(
-                      children: fakeRoles.map((e) => RoleCard(role: e)).toList(),
+                    return const Center(
+                     child: Text(PhonebookTextConstants.errorLoadRoleList),
                     );
+                    // return Row(
+                    //   children: fakeRoles.map((e) => RoleCard(role: e)).toList(),
+                    // );
                   }),
               ),
           const SizedBox(width: 10),
@@ -74,17 +120,17 @@ class AdminPage extends HookConsumerWidget {
                 );
               },
               error: (e, s) {
-                //return const Center(
-                //  child: Text(PhonebookTextConstants.errorLoadAssociationList),
-                //);
-                return Column(
-                  children: fakeAssociations.map((association) {
-                    return AssociationCard(association: association, onClicked: () {
-                      associationNotifier.setAssociation(association);
-                      pageNotifier.setPhonebookPage(PhonebookPage.associationEditor);
-                    },);
-                  }).toList(),
+                return const Center(
+                 child: Text(PhonebookTextConstants.errorLoadAssociationList),
                 );
+                // return Column(
+                //   children: fakeAssociations.map((association) {
+                //     return AssociationCard(association: association, onClicked: () {
+                //       associationNotifier.setAssociation(association);
+                //       pageNotifier.setPhonebookPage(PhonebookPage.associationEditor);
+                //     },);
+                //   }).toList(),
+                // );
               }),
         ],
       ));

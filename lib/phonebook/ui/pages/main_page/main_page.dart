@@ -52,18 +52,18 @@ class MainPage extends HookConsumerWidget {
                         );
                       },
                       error: (e, s) {
-                        return Column(
-                          children: fakeAssociations.map((association) {
-                            return AssociationCard(association: association, onClicked: () {
-                              associationNotifier.setAssociation(association);
-                              pageNotifier.setPhonebookPage(PhonebookPage.associationPage);
-                            },);
-                          }).toList(),
-                        );
+                        // return Column(
+                        //   children: fakeAssociations.map((association) {
+                        //     return AssociationCard(association: association, onClicked: () {
+                        //       associationNotifier.setAssociation(association);
+                        //       pageNotifier.setPhonebookPage(PhonebookPage.associationPage);
+                        //     },);
+                        //   }).toList(),
+                        // );
 
-                        //return const Center(
-                        //  child: Text(PhonebookTextConstants.errorLoadAssociationList),
-                        //);
+                        return const Center(
+                         child: Text(PhonebookTextConstants.errorLoadAssociationList),
+                        );
                       },
                     ))
               ],

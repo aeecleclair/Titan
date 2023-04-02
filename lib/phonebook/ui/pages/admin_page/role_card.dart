@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/role.dart';
+import 'package:myecl/phonebook/providers/role_list_provider.dart';
 import 'package:myecl/phonebook/providers/role_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/delete_button.dart';
@@ -19,6 +20,7 @@ class RoleCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final roleListNotifier = ref.watch(roleListProvider.notifier);
     final roleNotifier = ref.watch(roleProvider.notifier);
     final controller = TextEditingController();
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -60,6 +62,7 @@ class RoleCard extends HookConsumerWidget {
                     defaultText: role.name,
                     onConfirm: (){
                       roleNotifier.updateRole(role.copyWith(name: controller.text));
+                      roleListNotifier.loadRoles();
                       Navigator.of(context).pop();
                     },);
                   });
@@ -105,6 +108,7 @@ class RoleCard extends HookConsumerWidget {
                               PhonebookTextConstants.deletingError);
                         }
                       });
+                      roleListNotifier.loadRoles();
                     },
                   );
                 });
