@@ -131,7 +131,7 @@ class AssociationEditorPage extends HookConsumerWidget {
               error: (e, s) {
                 //return const Center(
                 //  child: Text(PhonebookTextConstants.errorLoadAssociationMember),
-                List<CompleteMember> fakeMembers = fakeMembersContructor(association);
+                List<CompleteMember> fakeMembers = [CompleteMember.empty()];
                 return Column(
                   children: fakeMembers.map((member) => 
                     MemberEditableCard(member: member)

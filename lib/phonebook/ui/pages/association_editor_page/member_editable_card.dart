@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
+import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
@@ -89,13 +90,16 @@ class MemberEditableCard extends HookConsumerWidget {
                 SizedBox(
                   width: 200,
                   child: Center(
-                    child: Text(
-                      member.memberships.firstWhere((element) => element.association.id == association.id).role.name,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child : Row(
+                      children: member.memberships.where((element) => element.association.id == association.id).map((e) =>
+                        Text(
+                        e.role.name,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )).toList()
+                      )
                   )
                 ),
                 const SizedBox(width: 10),
@@ -122,7 +126,7 @@ class MemberEditableCard extends HookConsumerWidget {
                 const SizedBox(width: 10),
                 GestureDetector(
                   onTap: (){
-                    associationNotifier.deleteMember(association ,member);
+                    associationNotifier.deleteMember(association ,member, );
                   },
                   child: Container(
                     width: 40,
