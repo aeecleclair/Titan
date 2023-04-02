@@ -31,14 +31,7 @@ class AssociationResearchBar extends HookConsumerWidget {
         width: 300,
         child: TextField(
           onChanged: (value) {
-            tokenExpireWrapper(ref, () async {
-              if (editingController.text.isNotEmpty) {
-                await associationListNotifier
-                    .loadAssociations(editingController.text);
-              } else {
-                await associationListNotifier.loadAssociations();
-              }
-            });
+            associationListNotifier.filterAssociations(value);
           },
           focusNode: focusNode,
           controller: editingController,

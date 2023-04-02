@@ -12,8 +12,18 @@ class RoleListNotifier extends ListNotifier<Role> {
     roleRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Role>>> loadRoles([String? filter]) async {
-    return await loadList(() async => roleRepository.getRoleList(filter!));
+  late List<Role> roleList;
+
+  Future<AsyncValue<List<Role>>> loadRoles() async {
+    roleList = await roleRepository.getRoleList();
+    return await loadList(() async => roleRepository.getRoleList());
+  }
+
+  List<Role> filterRoles(String filter) {
+    return roleList
+        .where((role) =>
+            role.name.toLowerCase().contains(filter.toLowerCase()))
+        .toList();
   }
 
 //  Future<AsyncValue<List<Role>>> loadRolesFromUser(User user) async {
