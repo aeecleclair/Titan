@@ -4,8 +4,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
+import 'package:myecl/event/providers/is_room_provider.dart';
+import 'package:myecl/event/providers/room_id_provider.dart';
 import 'package:myecl/event/ui/pages/event_pages/checkbox_entry.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
@@ -42,8 +43,10 @@ class AddEditEventPage extends HookConsumerWidget {
     final location = useTextEditingController(text: event.location);
     final description = useTextEditingController(text: event.description);
     final allDay = useState(event.allDay);
-    final roomId = useState(Room.empty().id);
-    final isRoom = useState(false);
+    final roomId = ref.watch(roomIdProvider);
+    final roomIdNotifier = ref.watch(roomIdProvider.notifier);
+    final isRoom = ref.watch(isRoomProvider);
+    final isRoomNotifier = ref.watch(isRoomProvider.notifier);
     final recurrent = useState(event.recurrenceRule != ""
         ? event.recurrenceRule.contains("BYDAY")
         : false);
@@ -74,17 +77,6 @@ class AddEditEventPage extends HookConsumerWidget {
             : "");
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
-    final id = rooms.when(
-        data: (data) => data
-            .firstWhere(
-              (element) => element.name == event.location,
-              orElse: () => Room.empty(),
-            )
-            .id,
-        loading: () => "",
-        error: (e, s) => "");
-    roomId.value = id;
-    isRoom.value = roomId.value != Room.empty().id;
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -518,7 +510,7 @@ class AddEditEventPage extends HookConsumerWidget {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              isRoom.value = true;
+                              isRoomNotifier.setbool(true);
                             },
                             child: Container(
                                 margin: const EdgeInsets.symmetric(
@@ -528,19 +520,19 @@ class AddEditEventPage extends HookConsumerWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text("Salle",
                                           style: TextStyle(
-                                            color: isRoom.value
+                                            color: isRoom
                                                 ? Colors.white
                                                 : Colors.black,
                                             fontWeight: FontWeight.bold,
                                           ))),
-                                  backgroundColor: isRoom.value
+                                  backgroundColor: isRoom
                                       ? Colors.black
                                       : Colors.grey.shade200,
                                 ))),
                         GestureDetector(
                           onTap: () {
-                            isRoom.value = false;
-                            roomId.value = "";
+                            isRoomNotifier.setbool(false);
+                            roomIdNotifier.setRoomId("");
                           },
                           child: Container(
                             margin:
@@ -550,20 +542,20 @@ class AddEditEventPage extends HookConsumerWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text("Autre",
                                       style: TextStyle(
-                                        color: isRoom.value
+                                        color: isRoom
                                             ? Colors.black
                                             : Colors.white,
                                         fontWeight: FontWeight.bold,
                                       )),
                                 ),
-                                backgroundColor: isRoom.value
+                                backgroundColor: isRoom
                                     ? Colors.grey.shade200
                                     : Colors.black),
                           ),
                         )
                       ]),
                   const SizedBox(height: 20),
-                  isRoom.value
+                  isRoom
                       ? SizedBox(
                           height: 59,
                           child: rooms.when(
@@ -573,8 +565,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                   physics: const BouncingScrollPhysics(),
                                   itemCount: rooms.length,
                                   itemBuilder: (context, index) {
-                                    final selected =
-                                        rooms[index].id == roomId.value;
+                                    final selected = rooms[index].id == roomId;
                                     return GestureDetector(
                                       child: Container(
                                         margin: const EdgeInsets.symmetric(
@@ -597,7 +588,8 @@ class AddEditEventPage extends HookConsumerWidget {
                                       ),
                                       onTap: () {
                                         location.text = rooms[index].name;
-                                        roomId.value = rooms[index].id;
+                                        roomIdNotifier
+                                            .setRoomId(rooms[index].id);
                                       },
                                     );
                                   }),
@@ -735,7 +727,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                       applicantId: user.id,
                                       applicant: user.toApplicant(),
                                       decision: Decision.pending,
-                                      roomId: roomId.value);
+                                      roomId: roomId);
                                   final value = isEdit
                                       ? await eventListNotifier
                                           .updateEvent(newEvent)
