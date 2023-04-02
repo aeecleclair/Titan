@@ -47,16 +47,7 @@ class ResearchBar extends HookConsumerWidget {
                 color: PhonebookColorConstants.textDark,
                 size: 30,
               ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.transparent,
-                ),
               ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: PhonebookColorConstants.textDark,
-                ),
-              )),
         ));
   }
 }
