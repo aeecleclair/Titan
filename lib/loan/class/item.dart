@@ -3,20 +3,23 @@ class Item {
     required this.id,
     required this.name,
     required this.caution,
-    required this.available,
+    required this.totalAmount,
+    required this.loanedAmount,
     required this.suggestedLendingDuration,
   });
   late final String id;
   late final String name;
   late final int caution;
-  late final bool available;
+  late final int totalAmount;
+  late final int loanedAmount;
   late final double suggestedLendingDuration;
 
   Item.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     caution = json['suggested_caution'];
-    available = json['available'];
+    totalAmount = json['totalAmount'];
+    loanedAmount = json['loanedAmount'];
     suggestedLendingDuration =
         json['suggested_lending_duration'];
   }
@@ -26,17 +29,19 @@ class Item {
     data['id'] = id;
     data['name'] = name;
     data['suggested_caution'] = caution;
-    data['available'] = available;
+    data['totalAmount'] = totalAmount;
+    data['loanedAmount'] = loanedAmount;
     data['suggested_lending_duration'] = suggestedLendingDuration;
     return data;
   }
 
-  Item copyWith({id, name, caution, available, suggestedLendingDuration}) {
+  Item copyWith({id, name, caution, totalAmount,loanedAmount, suggestedLendingDuration}) {
     return Item(
         id: id ?? this.id,
         name: name ?? this.name,
         caution: caution ?? this.caution,
-        available: available ?? this.available,
+        totalAmount: totalAmount ?? this.totalAmount,
+        loanedAmount: loanedAmount ?? this.loanedAmount,
         suggestedLendingDuration:
             suggestedLendingDuration ?? this.suggestedLendingDuration);
   }
@@ -45,12 +50,13 @@ class Item {
     id = '';
     name = '';
     caution = 0;
-    available = false;
+    totalAmount = 0;
+    loanedAmount = 0;
     suggestedLendingDuration = 0;
   }
 
   @override
   String toString() {
-    return 'Item(id: $id, name: $name, caution: $caution, available: $available, suggestedLendingDuration: $suggestedLendingDuration)';
+    return 'Item(id: $id, name: $name, caution: $caution, totalAmount: $totalAmount,  loanedAmount: $loanedAmount, suggestedLendingDuration: $suggestedLendingDuration)';
   }
 }
