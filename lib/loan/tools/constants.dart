@@ -60,6 +60,7 @@ class LoanTextConstants {
   static const String noItems = "Aucun objet";
   static const String noItemSelected = "Aucun objet sélectionné";
   static const String noLoan = "Aucun prêt";
+  static const String quantity = "Quantité";
   static const String none = "Aucun";
   static const String note = "Note";
   static const String noValue = "Veuillez entrer une valeur";

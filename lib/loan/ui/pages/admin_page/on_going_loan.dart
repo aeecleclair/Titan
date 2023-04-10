@@ -184,7 +184,7 @@ class OnGoingLoan extends HookConsumerWidget {
                                                   if (loanItemsId
                                                       .contains(element.id)) {
                                                     return element.copyWith(
-                                                        available: true);
+                                                        totalAmount: 1); //TODO
                                                   }
                                                   return element;
                                                 },
