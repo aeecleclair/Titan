@@ -78,14 +78,14 @@ class DetailLoanPage extends HookConsumerWidget {
                           ],
                         ),
                       ),
-                      loan.items.isNotEmpty
+                      loan.itemsQuantity.isNotEmpty
                           ? SingleChildScrollView(
                               physics: const BouncingScrollPhysics(),
                               child: Wrap(
-                                children: loan.items
+                                children: loan.itemsQuantity
                                     .map(
-                                      (item) => ItemCard(
-                                        item: item,
+                                      (itemQty) => ItemCard(
+                                        item: itemQty.item,
                                         showButtons: false,
                                         onDelete: () async {},
                                         onEdit: () {},

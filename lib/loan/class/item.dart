@@ -3,23 +3,23 @@ class Item {
     required this.id,
     required this.name,
     required this.caution,
-    required this.totalAmount,
-    required this.loanedAmount,
+    required this.totalQuantity,
+    required this.loanedQuantity,
     required this.suggestedLendingDuration,
   });
   late final String id;
   late final String name;
   late final int caution;
-  late final int totalAmount;
-  late final int loanedAmount;
+  late final int totalQuantity;
+  late final int loanedQuantity;
   late final double suggestedLendingDuration;
 
   Item.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     caution = json['suggested_caution'];
-    totalAmount = json['totalAmount'];
-    loanedAmount = json['loanedAmount'];
+    totalQuantity = json['total_quantity'];
+    loanedQuantity = json['loaned_quantity'];
     suggestedLendingDuration =
         json['suggested_lending_duration'];
   }
@@ -29,19 +29,18 @@ class Item {
     data['id'] = id;
     data['name'] = name;
     data['suggested_caution'] = caution;
-    data['totalAmount'] = totalAmount;
-    data['loanedAmount'] = loanedAmount;
+    data['total_quantity'] = totalQuantity;
     data['suggested_lending_duration'] = suggestedLendingDuration;
     return data;
   }
 
-  Item copyWith({id, name, caution, totalAmount,loanedAmount, suggestedLendingDuration}) {
+  Item copyWith({id, name, caution, totalQuantity,loanedQuantity, suggestedLendingDuration}) {
     return Item(
         id: id ?? this.id,
         name: name ?? this.name,
         caution: caution ?? this.caution,
-        totalAmount: totalAmount ?? this.totalAmount,
-        loanedAmount: loanedAmount ?? this.loanedAmount,
+        totalQuantity: totalQuantity ?? this.totalQuantity,
+        loanedQuantity: loanedQuantity ?? this.loanedQuantity,
         suggestedLendingDuration:
             suggestedLendingDuration ?? this.suggestedLendingDuration);
   }
@@ -50,13 +49,51 @@ class Item {
     id = '';
     name = '';
     caution = 0;
-    totalAmount = 0;
-    loanedAmount = 0;
+    totalQuantity = 0;
+    loanedQuantity = 0;
     suggestedLendingDuration = 0;
   }
 
   @override
   String toString() {
-    return 'Item(id: $id, name: $name, caution: $caution, totalAmount: $totalAmount,  loanedAmount: $loanedAmount, suggestedLendingDuration: $suggestedLendingDuration)';
+    return 'Item(id: $id, name: $name, caution: $caution, totalQuantity: $totalQuantity,  loanedQuantity: $loanedQuantity, suggestedLendingDuration: $suggestedLendingDuration)';
+  }
+}
+
+class ItemQuantity {
+  ItemQuantity({
+    required this.item,
+    required this.quantity
+  });
+  late final Item item;
+  late final int quantity;
+
+
+  ItemQuantity.fromJson(Map<String, dynamic> json) {
+    item = Item.fromJson(json['item']);
+    quantity = json['quantity'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['item_id'] = item.id;
+    data['quantity'] = quantity;
+    return data;
+  }
+
+  ItemQuantity copyWith({item, quantity, caution, totalQuantity,loanedQuantity, suggestedLendingDuration}) {
+    return ItemQuantity(
+        item: item ?? this.item,
+        quantity: quantity ?? this.quantity);
+  }
+
+  ItemQuantity.empty() {
+    item = Item.empty();
+    quantity = 0;
+  }
+
+  @override
+  String toString() {
+    return 'ItemQuantity(item: $item, quantity: $quantity)';
   }
 }

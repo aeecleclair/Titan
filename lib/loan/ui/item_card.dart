@@ -53,13 +53,13 @@ class ItemCard extends StatelessWidget {
                       color: Colors.black)),
               const SizedBox(height: 5),
               Text(
-                  item.loanedAmount < item.totalAmount
-                      ? '${item.totalAmount-item.loanedAmount} ${LoanTextConstants.available}'
+                  item.loanedQuantity < item.totalQuantity
+                      ? '${item.totalQuantity-item.loanedQuantity} ${LoanTextConstants.available}'
                       : LoanTextConstants.unavailable,
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: item.loanedAmount < item.totalAmount
+                      color: item.loanedQuantity < item.totalQuantity
                           ? Colors.grey.shade400
                           : const Color.fromARGB(255, 172, 32, 10))),
               const SizedBox(height: 5),

@@ -27,8 +27,8 @@ class ItemBar extends HookConsumerWidget {
     final start = ref.watch(startProvider);
     return items.when(data: (itemList) {
       if (itemList.isNotEmpty) {
-        final sortedAvailable = itemList.where((element) => element.loanedAmount < element.totalAmount).toList()..sort((a, b) => a.name.compareTo(b.name));
-        final sortedUnavailable = itemList.where((element) => element.loanedAmount >= element.totalAmount).toList()..sort((a, b) => a.name.compareTo(b.name));
+        final sortedAvailable = itemList.where((element) => element.loanedQuantity < element.totalQuantity).toList()..sort((a, b) => a.name.compareTo(b.name));
+        final sortedUnavailable = itemList.where((element) => element.loanedQuantity >= element.totalQuantity).toList()..sort((a, b) => a.name.compareTo(b.name));
         itemList = sortedAvailable + sortedUnavailable;
         return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -39,7 +39,7 @@ class ItemBar extends HookConsumerWidget {
                 (e) => CheckItemCard(
                   item: e,
                   onCheck: () async {
-                    if (e.loanedAmount < e.totalAmount || isEdit) {
+                    if (e.loanedQuantity < e.totalQuantity || isEdit) {
                       selectedItemsNotifier.toggle(itemList.indexOf(e)).then(
                         (value) {
                           List<Item> selected = itemList
