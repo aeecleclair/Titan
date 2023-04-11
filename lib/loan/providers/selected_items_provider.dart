@@ -45,7 +45,7 @@ class SelectedListProvider extends StateNotifier<List<bool>> {
   void initWithLoan(List<Item> products, Loan loan) {
     var copy = state.toList();
     final productIds = products.map((i) => i.id).toList();
-    for (var item in loan.items) {
+    for (var item in loan.itemsQuantity.map(((e) => e.item)).toList()) {
       if (productIds.contains(item.id)) {
         copy[productIds.indexOf(item.id)] = true;
       }

@@ -84,11 +84,11 @@ class AddEditButton extends HookConsumerWidget {
               data: (itemList) async {
                 await tokenExpireWrapper(ref, () async {
                   final sortedAvailable = itemList
-                      .where((element) => element.loanedAmount < element.totalAmount)
+                      .where((element) => element.loanedQuantity < element.totalQuantity)
                       .toList()
                     ..sort((a, b) => a.name.compareTo(b.name));
                   final sortedUnavailable = itemList
-                      .where((element) => element.loanedAmount >= element.totalAmount)
+                      .where((element) => element.loanedQuantity >= element.totalQuantity)
                       .toList()
                     ..sort((a, b) => a.name.compareTo(b.name));
                   itemList = sortedAvailable + sortedUnavailable;
@@ -99,7 +99,7 @@ class AddEditButton extends HookConsumerWidget {
                   if (selected.isNotEmpty) {
                     Loan newLoan = Loan(
                       loaner: isEdit ? loan.loaner : loaner,
-                      items: selected,
+                      itemsQuantity: selected.map((e) => ItemQuantity(item: e, quantity: 1)).toList(), //TODO : manage qty
                       borrower: borrower,
                       caution: caution.text,
                       end: DateTime.parse(processDateBack(end)),

@@ -165,8 +165,8 @@ class OnGoingLoan extends HookConsumerWidget {
                                           onYes: () async {
                                             await tokenExpireWrapper(ref,
                                                 () async {
-                                              final loanItemsId = e.items
-                                                  .map((e) => e.id)
+                                              final loanItemsId = e.itemsQuantity
+                                                  .map((e) => e.item.id)
                                                   .toList();
                                               final updatedItems = loanersItems
                                                   .when<List<Item>>(
@@ -183,8 +183,7 @@ class OnGoingLoan extends HookConsumerWidget {
                                                 (element) {
                                                   if (loanItemsId
                                                       .contains(element.id)) {
-                                                    return element.copyWith(
-                                                        totalAmount: 1); //TODO
+                                                    return element.copyWith(); //TODO
                                                   }
                                                   return element;
                                                 },
