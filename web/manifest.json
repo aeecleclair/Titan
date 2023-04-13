@@ -1,11 +1,11 @@
 {
-    "name": "myecl",
-    "short_name": "myecl",
+    "name": "MyECL",
+    "short_name": "MyECL",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#hexcode",
     "theme_color": "#hexcode",
-    "description": "A new Flutter project.",
+    "description": "Application associative de Centrale Lyon, développée par ÉCLAIR",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
