@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,11 +13,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/router.dart';
 import 'package:myecl/tools/ui/app_template.dart';
+import 'package:myecl/tools/service/push_notification_service.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 void main() async {
-  await dotenv.load();
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   QR.setUrlStrategy();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
@@ -29,6 +32,7 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    PushNotificationService.initialize();
     final appRouter = ref.watch(appRouterProvider);
     final animationController =
         useAnimationController(duration: const Duration(seconds: 2));
@@ -96,4 +100,7 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
         PointerDeviceKind.stylus,
         PointerDeviceKind.invertedStylus
       };
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
