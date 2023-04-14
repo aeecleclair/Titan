@@ -162,11 +162,9 @@ abstract class LocalNotificationService {
   void onDidReceiveLocalNotification(
       int id, String? title, String? body, String? payload) async {
     // display a dialog with the notification details, tap ok to go to another page
-    print(title);
   }
 
   void onDidReceiveNotificationResponse(NotificationResponse response) async {
-    print(response.payload);
     if (response.payload == null) {
       return;
     }
