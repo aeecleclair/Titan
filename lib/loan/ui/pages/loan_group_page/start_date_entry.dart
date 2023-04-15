@@ -59,7 +59,7 @@ class StartDateEntry extends HookConsumerWidget {
           ..sort((a, b) => a.name.compareTo(b.name));
         itemList = sortedAvailable + sortedUnavailable;
         List<Item> selected = itemList
-            .where((element) => selectedItems[itemList.indexOf(element)])
+            .where((element) => selectedItems[itemList.indexOf(element)] != -1)
             .toList();
         if (selected.isNotEmpty) {
           endNotifier.setEndFromSelected(newStart, selected);
