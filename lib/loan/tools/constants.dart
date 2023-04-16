@@ -8,6 +8,7 @@ class LoanTextConstants {
   static const String addingError = "Erreur lors de l'ajout";
   static const String admin = "Administrateur";
   static const String available = "Disponible";
+  static const String availableMultiple = "Disponibles";
   static const String borrowed = "Emprunté";
   static const String borrowedMultiple = "Empruntés";
   static const String and = "et";
