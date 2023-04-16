@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/ui/item_card.dart';
+import 'package:myecl/loan/ui/item_card_in_loan.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
 import 'package:myecl/tools/functions.dart';
 
@@ -84,11 +85,8 @@ class DetailLoanPage extends HookConsumerWidget {
                               child: Wrap(
                                 children: loan.itemsQuantity
                                     .map(
-                                      (itemQty) => ItemCard(
-                                        item: itemQty.item,
-                                        showButtons: false,
-                                        onDelete: () async {},
-                                        onEdit: () {},
+                                      (itemQty) => ItemCardInLoan(
+                                        itemQty: itemQty,
                                       ),
                                     )
                                     .toList(),
