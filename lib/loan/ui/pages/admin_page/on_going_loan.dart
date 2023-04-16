@@ -62,7 +62,7 @@ class OnGoingLoan extends HookConsumerWidget {
               ),
               const SizedBox(height: 15),
               SizedBox(
-                height: 190,
+                height: 200,
                 child: WebListView(
                   child: Row(
                     children: [
@@ -79,7 +79,7 @@ class OnGoingLoan extends HookConsumerWidget {
                           padding: const EdgeInsets.all(15.0),
                           child: Container(
                             width: 120,
-                            height: 180,
+                            height: 200,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(30),

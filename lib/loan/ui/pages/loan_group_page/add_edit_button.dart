@@ -94,7 +94,7 @@ class AddEditButton extends HookConsumerWidget {
                   itemList = sortedAvailable + sortedUnavailable;
                   List<ItemQuantity> selected = itemList
                       .where(
-                          (element) => selectedItems[itemList.indexOf(element)] != -1)
+                          (element) => selectedItems[itemList.indexOf(element)] != 0)
                       .map((e) => ItemQuantity(item: e, quantity: selectedItems[itemList.indexOf(e)])).toList();
                   if (selected.isNotEmpty) {
                     Loan newLoan = Loan(
