@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/caution_provider.dart';
@@ -51,51 +52,69 @@ class ItemBar extends HookConsumerWidget {
                       onCheck: () {},
                       isSelected: currentValue != 0,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        GestureDetector(
-                          child: Icon(
-                            Icons.exposure_minus_1_rounded,
-                            color: currentValue == 0
-                                ? Colors.grey.shade400
-                                : Colors.black,
-                          ),
-                          onTap: () {
-                            if (currentValue > 0) {
-                              selectedItemsNotifier.set(
-                                  itemList.indexOf(e), currentValue - 1);
-                            }
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 6),
-                          child: Text(
-                            currentValue.toString(),
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: currentValue == 0
-                                  ? Colors.grey.shade400
-                                  : Colors.black,
+                    SizedBox(
+                      width: 120,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: GestureDetector(
+                              child: HeroIcon(
+                                HeroIcons.minus,
+                                color: currentValue == 0
+                                    ? Colors.grey.shade400
+                                    : Colors.white,
+                              ),
+                              onTap: () {
+                                if (currentValue > 0) {
+                                  selectedItemsNotifier.set(
+                                      itemList.indexOf(e), currentValue - 1);
+                                }
+                              },
                             ),
                           ),
-                        ),
-                        GestureDetector(
-                          child: Icon(Icons.plus_one_rounded,
-                          color: currentValue ==
-                                e.totalQuantity - e.loanedQuantity
-                                ? Colors.grey.shade400
-                                : Colors.black,),
-                          onTap: () {
-                            if (currentValue <
-                                e.totalQuantity - e.loanedQuantity) {
-                              selectedItemsNotifier.set(
-                                  itemList.indexOf(e), currentValue + 1);
-                            }
-                          },
-                        )
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 6),
+                            child: Text(
+                              currentValue.toString(),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: currentValue == 0
+                                    ? Colors.grey.shade400
+                                    : Colors.black,
+                              ),
+                            ),
+                          ),
+                          Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: GestureDetector(
+                                child: HeroIcon(
+                                  HeroIcons.plus,
+                                  color: currentValue ==
+                                          e.totalQuantity - e.loanedQuantity
+                                      ? Colors.grey.shade400
+                                      : Colors.white,
+                                ),
+                                onTap: () {
+                                  if (currentValue <
+                                      e.totalQuantity - e.loanedQuantity) {
+                                    selectedItemsNotifier.set(
+                                        itemList.indexOf(e), currentValue + 1);
+                                  }
+                                },
+                              ))
+                        ],
+                      ),
                     ),
                   ],
                 );
