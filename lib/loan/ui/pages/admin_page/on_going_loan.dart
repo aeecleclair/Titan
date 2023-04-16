@@ -79,7 +79,7 @@ class OnGoingLoan extends HookConsumerWidget {
                           padding: const EdgeInsets.all(15.0),
                           child: Container(
                             width: 120,
-                            height: 180,
+                            height: 200,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(30),

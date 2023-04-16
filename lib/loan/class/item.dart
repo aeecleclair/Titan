@@ -49,7 +49,7 @@ class Item {
     id = '';
     name = '';
     caution = 0;
-    totalQuantity = 0;
+    totalQuantity = 1;
     loanedQuantity = 0;
     suggestedLendingDuration = 0;
   }
