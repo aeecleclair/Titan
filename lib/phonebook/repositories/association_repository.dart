@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/class/role.dart';
 import 'package:myecl/phonebook/tools/fake_class.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/list_users.dart';
@@ -12,7 +12,7 @@ import 'package:myecl/tools/exception.dart';
 class AssociationRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "phonebook/association/";
+  final ext = "phonebook/associations/";
 
   Future<List<Association>> getAssociationList() async {
     return fakeAssociations;
@@ -26,33 +26,37 @@ class AssociationRepository extends Repository {
   }
 
   Future<bool> deleteAssociation(String associationId) async {
-    fakeAssociations.removeWhere((element) => element.id == associationId);
+    //fakeAssociations.removeWhere((element) => element.id == associationId);
     return true;
     //return await delete(associationId);
   }
 
   Future<bool> updateAssociation(Association association) async {
-    fakeAssociations[fakeAssociations.indexWhere((element) => element.id == association.id)] = association;
+    //fakeAssociations[fakeAssociations.indexWhere((element) => element.id == association.id)] = association;
     return true;
     //return await update(association.toJSON(), association.id);
   }
 
   Future<Association> createAssociation(Association association) async {
+    debugPrint("createAssociation2");
     List<String> ids = fakeAssociations.map((e) => e.id).toList();
+    debugPrint("createAssociation3");
     String newId = "1";
+    debugPrint("createAssociation4");
     while (ids.contains(newId)) {
       newId = (int.parse(newId) + 1).toString();
     }
-    association.id = newId;
-    fakeAssociations.add(association);
+    debugPrint("createAssociation5");
+    association = association.copyWith(id: newId);
+    debugPrint("newId: $newId");
     return association;
     //return Association.fromJSON(await create(association.toJSON()));
   }
 
-  Future<bool> addMember(Association association, CompleteMember member, Role role) async {
+  Future<bool> addMember(Association association, CompleteMember member, List<String> rolesTags, String apparentName) async {
     fakeMembersList[fakeMembersList.indexWhere((element) => element.member.id == member.member.id)]
         .memberships
-        .add(Membership(association: association, role: role));
+        .add(Membership(association: association, rolesTags: rolesTags, apparentName: apparentName));
     //await create({"member_id": member.member.id, "association_id": association.id, "roleId": role.id},
     //    suffix: "membership");
     return true;

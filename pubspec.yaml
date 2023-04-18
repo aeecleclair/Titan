@@ -2,7 +2,7 @@ name: myecl
 description: A new Flutter project.
 
 publish_to: "none"
-version: 0.5.0+38
+version: 0.5.1+49
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
@@ -60,6 +60,7 @@ flutter:
   assets:
     - .env
     - assets/images/logo.png
+    - assets/images/logo_alpha.png
 
   uses-material-design: true
 

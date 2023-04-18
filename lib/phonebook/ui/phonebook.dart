@@ -45,6 +45,9 @@ class PhonebookHomePage extends HookConsumerWidget {
             case PhonebookPage.associationPage:
               pageNotifier.setPhonebookPage(PhonebookPage.main);
               break;
+            case PhonebookPage.associationCreation:
+              pageNotifier.setPhonebookPage(PhonebookPage.admin);
+              break;
           }
           return false;
         },
