@@ -2,25 +2,29 @@ import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/class/role.dart';
+import 'package:myecl/phonebook/class/roles_tags.dart';
+
+String printFakeAssociations() {
+  String result = '';
+  for (Association association in fakeAssociations) {
+    result += association.toString() + '\n';
+  }
+  return result;
+}
+
 
 List<Association> fakeAssociations = [
-  Association(id: '1', name: 'test1', description: 'description test1'),
-  Association(id: '2', name: 'test2', description: 'description test2'),
+  Association(id: '1', name: 'test1', description: 'description test1', kind: 'Section', mandateYear: "2023"),
+  Association(id: '2', name: 'test2', description: 'description test2', kind: 'Club', mandateYear: "2023"),
 ];
 
-List<Role> fakeRoles = [
-  Role(id: '1', name: 'Prez\''),
-  Role(id: '2', name: 'Trez\''),
-  Role(id: '3', name: 'SG'),
-  Role(id: '4', name: 'Fillot'),
-  Role(id: '5', name: 'VP Emprunt'),
-  Role(id: '6', name: 'VP Compta'),
-  Role(id: '7', name: 'VP Com'),
-  Role(id: '8', name: 'VP Log'),
-  Role(id: '9', name: 'VP RH'),
-  Role(id: '10', name: 'VP Appro'),
-];
+RolesTags fakeRolesTags = RolesTags(tags: [
+  'Prez\'',
+  'Trez\'',
+  'SG',
+  'VP com',
+  'VP sponsor',
+]);
 
 List<CompleteMember> fakeMembersList = [
     CompleteMember(
@@ -30,7 +34,7 @@ List<CompleteMember> fakeMembersList = [
             nickname: 'Testouille',
             id: '1',
             email: 'test1@useless'),
-        memberships: [Membership(association: fakeAssociations[0], role: fakeRoles[0])]),
+        memberships: [Membership(association: fakeAssociations[0], rolesTags: [fakeRolesTags.tags[0]], apparentName: 'Prez\'')]),
     CompleteMember(
         member: Member(
             name: 'Debouck',
@@ -38,7 +42,7 @@ List<CompleteMember> fakeMembersList = [
             nickname: 'Chad',
             id: '2',
             email: 'test2@useless'),
-        memberships: [Membership(association: fakeAssociations[0], role: fakeRoles[1])]),
+        memberships: [Membership(association: fakeAssociations[0], rolesTags: [fakeRolesTags.tags[1]], apparentName: 'Trez\'')]),
     CompleteMember(
         member: Member(
             name: 'Ray',
@@ -46,7 +50,7 @@ List<CompleteMember> fakeMembersList = [
             nickname: 'Salut',
             id: '3',
             email: 'test3@useless'),
-        memberships: [Membership(association: fakeAssociations[1], role: fakeRoles[2])]),
+        memberships: [Membership(association: fakeAssociations[1], rolesTags: [fakeRolesTags.tags[2]], apparentName: 'SG')]),
     CompleteMember(
         member: Member(
             name: 'Guarriguenc',
@@ -55,8 +59,8 @@ List<CompleteMember> fakeMembersList = [
             id: '4',
             email: 'test4@useless'),
         memberships: [
-          Membership(association: fakeAssociations[1], role: fakeRoles[3]),
-          Membership(association: fakeAssociations[0], role: fakeRoles[4]),
+          Membership(association: fakeAssociations[1], rolesTags: [fakeRolesTags.tags[0]], apparentName: 'Prez\''),
+          Membership(association: fakeAssociations[0], rolesTags: [fakeRolesTags.tags[4]], apparentName: 'VP sponsor'),
         ]),
     CompleteMember(
         member: Member(
@@ -65,7 +69,7 @@ List<CompleteMember> fakeMembersList = [
             nickname: 'Jean',
             id: '5',
             email: 'test5@useless'),
-        memberships: [Membership(association: fakeAssociations[1], role: fakeRoles[5])]),
+        memberships: [Membership(association: fakeAssociations[1], rolesTags: [], apparentName: 'VP Emprunt')]),
     CompleteMember(
         member: Member(
             name: 'Sarrazin',
@@ -74,7 +78,7 @@ List<CompleteMember> fakeMembersList = [
             id: '6',
             email: 'test6@useless'),
         memberships: [
-          Membership(association: fakeAssociations[0], role: fakeRoles[6]),
-          Membership(association: fakeAssociations[0], role: fakeRoles[7])]),
+          Membership(association: fakeAssociations[0], rolesTags: [fakeRolesTags.tags[3]], apparentName: 'VP com'),
+          Membership(association: fakeAssociations[0], rolesTags: [], apparentName: 'VP Event')]),
   ];
 

@@ -29,7 +29,7 @@ class AssociationPage extends HookConsumerWidget {
       },
       child: Column(
         children: [
-        const Text(PhonebookTextConstants.associationDetail),
+        const Text(PhonebookTextConstants.associationDetail, style: TextStyle(fontSize: 30)),
         const SizedBox(height: 20,),
         Container(
           decoration: BoxDecoration(
@@ -46,7 +46,7 @@ class AssociationPage extends HookConsumerWidget {
           child: associationPicture.when(
             data: (picture) {
               return CircleAvatar(
-                radius: 80,
+                radius: 120,
                 backgroundImage: picture.isEmpty
                     ? const AssetImage('assets/images/logo_alpha.png')
                     : Image.memory(picture).image,
@@ -64,14 +64,21 @@ class AssociationPage extends HookConsumerWidget {
             },
           ),
         ),
-        const SizedBox(height: 20,),
+        const SizedBox(height: 20),
         Text(association.name,
           style: const TextStyle(
-            fontSize: 20,
+            fontSize: 40,
             color: Colors.black
           ),
         ),
-        const SizedBox(height: 10,),
+        const SizedBox(height: 10),
+        Text(association.kind,
+          style: const TextStyle(
+              fontSize: 20,
+              color: Colors.black
+            )
+          ),
+        const SizedBox(height: 10),
         Text(association.description,
           style: const TextStyle(
             fontSize: 15,
