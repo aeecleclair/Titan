@@ -29,7 +29,7 @@ class Module {
     if (liked == null){
       data['liked'] = false;
     } else {
-      data['liked'] = liked ;
+      data['liked'] = true ;
     };
     return data;
   }
