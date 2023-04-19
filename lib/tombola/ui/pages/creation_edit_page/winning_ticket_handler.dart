@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/pages/admin_page/winning_ticket_card.dart';
+import 'package:myecl/tombola/ui/pages/creation_edit_page/winning_ticket_card.dart';
 
 class WinningTicketHandler extends HookConsumerWidget {
   const WinningTicketHandler({super.key});

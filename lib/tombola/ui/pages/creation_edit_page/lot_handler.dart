@@ -10,7 +10,7 @@ import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/tombola/router.dart';
 import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/pages/admin_page/lot_card.dart';
+import 'package:myecl/tombola/ui/pages/creation_edit_page/lot_card.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';

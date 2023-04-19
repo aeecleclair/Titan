@@ -8,7 +8,7 @@ import 'package:myecl/tombola/providers/ticket_type_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
 import 'package:myecl/tombola/router.dart';
 import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/pages/admin_page/ticket_ui.dart';
+import 'package:myecl/tombola/ui/pages/creation_edit_page/ticket_ui.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/dialog.dart';

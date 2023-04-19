@@ -14,8 +14,8 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class AddEditTypeTicketSimplePage extends HookConsumerWidget {
-  const AddEditTypeTicketSimplePage({Key? key}) : super(key: key);
+class AddEditPackTicketPage extends HookConsumerWidget {
+  const AddEditPackTicketPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

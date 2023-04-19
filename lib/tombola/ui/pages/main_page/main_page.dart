@@ -89,6 +89,35 @@ class RaffleMainPage extends HookConsumerWidget {
                                     color: Colors.white)),
                           ],
                         ),
+                            fontWeight: FontWeight.bold))),
+                if (isAdminModule)
+                  GestureDetector(
+                    onTap: () {
+                      pageNotifier.setTombolaPage(TombolaPage.creation);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 10,
+                                offset: const Offset(0, 5))
+                          ]),
+                      child: Row(
+                        children: const [
+                          HeroIcon(HeroIcons.userGroup,
+                              color: Colors.white, size: 20),
+                          SizedBox(width: 10),
+                          Text("Admin",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
+                        ],
                       ),
                     ),
                 ],
