@@ -18,7 +18,7 @@ class TicketWidget extends HookConsumerWidget {
     final raffleList = ref.watch(raffleListProvider);
     final raffle = raffleList.when(
         data: (data) => data.firstWhere(
-            (element) => element.id == ticket[0].typeTicket.raffleId),
+            (element) => element.id == ticket[0].packTicket.raffleId),
         loading: () => Raffle.empty(),
         error: (_, __) => Raffle.empty());
     return Stack(children: [

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
-import 'package:myecl/tombola/class/type_ticket_simple.dart';
+import 'package:myecl/tombola/providers/pack_ticket_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/ticket_type_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
@@ -85,12 +86,12 @@ class TicketHandler extends HookConsumerWidget {
                         ),
                       ),
                     )),
-              typeTickets.when(
+              packTickets.when(
                 data: (data) {
                   return Row(
                       children: data
                           .map((e) => TicketUI(
-                                typeTicket: e,
+                                packTicket: e,
                                 onEdit: () {
                                   typeTicketNotifier.setLot(e);
                                   QR.to(RaffleRouter.root +

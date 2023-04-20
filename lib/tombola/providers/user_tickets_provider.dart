@@ -1,11 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/tickets.dart';
-import 'package:myecl/tombola/class/type_ticket_simple.dart';
+import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/tombola/repositories/tickets_repository.dart';
 import 'package:myecl/tombola/repositories/user_tickets_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+
 
 class UserTicketListNotifier extends ListNotifier<Ticket> {
   final UserDetailRepository _userDetailRepository = UserDetailRepository();
@@ -26,7 +27,7 @@ class UserTicketListNotifier extends ListNotifier<Ticket> {
         () async => _userDetailRepository.getTicketsListbyUserId(userId));
   }
 
-  Future<bool> buyTicket(TypeTicketSimple typeTicketSimple) async {
+  Future<bool> buyTicket(PackTicket typeTicketSimple) async {
     return addAll(
         (_) async => _ticketsRepository.buyTicket(typeTicketSimple.id, userId),
         []);

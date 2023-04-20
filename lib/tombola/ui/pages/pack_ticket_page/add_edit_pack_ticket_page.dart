@@ -1,7 +1,7 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/tombola/class/type_ticket_simple.dart';
+import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/ticket_type_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
@@ -24,9 +24,9 @@ class AddEditPackTicketPage extends HookConsumerWidget {
     final typeTicket = ref.watch(typeTicketProvider);
     final isEdit = typeTicket.id != TypeTicketSimple.empty().id;
     final packSize = useTextEditingController(
-        text: isEdit ? typeTicket.packSize.toString() : "");
+        text: isEdit ? packTicket.packSize.toString() : "");
     final price = useTextEditingController(
-        text: isEdit ? typeTicket.price.toString() : "");
+        text: isEdit ? packTicket.price.toString() : "");
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

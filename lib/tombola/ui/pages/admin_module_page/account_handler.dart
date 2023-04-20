@@ -6,8 +6,8 @@ import 'package:myecl/tombola/providers/cash_provider.dart';
 import 'package:myecl/tombola/providers/focus_provider.dart';
 import 'package:myecl/tombola/providers/searching_raffle_user_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/pages/creation_edit_page/adding_user_container.dart';
-import 'package:myecl/tombola/ui/pages/creation_edit_page/cash_container.dart';
+import 'package:myecl/tombola/ui/pages/admin_module_page/adding_user_container.dart';
+import 'package:myecl/tombola/ui/pages/admin_module_page/cash_container.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 

@@ -93,7 +93,7 @@ class RaffleMainPage extends HookConsumerWidget {
                 if (isAdminModule)
                   GestureDetector(
                     onTap: () {
-                      pageNotifier.setTombolaPage(TombolaPage.creation);
+                      pageNotifier.setTombolaPage(TombolaPage.adminModule);
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
@@ -153,7 +153,7 @@ class RaffleMainPage extends HookConsumerWidget {
                     final id = ticketSum.length.toString();
                     ticketSum[id] = [ticket];
                     ticketPrice[id] =
-                        ticket.typeTicket.price / ticket.typeTicket.packSize;
+                        ticket.packTicket.price / ticket.packTicket.packSize;
                   }
                 }
                 return ticketSum.isEmpty

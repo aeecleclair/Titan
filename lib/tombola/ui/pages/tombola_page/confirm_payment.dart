@@ -2,8 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/tombola/class/raffle.dart';
-import 'package:myecl/tombola/class/type_ticket_simple.dart';
 import 'package:myecl/tombola/providers/user_amount_provider.dart';
 import 'package:myecl/tombola/providers/user_tickets_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
@@ -12,10 +12,10 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class ConfirmPaymentDialog extends HookConsumerWidget {
-  final TypeTicketSimple typeTicket;
+  final PackTicket packTicket;
   final Raffle raffle;
   const ConfirmPaymentDialog(
-      {Key? key, required this.typeTicket, required this.raffle})
+      {Key? key, required this.packTicket, required this.raffle})
       : super(key: key);
 
   @override
@@ -88,7 +88,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                           ),
                         ),
                         Text(
-                          "${typeTicket.price} €",
+                          "${packTicket.price} €",
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 40,
@@ -99,7 +99,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    "${typeTicket.packSize} tickets",
+                    "${packTicket.packSize} tickets",
                     style: TextStyle(
                         color: Colors.white.withOpacity(0.8),
                         fontSize: 38,
@@ -151,16 +151,16 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                 ),
                               )),
                           onTap: () async {
-                            if (b < typeTicket.price) {
+                            if (b < packTicket.price) {
                               displayToastWithContext(TypeMsg.error,
                                   "Vous n'avez pas assez d'argent");
                             } else {
                               await tokenExpireWrapper(ref, () async {
                                 final value = await userTicketListNotifier
-                                    .buyTicket(typeTicket);
+                                    .buyTicket(packTicket);
                                 if (value) {
                                   userAmountNotifier
-                                      .updateCash(-typeTicket.price.toDouble());
+                                      .updateCash(-packTicket.price.toDouble());
                                   displayToastWithContext(TypeMsg.msg,
                                       TombolaTextConstants.boughtTicket);
                                 } else {

@@ -1,7 +1,7 @@
 import 'package:myecl/tombola/class/lot.dart';
+import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/tombola/class/stats.dart';
 import 'package:myecl/tombola/class/tickets.dart';
-import 'package:myecl/tombola/class/type_ticket_simple.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class RaffleDetailRepository extends Repository {
@@ -9,9 +9,9 @@ class RaffleDetailRepository extends Repository {
   // ignore: overridden_fields
   final ext = "tombola/raffle/";
 
-  Future<List<TypeTicketSimple>> getTypeTicketSimpleListFromRaffle(String raffleId) async {
-    return List<TypeTicketSimple>.from((await getList(suffix: "$raffleId/type_tickets"))
-        .map((x) => TypeTicketSimple.fromJson(x)));
+  Future<List<PackTicket>> getPackTicketListFromRaffle(String raffleId) async {
+    return List<PackTicket>.from((await getList(suffix: "$raffleId/pack_tickets"))
+        .map((x) => PackTicket.fromJson(x)));
   }
 
   

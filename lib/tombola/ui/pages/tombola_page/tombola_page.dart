@@ -4,7 +4,7 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/providers/user_amount_provider.dart';
 import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
-import 'package:myecl/tombola/providers/type_ticket_provider.dart';
+import 'package:myecl/tombola/providers/pack_ticket_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/buy_type_ticket_card.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/prize_card.dart';
@@ -20,8 +20,8 @@ class TombolaInfoPage extends HookConsumerWidget {
     final raffle = ref.watch(raffleProvider);
     final solde = ref.watch(userAmountProvider);
     final soldeNotifier = ref.read(userAmountProvider.notifier);
-    final typeTicketList = ref.watch(typeTicketsListProvider);
-    final typeTicketListNotifier = ref.read(typeTicketsListProvider.notifier);
+    final packTicketList = ref.watch(packTicketListProvider);
+    final packTicketListNotifier = ref.read(packTicketListProvider.notifier);
     final lotsList = ref.watch(lotListProvider);
     final lotsListNotifier = ref.read(lotListProvider.notifier);
 

@@ -24,7 +24,7 @@ class TombolaWidget extends HookConsumerWidget {
     final raffleIdNotifier = ref.watch(raffleIdProvider.notifier);
     final lotListNotifier = ref.read(lotListProvider.notifier);
     final ticketListNotifier = ref.watch(ticketsListProvider.notifier);
-    final typeTicketListNotifier = ref.watch(typeTicketsListProvider.notifier);
+    final packTicketListNotifier = ref.watch(packTicketListProvider.notifier);
     final singleRaffleStats = ref.watch(raffleStatsProvider.notifier);
     final raffleStats = ref.watch(raffleStatsMapProvider);
     final rafflesStatsNotifier = ref.watch(raffleStatsMapProvider.notifier);

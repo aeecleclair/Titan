@@ -6,10 +6,9 @@ import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/raffle_stats_provider.dart';
-import 'package:myecl/tombola/providers/type_ticket_provider.dart';
+import 'package:myecl/tombola/providers/pack_ticket_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/blue_btn.dart';
-import 'package:myecl/tombola/ui/pages/creation_edit_page/account_handler.dart';
 import 'package:myecl/tombola/ui/pages/creation_edit_page/ticket_handler.dart';
 import 'package:myecl/tombola/ui/pages/creation_edit_page/lot_handler.dart';
 import 'package:myecl/tombola/ui/pages/creation_edit_page/winning_ticket_handler.dart';
@@ -27,19 +26,37 @@ class CreationPage extends HookConsumerWidget {
     final raffleListNotifier = ref.read(raffleListProvider.notifier);
     final raffleStats = ref.watch(raffleStatsProvider);
     final cashNotifier = ref.read(cashProvider.notifier);
-    final typeTicketsListNotifier = ref.read(typeTicketsListProvider.notifier);
+    final packTicketListNotifier = ref.read(packTicketListProvider.notifier);
     final lotListNotifier = ref.read(lotListProvider.notifier);
 
     return Refresher(
         onRefresh: () async {
           await cashNotifier.loadCashList();
-          await typeTicketsListNotifier.loadTypeTicketSimpleList();
+          await packTicketListNotifier.loadPackTicketList();
           await lotListNotifier.loadLotList();
         },
         child: Column(
           children: [
-            Text(raffle.name),
-            const AccountHandler(),
+            Container(
+              margin: const EdgeInsets.only(left: 30, top: 20),
+              child: ShaderMask(
+                  blendMode: BlendMode.srcIn,
+                  shaderCallback: (bounds) => const RadialGradient(
+                        colors: [
+                          Colors.black,
+                          TombolaColorConstants.gradient2,
+                        ],
+                        radius: 6.0,
+                        tileMode: TileMode.mirror,
+                        center: Alignment.topLeft,
+                      ).createShader(bounds),
+                  child: Center(
+                      child: Text(raffle.name,
+                          style: const TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                          )))),
+            ),
             const SizedBox(
               height: 12,
             ),

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
-import 'package:myecl/tombola/class/type_ticket_simple.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/confirm_payment.dart';
 
-class BuyTypeTicketSimple extends HookConsumerWidget {
-  final TypeTicketSimple typeTicket;
+class BuyPackTicket extends HookConsumerWidget {
+  final PackTicket packTicket;
   final Raffle raffle;
-  const BuyTypeTicketSimple(
-      {Key? key, required this.typeTicket, required this.raffle})
+  const BuyPackTicket(
+      {Key? key, required this.packTicket, required this.raffle})
       : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
               context: context,
               builder: (BuildContext context) {
                 return ConfirmPaymentDialog(
-                  typeTicket: typeTicket,
+                  packTicket: packTicket,
                   raffle: raffle,
                 );
               },
@@ -74,7 +74,7 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
                       ),
                     ),
                     Text(
-                      "${typeTicket.price.toStringAsFixed(2)}€",
+                      "${packTicket.price.toStringAsFixed(2)}€",
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -85,7 +85,7 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                "${typeTicket.packSize} tickets",
+                "${packTicket.packSize} tickets",
                 style: TextStyle(
                     color: Colors.white.withOpacity(0.8),
                     fontSize: 18,
