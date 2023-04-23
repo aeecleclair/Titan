@@ -5,11 +5,11 @@ import 'package:myecl/tools/repository/repository.dart';
 class RolesTagsRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "phonebook/role/";
+  final ext = "phonebook/";
 
   Future<RolesTags> getRolesTags() async {
     return fakeRolesTags;
-    // return RolesTags.fromJSON(await getList());
+    // return RolesTags.fromJSON(await getOne("rolesTags"));
   }
 }
 

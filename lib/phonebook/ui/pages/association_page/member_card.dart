@@ -74,7 +74,6 @@ class MemberCard extends HookConsumerWidget {
                 ),
                 const SizedBox(width: 10),
                 SizedBox(
-                  width: 200,
                   child: Column(
                     children: [
                       Text(
@@ -95,18 +94,13 @@ class MemberCard extends HookConsumerWidget {
                     ],
                   ),
                 ),
-                SizedBox(
-                  width: 100,
-                  child: Center(
-                    child: Text(
-                      member.memberships.firstWhere((element) => element.association.id == association.id).apparentName,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                )
+                const Spacer(),
+                Text(member.memberships.firstWhere((element) => element.association.id == association.id).apparentName,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    )),
+                const Spacer(),
               ],
             )));
   }

@@ -3,6 +3,7 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/class/roles_tags.dart';
 import 'package:myecl/phonebook/repositories/role_tags_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 
 class RolesTagsNotifier extends SingleNotifier<RolesTags> {
@@ -23,5 +24,9 @@ class RolesTagsNotifier extends SingleNotifier<RolesTags> {
 
 final rolesTagsProvider = StateNotifierProvider<RolesTagsNotifier, AsyncValue<RolesTags>>((ref) {
   final token = ref.watch(tokenProvider);
-  return RolesTagsNotifier(token: token);
+  RolesTagsNotifier notifier  = RolesTagsNotifier(token: token);
+  tokenExpireWrapperAuth(ref, () async {
+    await notifier.loadRolesTags();
+  });
+  return notifier;
 });
