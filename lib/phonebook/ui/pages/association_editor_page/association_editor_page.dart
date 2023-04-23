@@ -290,6 +290,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                             title: PhonebookTextConstants.addMember,
                             defaultText: "",
                             onConfirm: () async {
+                              debugPrint("assciation: $association,\n member: ${member.toString()},\n memberRoleTags: $memberRoleTags,\n controller: ${controller.text}");
                               final value = await associationNotifier
                                 .addMember(association, member, memberRoleTags, controller.text);
                               if (value) {
