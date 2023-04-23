@@ -3,10 +3,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/phonebook/class/association.dart';
+import 'package:myecl/phonebook/providers/association_kind_provider.dart';
+import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/phonebook/ui/pages/association_creation_page/kind_chip.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -24,9 +27,13 @@ class AssociationCreationPage extends HookConsumerWidget {
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associations = ref.watch(associationListProvider);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
+    final associationKinds = ref.watch(associationKindsProvider);
+    final kind = useState('');
+
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
+
 
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -37,8 +44,7 @@ class AssociationCreationPage extends HookConsumerWidget {
             child: Form(
               key: key,
               child: Column(children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
+                const Center(
                   child: Text(AdminTextConstants.addAssociation,
                       style: TextStyle(
                           fontSize: 20,
@@ -48,6 +54,32 @@ class AssociationCreationPage extends HookConsumerWidget {
                 const SizedBox(
                   height: 30,
                 ),
+                associationKinds.when(
+                      data: (value) {
+                        return SingleChildScrollView(
+                          child: Row(
+                            children: [
+                            const Spacer(),
+                              ...value.kinds.map(
+                              (e) => KindChip(
+                                label: e,
+                                selected: e == kind.value,
+                                onTap: () async {
+                                  kind.value = e;
+                                },
+                              )).toList(),
+                              const Spacer(),
+                            ]
+                          )
+                        );
+                      },
+                      error: (error, stack) {
+                        return const Text(PhonebookTextConstants.errorKindsLoading);
+                      },
+                      loading: () {
+                        return const CircularProgressIndicator();
+                      },
+                  ),
                 Container(
                     margin: const EdgeInsets.symmetric(
                       vertical: 20,
@@ -129,7 +161,9 @@ class AssociationCreationPage extends HookConsumerWidget {
                           ),
                         ),
                       ],
-                    )),
+                    )
+                  ),
+                
                 ShrinkButton(
                   waitChild: Container(
                     width: double.infinity,
@@ -162,11 +196,20 @@ class AssociationCreationPage extends HookConsumerWidget {
                     ),
                   ),
                   onTap: () async {
+                    if (!key.currentState!.validate()) {
+                      displayToastWithContext(TypeMsg.error, PhonebookTextConstants.emptyFieldError);
+                      return;
+                    }
+                    if (kind.value == '') {
+                      displayToastWithContext(TypeMsg.error, PhonebookTextConstants.emptyKindError);
+                      return;
+                    }
                     await tokenExpireWrapper(ref, () async {
                       final value = await associationListNotifier.createAssociation(
                           Association.empty().copyWith(
                               name: name.text,
-                              description: description.text,));
+                              description: description.text,
+                              kind: kind.value));
                       if (value) {
                         displayToastWithContext(
                             TypeMsg.msg, PhonebookTextConstants.addedAssociation);
