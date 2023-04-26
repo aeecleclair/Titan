@@ -8,7 +8,7 @@ import 'package:myecl/phonebook/class/roles_tags.dart';
 String printFakeAssociations() {
   String result = '';
   for (Association association in fakeAssociations) {
-    result += association.toString() + '\n';
+    result += '$association\n';
   }
   return result;
 }
