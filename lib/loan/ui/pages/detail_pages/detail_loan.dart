@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/loan/ui/item_card.dart';
 import 'package:myecl/loan/ui/item_card_in_loan.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
 import 'package:myecl/tools/functions.dart';
