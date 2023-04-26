@@ -17,9 +17,9 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
   }
 
   Future<AsyncValue<List<Raffle>>> loadRaffleList() async {
-    return await loadList( () async => 
-    [Raffle(name: "oui", group: SimpleGroup(name:"a",description: "b",id:"150"), raffleStatusType: RaffleStatusType.creation, id: "1"),
-    Raffle(name: "non", group: SimpleGroup(name:"a",description: "b",id:"150"), raffleStatusType: RaffleStatusType.open, id: "2"),
+return await loadList( () async => 
+    [Raffle(name: "oui", group: SimpleGroup(name:"a",description: "b",id:"1f841bd9-00be-41a7-96e1-860a18a46105"), raffleStatusType: RaffleStatusType.creation, id: "1"),
+    Raffle(name: "non", group: SimpleGroup(name:"a",description: "b",id:"1f841bd9-00be-41a7-96e1-860a18a46105"), raffleStatusType: RaffleStatusType.open, id: "2"),
     Raffle(name: "fini", group: SimpleGroup(name:"a",description: "b",id:"150"), raffleStatusType: RaffleStatusType.locked, id: "3"),]);
     //return await loadList(() async => _rafflerepository.getRaffleList());
   }

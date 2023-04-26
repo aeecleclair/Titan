@@ -1,21 +1,26 @@
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/providers/user_amount_provider.dart';
 import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/pack_ticket_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/buy_type_ticket_card.dart';
+import 'package:myecl/tombola/ui/pages/tombola_page/creation_button_anim.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/prize_card.dart';
 import 'package:myecl/tombola/ui/tombola.dart';
 import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
 class TombolaInfoPage extends HookConsumerWidget {
   const TombolaInfoPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final userId = ref.watch(idProvider);
     final raffle = ref.watch(raffleProvider);
     final solde = ref.watch(userAmountProvider);

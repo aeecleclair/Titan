@@ -1,4 +1,3 @@
-import 'package:myecl/tombola/class/raffle.dart';
 
 class PackTicket {
   PackTicket({
@@ -7,20 +6,17 @@ class PackTicket {
     required this.value,
     required this.id,
     required this.packSize,
-    required this.probaWin,
   });
   late final String raffleId;
   late final double price;
   late final int value;
   late final String id;
   late final double packSize;
-  late final double probaWin;
 
   PackTicket.fromJson(Map<String, dynamic> json) {
     raffleId = json['raffle_id'];
     price = json['price'];
     packSize = json['packSize'];
-    probaWin = json['probaWin'];
     value = json['value'];
     id = json['id'];
   }
@@ -32,7 +28,6 @@ class PackTicket {
     data['value'] = value;
     data['id'] = id;
     data['packSize'] = packSize;
-    data['probaWin'] = probaWin;
     return data;
   }
 
@@ -42,7 +37,6 @@ class PackTicket {
     int? value,
     String? id,
     double? packSize,
-    double? probaWin,
   }) =>
       PackTicket(
           raffleId: raffleId ?? this.raffleId,
@@ -50,7 +44,7 @@ class PackTicket {
           value: value ?? this.value,
           id: id ?? this.id,
           packSize: packSize ?? this.packSize,
-          probaWin: probaWin ?? this.probaWin);
+          );
 
   PackTicket.empty() {
     raffleId = "";
@@ -58,11 +52,10 @@ class PackTicket {
     value = 0;
     id = '';
     packSize = 0;
-    probaWin = 0;
   }
 
   @override
   String toString() {
-    return 'PackTicket(raffleId: $raffleId, price: $price, value: $value, id: $id, packSize: $packSize, probaWin: $probaWin)';
+    return 'PackTicket(raffleId: $raffleId, price: $price, value: $value, id: $id, packSize: $packSize)';
   }
 }
