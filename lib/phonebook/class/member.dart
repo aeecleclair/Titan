@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class Member{
