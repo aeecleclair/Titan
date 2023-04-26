@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/member.dart';
-import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/ui/delete_button.dart';
 import 'package:myecl/phonebook/ui/edition_button.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/membership_dialog.dart';
-import 'package:myecl/phonebook/ui/text_input_dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
-import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 
 class MemberEditableCard extends HookConsumerWidget {
@@ -23,7 +18,6 @@ class MemberEditableCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final memberNotifier = ref.watch(completeMemberProvider.notifier);
     final profilePicture = ref.watch(profilePictureProvider);
     final association = ref.watch(associationProvider);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);

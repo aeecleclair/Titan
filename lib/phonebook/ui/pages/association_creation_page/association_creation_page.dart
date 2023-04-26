@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
-import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 
 class AssociationCard extends HookConsumerWidget {

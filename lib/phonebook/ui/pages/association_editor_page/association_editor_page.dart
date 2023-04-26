@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
@@ -11,7 +9,6 @@ import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
 import 'package:myecl/phonebook/providers/member_provider.dart';
 import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
-import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/pages/association_creation_page/kind_chip.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable_card.dart';
@@ -32,7 +29,6 @@ class AssociationEditorPage extends HookConsumerWidget {
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
     final associationMemberList = ref.watch(associationMemberListProvider);
-    final associationPicture = ref.watch(associationPictureProvider);
     final associationPictureNotifier =
         ref.watch(associationPictureProvider.notifier);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
