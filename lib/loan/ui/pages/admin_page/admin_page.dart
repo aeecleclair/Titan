@@ -7,7 +7,6 @@ import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
-import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loaners_bar.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loaners_items.dart';
 import 'package:myecl/loan/ui/pages/admin_page/on_going_loan.dart';
@@ -100,18 +99,6 @@ class AdminPage extends HookConsumerWidget {
                 SizedBox(height: 40),
                 OnGoingLoan(),
                 SizedBox(height: 40),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(LoanTextConstants.itemHandling,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149))),
-                  ),
-                ),
-                SizedBox(height: 15),
                 LoanersItems(),
               ],
             ),

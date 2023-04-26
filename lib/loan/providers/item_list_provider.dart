@@ -45,6 +45,13 @@ class ItemListNotifier extends ListNotifier<Item> {
         error: (e, s) => AsyncValue.error(e, s),
         loading: () => const AsyncValue.loading());
   }
+
+  Future<AsyncValue<List<Item>>> filterItems(String query) async {
+    return state.whenData((items) => items
+        .where((item) =>
+            item.name.toLowerCase().contains(query.toLowerCase()))
+        .toList());
+  }
 }
 
 final itemListProvider =

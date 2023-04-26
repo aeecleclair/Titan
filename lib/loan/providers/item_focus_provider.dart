@@ -8,6 +8,6 @@ class FocusNotifier extends StateNotifier<bool> {
   }
 }
 
-final focusProvider = StateNotifierProvider<FocusNotifier, bool>((ref) {
+final itemFocusProvider = StateNotifierProvider<FocusNotifier, bool>((ref) {
   return FocusNotifier();
 });
