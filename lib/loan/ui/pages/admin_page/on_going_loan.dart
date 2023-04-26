@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/end_provider.dart';
+import 'package:myecl/loan/providers/focus_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
@@ -27,6 +29,7 @@ class OnGoingLoan extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final loaner = ref.watch(loanerProvider);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
+    final loanList = ref.watch(loanerLoanListProvider);
     final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final loanersItems = ref.watch(loanersItemsProvider);
     final pageNotifier = ref.watch(loanPageProvider.notifier);
@@ -35,6 +38,12 @@ class OnGoingLoan extends HookConsumerWidget {
     final adminLoanList = ref.watch(adminLoanListProvider);
     final startNotifier = ref.watch(startProvider.notifier);
     final endNotifier = ref.watch(endProvider.notifier);
+    final editingController = useTextEditingController();
+    final focus = ref.watch(focusProvider);
+    final focusNode = useFocusNode();
+    if (focus) {
+      focusNode.requestFocus();
+    }
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -52,12 +61,45 @@ class OnGoingLoan extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                      '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
-                      style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 149, 149, 149))),
+                  child: TextField(
+                    onChanged: (value) {
+                      tokenExpireWrapper(ref, () async {
+                        if (editingController.text.isNotEmpty) {
+                          adminLoanListNotifier.setTData(
+                              loaner,
+                              await loanListNotifier
+                                  .filterLoans(editingController.text));
+                        } else {
+                          adminLoanListNotifier.setTData(loaner, loanList);
+                        }
+                      });
+                    },
+                    focusNode: focusNode,
+                    controller: editingController,
+                    cursorColor: const Color.fromARGB(255, 149, 149, 149),
+                    decoration: InputDecoration(
+                        labelText:
+                            '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
+                        labelStyle: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 149, 149, 149)),
+                        suffixIcon: const Icon(
+                          Icons.search,
+                          color: Color.fromARGB(255, 149, 149, 149),
+                          size: 30,
+                        ),
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          ),
+                        ),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 149, 149, 149),
+                          ),
+                        )),
+                  ),
                 ),
               ),
               const SizedBox(height: 15),
@@ -165,7 +207,8 @@ class OnGoingLoan extends HookConsumerWidget {
                                           onYes: () async {
                                             await tokenExpireWrapper(ref,
                                                 () async {
-                                              final loanItemsId = e.itemsQuantity
+                                              final loanItemsId = e
+                                                  .itemsQuantity
                                                   .map((e) => e.item.id)
                                                   .toList();
                                               final updatedItems = loanersItems
@@ -183,7 +226,8 @@ class OnGoingLoan extends HookConsumerWidget {
                                                 (element) {
                                                   if (loanItemsId
                                                       .contains(element.id)) {
-                                                    return element.copyWith(); //TODO
+                                                    return element
+                                                        .copyWith(); //TODO
                                                   }
                                                   return element;
                                                 },

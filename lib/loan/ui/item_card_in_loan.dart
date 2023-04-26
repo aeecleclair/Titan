@@ -1,9 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
 
 class ItemCardInLoan extends StatelessWidget {
   final ItemQuantity itemQty;

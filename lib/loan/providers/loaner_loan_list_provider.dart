@@ -76,6 +76,13 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
       }
     }
   }
+
+  Future<AsyncValue<List<Loan>>> filterLoans(String query) async {
+    return state.whenData((loans) => loans
+        .where((loan) =>
+            loan.borrower.getName().toLowerCase().contains(query.toLowerCase()))
+        .toList());
+  }
 }
 
 final loanerLoanListProvider =
