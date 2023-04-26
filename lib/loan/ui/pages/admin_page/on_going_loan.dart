@@ -6,7 +6,7 @@ import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/end_provider.dart';
-import 'package:myecl/loan/providers/focus_provider.dart';
+import 'package:myecl/loan/providers/loan_focus_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
@@ -39,7 +39,7 @@ class OnGoingLoan extends HookConsumerWidget {
     final startNotifier = ref.watch(startProvider.notifier);
     final endNotifier = ref.watch(endProvider.notifier);
     final editingController = useTextEditingController();
-    final focus = ref.watch(focusProvider);
+    final focus = ref.watch(loanFocusProvider);
     final focusNode = useFocusNode();
     if (focus) {
       focusNode.requestFocus();
