@@ -5,13 +5,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'dart:math';
 
-class CreationButton extends HookConsumerWidget {
-  const CreationButton({Key? key}) : super(key: key);
+class CustomButton extends HookConsumerWidget {
+  const CustomButton({Key? key,required this.text}) : super(key: key);
+  final String text;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final animation = useAnimationController(
-        duration: const Duration(milliseconds: 10000), initialValue: 0)
+        duration: const Duration(milliseconds: 7000), initialValue: 0)
       ..repeat();
 
     return AnimatedBuilder(
@@ -27,17 +28,18 @@ class CreationButton extends HookConsumerWidget {
             ),
           ],
           gradient: RadialGradient(colors: [
-            Color.fromARGB(255, 250, 250, 210),
+            (animation.value -0.5).abs()  > 0.25 ? Color.fromARGB(255, 255, 249, 220): Color.fromARGB(255, 230, 239, 255),
+            (animation.value -0.5).abs()  > 0.25 ? Color.fromARGB(205, 248, 195, 82): Color.fromARGB(205, 199, 202, 209),
             TombolaColorConstants.gradient2,
           ], transform: GradientRotation(360* animation.value * pi / 180),
-          center: Alignment.bottomRight, radius: 1),
+          center: Alignment.topLeft, radius: 0.7),
           borderRadius: const BorderRadius.all(Radius.circular(10))),
       child: Row(
-        children: const [
-          HeroIcon(HeroIcons.userGroup, color: Colors.white, size: 20),
-          SizedBox(width: 10),
-          Text("Modifier",
-              style: TextStyle(
+        children:  [
+          const HeroIcon(HeroIcons.userGroup, color: Colors.white, size: 20),
+          const SizedBox(width: 10),
+          Text(text,
+              style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.white)),
