@@ -9,7 +9,7 @@ import 'package:myecl/tools/ui/shrink_button.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;
-  final bool isAdmin, isDetail;
+  final bool isAdmin, isDetail, isHistory;
   final Function() onEdit, onInfo;
   final Future Function() onCalendar, onReturn;
   const LoanCard(
@@ -20,7 +20,8 @@ class LoanCard extends StatelessWidget {
       required this.onReturn,
       required this.onInfo,
       required this.isAdmin,
-      required this.isDetail});
+      required this.isDetail,
+      this.isHistory = false});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class LoanCard extends StatelessWidget {
         padding: const EdgeInsets.all(15.0),
         child: Container(
           width: 250,
-          height: isAdmin ? 200 : 180,
+          height: isAdmin || !isHistory ? 200 : 180,
           decoration: BoxDecoration(
             gradient: RadialGradient(
               colors: shouldReturn && !loan.returned
@@ -66,7 +67,7 @@ class LoanCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (!isAdmin)
+                if (!isAdmin && !isHistory)
                   Column(children: [
                     const SizedBox(height: 10),
                     Row(
@@ -97,7 +98,7 @@ class LoanCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                   ]),
-                SizedBox(height: !isAdmin ? 5 : 10),
+                SizedBox(height: !isAdmin && !isHistory ? 5 : 10),
                 AutoSizeText(loan.borrower.getName(),
                     maxLines: 1,
                     style: TextStyle(
