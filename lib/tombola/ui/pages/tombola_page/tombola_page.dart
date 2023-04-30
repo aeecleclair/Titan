@@ -2,6 +2,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/providers/user_amount_provider.dart';
 import 'package:myecl/tombola/providers/lot_list_provider.dart';

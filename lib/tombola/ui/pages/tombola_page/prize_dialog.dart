@@ -42,7 +42,7 @@ class PrizeDialog extends HookConsumerWidget {
                   TombolaColorConstants.gradient1,
                   TombolaColorConstants.gradient2,
                 ], transform: GradientRotation(360* animation.value * pi / 180),
-                center: Alignment.topLeft, radius: 1.5)),
+                center: Alignment.bottomRight, radius: 1.5)),
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               Container(
