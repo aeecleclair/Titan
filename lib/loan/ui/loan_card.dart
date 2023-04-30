@@ -53,7 +53,7 @@ class LoanCard extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color: shouldReturn && !loan.returned
-                    ? const Color.fromARGB(255, 172, 32, 10).withOpacity(0.3)
+                    ? const Color.fromARGB(255, 172, 32, 10).withOpacity(0.25)
                     : Colors.grey.shade200.withOpacity(0.5),
                 spreadRadius: 5,
                 blurRadius: 10,
