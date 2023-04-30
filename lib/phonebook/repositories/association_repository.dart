@@ -79,7 +79,8 @@ class AssociationRepository extends Repository {
   Future<bool> updateMember(Association association, Member member, List<String> rolesTags, String apparentName) async {
     fakeMembersList[fakeMembersList.indexWhere((element) => element.member.id == member.id)]
         .memberships
-        .add(Membership(association: association, rolesTags: rolesTags, apparentName: apparentName));
+        .where((element) => element.association.id == association.id).toList()[0] = 
+          Membership(association: association, rolesTags: rolesTags, apparentName: apparentName);
     //await update({"member_id": member.id, "association_id": association.id, "rolesTags": rolesTags, "apparentName": apparentName"},
     //    suffix: "membership");
     return true;
