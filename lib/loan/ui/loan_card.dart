@@ -40,7 +40,7 @@ class LoanCard extends StatelessWidget {
           height: isAdmin || !isHistory ? 200 : 180,
           decoration: BoxDecoration(
             gradient: RadialGradient(
-              colors: shouldReturn && !loan.returned
+              colors: shouldReturn
                   ? [
                       const Color.fromARGB(255, 250, 66, 38),
                       const Color.fromARGB(255, 172, 32, 10)
@@ -52,7 +52,7 @@ class LoanCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
             boxShadow: [
               BoxShadow(
-                color: shouldReturn && !loan.returned
+                color: shouldReturn
                     ? const Color.fromARGB(255, 172, 32, 10).withOpacity(0.25)
                     : Colors.grey.shade200.withOpacity(0.5),
                 spreadRadius: 5,
@@ -81,14 +81,14 @@ class LoanCard extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
-                                color: shouldReturn && !loan.returned
+                                color: shouldReturn
                                     ? Colors.white
                                     : Colors.black)),
                         !isDetail
                             ? GestureDetector(
                                 onTap: onInfo,
                                 child: HeroIcon(HeroIcons.informationCircle,
-                                    color: shouldReturn && !loan.returned
+                                    color: shouldReturn
                                         ? Colors.white
                                         : Colors.black,
                                     size: 25),
@@ -104,7 +104,7 @@ class LoanCard extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: shouldReturn && !loan.returned
+                        color: shouldReturn
                             ? Colors.white
                             : Colors.black)),
                 const SizedBox(height: 7),
@@ -112,7 +112,7 @@ class LoanCard extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
-                        color: shouldReturn && !loan.returned
+                        color: shouldReturn
                             ? Colors.white.withOpacity(0.8)
                             : Colors.grey.shade400)),
                 const SizedBox(height: 5),
@@ -120,7 +120,7 @@ class LoanCard extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: shouldReturn && !loan.returned
+                        color: shouldReturn
                             ? Colors.white
                             : Colors.black)),
                 const SizedBox(height: 5),
@@ -136,14 +136,14 @@ class LoanCard extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
-                            color: shouldReturn && !loan.returned
+                            color: shouldReturn
                                 ? const Color.fromARGB(255, 99, 13, 0)
                                 : Colors.grey.shade400)),
                     Text(processDate(loan.end),
                         style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
-                            color: shouldReturn && !loan.returned
+                            color: shouldReturn
                                 ? Colors.white.withOpacity(0.8)
                                 : Colors.grey.shade400)),
                   ],
@@ -160,7 +160,7 @@ class LoanCard extends StatelessWidget {
                           height: 40,
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: shouldReturn && !loan.returned
+                            color: shouldReturn
                                 ? Colors.white.withOpacity(0.7)
                                 : Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(30),
@@ -172,7 +172,7 @@ class LoanCard extends StatelessWidget {
                             ],
                           ),
                           child: HeroIcon(HeroIcons.pencil,
-                              color: shouldReturn && !loan.returned
+                              color: shouldReturn
                                   ? const Color.fromARGB(255, 99, 13, 0)
                                   : Colors.black),
                         ),
@@ -182,7 +182,7 @@ class LoanCard extends StatelessWidget {
                               width: 40,
                               height: 40,
                               decoration: BoxDecoration(
-                                color: shouldReturn && !loan.returned
+                                color: shouldReturn
                                     ? Colors.white.withOpacity(0.7)
                                     : Colors.grey.shade200,
                                 borderRadius: BorderRadius.circular(30),
@@ -195,7 +195,7 @@ class LoanCard extends StatelessWidget {
                               ),
                               child: Center(
                                   child: CircularProgressIndicator(
-                                color: shouldReturn && !loan.returned
+                                color: shouldReturn
                                     ? const Color.fromARGB(255, 99, 13, 0)
                                     : Colors.black,
                               ))),
@@ -205,7 +205,7 @@ class LoanCard extends StatelessWidget {
                             height: 40,
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: shouldReturn && !loan.returned
+                              color: shouldReturn
                                   ? Colors.white.withOpacity(0.7)
                                   : Colors.grey.shade200,
                               borderRadius: BorderRadius.circular(30),
@@ -217,7 +217,7 @@ class LoanCard extends StatelessWidget {
                               ],
                             ),
                             child: HeroIcon(HeroIcons.calendarDays,
-                                color: shouldReturn && !loan.returned
+                                color: shouldReturn
                                     ? const Color.fromARGB(255, 99, 13, 0)
                                     : Colors.black),
                           )),
@@ -227,7 +227,7 @@ class LoanCard extends StatelessWidget {
                             height: 40,
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: shouldReturn && !loan.returned
+                              color: shouldReturn
                                   ? const Color.fromARGB(255, 99, 13, 0)
                                   : Colors.black,
                               borderRadius: BorderRadius.circular(30),
@@ -249,7 +249,7 @@ class LoanCard extends StatelessWidget {
                             height: 40,
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: shouldReturn && !loan.returned
+                              color: shouldReturn
                                   ? const Color.fromARGB(255, 99, 13, 0)
                                   : Colors.black,
                               borderRadius: BorderRadius.circular(30),
