@@ -19,10 +19,7 @@ class LotListNotifier extends ListNotifier<Lot> {
   }
 
   Future<AsyncValue<List<Lot>>> loadLotList() async {
-    return await loadList( () async => 
-    [Lot(name: "Lot 1", quantity: 1, id: "1", raffleId: '1'),Lot(name: "Lot 2", quantity: 2, id: "2", raffleId: '1'),
-    Lot(name: "Lot 3", quantity: 3, id: "3", raffleId: '2'),Lot(name: "Lot 4", quantity: 4, id: "4", raffleId: '2'),]);
-    //return await loadList(() async => _lotRepository.getLotList(raffleId));
+    return await loadList(() async => _lotRepository.getLotList(raffleId));
   }
 
   Future<bool> addLot(Lot lot) async {
