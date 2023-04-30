@@ -19,7 +19,7 @@ class HistoryLoan extends HookConsumerWidget {
     final loaner = ref.watch(loanerProvider);
     final historyloanListNotifier =
         ref.watch(historyLoanerLoanListProvider.notifier);
-    final loanList = ref.watch(loanerLoanListProvider);
+    final loanList = ref.watch(historyLoanerLoanListProvider);
     final adminHistoryLoanListNotifier =
         ref.watch(adminHistoryLoanListProvider.notifier);
     final adminLoanList = ref.watch(adminHistoryLoanListProvider);
