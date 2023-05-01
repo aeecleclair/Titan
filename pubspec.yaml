@@ -16,7 +16,7 @@ dependencies:
   datetime_picker_formfield: ^2.0.1
   dotenv: ^4.0.1
   either_dart: ^1.0.0
-  firebase_messaging: ^14.4.0
+  firebase_messaging: ^14.4.1
   fl_chart: ^0.63.0
   flash: ^3.0.5+1
   flutter:
