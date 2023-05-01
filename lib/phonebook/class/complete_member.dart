@@ -13,13 +13,13 @@ class CompleteMember{
 
   CompleteMember.fromJSON(Map<String, dynamic> json){
       member = Member.fromJSON(json['user']);
-      memberships = json['membership'].map((membership) => Membership.fromJSON(membership)).toList();
+      memberships = json['memberships'].map((membership) => Membership.fromJSON(membership)).toList();
       }
     
   Map<String, dynamic> toJSON(){
     final data = <String, dynamic>{
       'member': member.id,
-      'membership': memberships.map((e) => e.toJSON()).toList(),
+      'memberships': memberships.map((e) => e.toJSON()).toList(),
     };
     return data;
   }
@@ -45,6 +45,16 @@ class CompleteMember{
       firstname: member.firstname,
       nickname: member.nickname,
       id: member.id,
-      email: member.email);
+      email: member.email,
+      promotion: member.promotion,);
+  }
+
+  @override
+  String toString() {
+    return 'CompleteMember(member: $member, memberships: $memberships)';
+  }
+
+  List<String> getRolesTags(String associationId){
+    return memberships.firstWhere((element) => element.association.id == associationId).rolesTags;
   }
 }  

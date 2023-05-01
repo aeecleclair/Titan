@@ -7,6 +7,7 @@ class Member{
     required this.nickname,
     required this.id,
     required this.email,
+    required this.promotion,
   });
 
   late final String name;
@@ -14,6 +15,7 @@ class Member{
   late final String? nickname;
   late final String id;
   late final String email;
+  late final String promotion;
 
   Member.fromJSON(Map<String, dynamic> json){
       name = json['name'];
@@ -21,6 +23,7 @@ class Member{
       nickname = json['nickname'];
       id = json['id'];
       email = json['email'];
+      promotion = json['promotion'];
       }
   
   Map<String, dynamic> toJSON(){
@@ -30,6 +33,7 @@ class Member{
       'nickname': nickname,
       'id': id,
       'email': email,
+      'promotion': promotion,
     };
     return data;
   }
@@ -40,6 +44,7 @@ class Member{
     String? nickname,
     String? id,
     String? email,
+    String? promotion,
   }) {
     return Member(
       name: name ?? this.name,
@@ -47,6 +52,7 @@ class Member{
       nickname: nickname,
       id: id ?? this.id,
       email: email ?? this.email,
+      promotion: promotion ?? this.promotion,
     );
   }
 
@@ -56,6 +62,7 @@ class Member{
     nickname = null;
     id = "";
     email = "email.test@empty.useless";
+    promotion = "Exx";
   }
 
   Member.fromUser(SimpleUser user){
@@ -64,10 +71,15 @@ class Member{
     nickname = user.nickname;
     id = user.id;
     email = "";
+    promotion = "Exx";
   }
 
   @override
   String toString() {
-    return 'Member(name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email)';
+    return 'Member(name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, promotion: $promotion)';
+  }
+
+  String getName() {
+    return "$firstname $name ($nickname)";
   }
 }

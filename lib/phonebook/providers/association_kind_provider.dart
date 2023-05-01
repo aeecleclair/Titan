@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-final kindProvider = StateNotifierProvider<KindNotifier, String>((ref) {
-  return KindNotifier();
+final associationKindProvider = StateNotifierProvider<AssociationKindNotifier, String>((ref) {
+  return AssociationKindNotifier();
 });
 
-class KindNotifier extends StateNotifier<String> {
-  KindNotifier() : super("");
+class AssociationKindNotifier extends StateNotifier<String> {
+  AssociationKindNotifier() : super("");
 
   void setKind(String i) {
     state = i;

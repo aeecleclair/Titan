@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/member.dart';
-import 'package:myecl/phonebook/providers/member_provider.dart';
+import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
@@ -13,8 +13,8 @@ class SearchResult extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
-    final memberNotifier = ref.watch(memberProvider.notifier);
-    final member = ref.watch(memberProvider);
+    final memberNotifier = ref.watch(completeMemberProvider.notifier);
+    final member = ref.watch(completeMemberProvider);
 
     return users.when(
         data: (u) {

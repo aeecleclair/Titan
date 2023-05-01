@@ -79,6 +79,11 @@ class AssociationPage extends HookConsumerWidget {
             association.description,
             style: const TextStyle(fontSize: 15, color: Colors.black),
           ),
+          const SizedBox(height: 10),
+          Text(
+            "${PhonebookTextConstants.activeMandate} ${association.mandateYear}",
+            style: const TextStyle(fontSize: 15, color: Colors.black),
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -97,11 +102,6 @@ class AssociationPage extends HookConsumerWidget {
             error: (e, s) {
               return const Center(
                 child: Text(PhonebookTextConstants.errorLoadAssociationMember),
-                // List<CompleteMember> fakeMembers = [CompleteMember.empty()];
-                // return Column(
-                //   children: fakeMembers.map((member) =>
-                //     MemberCard(member: member)
-                //   ).toList()
               );
             },
           )

@@ -13,8 +13,7 @@ class MemberDetailPage extends HookConsumerWidget {
         margin: const EdgeInsets.all(10),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: const Color.fromARGB(255, 187, 187, 187)),
+            borderRadius: BorderRadius.circular(50)),
         child: Column(children: [
           const Text(PhonebookTextConstants.detail),
           Text("${PhonebookTextConstants.name} ${memberProvider.member.name}"),
@@ -23,6 +22,7 @@ class MemberDetailPage extends HookConsumerWidget {
           if (memberProvider.member.nickname != null)
             Text(
                 "${PhonebookTextConstants.nickname} ${memberProvider.member.nickname!}"),
+          Text("${PhonebookTextConstants.promotion} ${memberProvider.member.promotion}"),
           Text(
               "${PhonebookTextConstants.email} ${memberProvider.member.email}"),
           const Text(PhonebookTextConstants
@@ -31,15 +31,10 @@ class MemberDetailPage extends HookConsumerWidget {
             for (var membership in memberProvider.memberships)
               Container(
                   margin: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      border: Border.all(),
-                      color: const Color.fromARGB(255, 187, 187, 187)),
                   child:  Row(
                       children: [
                         const Spacer(flex: 1),
-                        Text("${membership.association.name} : ${membership.apparentName}",
-                            style: const TextStyle(fontSize: 20)),
+                        Text("${membership.association.name} : ${membership.apparentName}"),
                         const Spacer(flex: 1),
                   ]))
           ]),
