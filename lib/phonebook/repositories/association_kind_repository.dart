@@ -8,7 +8,7 @@ class AssociationKindsRepository extends Repository {
   final ext = "phonebook/associations";
 
   Future<AssociationKinds> getAssociationKinds() async {
-    return fakeAssociationKinds ;
-    // return AssociationKinds.fromJSON(await getOne("kinds"));
+    // return fakeAssociationKinds ;
+    return AssociationKinds.fromJSON(await getOne("kinds"));
   }
 }
