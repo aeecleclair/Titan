@@ -7,16 +7,16 @@ import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class LoanerLoanListNotifier extends ListNotifier<Loan> {
+class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
   final LoanRepository _loanrepository = LoanRepository();
-  LoanerLoanListNotifier({required String token})
+  HistoryLoanerLoanListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     _loanrepository.setToken(token);
   }
 
   Future<AsyncValue<List<Loan>>> loadLoan(String loanerId) async {
     return await loadList(
-        () async => _loanrepository.getLoanListByLoanerId(loanerId));
+        () async => _loanrepository.getHistory(loanerId));
   }
 
   Future<bool> addLoan(Loan loan) async {
@@ -85,17 +85,17 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
   }
 }
 
-final loanerLoanListProvider =
-    StateNotifierProvider<LoanerLoanListNotifier, AsyncValue<List<Loan>>>(
+final historyLoanerLoanListProvider =
+    StateNotifierProvider<HistoryLoanerLoanListNotifier, AsyncValue<List<Loan>>>(
         (ref) {
   final token = ref.watch(tokenProvider);
-  LoanerLoanListNotifier loanerLoanListNotifier =
-      LoanerLoanListNotifier(token: token);
+  HistoryLoanerLoanListNotifier historyloanerLoanListNotifier =
+      HistoryLoanerLoanListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     final loanerId = ref.watch(loanerIdProvider);
     if (loanerId != "") {
-      loanerLoanListNotifier.loadLoan(loanerId);
+      historyloanerLoanListNotifier.loadLoan(loanerId);
     }
   });
-  return loanerLoanListNotifier;
+  return historyloanerLoanListNotifier;
 });
