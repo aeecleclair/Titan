@@ -7,6 +7,7 @@ import 'package:myecl/loan/providers/history_loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_focus_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
+import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/web_list_view.dart';
@@ -60,7 +61,7 @@ class HistoryLoan extends HookConsumerWidget {
                     controller: editingController,
                     cursorColor: const Color.fromARGB(255, 149, 149, 149),
                     decoration: const InputDecoration(
-                        labelText: 'Historique',
+                        labelText: LoanTextConstants.history,
                         labelStyle: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
