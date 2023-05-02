@@ -45,6 +45,10 @@ class Item {
             suggestedLendingDuration ?? this.suggestedLendingDuration);
   }
 
+  ItemSimple simple() {
+    return ItemSimple(id: id,name: name);
+  }
+
   Item.empty() {
     id = '';
     name = '';
@@ -60,40 +64,80 @@ class Item {
   }
 }
 
+
+class ItemSimple {
+  ItemSimple({
+    required this.id,
+    required this.name,
+  });
+  late final String id;
+  late final String name;
+
+  ItemSimple.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    return data;
+  }
+
+  ItemSimple copyWith({id, name}) {
+    return ItemSimple(
+        id: id ?? this.id,
+        name: name ?? this.name,);
+  }
+
+  ItemSimple.empty() {
+    id = '';
+    name = '';
+  }
+
+  @override
+  String toString() {
+    return 'ItemSimple(id: $id, name: $name';
+  }
+}
+
+
+
 class ItemQuantity {
   ItemQuantity({
-    required this.item,
+    required this.itemSimple,
     required this.quantity
   });
-  late final Item item;
+  late final ItemSimple itemSimple;
   late final int quantity;
 
 
   ItemQuantity.fromJson(Map<String, dynamic> json) {
-    item = Item.fromJson(json['item']);
+    itemSimple = ItemSimple.fromJson(json['itemSimple']);
     quantity = json['quantity'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['item_id'] = item.id;
+    data['item_id'] = itemSimple.id;
     data['quantity'] = quantity;
     return data;
   }
 
-  ItemQuantity copyWith({item, quantity, caution, totalQuantity,loanedQuantity, suggestedLendingDuration}) {
+  ItemQuantity copyWith({itemSimple, quantity}) {
     return ItemQuantity(
-        item: item ?? this.item,
+        itemSimple: itemSimple ?? this.itemSimple,
         quantity: quantity ?? this.quantity);
   }
 
   ItemQuantity.empty() {
-    item = Item.empty();
+    itemSimple = ItemSimple.empty();
     quantity = 0;
   }
 
   @override
   String toString() {
-    return 'ItemQuantity(item: $item, quantity: $quantity)';
+    return 'ItemQuantity(itemSimple: $itemSimple, quantity: $quantity)';
   }
 }
