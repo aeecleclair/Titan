@@ -1,4 +1,4 @@
-import 'package:myecl/tombola/class/lot.dart';
+import 'package:myecl/tombola/class/prize.dart';
 import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/user/class/list_users.dart';
 
@@ -11,13 +11,13 @@ class Ticket {
   });
   late final PackTicket packTicket;
   late final SimpleUser user;
-  late final Lot? lot;
+  late final Prize? lot;
   late final String id;
 
   Ticket.fromJson(Map<String, dynamic> json) {
     packTicket = PackTicket.fromJson(json['type_ticket']);
     user = SimpleUser.fromJson(json['user']);
-    lot = json['lot'] != null ? Lot.fromJson(json['lot']) : null;
+    lot = json['lot'] != null ? Prize.fromJson(json['lot']) : null;
     id = json['id'];
   }
 
@@ -33,7 +33,7 @@ class Ticket {
   Ticket copyWith({
     PackTicket? packTicket,
     SimpleUser? user,
-    Lot? lot,
+    Prize? lot,
     String? id,
   }) =>
       Ticket(

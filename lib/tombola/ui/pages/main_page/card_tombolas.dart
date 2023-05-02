@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/stats.dart';
-import 'package:myecl/tombola/providers/lot_list_provider.dart';
+import 'package:myecl/tombola/providers/prize_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_id_provider.dart';
 import 'package:myecl/tombola/providers/raffle_stats_map_provider.dart';
 import 'package:myecl/tombola/providers/raffle_stats_provider.dart';
@@ -22,7 +22,7 @@ class TombolaWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffleIdNotifier = ref.watch(raffleIdProvider.notifier);
-    final lotListNotifier = ref.read(lotListProvider.notifier);
+    final lotListNotifier = ref.read(prizeListProvider.notifier);
     final ticketListNotifier = ref.watch(ticketsListProvider.notifier);
     final packTicketListNotifier = ref.watch(packTicketListProvider.notifier);
     final singleRaffleStats = ref.watch(raffleStatsProvider.notifier);

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/lot.dart';
+import 'package:myecl/tombola/class/prize.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/class/tickets.dart';
-import 'package:myecl/tombola/providers/lot_list_provider.dart';
-import 'package:myecl/tombola/providers/lot_provider.dart';
+import 'package:myecl/tombola/providers/prize_list_provider.dart';
+import 'package:myecl/tombola/providers/prize_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/tombola/router.dart';
 import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/pages/creation_edit_page/lot_card.dart';
+import 'package:myecl/tombola/ui/pages/creation_edit_page/prize_card.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class LotHandler extends HookConsumerWidget {
-  const LotHandler({super.key});
+class PrizeHandler extends HookConsumerWidget {
+  const PrizeHandler({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -154,7 +154,7 @@ class LotHandler extends HookConsumerWidget {
                   : Row(
                       children: lots
                           .map(
-                            (e) => LotCard(
+                            (e) => PrizeCard(
                               lot: e,
                               onDelete: () async {
                                 await showDialog(

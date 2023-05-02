@@ -1,9 +1,9 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/tombola/class/lot.dart';
-import 'package:myecl/tombola/providers/lot_list_provider.dart';
-import 'package:myecl/tombola/providers/lot_provider.dart';
+import 'package:myecl/tombola/class/prize.dart';
+import 'package:myecl/tombola/providers/prize_list_provider.dart';
+import 'package:myecl/tombola/providers/prize_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/blue_btn.dart';
@@ -21,8 +21,8 @@ class AddEditLotPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final raffle = ref.watch(raffleProvider);
-    final lot = ref.watch(lotProvider);
-    final isEdit = lot.id != Lot.empty().id;
+    final lot = ref.watch(prizeProvider);
+    final isEdit = lot.id != Prize.empty().id;
     final quantity = useTextEditingController(
         text: isEdit ? lot.quantity.toString() : "1");
     final name = useTextEditingController(text: lot.name);

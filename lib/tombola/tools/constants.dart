@@ -16,8 +16,8 @@ class TombolaColorConstants extends ColorConstants {
 
 class TombolaTextConstants {
   //general
-  static const String raffle = "Tombola";
-  static const String prize = "Lot";
+  static const String raffle = "Tombolas";
+  static const String prize = "Lots";
   //Home page
   static const String actualTombolas = "Tombola en cours";
   static const String pastTombolas = "Tombola passés";

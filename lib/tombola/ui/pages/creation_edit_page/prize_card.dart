@@ -1,17 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tombola/class/lot.dart';
+import 'package:myecl/tombola/class/prize.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
-class LotCard extends StatelessWidget {
-  final Lot lot;
+class PrizeCard extends StatelessWidget {
+  final Prize lot;
   final Function() onEdit;
   final Future Function() onDelete, onDraw;
   final RaffleStatusType status;
-  const LotCard(
+  const PrizeCard(
       {super.key,
       required this.lot,
       required this.onEdit,

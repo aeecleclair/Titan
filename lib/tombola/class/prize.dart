@@ -1,5 +1,5 @@
-class Lot {
-  Lot({
+class Prize {
+  Prize({
     required this.id,
     required this.name,
     required this.raffleId,
@@ -12,7 +12,7 @@ class Lot {
   late final String? description;
   late final int quantity;
 
-  Lot.fromJson(Map<String, dynamic> json) {
+  Prize.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     raffleId = json['raffle_id'];
@@ -30,14 +30,14 @@ class Lot {
     return data;
   }
 
-  Lot copyWith({
+  Prize copyWith({
     String? id,
     String? name,
     String? raffleId,
     String? description,
     int? quantity,
   }) =>
-      Lot(
+      Prize(
         id: id ?? this.id,
         name: name ?? this.name,
         raffleId: raffleId ?? this.raffleId,
@@ -45,7 +45,7 @@ class Lot {
         quantity: quantity ?? this.quantity,
       );
 
-  Lot.empty() {
+  Prize.empty() {
     id = '';
     name = '';
     raffleId = '';

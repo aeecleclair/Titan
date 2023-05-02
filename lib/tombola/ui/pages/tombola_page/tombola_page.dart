@@ -5,12 +5,12 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/providers/user_amount_provider.dart';
-import 'package:myecl/tombola/providers/lot_list_provider.dart';
+import 'package:myecl/tombola/providers/prize_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/pack_ticket_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/buy_type_ticket_card.dart';
-import 'package:myecl/tombola/ui/pages/tombola_page/creation_button_anim.dart';
+import 'package:myecl/tombola/ui/creation_button_anim.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/prize_card.dart';
 import 'package:myecl/tombola/ui/tombola.dart';
 import 'package:myecl/tools/ui/refresher.dart';
@@ -28,8 +28,8 @@ class TombolaInfoPage extends HookConsumerWidget {
     final soldeNotifier = ref.read(userAmountProvider.notifier);
     final packTicketList = ref.watch(packTicketListProvider);
     final packTicketListNotifier = ref.read(packTicketListProvider.notifier);
-    final lotsList = ref.watch(lotListProvider);
-    final lotsListNotifier = ref.read(lotListProvider.notifier);
+    final lotsList = ref.watch(prizeListProvider);
+    final lotsListNotifier = ref.read(prizeListProvider.notifier);
 
     return TombolaTemplate(
       child: Refresher(

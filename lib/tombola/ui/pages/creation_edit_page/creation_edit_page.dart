@@ -2,7 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/cash_provider.dart';
-import 'package:myecl/tombola/providers/lot_list_provider.dart';
+import 'package:myecl/tombola/providers/prize_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/raffle_stats_provider.dart';
@@ -10,7 +10,7 @@ import 'package:myecl/tombola/providers/pack_ticket_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/blue_btn.dart';
 import 'package:myecl/tombola/ui/pages/creation_edit_page/ticket_handler.dart';
-import 'package:myecl/tombola/ui/pages/creation_edit_page/lot_handler.dart';
+import 'package:myecl/tombola/ui/pages/creation_edit_page/prize_handler.dart';
 import 'package:myecl/tombola/ui/pages/creation_edit_page/winning_ticket_handler.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/dialog.dart';
@@ -27,7 +27,7 @@ class CreationPage extends HookConsumerWidget {
     final raffleStats = ref.watch(raffleStatsProvider);
     final cashNotifier = ref.read(cashProvider.notifier);
     final packTicketListNotifier = ref.read(packTicketListProvider.notifier);
-    final lotListNotifier = ref.read(lotListProvider.notifier);
+    final lotListNotifier = ref.read(prizeListProvider.notifier);
 
     return Refresher(
         onRefresh: () async {
@@ -66,7 +66,7 @@ class CreationPage extends HookConsumerWidget {
             const SizedBox(
               height: 12,
             ),
-            const LotHandler(),
+            const PrizeHandler(),
             raffle.raffleStatusType != RaffleStatusType.locked
                 ? Padding(
                     padding: const EdgeInsets.symmetric(

@@ -1,4 +1,4 @@
-import 'package:myecl/tombola/class/lot.dart';
+import 'package:myecl/tombola/class/prize.dart';
 import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/tombola/class/stats.dart';
 import 'package:myecl/tombola/class/tickets.dart';
@@ -20,9 +20,9 @@ class RaffleDetailRepository extends Repository {
         .map((x) => Ticket.fromJson(x)));
   }
 
-  Future<List<Lot>> getLotListFromRaffle(String raffleId) async {
-    return List<Lot>.from((await getList(suffix: "$raffleId/lots"))
-        .map((x) => Lot.fromJson(x)));
+  Future<List<Prize>> getLotListFromRaffle(String raffleId) async {
+    return List<Prize>.from((await getList(suffix: "$raffleId/lots"))
+        .map((x) => Prize.fromJson(x)));
   }
 
   Future<RaffleStats> getRaffleStats(String raffleId) async {

@@ -1,4 +1,4 @@
-import 'package:myecl/tombola/class/lot.dart';
+import 'package:myecl/tombola/class/prize.dart';
 import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -12,8 +12,8 @@ class UserDetailRepository extends Repository {
         (await getList(suffix: "/$userId/tickets")).map((x) => Ticket.fromJson(x)));
   }
 
-  Future<List<Lot>> getLotListByUserId(String userId) async {
-    return List<Lot>.from(
-        (await getList(suffix: "/$userId/lot")).map((x) => Lot.fromJson(x)));
+  Future<List<Prize>> getLotListByUserId(String userId) async {
+    return List<Prize>.from(
+        (await getList(suffix: "/$userId/lot")).map((x) => Prize.fromJson(x)));
   }
 }
