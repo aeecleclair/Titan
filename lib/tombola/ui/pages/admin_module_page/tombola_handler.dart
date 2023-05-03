@@ -17,6 +17,7 @@ class TombolaHandler extends HookConsumerWidget {
     final groupList = ref.watch(allGroupListProvider);
     final raffleList = ref.watch(raffleListProvider);
     final groupChoosen = useState(SimpleGroup.empty());
+    ValueNotifier<String> dropdownValue = useState('');
 
     void displayWinningsDialog(List<SimpleGroup> groups, Function callback) {
       showDialog(
@@ -161,7 +162,7 @@ class TombolaHandler extends HookConsumerWidget {
                   error: (e, s) => [Text("Error: $e")],
                   loading: () => const [CircularProgressIndicator()],
                 ),
-                /*groupList.when(
+                groupList.when(
                   data: (data) {
                     final List<String> listGroupName =
                         data.map((e) => e.name).toList();
@@ -187,7 +188,7 @@ class TombolaHandler extends HookConsumerWidget {
                   },
                   error: (e, s) => Text('Error: $e'),
                   loading: () => const CircularProgressIndicator(),
-                ),*/
+                ),
                 const SizedBox(
                   width: 10,
                 ),

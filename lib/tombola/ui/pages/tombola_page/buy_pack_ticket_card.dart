@@ -74,8 +74,7 @@ class BuyPackTicket extends HookConsumerWidget {
                       child: Container(
                         child: tombolaLogo.when(
                             data: (value) => ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                    15.0),
+                                borderRadius: BorderRadius.circular(15.0),
                                 child: value),
                             loading: () => const CircularProgressIndicator(),
                             error: (Object error, StackTrace? stackTrace) =>
