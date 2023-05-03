@@ -37,7 +37,7 @@ class WinningTicketUI extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             AutoSizeText(
-              ticket.lot == null ? "Lot" : ticket.lot!.name,
+              ticket.prize == null ? "Lot" : ticket.prize!.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(

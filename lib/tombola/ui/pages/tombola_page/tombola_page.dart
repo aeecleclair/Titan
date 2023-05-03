@@ -9,7 +9,7 @@ import 'package:myecl/tombola/providers/prize_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/pack_ticket_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/pages/tombola_page/buy_type_ticket_card.dart';
+import 'package:myecl/tombola/ui/pages/tombola_page/buy_pack_ticket_card.dart';
 import 'package:myecl/tombola/ui/creation_button_anim.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/prize_card.dart';
 import 'package:myecl/tombola/ui/tombola.dart';
@@ -28,8 +28,8 @@ class TombolaInfoPage extends HookConsumerWidget {
     final soldeNotifier = ref.read(userAmountProvider.notifier);
     final packTicketList = ref.watch(packTicketListProvider);
     final packTicketListNotifier = ref.read(packTicketListProvider.notifier);
-    final lotsList = ref.watch(prizeListProvider);
-    final lotsListNotifier = ref.read(prizeListProvider.notifier);
+    final prizesList = ref.watch(prizeListProvider);
+    final prizesListNotifier = ref.read(prizeListProvider.notifier);
 
     return TombolaTemplate(
       child: Refresher(

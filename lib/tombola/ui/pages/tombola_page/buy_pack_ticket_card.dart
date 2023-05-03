@@ -116,7 +116,7 @@ class BuyPackTicket extends HookConsumerWidget {
                           raffle.raffleStatusType == RaffleStatusType.open
                               ? "Acheter ce ticket"
                               : raffle.raffleStatusType ==
-                                      RaffleStatusType.locked
+                                      RaffleStatusType.lock
                                   ? "Tombola fermée"
                                   : "Pas encore disponible",
                           style: TextStyle(

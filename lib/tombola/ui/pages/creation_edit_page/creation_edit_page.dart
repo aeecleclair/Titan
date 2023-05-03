@@ -1,3 +1,4 @@
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
@@ -12,6 +13,7 @@ import 'package:myecl/tombola/ui/blue_btn.dart';
 import 'package:myecl/tombola/ui/pages/creation_edit_page/ticket_handler.dart';
 import 'package:myecl/tombola/ui/pages/creation_edit_page/prize_handler.dart';
 import 'package:myecl/tombola/ui/pages/creation_edit_page/winning_ticket_handler.dart';
+import 'package:myecl/tombola/ui/text_entry.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/refresher.dart';
@@ -22,18 +24,22 @@ class CreationPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final formKey = GlobalKey<FormState>();
+
     final raffle = ref.watch(raffleProvider);
     final raffleListNotifier = ref.read(raffleListProvider.notifier);
     final raffleStats = ref.watch(raffleStatsProvider);
     final cashNotifier = ref.read(cashProvider.notifier);
     final packTicketListNotifier = ref.read(packTicketListProvider.notifier);
-    final lotListNotifier = ref.read(prizeListProvider.notifier);
+    final prizeListNotifier = ref.read(prizeListProvider.notifier);
+
+    final name = useTextEditingController(text: raffle.name);
 
     return Refresher(
         onRefresh: () async {
           await cashNotifier.loadCashList();
           await packTicketListNotifier.loadPackTicketList();
-          await lotListNotifier.loadLotList();
+          await prizeListNotifier.loadLotList();
         },
         child: Column(
           children: [
@@ -43,31 +49,51 @@ class CreationPage extends HookConsumerWidget {
                   blendMode: BlendMode.srcIn,
                   shaderCallback: (bounds) => const RadialGradient(
                         colors: [
-                          Colors.black,
                           TombolaColorConstants.gradient2,
+                          Colors.black,
                         ],
                         radius: 6.0,
                         tileMode: TileMode.mirror,
                         center: Alignment.topLeft,
                       ).createShader(bounds),
                   child: Center(
-                      child: Text(raffle.name,
-                          style: const TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                          )))),
-            ),
+                      child: Form(
+                          
+                          key: formKey,
+                          child: TextEntry(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return TombolaTextConstants.fillField;
+                              }
+                              return null;
+                            },
+                            textEditingController: name,
+                            keyboardType: TextInputType.text)))),
+            ),Container(margin:EdgeInsets.only(left: 30,right:30,top: 15),
+            child: ShrinkButton(
+                            waitChild: const BlueBtn(
+                                text: TombolaTextConstants.waiting),onTap: () async {
+                              if (formKey.currentState!.validate()) {
+                                await tokenExpireWrapper(ref, () async {
+                                  await raffleListNotifier.updateRaffle(
+                                      raffle.copyWith(
+                                          name: name.text,
+                                          description: raffle.description,
+                                          raffleStatusType:
+                                              raffle.raffleStatusType));
+                                });
+                              }},child: BlueBtn(text:"Changez le nom"))),
             const SizedBox(
-              height: 12,
+              height: 32,
             ),
-            raffle.raffleStatusType != RaffleStatusType.locked
+            raffle.raffleStatusType != RaffleStatusType.lock
                 ? const TicketHandler()
                 : const WinningTicketHandler(),
             const SizedBox(
               height: 12,
             ),
             const PrizeHandler(),
-            raffle.raffleStatusType != RaffleStatusType.locked
+            raffle.raffleStatusType != RaffleStatusType.lock
                 ? Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30, vertical: 12),
@@ -105,7 +131,7 @@ class CreationPage extends HookConsumerWidget {
                                                   description:
                                                       raffle.description,
                                                   raffleStatusType:
-                                                      RaffleStatusType.locked),
+                                                      RaffleStatusType.lock),
                                             );
                                             break;
                                           default:

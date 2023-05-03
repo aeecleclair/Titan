@@ -140,7 +140,7 @@ class PrizeHandler extends HookConsumerWidget {
                       ),
                     )),
               ),
-            lotList.when(data: (lots) {
+            prizeList.when(data: (lots) {
               lots = lots
                   .where((element) => element.raffleId == raffle.id)
                   .toList();
@@ -165,7 +165,7 @@ class PrizeHandler extends HookConsumerWidget {
                                               "Voulez-vous vraiment supprimer ce produit?",
                                           onYes: () {
                                             tokenExpireWrapper(ref, () async {
-                                              final value = await lotsNotifier
+                                              final value = await prizesNotifier
                                                   .deleteLot(e);
                                               if (value) {
                                                 displayToastWithContext(
@@ -203,7 +203,7 @@ class PrizeHandler extends HookConsumerWidget {
                                                       .drawLot(e);
                                               value.when(
                                                   data: (winningTicketList) {
-                                                    lotsNotifier
+                                                    prizesNotifier
                                                         .setLotToZeroQuantity(
                                                             e.copyWith(
                                                                 quantity: 0));

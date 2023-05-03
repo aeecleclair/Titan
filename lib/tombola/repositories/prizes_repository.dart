@@ -12,7 +12,7 @@ class LotRepository extends Repository {
   }
 
   Future<Prize> getLot(String userId) async {
-    return Prize.fromJson(await getOne(userId, suffix: "/lot"));
+    return Prize.fromJson(await getOne(userId, suffix: "/prize"));
   }
 
   Future<Prize> createLot(Prize prize) async {

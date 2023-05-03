@@ -38,7 +38,7 @@ final winningTicketListProvider =
   WinningTicketNotifier notifier = WinningTicketNotifier(token: token);
   final ticketFromRaffle = ref.watch(ticketsListProvider);
   final winningTickets = ticketFromRaffle.when<List<Ticket>>(
-      data: (data) => data.where((element) => element.lot != null).toList(),
+      data: (data) => data.where((element) => element.prize != null).toList(),
       loading: () => [],
       error: (Object e, StackTrace? s) => []);
   notifier.setData(winningTickets);

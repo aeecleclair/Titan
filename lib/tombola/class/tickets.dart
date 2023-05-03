@@ -6,18 +6,18 @@ class Ticket {
   Ticket({
     required this.packTicket,
     required this.user,
-    required this.lot,
+    required this.prize,
     required this.id,
   });
   late final PackTicket packTicket;
   late final SimpleUser user;
-  late final Prize? lot;
+  late final Prize? prize;
   late final String id;
 
   Ticket.fromJson(Map<String, dynamic> json) {
-    packTicket = PackTicket.fromJson(json['type_ticket']);
+    packTicket = PackTicket.fromJson(json['pack_ticket']);
     user = SimpleUser.fromJson(json['user']);
-    lot = json['lot'] != null ? Prize.fromJson(json['lot']) : null;
+    prize = json['prize'] != null ? Prize.fromJson(json['prize']) : null;
     id = json['id'];
   }
 
@@ -25,7 +25,7 @@ class Ticket {
     final data = <String, dynamic>{};
     data['type_id'] = packTicket.id;
     data['user_id'] = user.id;
-    data['lot'] = lot != null ? lot!.id : null;
+    data['lot'] = prize != null ? prize!.id : null;
     data['id'] = id;
     return data;
   }
@@ -39,18 +39,18 @@ class Ticket {
       Ticket(
           packTicket: packTicket ?? this.packTicket,
           user: user ?? this.user,
-          lot: lot,
+          prize: lot,
           id: id ?? this.id,);
 
   Ticket.empty() {
     packTicket = PackTicket.empty();
     user = SimpleUser.empty();
-    lot = null;
+    prize = null;
     id = '';
   }
 
   @override
   String toString() {
-    return 'Ticket(packTicket: $packTicket, user: $user, lot: $lot, id: $id)';
+    return 'Ticket(packTicket: $packTicket, user: $user, lot: $prize, id: $id)';
   }
 }

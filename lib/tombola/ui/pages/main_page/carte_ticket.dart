@@ -14,7 +14,7 @@ class TicketWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isWinningTicket = ticket[0].lot != null;
+    final isWinningTicket = ticket[0].prize != null;
     final raffleList = ref.watch(raffleListProvider);
     final raffle = raffleList.when(
         data: (data) => data.firstWhere(
@@ -72,7 +72,7 @@ class TicketWidget extends HookConsumerWidget {
                 const Spacer(),
                 AutoSizeText(
                   isWinningTicket
-                      ? ticket[0].lot!.name
+                      ? ticket[0].prize!.name
                       : "${ticket.length} ticket${ticket.length > 1 ? "s" : ""}",
                   maxLines: 2,
                   style: TextStyle(

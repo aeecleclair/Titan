@@ -7,7 +7,7 @@ RaffleStatusType stringToRaffleStatusType(String raffleStatusType) {
     case 'open':
       return RaffleStatusType.open;
     case 'locked':
-      return RaffleStatusType.locked;
+      return RaffleStatusType.lock;
     default:
       return RaffleStatusType.creation;
   }
@@ -19,7 +19,7 @@ String raffleStatusTypeToString(RaffleStatusType raffleStatusType) {
       return 'creation';
     case RaffleStatusType.open:
       return 'open';
-    case RaffleStatusType.locked:
+    case RaffleStatusType.lock:
       return 'locked';
     default:
       return 'creation';

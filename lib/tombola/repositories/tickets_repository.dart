@@ -22,9 +22,9 @@ class TicketRepository extends Repository {
     return await delete("/$id");
   }
 
-  Future<List<Ticket>> buyTicket(String typeTicketId, String userId) async {
+  Future<List<Ticket>> buyTicket(String packTicketId, String userId) async {
     return List<Ticket>.from(
-        (await create({}, suffix: "/buy/$typeTicketId"))
+        (await create({}, suffix: "/buy/$packTicketId"))
             .map((e) => Ticket.fromJson(e)));
   }
 }
