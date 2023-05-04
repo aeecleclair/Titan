@@ -42,7 +42,7 @@ class PackTicket {
 
   PackTicket.empty() {
     raffleId = "";
-    price = 0.0;
+    price = 0;
     id = '';
     packSize = 0;
   }

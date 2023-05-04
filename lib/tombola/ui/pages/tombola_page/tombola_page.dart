@@ -44,6 +44,7 @@ class TombolaInfoPage extends HookConsumerWidget {
     final me = ref.watch(userProvider);
     final isThisTombolaAdmin =
         me.groups.map((e) => e.id).contains(raffle.group.id);
+        
     return Refresher(
       onRefresh: () async {
         userId.whenData(
