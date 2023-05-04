@@ -1,0 +1,50 @@
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/paiement/ui/top_bar.dart';
+import 'package:myecl/drawer/providers/page_provider.dart';
+import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/home/providers/scrolled_provider.dart';
+import 'package:myecl/paiement/ui/page_switcher.dart';
+import 'package:myecl/paiement/providers/paiement_page_provider.dart';
+
+class PaiementHomePage extends ConsumerWidget {
+  final SwipeControllerNotifier controllerNotifier;
+  final AnimationController controller;
+  const PaiementHomePage(
+      {Key? key, required this.controllerNotifier, required this.controller})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final page = ref.watch(paiementPageProvider);
+    final pageNotifier = ref.watch(paiementPageProvider.notifier);
+    final appPageNotifier = ref.watch(pageProvider.notifier);
+    final hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
+    return Scaffold(
+        body: WillPopScope(
+      onWillPop: () async {
+        switch (page) {
+          case PaiementPage.main:
+            if (!controller.isCompleted) {
+              controllerNotifier.toggle();
+              break;
+            } else {
+              return true;
+            }
+        }
+        return false;
+      },
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            TopBar(
+              controllerNotifier: controllerNotifier,
+            ),
+            const PageSwitcher()
+          ],
+        ),
+      ),
+    ));
+  }
+}
