@@ -3,6 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:heroicons/heroicons.dart';
 
+enum ModuleType {
+  calendar,
+  settings,
+  amap,
+  loan,
+  booking,
+  admin,
+  event,
+  vote,
+  tombola,
+  cinema,
+  paiement
+}
+
 class Module {
   String name;
   Either<HeroIcons, String> icon;
