@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/pack_ticket.dart';
@@ -39,26 +42,33 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
     void navigationPop() {
       Navigator.pop(context);
     }
+    final animation = useAnimationController(
+        duration: const Duration(milliseconds: 10000), initialValue: 0)
+      ..repeat();
 
+    return AnimatedBuilder(
+        animation: animation,
+        builder: (context, child) {
     return Dialog(
         backgroundColor: Colors.transparent,
         child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             width: 300,
             height: 450,
-            decoration: const BoxDecoration(
-                boxShadow: [
+            decoration: BoxDecoration(
+                boxShadow: const [
                   BoxShadow(
                     color: TombolaColorConstants.gradient2,
                     blurRadius: 15,
                     blurStyle: BlurStyle.outer,
                   ),
                 ],
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
                 gradient: RadialGradient(colors: [
                   TombolaColorConstants.gradient1,
                   TombolaColorConstants.gradient2,
-                ], center: Alignment.topLeft, radius: 1.5)),
+                ], transform: GradientRotation(360* animation.value * pi / 180),
+                 center: Alignment.topLeft, radius: 1.5)),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -233,5 +243,6 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                     ),
                   )
                 ])));
+  });
   }
 }

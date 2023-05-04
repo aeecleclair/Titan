@@ -39,7 +39,7 @@ class CreationPage extends HookConsumerWidget {
         onRefresh: () async {
           await cashNotifier.loadCashList();
           await packTicketListNotifier.loadPackTicketList();
-          await prizeListNotifier.loadLotList();
+          await prizeListNotifier.loadPrizeList();
         },
         child: Column(
           children: [

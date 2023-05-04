@@ -11,17 +11,16 @@ class AdminModulePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(tombolaPageProvider.notifier);
 
     return Refresher(
         onRefresh: () async {
           await () => {};
         },
         child: Column(
-          children: [
-            const AccountHandler(),
-            const SizedBox(height: 12),
-            const TombolaHandler()
+          children: const [
+             AccountHandler(),
+             SizedBox(height: 12),
+             TombolaHandler()
           ],
         ));
   }

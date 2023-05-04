@@ -5,5 +5,5 @@ final isTombolaAdminProvider = StateProvider<bool>((ref) {
   final me = ref.watch(userProvider);
   return me.groups
       .map((e) => e.id)
-      .contains("566b6455-ee7e-4933-bd09-83497167e7a8");
+      .contains("0a25cb76-4b63-4fd3-b939-da6d9feabf28");
 });

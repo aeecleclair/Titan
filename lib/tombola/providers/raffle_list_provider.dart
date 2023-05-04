@@ -6,7 +6,6 @@ import 'package:myecl/tombola/repositories/raffle_repositories.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-import 'package:myecl/admin/class/simple_group.dart';
 
 
 class RaffleListNotifier extends ListNotifier<Raffle> {
@@ -22,23 +21,20 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
 
   Future<bool> createRaffle(Raffle raffle) async {
     return await add(
-      // _rafflerepository.createRaffle,
-      (raffle) async => raffle,
+      _rafflerepository.createRaffle,
       raffle);
   }
 
   Future<bool> updateRaffle(Raffle raffle) async {
     return await update(
-        // _rafflerepository.updateRaffle,
-        (raffle) async => false,
+        _rafflerepository.updateRaffle,
         (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
         raffle);
   }
 
   Future<bool> deleteRaffle(Raffle raffle) async {
     return await delete(
-        // _rafflerepository.deleteRaffle,
-        (raffle) async => false,
+        _rafflerepository.deleteRaffle,
         (raffles, r) => raffles..removeWhere((e) => e.id == r.id),
         raffle.id,
         raffle);

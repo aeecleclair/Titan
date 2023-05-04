@@ -16,7 +16,7 @@ class PrizeDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final animation = useAnimationController(
-        duration: const Duration(milliseconds: 10000), initialValue: 0)
+        duration: const Duration(milliseconds: 7000), initialValue: 0)
       ..repeat();
 
     return AnimatedBuilder(

@@ -166,7 +166,7 @@ class PrizeHandler extends HookConsumerWidget {
                                           onYes: () {
                                             tokenExpireWrapper(ref, () async {
                                               final value = await prizesNotifier
-                                                  .deleteLot(e);
+                                                  .deletePrize(e);
                                               if (value) {
                                                 displayToastWithContext(
                                                     TypeMsg.msg,

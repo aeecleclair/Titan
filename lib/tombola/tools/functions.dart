@@ -20,7 +20,7 @@ String raffleStatusTypeToString(RaffleStatusType raffleStatusType) {
     case RaffleStatusType.open:
       return 'open';
     case RaffleStatusType.lock:
-      return 'locked';
+      return 'lock';
     default:
       return 'creation';
   }

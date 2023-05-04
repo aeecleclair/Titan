@@ -7,7 +7,7 @@ class LotRepository extends Repository {
   // ignore: overridden_fields
   final ext = "tombola/prizes";
 
-  Future<List<Prize>> getLotList(String raffle) async {
+  Future<List<Prize>> getPrizeList(String raffle) async {
     return List<Prize>.from((await getList()).map((x) => Prize.fromJson(x)));
   }
 
@@ -15,7 +15,7 @@ class LotRepository extends Repository {
     return Prize.fromJson(await getOne(userId, suffix: "/prize"));
   }
 
-  Future<Prize> createLot(Prize prize) async {
+  Future<Prize> createPrize(Prize prize) async {
     return Prize.fromJson(await create(prize.toJson()));
   }
 

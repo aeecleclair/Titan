@@ -4,7 +4,7 @@ import 'package:myecl/tombola/class/pack_ticket.dart';
 class PackTicketNotifier extends StateNotifier<PackTicket> {
   PackTicketNotifier() : super(PackTicket.empty());
 
-  void setLot(PackTicket type) {
+  void setPrize(PackTicket type) {
     state = type;
   }
 }
