@@ -10,6 +10,10 @@
 	<string>The photo library is used to let you change a profile picture</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
+    <key>NSCameraUsageDescription</key>
+    <string>This app needs camera access to scan QR codes</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
