@@ -14,7 +14,7 @@ class PageSwitcher extends ConsumerWidget {
       case PaiementPage.main:
         return const MainPage();
       case PaiementPage.scan:
-        return QRViewExample();
+        return const ScanPage();
     }
   }
 }
