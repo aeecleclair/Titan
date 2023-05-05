@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_ios/local_auth_ios.dart';
 import 'package:myecl/paiement/providers/paiement_page_provider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_button.dart';
 
@@ -10,6 +13,7 @@ class AccountCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageNotifier = ref.read(paiementPageProvider.notifier);
+    final LocalAuthentication auth = LocalAuthentication();
     return Container(
       margin: const EdgeInsets.fromLTRB(10, 10, 10, 12),
       decoration: BoxDecoration(
@@ -93,7 +97,24 @@ class AccountCard extends HookConsumerWidget {
                 AccountButton(
                   icon: HeroIcons.qrCode,
                   title: "Payer",
-                  onPressed: () {},
+                  onPressed: () async {
+                    final bool didAuthenticate = await auth.authenticate(
+                        localizedReason:
+                            'Please authenticate to show account balance',
+                        authMessages: [
+                          const AndroidAuthMessages(
+                            signInTitle:
+                                'Oops! Biometric authentication required!',
+                            cancelButton: 'No thanks',
+                          ),
+                          const IOSAuthMessages(
+                            cancelButton: 'No thanks',
+                          ),
+                        ]);
+                    if (didAuthenticate) {
+                      pageNotifier.setPaiementPage(PaiementPage.scan);
+                    }
+                  },
                 ),
                 AccountButton(
                   icon: HeroIcons.viewfinderCircle,
