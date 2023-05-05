@@ -30,6 +30,9 @@ class PaiementHomePage extends ConsumerWidget {
           case PaiementPage.scan:
             pageNotifier.setPaiementPage(PaiementPage.main);
             break;
+          case PaiementPage.pay:
+            pageNotifier.setPaiementPage(PaiementPage.main);
+            break;
         }
         return false;
       },
