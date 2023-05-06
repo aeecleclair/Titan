@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/cash_provider.dart';
 import 'package:myecl/tombola/providers/prize_list_provider.dart';
@@ -8,6 +12,7 @@ import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/raffle_stats_provider.dart';
 import 'package:myecl/tombola/providers/pack_ticket_provider.dart';
+import 'package:myecl/tombola/providers/tombola_logo_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/blue_btn.dart';
 import 'package:myecl/tombola/ui/pages/creation_edit_page/ticket_handler.dart';
@@ -32,8 +37,12 @@ class CreationPage extends HookConsumerWidget {
     final cashNotifier = ref.read(cashProvider.notifier);
     final packTicketListNotifier = ref.read(packTicketListProvider.notifier);
     final prizeListNotifier = ref.read(prizeListProvider.notifier);
+    final tombolaLogoNotifier = ref.watch(tombolaLogoProvider.notifier);
 
     final name = useTextEditingController(text: raffle.name);
+
+    final logo = useState<String?>(null);
+    final ImagePicker picker = ImagePicker();
 
     return Refresher(
         onRefresh: () async {
@@ -58,31 +67,33 @@ class CreationPage extends HookConsumerWidget {
                       ).createShader(bounds),
                   child: Center(
                       child: Form(
-                          
                           key: formKey,
                           child: TextEntry(
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return TombolaTextConstants.fillField;
-                              }
-                              return null;
-                            },
-                            textEditingController: name,
-                            keyboardType: TextInputType.text)))),
-            ),Container(margin:EdgeInsets.only(left: 30,right:30,top: 15),
-            child: ShrinkButton(
-                            waitChild: const BlueBtn(
-                                text: TombolaTextConstants.waiting),onTap: () async {
-                              if (formKey.currentState!.validate()) {
-                                await tokenExpireWrapper(ref, () async {
-                                  await raffleListNotifier.updateRaffle(
-                                      raffle.copyWith(
-                                          name: name.text,
-                                          description: raffle.description,
-                                          raffleStatusType:
-                                              raffle.raffleStatusType));
-                                });
-                              }},child: BlueBtn(text:"Changez le nom"))),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return TombolaTextConstants.fillField;
+                                }
+                                return null;
+                              },
+                              textEditingController: name,
+                              keyboardType: TextInputType.text)))),
+            ),
+            Container(
+                margin: EdgeInsets.only(left: 30, right: 30, top: 15),
+                child: ShrinkButton(
+                    waitChild:
+                        const BlueBtn(text: TombolaTextConstants.waiting),
+                    onTap: () async {
+                      if (formKey.currentState!.validate()) {
+                        await tokenExpireWrapper(ref, () async {
+                          await raffleListNotifier.updateRaffle(raffle.copyWith(
+                              name: name.text,
+                              description: raffle.description,
+                              raffleStatusType: raffle.raffleStatusType));
+                        });
+                      }
+                    },
+                    child: BlueBtn(text: "Changez le nom"))),
             const SizedBox(
               height: 32,
             ),
@@ -93,6 +104,56 @@ class CreationPage extends HookConsumerWidget {
               height: 12,
             ),
             const PrizeHandler(),
+            Row(
+              children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                alignment: Alignment.centerLeft,
+                child: const Text("Changer le logo de la tombola",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: TombolaColorConstants.textDark)),
+              ),
+              GestureDetector(
+                onTap: () async {
+                  final XFile? image =
+                      await picker.pickImage(source: ImageSource.gallery);
+                  if (image != null) {
+                    logo.value = image.path;
+                    tombolaLogoNotifier.updateLogo(raffle.id, logo.value!);
+                  }
+                },
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  padding: const EdgeInsets.all(7),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: const LinearGradient(
+                      colors: [
+                        TombolaColorConstants.gradient1,
+                        TombolaColorConstants.gradient2,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: TombolaColorConstants.gradient2.withOpacity(0.3),
+                        spreadRadius: 2,
+                        blurRadius: 4,
+                        offset: const Offset(2, 3),
+                      ),
+                    ],
+                  ),
+                  child: const HeroIcon(
+                    HeroIcons.photo,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ]),
             raffle.raffleStatusType != RaffleStatusType.lock
                 ? Padding(
                     padding: const EdgeInsets.symmetric(
