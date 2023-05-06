@@ -140,7 +140,7 @@ class TombolaWidget extends HookConsumerWidget {
                     ]),
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               raffleStats.when(
                 data: (statsList) {

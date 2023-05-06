@@ -50,6 +50,7 @@ class CreationPage extends HookConsumerWidget {
     ref.watch(winningTicketListProvider.notifier);
 
     final name = useTextEditingController(text: raffle.name);
+    final ImagePicker picker = ImagePicker();
 
     final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
     final tombolaLogoNotifier = ref.watch(tombolaLogoProvider.notifier);
@@ -64,7 +65,6 @@ class CreationPage extends HookConsumerWidget {
         });
       }
     });
-    final ImagePicker picker = ImagePicker();
 
     return TombolaTemplate(
       child: Refresher(
@@ -239,6 +239,18 @@ class CreationPage extends HookConsumerWidget {
               height: 30,
             ),
             const PrizeHandler(),
+            Row(
+              children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                alignment: Alignment.centerLeft,
+                child: const Text("Changer le logo de la tombola",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: TombolaColorConstants.textDark)),
+              ),
+            ]),
             raffle.raffleStatusType != RaffleStatusType.lock
                 ? Padding(
               padding:
