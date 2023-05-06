@@ -8,6 +8,7 @@ environment:
   sdk: ">=2.18.0 <3.0.0"
 
 dependencies:
+  animated_text_kit: ^4.2.2
   animations: ^2.0.2
   auto_size_text: ^3.0.0
   collection: ^1.16.0
