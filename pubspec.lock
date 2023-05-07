@@ -315,6 +315,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.6"
+  flutter_screen:
+    dependency: "direct main"
+    description:
+      name: flutter_screen
+      sha256: "67841aeff3851acf534038977306133db8d1e93b11f37a6b66cc41060f9a4069"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   flutter_secure_storage:
     dependency: "direct main"
     description:

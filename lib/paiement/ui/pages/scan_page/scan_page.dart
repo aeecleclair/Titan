@@ -54,23 +54,26 @@ class _ScanPageState extends State<ScanPage> {
             MediaQuery.of(context).size.height < 350)
         ? 250.0
         : 320.0;
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(30),
-        topRight: Radius.circular(30),
-      ),
-      child: QRView(
-        key: qrKey,
-        onQRViewCreated: _onQRViewCreated,
-        overlayMargin: EdgeInsets.only(
-            bottom: MediaQuery.of(context).size.height - scanArea - 350),
-        overlay: QrScannerOverlayShape(
-            borderColor: const Color(0xff017f80),
-            borderRadius: 20,
-            borderLength: 30,
-            borderWidth: 10,
-            cutOutSize: scanArea),
-        onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+        child: QRView(
+          key: qrKey,
+          onQRViewCreated: _onQRViewCreated,
+          overlayMargin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height - scanArea - 350),
+          overlay: QrScannerOverlayShape(
+              borderColor: const Color(0xff017f80),
+              borderRadius: 20,
+              borderLength: 30,
+              borderWidth: 10,
+              cutOutSize: scanArea),
+          onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+        ),
       ),
     );
   }
