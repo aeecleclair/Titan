@@ -22,7 +22,14 @@ class NumericKeyboard extends StatelessWidget {
   /// Main axis alignment [default = MainAxisAlignment.spaceEvenly]
   final MainAxisAlignment mainAxisAlignment;
 
-  const NumericKeyboard({super.key, required this.onKeyboardTap, this.textColor = Colors.black, this.rightButtonFn, this.leftIcon, this.leftButtonFn, this.mainAxisAlignment = MainAxisAlignment.spaceEvenly});
+  const NumericKeyboard(
+      {super.key,
+      required this.onKeyboardTap,
+      this.textColor = Colors.white,
+      this.rightButtonFn,
+      this.leftIcon,
+      this.leftButtonFn,
+      this.mainAxisAlignment = MainAxisAlignment.spaceEvenly});
 
   @override
   Widget build(BuildContext context) {
