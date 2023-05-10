@@ -105,7 +105,7 @@ class DetailOrderUI extends HookConsumerWidget {
           Row(
             children: [
               Text(
-                "${order.products.length} ${AMAPTextConstants.product}${order.products.length != 1 ? "s" : ""}",
+                "${order.products.fold<int>(0, (value, product) => value + product.quantity)} ${AMAPTextConstants.product}${order.products.fold<int>(0, (value, product) => value + product.quantity) != 1 ? "s" : ""}",
                 style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w700,
