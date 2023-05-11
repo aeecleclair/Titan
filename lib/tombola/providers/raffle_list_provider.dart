@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/raffle.dart';
-import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/repositories/raffle_repositories.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
