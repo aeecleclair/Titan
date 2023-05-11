@@ -8,7 +8,6 @@ class TombolaLogoRepository extends LogoRepository {
 
   Future<Image> getTombolaLogo(String id) async {
     final uint8List =  await getLogo(id, suffix: "/logo");
-    print("Empty logo : ${uint8List.isEmpty}, id: $id");
     if (uint8List.isEmpty) {return Image.asset("assets/images/logo.png");}
     return Image.memory(uint8List);
   }

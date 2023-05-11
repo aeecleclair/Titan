@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -13,6 +12,7 @@ import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/raffle_stats_provider.dart';
 import 'package:myecl/tombola/providers/pack_ticket_provider.dart';
 import 'package:myecl/tombola/providers/tombola_logo_provider.dart';
+import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/blue_btn.dart';
 import 'package:myecl/tombola/ui/pages/creation_edit_page/ticket_handler.dart';
@@ -31,6 +31,7 @@ class CreationPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
 
+    final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final raffle = ref.watch(raffleProvider);
     final raffleListNotifier = ref.read(raffleListProvider.notifier);
     final raffleStats = ref.watch(raffleStatsProvider);
@@ -91,6 +92,7 @@ class CreationPage extends HookConsumerWidget {
                               description: raffle.description,
                               raffleStatusType: raffle.raffleStatusType));
                         });
+                        pageNotifier.setTombolaPage(TombolaPage.detail);
                       }
                     },
                     child: BlueBtn(text: "Changez le nom"))),
@@ -104,8 +106,7 @@ class CreationPage extends HookConsumerWidget {
               height: 12,
             ),
             const PrizeHandler(),
-            Row(
-              children: [
+            Row(children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 alignment: Alignment.centerLeft,
@@ -117,7 +118,8 @@ class CreationPage extends HookConsumerWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+                  final XFile? image =
+                      await picker.pickImage(source: ImageSource.gallery);
                   if (image != null) {
                     logo.value = image.path;
                     print("LOGO.VALUE : ${logo.value!}");
@@ -200,6 +202,7 @@ class CreationPage extends HookConsumerWidget {
                                       },
                                     ));
                           });
+                          pageNotifier.setTombolaPage(TombolaPage.main);
                         },
                         child: BlueBtn(
                             text:

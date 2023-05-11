@@ -19,9 +19,7 @@ class TombolaLogoProvider extends SingleNotifier<Image> {
   }
 
   Future<Image> updateLogo(String id, String path) async {
-    print('addLogo called with id: $id');
     Image logo = await repository.addTombolaLogo(path, id);
-    print('Fetched logo: $logo');
     state = AsyncValue.data(logo);
     return logo;
   }

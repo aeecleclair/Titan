@@ -6,7 +6,7 @@ final raffleIdProvider =
   final raffles = ref.watch(raffleListProvider);
   return raffles.when(
       data: (data) {
-        return RaffleIdProvider(data.first.id);
+        return RaffleIdProvider(data.last.id);
       },
       error: (_, __) => RaffleIdProvider(""),
       loading: () => RaffleIdProvider(""));

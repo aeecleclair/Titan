@@ -6,7 +6,6 @@ import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/admin_module_page/confirm_creation.dart';
-import 'package:myecl/tools/ui/refresher.dart';
 
 class TombolaHandler extends HookConsumerWidget {
   const TombolaHandler({super.key});
@@ -65,7 +64,6 @@ class TombolaHandler extends HookConsumerWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 17.0),
                         child: GestureDetector(
                             onTap: () {
-                              print('tapped');
                               SimpleGroup groupChoosen = groupList.when(
                                   data: (data) => data.firstWhere((element) =>
                                       element.name == dropdownValue.value),
