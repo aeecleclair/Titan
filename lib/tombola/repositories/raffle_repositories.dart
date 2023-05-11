@@ -26,4 +26,11 @@ class RaffleRepository extends Repository {
   Future<bool> deleteRaffle(String raffleId) async {
     return await delete("/$raffleId");
   }
+  
+  Future<bool> openRaffle(Raffle raffle) async {
+    return await update(raffle.toJson(), "/${raffle.id}", suffix: "/open");
+  }
+  Future<bool> lockRaffle(Raffle raffle) async {
+    return await update(raffle.toJson(), "/${raffle.id}", suffix: "/lock");
+  }
 }

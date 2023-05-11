@@ -42,17 +42,18 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
 
   Future<bool> openRaffle(Raffle opennedRaffle) async {
     return await update(
-        _rafflerepository.updateRaffle,
+        _rafflerepository.openRaffle,
         (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
         opennedRaffle);
   }
 
   Future<bool> lockRaffle(Raffle lockedRaffle) async {
     return await update(
-        _rafflerepository.updateRaffle,
+        _rafflerepository.lockRaffle,
         (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
         lockedRaffle);
   }
+  
 }
 
 final raffleListProvider =

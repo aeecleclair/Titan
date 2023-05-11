@@ -7,6 +7,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/tombola/class/raffle.dart';
+import 'package:myecl/tombola/providers/tombola_logo_provider.dart';
 import 'package:myecl/tombola/providers/user_amount_provider.dart';
 import 'package:myecl/tombola/providers/user_tickets_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
@@ -26,7 +27,8 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
     final userAmount = ref.watch(userAmountProvider);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final userTicketListNotifier = ref.watch(userTicketListProvider.notifier);
-
+    final tombolaLogo = ref.watch(tombolaLogoProvider);
+    
     double b = 0;
     userAmount.when(
         data: (u) {
@@ -93,8 +95,14 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(25))),
                           child: Center(
-                            child: Image.asset("assets/images/soli.png",
-                                height: 80),
+                            child: tombolaLogo.when(
+                            data: (value) => ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                    20.0),
+                                child: value),
+                            loading: () => const SizedBox(),
+                            error: (Object error, StackTrace? stackTrace) =>
+                                Text('Error: $error')),
                           ),
                         ),
                         Text(

@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
+import 'package:myecl/tombola/providers/tombola_logo_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/confirm_payment.dart';
 
@@ -15,6 +16,7 @@ class BuyPackTicket extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final tombolaLogo = ref.watch(tombolaLogoProvider);
     return GestureDetector(
         onTap: () {
           if (raffle.raffleStatusType == RaffleStatusType.open) {
@@ -69,8 +71,14 @@ class BuyPackTicket extends HookConsumerWidget {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(15))),
                       child: Center(
-                        child:
-                            Image.asset("assets/images/soli.png", height: 40),
+                        child: tombolaLogo.when(
+                            data: (value) => ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                    20.0),
+                                child: value),
+                            loading: () => const SizedBox(),
+                            error: (Object error, StackTrace? stackTrace) =>
+                                Text('Error: $error')),
                       ),
                     ),
                     Text(
@@ -115,8 +123,7 @@ class BuyPackTicket extends HookConsumerWidget {
                       child: Text(
                           raffle.raffleStatusType == RaffleStatusType.open
                               ? "Acheter ce ticket"
-                              : raffle.raffleStatusType ==
-                                      RaffleStatusType.lock
+                              : raffle.raffleStatusType == RaffleStatusType.lock
                                   ? "Tombola fermée"
                                   : "Pas encore disponible",
                           style: TextStyle(

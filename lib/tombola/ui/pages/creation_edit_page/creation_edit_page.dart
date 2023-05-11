@@ -117,10 +117,10 @@ class CreationPage extends HookConsumerWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  final XFile? image =
-                      await picker.pickImage(source: ImageSource.gallery);
+                  final XFile? image = await picker.pickImage(source: ImageSource.gallery);
                   if (image != null) {
                     logo.value = image.path;
+                    print("LOGO.VALUE : ${logo.value!}");
                     tombolaLogoNotifier.updateLogo(raffle.id, logo.value!);
                   }
                 },
