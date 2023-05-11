@@ -239,8 +239,7 @@ class CreationPage extends HookConsumerWidget {
               height: 30,
             ),
             const PrizeHandler(),
-            Row(
-              children: [
+            Row(children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 alignment: Alignment.centerLeft,
@@ -252,7 +251,8 @@ class CreationPage extends HookConsumerWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+                  final XFile? image =
+                      await picker.pickImage(source: ImageSource.gallery);
                   if (image != null) {
                     logo.value = image.path;
                     tombolaLogoNotifier.updateLogo(raffle.id, logo.value!);
