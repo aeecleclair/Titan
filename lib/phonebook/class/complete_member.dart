@@ -12,7 +12,13 @@ class CompleteMember{
   
 
   CompleteMember.fromJSON(Map<String, dynamic> json){
-      member = Member.fromJSON(json['user']);
+      String name = json['name'];
+      String firstname = json['firstname'];
+      String nickname = json['nickname'];
+      String id = json['id'];
+      String email = json['email'];
+      String promotion = json['promotion'];
+      member = Member(name: name, firstname: firstname, nickname: nickname, id: id, email: email, promotion: promotion);
       memberships = json['memberships'].map((membership) => Membership.fromJSON(membership)).toList();
       }
     
