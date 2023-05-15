@@ -21,20 +21,19 @@ dependencies:
   flash: ^3.0.3+5
   flutter:
     sdk: flutter
-  flutter_appauth: ^5.0.0
+  flutter_appauth: ^6.0.0
   flutter_dotenv: ^5.0.2
   flutter_hooks: ^0.18.2+1
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.1
-  flutter_screen: ^0.0.2
   flutter_secure_storage: ^8.0.0
   google_fonts: ^4.0.3
   heroicons: ^0.8.0
   hooks_riverpod: ^2.1.1
   http: ^0.13.4
   http_parser: ^4.0.2
-  image_cropper: ^3.0.1
+  image_cropper: ^4.0.1
   image_picker: ^0.8.6
   image_picker_ios: ^0.8.6+7
   intl: ^0.17.0
@@ -43,7 +42,7 @@ dependencies:
   local_auth_android: ^1.0.28
   local_auth_ios: ^1.1.1
   numberpicker: ^2.1.1
-  package_info_plus: ^3.0.2
+  package_info_plus: ^4.0.0
   path: ^1.8.2
   path_provider: ^2.0.11
   qr_code_scanner: ^1.0.1
