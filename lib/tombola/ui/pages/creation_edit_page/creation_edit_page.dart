@@ -92,7 +92,7 @@ class CreationPage extends HookConsumerWidget {
                               description: raffle.description,
                               raffleStatusType: raffle.raffleStatusType));
                         });
-                        pageNotifier.setTombolaPage(TombolaPage.detail);
+                        pageNotifier.setTombolaPage(TombolaPage.main);// TombolaPage.detail mais problème à regler
                       }
                     },
                     child: BlueBtn(text: "Changez le nom"))),

@@ -8,6 +8,7 @@ import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
+import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -21,6 +22,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffleListNotifier = ref.watch(raffleListProvider.notifier);
+    final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -41,8 +43,8 @@ class ConfirmCreationDialog extends HookConsumerWidget {
               child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  width: 300,
-                  height: 450,
+                  width: 250,
+                  height: 350,
                   decoration: BoxDecoration(
                       boxShadow: const [
                         BoxShadow(
@@ -64,9 +66,11 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Voulez vous vraiment créer la tombola du groupe : ${group.name}",
+                        Container(margin: const EdgeInsets.only(top: 10),
+                          child:Text("Voulez vous vraiment créer la tombola du groupe : ${group.name}",
+                              textAlign: TextAlign.center,
                             style:
-                                TextStyle(color: Colors.white, fontSize: 30)),
+                                const TextStyle(color: Colors.white, fontSize: 30))),
                         Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -101,6 +105,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                               await tokenExpireWrapper(ref, () async {
                                 await raffleListNotifier.createRaffle(Raffle(name: "Tombola du groupe :  ${group.name}", group: group, id: '', raffleStatusType: RaffleStatusType.creation));
                                 await raffleListNotifier.loadRaffleList();
+                                pageNotifier.setTombolaPage(TombolaPage.main);
                                 navigationPop();
                               });
                             
