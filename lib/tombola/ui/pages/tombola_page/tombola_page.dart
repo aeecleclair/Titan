@@ -7,7 +7,6 @@ import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/providers/user_amount_provider.dart';
 import 'package:myecl/tombola/providers/prize_list_provider.dart';
-import 'package:myecl/tombola/providers/is_tombola_admin.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/pack_ticket_provider.dart';
 import 'package:myecl/tombola/providers/winning_ticket_list_provider.dart';
