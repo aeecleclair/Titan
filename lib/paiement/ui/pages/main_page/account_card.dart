@@ -45,8 +45,8 @@ class AccountCard extends HookConsumerWidget {
                     width: MediaQuery.of(context).size.width * 0.8,
                   ),
                   Row(
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         'Solde personnel',
                         textAlign: TextAlign.left,
                         style: TextStyle(
@@ -54,11 +54,16 @@ class AccountCard extends HookConsumerWidget {
                           fontSize: 18,
                         ),
                       ),
-                      Spacer(),
-                      HeroIcon(
-                        HeroIcons.chartPie,
-                        color: Colors.white,
-                        size: 30,
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          pageNotifier.setPaiementPage(PaiementPage.stats);
+                        },
+                        child: const HeroIcon(
+                          HeroIcons.chartPie,
+                          color: Colors.white,
+                          size: 30,
+                        ),
                       )
                     ],
                   ),
