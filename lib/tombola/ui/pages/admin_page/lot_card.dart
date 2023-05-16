@@ -214,8 +214,8 @@ class LotCard extends StatelessWidget {
                                             offset: const Offset(2, 3))
                                       ],
                                     ),
-                                    child: Row(
-                                      children: const [
+                                    child: const Row(
+                                      children: [
                                         HeroIcon(HeroIcons.envelopeOpen,
                                             color: Colors.white),
                                         SizedBox(width: 15),
@@ -231,8 +231,8 @@ class LotCard extends StatelessWidget {
                               height: 40,
                               padding: const EdgeInsets.symmetric(
                                   vertical: 7, horizontal: 12),
-                              child: Row(
-                                children: const [
+                              child: const Row(
+                                children: [
                                   HeroIcon(HeroIcons.check,
                                       color: Colors.white),
                                   SizedBox(width: 15),
@@ -243,9 +243,9 @@ class LotCard extends StatelessWidget {
                                 ],
                               ),
                             )
-                      : Expanded(
+                      : const Expanded(
                           child: Column(
-                            children: const [
+                            children: [
                               Center(
                                   child: Text("En Attente",
                                       style: TextStyle(

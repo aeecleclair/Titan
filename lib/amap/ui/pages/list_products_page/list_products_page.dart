@@ -47,9 +47,9 @@ class ListProductPage extends HookConsumerWidget {
               end: Alignment.bottomCenter,
             )),
           ),
-          Column(
+          const Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [ListProducts(), Dots(), Boutons()],
+            children: [ListProducts(), Dots(), Boutons()],
           ),
         ],
       ),

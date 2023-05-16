@@ -10,19 +10,19 @@ class TransactionCard extends StatelessWidget {
       height: 80,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
-      child: Row(children: [
-        const CircleAvatar(
+      child: const Row(children: [
+        CircleAvatar(
           radius: 27,
           backgroundColor: Color(0xff017f80),
         ),
-        const SizedBox(
+        SizedBox(
           width: 15,
         ),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               AutoSizeText("Maxime Roucher (Khurzs)",
                   maxLines: 2,
                   style: TextStyle(
@@ -40,10 +40,10 @@ class TransactionCard extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(
+        SizedBox(
           width: 10,
         ),
-        const Text("- 2,50€",
+        Text("- 2,50€",
             style: TextStyle(
                 color: Color(0xff204550),
                 fontSize: 18,

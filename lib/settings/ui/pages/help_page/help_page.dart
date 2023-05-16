@@ -55,8 +55,8 @@ class HelpPage extends HookConsumerWidget {
                                 blurRadius: 10,
                                 offset: const Offset(0, 5))
                           ]),
-                      child: Row(
-                        children: const [
+                      child: const Row(
+                        children: [
                           HeroIcon(HeroIcons.trash,
                               color: Colors.white, size: 20),
                         ],

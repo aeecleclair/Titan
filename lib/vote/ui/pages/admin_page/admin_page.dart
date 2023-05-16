@@ -243,9 +243,9 @@ class AdminPage extends HookConsumerWidget {
                                 showVotesNotifier.toggle(true);
                               },
                               behavior: HitTestBehavior.opaque,
-                              child: Column(
+                              child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   SizedBox(
                                     height: 40,
                                   ),

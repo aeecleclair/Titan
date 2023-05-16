@@ -114,9 +114,9 @@ class TombolaInfoPage extends HookConsumerWidget {
                       height: 120,
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 30),
-                      child: Column(
+                      child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(TombolaTextConstants.actualPrize,
                                 style: TextStyle(
                                     fontSize: 25,
@@ -166,9 +166,9 @@ class TombolaInfoPage extends HookConsumerWidget {
                 height: 120,
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                child: Column(
+                child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(TombolaTextConstants.actualPrize,
                           style: TextStyle(
                               fontSize: 25,

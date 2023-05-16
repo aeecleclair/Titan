@@ -22,8 +22,8 @@ class AdminPage extends HookConsumerWidget {
           await deliveryListNotifier.loadDeliveriesList();
           await productListNotifier.loadProductList();
         },
-        child: Column(
-          children: const [
+        child: const Column(
+          children: [
             AccountHandler(),
             SizedBox(
               height: 12,
