@@ -18,12 +18,12 @@ class SumUpCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.none,
-      height: 130,
-      width: 80,
+      height: 135,
+      width: 78,
       child: Container(
         height: 50,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        margin: const EdgeInsets.only(bottom: 55),
+        margin: const EdgeInsets.only(bottom: 60),
         decoration: ShapeDecoration(
           shape: const MessageBorder(),
           gradient: LinearGradient(
