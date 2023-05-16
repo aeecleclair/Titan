@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+import 'package:myecl/paiement/ui/pages/stats_page/description_shape.dart';
+
+class SumUpCard extends StatelessWidget {
+  final String title;
+  final String amount;
+  final Color color, darkColor, shadowColor;
+  const SumUpCard(
+      {Key? key,
+      required this.title,
+      required this.amount,
+      required this.color,
+      required this.darkColor,
+      required this.shadowColor})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      clipBehavior: Clip.none,
+      height: 130,
+      width: 80,
+      child: Container(
+        height: 50,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        margin: const EdgeInsets.only(bottom: 55),
+        decoration: ShapeDecoration(
+          shape: const MessageBorder(),
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              darkColor,
+              color,
+              darkColor
+            ],
+          ),
+          shadows: [
+            BoxShadow(
+              color: shadowColor,
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                  color: Colors.white.withOpacity(0.8),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13),
+            ),
+            const SizedBox(
+              height: 3,
+            ),
+            Text(
+              amount,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
