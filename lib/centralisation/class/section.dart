@@ -11,10 +11,19 @@ class Section {
   late final bool? expanded;
 
   Section.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    module_list = json['module_list'];
-    expanded = json['expanded'];
+    for(var i in json){
+      var key = i;
+      var val = json[i];
+      for(var j in val){
+        var sub_key = j;
+        name=sub_key;
+        var sub_val = val[j];
+        Module.fromJson(sub_val);
+      }
+    }
+    expanded=true;
   }
+  
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;

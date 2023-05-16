@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum CentralisationPage {
-  main,
-  admin,
+  main
 }
 
 final centralisationPageProvider = 
