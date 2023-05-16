@@ -19,7 +19,7 @@ class SumUpChart extends HookConsumerWidget {
             title: "",
             color: const Color.fromARGB(255, 255, 119, 7),
             badgeWidget: SumUpCard(
-              amount: '34,23€',
+              amount: '68,46€',
               color: const Color.fromARGB(255, 255, 119, 7),
               darkColor: const Color.fromARGB(255, 230, 103, 0),
               shadowColor: const Color.fromARGB(255, 97, 44, 0).withOpacity(0.2),
@@ -31,7 +31,7 @@ class SumUpChart extends HookConsumerWidget {
           radius: 70 + (selected.value == 1 ? 15 : 0),
           title: "",
           badgeWidget:  SumUpCard(
-            amount: '170,23€',
+            amount: '174,12€',
             color: const Color.fromARGB(255, 1, 127, 128),
             darkColor: const Color.fromARGB(255, 0, 102, 103),
             shadowColor: const Color.fromARGB(255, 0, 44, 45).withOpacity(0.3),
@@ -44,7 +44,7 @@ class SumUpChart extends HookConsumerWidget {
           title: "",
           radius: 65 + (selected.value == 2 ? 15 : 0),
           badgeWidget:  SumUpCard(
-            amount: '90,23€',
+            amount: '85,58€',
             color: const Color.fromARGB(255, 4, 84, 84),
             darkColor: const Color.fromARGB(255, 0, 68, 68),
             shadowColor: const Color.fromARGB(255, 0, 29, 29).withOpacity(0.4),
@@ -70,7 +70,8 @@ class SumUpChart extends HookConsumerWidget {
                 }),
                 sectionsSpace: 8,
                 centerSpaceRadius: 80,
-                sections: showingSections()),
+                sections: showingSections(),
+                startDegreeOffset: 0),
             swapAnimationCurve: Curves.easeOutCubic,
           ),
           const SizedBox(
