@@ -95,8 +95,8 @@ class AdminPage extends HookConsumerWidget {
                 );
               });
             }),
-            Column(
-              children: const [
+            const Column(
+              children: [
                 SizedBox(height: 40),
                 OnGoingLoan(),
                 SizedBox(height: 40),

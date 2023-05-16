@@ -13,6 +13,7 @@ import 'package:myecl/drawer/ui/custom_drawer.dart';
 import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/home/ui/home.dart';
 import 'package:myecl/loan/ui/loan.dart';
+import 'package:myecl/paiement/ui/paiement.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/vote/ui/vote.dart';
 import 'package:myecl/tombola/ui/tombola.dart';
@@ -59,6 +60,9 @@ class AppDrawer extends HookConsumerWidget {
       case ModuleType.cinema:
         return CinemaHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
+      case ModuleType.paiement:
+        return PaiementHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
     }
   }
 
@@ -75,58 +79,58 @@ class AppDrawer extends HookConsumerWidget {
       controllerNotifier.close();
     }
     return GestureDetector(
-            onHorizontalDragStart: controllerNotifier.onDragStart,
-            onHorizontalDragUpdate: controllerNotifier.onDragUpdate,
-            onHorizontalDragEnd: (details) => controllerNotifier.onDragEnd(
-                details, MediaQuery.of(context).size.width),
-            onTap: () {},
-            child: AnimatedBuilder(
-                animation: controller,
-                builder: (BuildContext context, _) {
-                  double animationVal = controller.value;
-                  double translateVal = animationVal * maxSlide;
-                  double scaleVal = 1 - (isWebFormat ? 0 :(animationVal * 0.3));
-                  double cornerval = isWebFormat ? 0 :30.0 * animationVal;
-                  return Stack(
-                    children: [
-                      CustomDrawer(controllerNotifier: controllerNotifier),
-                      Transform(
-                          alignment: Alignment.centerLeft,
-                          transform: Matrix4.identity()
-                            ..translate(translateVal)
-                            ..scale(scaleVal),
-                          child: GestureDetector(
-                            onTap: () {
-                              if (controller.isCompleted) {
-                                controllerNotifier.close();
-                              }
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(cornerval),
-                              child: Stack(
-                                children: [
-                                  getPage(page, controllerNotifier, controller),
-                                  MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    onEnter: (event) {
-                                      if (controller.isCompleted) {
-                                        controllerNotifier.close();
-                                      } else {
-                                        controllerNotifier.open();
-                                      }
-                                    },
-                                    child: Container(
-                                      color: Colors.transparent,
-                                      width: 20,
-                                      height: double.infinity,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ))
-                    ],
-                  );
-                }));
+        onHorizontalDragStart: controllerNotifier.onDragStart,
+        onHorizontalDragUpdate: controllerNotifier.onDragUpdate,
+        onHorizontalDragEnd: (details) => controllerNotifier.onDragEnd(
+            details, MediaQuery.of(context).size.width),
+        onTap: () {},
+        child: AnimatedBuilder(
+            animation: controller,
+            builder: (BuildContext context, _) {
+              double animationVal = controller.value;
+              double translateVal = animationVal * maxSlide;
+              double scaleVal = 1 - (isWebFormat ? 0 : (animationVal * 0.3));
+              double cornerval = isWebFormat ? 0 : 30.0 * animationVal;
+              return Stack(
+                children: [
+                  CustomDrawer(controllerNotifier: controllerNotifier),
+                  Transform(
+                      alignment: Alignment.centerLeft,
+                      transform: Matrix4.identity()
+                        ..translate(translateVal)
+                        ..scale(scaleVal),
+                      child: GestureDetector(
+                        onTap: () {
+                          if (controller.isCompleted) {
+                            controllerNotifier.close();
+                          }
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(cornerval),
+                          child: Stack(
+                            children: [
+                              getPage(page, controllerNotifier, controller),
+                              MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                onEnter: (event) {
+                                  if (controller.isCompleted) {
+                                    controllerNotifier.close();
+                                  } else {
+                                    controllerNotifier.open();
+                                  }
+                                },
+                                child: Container(
+                                  color: Colors.transparent,
+                                  width: 20,
+                                  height: double.infinity,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ))
+                ],
+              );
+            }));
   }
 }

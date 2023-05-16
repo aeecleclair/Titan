@@ -58,7 +58,7 @@ class LogCard extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: log.text));
+                  Clipboard.setData(ClipboardData(text: log.text??"Pas de log"));
                   displayToast(
                       context, TypeMsg.msg, SettingsTextConstants.copied);
                 },
