@@ -1,26 +1,34 @@
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
+
 class StatsPage extends StatelessWidget {
-const StatsPage({ Key? key }) : super(key: key);
+  const StatsPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
-        PieChart(
-  PieChartData(
-      pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
-        setState(() {
-          if (pieTouchResponse.touchInput is FlLongPressEnd ||
-              pieTouchResponse.touchInput is FlPanEnd) {
-            touchedIndex = -1;
-          } else {
-            touchedIndex = pieTouchResponse.touchedSectionIndex;
-          }
-        });
-      }),
-      borderData: FlBorderData(
-        show: false,
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: PieChart(
+        PieChartData(
+            borderData: FlBorderData(
+              show: false,
+            ),
+            sectionsSpace: 0,
+            centerSpaceRadius: 80,
+            sections: showingSections()),
       ),
-      sectionsSpace: 0,
-      centerSpaceRadius: 60,
-      sections: showingSections()),
-),
+    );
+  }
+
+  List<PieChartSectionData> showingSections() {
+    return [
+      PieChartSectionData(
+        value: 10,
+        color: Colors.amber,
+      ),
+      PieChartSectionData(
+        value: 25,
+        color: Colors.blueAccent
+      )
+    ];
   }
 }
