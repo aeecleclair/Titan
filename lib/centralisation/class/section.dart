@@ -10,17 +10,9 @@ class Section {
   late final List<Module> module_list;
   late final bool? expanded;
 
-  Section.fromJson(Map<String, dynamic> json) {
-    for(var i in json){
-      var key = i;
-      var val = json[i];
-      for(var j in val){
-        var sub_key = j;
-        name=sub_key;
-        var sub_val = val[j];
-        Module.fromJson(sub_val);
-      }
-    }
+  Section.fromJson(k,v) {
+    name=k;
+    module_list=List<Module>.from(v.map((e) => Module.fromJson(e)));
     expanded=true;
   }
   

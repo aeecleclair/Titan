@@ -3,6 +3,8 @@ import'package:myecl/centralisation/class/module.dart';
 import 'package:myecl/centralisation/class/section.dart';
 import 'package:myecl/centralisation/repositories/section_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 
 
 class SectionNotifier extends StateNotifier<List<Section>> {
@@ -13,7 +15,7 @@ class SectionNotifier extends StateNotifier<List<Section>> {
   late List<Module> allModules;
   late List<Module> modulesLiked;
 
-  void initState() async {
+  initState() async {
     allSections = await sectionRepository.getSectionList();
     for (Section section in allSections) {
       for (Module module in section.module_list) {
@@ -22,11 +24,11 @@ class SectionNotifier extends StateNotifier<List<Section>> {
     }
   }
 
-  void get_modules_liked() async {
+  void get_module_liked() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
       for (Module module in allModules) {
         if (prefs.getBool(module.name) == true) {
-          modulesLiked.add(module)
+          modulesLiked.add(module);
         }
       }
     }
@@ -51,3 +53,14 @@ class SectionNotifier extends StateNotifier<List<Section>> {
     s.expanded = false;
   }
 }
+
+final sectionProvider =
+    StateNotifierProvider<SectionNotifier , List<Section>>(
+        (ref) {
+  final token = ref.watch(tokenProvider);
+  SectionNotifier notifier = SectionNotifier();
+  tokenExpireWrapperAuth(ref, () async {
+    await notifier.initState();
+  });
+  return notifier;
+});

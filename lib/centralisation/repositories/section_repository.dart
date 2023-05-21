@@ -7,6 +7,7 @@ class SectionRepository extends Repository {
   final host = "https://centralisation.eclair.ec-lyon.fr/links.json";
 
   Future<List<Section>> getSectionList() async {
-    return (await getList()).map((e) => Section.fromJson(e)).toList();
+    final data = await getList();
+    return data.map<Section>((k) => Section.fromJson(k,data[k])).toList();
   }
 }

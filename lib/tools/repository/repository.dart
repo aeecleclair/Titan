@@ -43,6 +43,7 @@ abstract class Repository {
   /// GET ext/suffix
   Future<List> getList({String suffix = ""}) async {
     try {
+      print(host);
       final response =
           await http.get(Uri.parse(host + ext + suffix), headers: headers);
       if (response.statusCode == 200) {
@@ -91,6 +92,7 @@ abstract class Repository {
     } on AppException {
       rethrow;
     } catch (e) {
+      print(e);
       try {
         final toDecode = await cacheManager.readCache(ext + suffix);
         return jsonDecode(toDecode);

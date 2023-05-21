@@ -1,3 +1,3 @@
-class LoanTextConstants {
+class CentralisationTextConstants {
   static const String centralisation = "Centralisation";
 }
