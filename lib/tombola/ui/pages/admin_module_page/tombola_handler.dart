@@ -112,10 +112,10 @@ class TombolaHandler extends HookConsumerWidget {
                                     value: value, child: Text(value));
                               }).toList(),
                             ))
-                        : Text("No group found");
+                        : const Text("No group found");
                   },
                   error: (e, s) => Text('Error: $e'),
-                  loading: () => CircularProgressIndicator(),
+                  loading: () => const CircularProgressIndicator(),
                 ),
                 const SizedBox(
                   width: 10,

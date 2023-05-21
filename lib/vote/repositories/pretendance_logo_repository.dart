@@ -9,7 +9,7 @@ class PretendanceLogoRepository extends LogoRepository {
   final ext = 'campaign/lists/';
 
   Future<Image> getPretendenceLogo(String id) async {
-    final uint8List =  await getLogo(id, suffix: "/logo");
+    final uint8List = await getLogo(id, suffix: "/logo");
     if (uint8List.isEmpty) {
       return Image.asset("assets/images/logo.png");
     }

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
@@ -18,8 +20,8 @@ class TombolaLogoProvider extends SingleNotifier<Image> {
     return logo;
   }
 
-  Future<Image> updateLogo(String id, String path) async {
-    Image logo = await repository.addTombolaLogo(path, id);
+  Future<Image> updateLogo(String id, Uint8List bytes) async {
+    Image logo = await repository.addTombolaLogo(bytes, id);
     state = AsyncValue.data(logo);
     return logo;
   }

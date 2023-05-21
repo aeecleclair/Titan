@@ -10,7 +10,6 @@ import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
@@ -24,10 +23,6 @@ class ConfirmCreationDialog extends HookConsumerWidget {
     final raffleListNotifier = ref.watch(raffleListProvider.notifier);
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     
-    void displayToastWithContext(TypeMsg type, String msg) {
-      displayToast(context, type, msg);
-    }
-
     void navigationPop() {
       Navigator.pop(context);
     }
@@ -55,7 +50,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                       ],
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
                       gradient: RadialGradient(
-                          colors: [
+                          colors: const [
                             TombolaColorConstants.gradient1,
                             TombolaColorConstants.gradient2,
                           ],

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
@@ -12,8 +14,8 @@ class TombolaLogoRepository extends LogoRepository {
     return Image.memory(uint8List);
   }
 
-  Future<Image> addTombolaLogo(String path, String id) async {
-    final uint8List =  await addLogo(path, id, suffix: "/logo");
+  Future<Image> addTombolaLogo(Uint8List bytes, String id) async {
+    final uint8List =  await addLogo(bytes, id, suffix: "/logo");
     return Image.memory(uint8List);
   }
 }

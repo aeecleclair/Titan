@@ -80,7 +80,7 @@ class CreationPage extends HookConsumerWidget {
                               keyboardType: TextInputType.text)))),
             ),
             Container(
-                margin: EdgeInsets.only(left: 30, right: 30, top: 15),
+                margin: const EdgeInsets.only(left: 30, right: 30, top: 15),
                 child: ShrinkButton(
                     waitChild:
                         const BlueBtn(text: TombolaTextConstants.waiting),
@@ -95,7 +95,7 @@ class CreationPage extends HookConsumerWidget {
                         pageNotifier.setTombolaPage(TombolaPage.main);// TombolaPage.detail mais problème à regler
                       }
                     },
-                    child: BlueBtn(text: "Changez le nom"))),
+                    child: const BlueBtn(text: "Changez le nom"))),
             const SizedBox(
               height: 32,
             ),
@@ -122,8 +122,7 @@ class CreationPage extends HookConsumerWidget {
                       await picker.pickImage(source: ImageSource.gallery);
                   if (image != null) {
                     logo.value = image.path;
-                    print("LOGO.VALUE : ${logo.value!}");
-                    tombolaLogoNotifier.updateLogo(raffle.id, logo.value!);
+                    tombolaLogoNotifier.updateLogo(raffle.id, await image.readAsBytes());
                   }
                 },
                 child: Container(

@@ -30,7 +30,7 @@ class PrizeDialog extends HookConsumerWidget {
             margin: const EdgeInsets.only(left: 10),
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
             decoration:  BoxDecoration(
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: TombolaColorConstants.gradient2,
                     blurRadius: 15,
@@ -38,7 +38,7 @@ class PrizeDialog extends HookConsumerWidget {
                   ),
                 ],
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
-                gradient: RadialGradient(colors: [
+                gradient: RadialGradient(colors: const [
                   TombolaColorConstants.gradient1,
                   TombolaColorConstants.gradient2,
                 ], transform: GradientRotation(360* animation.value * pi / 180),

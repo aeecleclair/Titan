@@ -12,7 +12,7 @@ class AdminModulePage extends HookConsumerWidget {
 
     return Refresher(
         onRefresh: () async {
-          await () => {};
+          () => {};
         },
         child: const Column(
           children: [

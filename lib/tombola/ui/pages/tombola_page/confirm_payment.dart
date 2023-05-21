@@ -66,7 +66,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   ),
                 ],
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
-                gradient: RadialGradient(colors: [
+                gradient: RadialGradient(colors: const [
                   TombolaColorConstants.gradient1,
                   TombolaColorConstants.gradient2,
                 ], transform: GradientRotation(360* animation.value * pi / 180),
