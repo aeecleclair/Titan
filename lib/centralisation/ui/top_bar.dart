@@ -44,7 +44,7 @@ class TopBar extends HookConsumerWidget {
             ),
             const Text(CentralisationTextConstants.centralisation,
                 style: TextStyle(
-                    fontSize: 40,
+                    fontSize: 30,
                     fontWeight: FontWeight.w700,
                     color: Colors.black)),
             const SizedBox(

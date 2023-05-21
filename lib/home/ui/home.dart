@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
-import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/sorted_event_list_provider.dart';
 import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/home/ui/day_list.dart';

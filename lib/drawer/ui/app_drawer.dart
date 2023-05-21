@@ -14,6 +14,7 @@ import 'package:myecl/home/ui/home.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/vote/ui/vote.dart';
+import 'package:myecl/centralisation/ui/centralisation.dart';
 
 class AppDrawer extends HookConsumerWidget {
   static Duration duration = const Duration(milliseconds: 200);
@@ -53,6 +54,9 @@ class AppDrawer extends HookConsumerWidget {
             controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.cinema:
         return CinemaHomePage(
+            controllerNotifier: controllerNotifier, controller: controller);
+      case ModuleType.centralisation:
+        return CentralisationHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
     }
   }

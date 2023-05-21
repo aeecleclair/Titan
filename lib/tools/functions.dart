@@ -34,13 +34,15 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
       context: context,
       duration: Duration(milliseconds: duration),
       builder: (context, controller) {
-        return Flash.dialog(
-          controller: controller,
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
-          backgroundGradient: linearGradient,
-          alignment: Alignment.topCenter,
-          margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
-          child: Container(
+        return FlashBar(
+          // controller: controller,
+          content: Container(
+            alignment: Alignment.topCenter,
+            margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              gradient: linearGradient,
+            ),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             height: 50 + text.length / 2,
             child: Row(

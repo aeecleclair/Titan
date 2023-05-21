@@ -26,40 +26,39 @@ class Module {
     data['description'] = description;
     data['icon'] = icon;
     data['url'] = url;
-    if (liked == null){
+    if (liked == null) {
       data['liked'] = false;
     } else {
-      data['liked'] = true ;
-    };
+      data['liked'] = true;
+    }
     return data;
   }
 
   Module copyWith({
-  String? name,
-  String? description,
-  String? icon,
-  String? url,
-  bool? liked,
-
-  })  =>
+    String? name,
+    String? description,
+    String? icon,
+    String? url,
+    bool? liked,
+  }) =>
       Module(
-      name: name ?? this.name,
-      description: description ?? this.name,
-      icon: icon ?? this.icon,
-      url: url ?? this.url,
-      liked: liked,
+        name: name ?? this.name,
+        description: description ?? this.name,
+        icon: icon ?? this.icon,
+        url: url ?? this.url,
+        liked: liked,
       );
 
   Module.empty() {
-    name ='';
-    description='';
-    icon='';
-    url='';
-    liked=false;
+    name = '';
+    description = '';
+    icon = '';
+    url = '';
+    liked = false;
   }
 
   @override
   String toString() {
-  return 'Module{name: $name, description: $description, icon: $icon, url: $url, liked: $liked}';
+    return 'Module{name: $name, description: $description, icon: $icon, url: $url, liked: $liked}';
   }
 }

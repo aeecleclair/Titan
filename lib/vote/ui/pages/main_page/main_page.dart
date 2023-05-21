@@ -146,8 +146,8 @@ class MainPage extends HookConsumerWidget {
                                                           offset: const Offset(
                                                               0, 5))
                                                     ]),
-                                                child: Row(
-                                                  children: const [
+                                                child: const Row(
+                                                  children: [
                                                     HeroIcon(
                                                         HeroIcons.userGroup,
                                                         color: Colors.white),

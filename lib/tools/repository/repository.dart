@@ -48,7 +48,7 @@ abstract class Repository {
       if (response.statusCode == 200) {
         try {
           String toDecode = response.body;
-          if (host == displayHost) {
+          if (host.contains(".fr")) {
             toDecode = utf8.decode(response.body.runes.toList());
           }
           cacheManager.writeCache(ext + suffix, toDecode);
@@ -65,7 +65,7 @@ abstract class Repository {
                 "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
         try {
           String toDecode = response.body;
-          if (host == displayHost) {
+          if (host.contains(".fr")) {
             toDecode = utf8.decode(response.body.runes.toList());
           }
           final decoded = jsonDecode(toDecode);
@@ -113,7 +113,7 @@ abstract class Repository {
       if (response.statusCode == 200) {
         try {
           String toDecode = response.body;
-          if (host == displayHost) {
+          if (host.contains(".fr")) {
             toDecode = utf8.decode(response.body.runes.toList());
           }
           cacheManager.writeCache(ext + id + suffix, toDecode);
@@ -130,7 +130,7 @@ abstract class Repository {
                 "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}");
         try {
           String toDecode = response.body;
-          if (host == displayHost) {
+          if (host.contains(".fr")) {
             toDecode = utf8.decode(response.body.runes.toList());
           }
           final decoded = jsonDecode(toDecode);
@@ -177,7 +177,7 @@ abstract class Repository {
     if (response.statusCode == 201) {
       try {
         String toDecode = response.body;
-        if (host == displayHost) {
+        if (host.contains(".fr")) {
           toDecode = utf8.decode(response.body.runes.toList());
         }
         return jsonDecode(toDecode);
@@ -193,7 +193,7 @@ abstract class Repository {
       FLog.error(
           text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
       String toDecode = response.body;
-      if (host == displayHost) {
+      if (host.contains(".fr")) {
         toDecode = utf8.decode(response.body.runes.toList());
       }
       final decoded = jsonDecode(toDecode);
@@ -221,7 +221,7 @@ abstract class Repository {
           text:
               "PATCH ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
       String toDecode = response.body;
-      if (host == displayHost) {
+      if (host.contains(".fr")) {
         toDecode = utf8.decode(response.body.runes.toList());
       }
       final decoded = jsonDecode(toDecode);
@@ -249,7 +249,7 @@ abstract class Repository {
           text:
               "DELETE ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
       String toDecode = response.body;
-      if (host == displayHost) {
+      if (host.contains(".fr")) {
         toDecode = utf8.decode(response.body.runes.toList());
       }
       final decoded = jsonDecode(toDecode);
