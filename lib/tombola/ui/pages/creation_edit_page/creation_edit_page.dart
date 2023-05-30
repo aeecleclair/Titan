@@ -1,4 +1,3 @@
-
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -92,10 +91,15 @@ class CreationPage extends HookConsumerWidget {
                               description: raffle.description,
                               raffleStatusType: raffle.raffleStatusType));
                         });
-                        pageNotifier.setTombolaPage(TombolaPage.main);// TombolaPage.detail mais problème à regler
+                        pageNotifier.setTombolaPage(TombolaPage
+                            .main); // TombolaPage.detail mais problème à regler
                       }
                     },
-                    child: const BlueBtn(text: "Changez le nom"))),
+                    child: raffle.raffleStatusType == RaffleStatusType.creation
+                        ? const BlueBtn(text: "Changez le nom")
+                        : const SizedBox(
+                            height: 20,
+                          ))),
             const SizedBox(
               height: 32,
             ),
@@ -122,7 +126,8 @@ class CreationPage extends HookConsumerWidget {
                       await picker.pickImage(source: ImageSource.gallery);
                   if (image != null) {
                     logo.value = image.path;
-                    tombolaLogoNotifier.updateLogo(raffle.id, await image.readAsBytes());
+                    tombolaLogoNotifier.updateLogo(
+                        raffle.id, await image.readAsBytes());
                   }
                 },
                 child: Container(

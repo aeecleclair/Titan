@@ -62,7 +62,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(margin: const EdgeInsets.only(top: 10),
-                          child:Text("Voulez vous vraiment créer la tombola du groupe : ${group.name}",
+                          child:Text("Voulez vous vraiment créer la tombola : ${group.name}",
                               textAlign: TextAlign.center,
                             style:
                                 const TextStyle(color: Colors.white, fontSize: 30))),
@@ -98,7 +98,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                           onTap: () async {
                             
                               await tokenExpireWrapper(ref, () async {
-                                await raffleListNotifier.createRaffle(Raffle(name: "Tombola du groupe :  ${group.name}", group: group, id: '', raffleStatusType: RaffleStatusType.creation));
+                                await raffleListNotifier.createRaffle(Raffle(name: "Tombola : ${group.name}", group: group, id: '', raffleStatusType: RaffleStatusType.creation));
                                 await raffleListNotifier.loadRaffleList();
                                 pageNotifier.setTombolaPage(TombolaPage.main);
                                 navigationPop();

@@ -58,7 +58,7 @@ class TombolaTextConstants {
 
   static const String quantity = "Quantité";
 
-  static const String close = "Fermer";
+  static const String close = "Lancer le tirage de la tombola";
 
   static const String open = "Ouvrir";
 
