@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/repository/repository.dart';

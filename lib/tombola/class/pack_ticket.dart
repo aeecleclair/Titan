@@ -42,9 +42,9 @@ class PackTicket {
 
   PackTicket.empty() {
     raffleId = "";
-    price = 0;
+    price = 0.0;
     id = '';
-    packSize = 0;
+    packSize = 0.0;
   }
 
   @override
