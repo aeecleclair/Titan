@@ -69,7 +69,7 @@ class TombolaHandler extends HookConsumerWidget {
                                       element.name == dropdownValue.value),
                                   error: (e, s) => SimpleGroup.empty(),
                                   loading: () => SimpleGroup.empty());
-                              if (groupChoosen != SimpleGroup.empty()) {
+                              if (groupChoosen.id != SimpleGroup.empty().id) {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {

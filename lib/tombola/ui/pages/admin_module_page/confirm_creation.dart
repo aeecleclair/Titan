@@ -22,10 +22,11 @@ class ConfirmCreationDialog extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final raffleListNotifier = ref.watch(raffleListProvider.notifier);
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
-    
+
     void navigationPop() {
       Navigator.pop(context);
     }
+
     final animation = useAnimationController(
         duration: const Duration(milliseconds: 5000), initialValue: 0)
       ..repeat();
@@ -61,113 +62,117 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(margin: const EdgeInsets.only(top: 10),
-                          child:Text("Voulez vous vraiment créer la tombola : ${group.name}",
-                              textAlign: TextAlign.center,
-                            style:
-                                const TextStyle(color: Colors.white, fontSize: 30))),
+                        Container(
+                            margin: const EdgeInsets.only(top: 10),
+                            child: Text(
+                                "Voulez vous vraiment créer la tombola : ${group.name}",
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 30))),
                         Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Spacer(),
-                        ShrinkButton(
-                          waitChild: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 12),
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Colors.grey.shade100,
-                                      Colors.grey.shade200,
-                                    ],
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.shade300
-                                            .withOpacity(0.5),
-                                        blurRadius: 10,
-                                        offset: const Offset(2, 3))
-                                  ],
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(15))),
-                              child: const Center(
-                                child: CircularProgressIndicator(
-                                  color: TombolaColorConstants.textDark,
-                                ),
-                              )),
-                          onTap: () async {
-                            
-                              await tokenExpireWrapper(ref, () async {
-                                await raffleListNotifier.createRaffle(Raffle(name: "Tombola : ${group.name}", group: group, id: '', raffleStatusType: RaffleStatusType.creation));
-                                await raffleListNotifier.loadRaffleList();
-                                pageNotifier.setTombolaPage(TombolaPage.main);
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Spacer(),
+                            ShrinkButton(
+                              waitChild: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 12),
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Colors.grey.shade100,
+                                          Colors.grey.shade200,
+                                        ],
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.grey.shade300
+                                                .withOpacity(0.5),
+                                            blurRadius: 10,
+                                            offset: const Offset(2, 3))
+                                      ],
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(15))),
+                                  child: const Center(
+                                    child: CircularProgressIndicator(
+                                      color: TombolaColorConstants.textDark,
+                                    ),
+                                  )),
+                              onTap: () async {
+                                await tokenExpireWrapper(ref, () async {
+                                  await raffleListNotifier.createRaffle(Raffle(
+                                      name: "Tombola : ${group.name}",
+                                      group: group,
+                                      id: '',
+                                      raffleStatusType:
+                                          RaffleStatusType.creation));
+                                  await raffleListNotifier.loadRaffleList();
+                                  pageNotifier.setTombolaPage(TombolaPage.main);
+                                  navigationPop();
+                                });
+                              },
+                              child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 12),
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Colors.grey.shade100,
+                                          Colors.grey.shade200,
+                                        ],
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.grey.shade300
+                                                .withOpacity(0.5),
+                                            blurRadius: 10,
+                                            offset: const Offset(2, 3))
+                                      ],
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(15))),
+                                  child: const HeroIcon(
+                                    HeroIcons.check,
+                                    color: TombolaColorConstants.textDark,
+                                    size: 40,
+                                  )),
+                            ),
+                            const Spacer(
+                              flex: 3,
+                            ),
+                            GestureDetector(
+                              onTap: () {
                                 navigationPop();
-                              });
-                            
-                          },
-                          child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 12),
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Colors.grey.shade100,
-                                      Colors.grey.shade200,
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 12),
+                                decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        TombolaColorConstants.redGradient1,
+                                        TombolaColorConstants.redGradient2,
+                                      ],
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: TombolaColorConstants
+                                              .redGradient2
+                                              .withOpacity(0.5),
+                                          blurRadius: 10,
+                                          offset: const Offset(2, 3))
                                     ],
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.shade300
-                                            .withOpacity(0.5),
-                                        blurRadius: 10,
-                                        offset: const Offset(2, 3))
-                                  ],
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(15))),
-                              child: const HeroIcon(
-                                HeroIcons.check,
-                                color: TombolaColorConstants.textDark,
-                                size: 40,
-                              )),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(15))),
+                                child: const HeroIcon(HeroIcons.xMark,
+                                    color: Colors.white, size: 40),
+                              ),
+                            ),
+                            const Spacer(),
+                          ],
                         ),
-                        const Spacer(
-                          flex: 3,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            navigationPop();
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 12),
-                            decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    TombolaColorConstants.redGradient1,
-                                    TombolaColorConstants.redGradient2,
-                                  ],
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: TombolaColorConstants.redGradient2
-                                          .withOpacity(0.5),
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 3))
-                                ],
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(15))),
-                            child: const HeroIcon(HeroIcons.xMark,
-                                color: Colors.white, size: 40),
-                          ),
-                        ),
-                        const Spacer(),
-                      ],
-                    ),
                       ])));
         });
-        
   }
-  
 }

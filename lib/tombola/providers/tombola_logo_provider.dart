@@ -14,7 +14,6 @@ class TombolaLogoProvider extends SingleNotifier<Image> {
   }
 
   Future<Image> getLogo(String id) async {
-
     Image logo = await repository.getTombolaLogo(id);
     state = AsyncValue.data(logo);
     return logo;
@@ -30,6 +29,5 @@ class TombolaLogoProvider extends SingleNotifier<Image> {
 final tombolaLogoProvider =
     StateNotifierProvider<TombolaLogoProvider, AsyncValue<Image>>((ref) {
   final token = ref.watch(tokenProvider);
-  final notifier =TombolaLogoProvider(token: token);
-  return notifier;
+  return TombolaLogoProvider(token: token);
 });
