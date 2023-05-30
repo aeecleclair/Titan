@@ -119,8 +119,8 @@ class TopBar extends HookConsumerWidget {
                           width: 15,
                         ),
                       ]),
-                      loading: () => Row(
-                        children: const [
+                      loading: () => const Row(
+                        children: [
                           CircularProgressIndicator(),
                           SizedBox(
                             width: 15,

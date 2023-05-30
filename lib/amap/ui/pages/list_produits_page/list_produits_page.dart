@@ -9,9 +9,9 @@ class ListProductPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
+    return const Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: const [ListProducts(), Dots(), Boutons()],
+      children: [ListProducts(), Dots(), Boutons()],
     );
   }
 }

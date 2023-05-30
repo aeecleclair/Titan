@@ -88,9 +88,9 @@ class NoInternetPage extends HookConsumerWidget {
                               offset: const Offset(0, 5))
                         ],
                         borderRadius: BorderRadius.circular(15)),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         HeroIcon(
                           HeroIcons.arrowPath,
                           size: 35,
