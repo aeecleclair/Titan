@@ -255,7 +255,8 @@ class CreationPage extends HookConsumerWidget {
                       await picker.pickImage(source: ImageSource.gallery);
                   if (image != null) {
                     logo.value = image.path;
-                    tombolaLogoNotifier.updateLogo(raffle.id, await image.readAsBytes());
+                    tombolaLogoNotifier.updateLogo(
+                        raffle.id, await image.readAsBytes());
                   }
                 },
                 child: Container(
