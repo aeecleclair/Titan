@@ -85,10 +85,10 @@ packages:
     dependency: transitive
     description:
       name: cli_util
-      sha256: "66f86e916d285c1a93d3b79587d94bd71984a66aac4ff74e524cfa7877f1395c"
+      sha256: b8db3080e59b2503ca9e7922c3df2072cf13992354d5e944074ffa836fba43b7
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.5"
+    version: "0.4.0"
   clock:
     dependency: transitive
     description:
@@ -205,18 +205,18 @@ packages:
     dependency: "direct main"
     description:
       name: fl_chart
-      sha256: e97c5b850ad056e9b3a85d3afeb44c239a83aa994a90723940dac82234f2efaf
+      sha256: "48a1b69be9544e2b03d9a8e843affd89e43f3194c9248776222efcb4206bb1ec"
       url: "https://pub.dev"
     source: hosted
-    version: "0.61.0"
+    version: "0.62.0"
   flash:
     dependency: "direct main"
     description:
       name: flash
-      sha256: f110b161dc67e8cf78d3b7ed29a7ea9575a4f97c8725510c3b08b0a1fb3bbda8
+      sha256: "0ec6c32deb839a8ead1ba17a3bb055996f00ea6631384f4705ac6a08dec8b16c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.5+1"
+    version: "3.0.5+1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -226,18 +226,18 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_appauth
-      sha256: cbb075ec8fa11d3241cff5e4c20db8aa0732cc0d0bbb3f59b2172d23782dfc0b
+      sha256: a047019b525ab0e260776d1b0da1000b7416b45b9e8dd02d124c9da571fc1918
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.1"
+    version: "6.0.0"
   flutter_appauth_platform_interface:
     dependency: transitive
     description:
       name: flutter_appauth_platform_interface
-      sha256: "7b0c6e19e6b9a33098c6a14fb64aca62fccaefd40eccba1c4974d9a9d1fbe95a"
+      sha256: "44feaa7058191b5d3cd7c9ff195262725773643121bcada172d49c2ddcff71cb"
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.0"
+    version: "6.0.0"
   flutter_dotenv:
     dependency: "direct main"
     description:
@@ -258,10 +258,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_launcher_icons
-      sha256: "02dcaf49d405f652b7160e882bacfc02cb497041bb2eab2a49b1c393cf9aac12"
+      sha256: "526faf84284b86a4cb36d20a5e45147747b7563d921373d4ee0559c54fcdbcea"
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.0"
+    version: "0.13.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -420,26 +420,26 @@ packages:
     dependency: "direct main"
     description:
       name: image_cropper
-      sha256: e08311fcf0cdba367715a5036aec8d8e9b3ab84479909dc2156dd5bf872edefb
+      sha256: "542c3453109d16bcc388e43ae2276044d2cd6a6d20c68bdcff2c94ab9363ea15"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.2"
+    version: "4.0.1"
   image_cropper_for_web:
     dependency: transitive
     description:
       name: image_cropper_for_web
-      sha256: "09e93a8ec0435adcaa23622ac090442872f18145d70b9ff605ffedcf97d56255"
+      sha256: "89c936aa772a35b69ca67b78049ae9fa163a4fb8da2f6dee3893db8883fb49d2"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "2.0.0"
   image_cropper_platform_interface:
     dependency: transitive
     description:
       name: image_cropper_platform_interface
-      sha256: "62349e3aab63873ea9b9ab9f69d036ab8a0d74b3004beec4303981386cb9273f"
+      sha256: b232175c132b2f7ede3e1f101652bcd635cb4079a77c6dded8e6d32e6578d685
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.3"
+    version: "4.0.0"
   image_picker:
     dependency: "direct main"
     description:
@@ -588,10 +588,10 @@ packages:
     dependency: "direct main"
     description:
       name: package_info_plus
-      sha256: "8df5ab0a481d7dc20c0e63809e90a588e496d276ba53358afc4c4443d0a00697"
+      sha256: ceb027f6bc6a60674a233b4a90a7658af1aebdea833da0b5b53c1e9821a78c7b
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.3"
+    version: "4.0.2"
   package_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -660,10 +660,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_windows
-      sha256: f53720498d5a543f9607db4b0e997c4b5438884de25b0f73098cc2671a51b130
+      sha256: d3f80b32e83ec208ac95253e0cd4d298e104fbc63cb29c5c69edaed43b0c69d6
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.5"
+    version: "2.1.6"
   petitparser:
     dependency: transitive
     description:
@@ -1033,10 +1033,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: c9ebe7ee4ab0c2194e65d3a07d8c54c5d00bb001b76081c4a04cdb8448b59e46
+      sha256: "5a751eddf9db89b3e5f9d50c20ab8612296e4e8db69009788d6c8b060a84191c"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.3"
+    version: "4.1.4"
   xdg_directories:
     dependency: transitive
     description:
