@@ -12,7 +12,9 @@ final raffleStatsMapProvider = StateNotifierProvider<RaffleStatsMapNotifier,
     AsyncValue<Map<String, AsyncValue<List<RaffleStats>>>>>((ref) {
   RaffleStatsMapNotifier notifier = RaffleStatsMapNotifier();
   tokenExpireWrapperAuth(ref, () async {
+    print("raffleStatsMapProvider");
     final raffles = ref.watch(raffleListProvider);
+    print(raffles);
     raffles.whenData((value) {
       notifier.loadTList(value.map((e) => e.id).toList());
     });
