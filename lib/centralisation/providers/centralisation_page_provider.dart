@@ -1,11 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum CentralisationPage {
-  main
-}
+enum CentralisationPage { main }
 
-final centralisationPageProvider = 
-  StateNotifierProvider<CentralisationPageNotifier, CentralisationPage>((ref) {
+final centralisationPageProvider =
+    StateNotifierProvider<CentralisationPageNotifier, CentralisationPage>(
+        (ref) {
   return CentralisationPageNotifier();
 });
 
@@ -16,5 +15,3 @@ class CentralisationPageNotifier extends StateNotifier<CentralisationPage> {
     state = i;
   }
 }
-
-

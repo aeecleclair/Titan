@@ -10,44 +10,38 @@ class Section {
   late final List<Module> moduleList;
   late final bool? expanded;
 
-  Section.fromJson(k,v) {
-    name=k;
-    moduleList=List<Module>.from(v.map((e) => Module.fromJson(e)));
-    expanded=true;
+  Section.fromJson(k, v) {
+    name = k;
+    moduleList = List<Module>.from(v.map((e) => Module.fromJson(e)));
+    expanded = true;
   }
-  
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
     data['module_list'] = moduleList;
-    if (expanded == null){
+    if (expanded == null) {
       data['expanded'] = true;
     } else {
-      data['expanded'] = false ;
+      data['expanded'] = false;
     }
     return data;
   }
 
-  Section copyWith({
-  String? name,
-  List<Module>? moduleList,
-  bool? expanded
-
-  })  =>
+  Section copyWith({String? name, List<Module>? moduleList, bool? expanded}) =>
       Section(
-      name: name ?? this.name,
-      moduleList: moduleList ?? this.moduleList,
-      expanded: expanded ?? this.expanded
-      );
+          name: name ?? this.name,
+          moduleList: moduleList ?? this.moduleList,
+          expanded: expanded ?? this.expanded);
 
   Section.empty() {
-    name ='';
-    moduleList =[];
+    name = '';
+    moduleList = [];
     expanded = true;
   }
 
   @override
   String toString() {
-  return 'Section{name: $name, module_list: $moduleList, expanded: $expanded}';
+    return 'Section{name: $name, module_list: $moduleList, expanded: $expanded}';
   }
 }
