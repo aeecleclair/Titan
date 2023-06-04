@@ -15,7 +15,6 @@ class SectionNotifier extends StateNotifier<List<Section>> {
   late List<Module> modulesLiked;
 
   initState() async {
-  initState() async {
     allSections = await sectionRepository.getSectionList();
     for (Section section in allSections) {
       for (Module module in section.moduleList) {
