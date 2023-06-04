@@ -5,6 +5,7 @@ import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/advert_page_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
+import 'package:myecl/advert/providers/is_user_admin_provider.dart';
 import 'package:myecl/advert/ui/tools/announcer_bar.dart';
 import 'package:myecl/advert/ui/tools/advert_card.dart';
 import 'package:myecl/tools/ui/refresher.dart';
@@ -20,7 +21,7 @@ class MainPage extends HookConsumerWidget {
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final selected = ref.watch(announcerProvider);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
-    final isAdmin = true;
+    final isAdmin = ref.watch(isUserAdmin);
     return Expanded(
       child: Stack(
         children: [

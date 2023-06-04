@@ -3,10 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
-//import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/tools/announcer_bar.dart';
-import 'package:myecl/advert/ui/pages/form/text_entry.dart';
+import 'package:myecl/advert/ui/pages/form_page/text_entry.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AddEditAdvertPage extends HookConsumerWidget {
@@ -27,6 +26,7 @@ class AddEditAdvertPage extends HookConsumerWidget {
 
     return Expanded(
       child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             Padding(
@@ -95,8 +95,8 @@ class AddEditAdvertPage extends HookConsumerWidget {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 5,
                               blurRadius: 10,
-                              offset:
-                                  const Offset(3, 3), // changes position of shadow
+                              offset: const Offset(
+                                  3, 3), // changes position of shadow
                             ),
                           ],
                         ),
@@ -138,7 +138,10 @@ class AddEditAdvertPage extends HookConsumerWidget {
                                   fontWeight: FontWeight.bold))),
                     ),
                   ],
-                ))
+                )),
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
