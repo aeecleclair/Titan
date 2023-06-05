@@ -15,7 +15,6 @@ import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/creation_edit_page/winning_ticket_handler.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/buy_pack_ticket_card.dart';
 import 'package:myecl/tombola/ui/creation_button_anim.dart';
-import 'package:myecl/tombola/ui/pages/tombola_page/creation_button_anim.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/prize_card.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';

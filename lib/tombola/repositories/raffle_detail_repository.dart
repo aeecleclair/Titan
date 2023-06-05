@@ -26,8 +26,6 @@ class RaffleDetailRepository extends Repository {
   }
 
   Future<RaffleStats> getRaffleStats(String raffleId) async {
-    print("getRaffleStats $raffleId");
-    print(await getOne(raffleId, suffix: "/stats"));
     return RaffleStats.fromJson(await getOne(raffleId, suffix: "/stats"));
   }
 }
