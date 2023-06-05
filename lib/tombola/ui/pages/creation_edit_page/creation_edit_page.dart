@@ -191,6 +191,8 @@ class CreationPage extends HookConsumerWidget {
                                                         raffle.description,
                                                     raffleStatusType:
                                                         RaffleStatusType.open));
+                                            pageNotifier.setTombolaPage(
+                                                TombolaPage.main);
                                             break;
                                           case RaffleStatusType.open:
                                             await raffleListNotifier.lockRaffle(
@@ -200,13 +202,14 @@ class CreationPage extends HookConsumerWidget {
                                                   raffleStatusType:
                                                       RaffleStatusType.lock),
                                             );
+                                            pageNotifier.setTombolaPage(
+                                                TombolaPage.main);
                                             break;
                                           default:
                                         }
                                       },
                                     ));
                           });
-                          pageNotifier.setTombolaPage(TombolaPage.main);
                         },
                         child: BlueBtn(
                             text:

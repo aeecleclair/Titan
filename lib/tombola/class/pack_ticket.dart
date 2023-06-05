@@ -9,7 +9,7 @@ class PackTicket {
   late final String raffleId;
   late final double price;
   late final String id;
-  late final double packSize;
+  late final int packSize;
 
   PackTicket.fromJson(Map<String, dynamic> json) {
     raffleId = json['raffle_id'];
@@ -31,7 +31,7 @@ class PackTicket {
     String? raffleId,
     double? price,
     String? id,
-    double? packSize,
+    int? packSize,
   }) =>
       PackTicket(
           raffleId: raffleId ?? this.raffleId,
@@ -44,7 +44,7 @@ class PackTicket {
     raffleId = "";
     price = 0.0;
     id = '';
-    packSize = 0.0;
+    packSize = 0;
   }
 
   @override

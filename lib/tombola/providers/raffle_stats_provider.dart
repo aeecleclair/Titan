@@ -31,7 +31,6 @@ final raffleStatsProvider =
   final token = ref.watch(tokenProvider);
   RaffleStatsNotifier notifier = RaffleStatsNotifier(token: token);
   final raffleId = ref.watch(raffleIdProvider);
-  print("raffleStatsProvider $raffleId");
   if (raffleId != Raffle.empty().id) {
     notifier.setRaffleId(raffleId);
     notifier.loadRaffleStats();

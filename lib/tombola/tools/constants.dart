@@ -109,4 +109,6 @@ class TombolaTextConstants {
 
   static const String mustBePositive =
       "Le nombre doit être strictement positif";
+
+  static const String notEnoughPrize = "Tous les lots n'ont pas été tirés";
 }

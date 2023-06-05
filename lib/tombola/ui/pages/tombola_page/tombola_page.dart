@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
@@ -9,6 +10,7 @@ import 'package:myecl/tombola/providers/user_amount_provider.dart';
 import 'package:myecl/tombola/providers/prize_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/pack_ticket_provider.dart';
+import 'package:myecl/tombola/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/buy_pack_ticket_card.dart';
 import 'package:myecl/tombola/ui/creation_button_anim.dart';
@@ -32,6 +34,8 @@ class TombolaInfoPage extends HookConsumerWidget {
     final prizesList = ref.watch(prizeListProvider);
     final prizesListNotifier = ref.read(prizeListProvider.notifier);
     final raffleListNotifier = ref.watch(raffleListProvider.notifier);
+    final winningTicketList = ref.watch(winningTicketListProvider);
+    final prizeList = ref.watch(prizeListProvider);
 
     return TombolaTemplate(
       child: Refresher(
