@@ -39,7 +39,7 @@ class WinningTicketHandler extends HookConsumerWidget {
                     return const SizedBox(
                         height: 150,
                         child:
-                            Text("Les tickets gagnants seront affichés ici"));
+                            Text("Il n'y a pas de ticket gagnant"));
                   }
                   return Row(
                       children: data

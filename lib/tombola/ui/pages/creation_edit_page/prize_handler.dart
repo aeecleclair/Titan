@@ -160,9 +160,9 @@ class PrizeHandler extends HookConsumerWidget {
                                 await showDialog(
                                     context: context,
                                     builder: (context) => CustomDialogBox(
-                                          title: "Supprimer le produit",
+                                          title: "Supprimer le lot",
                                           descriptions:
-                                              "Voulez-vous vraiment supprimer ce produit?",
+                                              "Voulez-vous vraiment supprimer ce lot?",
                                           onYes: () {
                                             tokenExpireWrapper(ref, () async {
                                               final value = await prizesNotifier

@@ -12,6 +12,7 @@ import 'package:myecl/tombola/providers/raffle_stats_provider.dart';
 import 'package:myecl/tombola/providers/pack_ticket_provider.dart';
 import 'package:myecl/tombola/providers/tombola_logo_provider.dart';
 import 'package:myecl/tombola/providers/tombola_page_provider.dart';
+import 'package:myecl/tombola/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/blue_btn.dart';
 import 'package:myecl/tombola/ui/pages/creation_edit_page/ticket_handler.dart';
@@ -37,12 +38,16 @@ class CreationPage extends HookConsumerWidget {
     final cashNotifier = ref.read(cashProvider.notifier);
     final packTicketListNotifier = ref.read(packTicketListProvider.notifier);
     final prizeListNotifier = ref.read(prizeListProvider.notifier);
+    final prizeList = ref.watch(prizeListProvider);
+    final winningTicketListNotifier = ref.watch(winningTicketListProvider.notifier);
+
     final tombolaLogoNotifier = ref.watch(tombolaLogoProvider.notifier);
 
     final name = useTextEditingController(text: raffle.name);
 
     final logo = useState<String?>(null);
     final ImagePicker picker = ImagePicker();
+
 
     return Refresher(
         onRefresh: () async {
@@ -202,6 +207,12 @@ class CreationPage extends HookConsumerWidget {
                                                   raffleStatusType:
                                                       RaffleStatusType.lock),
                                             );
+                                            prizeList.whenData((prizes){
+                                              for (var prize in prizes) {
+                                                  if (prize.raffleId == raffle.id){
+                                                  winningTicketListNotifier.drawLot(prize);
+                                                  }
+                                                }});
                                             pageNotifier.setTombolaPage(
                                                 TombolaPage.main);
                                             break;
