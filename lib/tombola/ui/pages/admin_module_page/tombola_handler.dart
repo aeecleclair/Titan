@@ -8,7 +8,6 @@ import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/admin_module_page/confirm_creation.dart';
 import 'package:myecl/tombola/ui/pages/admin_module_page/tombola_card.dart';
-import 'package:myecl/tombola/ui/pages/main_page/card_tombolas.dart';
 
 class TombolaHandler extends HookConsumerWidget {
   const TombolaHandler({super.key});
@@ -125,7 +124,6 @@ class TombolaHandler extends HookConsumerWidget {
                               groupList.when(
                                 data: (data) {
                                   displayWinningsDialog(data, () {
-                                    print(groupChoosen.value);
                                     if (groupChoosen.value.id !=
                                         SimpleGroup.empty().id) {
                                       showDialog(

@@ -8,7 +8,6 @@ import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
-import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -21,7 +20,6 @@ class ConfirmCreationDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffleListNotifier = ref.watch(raffleListProvider.notifier);
-    final pageNotifier = ref.watch(tombolaPageProvider.notifier);
 
     void navigationPop() {
       Navigator.pop(context);
