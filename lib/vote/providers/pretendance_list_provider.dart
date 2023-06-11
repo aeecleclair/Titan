@@ -4,6 +4,7 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/repositories/pretendance_repository.dart';
+import 'package:myecl/vote/tools/functions.dart';
 
 class PretendanceListNotifier extends ListNotifier<Pretendance> {
   final PretendanceRepository _pretendanceRepository = PretendanceRepository();
@@ -38,6 +39,15 @@ class PretendanceListNotifier extends ListNotifier<Pretendance> {
             pretendances..removeWhere((p) => p.id == pretendance.id),
         pretendance.id,
         pretendance);
+  }
+
+  Future<bool> deletePretendances({ListType? type}) async {
+    return await delete(
+        _pretendanceRepository.deletePretendances,
+        (pretendances, pretendance) => pretendances
+          ..removeWhere((p) => type != null ? p.listType == type : true),
+        listTypeToString(type),
+        Pretendance.empty());
   }
 
   Future<AsyncValue<List<Pretendance>>> copy() async {

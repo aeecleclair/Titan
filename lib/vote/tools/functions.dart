@@ -14,6 +14,19 @@ ListType stringToListType(String type) {
   }
 }
 
+String listTypeToString(ListType? type) {
+  switch (type) {
+    case ListType.serio:
+      return 'Serio';
+    case ListType.pipo:
+      return 'Pipo';
+    case ListType.blank:
+      return 'Blank';
+    default:
+      return '';
+  }
+}
+
 
 Status stringToStatus(String status) {
   switch (status) {

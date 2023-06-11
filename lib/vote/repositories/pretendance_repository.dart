@@ -21,4 +21,8 @@ class PretendanceRepository extends Repository {
   Future<List<Pretendance>> getPretendances() async {
     return (await getList()).map((e) => Pretendance.fromJson(e)).toList();
   }
+
+  Future<bool> deletePretendances(String type) {
+    return delete("/?list_type=$type");
+  }
 }
