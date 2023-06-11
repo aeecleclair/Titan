@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/ui/item_card.dart';
+import 'package:myecl/loan/ui/item_card_in_loan.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
 import 'package:myecl/tools/functions.dart';
 
@@ -78,17 +79,14 @@ class DetailLoanPage extends HookConsumerWidget {
                           ],
                         ),
                       ),
-                      loan.items.isNotEmpty
+                      loan.itemsQuantity.isNotEmpty
                           ? SingleChildScrollView(
                               physics: const BouncingScrollPhysics(),
                               child: Wrap(
-                                children: loan.items
+                                children: loan.itemsQuantity
                                     .map(
-                                      (item) => ItemCard(
-                                        item: item,
-                                        showButtons: false,
-                                        onDelete: () async {},
-                                        onEdit: () {},
+                                      (itemQty) => ItemCardInLoan(
+                                        itemQty: itemQty,
                                       ),
                                     )
                                     .toList(),

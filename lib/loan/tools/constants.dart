@@ -8,6 +8,9 @@ class LoanTextConstants {
   static const String addingError = "Erreur lors de l'ajout";
   static const String admin = "Administrateur";
   static const String available = "Disponible";
+  static const String availableMultiple = "Disponibles";
+  static const String borrowed = "Emprunté";
+  static const String borrowedMultiple = "Empruntés";
   static const String and = "et";
   static const String association = "Association";
   static const String availableItems = "Objets disponibles";
@@ -60,6 +63,7 @@ class LoanTextConstants {
   static const String noItems = "Aucun objet";
   static const String noItemSelected = "Aucun objet sélectionné";
   static const String noLoan = "Aucun prêt";
+  static const String quantity = "Quantité";
   static const String none = "Aucun";
   static const String note = "Note";
   static const String noValue = "Veuillez entrer une valeur";
