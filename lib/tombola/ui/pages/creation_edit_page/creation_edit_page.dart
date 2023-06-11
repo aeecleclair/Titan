@@ -6,6 +6,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/cash_provider.dart';
 import 'package:myecl/tombola/providers/prize_list_provider.dart';
@@ -27,7 +28,6 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
-import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 
 class CreationPage extends HookConsumerWidget {
   const CreationPage({Key? key}) : super(key: key);
@@ -38,6 +38,7 @@ class CreationPage extends HookConsumerWidget {
 
     final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final raffle = ref.watch(raffleProvider);
+    final raffleList = ref.watch(raffleListProvider);
     final raffleListNotifier = ref.read(raffleListProvider.notifier);
     final raffleStats = ref.watch(raffleStatsProvider);
     final cashNotifier = ref.read(cashProvider.notifier);
@@ -50,7 +51,7 @@ class CreationPage extends HookConsumerWidget {
     final name = useTextEditingController(text: raffle.name);
 
     final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
-    final tombolaLogoNotifier = ref.watch(pretendenceLogoProvider.notifier);
+    final tombolaLogoNotifier = ref.watch(tombolaLogoProvider.notifier);
     final logo = useState<Uint8List?>(null);
     final logoFile = useState<Image?>(null);
     ref.watch(tombolaLogosProvider).whenData((value) {
@@ -130,8 +131,8 @@ class CreationPage extends HookConsumerWidget {
                   left: 0,
                   child: GestureDetector(
                     onTap: () async {
-                      final XFile? image =
-                          await picker.pickImage(source: ImageSource.gallery);
+                      final XFile? image = await picker.pickImage(
+                          source: ImageSource.gallery, imageQuality: 20);
                       if (image != null) {
                         logo.value = await File(image.path).readAsBytes();
                         logoFile.value = Image.file(File(image.path));
@@ -195,16 +196,36 @@ class CreationPage extends HookConsumerWidget {
                   onTap: () async {
                     if (formKey.currentState!.validate()) {
                       await tokenExpireWrapper(ref, () async {
-                        await raffleListNotifier.updateRaffle(raffle.copyWith(
+                        Raffle newRaffle = raffle.copyWith(
                             name: name.text,
                             description: raffle.description,
-                            raffleStatusType: raffle.raffleStatusType));
+                            raffleStatusType: raffle.raffleStatusType);
+                        await raffleListNotifier.updateRaffle(newRaffle);
                       });
-                      pageNotifier.setTombolaPage(TombolaPage.main);
+                      raffleList.when(
+                          data: (list) async {
+                            if (logo.value != null) {
+                              try {
+                                await tombolaLogoNotifier.updateLogo(
+                                    raffle.id, logo.value!);
+                                await tombolaLogosNotifier.setTData(
+                                    raffle,
+                                    AsyncData([
+                                      Image.memory(
+                                        logo.value!,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ]));
+                                pageNotifier.setTombolaPage(TombolaPage.main);
+                              } catch (e) {}
+                            }
+                          },
+                          error: (error, s) {},
+                          loading: () {});
                     }
                   },
                   child: raffle.raffleStatusType == RaffleStatusType.creation
-                      ? const BlueBtn(text: "Changez le nom")
+                      ? const BlueBtn(text: TombolaTextConstants.edit)
                       : const SizedBox(
                           height: 20,
                         ))),

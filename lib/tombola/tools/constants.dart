@@ -113,4 +113,6 @@ class TombolaTextConstants {
   static const String notEnoughPrize = "Tous les lots n'ont pas été tirés";
 
   static const String editRaffle = "Modifier la tombola";
+
+  static const String edit = "Modifier";
 }
