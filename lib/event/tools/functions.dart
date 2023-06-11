@@ -27,6 +27,8 @@ CalendarEventType stringToCalendarEventType(String type) {
       return CalendarEventType.eventAE;
     case "Event USE":
       return CalendarEventType.eventUSE;
+    case "Asso indé":
+      return CalendarEventType.independentAssociation;
     case "HH":
       return CalendarEventType.happyHour;
     case "Strass":
