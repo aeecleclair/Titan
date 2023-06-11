@@ -9,7 +9,8 @@ on:
         type: string
   pull_request:
   push:
-    branches: [main]
+    branches:
+      - 'main'
 
 permissions: read-all
 
@@ -26,7 +27,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: ["apk --debug", "appbundle --debug", "ios --no-codesign", web]
+        target: ["apk --debug", "appbundle --debug", "ios --no-codesign", "web --web-renderer html"]
 
     steps:
       - name: Determine ref
