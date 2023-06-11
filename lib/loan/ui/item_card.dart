@@ -19,7 +19,6 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var availableQuantity = item.totalQuantity-item.loanedQuantity;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5.0),
       padding: const EdgeInsets.all(12.0),
@@ -54,15 +53,13 @@ class ItemCard extends StatelessWidget {
                       color: Colors.black)),
               const SizedBox(height: 5),
               Text(
-                  availableQuantity>0
-                      ? '$availableQuantity ${availableQuantity <= 1
-                        ? LoanTextConstants.available
-                        : LoanTextConstants.availableMultiple}'
+                  item.available
+                      ? LoanTextConstants.available
                       : LoanTextConstants.unavailable,
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: availableQuantity>0
+                      color: item.available
                           ? Colors.grey.shade400
                           : const Color.fromARGB(255, 172, 32, 10))),
               const SizedBox(height: 5),

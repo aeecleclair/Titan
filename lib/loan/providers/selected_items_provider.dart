@@ -5,62 +5,55 @@ import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 
 final selectedListProvider =
-    StateNotifierProvider<SelectedListProvider, List<int>>((ref) {
-  final itemsList = ref.watch(itemListProvider);
-  final items = [];
-  itemsList.when(
-    data: (list) => items.addAll(list),
+    StateNotifierProvider<SelectedListProvider, List<bool>>((ref) {
+  final productsList = ref.watch(itemListProvider);
+  final products = [];
+  productsList.when(
+    data: (list) => products.addAll(list),
     error: (e, s) {},
     loading: () {},
   );
-  return SelectedListProvider(items);
+  return SelectedListProvider(products);
 });
 
 final editSelectedListProvider =
-    StateNotifierProvider<SelectedListProvider, List<int>>((ref) {
+    StateNotifierProvider<SelectedListProvider, List<bool>>((ref) {
   final loan = ref.watch(loanProvider);
-  final itemsList = ref.watch(itemListProvider);
-  final List<Item> items = [];
-  itemsList.when(
-    data: (list) => items.addAll(list),
+  final productsList = ref.watch(itemListProvider);
+  final List<Item> products = [];
+  productsList.when(
+    data: (list) => products.addAll(list),
     error: (e, s) {},
     loading: () {},
   );
-  SelectedListProvider selectedListProvider = SelectedListProvider(items);
-  selectedListProvider.initWithLoan(items, loan);
+  SelectedListProvider selectedListProvider = SelectedListProvider(products);
+  selectedListProvider.initWithLoan(products, loan);
   return selectedListProvider;
 });
 
-class SelectedListProvider extends StateNotifier<List<int>> {
+class SelectedListProvider extends StateNotifier<List<bool>> {
   SelectedListProvider(List<dynamic> p)
-      : super(List.generate(p.length, (index) => 0));
+      : super(List.generate(p.length, (index) => false));
 
-  Future<List<int>> toggle(int i, int quantity) async {
+  Future<List<bool>> toggle(int i) async {
     var copy = state.toList();
-    copy[i] = copy[i] == -1 ? quantity : -1;
+    copy[i] = !copy[i];
     state = copy;
     return state;
   }
 
-  Future<List<int>> set(int i, int quantity) async {
+  void initWithLoan(List<Item> products, Loan loan) {
     var copy = state.toList();
-    copy[i] = quantity;
-    state = copy;
-    return state;
-  }
-
-  void initWithLoan(List<Item> items, Loan loan) {
-    var copy = state.toList();
-    final itemIds = items.map((i) => i.id).toList();
-    for (var itemQty in loan.itemsQuantity) {
-      if (itemIds.contains(itemQty.item.id)) {
-        copy[itemIds.indexOf(itemQty.item.id)] = itemQty.quantity;
+    final productIds = products.map((i) => i.id).toList();
+    for (var item in loan.items) {
+      if (productIds.contains(item.id)) {
+        copy[productIds.indexOf(item.id)] = true;
       }
     }
     state = copy;
   }
 
   void clear() {
-    state = List.generate(state.length, (index) => 0);
+    state = List.generate(state.length, (index) => false);
   }
 }

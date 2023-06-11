@@ -12,7 +12,7 @@ class Loan {
     required this.start,
     required this.end,
     required this.caution,
-    required this.itemsQuantity,
+    required this.items,
     required this.returned,
   });
   late final String id;
@@ -22,7 +22,7 @@ class Loan {
   late final DateTime start;
   late final DateTime end;
   late final String caution;
-  late final List<ItemQuantity> itemsQuantity;
+  late final List<Item> items;
   late final bool returned;
 
   Loan.fromJson(Map<String, dynamic> json) {
@@ -33,7 +33,7 @@ class Loan {
     start = DateTime.parse(json['start']);
     end = DateTime.parse(json['end']);
     caution = json['caution'];
-    itemsQuantity = List<ItemQuantity>.from(json['items_qty'].map((x) => ItemQuantity.fromJson(x)));
+    items = List<Item>.from(json['items'].map((x) => Item.fromJson(x)));
     returned = json['returned'];
   }
 
@@ -46,12 +46,12 @@ class Loan {
     data['start'] = processDateToAPIWitoutHour(start);
     data['end'] = processDateToAPIWitoutHour(end);
     data['caution'] = caution;
-    data['items_borrowed'] = itemsQuantity.map((x) => x.toJson()).toList();
+    data['item_ids'] = items.map((x) => x.id).toList();
     return data;
   }
 
   Loan copyWith(
-      {id, loaner, borrower, notes, start, end, caution, itemsQuantity, returned}) {
+      {id, loaner, borrower, notes, start, end, caution, items, returned}) {
     return Loan(
         id: id ?? this.id,
         loaner: loaner ?? this.loaner,
@@ -60,7 +60,7 @@ class Loan {
         start: start ?? this.start,
         end: end ?? this.end,
         caution: caution ?? this.caution,
-        itemsQuantity: itemsQuantity ?? this.itemsQuantity,
+        items: items ?? this.items,
         returned: returned ?? this.returned);
   }
 
@@ -72,12 +72,12 @@ class Loan {
     start = DateTime.now();
     end = DateTime.now();
     caution = '';
-    itemsQuantity = [];
+    items = [];
     returned = false;
   }
 
   @override
   String toString() {
-    return 'Loan(id: $id, loaner: $loaner, borrower: $borrower, notes: $notes, start: $start, end: $end, caution: $caution, itemsQuantity: $itemsQuantity, returned: $returned)';
+    return 'Loan(id: $id, loaner: $loaner, borrower: $borrower, notes: $notes, start: $start, end: $end, caution: $caution, items: $items, returned: $returned)';
   }
 }

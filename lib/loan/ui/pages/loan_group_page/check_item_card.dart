@@ -56,13 +56,13 @@ class CheckItemCard extends StatelessWidget {
                         color: Colors.black)),
                 const SizedBox(height: 5),
                 Text(
-                    item.loanedQuantity < item.totalQuantity
-                        ? '${item.totalQuantity-item.loanedQuantity} ${LoanTextConstants.available}'
+                    item.available
+                        ? LoanTextConstants.available
                         : LoanTextConstants.unavailable,
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
-                        color: item.loanedQuantity < item.totalQuantity
+                        color: item.available
                             ? Colors.grey.shade400
                             : const Color.fromARGB(255, 172, 32, 10))),
                 const SizedBox(height: 5),

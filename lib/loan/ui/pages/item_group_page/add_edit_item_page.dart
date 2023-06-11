@@ -26,7 +26,6 @@ class AddEditItemPage extends HookConsumerWidget {
     final item = ref.watch(itemProvider);
     final isEdit = item.id != Item.empty().id;
     final name = useTextEditingController(text: item.name);
-    final quantity = useTextEditingController( text: item.totalQuantity.toString());
     final caution =
         useTextEditingController(text: isEdit ? item.caution.toString() : '');
     final lendingDuration = useTextEditingController(
@@ -65,14 +64,6 @@ class AddEditItemPage extends HookConsumerWidget {
                   suffix: '',
                   isInt: false,
                   controller: name,
-                ),
-                const SizedBox(height: 30),
-                TextEntry(
-                  keyboardType: TextInputType.number,
-                  label: LoanTextConstants.quantity,
-                  suffix: '',
-                  isInt: true,
-                  controller: quantity,
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -131,8 +122,7 @@ class AddEditItemPage extends HookConsumerWidget {
                             caution: int.parse(caution.text),
                             suggestedLendingDuration:
                                 double.parse(lendingDuration.text),
-                            loanedQuantity: 1,
-                            totalQuantity: int.parse(quantity.text));
+                            available: item.available);
                         final value = isEdit
                             ? await itemListNotifier.updateItem(
                                 newItem, loaner.id)

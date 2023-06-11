@@ -36,7 +36,7 @@ class LoanCard extends StatelessWidget {
         padding: const EdgeInsets.all(15.0),
         child: Container(
           width: 250,
-          height: isAdmin ? 200 : 180,
+          height: 180,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(30),
@@ -91,7 +91,7 @@ class LoanCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
                 const SizedBox(height: 7),
-                Text(formatItems(loan.itemsQuantity),
+                Text(formatItems(loan.items),
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,

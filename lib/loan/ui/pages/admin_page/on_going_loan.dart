@@ -79,7 +79,7 @@ class OnGoingLoan extends HookConsumerWidget {
                           padding: const EdgeInsets.all(15.0),
                           child: Container(
                             width: 120,
-                            height: 200,
+                            height: 180,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(30),
@@ -165,8 +165,8 @@ class OnGoingLoan extends HookConsumerWidget {
                                           onYes: () async {
                                             await tokenExpireWrapper(ref,
                                                 () async {
-                                              final loanItemsId = e.itemsQuantity
-                                                  .map((e) => e.item.id)
+                                              final loanItemsId = e.items
+                                                  .map((e) => e.id)
                                                   .toList();
                                               final updatedItems = loanersItems
                                                   .when<List<Item>>(
@@ -183,7 +183,8 @@ class OnGoingLoan extends HookConsumerWidget {
                                                 (element) {
                                                   if (loanItemsId
                                                       .contains(element.id)) {
-                                                    return element.copyWith(); //TODO
+                                                    return element.copyWith(
+                                                        available: true);
                                                   }
                                                   return element;
                                                 },

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/item_provider.dart';
@@ -49,7 +48,7 @@ class LoanersItems extends HookConsumerWidget {
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
-                            itemNotifier.setItem(Item.empty());
+                            loanNotifier.setLoan(Loan.empty());
                             pageNotifier.setLoanPage(LoanPage.addEditItem);
                           },
                           child: Container(
