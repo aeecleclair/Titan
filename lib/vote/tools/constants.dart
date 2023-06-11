@@ -21,6 +21,9 @@ class VoteTextConstants {
       "Voulez-vous vraiment supprimer tout ?";
   static const String deletedAll = "Tout supprimé";
   static const String deletedSection = 'Section supprimée';
+  static const String deletePipo = "Supprimer les listes pipos";
+  static const String deletePipoDescription =
+      "Voulez-vous vraiment supprimer les listes pipos ?";
   static const String deletePretendance = 'Supprimer la liste';
   static const String deletePretendanceDesc =
       'Voulez-vous vraiment supprimer cette liste ?';

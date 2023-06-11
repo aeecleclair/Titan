@@ -23,6 +23,9 @@ class PretendanceRepository extends Repository {
   }
 
   Future<bool> deletePretendances(String type) {
+    if (type.isEmpty) {
+      return delete("/");
+    }
     return delete("/?list_type=$type");
   }
 }
