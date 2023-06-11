@@ -7,6 +7,7 @@ import 'package:myecl/user/class/applicant.dart';
 enum CalendarEventType {
   eventAE,
   eventUSE,
+  independentAssociation,
   happyHour,
   direction,
   nightParty,

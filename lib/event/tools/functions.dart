@@ -8,6 +8,8 @@ String calendarEventTypeToString(CalendarEventType type) {
       return "Event AE";
     case CalendarEventType.eventUSE:
       return "Event USE";
+    case CalendarEventType.independentAssociation:
+      return "Asso indé";
     case CalendarEventType.happyHour:
       return "HH";
     case CalendarEventType.direction:
@@ -25,6 +27,8 @@ CalendarEventType stringToCalendarEventType(String type) {
       return CalendarEventType.eventAE;
     case "Event USE":
       return CalendarEventType.eventUSE;
+    case "Asso indé":
+      return CalendarEventType.independentAssociation;
     case "HH":
       return CalendarEventType.happyHour;
     case "Strass":
