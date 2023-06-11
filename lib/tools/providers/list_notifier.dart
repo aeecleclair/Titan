@@ -48,6 +48,35 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
     });
   }
 
+  Future<bool> addAll(Future<List<T>> Function(List<T> listT) f, List<T> listT) async {
+    return state.when(data: (d) async {
+      try {
+        final newT = await f(listT);
+        d.addAll(newT);
+        state = AsyncValue.data(d);
+        return true;
+      } catch (error) {
+        state = AsyncValue.data(d);
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          rethrow;
+        } else {
+          return false;
+        }
+      }
+    }, error: (error, s) {
+      if (error is AppException && error.type == ErrorType.tokenExpire) {
+        throw error;
+      } else {
+        state = AsyncValue.error(error, s);
+        return false;
+      }
+    }, loading: () {
+      state = const AsyncValue.error(
+          "Cannot addAll while loading", StackTrace.empty);
+      return false;
+    });
+  }
+
   Future<bool> update(Future<bool> Function(T t) f,
       List<T> Function(List<T> listT, T t) replace, T t) async {
     return state.when(data: (d) async {

@@ -75,7 +75,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                                         .addEntries({p.id: 0}.entries);
                                   }
                                   productsQuantity[p.id] =
-                                      productsQuantity[p.id]! + 1;
+                                      productsQuantity[p.id]! + p.quantity;
                                 }
                               }
                             },

@@ -46,7 +46,7 @@ class SectionPretendenceItems extends HookConsumerWidget {
             return sections[section]!.when(
                 data: (data) => SizedBox(
                       height: 190,
-                      child: WebListView(
+                      child: HorizontalListView(
                         child: Row(
                           children: [
                             const SizedBox(width: 10),

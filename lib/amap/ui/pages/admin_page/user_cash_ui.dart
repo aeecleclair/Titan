@@ -188,7 +188,11 @@ class UserCashUi extends HookConsumerWidget {
                                     keyboardType: TextInputType.number,
                                     validator: (value) => value!.isEmpty
                                         ? AMAPTextConstants.add
-                                        : null,
+                                        : double.tryParse(value.replaceAll(
+                                                    ',', '.')) ==
+                                                null
+                                            ? AMAPTextConstants.expectingNumber
+                                            : null,
                                     cursorColor: AMAPColorConstants.textDark,
                                     decoration: const InputDecoration(
                                       suffixText: '€',
@@ -231,7 +235,8 @@ class UserCashUi extends HookConsumerWidget {
                                             .read(cashProvider.notifier)
                                             .updateCash(
                                               cash,
-                                              int.parse(amount.text),
+                                              double.parse(amount.text
+                                                  .replaceAll(',', '.')),
                                             )
                                             .then((value) {
                                           if (value) {

@@ -80,7 +80,7 @@ class AccountHandler extends HookConsumerWidget {
       ),
       SizedBox(
         height: 135,
-        child: WebListView(
+        child: HorizontalListView(
           child: Row(
             children: [
               const SizedBox(

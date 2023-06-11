@@ -81,8 +81,8 @@ class MainPage extends HookConsumerWidget {
                                     blurRadius: 10,
                                     offset: const Offset(0, 5))
                               ]),
-                          child: Row(
-                            children: const [
+                          child: const Row(
+                            children: [
                               HeroIcon(HeroIcons.userGroup,
                                   color: Colors.white, size: 20),
                               SizedBox(width: 10),
@@ -106,7 +106,7 @@ class MainPage extends HookConsumerWidget {
               data.sort((a, b) => a.start.compareTo(b.start));
               return SizedBox(
                   height: 210,
-                  child: WebListView(
+                  child: HorizontalListView(
                       child: Row(children: [
                     Container(
                       margin: const EdgeInsets.only(left: 15),

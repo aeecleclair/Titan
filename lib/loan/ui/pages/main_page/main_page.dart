@@ -72,8 +72,8 @@ class MainPage extends HookConsumerWidget {
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
-                          height: 210,
-                          child: WebListView(
+                          height: 190,
+                          child: HorizontalListView(
                             child: Row(
                               children: [
                                 const SizedBox(width: 10),
@@ -99,8 +99,8 @@ class MainPage extends HookConsumerWidget {
                       ? SizedBox(
                           height: MediaQuery.of(context).size.height * 0.7,
                           width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            children: const [
+                          child: const Column(
+                            children: [
                               Expanded(
                                 child: Center(
                                     child: Text(LoanTextConstants.noLoan,
@@ -132,8 +132,8 @@ class MainPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   SizedBox(
-                      height: 210,
-                      child: WebListView(
+                      height: 190,
+                      child: HorizontalListView(
                         child: Row(
                           children: [
                             const SizedBox(width: 10),
@@ -178,8 +178,8 @@ class MainPage extends HookConsumerWidget {
                           blurRadius: 10,
                           offset: const Offset(0, 5))
                     ]),
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     HeroIcon(HeroIcons.userGroup, color: Colors.white),
                     SizedBox(width: 10),
                     Text("Admin",

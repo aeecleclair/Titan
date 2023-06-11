@@ -1,33 +1,37 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheManager {
-  final storage = const FlutterSecureStorage();
-
   Future<String> readCache(String key) async {
-    return await storage.read(key: key) ?? "";
+    final storage = await SharedPreferences.getInstance();
+    return storage.getString(key) ?? "";
   }
 
   Future<void> writeCache(String key, String value) async {
-    return await storage.write(key: key, value: value);
+    final storage = await SharedPreferences.getInstance();
+    await storage.setString(key, value);
   }
 
   Future<void> deleteCache(String key) async {
-    return await storage.delete(key: key);
+    final storage = await SharedPreferences.getInstance();
+    storage.remove(key);
   }
 
   Future<void> writeImage(String key, Uint8List bodyBytes) async {
-    return await storage.write(key: key, value: bodyBytes.toString());
+    final storage = await SharedPreferences.getInstance();
+    await storage.setString(key, bodyBytes.toString());
   }
 
   Future<void> deleteImage(String key) async {
-    return await storage.delete(key: key);
+    final storage = await SharedPreferences.getInstance();
+    storage.remove(key);
   }
 
   Future<Uint8List> readImage(String key) async {
-    final String? bytes = await storage.read(key: key).then((value) => value);
-    if (bytes == null) {
+    final storage = await SharedPreferences.getInstance();
+    final String bytes = storage.getString(key) ?? "";
+    if (bytes == "") {
       return Uint8List(0);
     }
     return Uint8List.fromList(List<int>.from(json.decode(bytes)));
