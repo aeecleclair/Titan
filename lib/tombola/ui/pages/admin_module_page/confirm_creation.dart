@@ -38,7 +38,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
               backgroundColor: Colors.transparent,
               child: Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      const EdgeInsets.all(20),
                   width: 250,
                   height: 350,
                   decoration: BoxDecoration(
@@ -107,7 +107,6 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                                       raffleStatusType:
                                           RaffleStatusType.creation));
                                   await raffleListNotifier.loadRaffleList();
-                                  pageNotifier.setTombolaPage(TombolaPage.main);
                                   navigationPop();
                                 });
                               },

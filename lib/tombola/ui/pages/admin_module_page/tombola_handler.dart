@@ -4,15 +4,73 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
+import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/admin_module_page/confirm_creation.dart';
+import 'package:myecl/tombola/ui/pages/admin_module_page/tombola_card.dart';
+import 'package:myecl/tombola/ui/pages/main_page/card_tombolas.dart';
 
 class TombolaHandler extends HookConsumerWidget {
   const TombolaHandler({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final groupList = ref.watch(allGroupListProvider);
-    ValueNotifier<String> dropdownValue = useState('');
+    final raffleList = ref.watch(raffleListProvider);
+    final groupChoosen = useState(SimpleGroup.empty());
+
+    void displayWinningsDialog(List<SimpleGroup> groups, Function callback) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
+              child: Container(
+                height: 100 + groups.length * 35.0,
+                padding: const EdgeInsets.all(30.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Pour quel groupe ?",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: TombolaColorConstants.textDark),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: groups.length,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              groupChoosen.value = groups[index];
+                              Navigator.pop(context);
+                              callback();
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Center(
+                                child: Text(
+                                  groups[index].name,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: TombolaColorConstants.textDark),
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                  ],
+                ),
+              ),
+            );
+          });
+    }
 
     return Column(children: [
       Container(
@@ -64,20 +122,26 @@ class TombolaHandler extends HookConsumerWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 17.0),
                         child: GestureDetector(
                             onTap: () {
-                              SimpleGroup groupChoosen = groupList.when(
-                                  data: (data) => data.firstWhere((element) =>
-                                      element.name == dropdownValue.value),
-                                  error: (e, s) => SimpleGroup.empty(),
-                                  loading: () => SimpleGroup.empty());
-                              if (groupChoosen.id != SimpleGroup.empty().id) {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return ConfirmCreationDialog(
-                                        group: groupChoosen);
-                                  },
-                                );
-                              }
+                              groupList.when(
+                                data: (data) {
+                                  displayWinningsDialog(data, () {
+                                    print(groupChoosen.value);
+                                    if (groupChoosen.value.id !=
+                                        SimpleGroup.empty().id) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ConfirmCreationDialog(
+                                              group: groupChoosen.value);
+                                        },
+                                      );
+                                    }
+                                  });
+                                },
+                                error: (e, s) => Text('Error: $e'),
+                                loading: () =>
+                                    const CircularProgressIndicator(),
+                              );
                             },
                             child: Container(
                               padding:
@@ -90,7 +154,16 @@ class TombolaHandler extends HookConsumerWidget {
                             )),
                       ),
                     )),
-                groupList.when(
+                ...raffleList.when(
+                  data: (raffles) {
+                    return raffles
+                        .map((raffle) => TombolaCard(raffle: raffle))
+                        .toList();
+                  },
+                  error: (e, s) => [Text("Error: $e")],
+                  loading: () => const [CircularProgressIndicator()],
+                ),
+                /*groupList.when(
                   data: (data) {
                     final List<String> listGroupName =
                         data.map((e) => e.name).toList();
@@ -116,7 +189,7 @@ class TombolaHandler extends HookConsumerWidget {
                   },
                   error: (e, s) => Text('Error: $e'),
                   loading: () => const CircularProgressIndicator(),
-                ),
+                ),*/
                 const SizedBox(
                   width: 10,
                 ),
