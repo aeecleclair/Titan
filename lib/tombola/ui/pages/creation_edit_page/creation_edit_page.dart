@@ -52,7 +52,6 @@ class CreationPage extends HookConsumerWidget {
     final name = useTextEditingController(text: raffle.name);
     final ImagePicker picker = ImagePicker();
 
-
     final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
     final tombolaLogoNotifier = ref.watch(tombolaLogoProvider.notifier);
     final logo = useState<Uint8List?>(null);
@@ -244,7 +243,7 @@ class CreationPage extends HookConsumerWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 alignment: Alignment.centerLeft,
-                child: const Text("Changer le logo de la tombola",
+                child: Text(TombolaTextConstants.editRaffle,
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
