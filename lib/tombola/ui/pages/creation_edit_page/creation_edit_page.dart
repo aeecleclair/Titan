@@ -205,10 +205,9 @@ class CreationPage extends HookConsumerWidget {
                       raffleList.when(
                           data: (list) async {
                             if (logo.value != null) {
-                              try {
-                                await tombolaLogoNotifier.updateLogo(
+                                tombolaLogoNotifier.updateLogo(
                                     raffle.id, logo.value!);
-                                await tombolaLogosNotifier.setTData(
+                                tombolaLogosNotifier.setTData(
                                     raffle,
                                     AsyncData([
                                       Image.memory(
@@ -216,8 +215,7 @@ class CreationPage extends HookConsumerWidget {
                                         fit: BoxFit.cover,
                                       ),
                                     ]));
-                                pageNotifier.setTombolaPage(TombolaPage.main);
-                              } catch (e) {}
+                                pageNotifier.setTombolaPage(TombolaPage.detail);
                             }
                           },
                           error: (error, s) {},

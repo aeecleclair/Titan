@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/tombola/class/raffle.dart';
@@ -70,15 +71,15 @@ class BuyPackTicket extends HookConsumerWidget {
                           ],
                           borderRadius:
                               const BorderRadius.all(Radius.circular(15))),
-                      child: Center(
+                      child: Container(
                         child: tombolaLogo.when(
                             data: (value) => ClipRRect(
                                 borderRadius: BorderRadius.circular(
-                                    20.0),
+                                    15.0),
                                 child: value),
-                            loading: () => const SizedBox(),
+                            loading: () => const CircularProgressIndicator(),
                             error: (Object error, StackTrace? stackTrace) =>
-                                Text('Error: $error')),
+                                const HeroIcon(HeroIcons.cubeTransparent)),
                       ),
                     ),
                     Text(
