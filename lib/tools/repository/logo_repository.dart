@@ -16,7 +16,7 @@ abstract class LogoRepository extends Repository {
   Future<Uint8List> getLogo(String id, {String suffix = ""}) async {
     try {
       final response =
-          await http.get(Uri.parse("$host$ext$id$suffix"), headers: headers);
+      await http.get(Uri.parse("$host$ext$id$suffix"), headers: headers);
       if (response.statusCode == 200) {
         try {
           await cacheManager.writeImage(ext + id + suffix, response.bodyBytes);
@@ -30,7 +30,7 @@ abstract class LogoRepository extends Repository {
       } else if (response.statusCode == 403) {
         FLog.error(
             text:
-                "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+            "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
         String resp = utf8.decode(response.body.runes.toList());
         final decoded = json.decode(resp);
         if (decoded["detail"] == expiredTokenDetail) {
@@ -41,7 +41,7 @@ abstract class LogoRepository extends Repository {
       } else {
         FLog.error(
             text:
-                "GET $ext$id$suffix\n${response.statusCode} ${response.body}");
+            "GET $ext$id$suffix\n${response.statusCode} ${response.body}");
         throw AppException(ErrorType.notFound, response.body);
       }
     } on AppException {
@@ -52,7 +52,7 @@ abstract class LogoRepository extends Repository {
       } catch (e) {
         FLog.error(
             text:
-                "GET $ext$id$suffix\nError while decoding response from cache",
+            "GET $ext$id$suffix\nError while decoding response from cache",
             exception: e);
         cacheManager.deleteCache(ext + id + suffix);
         rethrow;
@@ -60,13 +60,13 @@ abstract class LogoRepository extends Repository {
     }
   }
 
-  Future<Uint8List> addLogo(String path, String id, {String suffix = ""}) async {
-    final file = File(path);
+  Future<Uint8List> addLogo(Uint8List bytes, String id,
+      {String suffix = ""}) async {
     final request =
-        http.MultipartRequest('POST', Uri.parse("$host$ext$id$suffix"))
-          ..headers.addAll(headers)
-          ..files.add(await http.MultipartFile.fromPath('image', path,
-              contentType: MediaType('image', 'jpeg')));
+    http.MultipartRequest('POST', Uri.parse("$host$ext$id$suffix"))
+      ..headers.addAll(headers)
+      ..files.add(http.MultipartFile.fromBytes('image', bytes,
+          filename: 'image', contentType: MediaType('image', 'jpeg')));
     final response = await request.send();
     response.stream.transform(utf8.decoder).listen((value) async {
       if (response.statusCode == 201) {
@@ -81,16 +81,16 @@ abstract class LogoRepository extends Repository {
       } else if (response.statusCode == 403) {
         FLog.error(
             text:
-                "POST $ext$id$suffix\n${response.statusCode} ${response.reasonPhrase}");
+            "POST $ext$id$suffix\n${response.statusCode} ${response.reasonPhrase}");
         throw AppException(ErrorType.tokenExpire, value);
       } else {
         FLog.error(
             text:
-                "POST $ext$id$suffix\n${response.statusCode} ${response.reasonPhrase}");
+            "POST $ext$id$suffix\n${response.statusCode} ${response.reasonPhrase}");
         throw AppException(ErrorType.notFound, value);
       }
     });
-    return file.readAsBytes();
+    return bytes;
   }
 
   Future<File> saveLogoToTemp(String path) async {

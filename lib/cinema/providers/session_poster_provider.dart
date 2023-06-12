@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
@@ -15,8 +17,8 @@ class SessionPosterProvider extends SingleNotifier<Image> {
     return await repository.getPretendenceLogo(id);
   }
 
-  Future<Image> updateLogo(String id, String path) async {
-    return await repository.addPretendenceLogo(path, id);
+  Future<Image> updateLogo(String id, Uint8List bytes) async {
+    return await repository.addPretendenceLogo(bytes, id);
   }
 }
 
