@@ -37,7 +37,8 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
         await _picker.pickImage(source: source, imageQuality: 20);
     if (image != null) {
       try {
-        final i = await _profilePictureRepository.addProfilePicture(image.path);
+        final i = await _profilePictureRepository
+            .addProfilePicture(await image.readAsBytes());
         state = AsyncValue.data(i);
         return true;
       } catch (e) {
@@ -81,7 +82,7 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
       if (croppedFile != null) {
         try {
           final i = await _profilePictureRepository
-              .addProfilePicture(croppedFile.path);
+              .addProfilePicture(await croppedFile.readAsBytes());
           state = AsyncValue.data(i);
           return true;
         } catch (e) {
