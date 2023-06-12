@@ -5,7 +5,6 @@ import 'package:myecl/phonebook/providers/association_member_list_provider.dart'
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/providers/edition_provider.dart';
-import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/ui/delete_button.dart';
@@ -123,7 +122,10 @@ class MemberEditableCard extends HookConsumerWidget {
             DeleteButton(
               onDelete: () async {
                 final result =
-                    await associationNotifier.deleteMember(association, member);
+                    await associationNotifier.deleteMember(
+                      member.memberships.firstWhere(
+                        (element) => element.association.id == association.id)
+                    );
                 await associationMembersNotifier.loadMembers(association.id);
                 if (result) {
                   displayToastWithContext(
