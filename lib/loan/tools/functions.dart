@@ -1,17 +1,17 @@
 import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/class/item_quantity.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 
 String formatItems(List<ItemQuantity> itemsQty) {
   if (itemsQty.length == 2) {
-    return "${itemsQty[0].quantity} ${itemsQty[0].item.name} ${LoanTextConstants.and} ${itemsQty[1].quantity} ${itemsQty[1].item.name}";
+    return "${itemsQty[0].quantity} ${itemsQty[0].itemSimple.name} ${LoanTextConstants.and} ${itemsQty[1].quantity} ${itemsQty[1].itemSimple.name}";
   } else if (itemsQty.length == 3) {
-    return "${itemsQty[0].quantity} ${itemsQty[0].item.name}, ${itemsQty[1].quantity} ${itemsQty[1].item.name} ${LoanTextConstants.and} ${itemsQty[2].quantity} ${itemsQty[2].item.name}";
+    return "${itemsQty[0].quantity} ${itemsQty[0].itemSimple.name}, ${itemsQty[1].quantity} ${itemsQty[1].itemSimple.name} ${LoanTextConstants.and} ${itemsQty[2].quantity} ${itemsQty[2].itemSimple.name}";
   } else if (itemsQty.length > 3) {
-    return "${itemsQty[0].quantity} ${itemsQty[0].item.name}, ${itemsQty[1].quantity} ${itemsQty[1].item.name} ${LoanTextConstants.and} ${itemsQty.length - 2} ${LoanTextConstants.others}";
+    return "${itemsQty[0].quantity} ${itemsQty[0].itemSimple.name}, ${itemsQty[1].quantity} ${itemsQty[1].itemSimple.name} ${LoanTextConstants.and} ${itemsQty.length - 2} ${LoanTextConstants.others}";
   } else if (itemsQty.length == 1) {
-    return "${itemsQty[0].quantity} ${itemsQty[0].item.name}";
+    return "${itemsQty[0].quantity} ${itemsQty[0].itemSimple.name}";
   } else {
     return "";
   }

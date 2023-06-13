@@ -1,9 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
-import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/class/item_quantity.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
 
 class ItemCardInLoan extends StatelessWidget {
   final ItemQuantity itemQty;
@@ -11,7 +9,7 @@ class ItemCardInLoan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var item = itemQty.item;
+    var item = itemQty.itemSimple;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5.0),
       padding: const EdgeInsets.all(12.0),
