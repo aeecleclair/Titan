@@ -1,4 +1,3 @@
-import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/item_quantity.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/tools/functions.dart';

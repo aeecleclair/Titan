@@ -628,11 +628,11 @@ class AdminPage extends HookConsumerWidget {
                                                     offset: const Offset(3, 3),
                                                   )
                                                 ]),
-                                            child: Center(
+                                            child: const Center(
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
-                                                children: const [
+                                                children: [
                                                   Text(
                                                     VoteTextConstants.all,
                                                     style: TextStyle(
@@ -754,11 +754,11 @@ class AdminPage extends HookConsumerWidget {
                                                   offset: const Offset(3, 3),
                                                 )
                                               ]),
-                                          child: Center(
+                                          child: const Center(
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
-                                              children: const [
+                                              children: [
                                                 Text(
                                                   VoteTextConstants.pipo,
                                                   style: TextStyle(

@@ -84,7 +84,7 @@ class VoteBars extends HookConsumerWidget {
         padding: const EdgeInsets.only(top: 10),
         child: BarChart(
           BarChartData(
-            gridData: FlGridData(show: false),
+            gridData: const FlGridData(show: false),
             barTouchData: BarTouchData(
               touchTooltipData: BarTouchTooltipData(
                 tooltipRoundedRadius: 20,
@@ -115,17 +115,17 @@ class VoteBars extends HookConsumerWidget {
               },
             ),
             titlesData: FlTitlesData(
-              leftTitles: AxisTitles(
+              leftTitles: const AxisTitles(
                 sideTitles: SideTitles(
                   showTitles: false,
                 ),
               ),
-              topTitles: AxisTitles(
+              topTitles: const AxisTitles(
                 sideTitles: SideTitles(
                   showTitles: false,
                 ),
               ),
-              rightTitles: AxisTitles(
+              rightTitles: const AxisTitles(
                 sideTitles: SideTitles(
                   showTitles: false,
                 ),
