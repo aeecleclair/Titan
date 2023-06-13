@@ -41,7 +41,7 @@ class MyApp extends HookConsumerWidget {
       //   GlobalWidgetsLocalizations.delegate,
       //   GlobalCupertinoLocalizations.delegate,
       // ],
-      supportedLocales: const [Locale('en'), Locale('fr')],
+      // supportedLocales: const [Locale('en'), Locale('fr')],
       theme: ThemeData(
           primarySwatch: Colors.orange,
           textTheme: GoogleFonts.latoTextTheme(
