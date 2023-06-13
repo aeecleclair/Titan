@@ -7,6 +7,19 @@ class LoanRepository extends Repository {
   final ext = "loans/";
 
   Future<List<Loan>> getLoanListByLoanerId(String loanerId) async {
+    final resp = await getList(suffix: "loaners/$loanerId/loans?returned=false");
+    for (var i = 0; i < resp.length; i++) {
+      print(resp[i]['id']);
+      print(resp[i]['borrower']);
+      print(resp[i]['loaner']);
+      print(resp[i]['notes']);
+      print(resp[i]['start']);
+      print(resp[i]['end']);
+      print(resp[i]['caution']);
+      print(resp[i]['items_qty']);
+      print(resp[i]['returned']);
+      print(Loan.fromJson(resp[i]));
+    }
     return List<Loan>.from(
         (await getList(suffix: "loaners/$loanerId/loans?returned=false"))
             .map((x) => Loan.fromJson(x)));

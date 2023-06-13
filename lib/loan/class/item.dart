@@ -1,3 +1,5 @@
+import 'item_simple.dart';
+
 class Item {
   Item({
     required this.id,
@@ -49,8 +51,16 @@ class Item {
     suggestedLendingDuration = 0;
   }
 
+  ItemSimple toItemSimple() {
+    return ItemSimple(
+      id: id,
+      name: name,
+      loanerId: '',
+    );
+  }
+
   @override
   String toString() {
-    return 'Item(id: $id, name: $name, caution: $caution, available: $available, suggestedLendingDuration: $suggestedLendingDuration)';
+    return 'Item(id: $id, name: $name, caution: $caution, totalQuantity: $totalQuantity,  loanedQuantity: $loanedQuantity, suggestedLendingDuration: $suggestedLendingDuration)';
   }
 }
