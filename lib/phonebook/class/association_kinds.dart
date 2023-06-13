@@ -3,7 +3,7 @@ class AssociationKinds {
     required this.kinds,
     });
   
-  late final List<String> kinds;
+  late final List<dynamic> kinds;
 
   AssociationKinds.fromJSON(Map<String, dynamic> json){
       kinds = json['kinds'];
@@ -18,5 +18,10 @@ class AssociationKinds {
 
   AssociationKinds empty(){
     return AssociationKinds(kinds: []);
+  }
+
+  @override
+  String toString() {
+    return 'AssociationKinds(kinds: $kinds)';
   }
 }
