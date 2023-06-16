@@ -5,7 +5,6 @@ import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/item_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
-import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
@@ -21,8 +20,7 @@ class LoanersItems extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loaner = ref.watch(loanerProvider);
-    final loanNotifier = ref.watch(loanProvider.notifier);
-    final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
+    final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final loanersItems = ref.watch(loanersItemsProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final pageNotifier = ref.watch(loanPageProvider.notifier);
@@ -99,7 +97,7 @@ class LoanersItems extends HookConsumerWidget {
                                                 itemListNotifier
                                                     .copy()
                                                     .then((value) {
-                                                  loanersitemsNotifier.setTData(
+                                                  loanersItemsNotifier.setTData(
                                                       loaner, value);
                                                 });
                                                 displayToastWithContext(
