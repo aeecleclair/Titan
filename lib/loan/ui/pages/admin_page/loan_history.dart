@@ -5,7 +5,6 @@ import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/admin_history_loan_list_provider.dart';
 import 'package:myecl/loan/providers/history_loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_focus_provider.dart';
-import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
@@ -87,7 +86,7 @@ class HistoryLoan extends HookConsumerWidget {
               const SizedBox(height: 15),
               SizedBox(
                 height: 160,
-                child: WebListView(
+                child: HorizontalListView(
                   child: Row(
                     children: [
                       const SizedBox(width: 10),
