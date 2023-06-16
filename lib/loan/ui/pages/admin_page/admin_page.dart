@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/loan/providers/admin_history_loan_list_provider.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
+import 'package:myecl/loan/providers/history_loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
-import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/ui/pages/admin_page/loan_history.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loaners_bar.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loaners_items.dart';
 import 'package:myecl/loan/ui/pages/admin_page/on_going_loan.dart';
@@ -22,6 +24,7 @@ class AdminPage extends HookConsumerWidget {
     final loaner = ref.watch(loanerProvider);
     final loanerIdNotifier = ref.watch(loanerIdProvider.notifier);
     final adminLoanList = ref.watch(adminLoanListProvider);
+    final adminHistoryLoanList = ref.watch(adminHistoryLoanListProvider);
     final loanersItems = ref.watch(loanersItemsProvider);
 
     final opened = useState(false);
@@ -40,11 +43,18 @@ class AdminPage extends HookConsumerWidget {
         final itemListNotifier = ref.read(itemListProvider.notifier);
         final loanersitemsNotifier = ref.read(loanersItemsProvider.notifier);
         final loanListNotifier = ref.read(loanerLoanListProvider.notifier);
+        final historyLoanListNotifier =
+            ref.read(historyLoanerLoanListProvider.notifier);
         final adminLoanListNotifier = ref.read(adminLoanListProvider.notifier);
+        final admiHistoryLoanListNotifier =
+            ref.read(adminHistoryLoanListProvider.notifier);
         itemListNotifier.loadItemList(loaner.id);
         loanersitemsNotifier.setTData(loaner, await itemListNotifier.copy());
         loanListNotifier.loadLoan(loaner.id);
         adminLoanListNotifier.setTData(loaner, await loanListNotifier.copy());
+        historyLoanListNotifier.loadLoan(loaner.id);
+        admiHistoryLoanListNotifier.setTData(
+            loaner, await historyLoanListNotifier.copy());
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 10.0),
@@ -93,6 +103,27 @@ class AdminPage extends HookConsumerWidget {
                     }
                   },
                 );
+                adminHistoryLoanList.whenData(
+                  (value) async {
+                    final historyLoanListNotifier =
+                        ref.read(historyLoanerLoanListProvider.notifier);
+                    final admiHistoryLoanListNotifier =
+                        ref.read(adminHistoryLoanListProvider.notifier);
+                    if (value[key] != null) {
+                      value[key]!.whenData((value) async {
+                        if (value.isEmpty) {
+                          final res =
+                              await historyLoanListNotifier.loadLoan(key.id);
+                          admiHistoryLoanListNotifier.setTData(key, res);
+                        }
+                      });
+                    } else {
+                      final res =
+                          await historyLoanListNotifier.loadLoan(key.id);
+                      admiHistoryLoanListNotifier.setTData(key, res);
+                    }
+                  },
+                );
               });
             }),
             const Column(
@@ -100,19 +131,10 @@ class AdminPage extends HookConsumerWidget {
                 SizedBox(height: 40),
                 OnGoingLoan(),
                 SizedBox(height: 40),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(LoanTextConstants.itemHandling,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149))),
-                  ),
-                ),
-                SizedBox(height: 15),
                 LoanersItems(),
+                SizedBox(height: 40),
+                HistoryLoan(),
+                SizedBox(height: 20),
               ],
             ),
           ],

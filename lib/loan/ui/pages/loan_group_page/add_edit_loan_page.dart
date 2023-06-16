@@ -51,7 +51,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 149, 149, 149)))),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 10),
             ItemBar(
               isEdit: isEdit,
             ),

@@ -9,7 +9,7 @@ import 'package:myecl/tools/ui/shrink_button.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;
-  final bool isAdmin, isDetail;
+  final bool isAdmin, isDetail, isHistory;
   final Function() onEdit, onInfo;
   final Future Function() onCalendar, onReturn;
   const LoanCard(
@@ -20,7 +20,8 @@ class LoanCard extends StatelessWidget {
       required this.onReturn,
       required this.onInfo,
       required this.isAdmin,
-      required this.isDetail});
+      required this.isDetail,
+      this.isHistory = false});
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +37,24 @@ class LoanCard extends StatelessWidget {
         padding: const EdgeInsets.all(15.0),
         child: Container(
           width: 250,
-          height: 180,
+          height: isAdmin || !isHistory ? 200 : 180,
           decoration: BoxDecoration(
-            color: Colors.white,
+            gradient: RadialGradient(
+              colors: shouldReturn
+                  ? [
+                      const Color.fromARGB(255, 250, 66, 38),
+                      const Color.fromARGB(255, 172, 32, 10)
+                    ]
+                  : [Colors.white, Colors.grey.shade50],
+              center: Alignment.topLeft,
+              radius: 1.5,
+            ),
             borderRadius: BorderRadius.circular(30),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.shade200.withOpacity(0.5),
+                color: shouldReturn
+                    ? const Color.fromARGB(255, 172, 32, 10).withOpacity(0.25)
+                    : Colors.grey.shade200.withOpacity(0.5),
                 spreadRadius: 5,
                 blurRadius: 10,
                 offset: const Offset(3, 3),
@@ -55,7 +67,7 @@ class LoanCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (!isAdmin)
+                if (!isAdmin && !isHistory)
                   Column(children: [
                     const SizedBox(height: 10),
                     Row(
@@ -66,16 +78,19 @@ class LoanCard extends StatelessWidget {
                         ),
                         AutoSizeText(capitalize(loan.loaner.name),
                             maxLines: 1,
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black)),
+                                color: shouldReturn
+                                    ? Colors.white
+                                    : Colors.black)),
                         !isDetail
                             ? GestureDetector(
                                 onTap: onInfo,
-                                child: const HeroIcon(
-                                    HeroIcons.informationCircle,
-                                    color: Colors.black,
+                                child: HeroIcon(HeroIcons.informationCircle,
+                                    color: shouldReturn
+                                        ? Colors.white
+                                        : Colors.black,
                                     size: 25),
                               )
                             : Container(width: 25),
@@ -83,25 +98,31 @@ class LoanCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                   ]),
-                SizedBox(height: !isAdmin ? 5 : 10),
+                SizedBox(height: !isAdmin && !isHistory ? 5 : 10),
                 AutoSizeText(loan.borrower.getName(),
                     maxLines: 1,
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black)),
+                        color: shouldReturn
+                            ? Colors.white
+                            : Colors.black)),
                 const SizedBox(height: 7),
-                Text(formatItems(loan.items),
+                Text(formatItems(loan.itemsQuantity),
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
-                        color: Colors.grey.shade400)),
+                        color: shouldReturn
+                            ? Colors.white.withOpacity(0.8)
+                            : Colors.grey.shade400)),
                 const SizedBox(height: 5),
                 Text(loan.caution,
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black)),
+                        color: shouldReturn
+                            ? Colors.white
+                            : Colors.black)),
                 const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,14 +136,16 @@ class LoanCard extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
-                            color: shouldReturn && !loan.returned
-                                ? const Color.fromARGB(255, 172, 32, 10)
+                            color: shouldReturn
+                                ? const Color.fromARGB(255, 99, 13, 0)
                                 : Colors.grey.shade400)),
                     Text(processDate(loan.end),
                         style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
-                            color: Colors.grey.shade400)),
+                            color: shouldReturn
+                                ? Colors.white.withOpacity(0.8)
+                                : Colors.grey.shade400)),
                   ],
                 ),
                 const Spacer(),
@@ -137,7 +160,9 @@ class LoanCard extends StatelessWidget {
                           height: 40,
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
+                            color: shouldReturn
+                                ? Colors.white.withOpacity(0.7)
+                                : Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(30),
                             boxShadow: [
                               BoxShadow(
@@ -146,8 +171,10 @@ class LoanCard extends StatelessWidget {
                                   offset: const Offset(2, 3))
                             ],
                           ),
-                          child: const HeroIcon(HeroIcons.pencil,
-                              color: Colors.black),
+                          child: HeroIcon(HeroIcons.pencil,
+                              color: shouldReturn
+                                  ? const Color.fromARGB(255, 99, 13, 0)
+                                  : Colors.black),
                         ),
                       ),
                       ShrinkButton(
@@ -155,7 +182,9 @@ class LoanCard extends StatelessWidget {
                               width: 40,
                               height: 40,
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
+                                color: shouldReturn
+                                    ? Colors.white.withOpacity(0.7)
+                                    : Colors.grey.shade200,
                                 borderRadius: BorderRadius.circular(30),
                                 boxShadow: [
                                   BoxShadow(
@@ -164,9 +193,11 @@ class LoanCard extends StatelessWidget {
                                       offset: const Offset(2, 3))
                                 ],
                               ),
-                              child: const Center(
+                              child: Center(
                                   child: CircularProgressIndicator(
-                                color: Colors.black,
+                                color: shouldReturn
+                                    ? const Color.fromARGB(255, 99, 13, 0)
+                                    : Colors.black,
                               ))),
                           onTap: onCalendar,
                           child: Container(
@@ -174,7 +205,9 @@ class LoanCard extends StatelessWidget {
                             height: 40,
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
+                              color: shouldReturn
+                                  ? Colors.white.withOpacity(0.7)
+                                  : Colors.grey.shade200,
                               borderRadius: BorderRadius.circular(30),
                               boxShadow: [
                                 BoxShadow(
@@ -183,8 +216,10 @@ class LoanCard extends StatelessWidget {
                                     offset: const Offset(2, 3))
                               ],
                             ),
-                            child: const HeroIcon(HeroIcons.calendarDays,
-                                color: Colors.black),
+                            child: HeroIcon(HeroIcons.calendarDays,
+                                color: shouldReturn
+                                    ? const Color.fromARGB(255, 99, 13, 0)
+                                    : Colors.black),
                           )),
                       ShrinkButton(
                           waitChild: Container(
@@ -192,7 +227,9 @@ class LoanCard extends StatelessWidget {
                             height: 40,
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: Colors.black,
+                              color: shouldReturn
+                                  ? const Color.fromARGB(255, 99, 13, 0)
+                                  : Colors.black,
                               borderRadius: BorderRadius.circular(30),
                               boxShadow: [
                                 BoxShadow(
@@ -212,7 +249,9 @@ class LoanCard extends StatelessWidget {
                             height: 40,
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: Colors.black,
+                              color: shouldReturn
+                                  ? const Color.fromARGB(255, 99, 13, 0)
+                                  : Colors.black,
                               borderRadius: BorderRadius.circular(30),
                               boxShadow: [
                                 BoxShadow(

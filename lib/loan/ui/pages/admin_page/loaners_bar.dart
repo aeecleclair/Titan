@@ -21,6 +21,7 @@ class LoanersBar extends HookConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            
             const SizedBox(width: 15),
             ...loans
                 .map((key, value) => MapEntry(
