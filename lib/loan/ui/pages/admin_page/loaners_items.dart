@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/providers/item_focus_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/item_focus_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
@@ -26,19 +23,11 @@ class LoanersItems extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final loaner = ref.watch(loanerProvider);
     final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
-    final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final loanersItems = ref.watch(loanersItemsProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final itemList = ref.watch(itemListProvider);
-    final itemList = ref.watch(itemListProvider);
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final itemNotifier = ref.watch(itemProvider.notifier);
-    final editingController = useTextEditingController();
-    final focus = ref.watch(itemFocusProvider);
-    final focusNode = useFocusNode();
-    if (focus) {
-      focusNode.requestFocus();
-    }
     final editingController = useTextEditingController();
     final focus = ref.watch(itemFocusProvider);
     final focusNode = useFocusNode();
