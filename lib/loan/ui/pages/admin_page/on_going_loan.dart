@@ -102,9 +102,9 @@ class OnGoingLoan extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               SizedBox(
-                height: 190,
+                height: 210,
                 child: HorizontalListView(
                   child: Row(
                     children: [

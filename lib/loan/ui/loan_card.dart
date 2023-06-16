@@ -37,7 +37,7 @@ class LoanCard extends StatelessWidget {
         padding: const EdgeInsets.all(15.0),
         child: Container(
           width: 250,
-          height: isAdmin || !isHistory ? 200 : 180,
+          height: (isAdmin && !isHistory && !isDetail) ? 200 : 185,
           decoration: BoxDecoration(
             gradient: RadialGradient(
               colors: shouldReturn
