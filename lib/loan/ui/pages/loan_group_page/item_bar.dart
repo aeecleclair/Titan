@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/providers/caution_provider.dart';
+import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/selected_items_provider.dart';
+import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/check_item_card.dart';
 import 'package:myecl/tools/constants.dart';
@@ -18,10 +22,19 @@ class ItemBar extends HookConsumerWidget {
     final items = ref.watch(itemListProvider);
     final selectedItems = ref.watch(editSelectedListProvider);
     final selectedItemsNotifier = ref.watch(editSelectedListProvider.notifier);
+    final cautionNotifier = ref.watch(cautionProvider.notifier);
+    final endNotifier = ref.watch(endProvider.notifier);
+    final start = ref.watch(startProvider);
     return items.when(data: (itemList) {
       if (itemList.isNotEmpty) {
-        final sortedAvailable = itemList.where((element) => element.available).toList()..sort((a, b) => a.name.compareTo(b.name));
-        final sortedUnavailable = itemList.where((element) => !element.available).toList()..sort((a, b) => a.name.compareTo(b.name));
+        final sortedAvailable = itemList
+            .where((element) => element.available)
+            .toList()
+          ..sort((a, b) => a.name.compareTo(b.name));
+        final sortedUnavailable = itemList
+            .where((element) => !element.available)
+            .toList()
+          ..sort((a, b) => a.name.compareTo(b.name));
         itemList = sortedAvailable + sortedUnavailable;
         return SingleChildScrollView(
             scrollDirection: Axis.horizontal,

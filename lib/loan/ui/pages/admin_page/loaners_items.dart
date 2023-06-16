@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/item_provider.dart';
 import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
@@ -21,6 +21,7 @@ class LoanersItems extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loaner = ref.watch(loanerProvider);
+    final loanNotifier = ref.watch(loanProvider.notifier);
     final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final loanersItems = ref.watch(loanersItemsProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
