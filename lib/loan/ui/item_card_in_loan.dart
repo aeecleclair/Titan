@@ -9,7 +9,7 @@ class ItemCardInLoan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var item = itemQty.item;
+    var item = itemQty.itemSimple;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5.0),
       padding: const EdgeInsets.all(12.0),
