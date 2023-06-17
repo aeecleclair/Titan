@@ -88,7 +88,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   decoration: InputDecoration(
                     labelText: CinemaTextConstants.importFromIMDB,
                     labelStyle:
-                    const TextStyle(color: Colors.black, fontSize: 20),
+                        const TextStyle(color: Colors.black, fontSize: 20),
                     suffixIcon: Container(
                       padding: const EdgeInsets.all(10),
                       child: ShrinkButton(
@@ -114,13 +114,13 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 data: (data) async {
                                   name.text = data.title;
                                   overview.text = data.overview;
-                                  logo.value =
-                                  await File(data.posterUrl).readAsBytes();
                                   posterUrl.text = data.posterUrl;
                                   genre.text = data.genres.join(', ');
                                   tagline.text = data.tagline;
                                   duration.text =
                                       parseDurationBack(data.runtime);
+                                  logo.value =
+                                      await File(data.posterUrl).readAsBytes();
                                 },
                                 loading: () {},
                                 error: (e, s) {
@@ -169,19 +169,19 @@ class AddEditSessionPage extends HookConsumerWidget {
                 const SizedBox(height: 30),
                 (logo.value == null)
                     ? logoFile.value == null
-                    ? Container(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 50, horizontal: 30),
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(20)),
-                  child: HeroIcon(
-                    HeroIcons.camera,
-                    size: 100,
-                    color: Colors.grey.shade500,
-                  ),
-                )
-                    : Image(image: logoFile.value!.image, fit: BoxFit.cover)
+                        ? Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 50, horizontal: 30),
+                            decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(20)),
+                            child: HeroIcon(
+                              HeroIcons.camera,
+                              size: 100,
+                              color: Colors.grey.shade500,
+                            ),
+                          )
+                        : Image(image: logoFile.value!.image, fit: BoxFit.cover)
                     : Image.memory(logo.value!, fit: BoxFit.cover),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -219,7 +219,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                           ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide:
-                            BorderSide(color: Colors.black, width: 2.0),
+                                BorderSide(color: Colors.black, width: 2.0),
                           ),
                         ),
                         validator: (value) {
@@ -252,7 +252,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                           ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide:
-                            BorderSide(color: Colors.black, width: 2.0),
+                                BorderSide(color: Colors.black, width: 2.0),
                           ),
                         ),
                         validator: (value) {
@@ -315,7 +315,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset:
-                          const Offset(3, 3), // changes position of shadow
+                              const Offset(3, 3), // changes position of shadow
                         ),
                       ],
                     ),
@@ -346,14 +346,14 @@ class AddEditSessionPage extends HookConsumerWidget {
                           genre: genre.text.isEmpty ? null : genre.text,
                           id: isEdit ? session.id : '',
                           overview:
-                          overview.text.isEmpty ? null : overview.text,
+                              overview.text.isEmpty ? null : overview.text,
                           start: DateTime.parse(
                               processDateBackWithHour(start.text)),
                           tagline: tagline.text.isEmpty ? null : tagline.text,
                         );
                         final value = isEdit
                             ? await sessionListNotifier
-                            .updateSession(newSession)
+                                .updateSession(newSession)
                             : await sessionListNotifier.addSession(newSession);
                         if (value) {
                           pageNotifier.setCinemaPage(CinemaPage.admin);
@@ -365,15 +365,15 @@ class AddEditSessionPage extends HookConsumerWidget {
                                         .updateLogo(session.id, logo.value!);
                                     ref
                                         .watch(
-                                        sessionPosterMapProvider.notifier)
+                                            sessionPosterMapProvider.notifier)
                                         .setTData(
-                                        session,
-                                        AsyncData([
-                                          Image(
-                                            image: image.image,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ]));
+                                            session,
+                                            AsyncData([
+                                              Image(
+                                                image: image.image,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ]));
                                   }
                                 },
                                 error: (error, s) {},
@@ -386,19 +386,19 @@ class AddEditSessionPage extends HookConsumerWidget {
                                   final newPretendance = list.last;
                                   if (logo.value != null) {
                                     Image image =
-                                    await sessionPosterNotifier.updateLogo(
-                                        newPretendance.id, logo.value!);
+                                        await sessionPosterNotifier.updateLogo(
+                                            newPretendance.id, logo.value!);
                                     ref
                                         .watch(
-                                        sessionPosterMapProvider.notifier)
+                                            sessionPosterMapProvider.notifier)
                                         .setTData(
-                                        newPretendance,
-                                        AsyncData([
-                                          Image(
-                                            image: image.image,
-                                            fit: BoxFit.cover,
-                                          )
-                                        ]));
+                                            newPretendance,
+                                            AsyncData([
+                                              Image(
+                                                image: image.image,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ]));
                                   }
                                 },
                                 error: (error, s) {},
