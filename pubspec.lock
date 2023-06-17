@@ -169,14 +169,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.5"
-  f_logs:
-    dependency: "direct main"
-    description:
-      name: f_logs
-      sha256: "8ccf733949dcc934d7c7425e94a973cee71af1d7675b94dd1fbd6cbe707a3ce7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -302,6 +294,19 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  flutter_logs:
+    dependency: "direct main"
+    description:
+      name: flutter_logs
+      sha256: dd037783f0f22fe03f359b65f913af275aeac4a1474c18c41b2ed9fdbd4f83f1
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.10"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -548,10 +553,10 @@ packages:
     dependency: "direct main"
     description:
       name: intl
-      sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
+      sha256: a3715e3bc90294e971cb7dc063fbf3cd9ee0ebf8604ffeafabd9e6f16abbdbe6
       url: "https://pub.dev"
     source: hosted
-    version: "0.17.0"
+    version: "0.18.0"
   io:
     dependency: transitive
     description:
@@ -592,6 +597,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  localization:
+    dependency: "direct main"
+    description:
+      name: localization
+      sha256: "01d892155364dc456e1141dd8003e43c98d457f2b51fe1b8984766bad2a3fd72"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   logging:
     dependency: transitive
     description:
@@ -789,6 +802,7 @@ packages:
     description:
       name: riverpod
       sha256: "80e48bebc83010d5e67a11c9514af6b44bbac1ec77b4333c8ea65dbc79e2d8ef"
+
       url: "https://pub.dev"
     source: hosted
     version: "2.3.6"
@@ -940,7 +954,7 @@ packages:
       sha256: "5fcbd27688af6082f5abd611af56ee575342c30e87541d0245f7ff99faa02c60"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "21.2.3"
   term_glyph:
     dependency: transitive
     description:
@@ -1041,10 +1055,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_platform_interface
-      sha256: "6c9ca697a5ae218ce56cece69d46128169a58aa8653c1b01d26fcd4aad8c4370"
+      sha256: bfdfa402f1f3298637d71ca8ecfe840b4696698213d5346e9d12d4ab647ee2ea
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.2"
+    version: "2.1.3"
   url_launcher_web:
     dependency: transitive
     description:
@@ -1117,14 +1131,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.3.0"
-  xxtea:
-    dependency: transitive
-    description:
-      name: xxtea
-      sha256: edd57229638e16e88f4bb299737fe76a235d0f11da6df8573b3c7f28dec283ce
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
   yaml:
     dependency: transitive
     description:
