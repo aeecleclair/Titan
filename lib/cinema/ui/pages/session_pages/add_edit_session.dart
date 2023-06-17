@@ -119,8 +119,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                                   tagline.text = data.tagline;
                                   duration.text =
                                       parseDurationBack(data.runtime);
-                                  logo.value =
-                                      await File(data.posterUrl).readAsBytes();
+                                  logo.value = await getFromUrl(data.posterUrl);
                                 },
                                 loading: () {},
                                 error: (e, s) {
