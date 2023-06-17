@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/selected_items_provider.dart';
+import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/check_item_card.dart';
 import 'package:myecl/tools/constants.dart';
@@ -19,6 +22,8 @@ class ItemBar extends HookConsumerWidget {
     final items = ref.watch(itemListProvider);
     final selectedItems = ref.watch(editSelectedListProvider);
     final selectedItemsNotifier = ref.watch(editSelectedListProvider.notifier);
+    final endNotifier = ref.watch(endProvider.notifier);
+    final start = ref.watch(startProvider);
     return items.when(data: (itemList) {
       if (itemList.isNotEmpty) {
         final sortedAvailable = itemList
@@ -41,7 +46,6 @@ class ItemBar extends HookConsumerWidget {
                   children: [
                     CheckItemCard(
                       item: e,
-                      onCheck: () {},
                       isSelected: currentValue != 0,
                     ),
                     SizedBox(
@@ -66,6 +70,36 @@ class ItemBar extends HookConsumerWidget {
                                 if (currentValue > 0) {
                                   selectedItemsNotifier.set(
                                       itemList.indexOf(e), currentValue - 1);
+                                  items.whenData((itemList) {
+                                    final sortedAvailable = itemList
+                                        .where((element) =>
+                                            element.loanedQuantity <
+                                            element.totalQuantity)
+                                        .toList()
+                                      ..sort(
+                                          (a, b) => a.name.compareTo(b.name));
+                                    final sortedUnavailable = itemList
+                                        .where((element) =>
+                                            element.loanedQuantity >=
+                                            element.totalQuantity)
+                                        .toList()
+                                      ..sort(
+                                          (a, b) => a.name.compareTo(b.name));
+                                    itemList =
+                                        sortedAvailable + sortedUnavailable;
+                                    List<Item> selected = itemList
+                                        .where((element) =>
+                                            selectedItems[
+                                                itemList.indexOf(element)] !=
+                                            0  && element.id != e.id)
+                                        .toList();
+                                    if (selected.isNotEmpty) {
+                                      endNotifier.setEndFromSelected(
+                                          start, selected);
+                                    } else {
+                                      endNotifier.setEnd("");
+                                    }
+                                  });
                                 }
                               },
                             ),
@@ -102,6 +136,36 @@ class ItemBar extends HookConsumerWidget {
                                       e.totalQuantity - e.loanedQuantity) {
                                     selectedItemsNotifier.set(
                                         itemList.indexOf(e), currentValue + 1);
+                                    items.whenData((itemList) {
+                                      final sortedAvailable = itemList
+                                          .where((element) =>
+                                              element.loanedQuantity <
+                                              element.totalQuantity)
+                                          .toList()
+                                        ..sort(
+                                            (a, b) => a.name.compareTo(b.name));
+                                      final sortedUnavailable = itemList
+                                          .where((element) =>
+                                              element.loanedQuantity >=
+                                              element.totalQuantity)
+                                          .toList()
+                                        ..sort(
+                                            (a, b) => a.name.compareTo(b.name));
+                                      itemList =
+                                          sortedAvailable + sortedUnavailable;
+                                      List<Item> selected = itemList
+                                          .where((element) =>
+                                              selectedItems[
+                                                  itemList.indexOf(element)] !=
+                                              0)
+                                          .toList() + [e];
+                                      if (selected.isNotEmpty) {
+                                        endNotifier.setEndFromSelected(
+                                            start, selected);
+                                      } else {
+                                        endNotifier.setEnd("");
+                                      }
+                                    });
                                   }
                                 },
                               ))
