@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/class/item_quantity.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/borrower_provider.dart';
@@ -84,18 +85,23 @@ class AddEditButton extends HookConsumerWidget {
               data: (itemList) async {
                 await tokenExpireWrapper(ref, () async {
                   final sortedAvailable = itemList
-                      .where((element) => element.loanedQuantity < element.totalQuantity)
+                      .where((element) =>
+                          element.loanedQuantity < element.totalQuantity)
                       .toList()
                     ..sort((a, b) => a.name.compareTo(b.name));
                   final sortedUnavailable = itemList
-                      .where((element) => element.loanedQuantity >= element.totalQuantity)
+                      .where((element) =>
+                          element.loanedQuantity >= element.totalQuantity)
                       .toList()
                     ..sort((a, b) => a.name.compareTo(b.name));
                   itemList = sortedAvailable + sortedUnavailable;
                   List<ItemQuantity> selected = itemList
-                      .where(
-                          (element) => selectedItems[itemList.indexOf(element)] != 0)
-                      .map((e) => ItemQuantity(itemSimple: e.simple(), quantity: selectedItems[itemList.indexOf(e)])).toList();
+                      .where((element) =>
+                          selectedItems[itemList.indexOf(element)] != 0)
+                      .map((e) => ItemQuantity(
+                          itemSimple: e.toItemSimple(),
+                          quantity: selectedItems[itemList.indexOf(e)]))
+                      .toList();
                   if (selected.isNotEmpty) {
                     Loan newLoan = Loan(
                       loaner: isEdit ? loan.loaner : loaner,

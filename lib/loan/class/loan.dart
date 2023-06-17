@@ -1,4 +1,5 @@
 import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/class/item_quantity.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/list_users.dart';
@@ -33,7 +34,8 @@ class Loan {
     start = DateTime.parse(json['start']);
     end = DateTime.parse(json['end']);
     caution = json['caution'];
-    itemsQuantity = List<ItemQuantity>.from(json['items_qty'].map((x) => ItemQuantity.fromJson(x)));
+    itemsQuantity = List<ItemQuantity>.from(
+        json['items_qty'].map((x) => ItemQuantity.fromJson(x)));
     returned = json['returned'];
   }
 
@@ -51,7 +53,15 @@ class Loan {
   }
 
   Loan copyWith(
-      {id, loaner, borrower, notes, start, end, caution, itemsQuantity, returned}) {
+      {id,
+      loaner,
+      borrower,
+      notes,
+      start,
+      end,
+      caution,
+      itemsQuantity,
+      returned}) {
     return Loan(
         id: id ?? this.id,
         loaner: loaner ?? this.loaner,
