@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+import 'package:http/http.dart' as http;
+
 import 'package:myecl/cinema/tools/constants.dart';
 
 String formatSessionDateAndDuration(DateTime date, int duration) {
@@ -31,4 +34,8 @@ String parseDurationBack(int duration) {
   final hours = duration ~/ 60;
   final minutes = duration % 60;
   return "${hours.toString().padLeft(2, "0")}:${minutes.toString().padLeft(2, "0")}";
+}
+
+Future<Uint8List> getFromUrl(String url) async {
+  return (await http.get(Uri.parse(url))).bodyBytes;
 }
