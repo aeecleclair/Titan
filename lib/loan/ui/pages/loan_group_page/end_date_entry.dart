@@ -7,7 +7,7 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 
 class EndDateEntry extends HookConsumerWidget {
-  const EndDateEntry({Key? key }) : super(key: key);
+  const EndDateEntry({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,7 +17,7 @@ class EndDateEntry extends HookConsumerWidget {
     selectDate(BuildContext context) async {
       final DateTime now = DateTime.now();
       final DateTime? picked = await showDatePicker(
-        locale: const Locale("fr", "FR"),
+          // locale: const Locale("fr", "FR"),
           context: context,
           initialDate: initialDate,
           firstDate: initialDate,

@@ -26,7 +26,7 @@ class StartDateEntry extends HookConsumerWidget {
     selectDate(BuildContext context) async {
       final DateTime now = DateTime.now();
       final DateTime? picked = await showDatePicker(
-          locale: const Locale("fr", "FR"),
+          // locale: const Locale("fr", "FR"),
           context: context,
           initialDate:
               start.isNotEmpty ? DateTime.parse(processDateBack(start)) : now,
@@ -59,7 +59,7 @@ class StartDateEntry extends HookConsumerWidget {
           ..sort((a, b) => a.name.compareTo(b.name));
         itemList = sortedAvailable + sortedUnavailable;
         List<Item> selected = itemList
-            .where((element) => selectedItems[itemList.indexOf(element)] != -1)
+            .where((element) => selectedItems[itemList.indexOf(element)] != 0)
             .toList();
         if (selected.isNotEmpty) {
           endNotifier.setEndFromSelected(newStart, selected);

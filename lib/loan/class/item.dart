@@ -1,3 +1,5 @@
+import 'package:myecl/loan/class/item_simple.dart';
+
 class Item {
   Item({
     required this.id,
@@ -45,7 +47,7 @@ class Item {
             suggestedLendingDuration ?? this.suggestedLendingDuration);
   }
 
-  ItemSimple simple() {
+  ItemSimple toItemSimple() {
     return ItemSimple(id: id,name: name);
   }
 
@@ -65,79 +67,3 @@ class Item {
 }
 
 
-class ItemSimple {
-  ItemSimple({
-    required this.id,
-    required this.name,
-  });
-  late final String id;
-  late final String name;
-
-  ItemSimple.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    return data;
-  }
-
-  ItemSimple copyWith({id, name}) {
-    return ItemSimple(
-        id: id ?? this.id,
-        name: name ?? this.name,);
-  }
-
-  ItemSimple.empty() {
-    id = '';
-    name = '';
-  }
-
-  @override
-  String toString() {
-    return 'ItemSimple(id: $id, name: $name';
-  }
-}
-
-
-
-class ItemQuantity {
-  ItemQuantity({
-    required this.itemSimple,
-    required this.quantity
-  });
-  late final ItemSimple itemSimple;
-  late final int quantity;
-
-
-  ItemQuantity.fromJson(Map<String, dynamic> json) {
-    itemSimple = ItemSimple.fromJson(json['itemSimple']);
-    quantity = json['quantity'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['item_id'] = itemSimple.id;
-    data['quantity'] = quantity;
-    return data;
-  }
-
-  ItemQuantity copyWith({itemSimple, quantity}) {
-    return ItemQuantity(
-        itemSimple: itemSimple ?? this.itemSimple,
-        quantity: quantity ?? this.quantity);
-  }
-
-  ItemQuantity.empty() {
-    itemSimple = ItemSimple.empty();
-    quantity = 0;
-  }
-
-  @override
-  String toString() {
-    return 'ItemQuantity(itemSimple: $itemSimple, quantity: $quantity)';
-  }
-}
