@@ -9,12 +9,6 @@ class LogsProvider extends ListNotifier<Log> {
   LogsProvider() : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Log>>> getLogs() async {
-    print("logger.getLogs()");
-    try {
-      logger.getLogs();
-    } catch (e) {
-      print(e);
-    }
     return await loadList(() async => logger.getLogs());
   }
 

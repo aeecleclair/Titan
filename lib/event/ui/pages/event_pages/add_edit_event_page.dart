@@ -853,6 +853,7 @@ class AddEditEventPage extends HookConsumerWidget {
       BuildContext context, TextEditingController dateController) async {
     final DateTime now = DateTime.now();
     showDatePicker(
+        locale: const Locale("fr", "FR"),
         context: context,
         initialDate: now,
         firstDate: now,
