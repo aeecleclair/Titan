@@ -360,19 +360,23 @@ class AddEditSessionPage extends HookConsumerWidget {
                             sessionList.when(
                                 data: (list) async {
                                   if (logo.value != null) {
+                                    final sessionPosterMapNotifier = ref.read(
+                                        sessionPosterMapProvider.notifier);
+                                    Future.delayed(
+                                        const Duration(milliseconds: 1), () {
+                                      sessionPosterMapNotifier.setTData(
+                                          session, const AsyncLoading());
+                                    });
                                     Image image = await sessionPosterNotifier
                                         .updateLogo(session.id, logo.value!);
-                                    ref
-                                        .watch(
-                                            sessionPosterMapProvider.notifier)
-                                        .setTData(
-                                            session,
-                                            AsyncData([
-                                              Image(
-                                                image: image.image,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ]));
+                                    sessionPosterMapNotifier.setTData(
+                                        session,
+                                        AsyncData([
+                                          Image(
+                                            image: image.image,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ]));
                                   }
                                 },
                                 error: (error, s) {},
@@ -384,20 +388,24 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 data: (list) async {
                                   final newPretendance = list.last;
                                   if (logo.value != null) {
+                                    final sessionPosterMapNotifier = ref.read(
+                                        sessionPosterMapProvider.notifier);
+                                    Future.delayed(
+                                        const Duration(milliseconds: 1), () {
+                                      sessionPosterMapNotifier.setTData(
+                                          session, const AsyncLoading());
+                                    });
                                     Image image =
                                         await sessionPosterNotifier.updateLogo(
                                             newPretendance.id, logo.value!);
-                                    ref
-                                        .watch(
-                                            sessionPosterMapProvider.notifier)
-                                        .setTData(
-                                            newPretendance,
-                                            AsyncData([
-                                              Image(
-                                                image: image.image,
-                                                fit: BoxFit.cover,
-                                              )
-                                            ]));
+                                    sessionPosterMapNotifier.setTData(
+                                        newPretendance,
+                                        AsyncData([
+                                          Image(
+                                            image: image.image,
+                                            fit: BoxFit.cover,
+                                          )
+                                        ]));
                                   }
                                 },
                                 error: (error, s) {},

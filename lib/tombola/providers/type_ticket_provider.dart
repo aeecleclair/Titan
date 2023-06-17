@@ -9,7 +9,8 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class TypeTicketSimplesListNotifier extends ListNotifier<TypeTicketSimple> {
-  final TypeTicketSimpleRepository _typeTicketsRepository = TypeTicketSimpleRepository();
+  final TypeTicketSimpleRepository _typeTicketsRepository =
+      TypeTicketSimpleRepository();
   final RaffleDetailRepository _raffleDetailRepository =
       RaffleDetailRepository();
   late String raffleId;
@@ -50,8 +51,8 @@ class TypeTicketSimplesListNotifier extends ListNotifier<TypeTicketSimple> {
   }
 }
 
-final typeTicketsListProvider = StateNotifierProvider<TypeTicketSimplesListNotifier,
-    AsyncValue<List<TypeTicketSimple>>>((ref) {
+final typeTicketsListProvider = StateNotifierProvider<
+    TypeTicketSimplesListNotifier, AsyncValue<List<TypeTicketSimple>>>((ref) {
   final token = ref.watch(tokenProvider);
   final notifier = TypeTicketSimplesListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {

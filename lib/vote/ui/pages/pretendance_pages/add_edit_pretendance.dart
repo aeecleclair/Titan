@@ -424,6 +424,11 @@ class AddEditPretendancePage extends HookConsumerWidget {
                           pretendanceList.when(
                               data: (list) {
                                 if (logo.value != null) {
+                                  Future.delayed(const Duration(milliseconds: 1),
+                                          () {pretendanceLogosNotifier.setTData(
+                                          pretendance,
+                                              const AsyncLoading());
+                                      });
                                   logoNotifier.updateLogo(
                                       pretendance.id, logo.value!);
                                   pretendanceLogosNotifier.setTData(
@@ -445,6 +450,11 @@ class AddEditPretendancePage extends HookConsumerWidget {
                               data: (list) {
                                 final newPretendance = list.last;
                                 if (logo.value != null) {
+                                  Future.delayed(const Duration(milliseconds: 1),
+                                          () {pretendanceLogosNotifier.setTData(
+                                          pretendance,
+                                          const AsyncLoading());
+                                      });
                                   logoNotifier.updateLogo(
                                       newPretendance.id, logo.value!);
                                   pretendanceLogosNotifier.setTData(
