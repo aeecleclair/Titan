@@ -1,24 +1,28 @@
-import 'package:f_logs/f_logs.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/logs/log.dart';
+import 'package:myecl/tools/logs/logger.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
 class LogsProvider extends ListNotifier<Log> {
+  Logger logger = Repository.logger;
   LogsProvider() : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Log>>> getLogs() async {
-    return await loadList(() async => FLog.getAllLogsByFilter(logLevels: [
-          LogLevel.DEBUG.toString(),
-          LogLevel.ERROR.toString(),
-          LogLevel.FATAL.toString(),
-          LogLevel.WARNING.toString(),
-        ]).then((value) => value.reversed.toList()));
+    print("logger.getLogs()");
+    try {
+      logger.getLogs();
+    } catch (e) {
+      print(e);
+    }
+    return await loadList(() async => logger.getLogs());
   }
 
   Future<bool> deleteLogs() async {
     return await delete((id) async => true, (listT, t) {
-      FLog.clearLogs();
+      logger.clearLogs();
       return [];
-    }, "", Log());
+    }, "", Log.empty());
   }
 }
 

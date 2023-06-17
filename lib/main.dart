@@ -31,6 +31,7 @@ class MyApp extends HookConsumerWidget {
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final check = versionVerifier
         .whenData((value) => value.minimalTitanVersion <= titanVersion);
+    print(check);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MyECL',

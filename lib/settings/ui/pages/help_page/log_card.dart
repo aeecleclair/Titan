@@ -1,9 +1,9 @@
-import 'package:f_logs/f_logs.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/logs/log.dart';
 
 class LogCard extends StatelessWidget {
   final Log log;
@@ -11,13 +11,13 @@ class LogCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Color> colors = log.logLevel == LogLevel.DEBUG
+    List<Color> colors = log.level == LogLevel.debug
         ? [const Color(0xff00c3ff), const Color(0xff0077ff)]
-        : log.logLevel == LogLevel.INFO
+        : log.level == LogLevel.info
             ? [const Color(0xff549227), const Color(0xFF3E721A)]
-            : log.logLevel == LogLevel.WARNING
+            : log.level == LogLevel.warning
                 ? [const Color(0xfffc9a01), const Color(0xffee8300)]
-                : log.logLevel == LogLevel.ERROR
+                : log.level == LogLevel.error
                     ? [const Color(0xffc72c41), const Color(0xff801336)]
                     : [const Color(0xff222830), Colors.black];
 
@@ -50,7 +50,7 @@ class LogCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                log.timestamp.toString(),
+                log.time.toString(),
                 style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
@@ -58,7 +58,7 @@ class LogCard extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: log.text ?? ""));
+                  Clipboard.setData(ClipboardData(text: log.message));
                   displayToast(
                       context, TypeMsg.msg, SettingsTextConstants.copied);
                 },
@@ -71,7 +71,7 @@ class LogCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            log.text ?? '',
+            log.message,
             style: const TextStyle(
               fontSize: 12,
               color: Colors.white,

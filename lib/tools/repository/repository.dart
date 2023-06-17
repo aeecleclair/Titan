@@ -5,7 +5,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/exception.dart';
-import 'package:f_logs/f_logs.dart';
+import 'package:myecl/tools/logs/log.dart';
+import 'package:myecl/tools/logs/logger.dart';
 
 abstract class Repository {
   final String host = dotenv.env[kDebugMode ? "DEBUG_HOST" : "RELEASE_HOST"]!;
@@ -18,22 +19,10 @@ abstract class Repository {
     "Accept": "application/json",
   };
   final cacheManager = CacheManager();
-  LogsConfig config = FLog.getDefaultConfigurations()
-    ..isDevelopmentDebuggingEnabled = true
-    ..timestampFormat = TimestampFormat.TIME_FORMAT_24_FULL
-    ..formatType = FormatType.FORMAT_CUSTOM
-    ..fieldOrderFormatCustom = [
-      FieldName.TIMESTAMP,
-      FieldName.LOG_LEVEL,
-      FieldName.CLASSNAME,
-      FieldName.METHOD_NAME,
-      FieldName.TEXT,
-      FieldName.EXCEPTION,
-      FieldName.STACKTRACE
-    ];
+  static final Logger logger = Logger();
 
   void initLogger() {
-    FLog.applyConfigurations(config);
+    logger.init();
   }
 
   void setToken(String token) {
@@ -54,15 +43,16 @@ abstract class Repository {
           cacheManager.writeCache(ext + suffix, toDecode);
           return jsonDecode(toDecode);
         } catch (e) {
-          FLog.error(
-              text: "GET ${ext + suffix}\nError while decoding response",
-              exception: e);
+          logger.writeLog(Log(
+              message: "GET ${ext + suffix}\nError while decoding response",
+              level: LogLevel.error));
           return [];
         }
       } else if (response.statusCode == 403) {
-        FLog.error(
-            text:
-                "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+        logger.writeLog(Log(
+            message:
+                "GET ${ext + suffix}\n${response.statusCode} ${response.body}",
+            level: LogLevel.error));
         try {
           String toDecode = response.body;
           if (host == displayHost) {
@@ -77,15 +67,17 @@ abstract class Repository {
         } on AppException {
           rethrow;
         } catch (e) {
-          FLog.error(
-              text: "GET ${ext + suffix}\nError while decoding response",
-              exception: e);
+          logger.writeLog(Log(
+              message: "GET ${ext + suffix}\nError while decoding response",
+              level: LogLevel.error));
+
           throw AppException(ErrorType.notFound, response.body);
         }
       } else {
-        FLog.error(
-            text:
-                "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+        logger.writeLog(Log(
+            message:
+                "GET ${ext + suffix}\n${response.statusCode} ${response.body}",
+            level: LogLevel.error));
         throw AppException(ErrorType.notFound, response.body);
       }
     } on AppException {
@@ -95,10 +87,10 @@ abstract class Repository {
         final toDecode = await cacheManager.readCache(ext + suffix);
         return jsonDecode(toDecode);
       } catch (e) {
-        FLog.error(
-            text:
+        logger.writeLog(Log(
+            message:
                 "GET ${ext + suffix}\nError while decoding response from cache",
-            exception: e);
+            level: LogLevel.error));
         cacheManager.deleteCache(ext + suffix);
         return [];
       }
@@ -119,15 +111,17 @@ abstract class Repository {
           cacheManager.writeCache(ext + id + suffix, toDecode);
           return jsonDecode(toDecode);
         } catch (e) {
-          FLog.error(
-              text: "GET ${ext + id + suffix}\nError while decoding response",
-              exception: e);
+          logger.writeLog(Log(
+              message:
+                  "GET ${ext + id + suffix}\nError while decoding response",
+              level: LogLevel.error));
           return <String, dynamic>{};
         }
       } else if (response.statusCode == 403) {
-        FLog.error(
-            text:
-                "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}");
+        logger.writeLog(Log(
+            message:
+                "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}",
+            level: LogLevel.error));
         try {
           String toDecode = response.body;
           if (host == displayHost) {
@@ -142,15 +136,17 @@ abstract class Repository {
         } on AppException {
           rethrow;
         } catch (e) {
-          FLog.error(
-              text: "GET ${ext + id + suffix}\nError while decoding response",
-              exception: e);
+          logger.writeLog(Log(
+              message:
+                  "GET ${ext + id + suffix}\nError while decoding response",
+              level: LogLevel.error));
           throw AppException(ErrorType.notFound, response.body);
         }
       } else {
-        FLog.error(
-            text:
-                "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}");
+        logger.writeLog(Log(
+            message:
+                "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}",
+            level: LogLevel.error));
         throw AppException(ErrorType.notFound, response.body);
       }
     } on AppException {
@@ -160,10 +156,10 @@ abstract class Repository {
         final toDecode = await cacheManager.readCache(ext + id + suffix);
         return jsonDecode(toDecode);
       } catch (e) {
-        FLog.error(
-            text:
-                "GET ${ext + suffix}\nError while decoding response from cache",
-            exception: e);
+        logger.writeLog(Log(
+            message:
+                "GET ${ext + id + suffix}\nError while decoding response from cache",
+            level: LogLevel.error));
         cacheManager.deleteCache(ext + suffix);
         return [];
       }
@@ -182,16 +178,18 @@ abstract class Repository {
         }
         return jsonDecode(toDecode);
       } catch (e) {
-        FLog.error(
-            text: "POST ${ext + suffix}\nError while decoding response",
-            exception: e);
+        logger.writeLog(Log(
+            message: "POST ${ext + suffix}\nError while decoding response",
+            level: LogLevel.error));
         throw AppException(ErrorType.invalidData, e.toString());
       }
     } else if (response.statusCode == 204) {
       return true;
     } else if (response.statusCode == 403) {
-      FLog.error(
-          text: "GET ${ext + suffix}\n${response.statusCode} ${response.body}");
+      logger.writeLog(Log(
+          message:
+              "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
+          level: LogLevel.error));
       String toDecode = response.body;
       if (host == displayHost) {
         toDecode = utf8.decode(response.body.runes.toList());
@@ -203,9 +201,10 @@ abstract class Repository {
         throw AppException(ErrorType.notFound, decoded["detail"]);
       }
     } else {
-      FLog.error(
-          text:
-              "POST ${ext + suffix}\n${response.statusCode} ${response.body}");
+      logger.writeLog(Log(
+          message:
+              "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
+          level: LogLevel.error));
       throw AppException(ErrorType.notFound, response.body);
     }
   }
@@ -217,9 +216,10 @@ abstract class Repository {
     if (response.statusCode == 204 || response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
-      FLog.error(
-          text:
-              "PATCH ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
+      logger.writeLog(Log(
+          message:
+              "PATCH ${ext + tId + suffix}\n${response.statusCode} ${response.body}",
+          level: LogLevel.error));
       String toDecode = response.body;
       if (host == displayHost) {
         toDecode = utf8.decode(response.body.runes.toList());
@@ -231,9 +231,10 @@ abstract class Repository {
         throw AppException(ErrorType.notFound, decoded["detail"]);
       }
     } else {
-      FLog.error(
-          text:
-              "PATCH ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
+      logger.writeLog(Log(
+          message:
+              "PATCH ${ext + tId + suffix}\n${response.statusCode} ${response.body}",
+          level: LogLevel.error));
       throw AppException(ErrorType.notFound, response.body);
     }
   }
@@ -245,9 +246,10 @@ abstract class Repository {
     if (response.statusCode == 204) {
       return true;
     } else if (response.statusCode == 403) {
-      FLog.error(
-          text:
-              "DELETE ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
+      logger.writeLog(Log(
+          message:
+              "DELETE ${ext + tId + suffix}\n${response.statusCode} ${response.body}",
+          level: LogLevel.error));
       String toDecode = response.body;
       if (host == displayHost) {
         toDecode = utf8.decode(response.body.runes.toList());
@@ -259,9 +261,10 @@ abstract class Repository {
         throw AppException(ErrorType.notFound, decoded["detail"]);
       }
     } else {
-      FLog.error(
-          text:
-              "DELETE ${ext + tId + suffix}\n${response.statusCode} ${response.body}");
+      logger.writeLog(Log(
+          message:
+              "DELETE ${ext + tId + suffix}\n${response.statusCode} ${response.body}",
+          level: LogLevel.error));
       throw AppException(ErrorType.notFound, response.body);
     }
   }
