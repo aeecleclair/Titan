@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/providers/caution_provider.dart';
 import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
@@ -28,15 +29,16 @@ class ItemBar extends HookConsumerWidget {
     final endNotifier = ref.watch(endProvider.notifier);
     final start = ref.watch(startProvider);
     final itemListForSelected = ref.watch(itemListProvider);
+    final cautionNotifier = ref.watch(cautionProvider.notifier);
     return itemListForSelected.when(data: (data) {
       final sortedAvailableData = data
           .where((element) => element.loanedQuantity < element.totalQuantity)
           .toList()
-            ..sort((a, b) => a.name.compareTo(b.name));
+        ..sort((a, b) => a.name.compareTo(b.name));
       final sortedUnavailableData = data
           .where((element) => element.loanedQuantity >= element.totalQuantity)
           .toList()
-            ..sort((a, b) => a.name.compareTo(b.name));
+        ..sort((a, b) => a.name.compareTo(b.name));
       data = sortedAvailableData + sortedUnavailableData;
       return loanersItems.when(data: (items) {
         if (items[loaner] != null) {
@@ -92,19 +94,28 @@ class ItemBar extends HookConsumerWidget {
                                             selectedItemsNotifier.set(
                                                 data.indexOf(e),
                                                 currentValue - 1);
-                                            List<Item> selected = itemList
-                                                .where((element) =>
-                                                    selectedItems[
-                                                            itemList.indexOf(
-                                                                element)] !=
-                                                        0 &&
-                                                    element.id != e.id)
-                                                .toList();
+                                            Map<Item, int>
+                                                selectedItemsWithQuantity =
+                                                Map.fromIterables(
+                                                    itemList, selectedItems);
+                                            selectedItemsWithQuantity[e] =
+                                                currentValue - 1;
+                                            List<Item> selected =
+                                                selectedItemsWithQuantity.keys
+                                                    .where((element) =>
+                                                        selectedItemsWithQuantity[
+                                                            element] !=
+                                                        0)
+                                                    .toList();
                                             if (selected.isNotEmpty) {
                                               endNotifier.setEndFromSelected(
                                                   start, selected);
+                                              cautionNotifier
+                                                  .setCautionFromSelected(
+                                                      selectedItemsWithQuantity);
                                             } else {
                                               endNotifier.setEnd("");
+                                              cautionNotifier.setCaution("");
                                             }
                                           }
                                         },
@@ -147,19 +158,28 @@ class ItemBar extends HookConsumerWidget {
                                               selectedItemsNotifier.set(
                                                   data.indexOf(e),
                                                   currentValue + 1);
-                                              List<Item> selected = itemList
+                                              Map<Item, int>
+                                                  selectedItemsWithQuantity =
+                                                  Map.fromIterables(
+                                                      itemList, selectedItems);
+                                              selectedItemsWithQuantity[e] =
+                                                  currentValue + 1;
+                                              List<Item> selected =
+                                                  selectedItemsWithQuantity.keys
                                                       .where((element) =>
-                                                          selectedItems[
-                                                              itemList.indexOf(
-                                                                  element)] !=
+                                                          selectedItemsWithQuantity[
+                                                              element] !=
                                                           0)
-                                                      .toList() +
-                                                  [e];
+                                                      .toList();
                                               if (selected.isNotEmpty) {
                                                 endNotifier.setEndFromSelected(
                                                     start, selected);
+                                                cautionNotifier
+                                                    .setCautionFromSelected(
+                                                        selectedItemsWithQuantity);
                                               } else {
                                                 endNotifier.setEnd("");
+                                                cautionNotifier.setCaution("");
                                               }
                                             }
                                           },
