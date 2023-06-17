@@ -94,7 +94,7 @@ class LoanersItems extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 10),
                   SizedBox(
                       height: 170,
                       child: HorizontalListView(

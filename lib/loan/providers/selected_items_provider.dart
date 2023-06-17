@@ -37,7 +37,7 @@ class SelectedListProvider extends StateNotifier<List<int>> {
 
   Future<List<int>> toggle(int i, int quantity) async {
     var copy = state.toList();
-    copy[i] = copy[i] == -1 ? quantity : -1;
+    copy[i] = copy[i] == 0 ? quantity : 0;
     state = copy;
     return state;
   }

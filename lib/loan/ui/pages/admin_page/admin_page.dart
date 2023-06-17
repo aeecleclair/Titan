@@ -128,11 +128,11 @@ class AdminPage extends HookConsumerWidget {
             }),
             const Column(
               children: [
-                SizedBox(height: 40),
+                SizedBox(height: 25),
                 OnGoingLoan(),
-                SizedBox(height: 40),
+                SizedBox(height: 25),
                 LoanersItems(),
-                SizedBox(height: 40),
+                SizedBox(height: 25),
                 HistoryLoan(),
                 SizedBox(height: 20),
               ],
