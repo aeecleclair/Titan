@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 
-final sectionIdProvider = StateNotifierProvider<SectionIdProvider, String>((ref) {
+final sectionIdProvider =
+    StateNotifierProvider<SectionIdProvider, String>((ref) {
   final deliveries = ref.watch(sectionList);
   if (deliveries.isEmpty) {
     return SectionIdProvider("");

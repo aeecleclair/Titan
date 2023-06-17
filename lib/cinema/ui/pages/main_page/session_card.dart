@@ -8,6 +8,7 @@ import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SessionCard extends HookConsumerWidget {
   final Session session;
@@ -51,7 +52,7 @@ class SessionCard extends HookConsumerWidget {
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(10),
-        padding: EdgeInsets.all(isWebFormat ? 50: 0),
+        padding: EdgeInsets.all(isWebFormat ? 50 : 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -150,20 +151,17 @@ class SessionCard extends HookConsumerWidget {
                                     ),
                                   ],
                                 ),
-
-                                // if (splitCard)
-                                //   const Align(
-                                //     alignment: Alignment.topRight,
-                                //     child: Padding(
-                                //       padding: EdgeInsets.all(10),
-                                //       child: HeroIcon(HeroIcons.play),
-                                //     ),
-                                //   ),
                               );
                       } else {
-                        sessionPosterNotifier.getLogo(session.id).then((value) {
+                        Future.delayed(const Duration(milliseconds: 1), () {
                           sessionPosterMapNotifier.setTData(
-                              session, AsyncData([value]));
+                              session, const AsyncLoading());
+                        });
+                        tokenExpireWrapper(ref, () async {
+                          final image =
+                              await sessionPosterNotifier.getLogo(session.id);
+                          sessionPosterMapNotifier.setTData(
+                              session, AsyncData([image]));
                         });
                         return Container(
                           height: maxHeigth * scale,

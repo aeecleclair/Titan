@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum AdminPage { main, addAsso, edit, addLoaner }
 
-
-final adminPageProvider = StateNotifierProvider<AdminPageNotifier, AdminPage>((ref) {
+final adminPageProvider =
+    StateNotifierProvider<AdminPageNotifier, AdminPage>((ref) {
   return AdminPageNotifier();
 });
 

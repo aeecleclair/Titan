@@ -68,19 +68,27 @@ class AdminPage extends HookConsumerWidget {
                   (value) async {
                     final itemListNotifier =
                         ref.read(itemListProvider.notifier);
-                    final loanersitemsNotifier =
+                    final loanersItemsNotifier =
                         ref.read(loanersItemsProvider.notifier);
                     if (value[key] != null) {
                       value[key]!.whenData((value) async {
                         if (value.isEmpty) {
+                          Future.delayed(
+                              const Duration(milliseconds: 1),
+                              () => loanersItemsNotifier.setTData(
+                                  key, const AsyncLoading()));
                           final res =
                               await itemListNotifier.loadItemList(key.id);
-                          await loanersitemsNotifier.setTData(key, res);
+                          loanersItemsNotifier.setTData(key, res);
                         }
                       });
                     } else {
+                      Future.delayed(
+                          const Duration(milliseconds: 1),
+                          () => loanersItemsNotifier.setTData(
+                              key, const AsyncLoading()));
                       final res = await itemListNotifier.loadItemList(key.id);
-                      await loanersitemsNotifier.setTData(key, res);
+                      loanersItemsNotifier.setTData(key, res);
                     }
                   },
                 );
@@ -93,11 +101,19 @@ class AdminPage extends HookConsumerWidget {
                     if (value[key] != null) {
                       value[key]!.whenData((value) async {
                         if (value.isEmpty) {
+                          Future.delayed(
+                              const Duration(milliseconds: 1),
+                              () => adminLoanListNotifier.setTData(
+                                  key, const AsyncLoading()));
                           final res = await loanListNotifier.loadLoan(key.id);
                           adminLoanListNotifier.setTData(key, res);
                         }
                       });
                     } else {
+                      Future.delayed(
+                          const Duration(milliseconds: 1),
+                          () => adminLoanListNotifier.setTData(
+                              key, const AsyncLoading()));
                       final res = await loanListNotifier.loadLoan(key.id);
                       adminLoanListNotifier.setTData(key, res);
                     }
@@ -112,12 +128,20 @@ class AdminPage extends HookConsumerWidget {
                     if (value[key] != null) {
                       value[key]!.whenData((value) async {
                         if (value.isEmpty) {
+                          Future.delayed(
+                              const Duration(milliseconds: 1),
+                              () => admiHistoryLoanListNotifier.setTData(
+                                  key, const AsyncLoading()));
                           final res =
                               await historyLoanListNotifier.loadLoan(key.id);
                           admiHistoryLoanListNotifier.setTData(key, res);
                         }
                       });
                     } else {
+                      Future.delayed(
+                          const Duration(milliseconds: 1),
+                          () => admiHistoryLoanListNotifier.setTData(
+                              key, const AsyncLoading()));
                       final res =
                           await historyLoanListNotifier.loadLoan(key.id);
                       admiHistoryLoanListNotifier.setTData(key, res);

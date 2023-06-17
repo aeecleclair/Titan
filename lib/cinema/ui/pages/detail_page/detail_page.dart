@@ -8,6 +8,7 @@ import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});
@@ -49,9 +50,17 @@ class DetailPage extends HookConsumerWidget {
                           ),
                         );
                       } else {
-                        sessionPosterNotifier.getLogo(session.id).then((value) {
+                        Future.delayed(const Duration(milliseconds: 1), () {
                           sessionPosterMapNotifier.setTData(
-                              session, AsyncData([value]));
+                              session, const AsyncLoading());
+                        });
+                        tokenExpireWrapper(ref, () async {
+                          sessionPosterNotifier
+                              .getLogo(session.id)
+                              .then((value) {
+                            sessionPosterMapNotifier.setTData(
+                                session, AsyncData([value]));
+                          });
                         });
                         return Container(
                           width: double.infinity,

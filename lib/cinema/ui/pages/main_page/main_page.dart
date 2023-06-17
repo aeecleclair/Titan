@@ -25,7 +25,7 @@ class MainPage extends HookConsumerWidget {
     final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
     final initialPage = ref.watch(mainPageIndexProvider);
     int currentPage = initialPage;
-    final pageController = ref.watch(sessionListPageControllerProvider);
+    final pageController = ref.watch(sessionListPageControllerProvider(initialPage));
     final scrollNotifier = ref.watch(scrollProvider.notifier);
     final isAdmin = ref.watch(isCinemaAdmin);
     final isWebFormat = ref.watch(isWebFormatProvider);
@@ -38,6 +38,7 @@ class MainPage extends HookConsumerWidget {
       child: Refresher(
           onRefresh: () async {
             await sessionListNotifier.loadSessions();
+            ref.watch(mainPageIndexProvider.notifier).reset();
           },
           child: SizedBox(
             height: MediaQuery.of(context).size.height - 85,

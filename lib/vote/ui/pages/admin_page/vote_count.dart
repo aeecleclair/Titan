@@ -18,6 +18,8 @@ class VoteCount extends HookConsumerWidget {
       data: (data) {
         final voteCount = data[section];
         if (voteCount == null) {
+          Future.delayed(const Duration(milliseconds: 1),
+              () => statsNotifier.setTData(section, const AsyncLoading()));
           tokenExpireWrapper(ref, () async {
             final count = await sectionVoteNotifier.loadCout(section.id);
             count.whenData(
@@ -31,6 +33,8 @@ class VoteCount extends HookConsumerWidget {
         return voteCount.when(
           data: (data) {
             if (data.isEmpty) {
+              Future.delayed(const Duration(milliseconds: 1),
+                  () => statsNotifier.setTData(section, const AsyncLoading()));
               tokenExpireWrapper(ref, () async {
                 final count = await sectionVoteNotifier.loadCout(section.id);
                 count.whenData(

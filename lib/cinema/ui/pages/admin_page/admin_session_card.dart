@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AdminSessionCard extends HookConsumerWidget {
@@ -27,7 +28,7 @@ class AdminSessionCard extends HookConsumerWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 175,
+        width: 155,
         height: 300,
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
@@ -58,11 +59,18 @@ class AdminSessionCard extends HookConsumerWidget {
                             fit: BoxFit.cover,
                           );
                         } else {
-                          sessionPosterNotifier
-                              .getLogo(session.id)
-                              .then((value) {
+                          Future.delayed(
+                              const Duration(milliseconds: 1), () {
                             sessionPosterMapNotifier.setTData(
-                                session, AsyncData([value]));
+                                session, const AsyncLoading());
+                          });
+                          tokenExpireWrapper(ref, () async {
+                            sessionPosterNotifier
+                                .getLogo(session.id)
+                                .then((value) {
+                              sessionPosterMapNotifier.setTData(
+                                  session, AsyncData([value]));
+                            });
                           });
                           return Container(
                             width: double.infinity,
@@ -79,6 +87,7 @@ class AdminSessionCard extends HookConsumerWidget {
                       }, loading: () {
                         return const SizedBox(
                           width: double.infinity,
+                          height: 200,
                           child: Center(
                             child: CircularProgressIndicator(),
                           ),
@@ -86,6 +95,7 @@ class AdminSessionCard extends HookConsumerWidget {
                       }, error: (error, stack) {
                         return const SizedBox(
                           width: double.infinity,
+                          height: 200,
                           child: Center(
                             child: HeroIcon(HeroIcons.exclamationCircle),
                           ),

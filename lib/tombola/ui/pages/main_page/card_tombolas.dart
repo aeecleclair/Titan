@@ -84,6 +84,10 @@ class TombolaWidget extends HookConsumerWidget {
                     return stats.when(
                       data: (stats) {
                         if (stats.isEmpty) {
+                          Future.delayed(const Duration(milliseconds: 1), () {
+                            rafflesStatsNotifier.setTData(
+                                raffle.id, const AsyncLoading());
+                          });
                           tokenExpireWrapper(ref, () async {
                             final stats = await singleRaffleStats
                                 .loadRaffleStats(customRaffleId: raffle.id);
@@ -138,6 +142,10 @@ class TombolaWidget extends HookConsumerWidget {
                         );
                       },
                       loading: () {
+                        Future.delayed(const Duration(milliseconds: 1), () {
+                          rafflesStatsNotifier.setTData(
+                              raffle.id, const AsyncLoading());
+                        });
                         tokenExpireWrapper(ref, () async {
                           final stats = await singleRaffleStats.loadRaffleStats(
                               customRaffleId: raffle.id);
@@ -152,6 +160,10 @@ class TombolaWidget extends HookConsumerWidget {
                       },
                     );
                   } else {
+                    Future.delayed(const Duration(milliseconds: 1), () {
+                      rafflesStatsNotifier.setTData(
+                          raffle.id, const AsyncLoading());
+                    });
                     tokenExpireWrapper(ref, () async {
                       final stats = await singleRaffleStats.loadRaffleStats(
                           customRaffleId: raffle.id);

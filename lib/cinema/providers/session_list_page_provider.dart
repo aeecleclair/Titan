@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/cinema/providers/main_page_index_provider.dart';
 
-final sessionListPageControllerProvider =
-    StateNotifierProvider<SessionListPageControllerNotifier, PageController>(
-  (ref) {
-    final mainPageIndex = ref.watch(mainPageIndexProvider.notifier);
-    return SessionListPageControllerNotifier(mainPageIndex.startpage);
+final sessionListPageControllerProvider = StateNotifierProvider.family<
+    SessionListPageControllerNotifier, PageController, int>(
+  (ref, i) {
+    return SessionListPageControllerNotifier(i);
   },
 );
 

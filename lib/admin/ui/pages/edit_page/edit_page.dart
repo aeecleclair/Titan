@@ -49,6 +49,9 @@ class EditPage extends HookConsumerWidget {
               return g.when(
                 data: (groups) {
                   if (groups.isEmpty) {
+                    Future.delayed(const Duration(milliseconds: 1),
+                        () => simplegroupsGroupsNotifier.setTData(
+                            groupId, const AsyncLoading()));
                     tokenExpireWrapper(ref, () async {
                       final loadedGroup =
                           await groupNotifier.loadGroup(groupId);

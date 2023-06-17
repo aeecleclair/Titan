@@ -42,6 +42,10 @@ class DeliveryUi extends HookConsumerWidget {
                   if (d.isNotEmpty) {
                     orders.addAll(d);
                   } else if (!data[delivery.id]!.item2) {
+                    Future.delayed(const Duration(milliseconds: 1), () {
+                      deliveryOrdersNotifier.setTData(
+                          delivery.id, const AsyncLoading());
+                    });
                     tokenExpireWrapper(ref, () async {
                       final ordersByDelivery =
                           await ordersByDeliveryListNotifier
@@ -63,6 +67,10 @@ class DeliveryUi extends HookConsumerWidget {
                 error: (error, stack) {},
               );
         } else {
+          Future.delayed(const Duration(milliseconds: 1), () {
+            deliveryOrdersNotifier.setTData(
+                delivery.id, const AsyncLoading());
+          });
           tokenExpireWrapper(ref, () async {
             final ordersByDelivery = await ordersByDeliveryListNotifier
                 .loadDeliveryOrderList(delivery.id);
