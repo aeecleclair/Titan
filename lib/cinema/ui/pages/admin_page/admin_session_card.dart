@@ -87,6 +87,7 @@ class AdminSessionCard extends HookConsumerWidget {
                       }, loading: () {
                         return const SizedBox(
                           width: double.infinity,
+                          height: 200,
                           child: Center(
                             child: CircularProgressIndicator(),
                           ),
@@ -94,6 +95,7 @@ class AdminSessionCard extends HookConsumerWidget {
                       }, error: (error, stack) {
                         return const SizedBox(
                           width: double.infinity,
+                          height: 200,
                           child: Center(
                             child: HeroIcon(HeroIcons.exclamationCircle),
                           ),
