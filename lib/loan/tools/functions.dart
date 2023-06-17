@@ -1,5 +1,4 @@
 import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/item_quantity.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';

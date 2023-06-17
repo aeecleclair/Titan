@@ -10,14 +10,6 @@ class EndNotifier extends StateNotifier<String> {
   }
 
   void setEndFromSelected(String start, List<Item> selected) {
-    print(start);
-    print(selected);
-    print(selected.fold<double>(
-        double.infinity,
-            (previousValue, element) =>
-        previousValue > element.suggestedLendingDuration
-            ? element.suggestedLendingDuration
-            : previousValue));
     state = processDate(DateTime.parse(processDateBack(start)).add(Duration(
         days: (selected.fold<double>(
             double.infinity,
