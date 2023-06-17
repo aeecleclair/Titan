@@ -28,7 +28,7 @@ class AdminSessionCard extends HookConsumerWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 175,
+        width: 155,
         height: 300,
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
