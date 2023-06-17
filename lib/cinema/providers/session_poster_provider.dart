@@ -14,11 +14,11 @@ class SessionPosterProvider extends SingleNotifier<Image> {
   }
 
   Future<Image> getLogo(String id) async {
-    return await repository.getPretendenceLogo(id);
+    return await repository.getSessionLogo(id);
   }
 
   Future<Image> updateLogo(String id, Uint8List bytes) async {
-    return await repository.addPretendenceLogo(bytes, id);
+    return await repository.addSessionLogo(bytes, id);
   }
 }
 

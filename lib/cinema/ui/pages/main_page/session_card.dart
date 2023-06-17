@@ -52,7 +52,7 @@ class SessionCard extends HookConsumerWidget {
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(10),
-        padding: EdgeInsets.all(isWebFormat ? 50: 0),
+        padding: EdgeInsets.all(isWebFormat ? 50 : 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -153,15 +153,15 @@ class SessionCard extends HookConsumerWidget {
                                 ),
                               );
                       } else {
-                        Future.delayed(const Duration(milliseconds: 100), () {
+                        Future.delayed(const Duration(milliseconds: 1), () {
                           sessionPosterMapNotifier.setTData(
-                                  session, const AsyncLoading());
+                              session, const AsyncLoading());
                         });
                         tokenExpireWrapper(ref, () async {
-                          sessionPosterNotifier.getLogo(session.id).then((value) {
-                            sessionPosterMapNotifier.setTData(
-                                session, AsyncData([value]));
-                          });
+                          final image =
+                              await sessionPosterNotifier.getLogo(session.id);
+                          sessionPosterMapNotifier.setTData(
+                              session, AsyncData([image]));
                         });
                         return Container(
                           height: maxHeigth * scale,

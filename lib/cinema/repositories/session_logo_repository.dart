@@ -9,7 +9,7 @@ class SessionPosterRepository extends LogoRepository {
   // ignore: overridden_fields
   final ext = 'cinema/sessions/';
 
-  Future<Image> getPretendenceLogo(String id) async {
+  Future<Image> getSessionLogo(String id) async {
     final uint8List = await getLogo(id, suffix: "/poster");
     if (uint8List.isEmpty) {
       return Image.asset("assets/images/logo.png");
@@ -17,7 +17,7 @@ class SessionPosterRepository extends LogoRepository {
     return Image.memory(uint8List);
   }
 
-  Future<Image> addPretendenceLogo(Uint8List bytes, String id) async {
+  Future<Image> addSessionLogo(Uint8List bytes, String id) async {
     final uint8List = await addLogo(bytes, id, suffix: "/poster");
     return Image.memory(uint8List);
   }
