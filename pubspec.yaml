@@ -21,7 +21,6 @@ dependencies:
   flutter_appauth: ^6.0.0
   flutter_dotenv: ^5.0.2
   flutter_hooks: ^0.18.2+1
-  flutter_logs: ^2.1.10
   flutter_riverpod: ^2.1.1
   flutter_secure_storage: ^8.0.0
   google_fonts: ^5.0.0
@@ -31,11 +30,9 @@ dependencies:
   http_parser: ^4.0.2
   image_cropper: ^5.0.0
   image_picker: ^0.8.6
-  image_picker_ios: ^0.8.6+7
   intl: ^0.18.0
   flutter_localizations:
     sdk: flutter
-  localization: ^2.1.0
   jwt_decoder: ^2.0.1
   numberpicker: ^2.1.1
   package_info_plus: ^4.0.2
