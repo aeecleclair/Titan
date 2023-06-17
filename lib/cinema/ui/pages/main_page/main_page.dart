@@ -38,6 +38,7 @@ class MainPage extends HookConsumerWidget {
       child: Refresher(
           onRefresh: () async {
             await sessionListNotifier.loadSessions();
+            ref.watch(mainPageIndexProvider.notifier).reset();
           },
           child: SizedBox(
             height: MediaQuery.of(context).size.height - 85,

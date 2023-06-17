@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
 import 'package:myecl/vote/providers/pretendance_provider.dart';
@@ -171,11 +172,20 @@ class PretendanceCard extends HookConsumerWidget {
                                           ),
                                         );
                                       } else {
-                                        logoNotifier
-                                            .getLogo(pretendance.id)
-                                            .then((value) {
+                                        Future.delayed(
+                                            const Duration(milliseconds: 1),
+                                            () {
                                           pretendanceLogosNotifier.setTData(
-                                              pretendance, AsyncData([value]));
+                                              pretendance, const AsyncLoading());
+                                        });
+                                        tokenExpireWrapper(ref, () async {
+                                          logoNotifier
+                                              .getLogo(pretendance.id)
+                                              .then((value) {
+                                            pretendanceLogosNotifier.setTData(
+                                                pretendance,
+                                                AsyncData([value]));
+                                          });
                                         });
                                         return const HeroIcon(
                                           HeroIcons.userCircle,
