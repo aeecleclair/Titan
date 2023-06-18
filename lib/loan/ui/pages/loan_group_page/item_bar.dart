@@ -97,7 +97,7 @@ class ItemBar extends HookConsumerWidget {
                                             Map<Item, int>
                                                 selectedItemsWithQuantity =
                                                 Map.fromIterables(
-                                                    itemList, selectedItems);
+                                                    data, selectedItems);
                                             selectedItemsWithQuantity[e] =
                                                 currentValue - 1;
                                             List<Item> selected =
@@ -161,7 +161,7 @@ class ItemBar extends HookConsumerWidget {
                                               Map<Item, int>
                                                   selectedItemsWithQuantity =
                                                   Map.fromIterables(
-                                                      itemList, selectedItems);
+                                                      data, selectedItems);
                                               selectedItemsWithQuantity[e] =
                                                   currentValue + 1;
                                               List<Item> selected =
