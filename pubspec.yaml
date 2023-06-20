@@ -46,6 +46,7 @@ dependencies:
   url_launcher: ^6.1.7
   vector_math: ^2.1.2
   zxcvbn: ^1.0.0
+  qlevar_router: ^1.9.0
 
 dev_dependencies:
   dependency_validator: ^3.2.2
