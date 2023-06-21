@@ -26,11 +26,11 @@ class StartDateEntry extends HookConsumerWidget {
     selectDate(BuildContext context) async {
       final DateTime now = DateTime.now();
       final DateTime? picked = await showDatePicker(
-          // locale: const Locale("fr", "FR"),
+          locale: const Locale("fr", "FR"),
           context: context,
           initialDate:
               start.isNotEmpty ? DateTime.parse(processDateBack(start)) : now,
-          firstDate: now,
+          firstDate: DateTime(now.year - 1, now.month, now.day),
           lastDate: DateTime(now.year + 1, now.month, now.day),
           builder: (BuildContext context, Widget? child) {
             return Theme(
