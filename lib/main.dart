@@ -11,6 +11,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 void main() async {
   await dotenv.load();
   WidgetsFlutterBinding.ensureInitialized();
+  QR.setUrlStrategy();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(const ProviderScope(child: MyApp()));

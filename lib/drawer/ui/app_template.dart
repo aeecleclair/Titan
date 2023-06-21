@@ -1,62 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/ui/admin.dart';
-import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/cinema/ui/cinema.dart';
-import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
-import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
-import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/home/ui/home.dart';
-import 'package:myecl/loan/ui/loan.dart';
-import 'package:myecl/vote/ui/vote.dart';
-import 'package:myecl/tombola/ui/tombola.dart';
 
-class AppDrawer extends HookConsumerWidget {
+class AppTemplate extends HookConsumerWidget {
   static Duration duration = const Duration(milliseconds: 200);
   static const double maxSlide = 255;
   static const dragRigthStartVal = 60;
   static const dragLeftStartVal = maxSlide - 20;
   static bool shouldDrag = false;
+  final Widget child;
 
-  const AppDrawer({Key? key}) : super(key: key);
-
-  Widget getPage(ModuleType page, SwipeControllerNotifier controllerNotifier,
-      AnimationController controller) {
-    switch (page) {
-      case ModuleType.calendar:
-        return HomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
-      case ModuleType.booking:
-        return BookingHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
-      case ModuleType.loan:
-        return LoanHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
-      case ModuleType.amap:
-        return AmapHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
-      case ModuleType.admin:
-        return AdminHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
-      case ModuleType.event:
-        return EventHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
-      case ModuleType.vote:
-        return VoteHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
-      case ModuleType.tombola:
-        return TombolaHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
-      case ModuleType.cinema:
-        return CinemaHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
-    }
-  }
+  const AppTemplate({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -65,7 +22,6 @@ class AppDrawer extends HookConsumerWidget {
     final controller = ref.watch(swipeControllerProvider(animationController));
     final controllerNotifier =
         ref.watch(swipeControllerProvider(animationController).notifier);
-    final page = ref.watch(pageProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);
     if (isWebFormat) {
       controllerNotifier.close();
@@ -101,7 +57,7 @@ class AppDrawer extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(cornerval),
                           child: Stack(
                             children: [
-                              getPage(page, controllerNotifier, controller),
+                              child,
                               MouseRegion(
                                 cursor: SystemMouseCursors.click,
                                 onEnter: (event) {

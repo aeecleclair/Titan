@@ -34,7 +34,7 @@ class AppRouter {
           builder: () => const AppDrawer(),
           middleware: [AuthenticatedMiddleware(ref)]),
       QRoute(
-          path: '/settings',
+          path: SettingsRouter.root,
           builder: () => const MainPage(),
           middleware: [
             AuthenticatedMiddleware(ref),
