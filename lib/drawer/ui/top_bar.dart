@@ -9,9 +9,11 @@ import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
+import 'package:myecl/settings/router.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -49,7 +51,8 @@ class TopBar extends HookConsumerWidget {
                       animation.reverse();
                     }
                   } else {
-                    pageNotifier.setPage(ModuleType.settings);
+                    QR.to(SettingsRouter.root);
+                    // pageNotifier.setPage(ModuleType.settings);
                     controllerNotifier.toggle();
                     hasScrolled.setHasScrolled(false);
                   }
@@ -191,15 +194,16 @@ class TopBar extends HookConsumerWidget {
                     child: GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
-                        pageNotifier.setPage(ModuleType.settings);
-                        controllerNotifier.toggle();
-                        hasScrolled.setHasScrolled(false);
+                        // pageNotifier.setPage(ModuleType.settings);
+                        QR.to(SettingsRouter.root);
+                        /*controllerNotifier.toggle();
+                        hasScrolled.setHasScrolled(false);*/
                       },
                       child: Row(
                         children: [
                           HeroIcon(
                             HeroIcons.cog,
-                            color: page == ModuleType.settings
+                            color: QR.currentPath.startsWith(SettingsRouter.root)
                                 ? DrawerColorConstants.selectedText
                                 : DrawerColorConstants.lightText,
                             size: 25,
@@ -209,7 +213,7 @@ class TopBar extends HookConsumerWidget {
                           ),
                           Text(DrawerTextConstants.settings,
                               style: TextStyle(
-                                color: page == ModuleType.settings
+                                color: QR.currentPath.startsWith(SettingsRouter.root)
                                     ? DrawerColorConstants.selectedText
                                     : DrawerColorConstants.lightText,
                                 fontSize: 15,

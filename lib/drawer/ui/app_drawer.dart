@@ -13,7 +13,6 @@ import 'package:myecl/drawer/ui/custom_drawer.dart';
 import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/home/ui/home.dart';
 import 'package:myecl/loan/ui/loan.dart';
-import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/vote/ui/vote.dart';
 import 'package:myecl/tombola/ui/tombola.dart';
 
@@ -29,9 +28,6 @@ class AppDrawer extends HookConsumerWidget {
   Widget getPage(ModuleType page, SwipeControllerNotifier controllerNotifier,
       AnimationController controller) {
     switch (page) {
-      case ModuleType.settings:
-        return SettingsHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.calendar:
         return HomePage(
             controllerNotifier: controllerNotifier, controller: controller);

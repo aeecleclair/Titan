@@ -19,8 +19,13 @@ class AuthenticatedMiddleware extends QMiddleware {
     return check.when(
         data: (value) => value
             ? isLoggedIn
-                ? path != '/' ? '/' : null
-                : path != '/login' ? '/login' : null
+                ? ['/login', '/update', '/loading', '/no_internet']
+                        .contains(path)
+                    ? '/'
+                    : null
+                : path != '/login'
+                    ? '/login'
+                    : null
             : '/update',
         loading: () => '/loading',
         error: (error, stack) => '/no_internet');
