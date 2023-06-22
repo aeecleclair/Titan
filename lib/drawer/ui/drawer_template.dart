@@ -6,7 +6,7 @@ import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
 
-class AppTemplate extends HookConsumerWidget {
+class DrawerTemplate extends HookConsumerWidget {
   static Duration duration = const Duration(milliseconds: 200);
   static const double maxSlide = 255;
   static const dragRigthStartVal = 60;
@@ -14,7 +14,7 @@ class AppTemplate extends HookConsumerWidget {
   static bool shouldDrag = false;
   final Widget child;
 
-  const AppTemplate({Key? key, required this.child}) : super(key: key);
+  const DrawerTemplate({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

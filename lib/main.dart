@@ -5,8 +5,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/ui/app_template.dart';
 import 'package:myecl/router.dart';
+import 'package:myecl/tools/ui/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 void main() async {
