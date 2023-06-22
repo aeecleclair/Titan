@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class TopBar extends HookConsumerWidget {
-  const TopBar({Key? key}) : super(key: key);
+  final SwipeControllerNotifier controllerNotifier;
+  const TopBar({Key? key, required this.controllerNotifier}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,7 +23,13 @@ class TopBar extends HookConsumerWidget {
             SizedBox(
               width: 70,
               child: IconButton(
-                  onPressed: QR.back,
+                  onPressed: () {
+                    if (QR.currentPath == SettingsRouter.root) {
+                      controllerNotifier.toggle();
+                    } else {
+                      QR.back();
+                    }
+                  },
                   icon: HeroIcon(
                     QR.currentPath == SettingsRouter.root
                         ? HeroIcons.bars3BottomLeft

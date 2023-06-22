@@ -54,7 +54,7 @@ class TopBar extends HookConsumerWidget {
                     QR.to(SettingsRouter.root);
                     // pageNotifier.setPage(ModuleType.settings);
                     controllerNotifier.toggle();
-                    hasScrolled.setHasScrolled(false);
+                    // hasScrolled.setHasScrolled(false);
                   }
                 },
                 behavior: HitTestBehavior.opaque,
@@ -196,6 +196,7 @@ class TopBar extends HookConsumerWidget {
                       onTap: () {
                         // pageNotifier.setPage(ModuleType.settings);
                         QR.to(SettingsRouter.root);
+                        controllerNotifier.toggle();
                         /*controllerNotifier.toggle();
                         hasScrolled.setHasScrolled(false);*/
                       },

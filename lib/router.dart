@@ -32,19 +32,21 @@ class AppRouter {
       QRoute(
           path: home,
           builder: () => const AppDrawer(),
-          middleware: [AuthenticatedMiddleware(ref)]),
+          middleware: [AuthenticatedMiddleware(ref)],),
       QRoute(
           path: SettingsRouter.root,
           builder: () => const MainPage(),
-          middleware: [
-            AuthenticatedMiddleware(ref),
-          ],
+          middleware: [AuthenticatedMiddleware(ref)],
           children: settingsRoutes),
-      QRoute(path: login, builder: () => const AuthScreen()),
-      QRoute(path: loading, builder: () => const LoadingPage()),
+      QRoute(
+          path: login,
+          builder: () => const AuthScreen(),),
+      QRoute(
+          path: loading,
+          builder: () => const LoadingPage(),),
       QRoute(
           path: noInternet,
-          builder: () => const Scaffold(body: NoInternetPage())),
+          builder: () => const Scaffold(body: NoInternetPage()),),
     ];
   }
 }

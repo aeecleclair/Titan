@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
@@ -19,6 +20,7 @@ class AppTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final animationController =
         useAnimationController(duration: duration, initialValue: 1);
+    final animationNotifier = ref.read(animationProvider.notifier);
     final controller = ref.watch(swipeControllerProvider(animationController));
     final controllerNotifier =
         ref.watch(swipeControllerProvider(animationController).notifier);
@@ -26,6 +28,11 @@ class AppTemplate extends HookConsumerWidget {
     if (isWebFormat) {
       controllerNotifier.close();
     }
+
+    Future(() {
+      animationNotifier.setController(animationController);
+    });
+
     return GestureDetector(
         onHorizontalDragStart: controllerNotifier.onDragStart,
         onHorizontalDragUpdate: controllerNotifier.onDragUpdate,

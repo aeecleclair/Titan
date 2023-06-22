@@ -5,6 +5,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart';
 import 'package:myecl/settings/ui/settings.dart';
@@ -449,7 +450,7 @@ class EditUserPage extends HookConsumerWidget {
                         if (value) {
                           displayToastWithContext(
                               TypeMsg.msg, SettingsTextConstants.updatedProfile);
-                          QR.back();
+                          QR.removeNavigator(SettingsRouter.root + SettingsRouter.editAccount);
                         } else {
                           displayToastWithContext(
                               TypeMsg.error, SettingsTextConstants.updatingError);

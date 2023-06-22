@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/ui/app_template.dart';
 import 'package:myecl/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -39,6 +40,14 @@ class MyApp extends HookConsumerWidget {
           textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
           brightness: Brightness.light),
       routeInformationParser: const QRouteInformationParser(),
+      builder: (context, child) {
+        if (child == null) {
+          return const SizedBox();
+        }
+        return AppTemplate(
+          child: child,
+        );
+      },
       routerDelegate: QRouterDelegate(
         appRouter.routes,
         initPath: '/',
