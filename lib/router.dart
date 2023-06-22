@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/admin/router.dart';
+import 'package:myecl/admin/ui/pages/main_page/main_page.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/login/ui/auth.dart';
@@ -26,27 +28,36 @@ class AppRouter {
   static const String login = '/login';
   static const String loading = '/loading';
   static const String noInternet = '/no_internet';
-  final settingsRoutes = SettingsRouter().routes;
   AppRouter(this.ref) {
     routes = [
       QRoute(
-          path: home,
-          builder: () => const AppDrawer(),
-          middleware: [AuthenticatedMiddleware(ref)],),
+        path: home,
+        builder: () => const AppDrawer(),
+        middleware: [AuthenticatedMiddleware(ref)],
+      ),
       QRoute(
           path: SettingsRouter.root,
-          builder: () => const MainPage(),
+          builder: () => const SettingsMainPage(),
           middleware: [AuthenticatedMiddleware(ref)],
-          children: settingsRoutes),
+          children: SettingsRouter().routes),
       QRoute(
-          path: login,
-          builder: () => const AuthScreen(),),
+        path: AdminRouter.root,
+        builder: () => const AdminMainPage(),
+        middleware: [AuthenticatedMiddleware(ref)],
+        children: AdminRouter().routes,
+      ),
       QRoute(
-          path: loading,
-          builder: () => const LoadingPage(),),
+        path: login,
+        builder: () => const AuthScreen(),
+      ),
       QRoute(
-          path: noInternet,
-          builder: () => const Scaffold(body: NoInternetPage()),),
+        path: loading,
+        builder: () => const LoadingPage(),
+      ),
+      QRoute(
+        path: noInternet,
+        builder: () => const Scaffold(body: NoInternetPage()),
+      ),
     ];
   }
 }

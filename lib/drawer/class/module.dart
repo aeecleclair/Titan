@@ -5,7 +5,6 @@ enum ModuleType {
   amap, 
   loan,
   booking,
-  admin,
   event,
   vote,
   tombola,

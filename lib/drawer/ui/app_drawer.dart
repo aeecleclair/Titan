@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
@@ -39,9 +38,6 @@ class AppDrawer extends HookConsumerWidget {
             controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.amap:
         return AmapHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
-      case ModuleType.admin:
-        return AdminHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.event:
         return EventHomePage(
