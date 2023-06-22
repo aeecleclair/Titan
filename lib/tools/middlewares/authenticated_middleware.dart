@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -11,22 +12,33 @@ class AuthenticatedMiddleware extends QMiddleware {
 
   @override
   Future<String?> redirectGuard(String path) async {
+    final pathForwarding = ref.read(pathForwardingProvider);
+    final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     final versionVerifier = ref.watch(versionVerifierProvider);
     final titanVersion = ref.watch(titanVersionProvider);
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final check = versionVerifier
         .whenData((value) => value.minimalTitanVersion <= titanVersion);
+    if (!pathForwarding.isForwarding) {
+      pathForwardingNotifier.forward(path);
+    }
+
     return check.when(
-        data: (value) => value
-            ? isLoggedIn
-                ? ['/login', '/update', '/loading', '/no_internet']
-                        .contains(path)
-                    ? '/'
-                    : null
-                : path != '/login'
-                    ? '/login'
-                    : null
-            : '/update',
+        data: (value) {
+          if (value) {
+            if (isLoggedIn) {
+              if (pathForwarding.path == path) {
+                pathForwardingNotifier.reset();
+                return null;
+              }
+              return pathForwarding.path;
+            } else {
+              return '/login';
+            }
+          } else {
+            return '/update';
+          }
+        },
         loading: () => '/loading',
         error: (error, stack) => '/no_internet');
   }
