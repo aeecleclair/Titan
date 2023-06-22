@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class FirstPageNotifier extends StateNotifier<ModuleType> {
   final eq = const DeepCollectionEquality.unordered();
-  FirstPageNotifier() : super(ModuleType.calendar);
+  FirstPageNotifier() : super(ModuleType.amap);
 
   Future loadFirstPage() async {
     String dbModule = "modules";
@@ -20,7 +20,7 @@ class FirstPageNotifier extends StateNotifier<ModuleType> {
       modulesName.sort((a, b) =>
           allModulesName.indexOf(a).compareTo(allModulesName.indexOf(b)));
     }
-    state = dict[modulesName[0]] ?? ModuleType.calendar;
+    state = dict[modulesName[0]] ?? ModuleType.amap;
   }
 }
 

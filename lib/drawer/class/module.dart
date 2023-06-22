@@ -1,7 +1,6 @@
 import 'package:heroicons/heroicons.dart';
 
 enum ModuleType {
-  calendar,
   amap, 
   loan,
   booking,

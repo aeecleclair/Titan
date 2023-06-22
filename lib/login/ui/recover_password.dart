@@ -4,16 +4,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/login/class/recover_request.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/login_field.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
+import 'package:myecl/router.dart';
 import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RecoverPasswordPage extends HookConsumerWidget {
@@ -23,7 +23,6 @@ class RecoverPasswordPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(pageProvider.notifier);
     final authTokenNotifier = ref.watch(authTokenProvider.notifier);
     final signUpNotifier = ref.watch(signUpProvider.notifier);
     final activationCode = useTextEditingController();
@@ -81,7 +80,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
             if (value) {
               displayToastWithContext(
                   TypeMsg.msg, LoginTextConstants.resetedPassword);
-              pageNotifier.setPage(ModuleType.calendar);
+              QR.to(AppRouter.root);
               authTokenNotifier.deleteToken();
               onActivationPressed();
             } else {

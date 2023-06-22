@@ -5,6 +5,8 @@ import 'package:myecl/admin/router.dart';
 import 'package:myecl/admin/ui/pages/main_page/main_page.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
+import 'package:myecl/home/router.dart';
+import 'package:myecl/home/ui/home.dart';
 import 'package:myecl/login/ui/auth.dart';
 import 'package:myecl/others/ui/loading_page.dart';
 import 'package:myecl/others/ui/no_internert_page.dart';
@@ -25,14 +27,14 @@ final appRouterProvider = Provider<AppRouter>((ref) {
 class AppRouter {
   final ProviderRef ref;
   late List<QRoute> routes = [];
-  static const String home = '/';
+  static const String root = '/';
   static const String login = '/login';
   static const String loading = '/loading';
   static const String noInternet = '/no_internet';
   AppRouter(this.ref) {
     routes = [
       QRoute(
-        path: home,
+        path: root,
         builder: () => const AppDrawer(),
         middleware: [AuthenticatedMiddleware(ref)],
       ),
@@ -46,6 +48,11 @@ class AppRouter {
         builder: () => const AdminMainPage(),
         middleware: [AuthenticatedMiddleware(ref), AdminMiddleware(ref)],
         children: AdminRouter().routes,
+      ),
+      QRoute(
+        path: HomeRouter.root,
+        builder: () => const HomePage(),
+        middleware: [AuthenticatedMiddleware(ref)],
       ),
       QRoute(
         path: login,

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/ui/page_switcher.dart';
 import 'package:myecl/event/ui/top_bar.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
+import 'package:myecl/home/router.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class EventHomePage extends ConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -19,7 +19,6 @@ class EventHomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(eventPageProvider);
     final pageNotifier = ref.watch(eventPageProvider.notifier);
-    final appPageNotifier = ref.watch(pageProvider.notifier);
     final hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
     return Scaffold(
         body: WillPopScope(
@@ -45,7 +44,7 @@ class EventHomePage extends ConsumerWidget {
             pageNotifier.setEventPage(EventPage.admin);
             break;
           case EventPage.eventDetailfromCalendar:
-            appPageNotifier.setPage(ModuleType.calendar);
+            QR.to(HomeRouter.root);
             pageNotifier.setEventPage(EventPage.main);
             hasScrolledNotifier.setHasScrolled(true);
             break;

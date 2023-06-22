@@ -6,6 +6,8 @@ import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
+import 'package:myecl/home/router.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class ModuleUI extends HookConsumerWidget {
   const ModuleUI({Key? key, required this.m, required this.controllerNotifier})
@@ -69,7 +71,7 @@ class ModuleUI extends HookConsumerWidget {
       onTap: () {
         pageNotifier.setPage(m.page);
         controllerNotifier.toggle();
-        if (m.page != ModuleType.calendar) {
+        if (QR.currentPath != HomeRouter.root) {
           hasScrolled.setHasScrolled(false);
         }
       },

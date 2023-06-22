@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/providers/sorted_event_list_provider.dart';
@@ -12,10 +13,8 @@ import 'package:myecl/home/ui/top_bar.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
 class HomePage extends HookConsumerWidget {
-  final SwipeControllerNotifier controllerNotifier;
-  final AnimationController controller;
   const HomePage(
-      {Key? key, required this.controllerNotifier, required this.controller})
+      {Key? key})
       : super(key: key);
 
   @override
@@ -26,17 +25,15 @@ class HomePage extends HookConsumerWidget {
     DateTime now = DateTime.now();
     final ScrollController scrollController = useScrollController();
     final daysEventScrollController = useScrollController();
+    final animationNotifier = ref.watch(animationProvider.notifier);
+    final controller =
+    ref.watch(swipeControllerProvider(animationNotifier.animation!));
+    final controllerNotifier = ref
+        .watch(swipeControllerProvider(animationNotifier.animation!).notifier);
 
     return Scaffold(
-        body: WillPopScope(
-      onWillPop: () async {
-        if (!controller.isCompleted) {
-          controllerNotifier.toggle();
-          return false;
-        } else {
-          return true;
-        }
-      },
+        body: Container(
+      color: Colors.white,
       child: SafeArea(
           child: IgnorePointer(
         ignoring: controller.isCompleted,
