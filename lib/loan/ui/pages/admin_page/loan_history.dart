@@ -34,7 +34,7 @@ class HistoryLoan extends HookConsumerWidget {
       if (loans[loaner] != null) {
         return loans[loaner]!.when(data: (List<Loan> data) {
           if (data.isNotEmpty) {
-            data.sort((a, b) => a.end.compareTo(b.end));
+            data.sort((a, b) => b.end.compareTo(a.end));
           }
           return Column(
             children: [
