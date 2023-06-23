@@ -8,7 +8,6 @@ import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
-import 'package:myecl/tombola/ui/tombola.dart';
 
 class AppDrawer extends HookConsumerWidget {
   static Duration duration = const Duration(milliseconds: 200);
@@ -24,9 +23,6 @@ class AppDrawer extends HookConsumerWidget {
     switch (page) {
       case ModuleType.amap:
         return AmapHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
-      case ModuleType.tombola:
-        return TombolaHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.cinema:
         return CinemaHomePage(

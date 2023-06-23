@@ -5,13 +5,14 @@ import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/class/type_ticket_simple.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/ticket_type_provider.dart';
-import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/providers/type_ticket_provider.dart';
+import 'package:myecl/tombola/router.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/ticket_ui.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/dialog.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class TicketHandler extends HookConsumerWidget {
   const TicketHandler({super.key});
@@ -19,7 +20,6 @@ class TicketHandler extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffle = ref.watch(raffleProvider);
-    final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final typeTickets = ref.watch(typeTicketsListProvider);
     final typeTicketsNotifier = ref.watch(typeTicketsListProvider.notifier);
     final typeTicketNotifier = ref.watch(typeTicketProvider.notifier);
@@ -55,8 +55,9 @@ class TicketHandler extends HookConsumerWidget {
                 GestureDetector(
                     onTap: () {
                       typeTicketNotifier.setLot(TypeTicketSimple.empty());
-                      pageNotifier
-                          .setTombolaPage(TombolaPage.addEditTypeTicketSimple);
+                      QR.to(RaffleRouter.root +
+                          RaffleRouter.admin +
+                          RaffleRouter.addEditTypeTicket);
                     },
                     child: Container(
                       margin: const EdgeInsets.only(
@@ -92,8 +93,9 @@ class TicketHandler extends HookConsumerWidget {
                                 typeTicket: e,
                                 onEdit: () {
                                   typeTicketNotifier.setLot(e);
-                                  pageNotifier.setTombolaPage(
-                                      TombolaPage.addEditTypeTicketSimple);
+                                  QR.to(RaffleRouter.root +
+                                      RaffleRouter.admin +
+                                      RaffleRouter.addEditTypeTicket);
                                 },
                                 showButton: raffle.raffleStatusType ==
                                     RaffleStatusType.creation,
@@ -108,7 +110,8 @@ class TicketHandler extends HookConsumerWidget {
                                               tokenExpireWrapper(ref, () async {
                                                 final value =
                                                     await typeTicketsNotifier
-                                                        .deleteTypeTicketSimple(e);
+                                                        .deleteTypeTicketSimple(
+                                                            e);
                                                 if (value) {
                                                   displayToastWithContext(
                                                       TypeMsg.msg,
