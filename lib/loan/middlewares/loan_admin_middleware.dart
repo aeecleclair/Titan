@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
+import 'package:myecl/loan/providers/is_loan_admin_provider.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -11,7 +11,7 @@ class LoanAdminMiddleware extends QMiddleware {
 
   @override
   Future<String?> redirectGuard(String path) async {
-    final isAdmin = ref.watch(isBookingAdminProvider);
+    final isAdmin = ref.watch(isLoanAdminProvider);
     if (isAdmin) {
       return null;
     } else {

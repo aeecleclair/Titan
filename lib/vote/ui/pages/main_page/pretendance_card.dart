@@ -11,9 +11,10 @@ import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
+import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class PretendanceCard extends HookConsumerWidget {
   final Pretendance pretendance;
@@ -31,7 +32,6 @@ class PretendanceCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(votePageProvider.notifier);
     final pretendanceNotifier = ref.watch(pretendanceProvider.notifier);
     final sections = ref.watch(sectionsProvider);
     final selectedPretendance = ref.watch(selectedPretendanceProvider);
@@ -256,8 +256,8 @@ class PretendanceCard extends HookConsumerWidget {
                             ? GestureDetector(
                                 onTap: () {
                                   pretendanceNotifier.setId(pretendance);
-                                  pageNotifier
-                                      .setVotePage(VotePage.detailPageFromMain);
+                                  QR.to(VoteRouter.root +
+                                      VoteRouter.detail);
                                 },
                                 child: const HeroIcon(
                                   HeroIcons.informationCircle,

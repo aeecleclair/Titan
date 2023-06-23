@@ -24,7 +24,7 @@ class LoanMainPage extends HookConsumerWidget {
     final loanList = ref.watch(loanListProvider);
     final loanNotifier = ref.watch(loanProvider.notifier);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
-    final isAdmin = ref.watch(isLoanAdmin);
+    final isAdmin = ref.watch(isLoanAdminProvider);
 
     ref.watch(adminLoanListProvider);
     ref.watch(itemListProvider);

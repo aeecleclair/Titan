@@ -12,10 +12,11 @@ import 'package:myecl/vote/providers/pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
+import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/pages/admin_page/pretendance_card.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class SectionPretendenceItems extends HookConsumerWidget {
   const SectionPretendenceItems({super.key});
@@ -26,7 +27,6 @@ class SectionPretendenceItems extends HookConsumerWidget {
     final membersNotifier = ref.watch(pretendanceMembersProvider.notifier);
     final section = ref.watch(sectionProvider);
     final pretendanceListNotifier = ref.watch(pretendanceListProvider.notifier);
-    final pageNotifier = ref.watch(votePageProvider.notifier);
     final sectionPretendanceListNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
     final pretendanceNotifier = ref.watch(pretendanceProvider.notifier);
@@ -56,8 +56,9 @@ class SectionPretendenceItems extends HookConsumerWidget {
                                   pretendanceNotifier
                                       .setId(Pretendance.empty());
                                   membersNotifier.setMembers([]);
-                                  pageNotifier
-                                      .setVotePage(VotePage.addEditPretendance);
+                                  QR.to(VoteRouter.root +
+                                      VoteRouter.admin +
+                                      VoteRouter.addEditPretendance);
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.all(15.0),
@@ -102,8 +103,9 @@ class SectionPretendenceItems extends HookConsumerWidget {
                                         tokenExpireWrapper(ref, () async {
                                           pretendanceNotifier.setId(e);
                                           membersNotifier.setMembers(e.members);
-                                          pageNotifier.setVotePage(
-                                              VotePage.addEditPretendance);
+                                          QR.to(VoteRouter.root +
+                                              VoteRouter.admin +
+                                              VoteRouter.addEditPretendance);
                                         });
                                       },
                                       onDelete: () async {

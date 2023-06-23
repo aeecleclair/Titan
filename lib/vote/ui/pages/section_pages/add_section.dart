@@ -7,9 +7,10 @@ import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/text_entry.dart';
+import 'package:myecl/vote/ui/vote.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class AddSectionPage extends HookConsumerWidget {
   const AddSectionPage({Key? key}) : super(key: key);
@@ -20,7 +21,6 @@ class AddSectionPage extends HookConsumerWidget {
         ref.watch(sectionPretendanceProvider.notifier);
     final sectionListNotifier = ref.watch(sectionsProvider.notifier);
     final sections = ref.watch(sectionsProvider);
-    final pageNotifier = ref.watch(votePageProvider.notifier);
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();
     final description = useTextEditingController();
@@ -28,115 +28,117 @@ class AddSectionPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(children: [
-          const SizedBox(
-            height: 50,
-          ),
-          const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(VoteTextConstants.addSection,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 149, 149, 149)))),
-          Form(
-            key: key,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                TextEntry(
-                  controller: name,
-                  isInt: false,
-                  keyboardType: TextInputType.text,
-                  label: VoteTextConstants.sectionName,
-                  suffix: '',
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                TextEntry(
-                  controller: description,
-                  isInt: false,
-                  keyboardType: TextInputType.text,
-                  label: VoteTextConstants.sectionDescription,
-                  suffix: '',
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                ShrinkButton(
-                  waitChild: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(top: 8, bottom: 12),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(
-                                3, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: const Center(
-                          child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ))),
-                  onTap: () async {
-                    await tokenExpireWrapper(ref, () async {
-                      final value = await sectionListNotifier.addSection(
-                          Section(
-                              name: name.text,
-                              id: '',
-                              description: description.text));
-                      if (value) {
-                        pageNotifier.setVotePage(VotePage.admin);
-                        sections.whenData((value) {
-                          sectionPretendanceNotifier.addT(value.last);
-                        });
-                        displayVoteToastWithContext(
-                            TypeMsg.msg, VoteTextConstants.addedSection);
-                      } else {
-                        displayVoteToastWithContext(
-                            TypeMsg.error, VoteTextConstants.addingError);
-                      }
-                    });
-                  },
-                  child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(top: 8, bottom: 12),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(
-                                3, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: const Text(VoteTextConstants.add,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold))),
-                ),
-                const SizedBox(height: 30),
-              ],
+    return VoteTemplate(
+      child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Column(children: [
+            const SizedBox(
+              height: 50,
             ),
-          )
-        ]));
+            const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(VoteTextConstants.addSection,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 149, 149, 149)))),
+            Form(
+              key: key,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  TextEntry(
+                    controller: name,
+                    isInt: false,
+                    keyboardType: TextInputType.text,
+                    label: VoteTextConstants.sectionName,
+                    suffix: '',
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  TextEntry(
+                    controller: description,
+                    isInt: false,
+                    keyboardType: TextInputType.text,
+                    label: VoteTextConstants.sectionDescription,
+                    suffix: '',
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  ShrinkButton(
+                    waitChild: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.only(top: 8, bottom: 12),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 10,
+                              offset: const Offset(
+                                  3, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: const Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ))),
+                    onTap: () async {
+                      await tokenExpireWrapper(ref, () async {
+                        final value = await sectionListNotifier.addSection(
+                            Section(
+                                name: name.text,
+                                id: '',
+                                description: description.text));
+                        if (value) {
+                          QR.back();
+                          sections.whenData((value) {
+                            sectionPretendanceNotifier.addT(value.last);
+                          });
+                          displayVoteToastWithContext(
+                              TypeMsg.msg, VoteTextConstants.addedSection);
+                        } else {
+                          displayVoteToastWithContext(
+                              TypeMsg.error, VoteTextConstants.addingError);
+                        }
+                      });
+                    },
+                    child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.only(top: 8, bottom: 12),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 10,
+                              offset: const Offset(
+                                  3, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: const Text(VoteTextConstants.add,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold))),
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            )
+          ])),
+    );
   }
 }

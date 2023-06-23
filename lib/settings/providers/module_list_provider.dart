@@ -12,7 +12,8 @@ final modulesProvider =
       .map((e) => e.id)
       .contains("39691052-2ae5-4e12-99d0-7a9f5f2b0136");
   ModulesNotifier modulesNotifier = ModulesNotifier();
-  modulesNotifier.loadModules([ModuleType.vote], [isAEMember]);
+  modulesNotifier.loadModules([ModuleType.amap],
+      [isAEMember]); // TODO: rebloquer le vote pour les non AE
   return modulesNotifier;
 });
 
@@ -54,7 +55,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     Module(
         name: "Vote",
         icon: HeroIcons.envelopeOpen,
-        page: ModuleType.vote,
+        page: ModuleType.amap,
         selected: false),
     Module(
         name: "Cinéma",

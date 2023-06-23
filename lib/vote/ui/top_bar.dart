@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/providers/vote_page_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -11,8 +12,6 @@ class TopBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(votePageProvider);
-    final pageNotifier = ref.watch(votePageProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -27,29 +26,14 @@ class TopBar extends HookConsumerWidget {
                 builder: (BuildContext appBarContext) {
                   return IconButton(
                       onPressed: () {
-                        switch (page) {
-                          case VotePage.main:
-                            controllerNotifier.toggle();
-                            break;
-                          case VotePage.admin:
-                            pageNotifier.setVotePage(VotePage.main);
-                            break;
-                          case VotePage.addSection:
-                            pageNotifier.setVotePage(VotePage.admin);
-                            break;
-                          case VotePage.addEditPretendance:
-                            pageNotifier.setVotePage(VotePage.admin);
-                            break;
-                          case VotePage.detailPageFromMain:
-                            pageNotifier.setVotePage(VotePage.main);
-                            break;
-                          case VotePage.detailPageFromAdmin:
-                            pageNotifier.setVotePage(VotePage.admin);
-                            break;
+                        if (QR.currentPath == VoteRouter.root) {
+                          controllerNotifier.toggle();
+                        } else {
+                          QR.back();
                         }
                       },
                       icon: HeroIcon(
-                        page == VotePage.main
+                        QR.currentPath == VoteRouter.root
                             ? HeroIcons.bars3BottomLeft
                             : HeroIcons.chevronLeft,
                         color: const Color.fromARGB(255, 0, 0, 0),
