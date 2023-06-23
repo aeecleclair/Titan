@@ -25,19 +25,17 @@ class AuthenticatedMiddleware extends QMiddleware {
 
     return check.when(
         data: (value) {
-          if (value) {
-            if (isLoggedIn) {
-              if (pathForwarding.path == path) {
-                pathForwardingNotifier.reset();
-                return null;
-              }
-              return pathForwarding.path;
-            } else {
-              return '/login';
-            }
-          } else {
+          if (!value) {
             return '/update';
           }
+          if (!isLoggedIn) {
+            return '/login';
+          }
+          if (pathForwarding.path == path) {
+            pathForwardingNotifier.reset();
+            return null;
+          }
+          return pathForwarding.path;
         },
         loading: () => '/loading',
         error: (error, stack) => '/no_internet');

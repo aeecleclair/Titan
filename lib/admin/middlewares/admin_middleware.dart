@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/providers/is_admin.dart';
+import 'package:myecl/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminMiddleware extends QMiddleware {
@@ -10,6 +11,6 @@ class AdminMiddleware extends QMiddleware {
   @override
   Future<String?> redirectGuard(String path) async {
     final isAdmin = ref.watch(isAdminProvider);
-    return isAdmin ? null : '/';
+    return isAdmin ? null : AppRouter.root;
   }
 }

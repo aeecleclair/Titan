@@ -82,15 +82,15 @@ class ListBooking extends HookConsumerWidget {
                           isDetail: false,
                           onEdit: () {
                             bookingNotifier.setBooking(e);
-                            QR.to(BookingRouter.root + BookingRouter.addEdit);
-                            // pageNotifier.setBookingPage(
-                            //     BookingPage.addEditBookingFromAdmin);
+                            QR.to(BookingRouter.root +
+                                BookingRouter.admin +
+                                BookingRouter.addEdit);
                           },
                           onInfo: () {
                             bookingNotifier.setBooking(e);
-                            QR.to(BookingRouter.root + BookingRouter.detail);
-                            // pageNotifier.setBookingPage(
-                            //     BookingPage.detailBookingFromAdmin);
+                            QR.to(BookingRouter.root +
+                                BookingRouter.admin +
+                                BookingRouter.detail);
                           },
                           onConfirm: () async {
                             await showDialog(
@@ -144,9 +144,9 @@ class ListBooking extends HookConsumerWidget {
                           },
                           onCopy: () {
                             bookingNotifier.setBooking(e.copyWith(id: ""));
-                            // pageNotifier.setBookingPage(
-                            //     BookingPage.addEditBookingFromAdmin);
-                            QR.to(BookingRouter.root + BookingRouter.addEdit);
+                            QR.to(BookingRouter.root +
+                                BookingRouter.admin +
+                                BookingRouter.addEdit);
                           },
                           onDelete: () async {},
                         )),
