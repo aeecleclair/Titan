@@ -1,40 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/cinema/providers/cinema_page_provider.dart';
 import 'package:myecl/cinema/providers/is_cinema_admin.dart';
 import 'package:myecl/cinema/providers/main_page_index_provider.dart';
 import 'package:myecl/cinema/providers/scroll_provider.dart';
 import 'package:myecl/cinema/providers/session_list_page_provider.dart';
 import 'package:myecl/cinema/providers/session_list_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
+import 'package:myecl/cinema/router.dart';
 import 'package:myecl/cinema/tools/constants.dart';
+import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/cinema/ui/pages/main_page/session_card.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/tools/ui/refresher.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-class MainPage extends HookConsumerWidget {
-  const MainPage({Key? key}) : super(key: key);
+class CinemaMainPage extends HookConsumerWidget {
+  const CinemaMainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(cinemaPageProvider.notifier);
     final sessionList = ref.watch(sessionListProvider);
     final sessionListNotifier = ref.watch(sessionListProvider.notifier);
     final sessionNotifier = ref.watch(sessionProvider.notifier);
     final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
     final initialPage = ref.watch(mainPageIndexProvider);
     int currentPage = initialPage;
-    final pageController = ref.watch(sessionListPageControllerProvider(initialPage));
+    final pageController =
+        ref.watch(sessionListPageControllerProvider(initialPage));
     final scrollNotifier = ref.watch(scrollProvider.notifier);
-    final isAdmin = ref.watch(isCinemaAdmin);
+    final isAdmin = ref.watch(isCinemaAdminProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);
     pageController.addListener(() {
       scrollNotifier.setScroll(pageController.page!);
       currentPage = pageController.page!.round();
     });
 
-    return Expanded(
+    return CinemaTemplate(
       child: Refresher(
           onRefresh: () async {
             await sessionListNotifier.loadSessions();
@@ -62,7 +64,7 @@ class MainPage extends HookConsumerWidget {
                         if (isAdmin)
                           GestureDetector(
                             onTap: () {
-                              pageNotifier.setCinemaPage(CinemaPage.admin);
+                              QR.to(CinemaRouter.root + CinemaRouter.admin);
                               initialPageNotifier.setMainPageIndex(currentPage);
                             },
                             child: Container(
@@ -133,8 +135,8 @@ class MainPage extends HookConsumerWidget {
                                 index: index,
                                 onTap: () {
                                   sessionNotifier.setSession(data[index]);
-                                  pageNotifier.setCinemaPage(
-                                      CinemaPage.detailFromMainPage);
+                                  QR.to(
+                                      CinemaRouter.root + CinemaRouter.detail);
                                   initialPageNotifier.setMainPageIndex(index);
                                 },
                               );

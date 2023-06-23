@@ -60,7 +60,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     Module(
         name: "Cinéma",
         icon: HeroIcons.ticket,
-        page: ModuleType.cinema,
+        page: ModuleType.amap,
         selected: false),
   ];
   ModulesNotifier() : super([]);

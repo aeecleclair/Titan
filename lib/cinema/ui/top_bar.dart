@@ -3,9 +3,10 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/cinema/providers/scroll_provider.dart';
 import 'package:myecl/cinema/providers/main_page_index_provider.dart';
+import 'package:myecl/cinema/router.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/cinema/providers/cinema_page_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -13,8 +14,6 @@ class TopBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(cinemaPageProvider);
-    final pageNotifier = ref.watch(cinemaPageProvider.notifier);
     final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
     final scrollNotifier = ref.watch(scrollProvider.notifier);
     return Column(
@@ -31,28 +30,16 @@ class TopBar extends HookConsumerWidget {
                 builder: (BuildContext appBarContext) {
                   return IconButton(
                       onPressed: () {
-                        switch (page) {
-                          case CinemaPage.main:
-                            controllerNotifier.toggle();
-                            initialPageNotifier.reset();
-                            scrollNotifier.reset();
-                            break;
-                          case CinemaPage.admin:
-                            pageNotifier.setCinemaPage(CinemaPage.main);
-                            break;
-                          case CinemaPage.detailFromMainPage:
-                            pageNotifier.setCinemaPage(CinemaPage.main);
-                            break;
-                          case CinemaPage.detailFromAdminPage:
-                            pageNotifier.setCinemaPage(CinemaPage.admin);
-                            break;
-                          case CinemaPage.addEditSession:
-                            pageNotifier.setCinemaPage(CinemaPage.admin);
-                            break;
+                        if (QR.currentPath == CinemaRouter.root) {
+                          controllerNotifier.toggle();
+                          initialPageNotifier.reset();
+                          scrollNotifier.reset();
+                        } else {
+                          QR.back();
                         }
                       },
                       icon: HeroIcon(
-                        page == CinemaPage.main
+                        QR.currentPath == CinemaRouter.root
                             ? HeroIcons.bars3BottomLeft
                             : HeroIcons.chevronLeft,
                         color: Colors.black,

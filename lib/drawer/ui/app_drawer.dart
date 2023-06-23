@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
@@ -23,9 +22,6 @@ class AppDrawer extends HookConsumerWidget {
     switch (page) {
       case ModuleType.amap:
         return AmapHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
-      case ModuleType.cinema:
-        return CinemaHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
     }
   }

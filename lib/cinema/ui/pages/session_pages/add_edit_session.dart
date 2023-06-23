@@ -8,7 +8,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/cinema/class/session.dart';
-import 'package:myecl/cinema/providers/cinema_page_provider.dart';
 import 'package:myecl/cinema/providers/session_list_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
@@ -16,18 +15,19 @@ import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/providers/the_movie_db_genre_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
+import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/cinema/ui/text_entry.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditSessionPage extends HookConsumerWidget {
   const AddEditSessionPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(cinemaPageProvider.notifier);
     final session = ref.watch(sessionProvider);
     final movieNotifier = ref.watch(theMovieDBMovieProvider.notifier);
     final isEdit = session.id != Session.empty().id;
@@ -63,7 +63,7 @@ class AddEditSessionPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return Expanded(
+    return CinemaTemplate(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -355,7 +355,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 .updateSession(newSession)
                             : await sessionListNotifier.addSession(newSession);
                         if (value) {
-                          pageNotifier.setCinemaPage(CinemaPage.admin);
+                          QR.back();
                           if (isEdit) {
                             sessionList.when(
                                 data: (list) async {

@@ -5,6 +5,8 @@ import 'package:myecl/admin/router.dart';
 import 'package:myecl/admin/ui/pages/main_page/main_page.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/ui/pages/main_page/main_page.dart';
+import 'package:myecl/cinema/router.dart';
+import 'package:myecl/cinema/ui/pages/main_page/main_page.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/event/ui/pages/main_page/main_page.dart';
@@ -80,6 +82,12 @@ class AppRouter {
         builder: () => const RaffleMainPage(),
         middleware: [AuthenticatedMiddleware(ref)],
         children: RaffleRouter(ref).routes,
+      ),
+      QRoute(
+        path: CinemaRouter.root,
+        builder: () => const CinemaMainPage(),
+        middleware: [AuthenticatedMiddleware(ref)],
+        children: CinemaRouter(ref).routes,
       ),
       QRoute(
         path: HomeRouter.root,
