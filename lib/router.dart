@@ -4,6 +4,8 @@ import 'package:myecl/admin/middlewares/admin_middleware.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/admin/ui/pages/main_page/main_page.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/booking/router.dart';
+import 'package:myecl/booking/ui/pages/main_page/main_page.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/home/ui/home.dart';
@@ -48,6 +50,12 @@ class AppRouter {
         builder: () => const AdminMainPage(),
         middleware: [AuthenticatedMiddleware(ref), AdminMiddleware(ref)],
         children: AdminRouter().routes,
+      ),
+      QRoute(
+        path: BookingRouter.root,
+        builder: () => const BookingMainPage(),
+        middleware: [AuthenticatedMiddleware(ref)],
+        children: BookingRouter().routes,
       ),
       QRoute(
         path: HomeRouter.root,

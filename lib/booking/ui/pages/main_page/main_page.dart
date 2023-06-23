@@ -3,13 +3,14 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
-import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
+import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
 import 'package:myecl/booking/ui/calendar.dart';
 import 'package:myecl/tools/constants.dart';
@@ -18,14 +19,14 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/ui/web_list_view.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-class MainPage extends HookConsumerWidget {
-  const MainPage({Key? key}) : super(key: key);
+class BookingMainPage extends HookConsumerWidget {
+  const BookingMainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isAdmin = ref.watch(isBookingAdminProvider);
-    final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final confirmedbookingsNotifier =
         ref.watch(confirmedBookingListProvider.notifier);
@@ -38,7 +39,7 @@ class MainPage extends HookConsumerWidget {
       displayToast(context, type, message);
     }
 
-    return Expanded(
+    return BookingTemplate(
       child: Refresher(
         onRefresh: () async {
           await confirmedbookingsNotifier.loadConfirmedBooking();
@@ -67,7 +68,7 @@ class MainPage extends HookConsumerWidget {
                     if (isAdmin)
                       GestureDetector(
                         onTap: () {
-                          pageNotifier.setBookingPage(BookingPage.admin);
+                          QR.to(BookingRouter.root + BookingRouter.admin);
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -114,8 +115,7 @@ class MainPage extends HookConsumerWidget {
                         onTap: () {
                           bookingNotifier.setBooking(Booking.empty());
                           selectedDaysNotifier.clear();
-                          pageNotifier
-                              .setBookingPage(BookingPage.addEditBooking);
+                          QR.to(BookingRouter.root + BookingRouter.addEdit);
                         },
                         child: Container(
                           padding: const EdgeInsets.all(15.0),
@@ -172,13 +172,11 @@ class MainPage extends HookConsumerWidget {
                                   .map((e) => recurrentDays.contains(e))
                                   .toList());
                             }
-                            pageNotifier
-                                .setBookingPage(BookingPage.addEditBooking);
+                            QR.to(BookingRouter.root + BookingRouter.addEdit);
                           },
                           onInfo: () {
                             bookingNotifier.setBooking(e);
-                            pageNotifier.setBookingPage(
-                                BookingPage.detailBookingFromMain);
+                            QR.to(BookingRouter.root + BookingRouter.detail);
                           },
                           onConfirm: () {},
                           onDecline: () {},
@@ -241,8 +239,7 @@ class MainPage extends HookConsumerWidget {
                                   .map((e) => recurrentDays.contains(e))
                                   .toList());
                             }
-                            pageNotifier
-                                .setBookingPage(BookingPage.addEditBooking);
+                            QR.to(BookingRouter.root + BookingRouter.addEdit);
                           },
                         )),
                     const SizedBox(width: 15)

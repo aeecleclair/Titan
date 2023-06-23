@@ -1,54 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/booking/ui/page_switcher.dart';
 import 'package:myecl/booking/ui/top_bar.dart';
 
-class BookingHomePage extends HookConsumerWidget {
-  final SwipeControllerNotifier controllerNotifier;
-  final AnimationController controller;
-  const BookingHomePage(
-      {Key? key, required this.controllerNotifier, required this.controller})
+class BookingTemplate extends HookConsumerWidget {
+  final Widget child;
+  const BookingTemplate(
+      {Key? key, required this.child})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(bookingPageProvider);
-    final pageNotifier = ref.watch(bookingPageProvider.notifier);
+    final animationNotifier = ref.watch(animationProvider.notifier);
+    final controller =
+    ref.watch(swipeControllerProvider(animationNotifier.animation!));
+    final controllerNotifier = ref
+        .watch(swipeControllerProvider(animationNotifier.animation!).notifier);
     return Scaffold(
-        body: WillPopScope(
-      onWillPop: () async {
-        switch (page) {
-          case BookingPage.main:
-            if (!controller.isCompleted) {
-              controllerNotifier.toggle();
-              break;
-            } else {
-              return true;
-            }
-          case BookingPage.admin:
-            pageNotifier.setBookingPage(BookingPage.main);
-            break;
-          case BookingPage.addEditBooking:
-            pageNotifier.setBookingPage(BookingPage.main);
-            break;
-          case BookingPage.addEditRoom:
-            pageNotifier.setBookingPage(BookingPage.admin);
-            break;
-          case BookingPage.detailBookingFromAdmin:
-            pageNotifier.setBookingPage(BookingPage.admin);
-            break;
-          case BookingPage.detailBookingFromMain:
-            pageNotifier.setBookingPage(BookingPage.main);
-            break;
-          case BookingPage.addEditBookingFromAdmin:
-            pageNotifier.setBookingPage(BookingPage.admin);
-            break;
-        }
-        return false;
-      },
-      child: Container(
+        body: Container(
         color: Colors.white,
         child: SafeArea(
           child: IgnorePointer(
@@ -59,12 +29,12 @@ class BookingHomePage extends HookConsumerWidget {
                 TopBar(
                   controllerNotifier: controllerNotifier,
                 ),
-                const PageSwitcher()
+                Expanded(child: child)
               ],
             ),
           ),
         ),
       ),
-    ));
+    );
   }
 }

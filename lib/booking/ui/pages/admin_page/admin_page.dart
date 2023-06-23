@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
-import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
+import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/calendar.dart';
 import 'package:myecl/booking/ui/pages/admin_page/list_booking.dart';
 import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/refresher.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final roomList = ref.watch(roomListProvider);
     final room = ref.watch(roomProvider);
     final roomNotifier = ref.watch(roomProvider.notifier);
@@ -51,7 +52,7 @@ class AdminPage extends HookConsumerWidget {
         },
         error: (e, s) {},
         loading: () {});
-    return Expanded(
+    return AdminTemplate(
       child: Refresher(
         onRefresh: () async {
           await ref.watch(bookingListProvider.notifier).loadBookings();
@@ -112,7 +113,7 @@ class AdminPage extends HookConsumerWidget {
                     GestureDetector(
                       onTap: () {
                         roomNotifier.setRoom(Room.empty());
-                        pageNotifier.setBookingPage(BookingPage.addEditRoom);
+                        QR.to(BookingRouter.root + BookingRouter.room);
                       },
                       child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -134,7 +135,7 @@ class AdminPage extends HookConsumerWidget {
                         selected: room.id == e.id,
                         onTap: () {
                           roomNotifier.setRoom(e);
-                          pageNotifier.setBookingPage(BookingPage.addEditRoom);
+                          QR.to(BookingRouter.root + BookingRouter.room);
                         },
                       ),
                     ),

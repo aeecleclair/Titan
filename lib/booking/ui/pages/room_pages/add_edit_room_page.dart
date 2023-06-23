@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:myecl/booking/class/room.dart';
-import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
+import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditRoomPage extends HookConsumerWidget {
   const AddEditRoomPage({Key? key}) : super(key: key);
@@ -17,7 +18,6 @@ class AddEditRoomPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final roomListNotifier = ref.watch(roomListProvider.notifier);
-    final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final room = ref.watch(roomProvider);
     final isEdit = room.id != Room.empty().id;
@@ -97,7 +97,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                           ? await roomListNotifier.updateRoom(newRoom)
                           : await roomListNotifier.addRoom(newRoom);
                       if (value) {
-                        pageNotifier.setBookingPage(BookingPage.admin);
+                        QR.to(BookingRouter.root + BookingRouter.admin);
                         isEdit
                             ? displayToastWithContext(
                                 TypeMsg.msg, BookingTextConstants.editedRoom)

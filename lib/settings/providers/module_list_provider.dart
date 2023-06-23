@@ -30,7 +30,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     Module(
         name: "Réservation",
         icon: HeroIcons.tableCells,
-        page: ModuleType.booking,
+        page: ModuleType.amap,
         selected: false),
     Module(
         name: "Prêt",

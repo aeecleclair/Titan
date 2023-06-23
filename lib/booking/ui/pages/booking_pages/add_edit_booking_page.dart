@@ -5,13 +5,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
-import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
+import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/text_entry.dart';
@@ -21,17 +22,17 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEditBookingPage extends HookConsumerWidget {
-  const AddEditBookingPage({Key? key}) : super(key: key);
+  final bool isAdmin;
+  const AddEditBookingPage({Key? key, required this.isAdmin}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
-    final page = ref.watch(bookingPageProvider);
     final user = ref.watch(userProvider);
-    final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
     final usersBookingsNotifier = ref.watch(userBookingListProvider.notifier);
@@ -75,7 +76,7 @@ class AddEditBookingPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return Expanded(
+    return BookingTemplate(
       child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Form(
@@ -597,11 +598,10 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   : await bookingsNotifier
                                       .addBooking(newBooking);
                               if (value) {
-                                if (page == BookingPage.addEditBooking) {
-                                  pageNotifier.setBookingPage(BookingPage.main);
+                                if (isAdmin) {
+                                  QR.to(BookingRouter.root + BookingRouter.admin);
                                 } else {
-                                  pageNotifier
-                                      .setBookingPage(BookingPage.admin);
+                                  QR.to(BookingRouter.root);
                                 }
                                 if (isEdit) {
                                   if (booking.decision ==
@@ -609,14 +609,14 @@ class AddEditBookingPage extends HookConsumerWidget {
                                     await confirmedBookingListNotifier
                                         .updateBooking(newBooking);
                                   }
-                                  if (page == BookingPage.addEditBooking) {
+                                  if (!isAdmin) {
                                     await usersBookingsNotifier
                                         .updateBooking(newBooking);
                                   }
                                   displayToastWithContext(TypeMsg.msg,
                                       BookingTextConstants.editedBooking);
                                 } else {
-                                  if (page == BookingPage.addEditBooking) {
+                                  if (!isAdmin) {
                                     newBooking = bookings.when(
                                         data: (value) => value.last,
                                         error: (e, s) => Booking.empty(),
