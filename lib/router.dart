@@ -10,6 +10,8 @@ import 'package:myecl/event/router.dart';
 import 'package:myecl/event/ui/pages/main_page/main_page.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/home/ui/home.dart';
+import 'package:myecl/loan/router.dart';
+import 'package:myecl/loan/ui/pages/main_page/main_page.dart';
 import 'package:myecl/login/ui/auth.dart';
 import 'package:myecl/others/ui/loading_page.dart';
 import 'package:myecl/others/ui/no_internert_page.dart';
@@ -56,6 +58,12 @@ class AppRouter {
         builder: () => const EventMainPage(),
         middleware: [AuthenticatedMiddleware(ref)],
         children: EventRouter(ref).routes,
+      ),
+      QRoute(
+        path: LoanRouter.root,
+        builder: () => const LoanMainPage(),
+        middleware: [AuthenticatedMiddleware(ref)],
+        children: LoanRouter(ref).routes,
       ),
       QRoute(
         path: HomeRouter.root,

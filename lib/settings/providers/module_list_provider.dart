@@ -34,7 +34,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     Module(
         name: "Prêt",
         icon: HeroIcons.buildingLibrary,
-        page: ModuleType.loan,
+        page: ModuleType.amap,
         selected: false),
     Module(
         name: "Amap",

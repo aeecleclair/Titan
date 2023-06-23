@@ -8,7 +8,6 @@ import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
-import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/vote/ui/vote.dart';
 import 'package:myecl/tombola/ui/tombola.dart';
 
@@ -24,9 +23,6 @@ class AppDrawer extends HookConsumerWidget {
   Widget getPage(ModuleType page, SwipeControllerNotifier controllerNotifier,
       AnimationController controller) {
     switch (page) {
-      case ModuleType.loan:
-        return LoanHomePage(
-            controllerNotifier: controllerNotifier, controller: controller);
       case ModuleType.amap:
         return AmapHomePage(
             controllerNotifier: controllerNotifier, controller: controller);
