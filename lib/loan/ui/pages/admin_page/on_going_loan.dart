@@ -31,7 +31,7 @@ class OnGoingLoan extends HookConsumerWidget {
     final loaner = ref.watch(loanerProvider);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loanList = ref.watch(loanerLoanListProvider);
-    final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
+    final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final loanersItems = ref.watch(loanersItemsProvider);
     final loanNotifier = ref.watch(loanProvider.notifier);
     final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
@@ -40,6 +40,7 @@ class OnGoingLoan extends HookConsumerWidget {
     final endNotifier = ref.watch(endProvider.notifier);
     final editingController = useTextEditingController();
     final focus = ref.watch(loanFocusProvider);
+    final itemList = ref.watch(itemListProvider);
     final focusNode = useFocusNode();
     if (focus) {
       focusNode.requestFocus();
@@ -118,6 +119,7 @@ class OnGoingLoan extends HookConsumerWidget {
                           QR.to(LoanRouter.root +
                               LoanRouter.admin +
                               LoanRouter.addEditLoan);
+                          loanersItemsNotifier.setTData(loaner, itemList);
                         },
                         child: Container(
                           padding: const EdgeInsets.all(15.0),
@@ -241,7 +243,7 @@ class OnGoingLoan extends HookConsumerWidget {
                                               if (value) {
                                                 QR.to(LoanRouter.root +
                                                     LoanRouter.admin);
-                                                await loanersitemsNotifier
+                                                await loanersItemsNotifier
                                                     .setTData(
                                                         loaner,
                                                         AsyncData(
