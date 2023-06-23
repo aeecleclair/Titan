@@ -17,6 +17,8 @@ import 'package:myecl/others/ui/loading_page.dart';
 import 'package:myecl/others/ui/no_internert_page.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/ui/pages/main_page/main_page.dart';
+import 'package:myecl/tombola/router.dart';
+import 'package:myecl/tombola/ui/pages/main_page/main_page.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/ui/pages/main_page/main_page.dart';
@@ -72,6 +74,12 @@ class AppRouter {
         builder: () => const VoteMainPage(),
         middleware: [AuthenticatedMiddleware(ref)],
         children: VoteRouter(ref).routes,
+      ),
+      QRoute(
+        path: RaffleRouter.root,
+        builder: () => const RaffleMainPage(),
+        middleware: [AuthenticatedMiddleware(ref)],
+        children: RaffleRouter(ref).routes,
       ),
       QRoute(
         path: HomeRouter.root,
