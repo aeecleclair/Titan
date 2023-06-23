@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/pages/admin_page/calendar.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
@@ -35,7 +36,7 @@ class AdminPage extends HookConsumerWidget {
         },
         error: (e, s) {},
         loading: () {});
-    return Expanded(
+    return EventTemplate(
       child: Refresher(
         onRefresh: () async {
           await ref.watch(eventListProvider.notifier).loadEventList();

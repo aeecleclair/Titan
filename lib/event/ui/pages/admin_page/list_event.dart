@@ -7,12 +7,13 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
-import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
+import 'package:myecl/event/router.dart';
 import 'package:myecl/event/ui/event_ui.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/web_list_view.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class ListEvent extends HookConsumerWidget {
   final List<Event> events;
@@ -27,7 +28,6 @@ class ListEvent extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(eventPageProvider.notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
     final eventListNotifier = ref.watch(eventListProvider.notifier);
     final confirmedEventListNotifier =
@@ -84,13 +84,15 @@ class ListEvent extends HookConsumerWidget {
                             isAdmin: true,
                             onEdit: () {
                               eventNotifier.setEvent(e);
-                              pageNotifier.setEventPage(
-                                  EventPage.addEditEventFromAdmin);
+                              QR.to(EventRouter.root +
+                                  EventRouter.admin +
+                                  EventRouter.addEdit);
                             },
                             onInfo: () {
                               eventNotifier.setEvent(e);
-                              pageNotifier.setEventPage(
-                                  EventPage.eventDetailfromModuleFromAdmin);
+                              QR.to(EventRouter.root +
+                                  EventRouter.admin +
+                                  EventRouter.detail);
                             },
                             onConfirm: () async {
                               await showDialog(
@@ -142,8 +144,9 @@ class ListEvent extends HookConsumerWidget {
                             },
                             onCopy: () {
                               eventNotifier.setEvent(e.copyWith(id: ""));
-                              pageNotifier.setEventPage(
-                                  EventPage.addEditEventFromAdmin);
+                              QR.to(EventRouter.root +
+                                  EventRouter.admin +
+                                  EventRouter.addEdit);
                             },
                           )),
                       const SizedBox(width: 10),

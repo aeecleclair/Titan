@@ -10,7 +10,6 @@ import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
-import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
@@ -598,11 +597,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   : await bookingsNotifier
                                       .addBooking(newBooking);
                               if (value) {
-                                if (isAdmin) {
-                                  QR.to(BookingRouter.root + BookingRouter.admin);
-                                } else {
-                                  QR.to(BookingRouter.root);
-                                }
+                                QR.back();
                                 if (isEdit) {
                                   if (booking.decision ==
                                       Decision.approved) {

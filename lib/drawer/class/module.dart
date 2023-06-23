@@ -3,7 +3,6 @@ import 'package:heroicons/heroicons.dart';
 enum ModuleType {
   amap, 
   loan,
-  event,
   vote,
   tombola,
   cinema,

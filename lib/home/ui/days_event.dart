@@ -2,13 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
+import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/home/tools/constants.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class DaysEvent extends HookConsumerWidget {
   final DateTime now;
@@ -23,8 +22,6 @@ class DaysEvent extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(pageProvider.notifier);
-    final eventPageNotifier = ref.watch(eventPageProvider.notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
@@ -110,9 +107,7 @@ class DaysEvent extends HookConsumerWidget {
                           GestureDetector(
                             onTap: () {
                               eventNotifier.setEvent(event);
-                              pageNotifier.setPage(ModuleType.event);
-                              eventPageNotifier.setEventPage(
-                                  EventPage.eventDetailfromCalendar);
+                              QR.to(EventRouter.root + EventRouter.detail);
                             },
                             child: HeroIcon(
                               HeroIcons.informationCircle,

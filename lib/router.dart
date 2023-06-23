@@ -6,6 +6,8 @@ import 'package:myecl/admin/ui/pages/main_page/main_page.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/ui/pages/main_page/main_page.dart';
 import 'package:myecl/drawer/ui/app_drawer.dart';
+import 'package:myecl/event/router.dart';
+import 'package:myecl/event/ui/pages/main_page/main_page.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/home/ui/home.dart';
 import 'package:myecl/login/ui/auth.dart';
@@ -48,6 +50,12 @@ class AppRouter {
         builder: () => const BookingMainPage(),
         middleware: [AuthenticatedMiddleware(ref)],
         children: BookingRouter(ref).routes,
+      ),
+      QRoute(
+        path: EventRouter.root,
+        builder: () => const EventMainPage(),
+        middleware: [AuthenticatedMiddleware(ref)],
+        children: EventRouter(ref).routes,
       ),
       QRoute(
         path: HomeRouter.root,
