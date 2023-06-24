@@ -19,6 +19,7 @@ import 'package:myecl/login/router.dart';
 import 'package:myecl/login/ui/sign_in.dart';
 import 'package:myecl/others/ui/loading_page.dart';
 import 'package:myecl/others/ui/no_internert_page.dart';
+import 'package:myecl/others/ui/update_page.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/ui/pages/main_page/main_page.dart';
 import 'package:myecl/tombola/router.dart';
@@ -35,6 +36,7 @@ class AppRouter {
   late List<QRoute> routes = [];
   static const String root = '/';
   static const String loading = '/loading';
+  static const String update = '/update';
   static const String noInternet = '/no_internet';
   AppRouter(this.ref) {
     routes = [
@@ -115,6 +117,10 @@ class AppRouter {
         path: noInternet,
         builder: () => const Scaffold(body: NoInternetPage()),
       ),
+      QRoute(
+        path: update,
+        builder: () => const Scaffold(body: UpdatePage()),
+      )
     ];
   }
 }
