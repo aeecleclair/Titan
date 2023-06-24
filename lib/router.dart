@@ -104,6 +104,7 @@ class AppRouter {
       QRoute(
         path: LoginRouter.root,
         builder: () => const SignIn(),
+        middleware: [AuthenticatedMiddleware(ref)],
         children: LoginRouter(ref).routes,
       ),
       QRoute(

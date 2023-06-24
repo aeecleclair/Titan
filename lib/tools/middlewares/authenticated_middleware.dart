@@ -28,6 +28,10 @@ class AuthenticatedMiddleware extends QMiddleware {
           if (!value) {
             return '/update';
           }
+          if (pathForwarding.path == '/login') {
+            pathForwardingNotifier.reset();
+            return null;
+          }
           if (!isLoggedIn) {
             return '/login';
           }
