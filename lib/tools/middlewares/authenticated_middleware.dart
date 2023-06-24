@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/login/router.dart';
+import 'package:myecl/router.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
@@ -26,14 +28,14 @@ class AuthenticatedMiddleware extends QMiddleware {
     return check.when(
         data: (value) {
           if (!value) {
-            return '/update';
+            return AppRouter.update;
           }
-          if (pathForwarding.path == '/login') {
+          if (pathForwarding.path.startsWith(LoginRouter.root)) {
             pathForwardingNotifier.reset();
             return null;
           }
           if (!isLoggedIn) {
-            return '/login';
+            return LoginRouter.root;
           }
           if (pathForwarding.path == path) {
             pathForwardingNotifier.reset();
@@ -41,7 +43,7 @@ class AuthenticatedMiddleware extends QMiddleware {
           }
           return pathForwarding.path;
         },
-        loading: () => '/loading',
-        error: (error, stack) => '/no_internet');
+        loading: () => AppRouter.loading,
+        error: (error, stack) => AppRouter.noInternet);
   }
 }

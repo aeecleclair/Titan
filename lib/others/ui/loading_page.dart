@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/login/router.dart';
+import 'package:myecl/router.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
@@ -21,10 +23,10 @@ class LoadingPage extends ConsumerWidget {
     check.when(
         data: (value) {
           if (!value) {
-            QR.to('/update');
+            QR.to(AppRouter.update);
           }
           if (!isLoggedIn) {
-            QR.to('/login');
+            QR.to(LoginRouter.root);
           }
           final user = ref.watch(asyncUserProvider);
           user.when(
@@ -32,12 +34,12 @@ class LoadingPage extends ConsumerWidget {
                 QR.to(pathForwarding.path);
               },
               error: (error, s) {
-                QR.to('/login');
+                QR.to(LoginRouter.root);
               },
               loading: () {});
         },
         loading: () {},
-        error: (error, stack) => QR.to('/no_internet'));
+        error: (error, stack) => QR.to(AppRouter.noInternet));
     return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(),
