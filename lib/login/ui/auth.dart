@@ -54,19 +54,10 @@ class AuthScreen extends HookConsumerWidget {
                                     );
                                   },
                                   child: value
-                                      ? SignIn(
-                                          key: const ValueKey(
+                                      ? const SignIn(
+                                          key: ValueKey(
                                               LoginTextConstants.signIn),
-                                          onRegisterPressed: () {
-                                            showSignInPage.value = false;
-                                            showRegisterPage.value = true;
-                                            controller.forward();
-                                          },
-                                          onForgetPressed: () {
-                                            showSignInPage.value = false;
-                                            showRegisterPage.value = false;
-                                            controller.forward();
-                                          })
+                                        )
                                       : showRegisterPage.value
                                           ? ValueListenableBuilder<bool>(
                                               valueListenable:
@@ -98,37 +89,12 @@ class AuthScreen extends HookConsumerWidget {
                                                               );
                                                             },
                                                             child: value
-                                                                ? CreateAccountPage(
-                                                                    onActivationPressed:
-                                                                        () {
-                                                                      showActivationPage
-                                                                              .value =
-                                                                          false;
-                                                                      showSignInPage
-                                                                              .value =
-                                                                          true;
-                                                                      controller
-                                                                          .reverse();
-                                                                    },
-                                                                  )
-                                                                : Register(
-                                                                    key: const ValueKey(
+                                                                ? const CreateAccountPage()
+                                                                : const Register(
+                                                                    key: ValueKey(
                                                                         LoginTextConstants
                                                                             .register),
-                                                                    onSignInPressed:
-                                                                        () {
-                                                                      showSignInPage
-                                                                              .value =
-                                                                          true;
-                                                                      controller
-                                                                          .reverse();
-                                                                    },
-                                                                    onMailRecieved:
-                                                                        () {
-                                                                      showActivationPage
-                                                                              .value =
-                                                                          true;
-                                                                    })));
+                                                                  )));
                                               })
                                           : ValueListenableBuilder<bool>(
                                               valueListenable: showResetPage,
@@ -159,37 +125,11 @@ class AuthScreen extends HookConsumerWidget {
                                                               );
                                                             },
                                                             child: value
-                                                                ? RecoverPasswordPage(
-                                                                    onActivationPressed:
-                                                                        () {
-                                                                      showResetPage
-                                                                              .value =
-                                                                          false;
-                                                                      showSignInPage
-                                                                              .value =
-                                                                          true;
-                                                                      controller
-                                                                          .reverse();
-                                                                    },
-                                                                  )
-                                                                : ForgetPassword(
-                                                                    key: const ValueKey(
+                                                                ? const RecoverPasswordPage()
+                                                                : const ForgetPassword(
+                                                                    key: ValueKey(
                                                                         LoginTextConstants
                                                                             .forgetPassword),
-                                                                    onSignInPressed:
-                                                                        () {
-                                                                      showSignInPage
-                                                                              .value =
-                                                                          true;
-                                                                      controller
-                                                                          .reverse();
-                                                                    },
-                                                                    onMailRecieved:
-                                                                        () {
-                                                                      showResetPage
-                                                                              .value =
-                                                                          true;
-                                                                    },
                                                                   )));
                                               },
                                             )));

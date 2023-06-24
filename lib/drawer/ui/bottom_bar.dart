@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/tools/constants.dart';
-import 'package:myecl/router.dart';
+import 'package:myecl/login/router.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -38,7 +38,7 @@ class BottomBar extends ConsumerWidget {
                             isCachingNotifier.set(false);
                             displayToast(context, TypeMsg.msg,
                                 DrawerTextConstants.logOut);
-                            QR.to(AppRouter.login);
+                            QR.to(LoginRouter.root);
                           }));
                 },
                 child: Row(

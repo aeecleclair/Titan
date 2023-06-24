@@ -5,17 +5,15 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
+import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/login/ui/text_from_decoration.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class ForgetPassword extends HookConsumerWidget {
-  const ForgetPassword(
-      {Key? key, required this.onSignInPressed, required this.onMailRecieved})
-      : super(key: key);
-
-  final VoidCallback onSignInPressed, onMailRecieved;
+  const ForgetPassword({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,7 +33,7 @@ class ForgetPassword extends HookConsumerWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: GestureDetector(
-                onTap: onSignInPressed,
+                onTap: QR.back,
                 child: const HeroIcon(
                   HeroIcons.chevronLeft,
                   color: Colors.white,
@@ -99,7 +97,9 @@ class ForgetPassword extends HookConsumerWidget {
                         displayToastWithContext(
                             TypeMsg.msg, LoginTextConstants.sendedResetMail);
                         email.clear();
-                        onMailRecieved();
+                        QR.to(LoginRouter.root +
+                            LoginRouter.forgotPassword +
+                            LoginRouter.mailReceived);
                       } else {
                         displayToastWithContext(
                             TypeMsg.error, LoginTextConstants.mailSendingError);
@@ -115,9 +115,7 @@ class ForgetPassword extends HookConsumerWidget {
                           alignment: Alignment.centerLeft,
                           child: InkWell(
                             splashColor: const Color.fromRGBO(255, 255, 255, 1),
-                            onTap: () {
-                              onSignInPressed();
-                            },
+                            onTap: QR.back,
                             child: const Text(
                               LoginTextConstants.signIn,
                               style: TextStyle(
@@ -134,7 +132,9 @@ class ForgetPassword extends HookConsumerWidget {
                           child: InkWell(
                             splashColor: const Color.fromRGBO(255, 255, 255, 1),
                             onTap: () {
-                              onMailRecieved();
+                              QR.to(LoginRouter.root +
+                                  LoginRouter.forgotPassword +
+                                  LoginRouter.mailReceived);
                             },
                             child: const Text(
                               LoginTextConstants.recievedMail,

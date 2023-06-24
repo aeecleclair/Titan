@@ -6,17 +6,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/class/account_type.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
+import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/login/ui/text_from_decoration.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class Register extends HookConsumerWidget {
-  const Register(
-      {Key? key, required this.onSignInPressed, required this.onMailRecieved})
-      : super(key: key);
-
-  final VoidCallback onSignInPressed, onMailRecieved;
+  const Register({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,7 +36,7 @@ class Register extends HookConsumerWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: GestureDetector(
-                onTap: onSignInPressed,
+                onTap: QR.back,
                 child: const HeroIcon(
                   HeroIcons.chevronLeft,
                   color: Colors.white,
@@ -98,9 +96,9 @@ class Register extends HookConsumerWidget {
                   SignUpBar(
                       label: LoginTextConstants.create,
                       isLoading: ref.watch(loadingrovider).when(
-                        data: (data) => data,
-                        error: (e, s) => false,
-                        loading: () => false),
+                          data: (data) => data,
+                          error: (e, s) => false,
+                          loading: () => false),
                       onPressed: () async {
                         if (key.currentState!.validate()) {
                           final value = await signUpNotifier.createUser(
@@ -108,7 +106,9 @@ class Register extends HookConsumerWidget {
                           if (value) {
                             hidePass.value = true;
                             mail.clear();
-                            onMailRecieved();
+                            QR.to(LoginRouter.root +
+                                LoginRouter.createAccount +
+                                LoginRouter.mailReceived);
                             displayToastWithContext(
                                 TypeMsg.msg, LoginTextConstants.sendedMail);
                           } else {
@@ -129,9 +129,7 @@ class Register extends HookConsumerWidget {
                           alignment: Alignment.centerLeft,
                           child: InkWell(
                             splashColor: const Color.fromRGBO(255, 255, 255, 1),
-                            onTap: () {
-                              onSignInPressed();
-                            },
+                            onTap: QR.back,
                             child: const Text(
                               LoginTextConstants.signIn,
                               style: TextStyle(
@@ -148,7 +146,9 @@ class Register extends HookConsumerWidget {
                           child: InkWell(
                             splashColor: const Color.fromRGBO(255, 255, 255, 1),
                             onTap: () {
-                              onMailRecieved();
+                              QR.to(LoginRouter.root +
+                                  LoginRouter.createAccount +
+                                  LoginRouter.mailReceived);
                             },
                             child: const Text(
                               LoginTextConstants.recievedMail,

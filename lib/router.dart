@@ -15,7 +15,8 @@ import 'package:myecl/home/router.dart';
 import 'package:myecl/home/ui/home.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/ui/pages/main_page/main_page.dart';
-import 'package:myecl/login/ui/auth.dart';
+import 'package:myecl/login/router.dart';
+import 'package:myecl/login/ui/sign_in.dart';
 import 'package:myecl/others/ui/loading_page.dart';
 import 'package:myecl/others/ui/no_internert_page.dart';
 import 'package:myecl/settings/router.dart';
@@ -33,7 +34,6 @@ class AppRouter {
   final ProviderRef ref;
   late List<QRoute> routes = [];
   static const String root = '/';
-  static const String login = '/login';
   static const String loading = '/loading';
   static const String noInternet = '/no_internet';
   AppRouter(this.ref) {
@@ -102,8 +102,9 @@ class AppRouter {
         middleware: [AuthenticatedMiddleware(ref)],
       ),
       QRoute(
-        path: login,
-        builder: () => const AuthScreen(),
+        path: LoginRouter.root,
+        builder: () => const SignIn(),
+        children: LoginRouter(ref).routes,
       ),
       QRoute(
         path: loading,
