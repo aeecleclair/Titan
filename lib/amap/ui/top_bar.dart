@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/providers/amap_page_provider.dart';
+import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -11,8 +12,6 @@ class TopBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(amapPageProvider);
-    final pageNotifier = ref.watch(amapPageProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -27,35 +26,14 @@ class TopBar extends HookConsumerWidget {
                 builder: (BuildContext appBarContext) {
                   return IconButton(
                       onPressed: () {
-                        switch (page) {
-                          case AmapPage.main:
-                            controllerNotifier.toggle();
-                            break;
-                          case AmapPage.pres:
-                            pageNotifier.setAmapPage(AmapPage.main);
-                            break;
-                          case AmapPage.addProducts:
-                            pageNotifier.setAmapPage(AmapPage.main);
-                            break;
-                          case AmapPage.admin:
-                            pageNotifier.setAmapPage(AmapPage.main);
-                            break;
-                          case AmapPage.addEditProduct:
-                            pageNotifier.setAmapPage(AmapPage.admin);
-                            break;
-                          case AmapPage.addEditDelivery:
-                            pageNotifier.setAmapPage(AmapPage.admin);
-                            break;
-                          case AmapPage.detailPage:
-                            pageNotifier.setAmapPage(AmapPage.main);
-                            break;
-                          case AmapPage.deliveryDetail:
-                            pageNotifier.setAmapPage(AmapPage.admin);
-                            break;
+                        if (QR.currentPath == AmapRouter.root) {
+                          controllerNotifier.toggle();
+                        } else {
+                          QR.back();
                         }
                       },
                       icon: HeroIcon(
-                        page == AmapPage.main
+                        QR.currentPath == AmapRouter.root
                             ? HeroIcons.bars3BottomLeft
                             : HeroIcons.chevronLeft,
                         color: Colors.black,
@@ -74,10 +52,10 @@ class TopBar extends HookConsumerWidget {
             ),
             SizedBox(
               width: 70,
-              child: page == AmapPage.main
+              child: QR.currentPath == AmapRouter.root
                   ? IconButton(
                       onPressed: () {
-                        pageNotifier.setAmapPage(AmapPage.pres);
+                        QR.to(AmapRouter.root + AmapRouter.presentation);
                       },
                       icon: const HeroIcon(
                         HeroIcons.informationCircle,

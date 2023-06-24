@@ -2,7 +2,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
@@ -13,6 +12,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class Boutons extends HookConsumerWidget {
   const Boutons({Key? key}) : super(key: key);
@@ -21,7 +21,6 @@ class Boutons extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final order = ref.watch(orderProvider);
     final orderNotifier = ref.watch(orderProvider.notifier);
-    final pageNotifier = ref.watch(amapPageProvider.notifier);
     final deliveryId = ref.watch(deliveryIdProvider);
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
@@ -64,15 +63,15 @@ class Boutons extends HookConsumerWidget {
                         context, TypeMsg.error, AMAPTextConstants.noProduct);
                   } else {
                     Order newOrder = order.copyWith(
-                        deliveryId: deliveryId, user: me.toSimpleUser(), lastAmount: order.amount);
+                        deliveryId: deliveryId,
+                        user: me.toSimpleUser(),
+                        lastAmount: order.amount);
                     await tokenExpireWrapper(ref, () async {
                       final value = isEdit
-                          ? await orderListNotifier.updateOrder(
-                              newOrder)
-                          : await orderListNotifier.addOrder(
-                              newOrder);
+                          ? await orderListNotifier.updateOrder(newOrder)
+                          : await orderListNotifier.addOrder(newOrder);
                       if (value) {
-                        pageNotifier.setAmapPage(AmapPage.main);
+                        QR.back();
                         userAmountNotifier
                             .updateCash(order.lastAmount - order.amount);
                         if (isEdit) {
@@ -153,10 +152,10 @@ class Boutons extends HookConsumerWidget {
                         title: AMAPTextConstants.deleting,
                         onYes: () {
                           orderNotifier.setOrder(Order.empty());
-                          pageNotifier.setAmapPage(AmapPage.main);
+                          QR.back();
                         }));
               } else {
-                pageNotifier.setAmapPage(AmapPage.main);
+                QR.back();
               }
             },
           ),

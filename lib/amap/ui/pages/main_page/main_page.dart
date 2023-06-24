@@ -1,5 +1,7 @@
 import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/providers/orderable_deliveries.dart';
+import 'package:myecl/amap/router.dart';
+import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +9,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
@@ -21,16 +22,16 @@ import 'package:myecl/amap/ui/pages/main_page/orders_section.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-class MainPage extends HookConsumerWidget {
-  const MainPage({super.key});
+class AmapMainPage extends HookConsumerWidget {
+  const AmapMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final order = ref.watch(orderProvider);
     final orderNotifier = ref.watch(orderProvider.notifier);
-    final pageNotifier = ref.watch(amapPageProvider.notifier);
-    final isAdmin = ref.watch(isAmapAdmin);
+    final isAdmin = ref.watch(isAmapAdminProvider);
     final delivery = ref.watch(deliveryProvider);
     final deliveriesNotifier = ref.watch(deliveryListProvider.notifier);
     final ordersNotifier = ref.watch(userOrderListProvider.notifier);
@@ -56,296 +57,299 @@ class MainPage extends HookConsumerWidget {
       displayToast(context, type, text);
     }
 
-    return Refresher(
-        onRefresh: () async {
-          await ordersNotifier.loadOrderList(me.id);
-          await soldeNotifier.loadCashByUser(me.id);
-          await deliveriesNotifier.loadDeliveriesList();
-        },
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Text(
-                            solde.when(
-                                data: (s) =>
-                                    "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
-                                error: (e, s) => "Erreur",
-                                loading: () => AMAPTextConstants.loading),
-                            style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: AMAPColorConstants.greenGradient1))),
-                    if (isAdmin)
-                      GestureDetector(
-                        onTap: () {
-                          pageNotifier.setAmapPage(AmapPage.admin);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                              gradient: const RadialGradient(
-                                colors: [
-                                  AMAPColorConstants.greenGradient1,
-                                  AMAPColorConstants.greenGradient2
-                                ],
-                                center: Alignment.topLeft,
-                                radius: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: AMAPColorConstants.textDark
-                                        .withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 5))
-                              ]),
-                          child: const Row(
-                            children: [
-                              HeroIcon(HeroIcons.userGroup,
-                                  color: Colors.white),
-                              SizedBox(width: 10),
-                              Text("Admin",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white)),
-                            ],
-                          ),
-                        ),
-                      ),
-                  ]),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Stack(
-              children: [
-                Column(
-                  children: [
-                    OrderSection(
-                      onEdit: () {
-                        showPanel.value = true;
-                        animation.forward();
-                      },
-                      onTap: () {
-                        pageNotifier.setAmapPage(AmapPage.detailPage);
-                      },
-                      addOrder: () {
-                        solde.whenData(
-                          (s) {
-                            orderNotifier.setOrder(Order.empty());
-                            animation.forward();
-                            showPanel.value = true;
+    return AmapTemplate(
+      child: Refresher(
+          onRefresh: () async {
+            await ordersNotifier.loadOrderList(me.id);
+            await soldeNotifier.loadCashByUser(me.id);
+            await deliveriesNotifier.loadDeliveriesList();
+          },
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                              solde.when(
+                                  data: (s) =>
+                                      "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
+                                  error: (e, s) => "Erreur",
+                                  loading: () => AMAPTextConstants.loading),
+                              style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: AMAPColorConstants.greenGradient1))),
+                      if (isAdmin)
+                        GestureDetector(
+                          onTap: () {
+                            QR.to(AmapRouter.root + AmapRouter.admin);
                           },
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const DeliverySection(
-                      showSelected: false,
-                    ),
-                  ],
-                ),
-                AnimatedBuilder(
-                  builder: (context, child) {
-                    return Opacity(
-                        opacity: popAnimation.value,
-                        child: Transform.translate(
-                            offset: Offset(
-                                0,
-                                (1 - popAnimation.value) *
-                                    (MediaQuery.of(context).size.height)),
-                            child: child));
-                  },
-                  animation: animation,
-                  child: Container(
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height - 150,
-                    decoration: BoxDecoration(
-                      gradient: const RadialGradient(
-                        colors: [
-                          AMAPColorConstants.textLight,
-                          AMAPColorConstants.greenGradient1,
-                        ],
-                        center: Alignment.topRight,
-                        radius: 1.5,
-                      ),
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(50),
-                          topRight: Radius.circular(50)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AMAPColorConstants.textDark.withOpacity(0.3),
-                          spreadRadius: 5,
-                          blurRadius: 10,
-                          offset: const Offset(3, 3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Ajouter une commande',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                                gradient: const RadialGradient(
+                                  colors: [
+                                    AMAPColorConstants.greenGradient1,
+                                    AMAPColorConstants.greenGradient2
+                                  ],
+                                  center: Alignment.topLeft,
+                                  radius: 2,
                                 ),
-                              ),
-                              IconButton(
-                                icon: const HeroIcon(
-                                  HeroIcons.xMark,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
-                                onPressed: () {
-                                  animation.reverse();
-                                  showPanel.value = false;
-                                },
-                              ),
-                            ],
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: AMAPColorConstants.textDark
+                                          .withOpacity(0.2),
+                                      blurRadius: 10,
+                                      offset: const Offset(0, 5))
+                                ]),
+                            child: const Row(
+                              children: [
+                                HeroIcon(HeroIcons.userGroup,
+                                    color: Colors.white),
+                                SizedBox(width: 10),
+                                Text("Admin",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)),
+                              ],
+                            ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 50),
-                          child: Container(
-                              height: 70,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                border:
-                                    Border.all(color: Colors.white, width: 2),
-                              ),
-                              child: Row(
-                                  children: CollectionSlot.values
-                                      .map((e) => CollectionSLotelector(
-                                          collectionSlot: e))
-                                      .toList())),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        DeliverySection(
-                          editable: order.id == Order.empty().id,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ShrinkButton(
-                            onTap: () async {
-                              if (orderableDeliveriesIds
-                                  .contains(delivery.id)) {
-                                await tokenExpireWrapper(ref, () async {
-                                  await deliveryProductListNotifier
-                                      .loadProductList(delivery.products);
-                                });
-                                pageNotifier.setAmapPage(AmapPage.addProducts);
-                              } else {
-                                displayToastWithoutContext(TypeMsg.error,
-                                    AMAPTextConstants.noSelectedDelivery);
-                              }
+                    ]),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Stack(
+                children: [
+                  Column(
+                    children: [
+                      OrderSection(
+                        onEdit: () {
+                          showPanel.value = true;
+                          animation.forward();
+                        },
+                        onTap: () {
+                          QR.to(AmapRouter.root + AmapRouter.detailOrder);
+                        },
+                        addOrder: () {
+                          solde.whenData(
+                            (s) {
+                              orderNotifier.setOrder(Order.empty());
+                              animation.forward();
+                              showPanel.value = true;
                             },
-                            waitChild: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 30),
-                              height: 70,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    AMAPColorConstants.greenGradient2,
-                                    AMAPColorConstants.textDark,
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AMAPColorConstants.textDark
-                                        .withOpacity(0.3),
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 5),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const DeliverySection(
+                        showSelected: false,
+                      ),
+                    ],
+                  ),
+                  AnimatedBuilder(
+                    builder: (context, child) {
+                      return Opacity(
+                          opacity: popAnimation.value,
+                          child: Transform.translate(
+                              offset: Offset(
+                                  0,
+                                  (1 - popAnimation.value) *
+                                      (MediaQuery.of(context).size.height)),
+                              child: child));
+                    },
+                    animation: animation,
+                    child: Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height - 150,
+                      decoration: BoxDecoration(
+                        gradient: const RadialGradient(
+                          colors: [
+                            AMAPColorConstants.textLight,
+                            AMAPColorConstants.greenGradient1,
+                          ],
+                          center: Alignment.topRight,
+                          radius: 1.5,
+                        ),
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            topRight: Radius.circular(50)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AMAPColorConstants.textDark.withOpacity(0.3),
+                            spreadRadius: 5,
+                            blurRadius: 10,
+                            offset: const Offset(3, 3),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Ajouter une commande',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
                                   ),
-                                ],
-                              ),
-                              child: Container(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                width: double.infinity,
-                                child: const Center(
-                                    child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                )),
-                              ),
+                                ),
+                                IconButton(
+                                  icon: const HeroIcon(
+                                    HeroIcons.xMark,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                  onPressed: () {
+                                    animation.reverse();
+                                    showPanel.value = false;
+                                  },
+                                ),
+                              ],
                             ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 50),
                             child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 30),
-                              height: 70,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    AMAPColorConstants.greenGradient2,
-                                    AMAPColorConstants.textDark,
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
+                                height: 70,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  border:
+                                      Border.all(color: Colors.white, width: 2),
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AMAPColorConstants.textDark
-                                        .withOpacity(0.3),
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 5),
+                                child: Row(
+                                    children: CollectionSlot.values
+                                        .map((e) => CollectionSLotelector(
+                                            collectionSlot: e))
+                                        .toList())),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          DeliverySection(
+                            editable: order.id == Order.empty().id,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ShrinkButton(
+                              onTap: () async {
+                                if (orderableDeliveriesIds
+                                    .contains(delivery.id)) {
+                                  await tokenExpireWrapper(ref, () async {
+                                    await deliveryProductListNotifier
+                                        .loadProductList(delivery.products);
+                                  });
+                                  QR.to(
+                                      AmapRouter.root + AmapRouter.listProduct);
+                                } else {
+                                  displayToastWithoutContext(TypeMsg.error,
+                                      AMAPTextConstants.noSelectedDelivery);
+                                }
+                              },
+                              waitChild: Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 30),
+                                height: 70,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      AMAPColorConstants.greenGradient2,
+                                      AMAPColorConstants.textDark,
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
                                   ),
-                                ],
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AMAPColorConstants.textDark
+                                          .withOpacity(0.3),
+                                      spreadRadius: 2,
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 5),
+                                    ),
+                                  ],
+                                ),
+                                child: Container(
+                                  padding: const EdgeInsets.only(bottom: 5),
+                                  width: double.infinity,
+                                  child: const Center(
+                                      child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )),
+                                ),
                               ),
                               child: Container(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                width: double.infinity,
-                                child: const Center(
-                                  child: Text("Étape suivante",
-                                      style: TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w900,
-                                          color: Colors.white)),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 30),
+                                height: 70,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      AMAPColorConstants.greenGradient2,
+                                      AMAPColorConstants.textDark,
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AMAPColorConstants.textDark
+                                          .withOpacity(0.3),
+                                      spreadRadius: 2,
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 5),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ))
-                      ],
+                                child: Container(
+                                  padding: const EdgeInsets.only(bottom: 5),
+                                  width: double.infinity,
+                                  child: const Center(
+                                    child: Text("Étape suivante",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w900,
+                                            color: Colors.white)),
+                                  ),
+                                ),
+                              ))
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
-        ));
+                ],
+              ),
+            ],
+          )),
+    );
   }
 }

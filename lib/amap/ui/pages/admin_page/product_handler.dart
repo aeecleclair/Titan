@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/product_provider.dart';
 import 'package:myecl/amap/providers/sorted_by_category_products.dart';
+import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/product_ui.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/web_list_view.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class ProductHandler extends HookConsumerWidget {
   const ProductHandler({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(amapPageProvider.notifier);
     final productNotifier = ref.watch(productProvider.notifier);
     final sortedByCategoryProducts =
         ref.watch(sortedByCategoryProductsProvider);
@@ -56,7 +56,9 @@ class ProductHandler extends HookConsumerWidget {
               GestureDetector(
                 onTap: () {
                   productNotifier.setProduct(Product.empty());
-                  pageNotifier.setAmapPage(AmapPage.addEditProduct);
+                  QR.to(AmapRouter.root +
+                      AmapRouter.admin +
+                      AmapRouter.addEditProduct);
                 },
                 child: Container(
                     height: 185,
@@ -130,8 +132,9 @@ class ProductHandler extends HookConsumerWidget {
                               },
                               onEdit: () {
                                 productNotifier.setProduct(e);
-                                pageNotifier
-                                    .setAmapPage(AmapPage.addEditProduct);
+                                QR.to(AmapRouter.root +
+                                    AmapRouter.admin +
+                                    AmapRouter.addEditProduct);
                               },
                             ),
                           )

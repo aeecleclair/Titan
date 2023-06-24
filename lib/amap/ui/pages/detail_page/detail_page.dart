@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
+import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/order_ui.dart';
 import 'package:myecl/amap/ui/product_ui.dart';
 
@@ -10,83 +11,85 @@ class DetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final order = ref.watch(orderProvider);
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 60,
-                ),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey.shade50,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        blurRadius: 10,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
+    return AmapTemplate(
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 60,
                   ),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        alignment: Alignment.centerLeft,
-                        child: const Text(
-                          'Produits',
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.grey.shade50,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 10),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      order.products.isNotEmpty
-                          ? Wrap(
-                              children: order.products
-                                  .map((product) => ProductCard(
-                                        product: product,
-                                        onDelete: () async {},
-                                        onEdit: () {},
-                                        showButton: false,
-                                      ))
-                                  .toList(),
-                            )
-                          : const SizedBox(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          alignment: Alignment.centerLeft,
+                          child: const Text(
+                            'Produits',
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        order.products.isNotEmpty
+                            ? Wrap(
+                                children: order.products
+                                    .map((product) => ProductCard(
+                                          product: product,
+                                          onDelete: () async {},
+                                          onEdit: () {},
+                                          showButton: false,
+                                        ))
+                                    .toList(),
+                              )
+                            : const SizedBox(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Center(
-              child: CommandeUI(
-                order: order,
-                onTap: () {},
-                onEdit: () {},
-                showButton: false,
-                isDetail: true,
+                ],
               ),
             ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Center(
+                child: CommandeUI(
+                  order: order,
+                  onTap: () {},
+                  onEdit: () {},
+                  showButton: false,
+                  isDetail: true,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

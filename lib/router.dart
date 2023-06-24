@@ -3,11 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/middlewares/admin_middleware.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/admin/ui/pages/main_page/main_page.dart';
+import 'package:myecl/amap/router.dart';
+import 'package:myecl/amap/ui/pages/main_page/main_page.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/ui/pages/main_page/main_page.dart';
 import 'package:myecl/cinema/router.dart';
 import 'package:myecl/cinema/ui/pages/main_page/main_page.dart';
-import 'package:myecl/drawer/ui/app_drawer.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/event/ui/pages/main_page/main_page.dart';
 import 'package:myecl/home/router.dart';
@@ -39,7 +40,7 @@ class AppRouter {
     routes = [
       QRoute(
         path: root,
-        builder: () => const AppDrawer(),
+        builder: () => const HomePage(),
         middleware: [AuthenticatedMiddleware(ref)],
       ),
       QRoute(
@@ -88,6 +89,12 @@ class AppRouter {
         builder: () => const CinemaMainPage(),
         middleware: [AuthenticatedMiddleware(ref)],
         children: CinemaRouter(ref).routes,
+      ),
+      QRoute(
+        path: AmapRouter.root,
+        builder: () => const AmapMainPage(),
+        middleware: [AuthenticatedMiddleware(ref)],
+        children: AmapRouter(ref).routes,
       ),
       QRoute(
         path: HomeRouter.root,

@@ -31,7 +31,7 @@ class ModulesPage extends HookConsumerWidget {
             return Container(
               margin: const EdgeInsets.all(10),
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              key: Key(module.page.toString()),
+              key: Key(module.root.toString()),
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
