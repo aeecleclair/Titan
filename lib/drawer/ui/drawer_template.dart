@@ -68,11 +68,7 @@ class DrawerTemplate extends HookConsumerWidget {
                               MouseRegion(
                                 cursor: SystemMouseCursors.click,
                                 onEnter: (event) {
-                                  if (controller.isCompleted) {
-                                    controllerNotifier.close();
-                                  } else {
-                                    controllerNotifier.open();
-                                  }
+                                  controllerNotifier.toggle();
                                 },
                                 child: Container(
                                   color: Colors.transparent,
