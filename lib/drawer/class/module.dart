@@ -1,8 +1,5 @@
 import 'package:heroicons/heroicons.dart';
 
-enum ModuleType {
-  amap,
-}
 
 class Module {
   String name;
