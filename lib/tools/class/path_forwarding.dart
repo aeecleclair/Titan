@@ -1,29 +1,29 @@
 class PathForwarding {
   final String path;
-  final bool isForwarding;
+  final bool isLoggedIn;
   final bool canForward;
   PathForwarding({
     required this.path,
-    required this.isForwarding,
+    required this.isLoggedIn,
     required this.canForward,
   });
 
   PathForwarding copyWith({
     String? path,
-    bool? isForwarding,
+    bool? isLoggedIn,
     bool? canForward,
   }) {
     return PathForwarding(
       path: path ?? this.path,
-      isForwarding: isForwarding ?? this.isForwarding,
+      isLoggedIn: isLoggedIn ?? this.isLoggedIn,
       canForward: canForward ?? this.canForward,
     );
   }
 
   @override
   String toString() {
-    return 'PathForwarding(path: $path, isForwarding: $isForwarding,canForward: $canForward, )';
+    return 'PathForwarding(path: $path, isForwarding: $isLoggedIn,canForward: $canForward, )';
   }
 
-  PathForwarding.empty() : this(path: '', isForwarding: false, canForward: false);
+  PathForwarding.empty() : this(path: '', isLoggedIn: false, canForward: false);
 }

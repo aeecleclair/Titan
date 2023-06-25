@@ -21,7 +21,7 @@ class AuthenticatedMiddleware extends QMiddleware {
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final check = versionVerifier
         .whenData((value) => value.minimalTitanVersion <= titanVersion);
-    if (!pathForwarding.isForwarding) {
+    if (!pathForwarding.isLoggedIn && path != LoginRouter.root) {
       pathForwardingNotifier.forward(path);
     }
 
@@ -34,9 +34,14 @@ class AuthenticatedMiddleware extends QMiddleware {
             pathForwardingNotifier.reset();
             return null;
           }
+          if (path == LoginRouter.root && !pathForwarding.isLoggedIn && !isLoggedIn) {
+            return null;
+          }
           if (!isLoggedIn) {
-            pathForwardingNotifier.forward(LoginRouter.root);
             return LoginRouter.root;
+          }
+          if (!pathForwarding.isLoggedIn) {
+            pathForwardingNotifier.login();
           }
           if (pathForwarding.path == path) {
             pathForwardingNotifier.reset();

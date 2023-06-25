@@ -5,11 +5,15 @@ class PathForwardingProvider extends StateNotifier<PathForwarding> {
   PathForwardingProvider() : super(PathForwarding.empty());
 
   void forward(String path) {
-    state = state.copyWith(path: path, isForwarding: true, canForward: false);
+    state = state.copyWith(path: path, canForward: false);
   }
 
   void check() {
     state = state.copyWith(canForward: true);
+  }
+
+  void login() {
+    state = state.copyWith(isLoggedIn: true);
   }
 
   void reset() {

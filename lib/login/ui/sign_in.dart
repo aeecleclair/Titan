@@ -6,8 +6,8 @@ import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/main_page.dart';
 import 'package:myecl/login/ui/sign_in_up_bar.dart';
-import 'package:myecl/router.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SignIn extends HookConsumerWidget {
@@ -16,6 +16,7 @@ class SignIn extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authNotifier = ref.watch(authTokenProvider.notifier);
+    final pathForwarding = ref.read(pathForwardingProvider);
     return LoginTemplate(
       child: AutofillGroup(
           child: Form(
@@ -59,7 +60,7 @@ class SignIn extends HookConsumerWidget {
                                 await authNotifier.getTokenFromRequest();
                                 ref.watch(authTokenProvider).when(
                                     data: (token) {
-                                      QR.to(AppRouter.root);
+                                      QR.to(pathForwarding.path);
                                     },
                                     error: (e, s) {
                                       displayToast(context, TypeMsg.error,
