@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/loan/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/loan/middlewares/loan_admin_middleware.dart';
 import 'package:myecl/loan/ui/pages/detail_pages/detail_loan.dart';
@@ -15,6 +17,11 @@ class LoanRouter {
   static const String addEditLoan = '/add_edit_loan';
   static const String addEditItem = '/add_edit_item';
   static const String detail = '/detail';
+  static final Module module = Module(
+      name: "Prêt",
+      icon: HeroIcons.buildingLibrary,
+      root: LoanRouter.root,
+      selected: false);
   LoanRouter(this.ref);
 
   QRoute route() => QRoute(

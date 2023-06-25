@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/vote/middlewares/vote_admin_middleware.dart';
 import 'package:myecl/vote/ui/pages/admin_page/admin_page.dart';
@@ -15,6 +17,11 @@ class VoteRouter {
   static const String addEditPretendance = '/add_edit_pretendance';
   static const String addSection = '/add_edit_section';
   static const String detail = '/detail';
+  static final Module module = Module(
+      name: "Vote",
+      icon: HeroIcons.envelopeOpen,
+      root: VoteRouter.root,
+      selected: false);
   VoteRouter(this.ref);
 
   QRoute route() => QRoute(

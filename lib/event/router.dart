@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/event/middlewares/event_admin_middleware.dart';
 import 'package:myecl/event/ui/pages/detail_page/detail_page.dart';
 import 'package:myecl/event/ui/pages/admin_page/admin_page.dart';
@@ -13,6 +15,11 @@ class EventRouter {
   static const String admin = '/admin';
   static const String addEdit = '/add_edit';
   static const String detail = '/detail';
+  static final Module module = Module(
+      name: "Évenements",
+      icon: HeroIcons.calendar,
+      root: EventRouter.root,
+      selected: false);
   EventRouter(this.ref);
 
   QRoute route() => QRoute(

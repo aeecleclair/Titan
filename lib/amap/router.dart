@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/middlewares/amap_middleware.dart';
 import 'package:myecl/amap/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/amap/ui/pages/delivery_pages/add_edit_delivery_cmd_page.dart';
@@ -8,6 +9,7 @@ import 'package:myecl/amap/ui/pages/list_products_page/list_products_page.dart';
 import 'package:myecl/amap/ui/pages/main_page/main_page.dart';
 import 'package:myecl/amap/ui/pages/presentation_page/text.dart';
 import 'package:myecl/amap/ui/pages/product_pages/add_edit_product.dart';
+import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -21,6 +23,12 @@ class AmapRouter {
   static const String listProduct = '/list_product';
   static const String presentation = '/presentation';
   static const String addEditProduct = '/add_edit_product';
+  static final Module module = Module(
+    name: "Amap",
+    icon: HeroIcons.shoppingCart,
+    root: AmapRouter.root,
+    selected: false,
+  );
   AmapRouter(this.ref);
 
   QRoute route() => QRoute(

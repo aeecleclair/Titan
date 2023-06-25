@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/cinema/router.dart';
@@ -30,46 +29,14 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   String dbAllModules = "allModules";
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
-    Module(
-        name: "Calendrier",
-        icon: HeroIcons.calendarDays,
-        root: HomeRouter.root,
-        selected: false),
-    Module(
-        name: "Réservation",
-        icon: HeroIcons.tableCells,
-        root: BookingRouter.root,
-        selected: false),
-    Module(
-        name: "Prêt",
-        icon: HeroIcons.buildingLibrary,
-        root: LoanRouter.root,
-        selected: false),
-    Module(
-        name: "Amap",
-        icon: HeroIcons.shoppingCart,
-        root: AmapRouter.root,
-        selected: false),
-    Module(
-        name: "Tombola",
-        icon: HeroIcons.gift,
-        root: RaffleRouter.root,
-        selected: false),
-    Module(
-        name: "Évenements",
-        icon: HeroIcons.calendar,
-        root: EventRouter.root,
-        selected: false),
-    Module(
-        name: "Vote",
-        icon: HeroIcons.envelopeOpen,
-        root: VoteRouter.root,
-        selected: false),
-    Module(
-        name: "Cinéma",
-        icon: HeroIcons.ticket,
-        root: CinemaRouter.root,
-        selected: false),
+    AmapRouter.module,
+    BookingRouter.module,
+    CinemaRouter.module,
+    EventRouter.module,
+    HomeRouter.module,
+    LoanRouter.module,
+    RaffleRouter.module,
+    VoteRouter.module,
   ];
   ModulesNotifier() : super([]);
 

@@ -50,7 +50,7 @@ class MyApp extends HookConsumerWidget {
       },
       routerDelegate: QRouterDelegate(
         appRouter.routes,
-        initPath: '/',
+        initPath: AppRouter.root,
       ),
     );
   }
