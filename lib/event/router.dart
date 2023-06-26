@@ -1,11 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/event/middlewares/event_admin_middleware.dart';
+import 'package:myecl/event/providers/is_admin.dart';
 import 'package:myecl/event/ui/pages/detail_page/detail_page.dart';
 import 'package:myecl/event/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/event/ui/pages/event_pages/add_edit_event_page.dart';
 import 'package:myecl/event/ui/pages/main_page/main_page.dart';
+import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -28,7 +29,7 @@ class EventRouter {
         middleware: [AuthenticatedMiddleware(ref)],
         children: [
           QRoute(path: admin, builder: () => const AdminPage(), middleware: [
-            EventAdminMiddleware(ref),
+            AdminMiddleware(ref, isEventAdminProvider),
           ], children: [
             QRoute(
                 path: detail, builder: () => const DetailPage(isAdmin: true)),

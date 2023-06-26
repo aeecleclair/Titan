@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/amap/middlewares/amap_middleware.dart';
+import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
 import 'package:myecl/amap/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/amap/ui/pages/delivery_pages/add_edit_delivery_cmd_page.dart';
 import 'package:myecl/amap/ui/pages/detail_delivery_page/detail_page.dart';
@@ -10,6 +10,7 @@ import 'package:myecl/amap/ui/pages/main_page/main_page.dart';
 import 'package:myecl/amap/ui/pages/presentation_page/text.dart';
 import 'package:myecl/amap/ui/pages/product_pages/add_edit_product.dart';
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -37,7 +38,7 @@ class AmapRouter {
         middleware: [AuthenticatedMiddleware(ref)],
         children: [
           QRoute(path: admin, builder: () => const AdminPage(), middleware: [
-            AmapAdminMiddleware(ref),
+            AdminMiddleware(ref, isAmapAdminProvider),
           ], children: [
             QRoute(
                 path: addEditDelivery,

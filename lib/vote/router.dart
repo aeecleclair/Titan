@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/vote/middlewares/vote_admin_middleware.dart';
+import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
 import 'package:myecl/vote/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/vote/ui/pages/detail_page/detail_page.dart';
 import 'package:myecl/vote/ui/pages/main_page/main_page.dart';
@@ -30,7 +31,7 @@ class VoteRouter {
         middleware: [AuthenticatedMiddleware(ref)],
         children: [
           QRoute(path: admin, builder: () => const AdminPage(), middleware: [
-            VoteAdminMiddleware(ref),
+            AdminMiddleware(ref, isVoteAdminProvider),
           ], children: [
             QRoute(path: detail, builder: () => const DetailPage()),
             QRoute(
