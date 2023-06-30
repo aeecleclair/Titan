@@ -30,7 +30,7 @@ class OnGoingLoan extends HookConsumerWidget {
     final loaner = ref.watch(loanerProvider);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loanList = ref.watch(loanerLoanListProvider);
-    final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
+    final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final loanersItems = ref.watch(loanersItemsProvider);
     final pageNotifier = ref.watch(loanPageProvider.notifier);
     final loanNotifier = ref.watch(loanProvider.notifier);
@@ -40,6 +40,7 @@ class OnGoingLoan extends HookConsumerWidget {
     final endNotifier = ref.watch(endProvider.notifier);
     final editingController = useTextEditingController();
     final focus = ref.watch(loanFocusProvider);
+    final itemList = ref.watch(itemListProvider);
     final focusNode = useFocusNode();
     if (focus) {
       focusNode.requestFocus();
@@ -116,6 +117,7 @@ class OnGoingLoan extends HookConsumerWidget {
                           startNotifier.setStart(processDate(DateTime.now()));
                           endNotifier.setEnd("");
                           pageNotifier.setLoanPage(LoanPage.addEditLoan);
+                          loanersItemsNotifier.setTData(loaner, itemList);
                         },
                         child: Container(
                           padding: const EdgeInsets.all(15.0),
@@ -237,7 +239,7 @@ class OnGoingLoan extends HookConsumerWidget {
                                               if (value) {
                                                 pageNotifier.setLoanPage(
                                                     LoanPage.admin);
-                                                await loanersitemsNotifier
+                                                await loanersItemsNotifier
                                                     .setTData(
                                                         loaner,
                                                         AsyncData(
