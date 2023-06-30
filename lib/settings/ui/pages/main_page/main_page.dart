@@ -188,9 +188,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   SettingsItem(
                     icon: HeroIcons.pencil,
                     onTap: () {
-                      QR.navigator
-                          .push(SettingsRouter.root + SettingsRouter.editAccount);
-                      // pageNotifier.setSettingsPage(SettingsPage.edit);
+                      QR.to(SettingsRouter.root + SettingsRouter.editAccount);
                     },
                     child: const Text(SettingsTextConstants.editAccount,
                         style: TextStyle(fontSize: 16, color: Colors.black)),

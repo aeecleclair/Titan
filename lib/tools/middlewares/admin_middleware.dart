@@ -10,7 +10,6 @@ class AdminMiddleware extends QMiddleware {
 
   @override
   Future<String?> redirectGuard(String path) async {
-    final isAdmin = ref.watch(isAdminProvider);
-    return isAdmin ? null : AppRouter.root;
+    return ref.watch(isAdminProvider) ? null : AppRouter.root;
   }
 }
