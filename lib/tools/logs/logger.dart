@@ -15,7 +15,7 @@ class Logger {
     Directory root = await getApplicationDocumentsDirectory();
     final path = '${root.path}/$logFileName';
     if (!(await File(path).exists())) {
-      await Directory(path).create(recursive: true);
+      await File(path).create();
     }
     logFile = File(path);
   }
