@@ -33,7 +33,9 @@ class ForgetPassword extends HookConsumerWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: GestureDetector(
-                onTap: QR.back,
+                onTap: () {
+                  QR.to(LoginRouter.root);
+                },
                 child: const HeroIcon(
                   HeroIcons.chevronLeft,
                   color: Colors.white,

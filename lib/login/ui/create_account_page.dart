@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/class/create_account.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
+import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/login_field.dart';
 import 'package:myecl/login/ui/main_page.dart';
@@ -284,7 +285,9 @@ class CreateAccountPage extends HookConsumerWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: GestureDetector(
-                onTap: QR.back,
+                onTap: () {
+                  QR.to(LoginRouter.createAccount);
+                },
                 child: const HeroIcon(
                   HeroIcons.chevronLeft,
                   color: Colors.white,

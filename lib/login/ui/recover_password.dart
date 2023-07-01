@@ -103,7 +103,9 @@ class RecoverPasswordPage extends HookConsumerWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: GestureDetector(
-                onTap: QR.back,
+                onTap: () {
+                  QR.to(LoginRouter.forgotPassword);
+                },
                 child: const HeroIcon(
                   HeroIcons.chevronLeft,
                   color: Colors.white,
