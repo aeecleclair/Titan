@@ -130,7 +130,9 @@ class Register extends HookConsumerWidget {
                           alignment: Alignment.centerLeft,
                           child: InkWell(
                             splashColor: const Color.fromRGBO(255, 255, 255, 1),
-                            onTap: QR.back,
+                            onTap: () {
+                              QR.to(LoginRouter.root);
+                            },
                             child: const Text(
                               LoginTextConstants.signIn,
                               style: TextStyle(
