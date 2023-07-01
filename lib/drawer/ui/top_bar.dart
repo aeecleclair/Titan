@@ -27,6 +27,7 @@ class TopBar extends HookConsumerWidget {
     final isConnected = ref.watch(isConnectedProvider);
     final animation = useAnimationController(
         duration: const Duration(milliseconds: 250), initialValue: 0.0);
+
     return Column(children: [
       Container(
         height: 20,
@@ -48,7 +49,7 @@ class TopBar extends HookConsumerWidget {
                       animation.reverse();
                     }
                   } else {
-                    QR.to(SettingsRouter.root);
+    QR.to(SettingsRouter.root);
                     controllerNotifier.toggle();
                     hasScrolled.setHasScrolled(false);
                   }
@@ -74,9 +75,9 @@ class TopBar extends HookConsumerWidget {
                               ),
                               child: CircleAvatar(
                                 radius: 25,
-                                backgroundImage: file.isEmpty
-                                    ? const AssetImage("assets/images/logo.png")
-                                    : Image.memory(file).image,
+                                backgroundImage: file.isEmpty ?
+                                const AssetImage("assets/images/logo.png") :
+                                Image.memory(file).image,
                               ),
                             ),
                             if (isAdmin)
@@ -160,11 +161,11 @@ class TopBar extends HookConsumerWidget {
                                   color: Colors.grey.shade100,
                                   fontSize: 15,
                                 ),
-                              ))
-                        ]),
-                  ],
+                              )
+                            ),
+                    ],
+                  ),]),
                 ),
-              ),
             ],
           ),
           if (!isConnected)
@@ -190,7 +191,7 @@ class TopBar extends HookConsumerWidget {
                     child: GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
-                        QR.to(SettingsRouter.root);
+    QR.to(SettingsRouter.root);
                         controllerNotifier.toggle();
                         hasScrolled.setHasScrolled(false);
                       },
@@ -198,10 +199,9 @@ class TopBar extends HookConsumerWidget {
                         children: [
                           HeroIcon(
                             HeroIcons.cog,
-                            color:
-                                QR.currentPath.startsWith(SettingsRouter.root)
-                                    ? DrawerColorConstants.selectedText
-                                    : DrawerColorConstants.lightText,
+                            color: QR.currentPath.startsWith(SettingsRouter.root)
+                                ? DrawerColorConstants.selectedText
+                                : DrawerColorConstants.lightText,
                             size: 25,
                           ),
                           Container(
@@ -210,7 +210,7 @@ class TopBar extends HookConsumerWidget {
                           Text(DrawerTextConstants.settings,
                               style: TextStyle(
                                 color: QR.currentPath
-                                        .startsWith(SettingsRouter.root)
+                                    .startsWith(SettingsRouter.root)
                                     ? DrawerColorConstants.selectedText
                                     : DrawerColorConstants.lightText,
                                 fontSize: 15,
