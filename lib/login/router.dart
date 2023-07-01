@@ -17,69 +17,67 @@ class LoginRouter {
   static const String mailReceived = '/mail_received';
   LoginRouter(this.ref);
 
+  QRoute accountRoute() => QRoute(
+          path: createAccount,
+          builder: () => const Register(),
+          pageType: QCustomPage(
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return Scaffold(
+                body: Stack(
+                  children: [
+                    SizedBox.expand(
+                      child: CustomPaint(
+                        painter: BackgroundPainter(
+                          animation: animation,
+                        ),
+                      ),
+                    ),
+                    SafeArea(
+                      child: Center(child: child),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          children: [
+            QRoute(
+                path: mailReceived, builder: () => const CreateAccountPage()),
+          ]);
+
+  QRoute passwordRoute() => QRoute(
+          path: forgotPassword,
+          builder: () => const ForgetPassword(),
+          pageType: QCustomPage(
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return Scaffold(
+                body: Stack(
+                  children: [
+                    SizedBox.expand(
+                      child: CustomPaint(
+                        painter: BackgroundPainter(
+                          animation: animation,
+                        ),
+                      ),
+                    ),
+                    SafeArea(
+                      child: Center(child: child),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          children: [
+            QRoute(
+                path: mailReceived, builder: () => const RecoverPasswordPage()),
+          ]);
+
   QRoute route() => QRoute(
         path: LoginRouter.root,
         builder: () => const SignIn(),
         middleware: [AuthenticatedMiddleware(ref)],
-        children: [
-          QRoute(
-              path: createAccount,
-              builder: () => const Register(),
-              pageType: QCustomPage(
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  return Scaffold(
-                    body: Stack(
-                      children: [
-                        SizedBox.expand(
-                          child: CustomPaint(
-                            painter: BackgroundPainter(
-                              animation: animation,
-                            ),
-                          ),
-                        ),
-                        SafeArea(
-                          child: Center(child: child),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-              children: [
-                QRoute(
-                    path: mailReceived,
-                    builder: () => const CreateAccountPage()),
-              ]),
-          QRoute(
-              path: forgotPassword,
-              builder: () => const ForgetPassword(),
-              pageType: QCustomPage(
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  return Scaffold(
-                    body: Stack(
-                      children: [
-                        SizedBox.expand(
-                          child: CustomPaint(
-                            painter: BackgroundPainter(
-                              animation: animation,
-                            ),
-                          ),
-                        ),
-                        SafeArea(
-                          child: Center(child: child),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-              children: [
-                QRoute(
-                    path: mailReceived,
-                    builder: () => const RecoverPasswordPage()),
-              ]),
-        ],
       );
 }

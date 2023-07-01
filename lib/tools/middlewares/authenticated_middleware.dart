@@ -30,11 +30,13 @@ class AuthenticatedMiddleware extends QMiddleware {
           if (!value) {
             return AppRouter.update;
           }
-          if (pathForwarding.path.startsWith(LoginRouter.root)) {
+          if (pathForwarding.path != LoginRouter.root) {
             pathForwardingNotifier.reset();
             return null;
           }
-          if (path == LoginRouter.root && !pathForwarding.isLoggedIn && !isLoggedIn) {
+          if (path != LoginRouter.root &&
+              !pathForwarding.isLoggedIn &&
+              !isLoggedIn) {
             return null;
           }
           if (!isLoggedIn) {

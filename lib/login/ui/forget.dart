@@ -97,8 +97,7 @@ class ForgetPassword extends HookConsumerWidget {
                         displayToastWithContext(
                             TypeMsg.msg, LoginTextConstants.sendedResetMail);
                         email.clear();
-                        QR.to(LoginRouter.root +
-                            LoginRouter.forgotPassword +
+                        QR.to(LoginRouter.forgotPassword +
                             LoginRouter.mailReceived);
                       } else {
                         displayToastWithContext(
@@ -132,8 +131,7 @@ class ForgetPassword extends HookConsumerWidget {
                           child: InkWell(
                             splashColor: const Color.fromRGBO(255, 255, 255, 1),
                             onTap: () {
-                              QR.to(LoginRouter.root +
-                                  LoginRouter.forgotPassword +
+                              QR.to(LoginRouter.forgotPassword +
                                   LoginRouter.mailReceived);
                             },
                             child: const Text(

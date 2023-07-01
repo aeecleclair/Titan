@@ -85,8 +85,7 @@ class SignIn extends HookConsumerWidget {
                                 splashColor:
                                     const Color.fromRGBO(255, 255, 255, 1),
                                 onTap: () {
-                                  QR.to(LoginRouter.root +
-                                      LoginRouter.createAccount);
+                                  QR.to(LoginRouter.createAccount);
                                 },
                                 child: const Text(
                                   LoginTextConstants.createAccount,
@@ -105,8 +104,7 @@ class SignIn extends HookConsumerWidget {
                                 splashColor:
                                     const Color.fromRGBO(255, 255, 255, 1),
                                 onTap: () {
-                                  QR.to(LoginRouter.root +
-                                      LoginRouter.forgotPassword);
+                                  QR.to(LoginRouter.forgotPassword);
                                 },
                                 child: const Text(
                                   LoginTextConstants.forgotPassword,

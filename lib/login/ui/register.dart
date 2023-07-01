@@ -106,8 +106,7 @@ class Register extends HookConsumerWidget {
                           if (value) {
                             hidePass.value = true;
                             mail.clear();
-                            QR.to(LoginRouter.root +
-                                LoginRouter.createAccount +
+                            QR.to(LoginRouter.createAccount +
                                 LoginRouter.mailReceived);
                             displayToastWithContext(
                                 TypeMsg.msg, LoginTextConstants.sendedMail);
@@ -146,8 +145,7 @@ class Register extends HookConsumerWidget {
                           child: InkWell(
                             splashColor: const Color.fromRGBO(255, 255, 255, 1),
                             onTap: () {
-                              QR.to(LoginRouter.root +
-                                  LoginRouter.createAccount +
+                              QR.to(LoginRouter.createAccount +
                                   LoginRouter.mailReceived);
                             },
                             child: const Text(
