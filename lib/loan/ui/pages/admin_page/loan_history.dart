@@ -9,7 +9,7 @@ import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/web_list_view.dart';
+import 'package:myecl/tools/ui/horizontal_list_view.dart';
 
 class HistoryLoan extends HookConsumerWidget {
   const HistoryLoan({super.key});

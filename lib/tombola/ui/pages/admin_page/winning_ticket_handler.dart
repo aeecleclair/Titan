@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/winning_ticket_card.dart';
+import 'package:myecl/tools/ui/horizontal_list_view.dart';
 
 class WinningTicketHandler extends HookConsumerWidget {
   const WinningTicketHandler({super.key});
@@ -24,9 +25,7 @@ class WinningTicketHandler extends HookConsumerWidget {
         const SizedBox(
           height: 10,
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
+        HorizontalListView(
           child: Row(
             children: [
               const SizedBox(

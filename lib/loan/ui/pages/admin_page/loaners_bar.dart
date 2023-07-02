@@ -5,6 +5,7 @@ import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/ui/loaner_chip.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/horizontal_list_view.dart';
 
 class LoanersBar extends HookConsumerWidget {
   final Function(Loaner) onTap;
@@ -15,9 +16,7 @@ class LoanersBar extends HookConsumerWidget {
     final adminLoanList = ref.watch(adminLoanListProvider);
     final loaner = ref.watch(loanerProvider);
     return adminLoanList.when(
-      data: (loans) => SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
+      data: (loans) => HorizontalListView(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

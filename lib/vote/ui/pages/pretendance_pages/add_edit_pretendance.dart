@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -197,9 +198,7 @@ class AddEditPretendancePage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 50),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
+              HorizontalListView(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -231,9 +230,7 @@ class AddEditPretendancePage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
+              HorizontalListView(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

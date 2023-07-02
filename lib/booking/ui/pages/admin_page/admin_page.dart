@@ -14,6 +14,7 @@ import 'package:myecl/booking/ui/calendar.dart';
 import 'package:myecl/booking/ui/pages/admin_page/list_booking.dart';
 import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -105,9 +106,7 @@ class AdminPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 30),
             roomList.when(
-              data: (List<Room> data) => SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
+              data: (List<Room> data) => HorizontalListView(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

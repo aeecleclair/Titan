@@ -10,6 +10,7 @@ import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -138,9 +139,7 @@ class SettingsMainPage extends HookConsumerWidget {
             const SizedBox(
               height: 100,
             ),
-            SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
+            HorizontalListView(
               child: Row(children: [
                 const SizedBox(
                   width: 15,

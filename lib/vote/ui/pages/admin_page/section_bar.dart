@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
@@ -33,9 +34,7 @@ class SectionBar extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+    return HorizontalListView(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
