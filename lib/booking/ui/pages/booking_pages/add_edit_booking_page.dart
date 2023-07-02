@@ -19,6 +19,7 @@ import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -102,9 +103,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 20),
                 rooms.when(
-                    data: (data) => SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(),
+                    data: (data) => HorizontalListView(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [

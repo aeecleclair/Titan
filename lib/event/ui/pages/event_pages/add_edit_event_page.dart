@@ -19,6 +19,7 @@ import 'package:myecl/event/ui/pages/event_pages/event_type_chip.dart';
 import 'package:myecl/event/ui/pages/event_pages/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -105,9 +106,7 @@ class AddEditEventPage extends HookConsumerWidget {
                               color: Color.fromARGB(255, 149, 149, 149)))),
                 ),
                 const SizedBox(height: 30),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
+                HorizontalListView(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

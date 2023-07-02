@@ -12,6 +12,7 @@ import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/check_item_card.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/horizontal_list_view.dart';
 
 class ItemBar extends HookConsumerWidget {
   final bool isEdit;
@@ -55,9 +56,7 @@ class ItemBar extends HookConsumerWidget {
                   .toList()
                 ..sort((a, b) => a.name.compareTo(b.name));
               itemList = sortedAvailable + sortedUnavailable;
-              return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
+              return HorizontalListView(
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [

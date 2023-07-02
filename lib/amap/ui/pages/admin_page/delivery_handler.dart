@@ -7,7 +7,7 @@ import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/delivery_ui.dart';
-import 'package:myecl/tools/ui/web_list_view.dart';
+import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DeliveryHandler extends HookConsumerWidget {

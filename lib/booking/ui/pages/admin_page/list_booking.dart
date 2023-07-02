@@ -11,7 +11,7 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/web_list_view.dart';
+import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ListBooking extends HookConsumerWidget {

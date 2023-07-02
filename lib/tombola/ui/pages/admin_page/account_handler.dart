@@ -9,6 +9,7 @@ import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/adding_user_container.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/cash_container.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AccountHandler extends HookConsumerWidget {
@@ -79,9 +80,7 @@ class AccountHandler extends HookConsumerWidget {
         ),
         SizedBox(
             height: 135,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
+            child: HorizontalListView(
               child: Row(
                 children: [
                   const SizedBox(
