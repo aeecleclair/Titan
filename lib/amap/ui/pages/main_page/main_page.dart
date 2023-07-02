@@ -81,7 +81,7 @@ class AmapMainPage extends HookConsumerWidget {
                               solde.when(
                                   data: (s) =>
                                       "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
-                                  error: (e, s) => "Erreur",
+                                  error: (e, s) => AMAPTextConstants.error,
                                   loading: () => AMAPTextConstants.loading),
                               style: const TextStyle(
                                   fontSize: 20,
@@ -117,7 +117,7 @@ class AmapMainPage extends HookConsumerWidget {
                                 HeroIcon(HeroIcons.userGroup,
                                     color: Colors.white),
                                 SizedBox(width: 10),
-                                Text("Admin",
+                                Text(AMAPTextConstants.admin,
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -210,7 +210,7 @@ class AmapMainPage extends HookConsumerWidget {
                                 const Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    'Ajouter une commande',
+                                    AMAPTextConstants.addOrder,
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -332,7 +332,7 @@ class AmapMainPage extends HookConsumerWidget {
                                   padding: const EdgeInsets.only(bottom: 5),
                                   width: double.infinity,
                                   child: const Center(
-                                    child: Text("Étape suivante",
+                                    child: Text(AMAPTextConstants.nextStep,
                                         style: TextStyle(
                                             fontSize: 25,
                                             fontWeight: FontWeight.w900,

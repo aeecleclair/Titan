@@ -39,7 +39,7 @@ class OrderSection extends HookConsumerWidget {
         child: Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            'Commandes',
+            AMAPTextConstants.orders,
             style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

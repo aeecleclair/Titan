@@ -37,7 +37,7 @@ class ProductHandler extends HookConsumerWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           alignment: Alignment.centerLeft,
-          child: const Text("Produits",
+          child: const Text(AMAPTextConstants.products,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -96,7 +96,7 @@ class ProductHandler extends HookConsumerWidget {
               ),
               products.isEmpty
                   ? const Center(
-                      child: Text("Aucun produit"),
+                      child: Text(AMAPTextConstants.noProduct),
                     )
                   : Row(
                       children: products
@@ -107,9 +107,10 @@ class ProductHandler extends HookConsumerWidget {
                                 await showDialog(
                                     context: context,
                                     builder: (context) => CustomDialogBox(
-                                          title: "Supprimer le produit",
-                                          descriptions:
-                                              "Voulez-vous vraiment supprimer ce produit?",
+                                          title:
+                                              AMAPTextConstants.deleteProduct,
+                                          descriptions: AMAPTextConstants
+                                              .deleteProductDescription,
                                           onYes: () {
                                             tokenExpireWrapper(ref, () async {
                                               final value =

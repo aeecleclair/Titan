@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/components/order_ui.dart';
 import 'package:myecl/amap/ui/components/product_ui.dart';
@@ -45,7 +46,7 @@ class DetailPage extends HookConsumerWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           alignment: Alignment.centerLeft,
                           child: const Text(
-                            'Produits',
+                            AMAPTextConstants.products,
                             style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,

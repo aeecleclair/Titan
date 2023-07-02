@@ -30,7 +30,7 @@ class DeliverySection extends HookConsumerWidget {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Livraisons',
+              AMAPTextConstants.deliveries,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -44,7 +44,7 @@ class DeliverySection extends HookConsumerWidget {
           data: (data) {
             if (orderableDeliveries.isEmpty) {
               return const Center(
-                child: Text('Aucune livraison prévue'),
+                child: Text(AMAPTextConstants.notPlannedDelivery),
               );
             }
             return SingleChildScrollView(

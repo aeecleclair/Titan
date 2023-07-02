@@ -42,7 +42,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   Text(
-                    "Date de livraison : ${processDate(delivery.deliveryDate)}",
+                    "${AMAPTextConstants.deliveryDate} : ${processDate(delivery.deliveryDate)}",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -53,7 +53,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                   ),
                   const Align(
                     alignment: Alignment.centerLeft,
-                    child: Text("Produits :",
+                    child: Text("${AMAPTextConstants.products} :",
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -129,7 +129,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
             Container(
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 30),
-              child: const Text("Commandes :",
+              child: const Text("${AMAPTextConstants.orders} :",
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -151,7 +151,8 @@ class DetailDeliveryPage extends HookConsumerWidget {
                       if (data.isEmpty) {
                         return Container(
                             margin: const EdgeInsets.only(bottom: 50),
-                            child: const Center(child: Text("Aucune commande")));
+                            child: const Center(
+                                child: Text(AMAPTextConstants.noOrder)));
                       } else {
                         return cash.when(
                           data: (cash) {
