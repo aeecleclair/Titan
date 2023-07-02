@@ -258,7 +258,7 @@ class DeliveryUi extends HookConsumerWidget {
                         builder: ((context) => CustomDialogBox(
                             title: delivery.status == DeliveryStatus.creation
                                 ? AMAPTextConstants.openDelivery
-                                : delivery.status == DeliveryStatus.orderable
+                                : delivery.status == DeliveryStatus.available
                                     ? AMAPTextConstants.lock
                                     : delivery.status == DeliveryStatus.locked
                                         ? AMAPTextConstants.deliver
@@ -266,7 +266,7 @@ class DeliveryUi extends HookConsumerWidget {
                             descriptions: delivery.status ==
                                     DeliveryStatus.creation
                                 ? AMAPTextConstants.openningDelivery
-                                : delivery.status == DeliveryStatus.orderable
+                                : delivery.status == DeliveryStatus.available
                                     ? AMAPTextConstants.lockingDelivery
                                     : delivery.status == DeliveryStatus.locked
                                         ? AMAPTextConstants.deliveringDelivery
@@ -285,7 +285,7 @@ class DeliveryUi extends HookConsumerWidget {
                                           AMAPTextConstants.deliveryNotOpened);
                                     }
                                     break;
-                                  case DeliveryStatus.orderable:
+                                  case DeliveryStatus.available:
                                     final value = await deliveryListNotifier
                                         .lockDelivery(delivery);
                                     if (value) {
@@ -396,7 +396,7 @@ class DeliveryUi extends HookConsumerWidget {
                           child: Text(
                             delivery.status == DeliveryStatus.creation
                                 ? AMAPTextConstants.openDelivery
-                                : delivery.status == DeliveryStatus.orderable
+                                : delivery.status == DeliveryStatus.available
                                     ? AMAPTextConstants.closeDelivery
                                     : delivery.status == DeliveryStatus.locked
                                         ? AMAPTextConstants.endingDelivery
@@ -411,7 +411,7 @@ class DeliveryUi extends HookConsumerWidget {
                         HeroIcon(
                           delivery.status == DeliveryStatus.creation
                               ? HeroIcons.lockOpen
-                              : delivery.status == DeliveryStatus.orderable
+                              : delivery.status == DeliveryStatus.available
                                   ? HeroIcons.lockClosed
                                   : delivery.status == DeliveryStatus.locked
                                       ? HeroIcons.truck

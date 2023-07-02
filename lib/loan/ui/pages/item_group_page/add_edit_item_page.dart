@@ -22,7 +22,7 @@ class AddEditItemPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final loaner = ref.watch(loanerProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
-    final loanersitemsNotifier = ref.watch(loanersItemsProvider.notifier);
+    final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final item = ref.watch(itemProvider);
     final isEdit = item.id != Item.empty().id;
     final name = useTextEditingController(text: item.name);
@@ -141,7 +141,7 @@ class AddEditItemPage extends HookConsumerWidget {
                                   newItem, loaner.id);
                           if (value) {
                             QR.back();
-                            loanersitemsNotifier.setTData(
+                            loanersItemsNotifier.setTData(
                                 loaner, await itemListNotifier.copy());
                             if (isEdit) {
                               displayToastWithContext(

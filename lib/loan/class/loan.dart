@@ -44,8 +44,8 @@ class Loan {
     data['borrower_id'] = borrower.id;
     data['loaner_id'] = loaner.id;
     data['notes'] = notes;
-    data['start'] = processDateToAPIWitoutHour(start);
-    data['end'] = processDateToAPIWitoutHour(end);
+    data['start'] = processDateToAPIWithoutHour(start);
+    data['end'] = processDateToAPIWithoutHour(end);
     data['caution'] = caution;
     data['items_borrowed'] = itemsQuantity.map((x) => x.toJson()).toList();
     return data;

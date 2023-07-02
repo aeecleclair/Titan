@@ -3,9 +3,9 @@ import 'package:myecl/amap/class/order.dart';
 
 String collectionSlotToString(CollectionSlot slot) {
   switch (slot) {
-    case CollectionSlot.midi:
+    case CollectionSlot.midDay:
       return 'midi';
-    case CollectionSlot.soir:
+    case CollectionSlot.evening:
       return 'soir';
     default:
       return 'midi';
@@ -15,11 +15,11 @@ String collectionSlotToString(CollectionSlot slot) {
 CollectionSlot stringToCollectionSlot(String slot) {
   switch (slot) {
     case 'midi':
-      return CollectionSlot.midi;
+      return CollectionSlot.midDay;
     case 'soir':
-      return CollectionSlot.soir;
+      return CollectionSlot.evening;
     default:
-      return CollectionSlot.midi;
+      return CollectionSlot.midDay;
   }
 }
 
@@ -27,7 +27,7 @@ String deliveryStatusToString(DeliveryStatus status) {
   switch (status) {
     case DeliveryStatus.creation:
       return 'creation';
-    case DeliveryStatus.orderable:
+    case DeliveryStatus.available:
       return 'orderable';
     case DeliveryStatus.locked:
       return 'locked';
@@ -41,7 +41,7 @@ DeliveryStatus stringToDeliveryStatus(String status) {
     case 'creation':
       return DeliveryStatus.creation;
     case 'orderable':
-      return DeliveryStatus.orderable;
+      return DeliveryStatus.available;
     case 'locked':
       return DeliveryStatus.locked;
     case 'delivered':

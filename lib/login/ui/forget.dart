@@ -98,7 +98,7 @@ class ForgetPassword extends HookConsumerWidget {
                     ),
                     SignInUpBar(
                       label: LoginTextConstants.recover,
-                      isLoading: ref.watch(loadingrovider).when(
+                      isLoading: ref.watch(loadingProvider).when(
                           data: (data) => data,
                           error: (e, s) => false,
                           loading: () => false),

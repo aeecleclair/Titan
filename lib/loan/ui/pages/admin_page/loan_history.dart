@@ -17,7 +17,7 @@ class HistoryLoan extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loaner = ref.watch(loanerProvider);
-    final historyloanListNotifier =
+    final historyLoanListNotifier =
         ref.watch(historyLoanerLoanListProvider.notifier);
     final loanList = ref.watch(historyLoanerLoanListProvider);
     final adminHistoryLoanListNotifier =
@@ -48,7 +48,7 @@ class HistoryLoan extends HookConsumerWidget {
                         if (editingController.text.isNotEmpty) {
                           adminHistoryLoanListNotifier.setTData(
                               loaner,
-                              await historyloanListNotifier
+                              await historyLoanListNotifier
                                   .filterLoans(editingController.text));
                         } else {
                           adminHistoryLoanListNotifier.setTData(

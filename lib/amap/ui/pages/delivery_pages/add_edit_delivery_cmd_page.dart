@@ -157,7 +157,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                                       ),
                                                       ...value
                                                           .map((e) => ProductUi(
-                                                                isModif: selected[
+                                                                isModification: selected[
                                                                     products
                                                                         .indexOf(
                                                                             e)],

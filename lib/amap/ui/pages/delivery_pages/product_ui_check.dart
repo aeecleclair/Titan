@@ -6,9 +6,12 @@ import 'package:myecl/amap/tools/constants.dart';
 class ProductUi extends ConsumerWidget {
   final Product product;
   final Function onclick;
-  final bool isModif;
+  final bool isModification;
   const ProductUi(
-      {Key? key, required this.product, required this.onclick, required this.isModif})
+      {Key? key,
+      required this.product,
+      required this.onclick,
+      required this.isModification})
       : super(key: key);
 
   @override
@@ -43,7 +46,7 @@ class ProductUi extends ConsumerWidget {
                   width: 15,
                 ),
                 Checkbox(
-                  value: isModif,
+                  value: isModification,
                   checkColor: AMAPColorConstants.background,
                   activeColor: AMAPColorConstants.green2,
                   onChanged: (value) {

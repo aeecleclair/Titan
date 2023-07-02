@@ -8,24 +8,24 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class LoanerLoanListNotifier extends ListNotifier<Loan> {
-  final LoanRepository _loanrepository = LoanRepository();
+  final LoanRepository loanRepository = LoanRepository();
   LoanerLoanListNotifier({required String token})
       : super(const AsyncValue.loading()) {
-    _loanrepository.setToken(token);
+    loanRepository.setToken(token);
   }
 
   Future<AsyncValue<List<Loan>>> loadLoan(String loanerId) async {
     return await loadList(
-        () async => _loanrepository.getLoanListByLoanerId(loanerId));
+        () async => loanRepository.getLoanListByLoanerId(loanerId));
   }
 
   Future<bool> addLoan(Loan loan) async {
-    return await add(_loanrepository.createLoan, loan);
+    return await add(loanRepository.createLoan, loan);
   }
 
   Future<bool> updateLoan(Loan loan) async {
     return await update(
-        _loanrepository.updateLoan,
+        loanRepository.updateLoan,
         (loans, loan) =>
             loans..[loans.indexWhere((l) => l.id == loan.id)] = loan,
         loan);
@@ -33,7 +33,7 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
 
   Future<bool> deleteLoan(Loan loan) async {
     return await delete(
-        _loanrepository.deleteLoan,
+        loanRepository.deleteLoan,
         (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
         loan.id,
         loan);
@@ -41,7 +41,7 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
 
   Future<bool> returnLoan(Loan loan) async {
     return await delete(
-        _loanrepository.returnLoan,
+        loanRepository.returnLoan,
         (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
         loan.id,
         loan);
@@ -49,7 +49,7 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
 
   Future<bool> extendLoan(Loan loan, int delay) async {
     return await update((l) async {
-      return _loanrepository.extendLoan(l, delay);
+      return loanRepository.extendLoan(l, delay);
     },
         (loans, loan) =>
             loans..[loans.indexWhere((l) => l.id == loan.id)] = loan,
@@ -65,7 +65,7 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
 
   Future<AsyncValue<List<Loan>>> loadHistory(String loanerId) async {
     try {
-      final data = await _loanrepository.getHistory(loanerId);
+      final data = await loanRepository.getHistory(loanerId);
       return AsyncValue.data(data);
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);

@@ -5,7 +5,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
+import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/text_entry.dart';
@@ -17,8 +17,8 @@ class AddSectionPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sectionPretendanceNotifier =
-        ref.read(sectionPretendanceProvider.notifier);
+    final sectionContenderNotifier =
+        ref.read(sectionContenderProvider.notifier);
     final sectionListNotifier = ref.read(sectionsProvider.notifier);
     final sections = ref.watch(sectionsProvider);
     final key = GlobalKey<FormState>();
@@ -101,7 +101,7 @@ class AddSectionPage extends HookConsumerWidget {
                         if (value) {
                           QR.back();
                           sections.whenData((value) {
-                            sectionPretendanceNotifier.addT(value.last);
+                            sectionContenderNotifier.addT(value.last);
                           });
                           displayVoteToastWithContext(
                               TypeMsg.msg, VoteTextConstants.addedSection);

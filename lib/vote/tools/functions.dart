@@ -1,12 +1,12 @@
-import 'package:myecl/vote/class/pretendance.dart';
+import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 
 ListType stringToListType(String type) {
   switch (type) {
     case 'Serio':
-      return ListType.serio;
+      return ListType.serious;
     case 'Pipo':
-      return ListType.pipo;
+      return ListType.fake;
     case 'Blank':
       return ListType.blank;
     default:
@@ -16,9 +16,9 @@ ListType stringToListType(String type) {
 
 String listTypeToString(ListType? type) {
   switch (type) {
-    case ListType.serio:
+    case ListType.serious:
       return 'Serio';
-    case ListType.pipo:
+    case ListType.fake:
       return 'Pipo';
     case ListType.blank:
       return 'Blank';

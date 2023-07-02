@@ -16,7 +16,7 @@ import 'package:myecl/others/ui/no_internet_page.dart';
 import 'package:myecl/others/ui/no_module.dart';
 import 'package:myecl/others/ui/update_page.dart';
 import 'package:myecl/settings/router.dart';
-import 'package:myecl/tombola/router.dart';
+import 'package:myecl/raffle/router.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';

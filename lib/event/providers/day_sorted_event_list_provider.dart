@@ -48,9 +48,9 @@ final daySortedEventListProvider = Provider<Map<DateTime, List<Event>>>((ref) {
             }
           }
         }
-        final sortedkeys = sortedEventList.keys.toList(growable: false)
+        final sortedKeys = sortedEventList.keys.toList(growable: false)
           ..sort((k1, k2) => k1.compareTo(k2));
-        return {for (var k in sortedkeys) k: sortedEventList[k]!};
+        return {for (var k in sortedKeys) k: sortedEventList[k]!};
       },
       loading: () => {},
       error: (error, stack) => {});

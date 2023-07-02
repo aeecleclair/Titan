@@ -120,7 +120,7 @@ class UserOrderListNotifier extends ListNotifier<Order> {
     );
   }
 
-  Future<double> getprice(int indexOrder) async {
+  Future<double> getPrice(int indexOrder) async {
     double price = 0;
     try {
       state.when(

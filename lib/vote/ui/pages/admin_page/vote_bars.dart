@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/vote/providers/result_provider.dart';
-import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
+import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 
@@ -13,7 +13,7 @@ class VoteBars extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     const Duration animDuration = Duration(milliseconds: 250);
-    final sectionsPretendance = ref.watch(sectionPretendanceProvider);
+    final sectionsContender = ref.watch(sectionContenderProvider);
     final section = ref.watch(sectionProvider);
     final results = ref.watch(resultProvider);
     final touchedIndex = useState(-1);
@@ -21,7 +21,7 @@ class VoteBars extends HookConsumerWidget {
     final barBackgroundColor = Colors.grey.shade300;
     const barColor = Colors.black;
 
-    List<BarChartGroupData> pretendanceBars = [];
+    List<BarChartGroupData> contenderBars = [];
     List<String> sectionNames = [];
     Map<String, int> voteValue = {};
     results.whenData(
@@ -35,7 +35,7 @@ class VoteBars extends HookConsumerWidget {
     final Map<int, String> sectionIds = {};
     int total = 0;
 
-    sectionsPretendance.when(
+    sectionsContender.when(
         data: (data) {
           if (data[section] != null) {
             data[section]!.when(
@@ -46,7 +46,7 @@ class VoteBars extends HookConsumerWidget {
                   total = data.map((e) => voteValue[e.id]).reduce(
                           (value, element) => (value ?? 0) + (element ?? 0)) ??
                       0;
-                  pretendanceBars = data
+                  contenderBars = data
                       .map((x) => BarChartGroupData(
                             x: data.indexOf(x),
                             barRods: [
@@ -175,7 +175,7 @@ class VoteBars extends HookConsumerWidget {
             borderData: FlBorderData(
               show: false,
             ),
-            barGroups: pretendanceBars,
+            barGroups: contenderBars,
           ),
           swapAnimationDuration: animDuration,
         ),

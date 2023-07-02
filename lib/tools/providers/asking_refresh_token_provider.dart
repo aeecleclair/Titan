@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class AskingRefreshTokenNotifier extends StateNotifier<bool> {
   AskingRefreshTokenNotifier() : super(false);
 
-  void setbool(bool bool) {
+  void setAskingRefresh(bool bool) {
     state = bool;
   }
 }

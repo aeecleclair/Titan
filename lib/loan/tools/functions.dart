@@ -21,7 +21,7 @@ String numberDaysToIsoDate(int days) {
   return processDateToAPI(DateTime(0, 0, 0).add(Duration(days: days)));
 }
 
-int isoDatetoNumberDays(String date) {
+int isoDateToNumberDays(String date) {
   return DateTime.parse(date).difference(DateTime(0, 0, 0)).inDays;
 }
 

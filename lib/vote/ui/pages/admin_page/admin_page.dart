@@ -9,17 +9,17 @@ import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
-import 'package:myecl/vote/class/pretendance.dart';
-import 'package:myecl/vote/providers/pretendance_list_provider.dart';
+import 'package:myecl/vote/class/contender.dart';
+import 'package:myecl/vote/providers/contender_list_provider.dart';
 import 'package:myecl/vote/providers/result_provider.dart';
-import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
+import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/show_graph_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_bar.dart';
-import 'package:myecl/vote/ui/pages/admin_page/section_pretendence_items.dart';
+import 'package:myecl/vote/ui/pages/admin_page/section_contender_items.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_bars.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_count.dart';
 import 'package:myecl/vote/ui/vote.dart';
@@ -29,10 +29,10 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sectionPretendanceListNotifier =
-        ref.watch(sectionPretendanceProvider.notifier);
+    final sectionContenderListNotifier =
+        ref.watch(sectionContenderProvider.notifier);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
-    final pretendances = ref.watch(pretendanceListProvider);
+    final contenderList = ref.watch(contenderListProvider);
     final asyncStatus = ref.watch(statusProvider);
     final statusNotifier = ref.watch(statusProvider.notifier);
     final showVotes = ref.watch(showGraphProvider);
@@ -53,17 +53,17 @@ class AdminPage extends HookConsumerWidget {
           }
           final sections = await sectionsNotifier.loadSectionList();
           sections.whenData((value) async {
-            List<Pretendance> list = [];
-            pretendances.when(data: (pretendance) {
-              list = pretendance;
+            List<Contender> list = [];
+            contenderList.when(data: (contenders) {
+              list = contenders;
             }, error: (error, stackTrace) {
               list = [];
             }, loading: () {
               list = [];
             });
-            sectionPretendanceListNotifier.loadTList(value);
+            sectionContenderListNotifier.loadTList(value);
             for (final l in value) {
-              sectionPretendanceListNotifier.setTData(
+              sectionContenderListNotifier.setTData(
                   l,
                   AsyncValue.data(list
                       .where((element) => element.section.id == l.id)
@@ -90,7 +90,7 @@ class AdminPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              const SectionPretendenceItems(),
+              const SectionContenderItems(),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -198,9 +198,9 @@ class AdminPage extends HookConsumerWidget {
                                         final value =
                                             await statusNotifier.resetVote();
                                         ref
-                                            .watch(pretendanceListProvider
+                                            .watch(contenderListProvider
                                                 .notifier)
-                                            .loadPretendanceList();
+                                            .loadContenderList();
                                         if (value) {
                                           showVotesNotifier.toggle(false);
                                           displayVoteToastWithContext(
@@ -483,8 +483,8 @@ class AdminPage extends HookConsumerWidget {
                                           await statusNotifier.openVote();
                                       ref
                                           .watch(
-                                              pretendanceListProvider.notifier)
-                                          .loadPretendanceList();
+                                              contenderListProvider.notifier)
+                                          .loadContenderList();
                                       if (value) {
                                         displayVoteToastWithContext(TypeMsg.msg,
                                             VoteTextConstants.votesOpened);
@@ -596,9 +596,9 @@ class AdminPage extends HookConsumerWidget {
                                                             await tokenExpireWrapper(
                                                                 ref, () async {
                                                               final value = await ref
-                                                                  .watch(pretendanceListProvider
+                                                                  .watch(contenderListProvider
                                                                       .notifier)
-                                                                  .deletePretendances();
+                                                                  .deleteContenders();
                                                               if (value) {
                                                                 displayVoteToastWithContext(
                                                                     TypeMsg.msg,
@@ -723,11 +723,11 @@ class AdminPage extends HookConsumerWidget {
                                                               ref, () async {
                                                             final value = await ref
                                                                 .watch(
-                                                                    pretendanceListProvider
+                                                                    contenderListProvider
                                                                         .notifier)
-                                                                .deletePretendances(
+                                                                .deleteContenders(
                                                                     type: ListType
-                                                                        .pipo);
+                                                                        .fake);
                                                             if (value) {
                                                               displayVoteToastWithContext(
                                                                   TypeMsg.msg,

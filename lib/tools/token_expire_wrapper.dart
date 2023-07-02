@@ -14,7 +14,7 @@ Future tokenExpireWrapper(WidgetRef ref, Future<dynamic> Function() f) async {
         error.type == ErrorType.tokenExpire &&
         isLoggedIn) {
       if (askingRefreshToken) return;
-      askingRefreshTokenNotifier.setbool(true);
+      askingRefreshTokenNotifier.setAskingRefresh(true);
       try {
         final value = await tokenNotifier.refreshToken();
         if (value) {
@@ -25,7 +25,7 @@ Future tokenExpireWrapper(WidgetRef ref, Future<dynamic> Function() f) async {
       } catch (e) {
         tokenNotifier.deleteToken();
       }
-      askingRefreshTokenNotifier.setbool(false);
+      askingRefreshTokenNotifier.setAskingRefresh(false);
     }
   });
 }
@@ -41,7 +41,7 @@ void tokenExpireWrapperAuth(Ref ref, Future<dynamic> Function() f) async {
         error.type == ErrorType.tokenExpire &&
         isLoggedIn) {
       if (askingRefreshToken) return;
-      askingRefreshTokenNotifier.setbool(true);
+      askingRefreshTokenNotifier.setAskingRefresh(true);
       try {
         final value = await tokenNotifier.refreshToken();
         if (value) {
@@ -52,7 +52,7 @@ void tokenExpireWrapperAuth(Ref ref, Future<dynamic> Function() f) async {
       } catch (e) {
         tokenNotifier.deleteToken();
       }
-      askingRefreshTokenNotifier.setbool(false);
+      askingRefreshTokenNotifier.setAskingRefresh(false);
     }
   });
 }

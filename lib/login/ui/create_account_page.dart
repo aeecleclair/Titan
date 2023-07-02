@@ -287,7 +287,7 @@ class CreateAccountPage extends HookConsumerWidget {
               activationCode.text.isNotEmpty &&
               passwordConfirmation.text.isNotEmpty &&
               password.text == passwordConfirmation.text) {
-            CreateAccount finalcreateAccount = CreateAccount(
+            CreateAccount finalCreateAccount = CreateAccount(
               name: name.text,
               firstname: firstname.text,
               nickname: nickname.text.isEmpty ? null : nickname.text,
@@ -300,7 +300,7 @@ class CreateAccountPage extends HookConsumerWidget {
             );
             try {
               final value =
-                  await signUpNotifier.activateUser(finalcreateAccount);
+                  await signUpNotifier.activateUser(finalCreateAccount);
               if (value) {
                 displayToastWithContext(
                     TypeMsg.msg, LoginTextConstants.accountActivated);

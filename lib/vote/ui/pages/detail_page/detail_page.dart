@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
-import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
-import 'package:myecl/vote/providers/pretendance_provider.dart';
+import 'package:myecl/vote/providers/contender_logo_provider.dart';
+import 'package:myecl/vote/providers/contender_logos_provider.dart';
+import 'package:myecl/vote/providers/contender_provider.dart';
 import 'package:myecl/vote/ui/member_card.dart';
-import 'package:myecl/vote/ui/pages/admin_page/pretendance_card.dart';
+import 'package:myecl/vote/ui/pages/admin_page/contender_card.dart';
 import 'package:myecl/vote/ui/vote.dart';
 
 class DetailPage extends HookConsumerWidget {
@@ -13,11 +13,11 @@ class DetailPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pretendanceLogos = ref.watch(pretendanceLogosProvider);
-    final pretendance = ref.watch(pretendanceProvider);
-    final pretendanceLogosNotifier =
-        ref.watch(pretendanceLogosProvider.notifier);
-    final logoNotifier = ref.watch(pretendenceLogoProvider.notifier);
+    final contenderLogos = ref.watch(contenderLogosProvider);
+    final contender = ref.watch(contenderProvider);
+    final contenderLogosNotifier =
+        ref.watch(contenderLogosProvider.notifier);
+    final logoNotifier = ref.watch(contenderLogoProvider.notifier);
     return VoteTemplate(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -58,10 +58,10 @@ class DetailPage extends HookConsumerWidget {
                               const SizedBox(
                                 height: 30,
                               ),
-                              pretendanceLogos.when(
+                              contenderLogos.when(
                                   data: (data) {
-                                    if (data[pretendance] != null) {
-                                      return data[pretendance]!.when(
+                                    if (data[contender] != null) {
+                                      return data[contender]!.when(
                                           data: (data) {
                                         if (data.isNotEmpty) {
                                           return Container(
@@ -87,10 +87,10 @@ class DetailPage extends HookConsumerWidget {
                                           );
                                         } else {
                                           logoNotifier
-                                              .getLogo(pretendance.id)
+                                              .getLogo(contender.id)
                                               .then((value) {
-                                            pretendanceLogosNotifier.setTData(
-                                                pretendance, AsyncData([value]));
+                                            contenderLogosNotifier.setTData(
+                                                contender, AsyncData([value]));
                                           });
                                           return const HeroIcon(
                                             HeroIcons.userCircle,
@@ -126,7 +126,7 @@ class DetailPage extends HookConsumerWidget {
                                 height: 20,
                               ),
                               Text(
-                                pretendance.section.name,
+                                contender.section.name,
                                 style: const TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
@@ -138,7 +138,7 @@ class DetailPage extends HookConsumerWidget {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  pretendance.description,
+                                  contender.description,
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -151,11 +151,11 @@ class DetailPage extends HookConsumerWidget {
                             ],
                           ),
                         ),
-                        pretendance.members.isNotEmpty
+                        contender.members.isNotEmpty
                             ? SingleChildScrollView(
                                 physics: const BouncingScrollPhysics(),
                                 child: Wrap(
-                                  children: pretendance.members
+                                  children: contender.members
                                       .map(
                                         (e) => MemberCard(
                                           member: e,
@@ -173,13 +173,13 @@ class DetailPage extends HookConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           child: Text(
-                            pretendance.program,
+                            contender.program,
                             style: const TextStyle(
                               fontSize: 15,
                             ),
                           ),
                         ),
-                        if (pretendance.program.trim().isNotEmpty)
+                        if (contender.program.trim().isNotEmpty)
                           const SizedBox(
                             height: 20,
                           ),
@@ -192,8 +192,8 @@ class DetailPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
-                child: PretendanceCard(
-                  pretendance: pretendance,
+                child: ContenderCard(
+                  contender: contender,
                   onEdit: () {},
                   isAdmin: false,
                   onDelete: () async {},
