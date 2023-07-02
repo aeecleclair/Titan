@@ -331,7 +331,7 @@ class DeliveryUi extends HookConsumerWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 15),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(15),
                         gradient: LinearGradient(
                           colors: !(delivery.status == DeliveryStatus.creation)
                               ? [
@@ -367,7 +367,7 @@ class DeliveryUi extends HookConsumerWidget {
                     padding:
                         const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(15),
                       gradient: LinearGradient(
                         colors: !(delivery.status == DeliveryStatus.creation)
                             ? [

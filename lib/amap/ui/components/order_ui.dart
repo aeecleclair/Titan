@@ -131,7 +131,6 @@ class OrderUI extends HookConsumerWidget {
                               child: HeroIcon(
                                 HeroIcons.pencil,
                                 color: Colors.white,
-                                size: 20,
                               ),
                             ),
                           ),
@@ -181,7 +180,6 @@ class OrderUI extends HookConsumerWidget {
                               child:  HeroIcon(
                                 HeroIcons.trash,
                                 color: Colors.white,
-                                size: 20,
                               ),
                             ),
                           ),
