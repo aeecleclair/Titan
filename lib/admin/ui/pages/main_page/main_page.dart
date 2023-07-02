@@ -6,6 +6,7 @@ import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/pages/main_page/asso_ui.dart';
+import 'package:myecl/admin/ui/pages/main_page/card_ui.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
@@ -56,74 +57,45 @@ class AdminMainPage extends HookConsumerWidget {
                       QR.to(
                           AdminRouter.root + AdminRouter.editModuleVisibility);
                     },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                blurRadius: 5,
-                                spreadRadius: 2)
-                          ]),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          HeroIcon(
-                            HeroIcons.eye,
-                            color: Colors.grey.shade700,
-                            size: 40,
-                          ),
-                        ],
+                    child: CardUi(children: [
+                      const Spacer(),
+                      HeroIcon(
+                        HeroIcons.eye,
+                        color: Colors.grey.shade700,
+                        size: 40,
                       ),
-                    ),
+                      const Spacer(),
+                    ]),
                   ),
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
                       QR.to(AdminRouter.root + AdminRouter.addLoaner);
                     },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                blurRadius: 5,
-                                spreadRadius: 2)
-                          ]),
-                      child: Row(
-                        children: [
-                          const Spacer(),
-                          Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              HeroIcon(
-                                HeroIcons.buildingLibrary,
+                    child: CardUi(
+                      children: [
+                        const Spacer(),
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            HeroIcon(
+                              HeroIcons.buildingLibrary,
+                              color: Colors.grey.shade700,
+                              size: 40,
+                            ),
+                            Positioned(
+                              right: -2,
+                              top: -2,
+                              child: HeroIcon(
+                                HeroIcons.plus,
+                                size: 15,
                                 color: Colors.grey.shade700,
-                                size: 40,
                               ),
-                              Positioned(
-                                right: -2,
-                                top: -2,
-                                child: HeroIcon(
-                                  HeroIcons.plus,
-                                  size: 15,
-                                  color: Colors.grey.shade700,
-                                ),
-                              )
-                            ],
-                          ),
-                          const Spacer()
-                        ],
-                      ),
+                            )
+                          ],
+                        ),
+                        const Spacer()
+                      ],
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -131,31 +103,15 @@ class AdminMainPage extends HookConsumerWidget {
                     onTap: () {
                       QR.to(AdminRouter.root + AdminRouter.addAsso);
                     },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                blurRadius: 5,
-                                spreadRadius: 2)
-                          ]),
-                      child: Row(
-                        children: [
-                          const Spacer(),
-                          HeroIcon(
-                            HeroIcons.plus,
-                            color: Colors.grey.shade700,
-                            size: 40,
-                          ),
-                          const Spacer(),
-                        ],
+                    child: CardUi(children: [
+                      const Spacer(),
+                      HeroIcon(
+                        HeroIcons.plus,
+                        color: Colors.grey.shade700,
+                        size: 40,
                       ),
-                    ),
+                      const Spacer(),
+                    ]),
                   ),
                   ...g
                       .map((group) => AssoUi(

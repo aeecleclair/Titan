@@ -25,6 +25,7 @@ class MemberResults extends HookConsumerWidget {
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
+
     return users.when(
         data: (value) {
           return Column(
@@ -63,7 +64,8 @@ class MemberResults extends HookConsumerWidget {
                                                       .addedMember);
                                             });
                                           } else {
-                                            displayToastWithContext(TypeMsg.error,
+                                            displayToastWithContext(
+                                                TypeMsg.error,
                                                 AdminTextConstants.addingError);
                                           }
                                         });

@@ -8,7 +8,7 @@ import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/simple_groups_groups_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/pages/edit_page/results.dart';
-import 'package:myecl/admin/ui/user_ui.dart';
+import 'package:myecl/admin/ui/components/user_ui.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
