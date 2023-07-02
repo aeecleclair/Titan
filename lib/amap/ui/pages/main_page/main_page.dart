@@ -30,12 +30,12 @@ class AmapMainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final order = ref.watch(orderProvider);
-    final orderNotifier = ref.watch(orderProvider.notifier);
+    final orderNotifier = ref.read(orderProvider.notifier);
     final isAdmin = ref.watch(isAmapAdminProvider);
     final delivery = ref.watch(deliveryProvider);
-    final deliveriesNotifier = ref.watch(deliveryListProvider.notifier);
-    final ordersNotifier = ref.watch(userOrderListProvider.notifier);
-    final soldeNotifier = ref.watch(userAmountProvider.notifier);
+    final deliveriesNotifier = ref.read(deliveryListProvider.notifier);
+    final ordersNotifier = ref.read(userOrderListProvider.notifier);
+    final soldeNotifier = ref.read(userAmountProvider.notifier);
     final solde = ref.watch(userAmountProvider);
     final showPanel = useState(false);
     final me = ref.watch(userProvider);

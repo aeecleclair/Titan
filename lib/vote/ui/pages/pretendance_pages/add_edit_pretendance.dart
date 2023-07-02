@@ -39,26 +39,26 @@ class AddEditPretendancePage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final addMemberKey = GlobalKey<FormState>();
     final section = useState(ref.watch(sectionProvider));
-    final pretendanceListNotifier = ref.watch(pretendanceListProvider.notifier);
-    final sectionsNotifier = ref.watch(sectionPretendanceProvider.notifier);
+    final pretendanceListNotifier = ref.read(pretendanceListProvider.notifier);
+    final sectionsNotifier = ref.read(sectionPretendanceProvider.notifier);
     final pretendance = ref.watch(pretendanceProvider);
     final isEdit = pretendance.id != Pretendance.empty().id;
     final name = useTextEditingController(text: pretendance.name);
     final description = useTextEditingController(text: pretendance.description);
     final listType = useState(pretendance.listType);
-    final usersNotifier = ref.watch(userList.notifier);
+    final usersNotifier = ref.read(userList.notifier);
     final queryController = useTextEditingController();
     final role = useTextEditingController();
     final program = useTextEditingController(text: pretendance.program);
     final member = useState(SimpleUser.empty());
     final members = ref.watch(pretendanceMembersProvider);
-    final membersNotifier = ref.watch(pretendanceMembersProvider.notifier);
+    final membersNotifier = ref.read(pretendanceMembersProvider.notifier);
     final pretendanceLogosNotifier =
-    ref.watch(pretendanceLogosProvider.notifier);
-    final logoNotifier = ref.watch(pretendenceLogoProvider.notifier);
+    ref.read(pretendanceLogosProvider.notifier);
+    final logoNotifier = ref.read(pretendenceLogoProvider.notifier);
     final logo = useState<Uint8List?>(null);
     final logoFile = useState<Image?>(null);
-    final showNotifier = ref.watch(displayResult.notifier);
+    final showNotifier = ref.read(displayResult.notifier);
     ref.watch(pretendanceLogosProvider).whenData((value) {
       if (value[pretendance] != null) {
         value[pretendance]!.whenData((data) {

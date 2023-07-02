@@ -24,12 +24,12 @@ class SectionPretendenceItems extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sectionPretendance = ref.watch(sectionPretendanceProvider);
-    final membersNotifier = ref.watch(pretendanceMembersProvider.notifier);
+    final membersNotifier = ref.read(pretendanceMembersProvider.notifier);
     final section = ref.watch(sectionProvider);
-    final pretendanceListNotifier = ref.watch(pretendanceListProvider.notifier);
+    final pretendanceListNotifier = ref.read(pretendanceListProvider.notifier);
     final sectionPretendanceListNotifier =
-        ref.watch(sectionPretendanceProvider.notifier);
-    final pretendanceNotifier = ref.watch(pretendanceProvider.notifier);
+        ref.read(sectionPretendanceProvider.notifier);
+    final pretendanceNotifier = ref.read(pretendanceProvider.notifier);
 
     final asyncStatus = ref.watch(statusProvider);
     Status status = Status.open;

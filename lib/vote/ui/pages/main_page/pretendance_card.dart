@@ -32,15 +32,15 @@ class PretendanceCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pretendanceNotifier = ref.watch(pretendanceProvider.notifier);
+    final pretendanceNotifier = ref.read(pretendanceProvider.notifier);
     final sections = ref.watch(sectionsProvider);
     final selectedPretendance = ref.watch(selectedPretendanceProvider);
     final selectedPretendanceNotifier =
-        ref.watch(selectedPretendanceProvider.notifier);
+        ref.read(selectedPretendanceProvider.notifier);
     final pretendanceLogos = ref.watch(pretendanceLogosProvider);
     final pretendanceLogosNotifier =
-        ref.watch(pretendanceLogosProvider.notifier);
-    final logoNotifier = ref.watch(pretendenceLogoProvider.notifier);
+        ref.read(pretendanceLogosProvider.notifier);
+    final logoNotifier = ref.read(pretendenceLogoProvider.notifier);
     final status = ref.watch(statusProvider);
     final s = status.when(
         data: (value) => value,

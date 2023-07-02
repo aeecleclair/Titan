@@ -19,14 +19,14 @@ class ProductHandler extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final productNotifier = ref.watch(productProvider.notifier);
+    final productNotifier = ref.read(productProvider.notifier);
     final sortedByCategoryProducts =
         ref.watch(sortedByCategoryProductsProvider);
     final products = sortedByCategoryProducts.values
         .toList()
         .expand((element) => element)
         .toList();
-    final productsNotifier = ref.watch(productListProvider.notifier);
+    final productsNotifier = ref.read(productListProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

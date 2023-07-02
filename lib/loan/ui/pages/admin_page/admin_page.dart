@@ -23,7 +23,7 @@ class AdminPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loaner = ref.watch(loanerProvider);
-    final loanerIdNotifier = ref.watch(loanerIdProvider.notifier);
+    final loanerIdNotifier = ref.read(loanerIdProvider.notifier);
     final adminLoanList = ref.watch(adminLoanListProvider);
     final adminHistoryLoanList = ref.watch(adminHistoryLoanListProvider);
     final loanersItems = ref.watch(loanersItemsProvider);
