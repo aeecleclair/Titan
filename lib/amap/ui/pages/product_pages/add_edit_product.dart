@@ -159,7 +159,7 @@ class AddEditProduct extends HookConsumerWidget {
                                     color: AMAPColorConstants.enabled)),
                             errorBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 201, 23, 23))),
+                                    color: AMAPColorConstants.red)),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                               color: AMAPColorConstants.greenGradient2,

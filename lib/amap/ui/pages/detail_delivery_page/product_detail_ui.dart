@@ -22,8 +22,8 @@ class ProductDetailCard extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: const RadialGradient(
             colors: [
-              Color.fromARGB(223, 182, 212, 10),
-              Color.fromARGB(255, 108, 147, 0),
+              AMAPColorConstants.lightGradient1,
+              AMAPColorConstants.lightGradient2
             ],
             center: Alignment.topLeft,
             radius: 1.2,
@@ -51,7 +51,7 @@ class ProductDetailCard extends StatelessWidget {
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 32, 67, 0))),
+                      color: AMAPColorConstants.darkGreen)),
               const SizedBox(height: 4),
               AutoSizeText("${AMAPTextConstants.quantity} : $quantity",
                   maxLines: 2,
@@ -68,7 +68,7 @@ class ProductDetailCard extends StatelessWidget {
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 32, 67, 0))),           
+                      color: AMAPColorConstants.darkGreen)),
               const SizedBox(height: 10),
             ],
           ),

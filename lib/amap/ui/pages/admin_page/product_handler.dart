@@ -69,8 +69,8 @@ class ProductHandler extends HookConsumerWidget {
                       decoration: BoxDecoration(
                         gradient: const RadialGradient(
                           colors: [
-                            Color.fromARGB(223, 182, 212, 10),
-                            Color.fromARGB(255, 108, 147, 0),
+                            AMAPColorConstants.lightGradient1,
+                            AMAPColorConstants.lightGradient2,
                           ],
                           center: Alignment.topLeft,
                           radius: 1.2,
