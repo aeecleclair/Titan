@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/amap/ui/order_ui.dart';
-import 'package:myecl/amap/ui/product_ui.dart';
+import 'package:myecl/amap/ui/components/order_ui.dart';
+import 'package:myecl/amap/ui/components/product_ui.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({Key? key}) : super(key: key);
@@ -79,7 +79,7 @@ class DetailPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
-                child: CommandeUI(
+                child: OrderUI(
                   order: order,
                   onTap: () {},
                   onEdit: () {},

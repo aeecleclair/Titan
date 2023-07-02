@@ -4,6 +4,7 @@ import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/amap/ui/pages/main_page/delivery_ui.dart';
 
 class DeliverySection extends HookConsumerWidget {
@@ -68,10 +69,7 @@ class DeliverySection extends HookConsumerWidget {
               ),
             );
           },
-          loading: () => const Center(
-              child: CircularProgressIndicator(
-            color: AMAPColorConstants.greenGradient2,
-          )),
+          loading: () => const Waiter(),
           error: (error, stack) => Text(error.toString()),
         ),
       ],

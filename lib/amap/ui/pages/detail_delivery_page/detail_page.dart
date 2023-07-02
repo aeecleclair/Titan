@@ -10,6 +10,7 @@ import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/providers/sorted_delivery_product.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
+import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/amap/ui/pages/detail_delivery_page/order_detail_ui.dart';
 import 'package:myecl/amap/ui/pages/detail_delivery_page/product_detail_ui.dart';
 import 'package:myecl/tools/functions.dart';
@@ -143,10 +144,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                 data: (data) {
                   final orders = data[delivery.id];
                   if (orders == null) {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: AMAPColorConstants.greenGradient2,
-                    ));
+                    return const Waiter();
                   }
                   return orders.item1.when(
                     data: (data) {
@@ -169,25 +167,16 @@ class DetailDeliveryPage extends HookConsumerWidget {
                               }).toList(),
                             );
                           },
-                          loading: () => const Center(
-                              child: CircularProgressIndicator(
-                            color: AMAPColorConstants.greenGradient2,
-                          )),
+                          loading: () => const Waiter(),
                           error: (error, stack) => Text(error.toString()),
                         );
                       }
                     },
-                    loading: () => const Center(
-                        child: CircularProgressIndicator(
-                      color: AMAPColorConstants.greenGradient2,
-                    )),
+                    loading: () => const Waiter(),
                     error: (error, stack) => Text(error.toString()),
                   );
                 },
-                loading: () => const Center(
-                    child: CircularProgressIndicator(
-                  color: AMAPColorConstants.greenGradient2,
-                )),
+                loading: () => const Waiter(),
                 error: (error, stack) => Text(error.toString()),
               ),
             ),

@@ -12,11 +12,11 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
-class CommandeUI extends HookConsumerWidget {
+class OrderUI extends HookConsumerWidget {
   final Order order;
   final void Function() onTap, onEdit;
   final bool showButton, isDetail;
-  const CommandeUI(
+  const OrderUI(
       {super.key,
       required this.order,
       required this.onTap,

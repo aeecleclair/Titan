@@ -8,7 +8,8 @@ import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/order_ui.dart';
+import 'package:myecl/amap/ui/components/order_ui.dart';
+import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 
 class OrderSection extends HookConsumerWidget {
@@ -104,7 +105,7 @@ class OrderSection extends HookConsumerWidget {
                     return data.map((e) {
                       final canEdit = orderableDeliveries
                           .any((element) => element.id == e.deliveryId);
-                      return CommandeUI(
+                      return OrderUI(
                           order: e,
                           onTap: onTap,
                           onEdit: () {
@@ -116,10 +117,7 @@ class OrderSection extends HookConsumerWidget {
                     }).toList();
                   },
                   loading: () => [
-                        const Center(
-                            child: CircularProgressIndicator(
-                          color: AMAPColorConstants.greenGradient2,
-                        ))
+                        const Waiter()
                       ],
                   error: (error, stack) => [Text(error.toString())]),
               const SizedBox(
