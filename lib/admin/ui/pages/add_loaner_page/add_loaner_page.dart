@@ -4,10 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
+import 'package:myecl/admin/ui/components/page_title.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/all_loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -36,13 +36,8 @@ class AddLoanerPage extends HookConsumerWidget {
               children: [
                 SizedBox(
                     child: Column(children: [
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(AdminTextConstants.addLoaningAssociation,
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: ColorConstants.gradient1)),
+                  const PageTitle(
+                    title: AdminTextConstants.addLoaningAssociation,
                   ),
                   const SizedBox(
                     height: 30,
