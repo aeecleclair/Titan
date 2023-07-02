@@ -16,9 +16,9 @@ class DeliverySection extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryIdNotifier = ref.read(deliveryIdProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
-    final orderableDeliveries = deliveries.when<List<Delivery>>(
+    final availableDeliveries = deliveries.when<List<Delivery>>(
         data: (data) => data
-            .where((element) => element.status == DeliveryStatus.orderable)
+            .where((element) => element.status == DeliveryStatus.available)
             .toList(),
         loading: () => [],
         error: (_, __) => [])
@@ -42,7 +42,7 @@ class DeliverySection extends HookConsumerWidget {
         ),
         deliveries.when(
           data: (data) {
-            if (orderableDeliveries.isEmpty) {
+            if (availableDeliveries.isEmpty) {
               return const Center(
                 child: Text(AMAPTextConstants.notPlannedDelivery),
               );
@@ -51,15 +51,15 @@ class DeliverySection extends HookConsumerWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 10),
-                  for (var i = 0; i < orderableDeliveries.length; i++)
+                  for (var i = 0; i < availableDeliveries.length; i++)
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: DeliveryUi(
-                        delivery: orderableDeliveries[i],
+                        delivery: availableDeliveries[i],
                         onTap: () {
                           {if (editable && showSelected) {
                             deliveryIdNotifier
-                                .setId(orderableDeliveries[i].id);
+                                .setId(availableDeliveries[i].id);
                           }}
                         },
                         showSelected: showSelected,

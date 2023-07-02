@@ -37,7 +37,7 @@ class AddEditProduct extends HookConsumerWidget {
     final categoryController = ref.watch(selectedCategoryProvider(beginState));
     final categoryNotifier =
         ref.watch(selectedCategoryProvider(beginState).notifier);
-    final nouvellecategory = useTextEditingController(text: "");
+    final newCategory = useTextEditingController(text: "");
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -148,7 +148,7 @@ class AddEditProduct extends HookConsumerWidget {
                             if ((value == null ||
                                     value ==
                                         AMAPTextConstants.createCategory) &&
-                                nouvellecategory.text.isEmpty) {
+                                newCategory.text.isEmpty) {
                               return AMAPTextConstants.pickChooseCategory;
                             }
                             return null;
@@ -177,7 +177,7 @@ class AddEditProduct extends HookConsumerWidget {
                           onChanged: (value) {
                             categoryNotifier.setText(
                                 value ?? AMAPTextConstants.createCategory);
-                            nouvellecategory.text = "";
+                            newCategory.text = "";
                           },
                         ),
                       ),
@@ -207,12 +207,12 @@ class AddEditProduct extends HookConsumerWidget {
                         enabled: categoryController ==
                             AMAPTextConstants.createCategory,
                         onChanged: (value) {
-                          nouvellecategory.text = value ?? "";
-                          nouvellecategory.selection =
+                          newCategory.text = value ?? "";
+                          newCategory.selection =
                               TextSelection.fromPosition(TextPosition(
-                                  offset: nouvellecategory.text.length));
+                                  offset: newCategory.text.length));
                         },
-                        textEditingController: nouvellecategory,
+                        textEditingController: newCategory,
                         keyboardType: TextInputType.text,
                       ),
                       const SizedBox(
@@ -226,7 +226,7 @@ class AddEditProduct extends HookConsumerWidget {
                           if (formKey.currentState!.validate()) {
                             String cate = categoryController ==
                                     AMAPTextConstants.createCategory
-                                ? nouvellecategory.text
+                                ? newCategory.text
                                 : categoryController;
                             Product newProduct = Product(
                               id: isEdit ? product.id : "",

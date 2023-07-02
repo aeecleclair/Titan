@@ -26,9 +26,9 @@ class OrderSection extends HookConsumerWidget {
     final orderNotifier = ref.read(orderProvider.notifier);
     final deliveryIdNotifier = ref.read(deliveryIdProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
-    final orderableDeliveries = deliveries.when<List<Delivery>>(
+    final availableDeliveries = deliveries.when<List<Delivery>>(
         data: (data) => data
-            .where((element) => element.status == DeliveryStatus.orderable)
+            .where((element) => element.status == DeliveryStatus.available)
             .toList(),
         loading: () => [],
         error: (_, __) => []);
@@ -103,7 +103,7 @@ class OrderSection extends HookConsumerWidget {
                     data.sort(
                         (a, b) => a.deliveryDate.compareTo(b.deliveryDate));
                     return data.map((e) {
-                      final canEdit = orderableDeliveries
+                      final canEdit = availableDeliveries
                           .any((element) => element.id == e.deliveryId);
                       return OrderUI(
                           order: e,

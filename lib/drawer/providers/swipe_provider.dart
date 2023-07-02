@@ -5,7 +5,7 @@ class SwipeControllerNotifier extends StateNotifier<AnimationController> {
   SwipeControllerNotifier(AnimationController controller) : super(controller);
 
   static const double maxSlide = 255;
-  static const dragRigthStartVal = 60;
+  static const dragRightStartVal = 60;
   static const dragLeftStartVal = maxSlide - 30;
   static bool shouldDrag = false;
 
@@ -26,11 +26,11 @@ class SwipeControllerNotifier extends StateNotifier<AnimationController> {
   }
 
   void onDragStart(DragStartDetails startDetails) {
-    bool isDarggingFromLeft =
-        state.isDismissed && startDetails.globalPosition.dx < dragRigthStartVal;
-    bool isDarggingFromRight =
+    bool isDraggingFromLeft =
+        state.isDismissed && startDetails.globalPosition.dx < dragRightStartVal;
+    bool isDraggingFromRight =
         !state.isDismissed && startDetails.globalPosition.dx > dragLeftStartVal;
-    shouldDrag = isDarggingFromLeft || isDarggingFromRight;
+    shouldDrag = isDraggingFromLeft || isDraggingFromRight;
   }
 
   void onDragUpdate(DragUpdateDetails updateDetails) {
@@ -45,8 +45,8 @@ class SwipeControllerNotifier extends StateNotifier<AnimationController> {
       double minFlingVelocity = 365.0;
       double dragVelocity = endDetails.velocity.pixelsPerSecond.dx.abs();
       if (dragVelocity >= minFlingVelocity) {
-        double visualVelovity = endDetails.velocity.pixelsPerSecond.dx / width;
-        state.fling(velocity: visualVelovity);
+        double visualVelocity = endDetails.velocity.pixelsPerSecond.dx / width;
+        state.fling(velocity: visualVelocity);
       } else if (state.value < 0.5) {
         close();
       } else {

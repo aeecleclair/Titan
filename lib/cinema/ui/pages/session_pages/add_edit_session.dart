@@ -386,7 +386,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                           } else {
                             sessionList.when(
                                 data: (list) async {
-                                  final newPretendance = list.last;
+                                  final newContender = list.last;
                                   if (logo.value != null) {
                                     final sessionPosterMapNotifier = ref.read(
                                         sessionPosterMapProvider.notifier);
@@ -397,9 +397,9 @@ class AddEditSessionPage extends HookConsumerWidget {
                                     });
                                     Image image =
                                         await sessionPosterNotifier.updateLogo(
-                                            newPretendance.id, logo.value!);
+                                            newContender.id, logo.value!);
                                     sessionPosterMapNotifier.setTData(
-                                        newPretendance,
+                                        newContender,
                                         AsyncData([
                                           Image(
                                             image: image.image,

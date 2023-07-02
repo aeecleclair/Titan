@@ -25,8 +25,8 @@ class SearchUser extends HookConsumerWidget {
     final usersNotifier = ref.watch(userList.notifier);
     final groupId = ref.watch(groupIdProvider);
     final groupNotifier = ref.watch(groupProvider.notifier);
-    final simplegroupsGroups = ref.watch(simpleGroupsGroupsProvider);
-    final simplegroupGroupsNotifier =
+    final simpleGroupsGroups = ref.watch(simpleGroupsGroupsProvider);
+    final simpleGroupGroupsNotifier =
         ref.watch(simpleGroupsGroupsProvider.notifier);
     final add = useState(false);
     final focusNode = useFocusNode();
@@ -35,7 +35,7 @@ class SearchUser extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return simplegroupsGroups.when(data: (value) {
+    return simpleGroupsGroups.when(data: (value) {
       final g = value[groupId];
       if (g == null) {
         return const Center(
@@ -141,7 +141,7 @@ class SearchUser extends HookConsumerWidget {
                                   final value = await groupNotifier
                                       .deleteMember(newGroup, x);
                                   if (value) {
-                                    simplegroupGroupsNotifier.setTData(
+                                    simpleGroupGroupsNotifier.setTData(
                                         newGroup.id, AsyncData([newGroup]));
                                     displayToastWithContext(TypeMsg.msg,
                                         AdminTextConstants.updatedAssociation);

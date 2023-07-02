@@ -93,8 +93,8 @@ bool isDateBetween(DateTime date, DateTime start, DateTime end) {
 
 DateTime correctBeforeDate(DateTime start) {
   final now = DateTime.now();
-  final strNow = processDateToAPIWitoutHour(now);
-  if (processDateToAPIWitoutHour(start).compareTo(strNow) < 0) {
+  final strNow = processDateToAPIWithoutHour(now);
+  if (processDateToAPIWithoutHour(start).compareTo(strNow) < 0) {
     return DateTime(now.year, now.month, now.day, 0, 0);
   }
   return start;
@@ -102,8 +102,8 @@ DateTime correctBeforeDate(DateTime start) {
 
 DateTime correctAfterDate(DateTime end) {
   final now = DateTime.now();
-  final strNow = processDateToAPIWitoutHour(now);
-  if (processDateToAPIWitoutHour(end).compareTo(strNow) > 0) {
+  final strNow = processDateToAPIWithoutHour(now);
+  if (processDateToAPIWithoutHour(end).compareTo(strNow) > 0) {
     return DateTime(now.year, now.month, now.day, 23, 59);
   }
   return end;
@@ -115,7 +115,7 @@ List<DateTime> getDateInRecurrence(String recurrenceRule, DateTime start) {
 
 bool isDateInReccurence(String recurrenceRule, String strNow, DateTime start) {
   final rrule = getDateInRecurrence(recurrenceRule, start);
-  final dates = rrule.map((e) => processDateToAPIWitoutHour(e)).toList();
+  final dates = rrule.map((e) => processDateToAPIWithoutHour(e)).toList();
   return dates.contains(strNow);
 }
 

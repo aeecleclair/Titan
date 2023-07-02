@@ -5,7 +5,7 @@ import 'package:myecl/event/providers/event_provider.dart';
 class IsRoomNotifier extends StateNotifier<bool> {
   IsRoomNotifier(bool b) : super(b);
 
-  void setbool(bool b) {
+  void setIsRoom(bool b) {
     state = b;
   }
 }

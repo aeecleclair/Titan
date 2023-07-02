@@ -107,7 +107,7 @@ class Register extends HookConsumerWidget {
                     ),
                     SignInUpBar(
                         label: LoginTextConstants.create,
-                        isLoading: ref.watch(loadingrovider).when(
+                        isLoading: ref.watch(loadingProvider).when(
                             data: (data) => data,
                             error: (e, s) => false,
                             loading: () => false),

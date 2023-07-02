@@ -43,19 +43,19 @@ class AdminPage extends HookConsumerWidget {
       child: Refresher(
         onRefresh: () async {
           final itemListNotifier = ref.read(itemListProvider.notifier);
-          final loanersitemsNotifier = ref.read(loanersItemsProvider.notifier);
+          final loanersItemsNotifier = ref.read(loanersItemsProvider.notifier);
           final loanListNotifier = ref.read(loanerLoanListProvider.notifier);
           final historyLoanListNotifier =
               ref.read(historyLoanerLoanListProvider.notifier);
           final adminLoanListNotifier = ref.read(adminLoanListProvider.notifier);
-          final admiHistoryLoanListNotifier =
+          final adminHistoryLoanListNotifier =
               ref.read(adminHistoryLoanListProvider.notifier);
           itemListNotifier.loadItemList(loaner.id);
-          loanersitemsNotifier.setTData(loaner, await itemListNotifier.copy());
+          loanersItemsNotifier.setTData(loaner, await itemListNotifier.copy());
           loanListNotifier.loadLoan(loaner.id);
           adminLoanListNotifier.setTData(loaner, await loanListNotifier.copy());
           historyLoanListNotifier.loadLoan(loaner.id);
-          admiHistoryLoanListNotifier.setTData(
+          adminHistoryLoanListNotifier.setTData(
               loaner, await historyLoanListNotifier.copy());
         },
         child: Padding(
@@ -125,28 +125,28 @@ class AdminPage extends HookConsumerWidget {
                     (value) async {
                       final historyLoanListNotifier =
                           ref.read(historyLoanerLoanListProvider.notifier);
-                      final admiHistoryLoanListNotifier =
+                      final adminHistoryLoanListNotifier =
                           ref.read(adminHistoryLoanListProvider.notifier);
                       if (value[key] != null) {
                         value[key]!.whenData((value) async {
                           if (value.isEmpty) {
                             Future.delayed(
                                 const Duration(milliseconds: 1),
-                                () => admiHistoryLoanListNotifier.setTData(
+                                () => adminHistoryLoanListNotifier.setTData(
                                     key, const AsyncLoading()));
                             final res =
                                 await historyLoanListNotifier.loadLoan(key.id);
-                            admiHistoryLoanListNotifier.setTData(key, res);
+                            adminHistoryLoanListNotifier.setTData(key, res);
                           }
                         });
                       } else {
                         Future.delayed(
                             const Duration(milliseconds: 1),
-                            () => admiHistoryLoanListNotifier.setTData(
+                            () => adminHistoryLoanListNotifier.setTData(
                                 key, const AsyncLoading()));
                         final res =
                             await historyLoanListNotifier.loadLoan(key.id);
-                        admiHistoryLoanListNotifier.setTData(key, res);
+                        adminHistoryLoanListNotifier.setTData(key, res);
                       }
                     },
                   );

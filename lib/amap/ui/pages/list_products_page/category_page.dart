@@ -7,7 +7,7 @@ import 'package:myecl/amap/providers/scroll_controller_provider.dart';
 import 'package:myecl/amap/providers/scroll_provider.dart';
 import 'package:myecl/amap/providers/sorted_delivery_product.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/list_products_page/produit_ui_list.dart';
+import 'package:myecl/amap/ui/pages/list_products_page/product_ui_list.dart';
 import 'package:myecl/tools/functions.dart';
 
 class CategoryPage extends HookConsumerWidget {
@@ -31,21 +31,21 @@ class CategoryPage extends HookConsumerWidget {
 
     double minScale = 0.8;
     double scale = 1;
-    double maxHeigth = MediaQuery.of(context).size.height - 295;
+    double maxHeight = MediaQuery.of(context).size.height - 295;
     double height = 0;
 
     if (index == scroll.floor()) {
       scale = 1 - (scroll - index) * (1 - minScale);
-      height = maxHeigth * (1 - scale) / 2;
+      height = maxHeight * (1 - scale) / 2;
     } else if (index == scroll.floor() + 1) {
       scale = minScale + (scroll - index + 1) * (1 - minScale);
-      height = maxHeigth * (1 - scale) / 2;
+      height = maxHeight * (1 - scale) / 2;
     } else if (index == scroll.floor() - 1) {
       scale = minScale + (scroll - index - 1) * (1 - minScale);
-      height = maxHeigth * (1 - scale) / 2;
+      height = maxHeight * (1 - scale) / 2;
     } else {
       scale = minScale;
-      height = maxHeigth * (1 - minScale) / 2;
+      height = maxHeight * (1 - minScale) / 2;
     }
 
     double h = MediaQuery.of(context).size.height -
@@ -59,7 +59,7 @@ class CategoryPage extends HookConsumerWidget {
               height: height,
             ),
             SizedBox(
-              height: maxHeigth * scale,
+              height: maxHeight * scale,
               child: Builder(
                 builder: (BuildContext context) {
                   List<Widget> listWidgetProduct = [

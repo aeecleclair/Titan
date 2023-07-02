@@ -5,7 +5,7 @@ import 'package:myecl/admin/providers/group_id_provider.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/admin/ui/admin.dart';
-import 'package:myecl/admin/ui/pages/main_page/asso_ui.dart';
+import 'package:myecl/admin/ui/pages/main_page/association_ui.dart';
 import 'package:myecl/admin/ui/pages/main_page/card_ui.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
@@ -51,7 +51,6 @@ class AdminMainPage extends HookConsumerWidget {
             return Column(children: [
               Column(
                 children: [
-                  const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
                       QR.to(
@@ -67,7 +66,20 @@ class AdminMainPage extends HookConsumerWidget {
                       const Spacer(),
                     ]),
                   ),
-                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      QR.to(AdminRouter.root + AdminRouter.addAssociation);
+                    },
+                    child: CardUi(children: [
+                      const Spacer(),
+                      HeroIcon(
+                        HeroIcons.plus,
+                        color: Colors.grey.shade700,
+                        size: 40,
+                      ),
+                      const Spacer(),
+                    ]),
+                  ),
                   GestureDetector(
                     onTap: () {
                       QR.to(AdminRouter.root + AdminRouter.addLoaner);
@@ -98,28 +110,14 @@ class AdminMainPage extends HookConsumerWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () {
-                      QR.to(AdminRouter.root + AdminRouter.addAsso);
-                    },
-                    child: CardUi(children: [
-                      const Spacer(),
-                      HeroIcon(
-                        HeroIcons.plus,
-                        color: Colors.grey.shade700,
-                        size: 40,
-                      ),
-                      const Spacer(),
-                    ]),
-                  ),
                   ...g
-                      .map((group) => AssoUi(
+                      .map((group) => AssociationUi(
                             group: group,
                             isLoaner: loanersId.contains(group.id),
                             onEdit: () {
                               groupIdNotifier.setId(group.id);
-                              QR.to(AdminRouter.root + AdminRouter.editAsso);
+                              QR.to(AdminRouter.root +
+                                  AdminRouter.editAssociation);
                             },
                             onDelete: () async {
                               await showDialog(

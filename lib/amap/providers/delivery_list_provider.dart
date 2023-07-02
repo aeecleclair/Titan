@@ -34,7 +34,7 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
         _deliveriesListRepository.openDelivery,
         (deliveries, delivery) => deliveries
           ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
-              delivery.copyWith(status: DeliveryStatus.orderable),
+              delivery.copyWith(status: DeliveryStatus.available),
         delivery);
   }
 

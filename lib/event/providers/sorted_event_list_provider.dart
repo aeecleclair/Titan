@@ -29,31 +29,31 @@ final sortedEventListProvider = Provider<Map<String, List<Event>>>((ref) {
                 normalizedNow.compareTo(normalizedDates[i]) <= 0
                     ? normalizedDates[i]
                     : normalizedNow;
-            String formatedDelay = formatDelayToToday(maxDate, normalizedNow);
+            String formattedDelay = formatDelayToToday(maxDate, normalizedNow);
             final e = event.copyWith(
                 start: mergeDates(normalizedDates[i], event.start),
                 end: mergeDates(
                     normalizedDates[i].add(Duration(days: deltaDays[i])),
                     event.end));
             if (e.end.isAfter(now)) {
-              dateTitle[formatedDelay] = normalizedDates[i];
-              if (sortedEventList.containsKey(formatedDelay)) {
-                final index = sortedEventList[formatedDelay]!
+              dateTitle[formattedDelay] = normalizedDates[i];
+              if (sortedEventList.containsKey(formattedDelay)) {
+                final index = sortedEventList[formattedDelay]!
                     .indexWhere((element) => element.start.isAfter(e.start));
                 if (index == -1) {
-                  sortedEventList[formatedDelay]!.add(e);
+                  sortedEventList[formattedDelay]!.add(e);
                 } else {
-                  sortedEventList[formatedDelay]!.insert(index, e);
+                  sortedEventList[formattedDelay]!.insert(index, e);
                 }
               } else {
-                sortedEventList[formatedDelay] = [e];
+                sortedEventList[formattedDelay] = [e];
               }
             }
           }
         }
-        final sortedkeys = sortedEventList.keys.toList(growable: false)
+        final sortedKeys = sortedEventList.keys.toList(growable: false)
           ..sort((k1, k2) => dateTitle[k1]!.compareTo(dateTitle[k2]!));
-        return {for (var k in sortedkeys) k: sortedEventList[k]!};
+        return {for (var k in sortedKeys) k: sortedEventList[k]!};
       },
       loading: () => {},
       error: (error, stack) => {});

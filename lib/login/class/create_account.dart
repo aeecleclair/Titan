@@ -41,7 +41,7 @@ class CreateAccount {
     data['firstname'] = firstname;
     data['nickname'] = nickname;
     data['password'] = password;
-    data['birthday'] = processDateToAPIWitoutHour(birthday);
+    data['birthday'] = processDateToAPIWithoutHour(birthday);
     data['phone'] = phone;
     data['floor'] = floor;
     data['promo'] = promo;

@@ -28,7 +28,7 @@ class BookingMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isAdmin = ref.watch(isBookingAdminProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
-    final confirmedbookingsNotifier =
+    final confirmedBookingsNotifier =
         ref.watch(confirmedBookingListProvider.notifier);
     final bookings = ref.watch(userBookingListProvider);
     final allBookingsNotifier = ref.watch(bookingListProvider.notifier);
@@ -42,7 +42,7 @@ class BookingMainPage extends HookConsumerWidget {
     return BookingTemplate(
       child: Refresher(
         onRefresh: () async {
-          await confirmedbookingsNotifier.loadConfirmedBooking();
+          await confirmedBookingsNotifier.loadConfirmedBooking();
           await bookingsNotifier.loadUserBookings();
         },
         child: SizedBox(
@@ -195,7 +195,7 @@ class BookingMainPage extends HookConsumerWidget {
                                             bookingsNotifier.deleteBooking(e);
                                             if (e.decision ==
                                                 Decision.approved) {
-                                              confirmedbookingsNotifier
+                                              confirmedBookingsNotifier
                                                   .deleteBooking(e);
                                             }
 

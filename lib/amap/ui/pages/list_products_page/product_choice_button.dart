@@ -14,8 +14,8 @@ import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class Boutons extends HookConsumerWidget {
-  const Boutons({Key? key}) : super(key: key);
+class ProductChoiceButton extends HookConsumerWidget {
+  const ProductChoiceButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

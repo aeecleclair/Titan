@@ -73,7 +73,7 @@ final isLoggedInProvider =
   return isLoggedInProvider;
 });
 
-final loadingrovider = FutureProvider<bool>((ref) {
+final loadingProvider = FutureProvider<bool>((ref) {
   final isCaching = ref.watch(isCachingProvider);
   return isCaching ||
       ref.watch(authTokenProvider).when(

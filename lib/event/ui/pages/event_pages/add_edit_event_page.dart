@@ -512,7 +512,7 @@ class AddEditEventPage extends HookConsumerWidget {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              isRoomNotifier.setbool(true);
+                              isRoomNotifier.setIsRoom(true);
                             },
                             child: Container(
                                 margin: const EdgeInsets.symmetric(
@@ -533,7 +533,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                 ))),
                         GestureDetector(
                           onTap: () {
-                            isRoomNotifier.setbool(false);
+                            isRoomNotifier.setIsRoom(false);
                             roomIdNotifier.setRoomId("");
                           },
                           child: Container(

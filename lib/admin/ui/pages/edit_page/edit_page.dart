@@ -17,8 +17,8 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class EditAssoPage extends HookConsumerWidget {
-  const EditAssoPage({Key? key}) : super(key: key);
+class EditAssociationPage extends HookConsumerWidget {
+  const EditAssociationPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,9 +28,9 @@ class EditAssoPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();
     final description = useTextEditingController();
-    final simplegroupsGroupsNotifier =
+    final simpleGroupsGroupsNotifier =
         ref.watch(simpleGroupsGroupsProvider.notifier);
-    final simplegroupsGroups = ref.watch(simpleGroupsGroupsProvider);
+    final simpleGroupsGroups = ref.watch(simpleGroupsGroupsProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -41,7 +41,7 @@ class EditAssoPage extends HookConsumerWidget {
           physics: const BouncingScrollPhysics(),
           child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: simplegroupsGroups.when(data: (value) {
+              child: simpleGroupsGroups.when(data: (value) {
                 final g = value[groupId];
                 if (g == null) {
                   return const Center(
@@ -53,13 +53,13 @@ class EditAssoPage extends HookConsumerWidget {
                     if (groups.isEmpty) {
                       Future.delayed(
                           const Duration(milliseconds: 1),
-                          () => simplegroupsGroupsNotifier.setTData(
+                          () => simpleGroupsGroupsNotifier.setTData(
                               groupId, const AsyncLoading()));
                       tokenExpireWrapper(ref, () async {
                         final loadedGroup =
                             await groupNotifier.loadGroup(groupId);
                         loadedGroup.whenData((value) {
-                          simplegroupsGroupsNotifier.setTData(
+                          simpleGroupsGroupsNotifier.setTData(
                               groupId, AsyncData([value]));
                         });
                       });

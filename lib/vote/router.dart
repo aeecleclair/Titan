@@ -8,7 +8,7 @@ import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
 import 'package:myecl/vote/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/vote/ui/pages/detail_page/detail_page.dart';
 import 'package:myecl/vote/ui/pages/main_page/main_page.dart';
-import 'package:myecl/vote/ui/pages/pretendance_pages/add_edit_pretendance.dart';
+import 'package:myecl/vote/ui/pages/contender_pages/add_edit_contender.dart';
 import 'package:myecl/vote/ui/pages/section_pages/add_section.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -16,7 +16,7 @@ class VoteRouter {
   final ProviderRef ref;
   static const String root = '/vote';
   static const String admin = '/admin';
-  static const String addEditPretendance = '/add_edit_pretendance';
+  static const String addEditContender = '/add_edit_contender';
   static const String addSection = '/add_edit_section';
   static const String detail = '/detail';
   static final Module module = Module(
@@ -36,8 +36,8 @@ class VoteRouter {
           ], children: [
             QRoute(path: detail, builder: () => const DetailPage()),
             QRoute(
-                path: addEditPretendance,
-                builder: () => const AddEditPretendancePage()),
+                path: addEditContender,
+                builder: () => const AddEditContenderPage()),
             QRoute(path: addSection, builder: () => const AddSectionPage()),
           ]),
           QRoute(path: detail, builder: () => const DetailPage()),

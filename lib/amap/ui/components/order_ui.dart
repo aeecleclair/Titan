@@ -29,7 +29,7 @@ class OrderUI extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
     final orderNotifier = ref.watch(orderProvider.notifier);
-    final soldeNotifier = ref.watch(userAmountProvider.notifier);
+    final balanceNotifier = ref.watch(userAmountProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -149,7 +149,7 @@ class OrderUI extends HookConsumerWidget {
                                               .deleteOrder(order)
                                               .then((value) {
                                             if (value) {
-                                              soldeNotifier
+                                              balanceNotifier
                                                   .updateCash(order.amount);
                                               displayToastWithContext(
                                                   TypeMsg.msg,

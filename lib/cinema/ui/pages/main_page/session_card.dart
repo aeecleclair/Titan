@@ -44,7 +44,7 @@ class SessionCard extends HookConsumerWidget {
 
     double minScale = 0.8;
     double scale = 1;
-    double maxHeigth = MediaQuery.of(context).size.height - 344;
+    double maxHeight = MediaQuery.of(context).size.height - 344;
     double height = 0;
 
     int scrollValue = scroll.floor();
@@ -58,7 +58,7 @@ class SessionCard extends HookConsumerWidget {
     } else {
       scale = minScale;
     }
-    height = maxHeigth * (1 - scale) / 2;
+    height = maxHeight * (1 - scale) / 2;
 
     void createSessionNotification(Session session) {
       localNotificationService.showNotification(Message(
@@ -112,7 +112,7 @@ class SessionCard extends HookConsumerWidget {
                       if (data.isNotEmpty) {
                         return isWebFormat
                             ? Container(
-                                height: maxHeigth * scale,
+                                height: maxHeight * scale,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30),
@@ -182,7 +182,7 @@ class SessionCard extends HookConsumerWidget {
                             : Stack(
                                 children: [
                                   Container(
-                                    height: maxHeigth * scale,
+                                    height: maxHeight * scale,
                                     width: double.infinity,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(30),
@@ -241,7 +241,7 @@ class SessionCard extends HookConsumerWidget {
                               session, AsyncData([image]));
                         });
                         return Container(
-                          height: maxHeigth * scale,
+                          height: maxHeight * scale,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             boxShadow: [
@@ -258,7 +258,7 @@ class SessionCard extends HookConsumerWidget {
                       }
                     }, loading: () {
                       return SizedBox(
-                        height: maxHeigth * scale,
+                        height: maxHeight * scale,
                         width: double.infinity,
                         child: const Center(
                           child: CircularProgressIndicator(),
@@ -266,7 +266,7 @@ class SessionCard extends HookConsumerWidget {
                       );
                     }, error: (error, stack) {
                       return SizedBox(
-                        height: maxHeigth * scale,
+                        height: maxHeight * scale,
                         width: double.infinity,
                         child: const Center(
                           child: HeroIcon(HeroIcons.exclamationCircle),

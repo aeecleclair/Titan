@@ -1,5 +1,5 @@
 import 'package:myecl/amap/providers/delivery_provider.dart';
-import 'package:myecl/amap/providers/orderable_deliveries.dart';
+import 'package:myecl/amap/providers/available_deliveries.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/components/waiter.dart';
@@ -36,8 +36,8 @@ class AmapMainPage extends HookConsumerWidget {
     final delivery = ref.watch(deliveryProvider);
     final deliveriesNotifier = ref.read(deliveryListProvider.notifier);
     final ordersNotifier = ref.read(userOrderListProvider.notifier);
-    final soldeNotifier = ref.read(userAmountProvider.notifier);
-    final solde = ref.watch(userAmountProvider);
+    final balanceNotifier = ref.read(userAmountProvider.notifier);
+    final balance = ref.watch(userAmountProvider);
     final showPanel = useState(false);
     final me = ref.watch(userProvider);
     final deliveryProductListNotifier =
@@ -49,8 +49,8 @@ class AmapMainPage extends HookConsumerWidget {
       end: 1.0,
     ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic));
 
-    final orderableDeliveries = ref.watch(orderableDeliveriesProvider);
-    final orderableDeliveriesIds = orderableDeliveries
+    final availableDeliveries = ref.watch(availableDeliveriesProvider);
+    final availableDeliveriesIds = availableDeliveries
         .map((delivery) => delivery.id)
         .toList(growable: false);
 
@@ -62,7 +62,7 @@ class AmapMainPage extends HookConsumerWidget {
       child: Refresher(
           onRefresh: () async {
             await ordersNotifier.loadOrderList(me.id);
-            await soldeNotifier.loadCashByUser(me.id);
+            await balanceNotifier.loadCashByUser(me.id);
             await deliveriesNotifier.loadDeliveriesList();
           },
           child: Column(
@@ -78,7 +78,7 @@ class AmapMainPage extends HookConsumerWidget {
                       Container(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                              solde.when(
+                              balance.when(
                                   data: (s) =>
                                       "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
                                   error: (e, s) => AMAPTextConstants.error,
@@ -144,7 +144,7 @@ class AmapMainPage extends HookConsumerWidget {
                           QR.to(AmapRouter.root + AmapRouter.detailOrder);
                         },
                         addOrder: () {
-                          solde.whenData(
+                          balance.whenData(
                             (s) {
                               orderNotifier.setOrder(Order.empty());
                               animation.forward();
@@ -246,7 +246,7 @@ class AmapMainPage extends HookConsumerWidget {
                                 ),
                                 child: Row(
                                     children: CollectionSlot.values
-                                        .map((e) => CollectionSLotelector(
+                                        .map((e) => CollectionSlotSelector(
                                             collectionSlot: e))
                                         .toList())),
                           ),
@@ -261,7 +261,7 @@ class AmapMainPage extends HookConsumerWidget {
                           ),
                           ShrinkButton(
                               onTap: () async {
-                                if (orderableDeliveriesIds
+                                if (availableDeliveriesIds
                                     .contains(delivery.id)) {
                                   await tokenExpireWrapper(ref, () async {
                                     await deliveryProductListNotifier

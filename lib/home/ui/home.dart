@@ -16,7 +16,7 @@ class HomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final confimedEventListNotifier =
+    final confirmedEventListNotifier =
         ref.watch(confirmedEventListProvider.notifier);
     final sortedEventList = ref.watch(sortedEventListProvider);
     DateTime now = DateTime.now();
@@ -28,7 +28,7 @@ class HomePage extends HookConsumerWidget {
       child: SafeArea(
         child: Refresher(
             onRefresh: () async {
-              await confimedEventListNotifier.loadConfirmedEvent();
+              await confirmedEventListNotifier.loadConfirmedEvent();
               now = DateTime.now();
             },
             child: Column(children: [

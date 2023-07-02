@@ -3,20 +3,20 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/refresher.dart';
-import 'package:myecl/vote/class/pretendance.dart';
+import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/is_ae_member_provider.dart';
 import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
-import 'package:myecl/vote/providers/pretendance_list_provider.dart';
-import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
-import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
-import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
+import 'package:myecl/vote/providers/contender_list_provider.dart';
+import 'package:myecl/vote/providers/contender_logo_provider.dart';
+import 'package:myecl/vote/providers/contender_logos_provider.dart';
+import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/voted_section_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/pages/main_page/list_pretendence_card.dart';
+import 'package:myecl/vote/ui/pages/main_page/list_contender_card.dart';
 import 'package:myecl/vote/ui/pages/main_page/list_side_item.dart';
 import 'package:myecl/vote/ui/pages/main_page/section_title.dart';
 import 'package:myecl/vote/ui/pages/main_page/vote_button.dart';
@@ -32,11 +32,11 @@ class VoteMainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isVoteAdminProvider);
     final sections = ref.watch(sectionsProvider);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
-    final sectionsPretendances = ref.watch(sectionPretendanceProvider);
-    final pretendances = ref.watch(pretendanceListProvider);
-    final pretendancesNotifier = ref.watch(pretendanceListProvider.notifier);
-    final sectionPretendanceNotifier =
-        ref.watch(sectionPretendanceProvider.notifier);
+    final sectionsContenders = ref.watch(sectionContenderProvider);
+    final contenders = ref.watch(contenderListProvider);
+    final contendersNotifier = ref.watch(contenderListProvider.notifier);
+    final sectionContenderNotifier =
+        ref.watch(sectionContenderProvider.notifier);
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 2400),
     );
@@ -49,9 +49,9 @@ class VoteMainPage extends HookConsumerWidget {
     if (s == Status.open) {
       ref.watch(votedSectionProvider.notifier).getVotedSections();
     }
-    final logosNotifier = ref.watch(pretendenceLogoProvider.notifier);
-    final pretendanceLogosNotifier =
-        ref.watch(pretendanceLogosProvider.notifier);
+    final logosNotifier = ref.watch(contenderLogoProvider.notifier);
+    final contenderLogosNotifier =
+        ref.watch(contenderLogosProvider.notifier);
 
     final isAEMember = ref.watch(isAEMemberProvider);
 
@@ -63,17 +63,17 @@ class VoteMainPage extends HookConsumerWidget {
             if (s == Status.open) {
               await ref.watch(votedSectionProvider.notifier).getVotedSections();
             }
-            await pretendancesNotifier.loadPretendanceList();
+            await contendersNotifier.loadContenderList();
             final sections = await sectionsNotifier.loadSectionList();
             sections.whenData((value) {
-              List<Pretendance> list = [];
-              pretendances.whenData((pretendance) {
-                list = pretendance;
+              List<Contender> list = [];
+              contenders.whenData((contender) {
+                list = contender;
               });
-              sectionPretendanceNotifier.loadTList(value);
-              pretendanceLogosNotifier.loadTList(list);
+              sectionContenderNotifier.loadTList(value);
+              contenderLogosNotifier.loadTList(list);
               for (final l in value) {
-                sectionPretendanceNotifier.setTData(
+                sectionContenderNotifier.setTData(
                     l,
                     AsyncValue.data(list
                         .where((element) => element.section.id == l.id)
@@ -81,7 +81,7 @@ class VoteMainPage extends HookConsumerWidget {
               }
               for (final l in list) {
                 logosNotifier.getLogo(l.id).then((value) =>
-                    pretendanceLogosNotifier.setTData(
+                    contenderLogosNotifier.setTData(
                         l, AsyncValue.data([value])));
               }
             });
@@ -114,8 +114,8 @@ class VoteMainPage extends HookConsumerWidget {
                               Expanded(
                                 child: SizedBox(
                                   width: double.infinity,
-                                  child: sectionsPretendances.when(
-                                    data: (pretendanceList) => Column(children: [
+                                  child: sectionsContenders.when(
+                                    data: (contenderList) => Column(children: [
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -172,7 +172,7 @@ class VoteMainPage extends HookConsumerWidget {
                                         height: 15,
                                       ),
                                       Expanded(
-                                          child: ListPretendenceCard(
+                                          child: ListContenderCard(
                                         animation: animation,
                                       ))
                                     ]),

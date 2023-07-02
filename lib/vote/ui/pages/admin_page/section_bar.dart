@@ -7,7 +7,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
-import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
+import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
@@ -23,9 +23,9 @@ class SectionBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final section = ref.watch(sectionProvider);
     final sectionIdNotifier = ref.watch(sectionIdProvider.notifier);
-    final sectionPretendance = ref.watch(sectionPretendanceProvider);
-    final sectionPretendanceListNotifier =
-        ref.watch(sectionPretendanceProvider.notifier);
+    final sectionContender = ref.watch(sectionContenderProvider);
+    final sectionContenderListNotifier =
+        ref.watch(sectionContenderProvider.notifier);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final asyncStatus = ref.watch(statusProvider);
     Status status = Status.open;
@@ -60,7 +60,7 @@ class SectionBar extends HookConsumerWidget {
                   )),
             ),
           if (section.id != Section.empty().id)
-            ...sectionPretendance.when(data: (sections) {
+            ...sectionContender.when(data: (sections) {
               return sections
                   .map((key, value) => MapEntry(
                       SectionChip(
@@ -84,7 +84,7 @@ class SectionBar extends HookConsumerWidget {
                                           final result = await sectionsNotifier
                                               .deleteSection(key);
                                           if (result) {
-                                            sectionPretendanceListNotifier
+                                            sectionContenderListNotifier
                                                 .deleteT(key);
                                             displayVoteToastWithContext(
                                                 TypeMsg.msg,

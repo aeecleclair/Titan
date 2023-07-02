@@ -142,7 +142,7 @@ String processDateToAPI(DateTime date) {
   return date.toIso8601String();
 }
 
-String processDateToAPIWitoutHour(DateTime date) {
+String processDateToAPIWithoutHour(DateTime date) {
   return date.toIso8601String().split('T')[0];
 }
 
