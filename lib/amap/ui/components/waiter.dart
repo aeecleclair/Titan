@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:myecl/amap/tools/constants.dart';
 
 class Waiter extends StatelessWidget {
-  const Waiter({super.key});
+  final Color color;
+  const Waiter({super.key, this.color = AMAPColorConstants.greenGradient2});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-        child: CircularProgressIndicator(
-      color: AMAPColorConstants.greenGradient2,
-    ));
+    return Center(child: CircularProgressIndicator(color: color));
   }
 }

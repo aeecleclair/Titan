@@ -2,6 +2,7 @@ import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/providers/orderable_deliveries.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/ui/amap.dart';
+import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:flutter/material.dart';
@@ -300,10 +301,7 @@ class AmapMainPage extends HookConsumerWidget {
                                 child: Container(
                                   padding: const EdgeInsets.only(bottom: 5),
                                   width: double.infinity,
-                                  child: const Center(
-                                      child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )),
+                                  child: const Waiter(color: Colors.white),
                                 ),
                               ),
                               child: Container(

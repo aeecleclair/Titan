@@ -8,6 +8,7 @@ import 'package:myecl/amap/providers/page_controller_provider.dart';
 import 'package:myecl/amap/providers/scroll_controller_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/list_products_page/category_page.dart';
+import 'package:myecl/amap/ui/pages/list_products_page/web_page_navigation_button.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 
 class ListProducts extends HookConsumerWidget {
@@ -67,60 +68,26 @@ class ListProducts extends HookConsumerWidget {
           Positioned(
             right: 20,
             bottom: 0,
-            child: Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                  color: AMAPColorConstants.enabled,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                        color: AMAPColorConstants.enabled.withOpacity(0.3),
-                        blurRadius: 5,
-                        spreadRadius: 1)
-                  ]),
-              child: IconButton(
-                onPressed: () {
-                  pageController.nextPage(
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.decelerate);
-                },
-                icon: const HeroIcon(
-                  HeroIcons.arrowRight,
-                  size: 25,
-                  color: Colors.white,
-                ),
-              ),
+            child: WebPageNavigationButton(
+              onPressed: () {
+                pageController.nextPage(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.decelerate);
+              },
+              icon: HeroIcons.arrowRight,
             ),
           ),
         if (isWebFormat)
           Positioned(
             left: 20,
             bottom: 0,
-            child: Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                  color: AMAPColorConstants.enabled,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                        color: AMAPColorConstants.enabled.withOpacity(0.3),
-                        blurRadius: 5,
-                        spreadRadius: 1)
-                  ]),
-              child: IconButton(
-                onPressed: () {
-                  pageController.previousPage(
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.decelerate);
-                },
-                icon: const HeroIcon(
-                  HeroIcons.arrowLeft,
-                  size: 25,
-                  color: Colors.white,
-                ),
-              ),
+            child: WebPageNavigationButton(
+              onPressed: () {
+                pageController.previousPage(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.decelerate);
+              },
+              icon: HeroIcons.arrowLeft,
             ),
           ),
       ],
