@@ -17,7 +17,7 @@ class EditDeleteButton extends StatelessWidget {
       height: 40,
       padding: const EdgeInsets.all(7),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(15),
         gradient: LinearGradient(
           colors: [gradient1, gradient2],
           begin: Alignment.topLeft,
