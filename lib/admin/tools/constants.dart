@@ -17,6 +17,7 @@ class AdminTextConstants {
   static const String description = "Description";
   static const String edit = "Modifier";
   static const String emptyFieldError = "Le nom ne peut pas être vide";
+  static const String error = "Erreur";
   static const String loaningAssociation = "Association de prêt";
   static const String looking = "Recherche";
   static const String members = "Membres";

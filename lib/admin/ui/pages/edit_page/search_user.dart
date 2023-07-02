@@ -159,7 +159,7 @@ class SearchUser extends HookConsumerWidget {
           child: CircularProgressIndicator(),
         ),
         error: (e, s) => const Center(
-          child: Text('Error'),
+          child: Text(AdminTextConstants.error),
         ),
       );
     }, loading: () {
@@ -168,7 +168,7 @@ class SearchUser extends HookConsumerWidget {
       );
     }, error: (e, s) {
       return const Center(
-        child: Text('Error'),
+        child: Text(AdminTextConstants.error),
       );
     });
   }
