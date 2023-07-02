@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:myecl/centralisation//class/module.dart';
-import 'package:myecl/centralisation//repositories/section_repository.dart';
+import 'package:myecl/centralisation/class/module.dart';
+import 'package:myecl/centralisation/repositories/section_repository.dart';
+import 'package:myecl/centralisation/providers/centralisation_section_provider.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
@@ -24,38 +25,16 @@ final favoritesProvider =
 StateNotifierProvider<FavoritesNotifier, List<Module>>((ref) => FavoritesNotifier());
 
 class LinksScreen extends HookConsumerWidget {
-  SectionRepository sectionRepository = SectionRepository();
-  List<Section> sections = await sectionRepository.getSectionList();
+
   List<Module> modules = [];
   @override
 
+
   Widget build(BuildContext context, WidgetRef ref) {
+    final sectionNotifier = ref.watch(sectionProvider.notifier);
     final favorites = ref.watch(favoritesProvider);
     final modules = useMemoized(
-          () => [
-        Module(
-          icon: 'images/icon.png',
-          name: 'Google',
-          description: 'Recherche et plus',
-          url: 'https://www.google.com',
-          liked: false,
-        ),
-        Module(
-          icon: 'images/icon.png',
-          name: 'GitHub',
-          description: 'Plateforme de développement collaboratif',
-          url: 'https://www.github.com',
-          liked: true,
-        ),
-        Module(
-          icon: 'images/icon.png',
-          name: 'Gmail',
-          description: 'Service de messagerie de Google',
-          url: 'https://mail.google.com',
-          liked: false,
-        ),
-        // Ajoutez ici d'autres liens
-      ],
+          () => sectionNotifier.allModules,
       [],
     );
 

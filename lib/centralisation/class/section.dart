@@ -1,15 +1,47 @@
 import 'package:myecl/centralisation/class/module.dart';
 
 class Section {
-  String name;
-  List<Module> modules;
+  Section({
+    required this.name,
+    required this.moduleList,
+    required this.expanded,
+  });
+  late final String name;
+  late final List<Module> moduleList;
+  late final bool? expanded;
 
-  Section({required this.name, required this.modules});
+  Section.fromJson(k, v) {
+    name = k;
+    moduleList = List<Module>.from(v.map((e) => Module.fromJson(e)));
+    expanded = true;
+  }
 
-  factory Section.fromJson(Map<String, dynamic> json) {
-    final name = json['name'] as String;
-    final modulesJson = json['modules'] as List<dynamic>;
-    final modules = modulesJson.map((moduleJson) => Module.fromJson(moduleJson)).toList();
-    return Section(name: name, modules: modules);
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['name'] = name;
+    data['module_list'] = moduleList;
+    if (expanded == null) {
+      data['expanded'] = true;
+    } else {
+      data['expanded'] = false;
+    }
+    return data;
+  }
+
+  Section copyWith({String? name, List<Module>? moduleList, bool? expanded}) =>
+      Section(
+          name: name ?? this.name,
+          moduleList: moduleList ?? this.moduleList,
+          expanded: expanded ?? this.expanded);
+
+  Section.empty() {
+    name = '';
+    moduleList = [];
+    expanded = true;
+  }
+
+  @override
+  String toString() {
+    return 'Section{name: $name, module_list: $moduleList, expanded: $expanded}';
   }
 }
