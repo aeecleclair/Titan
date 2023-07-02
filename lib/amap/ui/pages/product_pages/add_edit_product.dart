@@ -9,7 +9,7 @@ import 'package:myecl/amap/providers/selected_category_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/amap/ui/green_btn.dart';
+import 'package:myecl/amap/ui/components/amap_button.dart';
 import 'package:myecl/amap/ui/pages/product_pages/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';

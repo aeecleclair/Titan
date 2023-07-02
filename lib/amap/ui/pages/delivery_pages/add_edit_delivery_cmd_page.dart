@@ -11,7 +11,8 @@ import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/providers/sorted_by_category_products.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/amap/ui/green_btn.dart';
+import 'package:myecl/amap/ui/components/amap_button.dart';
+import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/amap/ui/pages/delivery_pages/product_ui_check.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -166,7 +167,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                                                           .indexOf(
                                                                               e));
                                                                 },
-                                                                p: e,
+                                                                product: e,
                                                               )),
                                                       const SizedBox(
                                                         height: 20,
@@ -269,11 +270,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                 return const Text('error');
                               },
                               loading: () {
-                                return const Center(
-                                  child: CircularProgressIndicator(
-                                    color: AMAPColorConstants.greenGradient2,
-                                  ),
-                                );
+                                return const Waiter();
                               }),
                           const SizedBox(
                             height: 40,
