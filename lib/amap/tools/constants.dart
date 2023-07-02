@@ -59,6 +59,7 @@ class AMAPTextConstants {
   static const String deletingOrder = "Supprimer la commande ?";
   static const String deletingProduct = "Supprimer le produit ?";
   static const String deliver = "Livraison teminée ?";
+  static const String deliveries = "Livraisons";
   static const String deliveringDelivery =
       "Toutes les commandes sont livrées ?";
   static const String delivery = "Livraison";
@@ -78,6 +79,7 @@ class AMAPTextConstants {
   static const String editingError = "Erreur lors de la modification";
   static const String editProduct = "Modifier le produit";
   static const String endingDelivery = "Fin de la livraison";
+  static const String error = "Erreur";
   static const String errorLink = "Erreur lors de l'ouverture du lien";
   static const String errorLoadingUser =
       "Erreur lors du chargement des utilisateurs";

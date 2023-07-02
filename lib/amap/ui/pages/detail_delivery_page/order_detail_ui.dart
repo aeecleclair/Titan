@@ -8,6 +8,7 @@ import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/amap/ui/components/edit_delete_button.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -167,56 +168,18 @@ class DetailOrderUI extends HookConsumerWidget {
                             });
                           })));
                 },
-                waitChild: Container(
-                    height: 40,
-                    width: 40,
-                    padding: const EdgeInsets.all(7),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [
-                          AMAPColorConstants.redGradient1,
-                          AMAPColorConstants.redGradient2,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                            color: AMAPColorConstants.redGradient2
-                                .withOpacity(0.5),
-                            blurRadius: 10,
-                            offset: const Offset(2, 3))
-                      ],
-                    ),
-                    child: const Center(
+                waitChild: const EditDeleteButton(
+                    gradient1: AMAPColorConstants.redGradient1,
+                    gradient2: AMAPColorConstants.redGradient2,
+                    child: Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
                     )),
-                child: Container(
-                  height: 40,
-                  width: 40,
-                  padding: const EdgeInsets.all(7),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        AMAPColorConstants.redGradient1,
-                        AMAPColorConstants.redGradient2,
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                          color:
-                              AMAPColorConstants.redGradient2.withOpacity(0.5),
-                          blurRadius: 10,
-                          offset: const Offset(2, 3))
-                    ],
-                  ),
-                  child: const HeroIcon(
+                child: const EditDeleteButton(
+                  gradient1: AMAPColorConstants.redGradient1,
+                  gradient2: AMAPColorConstants.redGradient2,
+                  child: HeroIcon(
                     HeroIcons.trash,
                     color: Colors.white,
                     size: 20,

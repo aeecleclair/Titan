@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/amap/ui/components/edit_delete_button.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class ProductCard extends StatelessWidget {
@@ -82,83 +83,26 @@ class ProductCard extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: onEdit,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(7),
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                colors: [
-                                  AMAPColorConstants.greenGradient2,
-                                  AMAPColorConstants.textDark,
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: AMAPColorConstants.textDark
-                                        .withOpacity(0.5),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
-                            child: const HeroIcon(HeroIcons.pencil,
-                                color: Colors.white),
+                          child: const EditDeleteButton(
+                            gradient1: AMAPColorConstants.greenGradient2,
+                            gradient2: AMAPColorConstants.textDark,
+                            child:
+                                HeroIcon(HeroIcons.pencil, color: Colors.white),
                           ),
                         ),
                         ShrinkButton(
-                            waitChild: Container(
-                                width: 40,
-                                height: 40,
-                                padding: const EdgeInsets.all(7),
-                                decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      AMAPColorConstants.redGradient1,
-                                      AMAPColorConstants.redGradient2,
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: AMAPColorConstants.redGradient2
-                                            .withOpacity(0.5),
-                                        blurRadius: 10,
-                                        offset: const Offset(2, 3))
-                                  ],
-                                ),
-                                child: const Center(
+                            waitChild: const EditDeleteButton(
+                                gradient1: AMAPColorConstants.redGradient1,
+                                gradient2: AMAPColorConstants.redGradient2,
+                                child: Center(
                                   child: CircularProgressIndicator(
                                       color: Colors.white),
                                 )),
                             onTap: onDelete,
-                            child: Container(
-                              width: 40,
-                              height: 40,
-                              padding: const EdgeInsets.all(7),
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    AMAPColorConstants.redGradient1,
-                                    AMAPColorConstants.redGradient2,
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: AMAPColorConstants.redGradient2
-                                          .withOpacity(0.5),
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 3))
-                                ],
-                              ),
-                              child: const HeroIcon(HeroIcons.trash,
+                            child: const EditDeleteButton(
+                              gradient1: AMAPColorConstants.redGradient1,
+                              gradient2: AMAPColorConstants.redGradient2,
+                              child: HeroIcon(HeroIcons.trash,
                                   color: Colors.white),
                             ))
                       ],

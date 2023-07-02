@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
@@ -23,7 +24,7 @@ class DeliveryHandler extends HookConsumerWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           alignment: Alignment.centerLeft,
-          child: const Text("Livraisons",
+          child: const Text(AMAPTextConstants.deliveries,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -44,8 +45,10 @@ class DeliveryHandler extends HookConsumerWidget {
                 GestureDetector(
                     onTap: () {
                       selectedNotifier.clear();
-                      deliveryIdNotifier.setId("");
-                      QR.to(AmapRouter.root + AmapRouter.admin + AmapRouter.addEditDelivery);
+                      deliveryIdNotifier.setId(Delivery.empty().id);
+                      QR.to(AmapRouter.root +
+                          AmapRouter.admin +
+                          AmapRouter.addEditDelivery);
                     },
                     child: Container(
                       margin: const EdgeInsets.all(15.0),
@@ -84,7 +87,7 @@ class DeliveryHandler extends HookConsumerWidget {
                             .toList());
                   },
                   error: (Object e, StackTrace? s) =>
-                      Text("Error: ${e.toString()}"),
+                      Text("${AMAPTextConstants.error}: ${e.toString()}"),
                   loading: () => const CircularProgressIndicator(
                     color: AMAPColorConstants.greenGradient2,
                   ),
