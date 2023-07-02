@@ -81,7 +81,7 @@ class UserCashUi extends HookConsumerWidget {
                           style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(223, 244, 255, 183))),
+                              color: AMAPColorConstants.green3)),
                       const SizedBox(height: 5),
                       AutoSizeText(
                           cash.user.nickname != null
@@ -104,10 +104,10 @@ class UserCashUi extends HookConsumerWidget {
                               style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(223, 244, 255, 183))),
+                                  color: AMAPColorConstants.green3)),
                           const HeroIcon(
                             HeroIcons.plus,
-                            color: Color.fromARGB(223, 244, 255, 183),
+                            color: AMAPColorConstants.green3,
                             size: 20,
                           ),
                         ],
@@ -153,7 +153,7 @@ class UserCashUi extends HookConsumerWidget {
                                   ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Color.fromARGB(223, 244, 255, 183),
+                                      color: AMAPColorConstants.green3,
                                       width: 2,
                                     ),
                                   ),
@@ -165,7 +165,7 @@ class UserCashUi extends HookConsumerWidget {
                             ),
                             ShrinkButton(
                               waitChild: const Waiter(
-                                color: Color.fromARGB(223, 244, 255, 183),
+                                color: AMAPColorConstants.green3,
                               ),
                               onTap: () async {
                                 if (key.currentState == null) {
@@ -196,7 +196,7 @@ class UserCashUi extends HookConsumerWidget {
                               },
                               child: const Icon(
                                 Icons.add,
-                                color: Color.fromARGB(223, 244, 255, 183),
+                                color: AMAPColorConstants.green3,
                                 size: 30,
                               ),
                             ),

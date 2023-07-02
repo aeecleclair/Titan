@@ -74,7 +74,7 @@ class OrderSection extends HookConsumerWidget {
                       borderRadius: BorderRadius.circular(30),
                       gradient: const RadialGradient(
                         colors: [
-                          Color.fromARGB(223, 182, 212, 10),
+                          AMAPColorConstants.lightGradient1,
                           AMAPColorConstants.greenGradient1,
                         ],
                         center: Alignment.topLeft,

@@ -125,7 +125,7 @@ class AccountHandler extends HookConsumerWidget {
                                         horizontal: 12.0),
                                     child: const HeroIcon(
                                       HeroIcons.xMark,
-                                      color: Color.fromARGB(223, 244, 255, 183),
+                                      color: AMAPColorConstants.green3,
                                       size: 50,
                                     ),
                                   ),
@@ -151,7 +151,7 @@ class AccountHandler extends HookConsumerWidget {
                                     horizontal: 12.0),
                                 child: const HeroIcon(
                                   HeroIcons.plus,
-                                  color: Color.fromARGB(223, 244, 255, 183),
+                                  color: AMAPColorConstants.green3,
                                   size: 50,
                                 ),
                               )),
