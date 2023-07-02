@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/amap/ui/pages/admin_page/user_cash_ui_layout.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -163,7 +164,7 @@ class UserCashUi extends HookConsumerWidget {
                               width: 20,
                             ),
                             ShrinkButton(
-                              waitChild: const CircularProgressIndicator(
+                              waitChild: const Waiter(
                                 color: Color.fromARGB(223, 244, 255, 183),
                               ),
                               onTap: () async {

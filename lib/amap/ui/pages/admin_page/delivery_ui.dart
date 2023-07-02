@@ -12,6 +12,7 @@ import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/components/edit_delete_button.dart';
+import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -238,9 +239,7 @@ class DeliveryUi extends HookConsumerWidget {
                     waitChild: const EditDeleteButton(
                       gradient1: AMAPColorConstants.redGradient1,
                       gradient2: AMAPColorConstants.redGradient2,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ),
+                      child: Waiter(color: Colors.white),
                     ),
                     child: const EditDeleteButton(
                       gradient1: AMAPColorConstants.redGradient1,
@@ -359,9 +358,7 @@ class DeliveryUi extends HookConsumerWidget {
                       ),
                       child: const SizedBox(
                         width: 100,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
+                        child: Waiter(color: Colors.white),
                       )),
                   child: Container(
                     padding:
