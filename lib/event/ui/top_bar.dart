@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/event/providers/event_page_provider.dart';
+import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/home/providers/scrolled_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -14,10 +12,6 @@ class TopBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(eventPageProvider);
-    final pageNotifier = ref.watch(eventPageProvider.notifier);
-    final appPageNotifier = ref.watch(pageProvider.notifier);
-    final hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -32,34 +26,14 @@ class TopBar extends HookConsumerWidget {
                 builder: (BuildContext appBarContext) {
                   return IconButton(
                       onPressed: () {
-                        switch (page) {
-                          case EventPage.main:
-                            controllerNotifier.toggle();
-                            break;
-                          case EventPage.addEditEventFromMain:
-                            pageNotifier.setEventPage(EventPage.main);
-                            break;
-                          case EventPage.addEditEventFromAdmin:
-                            pageNotifier.setEventPage(EventPage.admin);
-                            break;
-                          case EventPage.eventDetailfromModuleFromMain:
-                            pageNotifier.setEventPage(EventPage.main);
-                            break;
-                          case EventPage.eventDetailfromModuleFromAdmin:
-                            pageNotifier.setEventPage(EventPage.admin);
-                            break;
-                          case EventPage.eventDetailfromCalendar:
-                            appPageNotifier.setPage(ModuleType.calendar);
-                            pageNotifier.setEventPage(EventPage.main);
-                            hasScrolledNotifier.setHasScrolled(true);
-                            break;
-                          case EventPage.admin:
-                            pageNotifier.setEventPage(EventPage.main);
-                            break;
+                        if (QR.currentPath == EventRouter.root) {
+                          controllerNotifier.toggle();
+                        } else {
+                          QR.back();
                         }
                       },
                       icon: HeroIcon(
-                        page == EventPage.main
+                        QR.currentPath == EventRouter.root
                             ? HeroIcons.bars3BottomLeft
                             : HeroIcons.chevronLeft,
                         color: Colors.black,

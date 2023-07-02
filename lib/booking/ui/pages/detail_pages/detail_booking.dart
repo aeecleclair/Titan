@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,7 +22,7 @@ class DetailBookingPage extends HookConsumerWidget {
       displayToast(context, type, message);
     }
 
-    return Expanded(
+    return BookingTemplate(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Stack(children: [

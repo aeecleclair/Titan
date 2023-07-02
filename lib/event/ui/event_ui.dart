@@ -5,13 +5,14 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
+import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class EventUi extends ConsumerWidget {
   final Event event;
@@ -32,7 +33,6 @@ class EventUi extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
-    final pageNotifier = ref.watch(eventPageProvider.notifier);
     final eventListNotifier = ref.watch(eventEventListProvider.notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -109,8 +109,7 @@ class EventUi extends ConsumerWidget {
                             GestureDetector(
                               onTap: () {
                                 eventNotifier.setEvent(event);
-                                pageNotifier.setEventPage(
-                                    EventPage.eventDetailfromModuleFromMain);
+                                QR.to(EventRouter.root + EventRouter.detail);
                               },
                               child: HeroIcon(
                                 HeroIcons.informationCircle,
@@ -186,8 +185,8 @@ class EventUi extends ConsumerWidget {
                                   child: GestureDetector(
                                     onTap: () async {
                                       eventNotifier.setEvent(event);
-                                      pageNotifier.setEventPage(
-                                          EventPage.addEditEventFromMain);
+                                      QR.to(EventRouter.root +
+                                          EventRouter.addEdit);
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(

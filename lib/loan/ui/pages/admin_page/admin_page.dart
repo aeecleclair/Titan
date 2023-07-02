@@ -9,6 +9,7 @@ import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
+import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loan_history.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loaners_bar.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loaners_items.dart';
@@ -38,130 +39,132 @@ class AdminPage extends HookConsumerWidget {
       opened.value = true;
     }
 
-    return Refresher(
-      onRefresh: () async {
-        final itemListNotifier = ref.read(itemListProvider.notifier);
-        final loanersitemsNotifier = ref.read(loanersItemsProvider.notifier);
-        final loanListNotifier = ref.read(loanerLoanListProvider.notifier);
-        final historyLoanListNotifier =
-            ref.read(historyLoanerLoanListProvider.notifier);
-        final adminLoanListNotifier = ref.read(adminLoanListProvider.notifier);
-        final admiHistoryLoanListNotifier =
-            ref.read(adminHistoryLoanListProvider.notifier);
-        itemListNotifier.loadItemList(loaner.id);
-        loanersitemsNotifier.setTData(loaner, await itemListNotifier.copy());
-        loanListNotifier.loadLoan(loaner.id);
-        adminLoanListNotifier.setTData(loaner, await loanListNotifier.copy());
-        historyLoanListNotifier.loadLoan(loaner.id);
-        admiHistoryLoanListNotifier.setTData(
-            loaner, await historyLoanListNotifier.copy());
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(top: 10.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 30),
-            LoanersBar(onTap: (key) async {
-              tokenExpireWrapper(ref, () async {
-                loanerIdNotifier.setId(key.id);
-                loanersItems.whenData(
-                  (value) async {
-                    final itemListNotifier =
-                        ref.read(itemListProvider.notifier);
-                    final loanersItemsNotifier =
-                        ref.read(loanersItemsProvider.notifier);
-                    if (value[key] != null) {
-                      value[key]!.whenData((value) async {
-                        if (value.isEmpty) {
-                          Future.delayed(
-                              const Duration(milliseconds: 1),
-                              () => loanersItemsNotifier.setTData(
-                                  key, const AsyncLoading()));
-                          final res =
-                              await itemListNotifier.loadItemList(key.id);
-                          loanersItemsNotifier.setTData(key, res);
-                        }
-                      });
-                    } else {
-                      Future.delayed(
-                          const Duration(milliseconds: 1),
-                          () => loanersItemsNotifier.setTData(
-                              key, const AsyncLoading()));
-                      final res = await itemListNotifier.loadItemList(key.id);
-                      loanersItemsNotifier.setTData(key, res);
-                    }
-                  },
-                );
-                adminLoanList.whenData(
-                  (value) async {
-                    final loanListNotifier =
-                        ref.read(loanerLoanListProvider.notifier);
-                    final adminLoanListNotifier =
-                        ref.read(adminLoanListProvider.notifier);
-                    if (value[key] != null) {
-                      value[key]!.whenData((value) async {
-                        if (value.isEmpty) {
-                          Future.delayed(
-                              const Duration(milliseconds: 1),
-                              () => adminLoanListNotifier.setTData(
-                                  key, const AsyncLoading()));
-                          final res = await loanListNotifier.loadLoan(key.id);
-                          adminLoanListNotifier.setTData(key, res);
-                        }
-                      });
-                    } else {
-                      Future.delayed(
-                          const Duration(milliseconds: 1),
-                          () => adminLoanListNotifier.setTData(
-                              key, const AsyncLoading()));
-                      final res = await loanListNotifier.loadLoan(key.id);
-                      adminLoanListNotifier.setTData(key, res);
-                    }
-                  },
-                );
-                adminHistoryLoanList.whenData(
-                  (value) async {
-                    final historyLoanListNotifier =
-                        ref.read(historyLoanerLoanListProvider.notifier);
-                    final admiHistoryLoanListNotifier =
-                        ref.read(adminHistoryLoanListProvider.notifier);
-                    if (value[key] != null) {
-                      value[key]!.whenData((value) async {
-                        if (value.isEmpty) {
-                          Future.delayed(
-                              const Duration(milliseconds: 1),
-                              () => admiHistoryLoanListNotifier.setTData(
-                                  key, const AsyncLoading()));
-                          final res =
-                              await historyLoanListNotifier.loadLoan(key.id);
-                          admiHistoryLoanListNotifier.setTData(key, res);
-                        }
-                      });
-                    } else {
-                      Future.delayed(
-                          const Duration(milliseconds: 1),
-                          () => admiHistoryLoanListNotifier.setTData(
-                              key, const AsyncLoading()));
-                      final res =
-                          await historyLoanListNotifier.loadLoan(key.id);
-                      admiHistoryLoanListNotifier.setTData(key, res);
-                    }
-                  },
-                );
-              });
-            }),
-            const Column(
-              children: [
-                SizedBox(height: 25),
-                OnGoingLoan(),
-                SizedBox(height: 25),
-                LoanersItems(),
-                SizedBox(height: 25),
-                HistoryLoan(),
-                SizedBox(height: 20),
-              ],
-            ),
-          ],
+    return LoanTemplate(
+      child: Refresher(
+        onRefresh: () async {
+          final itemListNotifier = ref.read(itemListProvider.notifier);
+          final loanersitemsNotifier = ref.read(loanersItemsProvider.notifier);
+          final loanListNotifier = ref.read(loanerLoanListProvider.notifier);
+          final historyLoanListNotifier =
+              ref.read(historyLoanerLoanListProvider.notifier);
+          final adminLoanListNotifier = ref.read(adminLoanListProvider.notifier);
+          final admiHistoryLoanListNotifier =
+              ref.read(adminHistoryLoanListProvider.notifier);
+          itemListNotifier.loadItemList(loaner.id);
+          loanersitemsNotifier.setTData(loaner, await itemListNotifier.copy());
+          loanListNotifier.loadLoan(loaner.id);
+          adminLoanListNotifier.setTData(loaner, await loanListNotifier.copy());
+          historyLoanListNotifier.loadLoan(loaner.id);
+          admiHistoryLoanListNotifier.setTData(
+              loaner, await historyLoanListNotifier.copy());
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 30),
+              LoanersBar(onTap: (key) async {
+                tokenExpireWrapper(ref, () async {
+                  loanerIdNotifier.setId(key.id);
+                  loanersItems.whenData(
+                    (value) async {
+                      final itemListNotifier =
+                          ref.read(itemListProvider.notifier);
+                      final loanersItemsNotifier =
+                          ref.read(loanersItemsProvider.notifier);
+                      if (value[key] != null) {
+                        value[key]!.whenData((value) async {
+                          if (value.isEmpty) {
+                            Future.delayed(
+                                const Duration(milliseconds: 1),
+                                () => loanersItemsNotifier.setTData(
+                                    key, const AsyncLoading()));
+                            final res =
+                                await itemListNotifier.loadItemList(key.id);
+                            loanersItemsNotifier.setTData(key, res);
+                          }
+                        });
+                      } else {
+                        Future.delayed(
+                            const Duration(milliseconds: 1),
+                            () => loanersItemsNotifier.setTData(
+                                key, const AsyncLoading()));
+                        final res = await itemListNotifier.loadItemList(key.id);
+                        loanersItemsNotifier.setTData(key, res);
+                      }
+                    },
+                  );
+                  adminLoanList.whenData(
+                    (value) async {
+                      final loanListNotifier =
+                          ref.read(loanerLoanListProvider.notifier);
+                      final adminLoanListNotifier =
+                          ref.read(adminLoanListProvider.notifier);
+                      if (value[key] != null) {
+                        value[key]!.whenData((value) async {
+                          if (value.isEmpty) {
+                            Future.delayed(
+                                const Duration(milliseconds: 1),
+                                () => adminLoanListNotifier.setTData(
+                                    key, const AsyncLoading()));
+                            final res = await loanListNotifier.loadLoan(key.id);
+                            adminLoanListNotifier.setTData(key, res);
+                          }
+                        });
+                      } else {
+                        Future.delayed(
+                            const Duration(milliseconds: 1),
+                            () => adminLoanListNotifier.setTData(
+                                key, const AsyncLoading()));
+                        final res = await loanListNotifier.loadLoan(key.id);
+                        adminLoanListNotifier.setTData(key, res);
+                      }
+                    },
+                  );
+                  adminHistoryLoanList.whenData(
+                    (value) async {
+                      final historyLoanListNotifier =
+                          ref.read(historyLoanerLoanListProvider.notifier);
+                      final admiHistoryLoanListNotifier =
+                          ref.read(adminHistoryLoanListProvider.notifier);
+                      if (value[key] != null) {
+                        value[key]!.whenData((value) async {
+                          if (value.isEmpty) {
+                            Future.delayed(
+                                const Duration(milliseconds: 1),
+                                () => admiHistoryLoanListNotifier.setTData(
+                                    key, const AsyncLoading()));
+                            final res =
+                                await historyLoanListNotifier.loadLoan(key.id);
+                            admiHistoryLoanListNotifier.setTData(key, res);
+                          }
+                        });
+                      } else {
+                        Future.delayed(
+                            const Duration(milliseconds: 1),
+                            () => admiHistoryLoanListNotifier.setTData(
+                                key, const AsyncLoading()));
+                        final res =
+                            await historyLoanListNotifier.loadLoan(key.id);
+                        admiHistoryLoanListNotifier.setTData(key, res);
+                      }
+                    },
+                  );
+                });
+              }),
+              const Column(
+                children: [
+                  SizedBox(height: 25),
+                  OnGoingLoan(),
+                  SizedBox(height: 25),
+                  LoanersItems(),
+                  SizedBox(height: 25),
+                  HistoryLoan(),
+                  SizedBox(height: 20),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

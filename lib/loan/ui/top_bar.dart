@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/loan/providers/loan_page_provider.dart';
+import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -11,8 +12,6 @@ class TopBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(loanPageProvider);
-    final pageNotifier = ref.watch(loanPageProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -27,29 +26,14 @@ class TopBar extends HookConsumerWidget {
                 builder: (BuildContext appBarContext) {
                   return IconButton(
                       onPressed: () {
-                        switch (page) {
-                          case LoanPage.main:
-                            controllerNotifier.toggle();
-                            break;
-                          case LoanPage.addEditLoan:
-                            pageNotifier.setLoanPage(LoanPage.admin);
-                            break;
-                          case LoanPage.addEditItem:
-                            pageNotifier.setLoanPage(LoanPage.admin);
-                            break;
-                          case LoanPage.admin:
-                            pageNotifier.setLoanPage(LoanPage.main);
-                            break;
-                          case LoanPage.detailLoanFromMain:
-                            pageNotifier.setLoanPage(LoanPage.main);
-                            break;
-                          case LoanPage.detailLoanFromAdmin:
-                            pageNotifier.setLoanPage(LoanPage.admin);
-                            break;
+                        if (QR.currentPath == LoanRouter.root) {
+                          controllerNotifier.toggle();
+                        } else {
+                          QR.back();
                         }
                       },
                       icon: HeroIcon(
-                        page == LoanPage.main
+                         QR.currentPath == LoanRouter.root
                             ? HeroIcons.bars3BottomLeft
                             : HeroIcons.chevronLeft,
                         color: Colors.black,

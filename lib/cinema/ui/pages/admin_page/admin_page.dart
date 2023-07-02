@@ -2,23 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/cinema/class/session.dart';
-import 'package:myecl/cinema/providers/cinema_page_provider.dart';
 import 'package:myecl/cinema/providers/session_list_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
+import 'package:myecl/cinema/router.dart';
 import 'package:myecl/cinema/tools/constants.dart';
+import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/cinema/ui/pages/admin_page/admin_session_card.dart';
 import 'package:myecl/tools/ui/dialog.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(cinemaPageProvider.notifier);
     final sessionNotifier = ref.watch(sessionProvider.notifier);
     final sessionList = ref.watch(sessionListProvider);
     final sessionListNotifier = ref.watch(sessionListProvider.notifier);
-    return Expanded(
+    return CinemaTemplate(
       child: sessionList.when(
         data: (data) {
           return SingleChildScrollView(
@@ -28,7 +29,9 @@ class AdminPage extends HookConsumerWidget {
                 GestureDetector(
                     onTap: () {
                       sessionNotifier.setSession(Session.empty());
-                      pageNotifier.setCinemaPage(CinemaPage.addEditSession);
+                      QR.to(CinemaRouter.root +
+                          CinemaRouter.admin +
+                          CinemaRouter.addEdit);
                     },
                     child: Container(
                       width: 155,
@@ -57,7 +60,9 @@ class AdminPage extends HookConsumerWidget {
                       session: session,
                       onEdit: () {
                         sessionNotifier.setSession(session);
-                        pageNotifier.setCinemaPage(CinemaPage.addEditSession);
+                        QR.to(CinemaRouter.root +
+                            CinemaRouter.admin +
+                            CinemaRouter.addEdit);
                       },
                       onDelete: () async {
                         await showDialog(
@@ -65,8 +70,7 @@ class AdminPage extends HookConsumerWidget {
                             builder: (context) {
                               return CustomDialogBox(
                                 title: CinemaTextConstants.deleting,
-                                descriptions:
-                                    CinemaTextConstants.deleteSession,
+                                descriptions: CinemaTextConstants.deleteSession,
                                 onYes: () {
                                   sessionListNotifier.deleteSession(session);
                                 },
@@ -75,8 +79,7 @@ class AdminPage extends HookConsumerWidget {
                       },
                       onTap: () {
                         sessionNotifier.setSession(session);
-                        pageNotifier
-                            .setCinemaPage(CinemaPage.detailFromAdminPage);
+                        QR.to(CinemaRouter.root + CinemaRouter.detail);
                       }),
                 )
               ],

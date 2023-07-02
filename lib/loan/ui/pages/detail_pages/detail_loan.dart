@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/ui/item_card_in_loan.dart';
+import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
 import 'package:myecl/tools/functions.dart';
 
@@ -12,107 +13,109 @@ class DetailLoanPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loan = ref.watch(loanProvider);
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 80,
-                ),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey.shade50,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        blurRadius: 10,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
+    return LoanTemplate(
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 80,
                   ),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 100,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(30.0),
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AutoSizeText(
-                              loan.borrower.getName(),
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              capitalize(loan.loaner.name),
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Text(
-                              loan.notes,
-                              style: const TextStyle(
-                                fontSize: 18,
-                              ),
-                            ),
-                          ],
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.grey.shade50,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 10),
                         ),
-                      ),
-                      loan.itemsQuantity.isNotEmpty
-                          ? SingleChildScrollView(
-                              physics: const BouncingScrollPhysics(),
-                              child: Wrap(
-                                children: loan.itemsQuantity
-                                    .map(
-                                      (itemQty) => ItemCardInLoan(
-                                        itemQty: itemQty,
-                                      ),
-                                    )
-                                    .toList(),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 100,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(30.0),
+                          alignment: Alignment.centerLeft,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AutoSizeText(
+                                loan.borrower.getName(),
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            )
-                          : const SizedBox(),
-                    ],
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                capitalize(loan.loaner.name),
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              Text(
+                                loan.notes,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        loan.itemsQuantity.isNotEmpty
+                            ? SingleChildScrollView(
+                                physics: const BouncingScrollPhysics(),
+                                child: Wrap(
+                                  children: loan.itemsQuantity
+                                      .map(
+                                        (itemQty) => ItemCardInLoan(
+                                          itemQty: itemQty,
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                              )
+                            : const SizedBox(),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Center(
-              child: LoanCard(
-                loan: loan,
-                onEdit: () {},
-                onReturn: () async {},
-                onInfo: () {},
-                isAdmin: false,
-                isDetail: true,
-                onCalendar: () async {},
+                ],
               ),
             ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Center(
+                child: LoanCard(
+                  loan: loan,
+                  onEdit: () {},
+                  onReturn: () async {},
+                  onInfo: () {},
+                  isAdmin: false,
+                  isDetail: true,
+                  onCalendar: () async {},
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

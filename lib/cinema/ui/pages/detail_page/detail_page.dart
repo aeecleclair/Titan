@@ -2,13 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/cinema/providers/cinema_page_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});
@@ -16,8 +16,6 @@ class DetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final session = ref.watch(sessionProvider);
-    final page = ref.watch(cinemaPageProvider);
-    final pageNotifier = ref.watch(cinemaPageProvider.notifier);
     final sessionPosterMap = ref.watch(sessionPosterMapProvider);
     final sessionPosterMapNotifier =
         ref.watch(sessionPosterMapProvider.notifier);
@@ -110,13 +108,7 @@ class DetailPage extends HookConsumerWidget {
                     width: 20,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      if (page == CinemaPage.detailFromMainPage) {
-                        pageNotifier.setCinemaPage(CinemaPage.main);
-                      } else {
-                        pageNotifier.setCinemaPage(CinemaPage.admin);
-                      }
-                    },
+                    onTap: QR.back,
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(

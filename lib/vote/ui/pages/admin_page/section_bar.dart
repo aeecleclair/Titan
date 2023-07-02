@@ -9,10 +9,11 @@ import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/providers/vote_page_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
+import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/section_chip.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class SectionBar extends HookConsumerWidget {
   const SectionBar({super.key});
@@ -22,7 +23,6 @@ class SectionBar extends HookConsumerWidget {
     final section = ref.watch(sectionProvider);
     final sectionIdNotifier = ref.watch(sectionIdProvider.notifier);
     final sectionPretendance = ref.watch(sectionPretendanceProvider);
-    final pageNotifier = ref.watch(votePageProvider.notifier);
     final sectionPretendanceListNotifier =
         ref.watch(sectionPretendanceProvider.notifier);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
@@ -43,7 +43,9 @@ class SectionBar extends HookConsumerWidget {
           if (status == Status.waiting)
             GestureDetector(
               onTap: () {
-                pageNotifier.setVotePage(VotePage.addSection);
+                QR.to(VoteRouter.root +
+                    VoteRouter.admin +
+                    VoteRouter.addSection);
               },
               child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10.0),

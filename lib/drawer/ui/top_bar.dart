@@ -3,15 +3,16 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/is_admin.dart';
+import 'package:myecl/admin/router.dart';
 import 'package:myecl/auth/providers/is_connected_provider.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
+import 'package:myecl/settings/router.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -21,8 +22,6 @@ class TopBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
     final profilePicture = ref.watch(profilePictureProvider);
-    final page = ref.watch(pageProvider);
-    final pageNotifier = ref.watch(pageProvider.notifier);
     final hasScrolled = ref.watch(hasScrolledProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
     final isConnected = ref.watch(isConnectedProvider);
@@ -49,7 +48,7 @@ class TopBar extends HookConsumerWidget {
                       animation.reverse();
                     }
                   } else {
-                    pageNotifier.setPage(ModuleType.settings);
+                    QR.to(SettingsRouter.root);
                     controllerNotifier.toggle();
                     hasScrolled.setHasScrolled(false);
                   }
@@ -75,9 +74,9 @@ class TopBar extends HookConsumerWidget {
                               ),
                               child: CircleAvatar(
                                 radius: 25,
-                                backgroundImage: file.isEmpty ?
-                                const AssetImage("assets/images/logo.png") :
-                                Image.memory(file).image,
+                                backgroundImage: file.isEmpty
+                                    ? const AssetImage("assets/images/logo.png")
+                                    : Image.memory(file).image,
                               ),
                             ),
                             if (isAdmin)
@@ -191,7 +190,7 @@ class TopBar extends HookConsumerWidget {
                     child: GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
-                        pageNotifier.setPage(ModuleType.settings);
+                        QR.to(SettingsRouter.root);
                         controllerNotifier.toggle();
                         hasScrolled.setHasScrolled(false);
                       },
@@ -199,9 +198,10 @@ class TopBar extends HookConsumerWidget {
                         children: [
                           HeroIcon(
                             HeroIcons.cog,
-                            color: page == ModuleType.settings
-                                ? DrawerColorConstants.selectedText
-                                : DrawerColorConstants.lightText,
+                            color:
+                                QR.currentPath.startsWith(SettingsRouter.root)
+                                    ? DrawerColorConstants.selectedText
+                                    : DrawerColorConstants.lightText,
                             size: 25,
                           ),
                           Container(
@@ -209,7 +209,8 @@ class TopBar extends HookConsumerWidget {
                           ),
                           Text(DrawerTextConstants.settings,
                               style: TextStyle(
-                                color: page == ModuleType.settings
+                                color: QR.currentPath
+                                        .startsWith(SettingsRouter.root)
                                     ? DrawerColorConstants.selectedText
                                     : DrawerColorConstants.lightText,
                                 fontSize: 15,
@@ -227,7 +228,7 @@ class TopBar extends HookConsumerWidget {
                       child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: () {
-                          pageNotifier.setPage(ModuleType.admin);
+                          QR.to(AdminRouter.root);
                           controllerNotifier.toggle();
                           hasScrolled.setHasScrolled(false);
                         },
@@ -235,7 +236,7 @@ class TopBar extends HookConsumerWidget {
                           children: [
                             HeroIcon(
                               HeroIcons.userGroup,
-                              color: page == ModuleType.admin
+                              color: QR.currentPath.startsWith(AdminRouter.root)
                                   ? DrawerColorConstants.selectedText
                                   : DrawerColorConstants.lightText,
                               size: 25,
@@ -245,7 +246,8 @@ class TopBar extends HookConsumerWidget {
                             ),
                             Text(DrawerTextConstants.admin,
                                 style: TextStyle(
-                                  color: page == ModuleType.admin
+                                  color: QR.currentPath
+                                          .startsWith(AdminRouter.root)
                                       ? DrawerColorConstants.selectedText
                                       : DrawerColorConstants.lightText,
                                   fontSize: 15,

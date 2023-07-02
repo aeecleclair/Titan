@@ -6,15 +6,16 @@ import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/item_focus_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/item_provider.dart';
-import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
+import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/item_card.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/web_list_view.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class LoanersItems extends HookConsumerWidget {
   const LoanersItems({super.key});
@@ -26,7 +27,6 @@ class LoanersItems extends HookConsumerWidget {
     final loanersItems = ref.watch(loanersItemsProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final itemList = ref.watch(itemListProvider);
-    final pageNotifier = ref.watch(loanPageProvider.notifier);
     final itemNotifier = ref.watch(itemProvider.notifier);
     final editingController = useTextEditingController();
     final focus = ref.watch(itemFocusProvider);
@@ -70,8 +70,7 @@ class LoanersItems extends HookConsumerWidget {
                         controller: editingController,
                         cursorColor: const Color.fromARGB(255, 149, 149, 149),
                         decoration: const InputDecoration(
-                            labelText:
-                                LoanTextConstants.itemHandling,
+                            labelText: LoanTextConstants.itemHandling,
                             labelStyle: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -104,7 +103,9 @@ class LoanersItems extends HookConsumerWidget {
                             GestureDetector(
                               onTap: () {
                                 itemNotifier.setItem(Item.empty());
-                                pageNotifier.setLoanPage(LoanPage.addEditItem);
+                                QR.to(LoanRouter.root +
+                                    LoanRouter.admin +
+                                    LoanRouter.addEditItem);
                               },
                               child: Container(
                                 margin:
@@ -177,8 +178,9 @@ class LoanersItems extends HookConsumerWidget {
                                         });
                                   },
                                   onEdit: () {
-                                    pageNotifier
-                                        .setLoanPage(LoanPage.addEditItem);
+                                    QR.to(LoanRouter.root +
+                                        LoanRouter.admin +
+                                        LoanRouter.addEditItem);
                                     itemNotifier.setItem(e);
                                   },
                                 )),

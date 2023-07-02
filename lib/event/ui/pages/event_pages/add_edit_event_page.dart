@@ -7,9 +7,9 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/event/providers/is_room_provider.dart';
 import 'package:myecl/event/providers/room_id_provider.dart';
+import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/pages/event_pages/checkbox_entry.dart';
 import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/selected_days_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
@@ -21,6 +21,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEditEventPage extends HookConsumerWidget {
@@ -33,8 +34,6 @@ class AddEditEventPage extends HookConsumerWidget {
     final event = ref.watch(eventProvider);
     final rooms = ref.watch(roomListProvider);
     final isEdit = event.id != Event.empty().id;
-    final page = ref.watch(eventPageProvider);
-    final pageNotifier = ref.watch(eventPageProvider.notifier);
     final key = GlobalKey<FormState>();
     final eventListNotifier = ref.watch(eventEventListProvider.notifier);
     final eventType = useState(event.type);
@@ -82,7 +81,7 @@ class AddEditEventPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return Expanded(
+    return EventTemplate(
       child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Form(
@@ -734,13 +733,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                       : await eventListNotifier
                                           .addEvent(newEvent);
                                   if (value) {
-                                    if (page ==
-                                        EventPage.addEditEventFromMain) {
-                                      pageNotifier.setEventPage(EventPage.main);
-                                    } else {
-                                      pageNotifier
-                                          .setEventPage(EventPage.admin);
-                                    }
+                                    QR.back();
                                     if (isEdit) {
                                       displayToastWithContext(TypeMsg.msg,
                                           EventTextConstants.editedEvent);

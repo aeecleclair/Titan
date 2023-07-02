@@ -1,34 +1,22 @@
 import 'package:heroicons/heroicons.dart';
 
-enum ModuleType {
-  calendar,
-  settings,
-  amap, 
-  loan,
-  booking,
-  admin,
-  event,
-  vote,
-  tombola,
-  cinema,
-}
 
 class Module {
   String name;
   HeroIcons icon;
-  ModuleType page;
+  String root;
   bool selected;
 
   Module(
       {required this.name,
       required this.icon,
-      required this.page,
+      required this.root,
       required this.selected});
 
-  Module copy({name, icon, page, selected}) => Module(
+  Module copy({name, icon, root, selected}) => Module(
         name: name ?? this.name,
         icon: icon ?? this.icon,
-        page: page ?? this.page,
+        root: root ?? this.root,
         selected: selected ?? this.selected,
       );
 }

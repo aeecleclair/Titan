@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/booking/providers/booking_page_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -11,8 +12,6 @@ class TopBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(bookingPageProvider);
-    final pageNotifier = ref.watch(bookingPageProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -27,32 +26,14 @@ class TopBar extends HookConsumerWidget {
                 builder: (BuildContext appBarContext) {
                   return IconButton(
                       onPressed: () {
-                        switch (page) {
-                          case BookingPage.main:
-                            controllerNotifier.toggle();
-                            break;
-                          case BookingPage.admin:
-                            pageNotifier.setBookingPage(BookingPage.main);
-                            break;
-                          case BookingPage.addEditBooking:
-                            pageNotifier.setBookingPage(BookingPage.main);
-                            break;
-                          case BookingPage.addEditRoom:
-                            pageNotifier.setBookingPage(BookingPage.admin);
-                            break;
-                          case BookingPage.detailBookingFromAdmin:
-                            pageNotifier.setBookingPage(BookingPage.admin);
-                            break;
-                          case BookingPage.detailBookingFromMain:
-                            pageNotifier.setBookingPage(BookingPage.main);
-                            break;
-                          case BookingPage.addEditBookingFromAdmin:
-                            pageNotifier.setBookingPage(BookingPage.admin);
-                            break;
+                        if (QR.currentPath == BookingRouter.root) {
+                          controllerNotifier.toggle();
+                        } else {
+                          QR.back();
                         }
                       },
                       icon: HeroIcon(
-                        page == BookingPage.main
+                        QR.currentPath == BookingRouter.root
                             ? HeroIcons.bars3BottomLeft
                             : HeroIcons.chevronLeft,
                         color: Colors.black,

@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
+import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/event_ui.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,7 +21,7 @@ class DetailPage extends HookConsumerWidget {
       displayToast(context, type, message);
     }
 
-    return Expanded(
+    return EventTemplate(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Stack(

@@ -9,6 +9,7 @@ import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/add_edit_button.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/caution_text_entry.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/end_date_entry.dart';
@@ -46,130 +47,132 @@ class AddEditLoanPage extends HookConsumerWidget {
       focusNode.requestFocus();
     }
 
-    return SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Form(
-          key: key,
-          child: Column(children: [
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: TextField(
-                  onChanged: (value) {
-                    tokenExpireWrapper(ref, () async {
-                      if (editingController.text.isNotEmpty) {
-                        loanersItemsNotifier.setTData(
-                            loaner,
-                            await itemListNotifier
-                                .filterItems(editingController.text));
-                      } else {
-                        loanersItemsNotifier.setTData(loaner, itemList);
-                      }
-                    });
-                  },
-                  focusNode: focusNode,
-                  controller: editingController,
-                  cursorColor: const Color.fromARGB(255, 149, 149, 149),
-                  decoration: InputDecoration(
-                      labelText:
-                      isEdit
-                          ? LoanTextConstants.editLoan
-                          : LoanTextConstants.addLoan,
-                      labelStyle: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 149, 149, 149)),
-                      suffixIcon: const Icon(
-                        Icons.search,
-                        color: Color.fromARGB(255, 149, 149, 149),
-                        size: 30,
-                      ),
-                      enabledBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        ),
-                      ),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
+    return LoanTemplate(
+      child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Form(
+            key: key,
+            child: Column(children: [
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextField(
+                    onChanged: (value) {
+                      tokenExpireWrapper(ref, () async {
+                        if (editingController.text.isNotEmpty) {
+                          loanersItemsNotifier.setTData(
+                              loaner,
+                              await itemListNotifier
+                                  .filterItems(editingController.text));
+                        } else {
+                          loanersItemsNotifier.setTData(loaner, itemList);
+                        }
+                      });
+                    },
+                    focusNode: focusNode,
+                    controller: editingController,
+                    cursorColor: const Color.fromARGB(255, 149, 149, 149),
+                    decoration: InputDecoration(
+                        labelText:
+                        isEdit
+                            ? LoanTextConstants.editLoan
+                            : LoanTextConstants.addLoan,
+                        labelStyle: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 149, 149, 149)),
+                        suffixIcon: const Icon(
+                          Icons.search,
                           color: Color.fromARGB(255, 149, 149, 149),
+                          size: 30,
                         ),
-                      )),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            ItemBar(
-              isEdit: isEdit,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Column(children: [
-                const SizedBox(height: 20),
-                const NumberSelectedText(),
-                const SizedBox(height: 20),
-                TextFormField(
-                  onChanged: (value) {
-                    tokenExpireWrapper(ref, () async {
-                      if (queryController.text.isNotEmpty) {
-                        await usersNotifier.filterUsers(queryController.text);
-                      } else {
-                        usersNotifier.clear();
-                      }
-                    });
-                  },
-                  cursorColor: Colors.black,
-                  controller: queryController,
-                  decoration: const InputDecoration(
-                    labelText: LoanTextConstants.borrower,
-                    floatingLabelStyle: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 2.0),
-                    ),
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          ),
+                        ),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 149, 149, 149),
+                          ),
+                        )),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                SearchResult(queryController: queryController),
-                const SizedBox(height: 30),
-                const StartDateEntry(),
-                const SizedBox(height: 30),
-                const EndDateEntry(),
-                const SizedBox(height: 30),
-                TextEntry(
-                  keyboardType: TextInputType.text,
-                  label: LoanTextConstants.note,
-                  suffix: '',
-                  isInt: false,
-                  controller: note,
-                ),
-                const SizedBox(height: 30),
-                const CautionTextEntry(),
-                const SizedBox(height: 50),
-                AddEditButton(
-                  isEdit: isEdit,
-                  note: note,
-                  onAddEdit: (p0) async {
-                    if (key.currentState == null) {
-                      return;
-                    }
-                    if (key.currentState!.validate()) {
-                      p0();
-                    } else {
-                      displayToast(context, TypeMsg.error,
-                          LoanTextConstants.incorrectOrMissingFields);
-                    }
-                  },
-                ),
-                const SizedBox(height: 30),
-              ]),
-            ),
-          ]),
-        ));
+              ),
+              const SizedBox(height: 10),
+              ItemBar(
+                isEdit: isEdit,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Column(children: [
+                  const SizedBox(height: 20),
+                  const NumberSelectedText(),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    onChanged: (value) {
+                      tokenExpireWrapper(ref, () async {
+                        if (queryController.text.isNotEmpty) {
+                          await usersNotifier.filterUsers(queryController.text);
+                        } else {
+                          usersNotifier.clear();
+                        }
+                      });
+                    },
+                    cursorColor: Colors.black,
+                    controller: queryController,
+                    decoration: const InputDecoration(
+                      labelText: LoanTextConstants.borrower,
+                      floatingLabelStyle: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SearchResult(queryController: queryController),
+                  const SizedBox(height: 30),
+                  const StartDateEntry(),
+                  const SizedBox(height: 30),
+                  const EndDateEntry(),
+                  const SizedBox(height: 30),
+                  TextEntry(
+                    keyboardType: TextInputType.text,
+                    label: LoanTextConstants.note,
+                    suffix: '',
+                    isInt: false,
+                    controller: note,
+                  ),
+                  const SizedBox(height: 30),
+                  const CautionTextEntry(),
+                  const SizedBox(height: 50),
+                  AddEditButton(
+                    isEdit: isEdit,
+                    note: note,
+                    onAddEdit: (p0) async {
+                      if (key.currentState == null) {
+                        return;
+                      }
+                      if (key.currentState!.validate()) {
+                        p0();
+                      } else {
+                        displayToast(context, TypeMsg.error,
+                            LoanTextConstants.incorrectOrMissingFields);
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 30),
+                ]),
+              ),
+            ]),
+          )),
+    );
   }
 }

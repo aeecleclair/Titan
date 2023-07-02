@@ -7,13 +7,14 @@ import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tombola/providers/lot_list_provider.dart';
 import 'package:myecl/tombola/providers/lot_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
-import 'package:myecl/tombola/providers/tombola_page_provider.dart';
 import 'package:myecl/tombola/providers/winning_ticket_list_provider.dart';
+import 'package:myecl/tombola/router.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/admin_page/lot_card.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class LotHandler extends HookConsumerWidget {
   const LotHandler({super.key});
@@ -21,7 +22,6 @@ class LotHandler extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffle = ref.watch(raffleProvider);
-    final pageNotifier = ref.watch(tombolaPageProvider.notifier);
     final lotNotifier = ref.watch(lotProvider.notifier);
     final lotsNotifier = ref.watch(lotListProvider.notifier);
     final lotList = ref.watch(lotListProvider);
@@ -101,7 +101,9 @@ class LotHandler extends HookConsumerWidget {
               GestureDetector(
                 onTap: () {
                   lotNotifier.setLot(Lot.empty());
-                  pageNotifier.setTombolaPage(TombolaPage.addEditLot);
+                  QR.to(RaffleRouter.root +
+                      RaffleRouter.admin +
+                      RaffleRouter.addEditLot);
                 },
                 child: Container(
                     margin: const EdgeInsets.only(left: 5.0, bottom: 10),
@@ -182,8 +184,9 @@ class LotHandler extends HookConsumerWidget {
                               },
                               onEdit: () {
                                 lotNotifier.setLot(e);
-                                pageNotifier
-                                    .setTombolaPage(TombolaPage.addEditLot);
+                                QR.to(RaffleRouter.root +
+                                    RaffleRouter.admin +
+                                    RaffleRouter.addEditLot);
                               },
                               status: raffle.raffleStatusType,
                               onDraw: () async {

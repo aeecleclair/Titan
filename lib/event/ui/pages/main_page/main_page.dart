@@ -2,25 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_page_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/is_admin.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
+import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
+import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/event_ui.dart';
 import 'package:myecl/tools/ui/refresher.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-class MainPage extends HookConsumerWidget {
-  const MainPage({Key? key}) : super(key: key);
+class EventMainPage extends HookConsumerWidget {
+  const EventMainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(isEventAdmin);
-    final pageNotifier = ref.watch(eventPageProvider.notifier);
+    final isAdmin = ref.watch(isEventAdminProvider);
     final eventNotifier = ref.watch(eventProvider.notifier);
     final eventListNotifier = ref.watch(eventEventListProvider.notifier);
     final events = ref.watch(eventEventListProvider);
-    return Expanded(
+    return EventTemplate(
       child: Refresher(
         onRefresh: () async {
           await eventListNotifier.loadConfirmedEvent();
@@ -49,7 +50,7 @@ class MainPage extends HookConsumerWidget {
                           if (isAdmin)
                             GestureDetector(
                               onTap: () {
-                                pageNotifier.setEventPage(EventPage.admin);
+                                QR.to(EventRouter.root + EventRouter.admin);
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
@@ -94,8 +95,7 @@ class MainPage extends HookConsumerWidget {
                             return GestureDetector(
                               onTap: () {
                                 eventNotifier.setEvent(Event.empty());
-                                pageNotifier.setEventPage(
-                                    EventPage.addEditEventFromMain);
+                                QR.to(EventRouter.root + EventRouter.addEdit);
                               },
                               child: Container(
                                   margin: const EdgeInsets.only(

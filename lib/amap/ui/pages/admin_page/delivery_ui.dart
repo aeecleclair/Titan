@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
-import 'package:myecl/amap/providers/amap_page_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
@@ -10,11 +9,13 @@ import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/orders_by_delivery_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
+import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class DeliveryUi extends HookConsumerWidget {
   final Delivery delivery;
@@ -22,7 +23,6 @@ class DeliveryUi extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(amapPageProvider.notifier);
     final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
     final deliveryOrders = ref.watch(adminDeliveryOrderListProvider);
@@ -68,8 +68,7 @@ class DeliveryUi extends HookConsumerWidget {
               );
         } else {
           Future.delayed(const Duration(milliseconds: 1), () {
-            deliveryOrdersNotifier.setTData(
-                delivery.id, const AsyncLoading());
+            deliveryOrdersNotifier.setTData(delivery.id, const AsyncLoading());
           });
           tokenExpireWrapper(ref, () async {
             final ordersByDelivery = await ordersByDeliveryListNotifier
@@ -137,7 +136,9 @@ class DeliveryUi extends HookConsumerWidget {
                           deliveryIdNotifier.setId(delivery.id);
                           deliveryProductListNotifier
                               .loadProductList(delivery.products);
-                          pageNotifier.setAmapPage(AmapPage.deliveryDetail);
+                          QR.to(AmapRouter.root +
+                              AmapRouter.admin +
+                              AmapRouter.detailDelivery);
                         },
                         child: const HeroIcon(
                           HeroIcons.arrowTopRightOnSquare,
@@ -177,7 +178,9 @@ class DeliveryUi extends HookConsumerWidget {
                   GestureDetector(
                     onTap: () async {
                       deliveryIdNotifier.setId(delivery.id);
-                      pageNotifier.setAmapPage(AmapPage.addEditDelivery);
+                      QR.to(AmapRouter.root +
+                          AmapRouter.admin +
+                          AmapRouter.addEditDelivery);
                       final deliveryProductsIds = delivery.products
                           .map((e) => e.id)
                           .toList(growable: false);

@@ -8,12 +8,12 @@ import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/loan_focus_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/providers/start_provider.dart';
+import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan_card.dart';
 import 'package:myecl/loan/ui/pages/admin_page/delay_dialog.dart';
@@ -21,6 +21,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/web_list_view.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class OnGoingLoan extends HookConsumerWidget {
   const OnGoingLoan({super.key});
@@ -32,7 +33,6 @@ class OnGoingLoan extends HookConsumerWidget {
     final loanList = ref.watch(loanerLoanListProvider);
     final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final loanersItems = ref.watch(loanersItemsProvider);
-    final pageNotifier = ref.watch(loanPageProvider.notifier);
     final loanNotifier = ref.watch(loanProvider.notifier);
     final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
     final adminLoanList = ref.watch(adminLoanListProvider);
@@ -116,7 +116,9 @@ class OnGoingLoan extends HookConsumerWidget {
                           ref.watch(itemListProvider);
                           startNotifier.setStart(processDate(DateTime.now()));
                           endNotifier.setEnd("");
-                          pageNotifier.setLoanPage(LoanPage.addEditLoan);
+                          QR.to(LoanRouter.root +
+                              LoanRouter.admin +
+                              LoanRouter.addEditLoan);
                           loanersItemsNotifier.setTData(loaner, itemList);
                         },
                         child: Container(
@@ -161,8 +163,9 @@ class OnGoingLoan extends HookConsumerWidget {
                                   ref.watch(itemListProvider);
                                   startNotifier.setStart(processDate(e.start));
                                   endNotifier.setEnd(processDate(e.end));
-                                  pageNotifier
-                                      .setLoanPage(LoanPage.addEditLoan);
+                                  QR.to(LoanRouter.root +
+                                      LoanRouter.admin +
+                                      LoanRouter.addEditItem);
                                 },
                                 onCalendar: () async {
                                   await showDialog<int>(
@@ -209,7 +212,8 @@ class OnGoingLoan extends HookConsumerWidget {
                                           onYes: () async {
                                             await tokenExpireWrapper(ref,
                                                 () async {
-                                              final loanItemsId = e.itemsQuantity
+                                              final loanItemsId = e
+                                                  .itemsQuantity
                                                   .map((e) => e.itemSimple.id)
                                                   .toList();
                                               final updatedItems = loanersItems
@@ -237,8 +241,8 @@ class OnGoingLoan extends HookConsumerWidget {
                                                   await loanListNotifier
                                                       .returnLoan(e);
                                               if (value) {
-                                                pageNotifier.setLoanPage(
-                                                    LoanPage.admin);
+                                                QR.to(LoanRouter.root +
+                                                    LoanRouter.admin);
                                                 await loanersItemsNotifier
                                                     .setTData(
                                                         loaner,
@@ -264,8 +268,9 @@ class OnGoingLoan extends HookConsumerWidget {
                                 },
                                 onInfo: () {
                                   loanNotifier.setLoan(e);
-                                  pageNotifier.setLoanPage(
-                                      LoanPage.detailLoanFromAdmin);
+                                  QR.to(LoanRouter.root +
+                                      LoanRouter.admin +
+                                      LoanRouter.detail);
                                 },
                               ))
                           .toList(),

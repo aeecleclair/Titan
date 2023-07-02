@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/settings/providers/settings_page_provider.dart';
+import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/tools/constants.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -11,8 +12,6 @@ class TopBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(settingsPageProvider);
-    final pageNotifier = ref.watch(settingsPageProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -23,40 +22,21 @@ class TopBar extends HookConsumerWidget {
           children: [
             SizedBox(
               width: 70,
-              child: Builder(
-                builder: (BuildContext appBarContext) {
-                  return IconButton(
-                      onPressed: () {
-                        switch (page) {
-                          case SettingsPage.main:
-                            controllerNotifier.toggle();
-                            break;
-                          case SettingsPage.edit:
-                            pageNotifier.setSettingsPage(SettingsPage.main);
-                            break;
-                          case SettingsPage.changePassword:
-                            pageNotifier.setSettingsPage(SettingsPage.main);
-                            break;
-                          case SettingsPage.notification:
-                            pageNotifier.setSettingsPage(SettingsPage.main);
-                            break;
-                          case SettingsPage.logs:
-                            pageNotifier.setSettingsPage(SettingsPage.main);
-                            break;
-                          case SettingsPage.modules:
-                            pageNotifier.setSettingsPage(SettingsPage.main);
-                            break;
-                        }
-                      },
-                      icon: HeroIcon(
-                        page == SettingsPage.main
-                            ? HeroIcons.bars3BottomLeft
-                            : HeroIcons.chevronLeft,
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                        size: 30,
-                      ));
-                },
-              ),
+              child: IconButton(
+                  onPressed: () {
+                    if (QR.currentPath == SettingsRouter.root) {
+                      controllerNotifier.toggle();
+                    } else {
+                      QR.back();
+                    }
+                  },
+                  icon: HeroIcon(
+                    QR.currentPath == SettingsRouter.root
+                        ? HeroIcons.bars3BottomLeft
+                        : HeroIcons.chevronLeft,
+                    color: const Color.fromARGB(255, 0, 0, 0),
+                    size: 30,
+                  )),
             ),
             const Text(SettingsTextConstants.settings,
                 style: TextStyle(

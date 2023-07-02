@@ -7,7 +7,6 @@ import 'package:myecl/loan/providers/borrower_provider.dart';
 import 'package:myecl/loan/providers/caution_provider.dart';
 import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/loan_page_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
@@ -17,6 +16,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditButton extends HookConsumerWidget {
   final TextEditingController note;
@@ -31,7 +31,6 @@ class AddEditButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(loanPageProvider.notifier);
     final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
     final items = ref.watch(itemListProvider);
     final selectedItems = ref.watch(editSelectedListProvider);
@@ -120,7 +119,7 @@ class AddEditButton extends HookConsumerWidget {
                       await adminLoanListNotifier.setTData(
                           isEdit ? loan.loaner : loaner,
                           await loanListNotifier.copy());
-                      pageNotifier.setLoanPage(LoanPage.admin);
+                      QR.back();
                       if (isEdit) {
                         displayToastWithContext(
                             TypeMsg.msg, LoanTextConstants.updatedLoan);

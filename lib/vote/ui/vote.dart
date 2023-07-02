@@ -1,50 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/vote/providers/vote_page_provider.dart';
-import 'package:myecl/vote/ui/page_switcher.dart';
 import 'package:myecl/vote/ui/top_bar.dart';
 
-class VoteHomePage extends HookConsumerWidget {
-  final SwipeControllerNotifier controllerNotifier;
-  final AnimationController controller;
-  const VoteHomePage(
-      {Key? key, required this.controllerNotifier, required this.controller})
-      : super(key: key);
+class VoteTemplate extends HookConsumerWidget {
+  final Widget child;
+  const VoteTemplate({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(votePageProvider);
-    final pageNotifier = ref.watch(votePageProvider.notifier);
+    final animationNotifier = ref.watch(animationProvider.notifier);
+    final controller =
+        ref.watch(swipeControllerProvider(animationNotifier.animation!));
+    final controllerNotifier = ref
+        .watch(swipeControllerProvider(animationNotifier.animation!).notifier);
     return Scaffold(
-      body: WillPopScope(
-        onWillPop: () async {
-          switch (page) {
-            case VotePage.main:
-              if (!controller.isCompleted) {
-                controllerNotifier.toggle();
-                break;
-              } else {
-                return true;
-              }
-            case VotePage.admin:
-              pageNotifier.setVotePage(VotePage.main);
-              break;
-            case VotePage.addSection:
-              pageNotifier.setVotePage(VotePage.admin);
-              break;
-            case VotePage.addEditPretendance:
-              pageNotifier.setVotePage(VotePage.admin);
-              break;
-            case VotePage.detailPageFromMain:
-              pageNotifier.setVotePage(VotePage.main);
-              break;
-            case VotePage.detailPageFromAdmin:
-              pageNotifier.setVotePage(VotePage.admin);
-              break;
-          }
-          return false;
-        },
+      body: Container(
+        color: Colors.white,
         child: SafeArea(
           child: IgnorePointer(
             ignoring: controller.isCompleted,
@@ -53,7 +26,7 @@ class VoteHomePage extends HookConsumerWidget {
                 TopBar(
                   controllerNotifier: controllerNotifier,
                 ),
-                const Expanded(child: PageSwitcher()),
+                Expanded(child: child),
               ],
             ),
           ),

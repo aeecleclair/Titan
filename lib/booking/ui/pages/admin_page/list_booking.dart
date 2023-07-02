@@ -4,14 +4,15 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
-import 'package:myecl/booking/providers/booking_page_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/web_list_view.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class ListBooking extends HookConsumerWidget {
   final List<Booking> bookings;
@@ -26,7 +27,6 @@ class ListBooking extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(bookingPageProvider.notifier);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     final bookingListNotifier = ref.watch(bookingListProvider.notifier);
     final confirmedBookingListNotifier =
@@ -82,13 +82,15 @@ class ListBooking extends HookConsumerWidget {
                           isDetail: false,
                           onEdit: () {
                             bookingNotifier.setBooking(e);
-                            pageNotifier.setBookingPage(
-                                BookingPage.addEditBookingFromAdmin);
+                            QR.to(BookingRouter.root +
+                                BookingRouter.admin +
+                                BookingRouter.addEdit);
                           },
                           onInfo: () {
                             bookingNotifier.setBooking(e);
-                            pageNotifier.setBookingPage(
-                                BookingPage.detailBookingFromAdmin);
+                            QR.to(BookingRouter.root +
+                                BookingRouter.admin +
+                                BookingRouter.detail);
                           },
                           onConfirm: () async {
                             await showDialog(
@@ -142,8 +144,9 @@ class ListBooking extends HookConsumerWidget {
                           },
                           onCopy: () {
                             bookingNotifier.setBooking(e.copyWith(id: ""));
-                            pageNotifier.setBookingPage(
-                                BookingPage.addEditBookingFromAdmin);
+                            QR.to(BookingRouter.root +
+                                BookingRouter.admin +
+                                BookingRouter.addEdit);
                           },
                           onDelete: () async {},
                         )),
