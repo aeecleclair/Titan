@@ -18,8 +18,8 @@ class AddSectionPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sectionPretendanceNotifier =
-        ref.watch(sectionPretendanceProvider.notifier);
-    final sectionListNotifier = ref.watch(sectionsProvider.notifier);
+        ref.read(sectionPretendanceProvider.notifier);
+    final sectionListNotifier = ref.read(sectionsProvider.notifier);
     final sections = ref.watch(sectionsProvider);
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();

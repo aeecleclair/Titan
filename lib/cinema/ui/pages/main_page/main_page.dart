@@ -22,7 +22,7 @@ class CinemaMainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sessionList = ref.watch(sessionListProvider);
-    final sessionListNotifier = ref.watch(sessionListProvider.notifier);
+    final sessionListNotifier = ref.read(sessionListProvider.notifier);
     final sessionNotifier = ref.watch(sessionProvider.notifier);
     final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
     final initialPage = ref.watch(mainPageIndexProvider);

@@ -17,14 +17,14 @@ class AccountHandler extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cashNotifier = ref.watch(cashProvider.notifier);
-    final usersNotifier = ref.watch(userList.notifier);
+    final cashNotifier = ref.read(cashProvider.notifier);
+    final usersNotifier = ref.read(userList.notifier);
     final editingController = useTextEditingController();
     final searchingAmapUser = ref.watch(searchingAmapUserProvider);
     final searchingAmapUserNotifier =
-        ref.watch(searchingAmapUserProvider.notifier);
+        ref.read(searchingAmapUserProvider.notifier);
     final focus = ref.watch(focusProvider);
-    final focusNotifier = ref.watch(focusProvider.notifier);
+    final focusNotifier = ref.read(focusProvider.notifier);
     final focusNode = useFocusNode();
     if (focus) {
       focusNode.requestFocus();

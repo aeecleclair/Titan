@@ -16,9 +16,9 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sessionNotifier = ref.watch(sessionProvider.notifier);
+    final sessionNotifier = ref.read(sessionProvider.notifier);
     final sessionList = ref.watch(sessionListProvider);
-    final sessionListNotifier = ref.watch(sessionListProvider.notifier);
+    final sessionListNotifier = ref.read(sessionListProvider.notifier);
     return CinemaTemplate(
       child: sessionList.when(
         data: (data) {

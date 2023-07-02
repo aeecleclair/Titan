@@ -23,8 +23,8 @@ class AdminSessionCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sessionPosterMap = ref.watch(sessionPosterMapProvider);
     final sessionPosterMapNotifier =
-        ref.watch(sessionPosterMapProvider.notifier);
-    final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
+        ref.read(sessionPosterMapProvider.notifier);
+    final sessionPosterNotifier = ref.read(sessionPosterProvider.notifier);
     return GestureDetector(
       onTap: onTap,
       child: Container(

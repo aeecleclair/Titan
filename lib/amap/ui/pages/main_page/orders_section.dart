@@ -22,8 +22,8 @@ class OrderSection extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final orders = ref.watch(userOrderListProvider);
-    final orderNotifier = ref.watch(orderProvider.notifier);
-    final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
+    final orderNotifier = ref.read(orderProvider.notifier);
+    final deliveryIdNotifier = ref.read(deliveryIdProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
     final orderableDeliveries = deliveries.when<List<Delivery>>(
         data: (data) => data

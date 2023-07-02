@@ -12,7 +12,7 @@ class CollectionSLotelector extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final order = ref.watch(orderProvider);
-    final orderNotifier = ref.watch(orderProvider.notifier);
+    final orderNotifier = ref.read(orderProvider.notifier);
     final isSelected = collectionSlot == order.collectionSlot;
     final isFirst = CollectionSlot.values.first == collectionSlot;
     return Expanded(
