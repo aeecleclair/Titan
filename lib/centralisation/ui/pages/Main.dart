@@ -1,42 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:myecl/centralisation/class/module.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:myecl/centralisation/class/section.dart';
 import 'package:myecl/centralisation/repositories/section_repository.dart';
 import 'package:myecl/centralisation/providers/centralisation_section_provider.dart';
 
-void main() {
-  runApp(ProviderScope(child: MyApp()));
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Centralisation',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: LinksScreen(),
-    );
-  }
-}
-
 final favoritesProvider =
-StateNotifierProvider<FavoritesNotifier, List<Module>>((ref) => FavoritesNotifier());
+    StateNotifierProvider<FavoritesNotifier, List<Module>>(
+        (ref) => FavoritesNotifier());
 
 class LinksScreen extends HookConsumerWidget {
-
-  List<Module> modules = [];
   @override
-
-
   Widget build(BuildContext context, WidgetRef ref) {
+    final section = ref.watch(sectionProvider);
     final sectionNotifier = ref.watch(sectionProvider.notifier);
     final favorites = ref.watch(favoritesProvider);
-    final modules = useMemoized(
-          () => sectionNotifier.allModules,
-      [],
-    );
 
     void toggleFavorite(Module module) {
       if (favorites.contains(module)) {
@@ -80,73 +60,33 @@ class LinksScreen extends HookConsumerWidget {
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Centralisation"),
-        textTheme: TextTheme(
-          headline6: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.red,
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(50.0),
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: favorites.length,
-            itemBuilder: (context, index) {
-              final module = favorites[index];
-              return IconButton(
-                icon: Image.asset(module.icon),
-                onPressed: () {
-                  _openLink(module.url);
-                },
-              );
-            },
-          ),
-        ),
-      ),
-      body: ListView.builder(
-        itemCount: modules.length,
-        itemBuilder: (context, index) {
-          final module = modules[index];
-          final isFavorite = favorites.contains(module);
-
-          return ListTile(
-            leading: Image.asset(module.icon),
-            title: Text(module.name),
-            trailing: IconButton(
-              icon: isFavorite ? Icon(Icons.star) : Icon(Icons.star_border),
-              onPressed: () {
-                toggleFavorite(module);
-              },
-            ),
-            onTap: () {
-              _openLink(module.url);
-            },
-            onLongPress: () {
-              _showLinkDetails(context, module);
-            },
-          );
-        },
-      ),
-      persistentFooterButtons: favorites.map((module) {
-        return IconButton(
-          icon: Image.asset(module.icon),
-          onPressed: () {
-            _openLink(module.url);
-          },
-        );
-      }).toList(),
-      bottomNavigationBar: Container(
-        height: 50.0,
-        color: Colors.red,
-        child: Center(
-          child: Text(
-            'Imaginé et conçu par ÉCLAIR',
-            style: TextStyle(color: Colors.white),
+    return Expanded(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height - 85,
+        child: Column(
+          children: section.when(
+            data: (sections) => sections
+                .map<List<Widget>>((section) => section.moduleList.map((e) =>
+                ListTile(
+                      leading: Image.asset(e.icon),
+                      title: Text(e.name),
+                      trailing: IconButton(
+                        icon: favorites.contains(e)
+                            ? Icon(Icons.star)
+                            : Icon(Icons.star_border),
+                        onPressed: () {
+                          toggleFavorite(e);
+                        },
+                      ),
+                      onTap: () {
+                        _openLink(e.url);
+                      },
+                      onLongPress: () {
+                        _showLinkDetails(context, e);
+                      },
+                    )).toList()).expand((element) => element).toList(),
+            loading: () => [],
+            error: (err, stack) => [],
           ),
         ),
       ),

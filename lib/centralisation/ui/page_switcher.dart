@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/centralisation/providers/centralisation_page_provider.dart';
 import 'package:myecl/centralisation/ui/pages/Main.dart';
 
 class PageSwitcher extends ConsumerWidget {
@@ -10,7 +11,7 @@ class PageSwitcher extends ConsumerWidget {
     final page = ref.watch(centralisationPageProvider);
     switch (page) {
       case CentralisationPage.main:
-        return const MainPage();
+        return LinksScreen();
     }
   }
 }
