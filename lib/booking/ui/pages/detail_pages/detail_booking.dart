@@ -6,7 +6,8 @@ import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/booking_card.dart';
+import 'package:myecl/booking/ui/components/booking_card.dart';
+import 'package:myecl/booking/ui/pages/detail_pages/contact_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -151,26 +152,8 @@ class DetailBookingPage extends HookConsumerWidget {
                                     }
                                   }
                                 },
-                                child: Container(
-                                  width: 80,
-                                  height: 80,
-                                  padding: const EdgeInsets.all(15.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    border: Border.all(
-                                      color: Colors.black,
-                                      width: 2,
-                                    ),
-                                    color: Colors.grey.shade50,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        blurRadius: 10,
-                                        offset: const Offset(0, 10),
-                                      ),
-                                    ],
-                                  ),
-                                  child: const HeroIcon(
+                                child: const ContactButton(
+                                  child: HeroIcon(
                                     HeroIcons.phone,
                                     color: Colors.black,
                                   ),
@@ -191,26 +174,8 @@ class DetailBookingPage extends HookConsumerWidget {
                                     }
                                   }
                                 },
-                                child: Container(
-                                  width: 80,
-                                  height: 80,
-                                  padding: const EdgeInsets.all(15.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    border: Border.all(
-                                      color: Colors.black,
-                                      width: 2,
-                                    ),
-                                    color: Colors.grey.shade50,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        blurRadius: 10,
-                                        offset: const Offset(0, 10),
-                                      ),
-                                    ],
-                                  ),
-                                  child: const HeroIcon(
+                                child: const ContactButton(
+                                  child: HeroIcon(
                                     HeroIcons.chatBubbleBottomCenterText,
                                     color: Colors.black,
                                   ),

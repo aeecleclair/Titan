@@ -11,8 +11,9 @@ import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar.dart';
+import 'package:myecl/booking/ui/components/waiter.dart';
 import 'package:myecl/booking/ui/pages/admin_page/list_booking.dart';
-import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
+import 'package:myecl/booking/ui/components/room_chip.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/refresher.dart';
@@ -152,7 +153,7 @@ class AdminPage extends HookConsumerWidget {
                 return Center(child: Text('Error $error'));
               },
               loading: () {
-                return const Center(child: CircularProgressIndicator());
+                return const Waiter();
               },
             ),
             const SizedBox(height: 30),

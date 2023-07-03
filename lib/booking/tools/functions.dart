@@ -1,7 +1,10 @@
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -132,4 +135,87 @@ DateTime getTrueEnd(Booking b) {
 
 DateTime combineDate(DateTime date, DateTime time) {
   return DateTime(date.year, date.month, date.day, time.hour, time.minute);
+}
+
+Future<TimeOfDay?> _getTime(BuildContext context) async {
+  return await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: ColorConstants.gradient1,
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Colors.black,
+            ),
+            dialogBackgroundColor: Colors.white,
+          ),
+          child: child!,
+        );
+      });
+}
+
+Future<DateTime?> _getDate(BuildContext context, DateTime now) async {
+  return await showDatePicker(
+    context: context,
+    initialDate: now,
+    firstDate: now,
+    lastDate: DateTime(now.year + 1, now.month, now.day),
+    builder: (BuildContext context, Widget? child) {
+      return Theme(
+        data: ThemeData.light().copyWith(
+          colorScheme: const ColorScheme.light(
+            primary: ColorConstants.gradient1,
+            onPrimary: Colors.white,
+            surface: Colors.white,
+            onSurface: Colors.black,
+          ),
+          dialogBackgroundColor: Colors.white,
+        ),
+        child: child!,
+      );
+    },
+  );
+}
+
+getOnlyDayDate(
+    BuildContext context, TextEditingController dateController) async {
+  final DateTime now = DateTime.now();
+  final DateTime? date = await _getDate(context, now);
+
+  dateController.text = DateFormat('dd/MM/yyyy')
+      .format(date ?? now.add(const Duration(hours: 1)));
+}
+
+
+getOnlyHourDate(
+    BuildContext context, TextEditingController dateController) async {
+  final DateTime now = DateTime.now();
+  final TimeOfDay? time = await _getTime(context);
+
+  dateController.text = DateFormat('HH:mm')
+      .format(DateTimeField.combine(now, time));
+}
+
+getFullDate(
+    BuildContext context, TextEditingController dateController) async {
+  final DateTime now = DateTime.now();
+  _getDate(context, now).then(
+    (DateTime? date) {
+      if (date != null) {
+        _getTime(context).then(
+          (TimeOfDay? time) {
+            if (time != null) {
+              dateController.text = DateFormat('dd/MM/yyyy HH:mm')
+                  .format(DateTimeField.combine(date, time));
+            }
+          },
+        );
+      } else {
+        dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
+      }
+    },
+  );
 }
