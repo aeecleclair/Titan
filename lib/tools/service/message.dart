@@ -1,38 +1,42 @@
 class Message {
-  late final String titre;
-  late final String corps;
+  late final String title;
+  late final String content;
   late final String actionId;
   late final String context;
-  late final String firebaseId;
+  late final String firebaseDeviceToken;
+  late final bool isVisible;
 
   Message({
-    required this.titre,
-    required this.corps,
+    required this.title,
+    required this.content,
     required this.actionId,
     required this.context,
-    required this.firebaseId,
+    required this.firebaseDeviceToken,
+    required this.isVisible,
   });
 
   Message.fromJson(Map<String, dynamic> json) {
-    titre = json['titre'];
-    corps = json['corps'];
+    title = json['title'];
+    content = json['content'];
     actionId = json['actionId'];
     context = json['context'];
-    firebaseId = json['firebaseId'];
+    firebaseDeviceToken = json['firebase_device_token'];
+    isVisible = json['is_visible'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['titre'] = titre;
-    data['corps'] = corps;
+    data['title'] = title;
+    data['content'] = content;
     data['actionId'] = actionId;
     data['context'] = context;
-    data['firebaseId'] = firebaseId;
+    data['firebase_device_token'] = firebaseDeviceToken;
+    data['is_visible'] = isVisible;
     return data;
   }
 
   @override
   String toString() {
-    return 'Message{titre: $titre, corps: $corps, actionId: $actionId, context: $context, firebaseId: $firebaseId}';
+    return 'Message{title: $title, content: $content, actionId: $actionId, context: $context, firebaseDeviceToken: $firebaseDeviceToken, isVisible: $isVisible}';
   }
 }
