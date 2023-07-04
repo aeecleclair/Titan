@@ -8,7 +8,7 @@ import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/ui/event_ui.dart';
+import 'package:myecl/event/ui/components/event_ui.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
