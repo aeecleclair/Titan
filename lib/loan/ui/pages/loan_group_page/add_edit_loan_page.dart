@@ -17,7 +17,7 @@ import 'package:myecl/loan/ui/pages/loan_group_page/item_bar.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/number_selected_text.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/search_result.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/start_date_entry.dart';
-import 'package:myecl/loan/ui/text_entry.dart';
+import 'package:myecl/loan/ui/components/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
