@@ -9,9 +9,12 @@ import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
+import 'package:myecl/event/ui/components/button_card.dart';
+import 'package:myecl/event/ui/components/edit_delete_button.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventUi extends ConsumerWidget {
@@ -188,26 +191,18 @@ class EventUi extends ConsumerWidget {
                                       QR.to(EventRouter.root +
                                           EventRouter.addEdit);
                                     },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10),
-                                      decoration: BoxDecoration(
-                                          color: event.end.compareTo(now) < 0
+                                    child: EditDeleteButton(
+                                      backGroundColor:
+                                          event.end.compareTo(now) < 0
                                               ? Colors.grey.shade700
                                               : event.start.compareTo(now) <= 0
                                                   ? ColorConstants.gradient1
                                                   : Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          border: Border.all(
-                                              color: event.end.compareTo(now) <
-                                                      0
-                                                  ? Colors.grey.shade700
-                                                  : event.start
-                                                              .compareTo(now) <=
-                                                          0
-                                                      ? ColorConstants.gradient1
-                                                      : Colors.grey.shade300)),
+                                      borderColor: event.end.compareTo(now) < 0
+                                          ? Colors.grey.shade700
+                                          : event.start.compareTo(now) <= 0
+                                              ? ColorConstants.gradient1
+                                              : Colors.grey.shade300,
                                       child: Center(
                                         child: Text(
                                           EventTextConstants.edit,
@@ -224,8 +219,8 @@ class EventUi extends ConsumerWidget {
                                   width: 10,
                                 ),
                                 Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
+                                  child: ShrinkButton(
+                                    onTap: () async {
                                       showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
@@ -253,26 +248,36 @@ class EventUi extends ConsumerWidget {
                                             );
                                           });
                                     },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10),
-                                      decoration: BoxDecoration(
-                                          color: event.end.compareTo(now) < 0
+                                    waitChild: EditDeleteButton(
+                                      backGroundColor:
+                                          event.end.compareTo(now) < 0
                                               ? Colors.grey.shade700
                                               : event.start.compareTo(now) <= 0
                                                   ? ColorConstants.gradient1
                                                   : Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          border: Border.all(
-                                              color: event.end.compareTo(now) <
-                                                      0
-                                                  ? Colors.grey.shade700
-                                                  : event.start
-                                                              .compareTo(now) <=
-                                                          0
-                                                      ? ColorConstants.gradient1
-                                                      : Colors.grey.shade300)),
+                                      borderColor: event.end.compareTo(now) < 0
+                                          ? Colors.grey.shade700
+                                          : event.start.compareTo(now) <= 0
+                                              ? ColorConstants.gradient1
+                                              : Colors.grey.shade300,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: textColor,
+                                        ),
+                                      ),
+                                    ),
+                                    child: EditDeleteButton(
+                                      backGroundColor:
+                                          event.end.compareTo(now) < 0
+                                              ? Colors.grey.shade700
+                                              : event.start.compareTo(now) <= 0
+                                                  ? ColorConstants.gradient1
+                                                  : Colors.white,
+                                      borderColor: event.end.compareTo(now) < 0
+                                          ? Colors.grey.shade700
+                                          : event.start.compareTo(now) <= 0
+                                              ? ColorConstants.gradient1
+                                              : Colors.grey.shade300,
                                       child: Center(
                                         child: Text(
                                           EventTextConstants.delete,
@@ -296,114 +301,56 @@ class EventUi extends ConsumerWidget {
                           ),
                           Row(
                             children: [
-                              GestureDetector(
+                              ButtonCard(
                                 onTap: onEdit,
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  padding: const EdgeInsets.all(7),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(30),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.grey.withOpacity(0.2),
-                                          blurRadius: 10,
-                                          offset: const Offset(2, 3))
-                                    ],
-                                  ),
-                                  child: const HeroIcon(HeroIcons.pencil,
-                                      color: Colors.black),
-                                ),
+                                backGroundColor: Colors.grey.shade200,
+                                icon: const HeroIcon(HeroIcons.pencil,
+                                    color: Colors.black),
                               ),
                               const Spacer(),
-                              GestureDetector(
+                              ButtonCard(
                                 onTap: onCopy,
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  padding: const EdgeInsets.all(7),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(30),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black.withOpacity(0.2),
-                                          blurRadius: 10,
-                                          offset: const Offset(2, 3))
-                                    ],
-                                  ),
-                                  child: const HeroIcon(
-                                      HeroIcons.documentDuplicate,
-                                      color: Colors.white),
-                                ),
+                                backGroundColor: Colors.black,
+                                icon: const HeroIcon(
+                                    HeroIcons.documentDuplicate,
+                                    color: Colors.white),
                               ),
                               const Spacer(),
-                              GestureDetector(
+                              ButtonCard(
                                 onTap: () {
                                   if (event.decision != Decision.approved) {
                                     onConfirm();
                                   }
                                 },
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  padding: const EdgeInsets.all(7),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(30),
-                                    border: Border.all(
-                                        color: isAdmin
-                                            ? event.decision ==
-                                                    Decision.approved
-                                                ? Colors.black
-                                                : Colors.transparent
-                                            : Colors.transparent,
-                                        width: 2),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.grey.withOpacity(0.2),
-                                          blurRadius: 10,
-                                          offset: const Offset(2, 3))
-                                    ],
-                                  ),
-                                  child: const HeroIcon(HeroIcons.check,
-                                      color: Colors.black),
-                                ),
+                                backGroundColor: Colors.grey.shade200,
+                                icon: const HeroIcon(HeroIcons.check,
+                                    color: Colors.black),
+                                border: Border.all(
+                                    color: isAdmin
+                                        ? event.decision == Decision.approved
+                                            ? Colors.black
+                                            : Colors.transparent
+                                        : Colors.transparent,
+                                    width: 2),
                               ),
                               const Spacer(),
-                              GestureDetector(
+                              ButtonCard(
                                 onTap: () {
                                   if (event.decision != Decision.declined) {
                                     onDecline();
                                   }
                                 },
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  padding: const EdgeInsets.all(7),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(30),
-                                    border: Border.all(
-                                        color: isAdmin
-                                            ? event.decision ==
-                                                    Decision.declined
-                                                ? Colors.white
-                                                : Colors.transparent
-                                            : Colors.transparent,
-                                        width: 2),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black.withOpacity(0.2),
-                                          blurRadius: 10,
-                                          offset: const Offset(2, 3))
-                                    ],
-                                  ),
-                                  child: const HeroIcon(HeroIcons.xMark,
-                                      color: Colors.white),
-                                ),
-                              ),
+                                backGroundColor: Colors.black,
+                                icon: const HeroIcon(HeroIcons.xMark,
+                                    color: Colors.white),
+                                border: Border.all(
+                                    color: isAdmin
+                                        ? event.decision == Decision.declined
+                                            ? Colors.white
+                                            : Colors.transparent
+                                        : Colors.transparent,
+                                    width: 2),
+                              )
                             ],
                           ),
                         ]),

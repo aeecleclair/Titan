@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/ui/event_ui.dart';
+import 'package:myecl/event/ui/components/event_ui.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:url_launcher/url_launcher.dart';
 

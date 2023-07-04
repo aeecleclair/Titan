@@ -8,6 +8,7 @@ import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/event/providers/is_room_provider.dart';
 import 'package:myecl/event/providers/room_id_provider.dart';
 import 'package:myecl/event/ui/event.dart';
+import 'package:myecl/event/ui/pages/event_pages/add_edit_button.dart';
 import 'package:myecl/event/ui/pages/event_pages/checkbox_entry.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_provider.dart';
@@ -622,23 +623,7 @@ class AddEditEventPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 50),
                         ShrinkButton(
-                          waitChild: Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.only(top: 8, bottom: 12),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 5,
-                                  blurRadius: 10,
-                                  offset: const Offset(
-                                      3, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
+                          waitChild: AddEditButton(
                             child: const Center(
                               child: SizedBox(
                                 height: 25,
@@ -751,24 +736,7 @@ class AddEditEventPage extends HookConsumerWidget {
                               }
                             }
                           },
-                          child: Container(
-                              width: double.infinity,
-                              padding:
-                                  const EdgeInsets.only(top: 8, bottom: 12),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 10,
-                                    offset: const Offset(
-                                        3, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
+                          child: AddEditButton(
                               child: Text(
                                   isEdit
                                       ? EventTextConstants.edit
