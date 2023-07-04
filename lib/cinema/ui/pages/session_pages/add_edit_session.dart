@@ -16,7 +16,9 @@ import 'package:myecl/cinema/providers/the_movie_db_genre_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
-import 'package:myecl/cinema/ui/text_entry.dart';
+import 'package:myecl/cinema/ui/pages/session_pages/add_edit_button.dart';
+import 'package:myecl/cinema/ui/pages/session_pages/imdb_button.dart';
+import 'package:myecl/cinema/ui/pages/session_pages/text_entry.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -130,23 +132,13 @@ class AddEditSessionPage extends HookConsumerWidget {
                             });
                           });
                         },
-                        waitChild: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xffe2b616),
-                          ),
-                          child: const CircularProgressIndicator(
+                        waitChild: const ImdbButton(
+                          child: CircularProgressIndicator(
                             color: Colors.black,
                           ),
                         ),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xffe2b616),
-                          ),
-                          child: const HeroIcon(
+                        child: const ImdbButton(
+                          child: HeroIcon(
                             HeroIcons.arrowRight,
                             size: 22,
                             color: Colors.black,
@@ -301,24 +293,8 @@ class AddEditSessionPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 50),
                 ShrinkButton(
-                  waitChild: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(top: 8, bottom: 12),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 10,
-                          offset:
-                              const Offset(3, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: const Center(
+                  waitChild: const AddEditButton(
+                    child: Center(
                       child: SizedBox(
                         height: 30,
                         width: 30,
@@ -428,23 +404,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                           CinemaTextConstants.incorrectOrMissingFields);
                     }
                   },
-                  child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(top: 8, bottom: 12),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(
-                                3, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
+                  child: AddEditButton(
                       child: Text(
                           isEdit
                               ? CinemaTextConstants.edit
