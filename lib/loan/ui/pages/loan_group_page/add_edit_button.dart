@@ -13,6 +13,7 @@ import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/ui/pages/loan_group_page/add_edit_button_layout.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -47,23 +48,8 @@ class AddEditButton extends HookConsumerWidget {
     }
 
     return ShrinkButton(
-      waitChild: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.only(top: 8, bottom: 12),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 10,
-                offset: const Offset(3, 3),
-              ),
-            ],
-          ),
-          child: const Center(
+      waitChild: const AddEditButtonLayout(
+          child: Center(
             child: SizedBox(
               height: 25,
               width: 25,
@@ -153,22 +139,7 @@ class AddEditButton extends HookConsumerWidget {
           }
         });
       },
-      child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.only(top: 8, bottom: 12),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 10,
-                offset: const Offset(3, 3), // changes position of shadow
-              ),
-            ],
-          ),
+      child: AddEditButtonLayout(
           child: Text(isEdit ? LoanTextConstants.edit : LoanTextConstants.add,
               style: const TextStyle(
                   color: Colors.white,

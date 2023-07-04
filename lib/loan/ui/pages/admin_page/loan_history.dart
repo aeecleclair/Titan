@@ -7,7 +7,7 @@ import 'package:myecl/loan/providers/history_loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_focus_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/ui/loan_card.dart';
+import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 
