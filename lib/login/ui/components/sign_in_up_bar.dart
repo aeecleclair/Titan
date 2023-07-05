@@ -26,13 +26,12 @@ class SignInUpBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
-        child: SizedBox(
+        child: Container(
             height: 50,
-            width: double.infinity,
+            alignment: Alignment.centerLeft,
             child: ShrinkButton(
               onTap: onPressed,
               waitChild: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     label,
@@ -49,9 +48,6 @@ class SignInUpBar extends StatelessWidget {
                 ],
               ),
               child: Row(
-                mainAxisAlignment: color == Colors.white
-                    ? MainAxisAlignment.start
-                    : MainAxisAlignment.center,
                 children: [
                   Text(
                     label,

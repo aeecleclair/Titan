@@ -623,8 +623,8 @@ class AddEditEventPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 50),
                         ShrinkButton(
-                          waitChild: AddEditButton(
-                            child: const Center(
+                          waitChild: const AddEditButton(
+                            child: Center(
                               child: SizedBox(
                                 height: 25,
                                 width: 25,
