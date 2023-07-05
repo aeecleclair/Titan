@@ -8,9 +8,9 @@ import 'package:myecl/login/class/recover_request.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/login/ui/login_field.dart';
-import 'package:myecl/login/ui/main_page.dart';
-import 'package:myecl/login/ui/sign_in_up_bar.dart';
+import 'package:myecl/login/ui/components/login_field.dart';
+import 'package:myecl/login/ui/auth_page.dart';
+import 'package:myecl/login/ui/components/sign_in_up_bar.dart';
 import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
@@ -24,20 +24,16 @@ class RecoverPasswordPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authTokenNotifier = ref.watch(authTokenProvider.notifier);
     final signUpNotifier = ref.watch(signUpProvider.notifier);
-    final code = QR.params['code'] ?? '';
-    final isCodeGiven = code != '';
-    final activationCode = useTextEditingController(text: code.toString());
+    final activationCode = useTextEditingController();
     final password = useTextEditingController();
-    final passwordConfirmation = useTextEditingController();
-    final lastIndex = useState(isCodeGiven ? 1 : 0);
-    final currentPage = useState(isCodeGiven ? 1 : 0);
-    final pageController = usePageController(initialPage: currentPage.value);
+    final currentPage = useState(0);
+    final lastIndex = useState(0);
+    final pageController = usePageController();
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
     List<GlobalKey<FormState>> formKeys = [
-      GlobalKey<FormState>(),
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
     ];
@@ -69,39 +65,12 @@ class RecoverPasswordPage extends HookConsumerWidget {
           ),
           const Spacer(),
         ],
-      ),Column(
-          children: [
-            CreateAccountField(
-              controller: passwordConfirmation,
-              label: LoginTextConstants.confirmPassword,
-              index: 3,
-              pageController: pageController,
-              currentPage: currentPage,
-              formKey: formKeys[2],
-              keyboardType: TextInputType.visiblePassword,
-              validator: (value) {
-                if (value != password.text) {
-                  return LoginTextConstants.passwordMustMatch;
-                }
-                return null;
-              },
-            ),
-            const Spacer(),
-            PasswordStrength(
-              newPassword: passwordConfirmation,
-              textColor: ColorConstants.background2,
-            ),
-            const Spacer(),
-          ],
-        ),
+      ),
       SignInUpBar(
         label: LoginTextConstants.endResetPassword,
         isLoading: false,
         onPressed: () async {
-          if (password.text.isNotEmpty &&
-              activationCode.text.isNotEmpty &&
-              passwordConfirmation.text.isNotEmpty &&
-              password.text == passwordConfirmation.text) {
+          if (password.text.isNotEmpty && activationCode.text.isNotEmpty) {
             RecoverRequest recoverRequest = RecoverRequest(
               resetToken: activationCode.text.trim(),
               newPassword: password.text,
@@ -126,11 +95,6 @@ class RecoverPasswordPage extends HookConsumerWidget {
     final len = steps.length;
 
     return LoginTemplate(
-      callback: (AnimationController controller) {
-        if (!controller.isCompleted) {
-          controller.forward();
-        }
-      },
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
@@ -186,11 +150,10 @@ class RecoverPasswordPage extends HookConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      currentPage.value != (isCodeGiven ? 1 : 0)
+                      currentPage.value != 0
                           ? GestureDetector(
                               onTap: (() {
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
+                                FocusScope.of(context).requestFocus(FocusNode());
                                 currentPage.value--;
                                 lastIndex.value = currentPage.value;
                                 pageController.previousPage(
@@ -213,8 +176,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
                                   pageController.nextPage(
-                                      duration:
-                                          const Duration(milliseconds: 500),
+                                      duration: const Duration(milliseconds: 500),
                                       curve: Curves.decelerate);
                                   currentPage.value++;
                                   lastIndex.value = currentPage.value;
