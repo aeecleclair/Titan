@@ -28,7 +28,10 @@ class SignInUpBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Container(
             height: 50,
-            alignment: Alignment.centerLeft,
+            width: double.infinity,
+            color: Colors.pink,
+            alignment:
+                color == Colors.white ? Alignment.centerLeft : Alignment.center,
             child: ShrinkButton(
               onTap: onPressed,
               waitChild: Row(
