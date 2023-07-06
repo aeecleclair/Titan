@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/login/ui/background_painter.dart';
 import 'package:myecl/login/ui/create_account_page.dart';
@@ -20,64 +19,31 @@ class LoginRouter {
   QRoute accountRoute() => QRoute(
           path: createAccount,
           builder: () => const Register(),
-          pageType: QCustomPage(
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              return Scaffold(
-                body: Stack(
-                  children: [
-                    SizedBox.expand(
-                      child: CustomPaint(
-                        painter: BackgroundPainter(
-                          animation: animation,
-                        ),
-                      ),
-                    ),
-                    SafeArea(
-                      child: Center(child: child),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+          pageType: const QMaterialPage(),
           children: [
             QRoute(
-                path: mailReceived, builder: () => const CreateAccountPage()),
+              path: mailReceived,
+              pageType: const QMaterialPage(),
+              builder: () => const CreateAccountPage(),
+            ),
           ]);
 
   QRoute passwordRoute() => QRoute(
           path: forgotPassword,
           builder: () => const ForgetPassword(),
-          pageType: QCustomPage(
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              return Scaffold(
-                body: Stack(
-                  children: [
-                    SizedBox.expand(
-                      child: CustomPaint(
-                        painter: BackgroundPainter(
-                          animation: animation,
-                        ),
-                      ),
-                    ),
-                    SafeArea(
-                      child: Center(child: child),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+          pageType: const QMaterialPage(),
           children: [
             QRoute(
-                path: mailReceived, builder: () => const RecoverPasswordPage()),
+              path: mailReceived,
+              pageType: const QMaterialPage(),
+              builder: () => const RecoverPasswordPage(),
+            ),
           ]);
 
   QRoute route() => QRoute(
         path: LoginRouter.root,
         builder: () => const SignIn(),
+        pageType: const QMaterialPage(),
         middleware: [AuthenticatedMiddleware(ref)],
       );
 }

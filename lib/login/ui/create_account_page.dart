@@ -292,6 +292,11 @@ class CreateAccountPage extends HookConsumerWidget {
     final len = steps.length;
 
     return LoginTemplate(
+      callback: (AnimationController controller) {
+        if (!controller.isCompleted) {
+          controller.forward();
+        }
+      },
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
