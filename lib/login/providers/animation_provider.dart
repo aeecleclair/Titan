@@ -31,7 +31,7 @@ class AnimationNotifier extends StateNotifier<AnimationController?> {
   }
 }
 
-final backgroundAnimationProvider =
+final animationProvider =
     StateNotifierProvider<AnimationNotifier, AnimationController?>((ref) {
   return AnimationNotifier();
 });
