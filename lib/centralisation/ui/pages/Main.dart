@@ -6,17 +6,26 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:myecl/centralisation/class/section.dart';
 import 'package:myecl/centralisation/repositories/section_repository.dart';
 import 'package:myecl/centralisation/providers/centralisation_section_provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 final favoritesProvider =
     StateNotifierProvider<FavoritesNotifier, List<Module>>(
         (ref) => FavoritesNotifier());
 
+
+
+final SectionNotifier sectionNotifier = SectionNotifier();
+
 class LinksScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final section = ref.watch(sectionProvider);
     final sectionNotifier = ref.watch(sectionProvider.notifier);
+    final section = ref.watch(sectionProvider);
     final favorites = ref.watch(favoritesProvider);
+
+    print(favorites);
+
+
 
     void toggleFavorite(Module module) {
       if (favorites.contains(module)) {
@@ -60,37 +69,65 @@ class LinksScreen extends HookConsumerWidget {
       );
     }
 
+
     return Expanded(
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height - 85,
-        child: Column(
+      child: SingleChildScrollView(
+        child: Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          spacing: 8.0,
+          runSpacing: 8.0,
           children: section.when(
             data: (sections) => sections
-                .map<List<Widget>>((section) => section.moduleList.map((e) =>
-                ListTile(
-                      leading: Image.asset(e.icon),
-                      title: Text(e.name),
-                      trailing: IconButton(
-                        icon: favorites.contains(e)
-                            ? Icon(Icons.star)
-                            : Icon(Icons.star_border),
-                        onPressed: () {
-                          toggleFavorite(e);
-                        },
-                      ),
-                      onTap: () {
-                        _openLink(e.url);
-                      },
-                      onLongPress: () {
-                        _showLinkDetails(context, e);
-                      },
-                    )).toList()).expand((element) => element).toList(),
+                .map<List<Widget>>(
+                  (section) => section.moduleList.map<Widget>(
+                    (e) => Container(
+                  width: MediaQuery.of(context).size.width / 2 - 12.0, // Largeur des ListTiles
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+
+
+                    leading: e.icon.toLowerCase().endsWith('.svg')
+                        ? SvgPicture.network(
+                      "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + e.icon,
+                    )
+                        : Image.network(
+                      "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + e.icon,
+                    ),
+
+                    title: Row(
+                      children: [
+                        SizedBox(width: 8.0), // Espacement entre l'icône et le titre
+                        Text(e.name),
+                        IconButton(
+                          icon: favorites.contains(e)
+                              ? Icon(Icons.star)
+                              : Icon(Icons.star_border),
+                          onPressed: () {
+                            toggleFavorite(e);
+                          },
+                        ),
+                      ],
+                    ),
+                    onTap: () {
+                      _openLink(e.url);
+                    },
+                    onLongPress: () {
+                      _showLinkDetails(context, e);
+                    },
+                  ),
+                ),
+              ).toList(),
+            )
+                .expand((element) => element)
+                .toList(),
             loading: () => [],
             error: (err, stack) => [],
           ),
         ),
       ),
     );
+
+
   }
 }
 

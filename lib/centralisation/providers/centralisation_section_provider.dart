@@ -10,19 +10,19 @@ class SectionNotifier extends ListNotifier<Section> {
   SectionRepository sectionRepository = SectionRepository();
   SectionNotifier() : super(const AsyncValue.loading());
 
-  late List<Section> allSections;
-  late List<Module> allModules;
-  late List<Module> modulesLiked;
+  late List<Section> allSections = [];
+  late List<Module> allModules = [];
+  late List<Module> modulesLiked = [];
 
   initState() async {
     allSections = await sectionRepository.getSectionList();
-    print(allSections);
     for (Section section in allSections) {
       for (Module module in section.moduleList) {
         allModules.add(module);
       }
     }
-    print(allModules);
+    state = AsyncValue.data(allSections);
+    print(allSections);
   }
 
   void getLikedModule() async {
@@ -49,10 +49,12 @@ class SectionNotifier extends ListNotifier<Section> {
 
   void expandSection(Section s) async {
     s.expanded = true;
+    state = AsyncValue.data(allSections);
   }
 
   void contractSection(Section s) async {
     s.expanded = false;
+    state = AsyncValue.data(allSections);
   }
 }
 

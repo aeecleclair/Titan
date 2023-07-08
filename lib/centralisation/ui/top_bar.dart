@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/centralisation/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/tombola/providers/tombola_page_provider.dart';
-import 'package:myecl/tombola/tools/constants.dart';
+import 'package:myecl/centralisation/providers/centralisation_page_provider.dart';
+import 'package:myecl/centralisation/tools/constants.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -11,8 +12,8 @@ class TopBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(tombolaPageProvider);
-    final pageNotifier = ref.watch(tombolaPageProvider.notifier);
+    final page = ref.watch(centralisationPageProvider);
+    final pageNotifier = ref.watch(centralisationPageProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -31,7 +32,7 @@ class TopBar extends HookConsumerWidget {
                         }
                       },
                       icon: HeroIcon(
-                        page == TombolaPage.main
+                        page == CentralisationPage.main
                             ? HeroIcons.bars3BottomLeft
                             : HeroIcons.chevronLeft,
                         color: Colors.black,
@@ -40,7 +41,7 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            const Text(TombolaTextConstants.raffle,
+            const Text(CentralisationTextConstants.centralisation,
                 style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.w700,
