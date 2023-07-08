@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
@@ -12,6 +13,9 @@ class TopBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final animation = useAnimationController(
+        duration: const Duration(milliseconds: 3000), initialValue: 0)
+      ..repeat(reverse: true);
     return Column(
       children: [
         const SizedBox(
@@ -42,11 +46,34 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            const Text(ElocapsTextConstant.elocaps,
-                style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black)),
+            AnimatedBuilder(
+                animation: animation,
+                builder: (context, child) {
+                  return ShaderMask(
+                      blendMode: BlendMode.srcIn,
+                      shaderCallback: (bounds) => LinearGradient(
+                            colors: const [
+                              Color.fromARGB(255, 12, 0, 0),
+                              Color.fromARGB(255, 63, 2, 2),
+                              Color.fromARGB(255, 251, 118, 70),
+                              Color.fromARGB(255, 251, 194, 70),
+                            ],
+                            stops: [
+                              0.0,
+                              0.2 + 0.2 * animation.value,
+                              0.5 + 0.5 * animation.value,
+                              0.7 + 0.3 * animation.value
+                            ],
+                            tileMode: TileMode.mirror,
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          ).createShader(bounds),
+                      child: const Text(ElocapsTextConstant.elocaps,
+                          style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black)));
+                }),
             const SizedBox(
               width: 70,
             ),
