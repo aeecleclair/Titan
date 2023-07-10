@@ -5,6 +5,9 @@ import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
+import 'package:myecl/others/ui/email_change_popup.dart';
+import 'package:myecl/tools/providers/should_notify_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class DrawerTemplate extends HookConsumerWidget {
   static Duration duration = const Duration(milliseconds: 200);
@@ -25,12 +28,18 @@ class DrawerTemplate extends HookConsumerWidget {
     final controllerNotifier =
         ref.watch(swipeControllerProvider(animationController).notifier);
     final isWebFormat = ref.watch(isWebFormatProvider);
+    final shouldNotify = ref.watch(shouldNotifyProvider);
     if (isWebFormat) {
       controllerNotifier.close();
     }
 
     Future(() {
       animationNotifier.setController(animationController);
+      if (shouldNotify) {
+        showDialog(
+            context: QR.context!,
+            builder: (BuildContext context) => EmailChangeDialog());
+      }
     });
 
     return GestureDetector(

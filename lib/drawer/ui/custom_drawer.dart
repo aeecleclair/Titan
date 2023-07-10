@@ -49,9 +49,10 @@ class CustomDrawer extends HookConsumerWidget {
                                 MediaQuery.of(context).size.height * 4.4 / 10,
                             child: ListModule(
                                 controllerNotifier: controllerNotifier))),
-                    isWebFormat ? Container(
-                      width: MediaQuery.of(context).size.width - 220
-                    ) : const FakePage(),
+                    isWebFormat
+                        ? Container(
+                            width: MediaQuery.of(context).size.width - 220)
+                        : const FakePage(),
                   ],
                 ),
               ],
