@@ -22,9 +22,9 @@ class PrizeHandler extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffle = ref.watch(raffleProvider);
-    final lotNotifier = ref.watch(lotProvider.notifier);
-    final lotsNotifier = ref.watch(lotListProvider.notifier);
-    final lotList = ref.watch(lotListProvider);
+    final prizeNotifier = ref.watch(prizeProvider.notifier);
+    final prizesNotifier = ref.watch(prizeListProvider.notifier);
+    final prizeList = ref.watch(prizeListProvider);
     final winningTicketListNotifier =
         ref.watch(winningTicketListProvider.notifier);
 
@@ -100,9 +100,10 @@ class PrizeHandler extends HookConsumerWidget {
             if (raffle.raffleStatusType == RaffleStatusType.creation)
               GestureDetector(
                 onTap: () {
-                  lotNotifier.setLot(Lot.empty());
+                  prizeNotifier.setLot(Prize.empty());
                   QR.to(RaffleRouter.root +
-                      RaffleRouter.admin +
+                      RaffleRouter.detail +
+                      RaffleRouter.creation +
                       RaffleRouter.addEditLot);
                 },
                 child: Container(
@@ -183,9 +184,10 @@ class PrizeHandler extends HookConsumerWidget {
                                         ));
                               },
                               onEdit: () {
-                                lotNotifier.setLot(e);
+                                prizeNotifier.setLot(e);
                                 QR.to(RaffleRouter.root +
-                                    RaffleRouter.admin +
+                                    RaffleRouter.detail +
+                                    RaffleRouter.creation +
                                     RaffleRouter.addEditLot);
                               },
                               status: raffle.raffleStatusType,
