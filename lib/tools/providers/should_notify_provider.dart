@@ -4,5 +4,5 @@ import 'package:myecl/user/providers/user_provider.dart';
 
 final shouldNotifyProvider = Provider((ref) {
   final user = ref.watch(userProvider);
-  return !isEmailValid(user.email);
+  return isEmailInValid(user.email);
 });

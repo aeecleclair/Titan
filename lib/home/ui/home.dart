@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
@@ -10,12 +11,13 @@ import 'package:myecl/home/ui/day_list.dart';
 import 'package:myecl/home/ui/days_event.dart';
 import 'package:myecl/home/ui/month_bar.dart';
 import 'package:myecl/home/ui/top_bar.dart';
+import 'package:myecl/others/ui/email_change_popup.dart';
+import 'package:myecl/tools/providers/should_notify_provider.dart';
 import 'package:myecl/tools/ui/refresher.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class HomePage extends HookConsumerWidget {
-  const HomePage(
-      {Key? key})
-      : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,9 +29,21 @@ class HomePage extends HookConsumerWidget {
     final daysEventScrollController = useScrollController();
     final animationNotifier = ref.watch(animationProvider.notifier);
     final controller =
-    ref.watch(swipeControllerProvider(animationNotifier.animation!));
+        ref.watch(swipeControllerProvider(animationNotifier.animation!));
     final controllerNotifier = ref
         .watch(swipeControllerProvider(animationNotifier.animation!).notifier);
+    final shouldNotify = ref.watch(shouldNotifyProvider);
+    final isLoggedIn = ref.watch(isLoggedInProvider);
+    final displayedDialog = useState(false);
+
+    Future(() {
+      if (isLoggedIn && shouldNotify && QR.context != null && !displayedDialog.value) {
+        displayedDialog.value = true;
+        showDialog(
+            context: QR.context!,
+            builder: (BuildContext context) => EmailChangeDialog());
+      }
+    });
 
     return Scaffold(
         body: Container(
