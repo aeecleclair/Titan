@@ -144,3 +144,8 @@ bool isEmailInValid(String email) {
   final regex = RegExp(previousEmailRegex);
   return regex.hasMatch(email);
 }
+
+bool isStudent(String email) {
+  final regex = RegExp(previousEmailRegex);
+  return regex.hasMatch(email);
+}

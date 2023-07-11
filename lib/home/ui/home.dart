@@ -41,7 +41,7 @@ class HomePage extends HookConsumerWidget {
         displayedDialog.value = true;
         showDialog(
             context: QR.context!,
-            builder: (BuildContext context) => EmailChangeDialog());
+            builder: (BuildContext context) => const EmailChangeDialog());
       }
     });
 

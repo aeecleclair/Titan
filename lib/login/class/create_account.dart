@@ -8,6 +8,7 @@ class CreateAccount {
   late DateTime birthday;
   late String? phone;
   late String floor;
+  late int? promo;
   late String activationToken;
 
   CreateAccount({
@@ -18,6 +19,7 @@ class CreateAccount {
     required this.birthday,
     required this.phone,
     required this.floor,
+    required this.promo,
     required this.activationToken,
   });
 
@@ -29,6 +31,7 @@ class CreateAccount {
     birthday = DateTime.parse(json['birthday']);
     phone = json['phone'] != "" ? json['phone'] : null;
     floor = json['floor'];
+    promo = json['promo'];
     activationToken = json['activation_token'];
   }
 
@@ -41,6 +44,7 @@ class CreateAccount {
     data['birthday'] = processDateToAPIWitoutHour(birthday);
     data['phone'] = phone;
     data['floor'] = floor;
+    data['promo'] = promo;
     data['activation_token'] = activationToken;
     return data;
   }
@@ -52,7 +56,7 @@ class CreateAccount {
     String? password,
     DateTime? birthday,
     String? phone,
-    String? promo,
+    int? promo,
     String? floor,
     String? activationToken,
   }) {
@@ -64,12 +68,13 @@ class CreateAccount {
       birthday: birthday ?? this.birthday,
       phone: phone ?? this.phone,
       floor: floor ?? this.floor,
+      promo: promo,
       activationToken: activationToken ?? this.activationToken,
     );
   }
 
   @override
   String toString() {
-    return "CreateAccount {name: $name, firstname: $firstname, nickname: $nickname, password: $password, birthday: $birthday, phone: $phone, floor: $floor, activationToken: $activationToken}";
+    return "CreateAccount {name: $name, firstname: $firstname, nickname: $nickname, password: $password, birthday: $birthday, phone: $phone, promo: $promo, floor: $floor, activationToken: $activationToken}";
   }
 }

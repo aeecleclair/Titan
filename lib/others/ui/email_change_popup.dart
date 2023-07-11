@@ -12,14 +12,14 @@ class EmailChangeDialog extends StatelessWidget {
                 border: Border(bottom: BorderSide(color: Colors.black)),
                 color: Colors.white,
               ),
-              child: Text("Changer d'adresse mail", style: const TextStyle(fontSize: 20)))),
-      content: SizedBox(
+              child: const Text("Changer d'adresse mail", style: TextStyle(fontSize: 20)))),
+      content: const SizedBox(
           height: 100,
           child: Column(
             children: [
-              const SizedBox(height: 25),
+              SizedBox(height: 25),
               Text("Nouvelle adresse mail :"),
-              const SizedBox(height: 5),
+              SizedBox(height: 5),
               SizedBox(
                 width: 200,
                 child: TextField(
