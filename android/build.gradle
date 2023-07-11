@@ -29,3 +29,7 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+plugins {
+    id 'com.google.gms.google-services' version '4.3.15' apply false
+}

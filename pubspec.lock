@@ -258,29 +258,29 @@ packages:
     source: hosted
     version: "0.9.3"
   firebase_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_core
-      sha256: "239e4ac688674a7e7b5476fd16b0d8e2b5a453d464f32091af3ce1df4ebb7316"
+      sha256: c78132175edda4bc532a71e01a32964e4b4fcf53de7853a422d96dac3725f389
       url: "https://pub.dev"
     source: hosted
-    version: "2.10.0"
+    version: "2.15.1"
   firebase_core_platform_interface:
     dependency: transitive
     description:
       name: firebase_core_platform_interface
-      sha256: "0df0a064ab0cad7f8836291ca6f3272edd7b83ad5b3540478ee46a0849d8022b"
+      sha256: b63e3be6c96ef5c33bdec1aab23c91eb00696f6452f0519401d640938c94cba2
       url: "https://pub.dev"
     source: hosted
-    version: "4.6.0"
+    version: "4.8.0"
   firebase_core_web:
     dependency: transitive
     description:
       name: firebase_core_web
-      sha256: "347351a8f0518f3343d79a9a0690fa67ad232fc32e2ea270677791949eac792b"
+      sha256: "4cf4d2161530332ddc3c562f19823fb897ff37a9a774090d28df99f47370e973"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.7.0"
   firebase_messaging:
     dependency: "direct main"
     description:
@@ -929,10 +929,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_foundation
-      sha256: d29753996d8eb8f7619a1f13df6ce65e34bc107bef6330739ed76f18b22310ef
+      sha256: "0dc5c49ad8a05ed358b991b60c7b0ba1a14e16dae58af9b420d6b9e82dc024ab"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.3"
+    version: "2.3.0"
   shared_preferences_linux:
     dependency: transitive
     description:
@@ -1022,26 +1022,26 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_calendar
-      sha256: eccc692964d712a4e09288ba8cfaf5b09618863067877c5802a9333ec94cd8c7
+      sha256: ac9c39ee72f6940db8dce13156825ae96979339d0b62eb42b83a20d65201df24
       url: "https://pub.dev"
     source: hosted
-    version: "22.2.9"
+    version: "22.1.36"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: d3a978d926919a90065ddd492d1a2eba1e9cd15eec6ac2a127157f1e042c79ef
+      sha256: cd99c16c22658fce7ef036af5e72125428c53b8b58110ef01593b1e17891b68a
       url: "https://pub.dev"
     source: hosted
-    version: "22.2.9"
+    version: "22.1.36"
   syncfusion_flutter_datepicker:
     dependency: transitive
     description:
       name: syncfusion_flutter_datepicker
-      sha256: fa67b98561c16ca9daf64ba7ac893eaf6794c143a9e0b46f9ba13768edbc55b7
+      sha256: "18d244086890be36957a3a15fb3e9b2ac83556e7fb31fa9ff90837dd4fca8fd2"
       url: "https://pub.dev"
     source: hosted
-    version: "22.2.9"
+    version: "22.1.36"
   term_glyph:
     dependency: transitive
     description:
