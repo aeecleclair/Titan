@@ -162,6 +162,7 @@ abstract class LocalNotificationService {
   void onDidReceiveLocalNotification(
       int id, String? title, String? body, String? payload) async {
     // display a dialog with the notification details, tap ok to go to another page
+    print("Notification received: $id, $title, $body, $payload");
   }
 
   void onDidReceiveNotificationResponse(NotificationResponse response) async {
@@ -178,6 +179,7 @@ abstract class LocalNotificationService {
       return;
     }
     if (payload.isNotEmpty) {
+      print("Notification clicked: $payload");
       // do something
     }
   }

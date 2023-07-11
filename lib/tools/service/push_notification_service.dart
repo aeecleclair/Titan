@@ -6,11 +6,13 @@ class PushNotificationService {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
+        print("Message: ${message.notification!.body}");
       }
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.notification != null) {
+        print("Message: ${message.notification!.body}");
       }
     });
   }
