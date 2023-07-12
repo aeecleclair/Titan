@@ -4,7 +4,7 @@ import 'package:rxdart/subjects.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
-abstract class LocalNotificationService {
+class LocalNotificationService {
   LocalNotificationService();
 
   final _localNotificationService = FlutterLocalNotificationsPlugin();
@@ -171,6 +171,7 @@ abstract class LocalNotificationService {
     }
     if (response.payload!.isNotEmpty) {
       onNotificationClick.add(response.payload!);
+      print("onDidReceiveNotificationResponse : Notification clicked: ${response.payload}");
     }
   }
 
@@ -179,7 +180,7 @@ abstract class LocalNotificationService {
       return;
     }
     if (payload.isNotEmpty) {
-      print("Notification clicked: $payload");
+      print("onNotificationClickListener : Notification clicked: $payload");
       // do something
     }
   }

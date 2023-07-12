@@ -1,5 +1,5 @@
 import 'package:myecl/event/class/event.dart';
-import 'package:myecl/tools/service/local_notification_service.dart';
+import 'package:myecl/service/local_notification_service.dart';
 
 class EventNotification extends LocalNotificationService {
   void scheduleAllSession(List<Event> eventList) async {

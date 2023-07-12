@@ -12,9 +12,9 @@ import 'package:myecl/drawer/providers/top_bar_callback_provider.dart';
 import 'package:myecl/login/providers/animation_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/service/push_notification_service.dart';
 import 'package:myecl/router.dart';
 import 'package:myecl/tools/ui/app_template.dart';
-import 'package:myecl/tools/service/push_notification_service.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 void main() async {
@@ -22,8 +22,9 @@ void main() async {
   await dotenv.load();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   QR.setUrlStrategy();
+  await Firebase.initializeApp();
+  PushNotificationService.initialize();
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage((_) async {});
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
@@ -36,12 +37,6 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    PushNotificationService.initialize();
-    PushNotificationService.getToken().then(
-      (value) {
-        print(value);
-      }
-    );
 
     final appRouter = ref.watch(appRouterProvider);
     final animationController =

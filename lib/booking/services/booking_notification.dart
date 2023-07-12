@@ -1,5 +1,5 @@
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/tools/service/local_notification_service.dart';
+import 'package:myecl/service/local_notification_service.dart';
 
 class BookingNotification extends LocalNotificationService {
   void scheduleAllSession(List<Booking> bookingList) async {

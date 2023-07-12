@@ -1,5 +1,5 @@
 import 'package:myecl/cinema/class/session.dart';
-import 'package:myecl/tools/service/local_notification_service.dart';
+import 'package:myecl/service/local_notification_service.dart';
 
 class CinemaNotification extends LocalNotificationService {
   void scheduleAllSession(List<Session> sessionList) async {
