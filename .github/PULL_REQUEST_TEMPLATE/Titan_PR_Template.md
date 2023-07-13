@@ -6,7 +6,7 @@ Description of the added features :
 Required unmerged PR :
 - [ ]
 
-Images (if the PR change the front) :
+Images (if the PR changes the front) :
 
 | Desktop | Mobile |
 | ------- | ------ |
