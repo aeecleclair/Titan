@@ -1,19 +1,16 @@
 Goal of this PR : 
 
-Description :
+Description of the added features :
 - [ ]
 
 Required unmerged PR :
 - [ ]
 
-Images :
+Images (if the PR change the front) :
 
 | Desktop | Mobile |
 | ------- | ------ |
 |         |        |
 
 Other informations :
-- 
-
-Author(s) :
 - 
