@@ -29,12 +29,12 @@ class SignInUpBar extends StatelessWidget {
         child: Container(
             height: 50,
             width: double.infinity,
-            color: Colors.pink,
             alignment:
                 color == Colors.white ? Alignment.centerLeft : Alignment.center,
             child: ShrinkButton(
               onTap: onPressed,
               waitChild: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     label,
@@ -51,6 +51,7 @@ class SignInUpBar extends StatelessWidget {
                 ],
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     label,
