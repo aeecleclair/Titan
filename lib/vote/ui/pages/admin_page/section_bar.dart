@@ -13,7 +13,7 @@ import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/section_chip.dart';
+import 'package:myecl/vote/ui/pages/admin_page/section_chip.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SectionBar extends HookConsumerWidget {

@@ -8,7 +8,7 @@ import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/text_entry.dart';
+import 'package:myecl/vote/ui/components/text_entry.dart';
 import 'package:myecl/vote/ui/vote.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 

@@ -25,10 +25,10 @@ import 'package:myecl/vote/providers/contender_provider.dart';
 import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/member_card.dart';
+import 'package:myecl/vote/ui/components/member_card.dart';
 import 'package:myecl/vote/ui/pages/contender_pages/search_result.dart';
-import 'package:myecl/vote/ui/section_chip.dart';
-import 'package:myecl/vote/ui/text_entry.dart';
+import 'package:myecl/vote/ui/pages/admin_page/section_chip.dart';
+import 'package:myecl/vote/ui/components/text_entry.dart';
 import 'package:myecl/vote/ui/vote.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
