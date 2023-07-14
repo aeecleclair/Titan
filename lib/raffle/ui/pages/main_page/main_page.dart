@@ -10,6 +10,7 @@ import 'package:myecl/raffle/providers/raffle_list_provider.dart';
 import 'package:myecl/raffle/providers/user_tickets_provider.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
+import 'package:myecl/raffle/ui/components/section_title.dart';
 import 'package:myecl/raffle/ui/pages/main_page/raffle_card.dart';
 import 'package:myecl/raffle/ui/pages/main_page/ticket_card.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
@@ -44,22 +45,13 @@ class RaffleMainPage extends HookConsumerWidget {
         },
         child: Column(
           children: [
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(RaffleTextConstants.tickets,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold))),
+                  const SectionTitle(text: RaffleTextConstants.tickets),
                   if (isAdmin)
                     GestureDetector(
                       onTap: () {
@@ -94,9 +86,7 @@ class RaffleMainPage extends HookConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             userTicketList.when(
               data: (tickets) {
                 tickets = tickets
@@ -191,16 +181,11 @@ class RaffleMainPage extends HookConsumerWidget {
                       children: [
                         if (onGoingRaffles.isNotEmpty)
                           Container(
-                              margin: const EdgeInsets.only(
-                                  bottom: 10, top: 20, left: 5),
-                              child: const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(RaffleTextConstants.actualRaffles,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold)))),
+                            margin: const EdgeInsets.only(
+                                bottom: 10, top: 20, left: 5),
+                            child: const SectionTitle(
+                                text: RaffleTextConstants.actualRaffles),
+                          ),
                         ...onGoingRaffles
                             .map((e) => RaffleWidget(raffle: e))
                             .toList(),
@@ -208,14 +193,8 @@ class RaffleMainPage extends HookConsumerWidget {
                           Container(
                               margin: const EdgeInsets.only(
                                   bottom: 10, top: 20, left: 5),
-                              child: const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(RaffleTextConstants.nextRaffles,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold)))),
+                              child: const SectionTitle(
+                                  text: RaffleTextConstants.nextRaffles)),
                         ...incomingRaffles
                             .map((e) => RaffleWidget(raffle: e))
                             .toList(),
@@ -223,14 +202,8 @@ class RaffleMainPage extends HookConsumerWidget {
                           Container(
                               margin: const EdgeInsets.only(
                                   bottom: 10, top: 20, left: 5),
-                              child: const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(RaffleTextConstants.pastRaffles,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold)))),
+                              child: const SectionTitle(
+                                  text: RaffleTextConstants.pastRaffles)),
                         ...pastRaffles
                             .map((e) => RaffleWidget(raffle: e))
                             .toList(),

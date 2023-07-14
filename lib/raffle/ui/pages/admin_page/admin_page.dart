@@ -8,7 +8,7 @@ import 'package:myecl/raffle/providers/raffle_provider.dart';
 import 'package:myecl/raffle/providers/raffle_stats_provider.dart';
 import 'package:myecl/raffle/providers/type_ticket_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/blue_btn.dart';
+import 'package:myecl/raffle/ui/pages/admin_page/blue_btn.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/account_handler.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/ticket_handler.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/prize_handler.dart';
@@ -76,20 +76,23 @@ class AdminPage extends HookConsumerWidget {
                                         onYes: () async {
                                           switch (raffle.raffleStatusType) {
                                             case RaffleStatusType.creation:
-                                              await raffleListNotifier.openRaffle(
-                                                  raffle.copyWith(
+                                              await raffleListNotifier
+                                                  .openRaffle(raffle.copyWith(
                                                       description:
                                                           raffle.description,
                                                       raffleStatusType:
-                                                          RaffleStatusType.open));
+                                                          RaffleStatusType
+                                                              .open));
                                               break;
                                             case RaffleStatusType.open:
-                                              await raffleListNotifier.lockRaffle(
+                                              await raffleListNotifier
+                                                  .lockRaffle(
                                                 raffle.copyWith(
                                                     description:
                                                         raffle.description,
                                                     raffleStatusType:
-                                                        RaffleStatusType.locked),
+                                                        RaffleStatusType
+                                                            .locked),
                                               );
                                               break;
                                             default:
@@ -99,10 +102,10 @@ class AdminPage extends HookConsumerWidget {
                             });
                           },
                           child: BlueBtn(
-                              text:
-                                  raffle.raffleStatusType == RaffleStatusType.open
-                                      ? RaffleTextConstants.close
-                                      : RaffleTextConstants.open)),
+                              text: raffle.raffleStatusType ==
+                                      RaffleStatusType.open
+                                  ? RaffleTextConstants.close
+                                  : RaffleTextConstants.open)),
                     )
                   : Container(
                       margin: const EdgeInsets.only(bottom: 30),
@@ -115,14 +118,16 @@ class AdminPage extends HookConsumerWidget {
                                       Text(
                                         stats.ticketsSold.toString(),
                                         style: const TextStyle(
-                                            color: RaffleColorConstants.textDark,
+                                            color:
+                                                RaffleColorConstants.textDark,
                                             fontSize: 30),
                                       ),
                                       const Text(
                                         "Tickets",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            color: RaffleColorConstants.textDark,
+                                            color:
+                                                RaffleColorConstants.textDark,
                                             fontSize: 20),
                                       ),
                                     ],
@@ -140,14 +145,16 @@ class AdminPage extends HookConsumerWidget {
                                       Text(
                                         "${stats.amountRaised.toStringAsFixed(2)} €",
                                         style: const TextStyle(
-                                            color: RaffleColorConstants.textDark,
+                                            color:
+                                                RaffleColorConstants.textDark,
                                             fontSize: 30),
                                       ),
                                       const Text(
                                         "Récoltés",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            color: RaffleColorConstants.textDark,
+                                            color:
+                                                RaffleColorConstants.textDark,
                                             fontSize: 20),
                                       ),
                                     ],

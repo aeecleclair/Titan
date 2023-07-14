@@ -6,8 +6,9 @@ import 'package:myecl/raffle/providers/prize_list_provider.dart';
 import 'package:myecl/raffle/providers/prize_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/blue_btn.dart';
-import 'package:myecl/raffle/ui/text_entry.dart';
+import 'package:myecl/raffle/ui/components/section_title.dart';
+import 'package:myecl/raffle/ui/pages/admin_page/blue_btn.dart';
+import 'package:myecl/raffle/ui/components/text_entry.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -45,9 +46,7 @@ class AddEditPrizePage extends HookConsumerWidget {
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 20),
                           const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -59,19 +58,9 @@ class AddEditPrizePage extends HookConsumerWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 35,
-                          ),
-                          const Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text("Quantité",
-                                  style: TextStyle(
-                                      color: RaffleColorConstants.gradient2,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20))),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                          const SizedBox(height: 35),
+                          const SectionTitle(text: "Quantité"),
+                          const SizedBox(height: 5),
                           TextEntry(
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -87,19 +76,9 @@ class AddEditPrizePage extends HookConsumerWidget {
                               },
                               textEditingController: quantity,
                               keyboardType: TextInputType.number),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          const Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text("Nom",
-                                  style: TextStyle(
-                                      color: RaffleColorConstants.gradient2,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20))),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                          const SizedBox(height: 50),
+                          const SectionTitle(text: "Nom"),
+                          const SizedBox(height: 5),
                           TextEntry(
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -109,26 +88,14 @@ class AddEditPrizePage extends HookConsumerWidget {
                               },
                               textEditingController: name,
                               keyboardType: TextInputType.text),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          const Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text("Description",
-                                  style: TextStyle(
-                                      color: RaffleColorConstants.gradient2,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20))),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                          const SizedBox(height: 50),
+                          const SectionTitle(text: "Description"),
+                          const SizedBox(height: 5),
                           TextEntry(
                               validator: (value) => null,
                               textEditingController: description,
                               keyboardType: TextInputType.text),
-                          const SizedBox(
-                            height: 50,
-                          ),
+                          const SizedBox(height: 50),
                           ShrinkButton(
                               waitChild: const BlueBtn(
                                   text: RaffleTextConstants.waiting),
@@ -138,10 +105,11 @@ class AddEditPrizePage extends HookConsumerWidget {
                                     final newPrize = prize.copyWith(
                                         name: name.text,
                                         description: description.text,
-                                        raffleId: isEdit ? prize.raffleId : raffle.id,
+                                        raffleId:
+                                            isEdit ? prize.raffleId : raffle.id,
                                         quantity: int.parse(quantity.text));
-                                    final prizeNotifier = ref
-                                        .watch(prizeListProvider.notifier);
+                                    final prizeNotifier =
+                                        ref.watch(prizeListProvider.notifier);
                                     final value = isEdit
                                         ? await prizeNotifier
                                             .updatePrize(newPrize)
@@ -161,10 +129,8 @@ class AddEditPrizePage extends HookConsumerWidget {
                                         displayToastWithContext(TypeMsg.error,
                                             RaffleTextConstants.editingError);
                                       } else {
-                                        displayToastWithContext(
-                                            TypeMsg.error,
-                                            RaffleTextConstants
-                                                .addingError);
+                                        displayToastWithContext(TypeMsg.error,
+                                            RaffleTextConstants.addingError);
                                       }
                                     }
                                   });
@@ -177,9 +143,7 @@ class AddEditPrizePage extends HookConsumerWidget {
                                   text: isEdit
                                       ? RaffleTextConstants.editPrize
                                       : RaffleTextConstants.addPrize)),
-                          const SizedBox(
-                            height: 40,
-                          ),
+                          const SizedBox(height: 40),
                         ],
                       ),
                     )))),
