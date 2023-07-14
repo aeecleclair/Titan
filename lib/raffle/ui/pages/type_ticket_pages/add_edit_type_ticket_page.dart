@@ -6,8 +6,9 @@ import 'package:myecl/raffle/providers/raffle_provider.dart';
 import 'package:myecl/raffle/providers/ticket_type_provider.dart';
 import 'package:myecl/raffle/providers/type_ticket_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/blue_btn.dart';
-import 'package:myecl/raffle/ui/text_entry.dart';
+import 'package:myecl/raffle/ui/components/section_title.dart';
+import 'package:myecl/raffle/ui/pages/admin_page/blue_btn.dart';
+import 'package:myecl/raffle/ui/components/text_entry.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -45,9 +46,7 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 20),
                           const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -59,19 +58,9 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 35,
-                          ),
-                          const Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text("Nombre de ticket",
-                                  style: TextStyle(
-                                      color: RaffleColorConstants.gradient2,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20))),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                          const SizedBox(height: 35),
+                          const SectionTitle(text: "Nombre de ticket"),
+                          const SizedBox(height: 5),
                           TextEntry(
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -87,19 +76,9 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                               },
                               textEditingController: packSize,
                               keyboardType: TextInputType.number),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          const Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text("Prix",
-                                  style: TextStyle(
-                                      color: RaffleColorConstants.gradient2,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20))),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                          const SizedBox(height: 50),
+                          const SectionTitle(text: "Prix"),
+                          const SizedBox(height: 5),
                           TextEntry(
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -113,9 +92,7 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                               suffixText: "€",
                               textEditingController: price,
                               keyboardType: TextInputType.number),
-                          const SizedBox(
-                            height: 50,
-                          ),
+                          const SizedBox(height: 50),
                           ShrinkButton(
                               waitChild: const BlueBtn(
                                   text: RaffleTextConstants.waiting),
@@ -128,7 +105,8 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                                       final newTypeTicketSimple =
                                           typeTicket.copyWith(
                                               price: double.parse(price.text),
-                                              packSize: int.parse(packSize.text),
+                                              packSize:
+                                                  int.parse(packSize.text),
                                               raffleId: isEdit
                                                   ? typeTicket.raffleId
                                                   : raffle.id,
@@ -177,9 +155,7 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                                       ? RaffleTextConstants.editTypeTicketSimple
                                       : RaffleTextConstants
                                           .addTypeTicketSimple)),
-                          const SizedBox(
-                            height: 40,
-                          ),
+                          const SizedBox(height: 40),
                         ],
                       ),
                     )))),
