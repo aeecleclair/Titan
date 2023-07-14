@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/tools/constants.dart';
+import 'package:myecl/settings/ui/pages/edit_user_page/picture_button.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/constants.dart';
@@ -91,7 +92,8 @@ class EditUserPage extends HookConsumerWidget {
                             child: CircleAvatar(
                               radius: 80,
                               backgroundImage: profile.isEmpty
-                                  ? const AssetImage('assets/images/profile.png')
+                                  ? const AssetImage(
+                                      'assets/images/profile.png')
                                   : Image.memory(profile).image,
                             ),
                           ),
@@ -115,39 +117,13 @@ class EditUserPage extends HookConsumerWidget {
                                             .tooHeavyProfilePicture);
                                   }
                                 } else {
-                                  displayToastWithContext(TypeMsg.error,
-                                      SettingsTextConstants.errorProfilePicture);
+                                  displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants
+                                          .errorProfilePicture);
                                 }
                               },
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                padding: const EdgeInsets.all(7),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      ColorConstants.gradient1,
-                                      ColorConstants.gradient2,
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: ColorConstants.gradient2
-                                          .withOpacity(0.3),
-                                      spreadRadius: 2,
-                                      blurRadius: 4,
-                                      offset: const Offset(2, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: const HeroIcon(
-                                  HeroIcons.photo,
-                                  color: Colors.white,
-                                ),
-                              ),
+                              child: const PictureButton(icon: HeroIcons.photo),
                             ),
                           ),
                           Positioned(
@@ -170,39 +146,14 @@ class EditUserPage extends HookConsumerWidget {
                                             .tooHeavyProfilePicture);
                                   }
                                 } else {
-                                  displayToastWithContext(TypeMsg.error,
-                                      SettingsTextConstants.errorProfilePicture);
+                                  displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants
+                                          .errorProfilePicture);
                                 }
                               },
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                padding: const EdgeInsets.all(7),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      ColorConstants.gradient1,
-                                      ColorConstants.gradient2,
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: ColorConstants.gradient2
-                                          .withOpacity(0.3),
-                                      spreadRadius: 2,
-                                      blurRadius: 4,
-                                      offset: const Offset(2, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: const HeroIcon(
-                                  HeroIcons.camera,
-                                  color: Colors.white,
-                                ),
-                              ),
+                              child:
+                                  const PictureButton(icon: HeroIcons.camera),
                             ),
                           ),
                           Positioned(
@@ -226,35 +177,8 @@ class EditUserPage extends HookConsumerWidget {
                                   }
                                 }
                               },
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                padding: const EdgeInsets.all(7),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      ColorConstants.gradient1,
-                                      ColorConstants.gradient2,
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: ColorConstants.gradient2
-                                          .withOpacity(0.3),
-                                      spreadRadius: 2,
-                                      blurRadius: 4,
-                                      offset: const Offset(2, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: const HeroIcon(
-                                  HeroIcons.sparkles,
-                                  color: Colors.white,
-                                ),
-                              ),
+                              child:
+                                  const PictureButton(icon: HeroIcons.sparkles),
                             ),
                           )
                         ],
@@ -348,14 +272,17 @@ class EditUserPage extends HookConsumerWidget {
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                                 gradient: const LinearGradient(
-                                  colors: [Color(0xFFfb6d10), Color(0xffeb3e1b)],
+                                  colors: [
+                                    Color(0xFFfb6d10),
+                                    Color(0xffeb3e1b)
+                                  ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color:
-                                        const Color(0xffeb3e1b).withOpacity(0.5),
+                                    color: const Color(0xffeb3e1b)
+                                        .withOpacity(0.5),
                                     spreadRadius: 1,
                                     blurRadius: 7,
                                     offset: const Offset(0, 3),
@@ -448,12 +375,13 @@ class EditUserPage extends HookConsumerWidget {
                           floor: floorController.value.text,
                         ));
                         if (value) {
-                          displayToastWithContext(
-                              TypeMsg.msg, SettingsTextConstants.updatedProfile);
-                          QR.removeNavigator(SettingsRouter.root + SettingsRouter.editAccount);
+                          displayToastWithContext(TypeMsg.msg,
+                              SettingsTextConstants.updatedProfile);
+                          QR.removeNavigator(
+                              SettingsRouter.root + SettingsRouter.editAccount);
                         } else {
-                          displayToastWithContext(
-                              TypeMsg.error, SettingsTextConstants.updatingError);
+                          displayToastWithContext(TypeMsg.error,
+                              SettingsTextConstants.updatingError);
                         }
                       });
                     },
