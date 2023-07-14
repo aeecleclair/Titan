@@ -18,6 +18,7 @@ import 'package:myecl/vote/providers/show_graph_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/tools/constants.dart';
+import 'package:myecl/vote/ui/pages/admin_page/admin_button.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_bar.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_contender_items.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_bars.dart';
@@ -120,13 +121,8 @@ class AdminPage extends HookConsumerWidget {
                                 ),
                               ),
                               ShrinkButton(
-                                waitChild: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.black,
-                                  ),
-                                  child: const SizedBox(
+                                waitChild: const AdminButton(
+                                  child: SizedBox(
                                     height: 15,
                                     width: 15,
                                     child: CircularProgressIndicator(
@@ -149,13 +145,8 @@ class AdminPage extends HookConsumerWidget {
                                                 .loadResult();
                                           }));
                                 },
-                                child: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.black,
-                                  ),
-                                  child: const Text(VoteTextConstants.publish,
+                                child: const AdminButton(
+                                  child: Text(VoteTextConstants.publish,
                                       style: TextStyle(
                                           fontSize: 13,
                                           fontWeight: FontWeight.bold,
@@ -168,13 +159,8 @@ class AdminPage extends HookConsumerWidget {
                       if (status == Status.counting ||
                           status == Status.published)
                         ShrinkButton(
-                          waitChild: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.black,
-                            ),
-                            child: const Center(
+                          waitChild: const AdminButton(
+                            child: Center(
                               child: SizedBox(
                                 height: 15,
                                 width: 15,
@@ -217,13 +203,8 @@ class AdminPage extends HookConsumerWidget {
                                   );
                                 });
                           },
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.black,
-                            ),
-                            child: const Text(VoteTextConstants.clear,
+                          child: const AdminButton(
+                            child: Text(VoteTextConstants.clear,
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,

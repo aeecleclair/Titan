@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/vote/providers/contender_logo_provider.dart';
 import 'package:myecl/vote/providers/contender_logos_provider.dart';
 import 'package:myecl/vote/providers/contender_provider.dart';
-import 'package:myecl/vote/ui/member_card.dart';
+import 'package:myecl/vote/ui/components/member_card.dart';
 import 'package:myecl/vote/ui/pages/admin_page/contender_card.dart';
 import 'package:myecl/vote/ui/vote.dart';
 
