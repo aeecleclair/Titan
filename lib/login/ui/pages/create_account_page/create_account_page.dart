@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/class/create_account.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
@@ -167,7 +166,7 @@ class CreateAccountPage extends HookConsumerWidget {
         ),
         GestureDetector(
           onTap: () {
-            _selectDate(context, birthday);
+            getOnlyDayDate(context, birthday);
           },
           child: AbsorbPointer(
             child: Form(
@@ -457,31 +456,5 @@ class CreateAccountPage extends HookConsumerWidget {
         ),
       ),
     );
-  }
-
-  _selectDate(
-      BuildContext context, TextEditingController dateController) async {
-    final DateTime? picked = await showDatePicker(
-        locale: const Locale("fr", "FR"),
-        context: context,
-        initialDate: DateTime.now().subtract(const Duration(days: 365 * 21)),
-        firstDate: DateTime(1900),
-        lastDate: DateTime.now(),
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Color(0xFFfb6d10),
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
-              dialogBackgroundColor: Colors.white,
-            ),
-            child: child!,
-          );
-        });
-    dateController.text =
-        DateFormat('dd/MM/yyyy').format(picked ?? DateTime.now());
   }
 }

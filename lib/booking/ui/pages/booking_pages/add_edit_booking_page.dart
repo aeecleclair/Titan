@@ -9,7 +9,6 @@ import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/components/room_chip.dart';
 import 'package:myecl/booking/ui/components/waiter.dart';

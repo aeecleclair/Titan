@@ -1,6 +1,8 @@
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:intl/intl.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -146,6 +148,97 @@ String processDateToAPIWithoutHour(DateTime date) {
   return date.toIso8601String().split('T')[0];
 }
 
+Future<TimeOfDay?> _getTime(BuildContext context) async {
+  return await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: ColorConstants.gradient1,
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Colors.black,
+            ),
+            dialogBackgroundColor: Colors.white,
+          ),
+          child: child!,
+        );
+      });
+}
+
+Future<DateTime?> _getDate(BuildContext context, DateTime now,
+    DateTime? initialDate, DateTime? firstDate, DateTime? lastDate) async {
+  return await showDatePicker(
+    context: context,
+    initialDate: initialDate ?? now,
+    firstDate: firstDate ?? now,
+    lastDate: lastDate ?? DateTime(now.year + 1, now.month, now.day),
+    builder: (BuildContext context, Widget? child) {
+      return Theme(
+        data: ThemeData.light().copyWith(
+          colorScheme: const ColorScheme.light(
+            primary: ColorConstants.gradient1,
+            onPrimary: Colors.white,
+            surface: Colors.white,
+            onSurface: Colors.black,
+          ),
+          dialogBackgroundColor: Colors.white,
+        ),
+        child: child!,
+      );
+    },
+  );
+}
+
+getOnlyDayDate(BuildContext context, TextEditingController dateController,
+    {DateTime? initialDate, DateTime? firstDate, DateTime? lastDate}) async {
+  final DateTime now = DateTime.now();
+  final DateTime? date =
+      await _getDate(context, now, initialDate, firstDate, lastDate);
+
+  dateController.text = DateFormat('dd/MM/yyyy').format(date ?? now);
+}
+
+getOnlyDayDateFunction(BuildContext context, void Function(String) setDate,
+    {DateTime? initialDate, DateTime? firstDate, DateTime? lastDate}) async {
+  final DateTime now = DateTime.now();
+  final DateTime? date =
+      await _getDate(context, now, initialDate, firstDate, lastDate);
+
+  setDate(DateFormat('dd/MM/yyyy').format(date ?? now));
+}
+
+getOnlyHourDate(
+    BuildContext context, TextEditingController dateController) async {
+  final DateTime now = DateTime.now();
+  final TimeOfDay? time = await _getTime(context);
+
+  dateController.text =
+      DateFormat('HH:mm').format(DateTimeField.combine(now, time));
+}
+
+getFullDate(BuildContext context, TextEditingController dateController,
+    {DateTime? initialDate, DateTime? firstDate, DateTime? lastDate}) async {
+  final DateTime now = DateTime.now();
+  _getDate(context, now, initialDate, firstDate, lastDate).then(
+    (DateTime? date) {
+      if (date != null) {
+        _getTime(context).then(
+          (TimeOfDay? time) {
+            if (time != null) {
+              dateController.text = DateFormat('dd/MM/yyyy HH:mm')
+                  .format(DateTimeField.combine(date, time));
+            }
+          },
+        );
+      } else {
+        dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
+      }
+    },
+  );
+}
 
 int generateIntFromString(String s) {
   return s.codeUnits.reduce(

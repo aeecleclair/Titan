@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/picture_button.dart';
@@ -15,7 +14,6 @@ import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/class/floors.dart';
-import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -265,7 +263,10 @@ class EditUserPage extends HookConsumerWidget {
                       ),
                     ),
                     GestureDetector(
-                        onTap: () => _selectDate(context, user, dateController),
+                        onTap: () => getOnlyDayDate(context, dateController,
+                            initialDate: DateTime.parse(user.birthday),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now()),
                         child: Container(
                             margin: const EdgeInsets.only(left: 30),
                             padding: const EdgeInsets.all(12),
@@ -418,32 +419,5 @@ class EditUserPage extends HookConsumerWidget {
                 ])),
           )),
     );
-  }
-
-  _selectDate(BuildContext context, User me,
-      TextEditingController dateController) async {
-    final DateTime? picked = await showDatePicker(
-        locale: const Locale("fr", "FR"),
-        context: context,
-        initialDate: DateTime.parse(me.birthday),
-        firstDate: DateTime(1900),
-        lastDate: DateTime.now(),
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Color(0xFFfb6d10),
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
-              dialogBackgroundColor: Colors.white,
-            ),
-            child: child!,
-          );
-        });
-
-    dateController.text = processDatePrint(
-        picked == null ? me.birthday : DateFormat('dd/MM/yyyy').format(picked));
   }
 }
