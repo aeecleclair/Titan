@@ -1,7 +1,6 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
@@ -69,7 +68,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                               margin: const EdgeInsets.symmetric(vertical: 30),
                               child: GestureDetector(
                                 onTap: () =>
-                                    _selectDate(context, dateController),
+                                    getOnlyDayDate(context, dateController),
                                 child: SizedBox(
                                   child: AbsorbPointer(
                                     child: TextFormField(
@@ -278,17 +277,5 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                         ]))))),
       ),
     );
-  }
-
-  _selectDate(
-      BuildContext context, TextEditingController dateController) async {
-    final DateTime now = DateTime.now();
-    final DateTime? picked = await showDatePicker(
-        locale: const Locale("fr", "FR"),
-        context: context,
-        initialDate: now,
-        firstDate: now,
-        lastDate: DateTime(now.year + 1, now.month, now.day));
-    dateController.text = DateFormat('dd/MM/yyyy').format(picked ?? now);
   }
 }

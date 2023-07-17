@@ -1,12 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/providers/session_list_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
@@ -19,7 +17,6 @@ import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/cinema/ui/pages/session_pages/add_edit_button.dart';
 import 'package:myecl/cinema/ui/pages/session_pages/imdb_button.dart';
 import 'package:myecl/cinema/ui/pages/session_pages/text_entry.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -197,7 +194,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 30),
                 GestureDetector(
-                  onTap: () => _selectDate(context, start),
+                  onTap: () => getFullDate(context, start),
                   child: SizedBox(
                     child: AbsorbPointer(
                       child: TextFormField(
@@ -230,7 +227,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 30),
                 GestureDetector(
-                  onTap: () => _selectOnlyHour(context, duration),
+                  onTap: () => getOnlyHourDate(context, duration),
                   child: SizedBox(
                     child: AbsorbPointer(
                       child: TextFormField(
@@ -420,77 +417,4 @@ class AddEditSessionPage extends HookConsumerWidget {
       ),
     );
   }
-}
-
-_selectDate(BuildContext context, TextEditingController dateController) async {
-  final DateTime now = DateTime.now();
-  showDatePicker(
-      locale: const Locale("fr", "FR"),
-      context: context,
-      initialDate: now,
-      firstDate: now,
-      lastDate: DateTime(now.year + 1, now.month, now.day),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Color.fromARGB(255, 10, 153, 172),
-              onPrimary: Colors.white,
-              surface: Colors.white,
-              onSurface: Colors.black,
-            ),
-            dialogBackgroundColor: Colors.white,
-          ),
-          child: child!,
-        );
-      }).then((picked) {
-    if (picked != null) {
-      showTimePicker(
-          context: context,
-          initialTime: TimeOfDay.now(),
-          builder: (BuildContext context, Widget? child) {
-            return Theme(
-              data: ThemeData.light().copyWith(
-                colorScheme: const ColorScheme.light(
-                  primary: Color.fromARGB(255, 10, 153, 172),
-                  onPrimary: Colors.white,
-                  surface: Colors.white,
-                  onSurface: Colors.black,
-                ),
-                dialogBackgroundColor: Colors.white,
-              ),
-              child: child!,
-            );
-          }).then((value) {
-        dateController.text = DateFormat('dd/MM/yyyy HH:mm')
-            .format(DateTimeField.combine(picked, value));
-      });
-    } else {
-      dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
-    }
-  });
-}
-
-_selectOnlyHour(
-    BuildContext context, TextEditingController dateController) async {
-  const TimeOfDay now = TimeOfDay(hour: 0, minute: 0);
-  final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: now,
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: ColorConstants.gradient1,
-              onPrimary: Colors.white,
-              surface: Colors.white,
-              onSurface: Colors.black,
-            ),
-            dialogBackgroundColor: Colors.white,
-          ),
-          child: child!,
-        );
-      });
-  dateController.text =
-      DateFormat('HH:mm').format(DateTimeField.combine(DateTime.now(), picked));
 }

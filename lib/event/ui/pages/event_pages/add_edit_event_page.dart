@@ -1,8 +1,6 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/event/providers/is_room_provider.dart';
@@ -291,7 +289,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                         Column(
                                           children: [
                                             GestureDetector(
-                                              onTap: () => _selectOnlyHour(
+                                              onTap: () => getOnlyHourDate(
                                                   context, start),
                                               child: SizedBox(
                                                 child: AbsorbPointer(
@@ -337,7 +335,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                             ),
                                             GestureDetector(
                                               onTap: () =>
-                                                  _selectOnlyHour(context, end),
+                                                  getOnlyHourDate(context, end),
                                               child: SizedBox(
                                                 child: AbsorbPointer(
                                                   child: TextFormField(
@@ -383,7 +381,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                           ],
                                         ),
                                       GestureDetector(
-                                        onTap: () => _selectOnlyDayDate(
+                                        onTap: () => getOnlyDayDate(
                                             context, recurrenceEndDate),
                                         child: SizedBox(
                                           child: AbsorbPointer(
@@ -427,8 +425,8 @@ class AddEditEventPage extends HookConsumerWidget {
                                 children: [
                                   GestureDetector(
                                     onTap: () => allDay.value
-                                        ? _selectOnlyDayDate(context, start)
-                                        : _selectDate(context, start),
+                                        ? getOnlyDayDate(context, start)
+                                        : getFullDate(context, start),
                                     child: SizedBox(
                                       child: AbsorbPointer(
                                         child: TextFormField(
@@ -467,8 +465,8 @@ class AddEditEventPage extends HookConsumerWidget {
                                   ),
                                   GestureDetector(
                                     onTap: () => allDay.value
-                                        ? _selectOnlyDayDate(context, end)
-                                        : _selectDate(context, end),
+                                        ? getOnlyDayDate(context, end)
+                                        : getFullDate(context, end),
                                     child: SizedBox(
                                       child: AbsorbPointer(
                                         child: TextFormField(
@@ -759,107 +757,5 @@ class AddEditEventPage extends HookConsumerWidget {
                 ]),
               ]))),
     );
-  }
-
-  _selectOnlyDayDate(
-      BuildContext context, TextEditingController dateController) async {
-    final DateTime now = DateTime.now();
-    final DateTime? picked = await showDatePicker(
-        locale: const Locale("fr", "FR"),
-        context: context,
-        initialDate: now,
-        firstDate: now,
-        lastDate: DateTime(now.year + 1, now.month, now.day),
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Color.fromARGB(255, 10, 153, 172),
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
-              dialogBackgroundColor: Colors.white,
-            ),
-            child: child!,
-          );
-        });
-
-    dateController.text = DateFormat('dd/MM/yyyy')
-        .format(picked ?? now.add(const Duration(hours: 1)));
-  }
-
-  _selectOnlyHour(
-      BuildContext context, TextEditingController dateController) async {
-    final TimeOfDay now = TimeOfDay.now();
-    final TimeOfDay? picked = await showTimePicker(
-        context: context,
-        initialTime: now,
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Color.fromARGB(255, 10, 153, 172),
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
-              dialogBackgroundColor: Colors.white,
-            ),
-            child: child!,
-          );
-        });
-    dateController.text = DateFormat('HH:mm')
-        .format(DateTimeField.combine(DateTime.now(), picked));
-  }
-
-  _selectDate(
-      BuildContext context, TextEditingController dateController) async {
-    final DateTime now = DateTime.now();
-    showDatePicker(
-        locale: const Locale("fr", "FR"),
-        context: context,
-        initialDate: now,
-        firstDate: now,
-        lastDate: DateTime(now.year + 1, now.month, now.day),
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Color.fromARGB(255, 10, 153, 172),
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
-              dialogBackgroundColor: Colors.white,
-            ),
-            child: child!,
-          );
-        }).then((picked) {
-      if (picked != null) {
-        showTimePicker(
-            context: context,
-            initialTime: TimeOfDay.now(),
-            builder: (BuildContext context, Widget? child) {
-              return Theme(
-                data: ThemeData.light().copyWith(
-                  colorScheme: const ColorScheme.light(
-                    primary: Color.fromARGB(255, 10, 153, 172),
-                    onPrimary: Colors.white,
-                    surface: Colors.white,
-                    onSurface: Colors.black,
-                  ),
-                  dialogBackgroundColor: Colors.white,
-                ),
-                child: child!,
-              );
-            }).then((value) {
-          dateController.text = DateFormat('dd/MM/yyyy HH:mm')
-              .format(DateTimeField.combine(picked, value));
-        });
-      } else {
-        dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
-      }
-    });
   }
 }
