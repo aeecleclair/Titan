@@ -215,9 +215,7 @@ class UserCashUi extends HookConsumerWidget {
                                   width: 20,
                                 ),
                                 ShrinkButton(
-                                  waitChild: const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ),
+                                  builder: (child) => child,
                                   onTap: () async {
                                     if (key.currentState == null) {
                                       return;

@@ -2,7 +2,6 @@ import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/providers/available_deliveries.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:flutter/material.dart';
@@ -274,70 +273,40 @@ class AmapMainPage extends HookConsumerWidget {
                                       AMAPTextConstants.noSelectedDelivery);
                                 }
                               },
-                              waitChild: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 30),
-                                height: 70,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      AMAPColorConstants.greenGradient2,
-                                      AMAPColorConstants.textDark,
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AMAPColorConstants.textDark
-                                          .withOpacity(0.3),
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 5),
+                              builder: (child) => Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 30),
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        AMAPColorConstants.greenGradient2,
+                                        AMAPColorConstants.textDark,
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
                                     ),
-                                  ],
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.only(bottom: 5),
-                                  width: double.infinity,
-                                  child: const Waiter(color: Colors.white),
-                                ),
-                              ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AMAPColorConstants.textDark
+                                            .withOpacity(0.3),
+                                        spreadRadius: 2,
+                                        blurRadius: 10,
+                                        offset: const Offset(2, 5),
+                                      ),
+                                    ],
+                                  ),
+                                  child: child),
                               child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 30),
-                                height: 70,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      AMAPColorConstants.greenGradient2,
-                                      AMAPColorConstants.textDark,
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AMAPColorConstants.textDark
-                                          .withOpacity(0.3),
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 5),
-                                    ),
-                                  ],
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.only(bottom: 5),
-                                  width: double.infinity,
-                                  child: const Center(
-                                    child: Text(AMAPTextConstants.nextStep,
-                                        style: TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.w900,
-                                            color: Colors.white)),
-                                  ),
+                                padding: const EdgeInsets.only(bottom: 5),
+                                width: double.infinity,
+                                child: const Center(
+                                  child: Text(AMAPTextConstants.nextStep,
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w900,
+                                          color: Colors.white)),
                                 ),
                               ))
                         ],

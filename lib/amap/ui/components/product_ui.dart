@@ -91,20 +91,14 @@ class ProductCard extends StatelessWidget {
                           ),
                         ),
                         ShrinkButton(
-                            waitChild: const EditDeleteButton(
-                                gradient1: AMAPColorConstants.redGradient1,
-                                gradient2: AMAPColorConstants.redGradient2,
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                      color: Colors.white),
-                                )),
-                            onTap: onDelete,
-                            child: const EditDeleteButton(
+                          onTap: onDelete,
+                          builder: (child) => EditDeleteButton(
                               gradient1: AMAPColorConstants.redGradient1,
                               gradient2: AMAPColorConstants.redGradient2,
-                              child: HeroIcon(HeroIcons.trash,
-                                  color: Colors.white),
-                            ))
+                              child: child),
+                          child: const HeroIcon(HeroIcons.trash,
+                              color: Colors.white),
+                        )
                       ],
                     )
                   : Container(

@@ -336,7 +336,7 @@ class EditUserPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 50),
                   ShrinkButton(
-                    waitChild: Container(
+                    builder: (child) => Container(
                       width: double.infinity,
                       padding: const EdgeInsets.only(
                           bottom: 12, top: 8, right: 12, left: 12),
@@ -355,11 +355,7 @@ class EditUserPage extends HookConsumerWidget {
                             ),
                           ],
                           borderRadius: BorderRadius.circular(20)),
-                      child: const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                      ),
+                      child: child,
                     ),
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
@@ -385,33 +381,13 @@ class EditUserPage extends HookConsumerWidget {
                         }
                       });
                     },
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(
-                          bottom: 12, top: 8, right: 12, left: 12),
-                      decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFFfb6d10), Color(0xffeb3e1b)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xffeb3e1b).withOpacity(0.5),
-                              spreadRadius: 1,
-                              blurRadius: 7,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(20)),
-                      child: const Center(
-                        child: Text(
-                          SettingsTextConstants.save,
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white),
-                        ),
+                    child: const Center(
+                      child: Text(
+                        SettingsTextConstants.save,
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white),
                       ),
                     ),
                   ),

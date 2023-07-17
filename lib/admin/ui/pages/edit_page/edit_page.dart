@@ -186,15 +186,6 @@ class EditAssociationPage extends HookConsumerWidget {
                             height: 20,
                           ),
                           ShrinkButton(
-                            waitChild: const AdminButton(
-                              child: SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
                             onTap: () async {
                               if (!key.currentState!.validate()) {
                                 return;
@@ -216,15 +207,14 @@ class EditAssociationPage extends HookConsumerWidget {
                                 }
                               });
                             },
-                            child: const AdminButton(
-                              child: Text(
+                            builder: (child) => AdminButton(child: child),
+                            child: const Text(
                                 AdminTextConstants.edit,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                   color: Color.fromARGB(255, 255, 255, 255),
                                 ),
-                              ),
                             ),
                           ),
                           const SizedBox(

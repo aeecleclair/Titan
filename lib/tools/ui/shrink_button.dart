@@ -1,48 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class ShrinkButton extends StatefulWidget {
+class ShrinkButton extends HookWidget {
   final Widget child;
-  final Widget waitChild;
+  final Widget Function(Widget) builder;
+  final Color waitingColor;
   final Future Function() onTap;
 
-  const ShrinkButton(
+  ShrinkButton(
       {super.key,
       required this.child,
       required this.onTap,
-      this.waitChild = const SizedBox()});
+      required this.builder,
+      this.waitingColor = Colors.white});
 
-  @override
-  ShrinkButtonState createState() => ShrinkButtonState();
-}
+  final clicked = useState(false);
 
-class ShrinkButtonState extends State<ShrinkButton>
-    with SingleTickerProviderStateMixin {
-  static const clickAnimationDurationMillis = 100;
-
-  double _scaleTransformValue = 1;
-  bool clicked = false;
-
-  // needed for the "click" tap effect
-  late final AnimationController animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: clickAnimationDurationMillis),
+  final AnimationController animationController = useAnimationController(
+      duration: const Duration(milliseconds: 100),
       lowerBound: 0.0,
-      upperBound: 0.1,
-    )..addListener(() {
-        setState(() => _scaleTransformValue = 1 - animationController.value);
-      });
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
+      upperBound: 0.1);
 
   void _shrinkButtonSize() {
     animationController.forward();
@@ -57,16 +34,12 @@ class ShrinkButtonState extends State<ShrinkButton>
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () async {
-        if (clicked) return;
-        setState(() {
-          clicked = true;
-        });
+        if (clicked.value) return;
+        clicked.value = true;
         _shrinkButtonSize();
-        widget.onTap().then((_) {
+        onTap().then((_) {
           _restoreButtonSize();
-          setState(() {
-            clicked = false;
-          });
+          clicked.value = false;
         });
       },
       onTapDown: (_) {
@@ -75,9 +48,14 @@ class ShrinkButtonState extends State<ShrinkButton>
       onTapCancel: () {
         _restoreButtonSize();
       },
-      child: Transform.scale(
-          scale: _scaleTransformValue,
-          child: clicked ? widget.waitChild : widget.child),
+      child: AnimatedBuilder(
+          animation: animationController,
+          builder: (context, child) => Transform.scale(
+              scale: 1 - animationController.value,
+              child: builder(child!)),
+          child: clicked.value
+              ? Center(child: CircularProgressIndicator(color: waitingColor))
+              : child),
     );
   }
 }

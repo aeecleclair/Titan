@@ -156,8 +156,8 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                                       ),
                                                       ...value
                                                           .map((e) => ProductUi(
-                                                                isModification: selected[
-                                                                    products
+                                                                isModification:
+                                                                    selected[products
                                                                         .indexOf(
                                                                             e)],
                                                                 onclick: () {
@@ -180,89 +180,89 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                         height: 30,
                                       ),
                                       ShrinkButton(
-                                          waitChild: const GreenBtn(
-                                              text: AMAPTextConstants.waiting),
-                                          onTap: () async {
-                                            if (formKey.currentState!
-                                                .validate()) {
-                                              final date =
-                                                  dateController.value.text;
-                                              final del = Delivery(
-                                                  id: isEdit ? delivery.id : '',
-                                                  products: products
-                                                      .where((element) =>
-                                                          selected[
-                                                              products.indexOf(
-                                                                  element)])
-                                                      .toList(),
-                                                  deliveryDate: DateTime.parse(
-                                                      processDateBack(date)),
-                                                  status:
-                                                      DeliveryStatus.creation);
-                                              await tokenExpireWrapper(ref,
-                                                  () async {
-                                                final deliveryNotifier = ref
-                                                    .watch(deliveryListProvider
-                                                        .notifier);
-                                                final value = isEdit
-                                                    ? await deliveryNotifier
-                                                        .updateDelivery(del)
-                                                    : await deliveryNotifier
-                                                        .addDelivery(del);
-                                                if (value) {
-                                                  QR.back();
-                                                  if (isEdit) {
-                                                    displayToastWithContext(
-                                                        TypeMsg.msg,
-                                                        AMAPTextConstants
-                                                            .editedCommand);
-                                                  } else {
-                                                    final deliveryOrdersNotifier =
-                                                        ref.watch(
-                                                            adminDeliveryOrderListProvider
-                                                                .notifier);
-                                                    final deliveryList =
-                                                        ref.watch(
-                                                            deliveryListProvider);
-                                                    deliveryList
-                                                        .whenData((deliveries) {
-                                                      deliveryOrdersNotifier
-                                                          .addT(deliveries
-                                                              .last.id);
-                                                    });
-                                                    displayToastWithContext(
-                                                        TypeMsg.msg,
-                                                        AMAPTextConstants
-                                                            .addedCommand);
-                                                  }
+                                        builder: (child) =>
+                                            GreenBtn(child: child),
+                                        onTap: () async {
+                                          if (formKey.currentState!
+                                              .validate()) {
+                                            final date =
+                                                dateController.value.text;
+                                            final del = Delivery(
+                                                id: isEdit ? delivery.id : '',
+                                                products: products
+                                                    .where((element) =>
+                                                        selected[products
+                                                            .indexOf(element)])
+                                                    .toList(),
+                                                deliveryDate: DateTime.parse(
+                                                    processDateBack(date)),
+                                                status:
+                                                    DeliveryStatus.creation);
+                                            await tokenExpireWrapper(ref,
+                                                () async {
+                                              final deliveryNotifier =
+                                                  ref.watch(deliveryListProvider
+                                                      .notifier);
+                                              final value = isEdit
+                                                  ? await deliveryNotifier
+                                                      .updateDelivery(del)
+                                                  : await deliveryNotifier
+                                                      .addDelivery(del);
+                                              if (value) {
+                                                QR.back();
+                                                if (isEdit) {
+                                                  displayToastWithContext(
+                                                      TypeMsg.msg,
+                                                      AMAPTextConstants
+                                                          .editedCommand);
                                                 } else {
-                                                  if (isEdit) {
-                                                    displayToastWithContext(
-                                                        TypeMsg.error,
-                                                        AMAPTextConstants
-                                                            .editingError);
-                                                  } else {
-                                                    displayToastWithContext(
-                                                        TypeMsg.error,
-                                                        AMAPTextConstants
-                                                            .alreadyExistCommand);
-                                                  }
+                                                  final deliveryOrdersNotifier =
+                                                      ref.watch(
+                                                          adminDeliveryOrderListProvider
+                                                              .notifier);
+                                                  final deliveryList =
+                                                      ref.watch(
+                                                          deliveryListProvider);
+                                                  deliveryList
+                                                      .whenData((deliveries) {
+                                                    deliveryOrdersNotifier.addT(
+                                                        deliveries.last.id);
+                                                  });
+                                                  displayToastWithContext(
+                                                      TypeMsg.msg,
+                                                      AMAPTextConstants
+                                                          .addedCommand);
                                                 }
-                                              });
-                                            } else {
-                                              displayToast(
-                                                  context,
-                                                  TypeMsg.error,
-                                                  AMAPTextConstants
-                                                      .addingError);
-                                            }
-                                          },
-                                          child: GreenBtn(
-                                              text: isEdit
-                                                  ? AMAPTextConstants
-                                                      .editDelivery
-                                                  : AMAPTextConstants
-                                                      .addDelivery)),
+                                              } else {
+                                                if (isEdit) {
+                                                  displayToastWithContext(
+                                                      TypeMsg.error,
+                                                      AMAPTextConstants
+                                                          .editingError);
+                                                } else {
+                                                  displayToastWithContext(
+                                                      TypeMsg.error,
+                                                      AMAPTextConstants
+                                                          .alreadyExistCommand);
+                                                }
+                                              }
+                                            });
+                                          } else {
+                                            displayToast(context, TypeMsg.error,
+                                                AMAPTextConstants.addingError);
+                                          }
+                                        },
+                                        child: Text(
+                                          isEdit
+                                              ? AMAPTextConstants.editDelivery
+                                              : AMAPTextConstants.addDelivery,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700,
+                                              color: AMAPColorConstants
+                                                  .background),
+                                        ),
+                                      ),
                                     ],
                                   ),
                               error: (Object error, StackTrace stackTrace) {

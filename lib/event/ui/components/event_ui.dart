@@ -248,45 +248,27 @@ class EventUi extends ConsumerWidget {
                                             );
                                           });
                                     },
-                                    waitChild: EditDeleteButton(
-                                      backGroundColor:
-                                          event.end.compareTo(now) < 0
-                                              ? Colors.grey.shade700
-                                              : event.start.compareTo(now) <= 0
-                                                  ? ColorConstants.gradient1
-                                                  : Colors.white,
-                                      borderColor: event.end.compareTo(now) < 0
-                                          ? Colors.grey.shade700
-                                          : event.start.compareTo(now) <= 0
-                                              ? ColorConstants.gradient1
-                                              : Colors.grey.shade300,
-                                      child: Center(
-                                        child: CircularProgressIndicator(
+                                    builder: (child) => EditDeleteButton(
+                                        backGroundColor: event.end
+                                                    .compareTo(now) <
+                                                0
+                                            ? Colors.grey.shade700
+                                            : event.start.compareTo(now) <= 0
+                                                ? ColorConstants.gradient1
+                                                : Colors.white,
+                                        borderColor: event.end.compareTo(now) <
+                                                0
+                                            ? Colors.grey.shade700
+                                            : event.start.compareTo(now) <= 0
+                                                ? ColorConstants.gradient1
+                                                : Colors.grey.shade300,
+                                        child: child),
+                                    child: Text(
+                                      EventTextConstants.delete,
+                                      style: TextStyle(
                                           color: textColor,
-                                        ),
-                                      ),
-                                    ),
-                                    child: EditDeleteButton(
-                                      backGroundColor:
-                                          event.end.compareTo(now) < 0
-                                              ? Colors.grey.shade700
-                                              : event.start.compareTo(now) <= 0
-                                                  ? ColorConstants.gradient1
-                                                  : Colors.white,
-                                      borderColor: event.end.compareTo(now) < 0
-                                          ? Colors.grey.shade700
-                                          : event.start.compareTo(now) <= 0
-                                              ? ColorConstants.gradient1
-                                              : Colors.grey.shade300,
-                                      child: Center(
-                                        child: Text(
-                                          EventTextConstants.delete,
-                                          style: TextStyle(
-                                              color: textColor,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),

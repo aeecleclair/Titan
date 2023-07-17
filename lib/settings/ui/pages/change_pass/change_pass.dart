@@ -117,7 +117,7 @@ class ChangePassPage extends HookConsumerWidget {
                   height: 60,
                 ),
                 ShrinkButton(
-                  waitChild: Container(
+                  builder: (child) => Container(
                     width: double.infinity,
                     padding: const EdgeInsets.only(bottom: 16, top: 12),
                     decoration: BoxDecoration(
@@ -135,11 +135,7 @@ class ChangePassPage extends HookConsumerWidget {
                           ),
                         ],
                         borderRadius: BorderRadius.circular(10)),
-                    child: const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ),
-                    ),
+                    child: child,
                   ),
                   onTap: () async {
                     if (key.currentState!.validate()) {
@@ -157,8 +153,10 @@ class ChangePassPage extends HookConsumerWidget {
                                             user);
                                     if (value) {
                                       QR.back();
-                                      displayToastWithContext(TypeMsg.msg,
-                                          SettingsTextConstants.passwordChanged);
+                                      displayToastWithContext(
+                                          TypeMsg.msg,
+                                          SettingsTextConstants
+                                              .passwordChanged);
                                     } else {
                                       displayToastWithContext(TypeMsg.error,
                                           SettingsTextConstants.updatingError);
@@ -169,32 +167,13 @@ class ChangePassPage extends HookConsumerWidget {
                               ));
                     }
                   },
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(bottom: 16, top: 12),
-                    decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFfb6d10), Color(0xffeb3e1b)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xffeb3e1b).withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10)),
-                    child: const Center(
-                      child: Text(
-                        SettingsTextConstants.save,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                  child: const Center(
+                    child: Text(
+                      SettingsTextConstants.save,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   ),

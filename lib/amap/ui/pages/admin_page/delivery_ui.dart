@@ -12,7 +12,6 @@ import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/components/edit_delete_button.dart';
-import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -236,19 +235,14 @@ class DeliveryUi extends HookConsumerWidget {
                                 });
                               })));
                     },
-                    waitChild: const EditDeleteButton(
-                      gradient1: AMAPColorConstants.redGradient1,
-                      gradient2: AMAPColorConstants.redGradient2,
-                      child: Waiter(color: Colors.white),
-                    ),
-                    child: const EditDeleteButton(
-                      gradient1: AMAPColorConstants.redGradient1,
-                      gradient2: AMAPColorConstants.redGradient2,
-                      child: HeroIcon(
-                        HeroIcons.trash,
-                        color: Colors.white,
-                        size: 22,
-                      ),
+                    builder: (child) => EditDeleteButton(
+                        gradient1: AMAPColorConstants.redGradient1,
+                        gradient2: AMAPColorConstants.redGradient2,
+                        child: child),
+                    child: const HeroIcon(
+                      HeroIcons.trash,
+                      color: Colors.white,
+                      size: 22,
                     ),
                   ),
                 ShrinkButton(
@@ -326,7 +320,7 @@ class DeliveryUi extends HookConsumerWidget {
                               });
                             })));
                   },
-                  waitChild: Container(
+                  builder: (child) => Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 15),
                       decoration: BoxDecoration(
@@ -356,71 +350,38 @@ class DeliveryUi extends HookConsumerWidget {
                               offset: const Offset(2, 3))
                         ],
                       ),
-                      child: const SizedBox(
-                        width: 100,
-                        child: Waiter(color: Colors.white),
-                      )),
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      gradient: LinearGradient(
-                        colors: !(delivery.status == DeliveryStatus.creation)
-                            ? [
-                                AMAPColorConstants.redGradient1,
-                                AMAPColorConstants.redGradient2,
-                              ]
-                            : [
-                                AMAPColorConstants.greenGradient1,
-                                AMAPColorConstants.greenGradient2,
-                              ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                            color: !(delivery.status == DeliveryStatus.creation)
-                                ? AMAPColorConstants.redGradient2
-                                    .withOpacity(0.5)
-                                : AMAPColorConstants.greenGradient2
-                                    .withOpacity(0.5),
-                            blurRadius: 10,
-                            offset: const Offset(2, 3))
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(bottom: 2),
-                          child: Text(
-                            delivery.status == DeliveryStatus.creation
-                                ? AMAPTextConstants.openDelivery
-                                : delivery.status == DeliveryStatus.available
-                                    ? AMAPTextConstants.closeDelivery
-                                    : delivery.status == DeliveryStatus.locked
-                                        ? AMAPTextConstants.endingDelivery
-                                        : AMAPTextConstants.archiveDelivery,
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 20),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        HeroIcon(
+                      child: child),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 2),
+                        child: Text(
                           delivery.status == DeliveryStatus.creation
-                              ? HeroIcons.lockOpen
+                              ? AMAPTextConstants.openDelivery
                               : delivery.status == DeliveryStatus.available
-                                  ? HeroIcons.lockClosed
+                                  ? AMAPTextConstants.closeDelivery
                                   : delivery.status == DeliveryStatus.locked
-                                      ? HeroIcons.truck
-                                      : HeroIcons.archiveBoxArrowDown,
-                          color: Colors.white,
-                          size: 22,
+                                      ? AMAPTextConstants.endingDelivery
+                                      : AMAPTextConstants.archiveDelivery,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 20),
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      HeroIcon(
+                        delivery.status == DeliveryStatus.creation
+                            ? HeroIcons.lockOpen
+                            : delivery.status == DeliveryStatus.available
+                                ? HeroIcons.lockClosed
+                                : delivery.status == DeliveryStatus.locked
+                                    ? HeroIcons.truck
+                                    : HeroIcons.archiveBoxArrowDown,
+                        color: Colors.white,
+                        size: 22,
+                      ),
+                    ],
                   ),
                 ),
               ],

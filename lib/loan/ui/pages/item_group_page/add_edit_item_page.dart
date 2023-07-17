@@ -26,7 +26,8 @@ class AddEditItemPage extends HookConsumerWidget {
     final item = ref.watch(itemProvider);
     final isEdit = item.id != Item.empty().id;
     final name = useTextEditingController(text: item.name);
-    final quantity = useTextEditingController( text: item.totalQuantity.toString());
+    final quantity =
+        useTextEditingController(text: item.totalQuantity.toString());
     final caution =
         useTextEditingController(text: isEdit ? item.caution.toString() : '');
     final lendingDuration = useTextEditingController(
@@ -93,104 +94,77 @@ class AddEditItemPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 50),
                   ShrinkButton(
-                    waitChild: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(top: 8, bottom: 12),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset:
-                                const Offset(3, 3), // changes position of shadow
+                      builder: (child) => Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.only(top: 8, bottom: 12),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 10,
+                                offset: const Offset(
+                                    3, 3), // changes position of shadow
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: const Center(
-                        child: SizedBox(
-                          height: 25,
-                          width: 25,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    onTap: () async {
-                      if (key.currentState == null) {
-                        return;
-                      }
-                      if (key.currentState!.validate()) {
-                        await tokenExpireWrapper(ref, () async {
-                          Item newItem = Item(
-                              id: isEdit ? item.id : '',
-                              name: name.text,
-                              caution: int.parse(caution.text),
-                              suggestedLendingDuration:
-                                  double.parse(lendingDuration.text),
-                              loanedQuantity: 1,
-                              totalQuantity: int.parse(quantity.text));
-                          final value = isEdit
-                              ? await itemListNotifier.updateItem(
-                                  newItem, loaner.id)
-                              : await itemListNotifier.addItem(
-                                  newItem, loaner.id);
-                          if (value) {
-                            QR.back();
-                            loanersItemsNotifier.setTData(
-                                loaner, await itemListNotifier.copy());
-                            if (isEdit) {
-                              displayToastWithContext(
-                                  TypeMsg.msg, LoanTextConstants.updatedItem);
+                          child: child),
+                      onTap: () async {
+                        if (key.currentState == null) {
+                          return;
+                        }
+                        if (key.currentState!.validate()) {
+                          await tokenExpireWrapper(ref, () async {
+                            Item newItem = Item(
+                                id: isEdit ? item.id : '',
+                                name: name.text,
+                                caution: int.parse(caution.text),
+                                suggestedLendingDuration:
+                                    double.parse(lendingDuration.text),
+                                loanedQuantity: 1,
+                                totalQuantity: int.parse(quantity.text));
+                            final value = isEdit
+                                ? await itemListNotifier.updateItem(
+                                    newItem, loaner.id)
+                                : await itemListNotifier.addItem(
+                                    newItem, loaner.id);
+                            if (value) {
+                              QR.back();
+                              loanersItemsNotifier.setTData(
+                                  loaner, await itemListNotifier.copy());
+                              if (isEdit) {
+                                displayToastWithContext(
+                                    TypeMsg.msg, LoanTextConstants.updatedItem);
+                              } else {
+                                displayToastWithContext(
+                                    TypeMsg.msg, LoanTextConstants.addedObject);
+                              }
                             } else {
-                              displayToastWithContext(
-                                  TypeMsg.msg, LoanTextConstants.addedObject);
+                              if (isEdit) {
+                                displayToastWithContext(TypeMsg.error,
+                                    LoanTextConstants.updatingError);
+                              } else {
+                                displayToastWithContext(TypeMsg.error,
+                                    LoanTextConstants.addingError);
+                              }
                             }
-                          } else {
-                            if (isEdit) {
-                              displayToastWithContext(
-                                  TypeMsg.error, LoanTextConstants.updatingError);
-                            } else {
-                              displayToastWithContext(
-                                  TypeMsg.error, LoanTextConstants.addingError);
-                            }
-                          }
-                        });
-                      } else {
-                        displayToast(context, TypeMsg.error,
-                            LoanTextConstants.incorrectOrMissingFields);
-                      }
-                    },
-                    child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.only(top: 8, bottom: 12),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 10,
-                              offset: const Offset(
-                                  3, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: Text(
-                            isEdit
-                                ? LoanTextConstants.edit
-                                : LoanTextConstants.add,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold))),
-                  ),
+                          });
+                        } else {
+                          displayToast(context, TypeMsg.error,
+                              LoanTextConstants.incorrectOrMissingFields);
+                        }
+                      },
+                      child: Text(
+                          isEdit
+                              ? LoanTextConstants.edit
+                              : LoanTextConstants.add,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold))),
                 ]),
               )
             ]),

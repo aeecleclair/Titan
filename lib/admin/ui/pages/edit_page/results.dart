@@ -72,15 +72,8 @@ class MemberResults extends HookConsumerWidget {
                                       });
                                     }
                                   },
-                                  waitChild: const Center(
-                                    child: SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: CircularProgressIndicator(
-                                        color: ColorConstants.gradient1,
-                                      ),
-                                    ),
-                                  ),
+                                  waitingColor: ColorConstants.gradient1,
+                                  builder: (child) => child,
                                   child: const HeroIcon(HeroIcons.plus))
                             ],
                           ),

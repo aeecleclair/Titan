@@ -91,33 +91,7 @@ class TicketUI extends HookConsumerWidget {
                   ),
                 ),
                 ShrinkButton(
-                    waitChild: Container(
-                        width: 40,
-                        height: 40,
-                        padding: const EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              RaffleColorConstants.redGradient1,
-                              RaffleColorConstants.redGradient2,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                                color: RaffleColorConstants.redGradient2
-                                    .withOpacity(0.5),
-                                blurRadius: 10,
-                                offset: const Offset(2, 3))
-                          ],
-                        ),
-                        child: const Center(
-                          child: CircularProgressIndicator(color: Colors.white),
-                        )),
-                    onTap: onDelete,
-                    child: Container(
+                  builder: (child) => Container(
                       width: 40,
                       height: 40,
                       padding: const EdgeInsets.all(7),
@@ -139,9 +113,10 @@ class TicketUI extends HookConsumerWidget {
                               offset: const Offset(2, 3))
                         ],
                       ),
-                      child:
-                          const HeroIcon(HeroIcons.trash, color: Colors.white),
-                    ))
+                      child: child),
+                  onTap: onDelete,
+                  child: const HeroIcon(HeroIcons.trash, color: Colors.white),
+                )
               ])
           ],
         ),

@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/loan/ui/pages/admin_page/edit_delete_item_button.dart';
 
 class ItemCard extends StatelessWidget {
   final Item item;
@@ -19,7 +20,7 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var availableQuantity = item.totalQuantity-item.loanedQuantity;
+    var availableQuantity = item.totalQuantity - item.loanedQuantity;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5.0),
       padding: const EdgeInsets.all(12.0),
@@ -54,15 +55,13 @@ class ItemCard extends StatelessWidget {
                       color: Colors.black)),
               const SizedBox(height: 5),
               Text(
-                  availableQuantity>0
-                      ? '$availableQuantity ${availableQuantity <= 1
-                        ? LoanTextConstants.available
-                        : LoanTextConstants.availableMultiple}'
+                  availableQuantity > 0
+                      ? '$availableQuantity ${availableQuantity <= 1 ? LoanTextConstants.available : LoanTextConstants.availableMultiple}'
                       : LoanTextConstants.unavailable,
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: availableQuantity>0
+                      color: availableQuantity > 0
                           ? Colors.grey.shade400
                           : const Color.fromARGB(255, 172, 32, 10))),
               const SizedBox(height: 5),
@@ -80,68 +79,17 @@ class ItemCard extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: onEdit,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        padding: const EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                blurRadius: 10,
-                                offset: const Offset(2, 3))
-                          ],
-                        ),
-                        child: const HeroIcon(HeroIcons.pencil,
+                      child: const EditDeleteItemButton(
+                        child: HeroIcon(HeroIcons.pencil,
                             color: Colors.black),
                       ),
                     ),
                     ShrinkButton(
-                        waitChild: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
-                            child: const Center(
-                              child: SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  valueColor:
-                                      AlwaysStoppedAnimation(Colors.white),
-                                ),
-                              ),
-                            )),
-                        onTap: onDelete,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3))
-                            ],
-                          ),
-                          child: const HeroIcon(HeroIcons.trash,
-                              color: Colors.white),
-                        )),
+                      builder: (child) => EditDeleteItemButton(child: child),
+                      onTap: onDelete,
+                      child:
+                          const HeroIcon(HeroIcons.trash, color: Colors.white),
+                    ),
                   ],
                 ),
               if (showButtons) const SizedBox(height: 10),

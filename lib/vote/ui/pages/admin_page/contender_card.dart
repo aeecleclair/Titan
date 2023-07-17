@@ -36,8 +36,7 @@ class ContenderCard extends HookConsumerWidget {
           error: (error, stackTrace) => Status.waiting,
         );
     final contenderLogos = ref.watch(contenderLogosProvider);
-    final contenderLogosNotifier =
-        ref.watch(contenderLogosProvider.notifier);
+    final contenderLogosNotifier = ref.watch(contenderLogosProvider.notifier);
     final logoNotifier = ref.watch(contenderLogoProvider.notifier);
     return Container(
       padding: const EdgeInsets.all(15.0),
@@ -211,7 +210,7 @@ class ContenderCard extends HookConsumerWidget {
                         ),
                       ),
                       ShrinkButton(
-                          waitChild: Container(
+                        builder: (child) => Container(
                             width: 40,
                             height: 40,
                             decoration: BoxDecoration(
@@ -224,29 +223,11 @@ class ContenderCard extends HookConsumerWidget {
                                     offset: const Offset(2, 3))
                               ],
                             ),
-                            child: const Center(
-                                child: CircularProgressIndicator(
-                              color: Colors.white,
-                            )),
-                          ),
-                          onTap: onDelete,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
-                            child: const HeroIcon(HeroIcons.trash,
-                                color: Colors.white),
-                          )),
+                            child: child),
+                        onTap: onDelete,
+                        child: const HeroIcon(HeroIcons.trash,
+                            color: Colors.white),
+                      ),
                     ],
                   ),
               ],

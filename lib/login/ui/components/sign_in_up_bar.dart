@@ -33,7 +33,7 @@ class SignInUpBar extends StatelessWidget {
                 color == Colors.white ? Alignment.centerLeft : Alignment.center,
             child: ShrinkButton(
               onTap: onPressed,
-              waitChild: Row(
+              builder: (child) => Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
@@ -43,32 +43,16 @@ class SignInUpBar extends StatelessWidget {
                         fontWeight: FontWeight.w800,
                         color: color),
                   ),
-                  Container(
-                      margin: const EdgeInsets.only(left: 20),
-                      child: CircularProgressIndicator(
-                        color: color,
-                      )),
+                  child,
                 ],
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    label,
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w800,
-                        color: color),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 20),
-                    child: isLoading
-                        ? CircularProgressIndicator(
-                            color: color,
-                          )
-                        : icon,
-                  ),
-                ],
+              child: Container(
+                margin: const EdgeInsets.only(left: 20),
+                child: isLoading
+                    ? CircularProgressIndicator(
+                        color: color,
+                      )
+                    : icon,
               ),
             )));
   }
