@@ -48,15 +48,7 @@ class AddEditButton extends HookConsumerWidget {
     }
 
     return ShrinkButton(
-      waitChild: const AddEditButtonLayout(
-          child: Center(
-            child: SizedBox(
-              height: 25,
-              width: 25,
-              child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
-            ),
-          )),
+      builder: (child) => AddEditButtonLayout(child: child),
       onTap: () async {
         await onAddEdit(() async {
           if (processDateBack(start).compareTo(processDateBack(end)) > 0) {
@@ -139,12 +131,9 @@ class AddEditButton extends HookConsumerWidget {
           }
         });
       },
-      child: AddEditButtonLayout(
-          child: Text(isEdit ? LoanTextConstants.edit : LoanTextConstants.add,
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold))),
+      child: Text(isEdit ? LoanTextConstants.edit : LoanTextConstants.add,
+          style: const TextStyle(
+              color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold)),
     );
   }
 }

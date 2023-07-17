@@ -168,22 +168,14 @@ class DetailOrderUI extends HookConsumerWidget {
                             });
                           })));
                 },
-                waitChild: const EditDeleteButton(
+                builder: (child) => EditDeleteButton(
                     gradient1: AMAPColorConstants.redGradient1,
                     gradient2: AMAPColorConstants.redGradient2,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ),
-                    )),
-                child: const EditDeleteButton(
-                  gradient1: AMAPColorConstants.redGradient1,
-                  gradient2: AMAPColorConstants.redGradient2,
-                  child: HeroIcon(
-                    HeroIcons.trash,
-                    color: Colors.white,
-                    size: 20,
-                  ),
+                    child: child),
+                child: const HeroIcon(
+                  HeroIcons.trash,
+                  color: Colors.white,
+                  size: 20,
                 ),
               ),
             ],

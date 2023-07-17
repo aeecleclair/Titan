@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
+import 'package:myecl/loan/ui/pages/admin_page/edit_delete_loan_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
@@ -104,9 +105,7 @@ class LoanCard extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: shouldReturn
-                            ? Colors.white
-                            : Colors.black)),
+                        color: shouldReturn ? Colors.white : Colors.black)),
                 const SizedBox(height: 7),
                 Text(formatItems(loan.itemsQuantity),
                     style: TextStyle(
@@ -120,9 +119,7 @@ class LoanCard extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: shouldReturn
-                            ? Colors.white
-                            : Colors.black)),
+                        color: shouldReturn ? Colors.white : Colors.black)),
                 const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,22 +152,10 @@ class LoanCard extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: onEdit,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: shouldReturn
-                                ? Colors.white.withOpacity(0.7)
-                                : Colors.grey.shade200,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3))
-                            ],
-                          ),
+                        child: EditDeleteLoanButton(
+                          color: shouldReturn
+                              ? Colors.white.withOpacity(0.7)
+                              : Colors.grey.shade200,
                           child: HeroIcon(HeroIcons.pencil,
                               color: shouldReturn
                                   ? const Color.fromARGB(255, 99, 13, 0)
@@ -178,91 +163,30 @@ class LoanCard extends StatelessWidget {
                         ),
                       ),
                       ShrinkButton(
-                          waitChild: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: shouldReturn
-                                    ? Colors.white.withOpacity(0.7)
-                                    : Colors.grey.shade200,
-                                borderRadius: BorderRadius.circular(30),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 3))
-                                ],
-                              ),
-                              child: Center(
-                                  child: CircularProgressIndicator(
-                                color: shouldReturn
-                                    ? const Color.fromARGB(255, 99, 13, 0)
-                                    : Colors.black,
-                              ))),
-                          onTap: onCalendar,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: shouldReturn
-                                  ? Colors.white.withOpacity(0.7)
-                                  : Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
-                            child: HeroIcon(HeroIcons.calendarDays,
-                                color: shouldReturn
-                                    ? const Color.fromARGB(255, 99, 13, 0)
-                                    : Colors.black),
-                          )),
+                        waitingColor: shouldReturn
+                            ? const Color.fromARGB(255, 99, 13, 0)
+                            : Colors.black,
+                        builder: (child) => EditDeleteLoanButton(
+                            color: shouldReturn
+                                ? Colors.white.withOpacity(0.7)
+                                : Colors.grey.shade200,
+                            child: child),
+                        onTap: onCalendar,
+                        child: HeroIcon(HeroIcons.calendarDays,
+                            color: shouldReturn
+                                ? const Color.fromARGB(255, 99, 13, 0)
+                                : Colors.black),
+                      ),
                       ShrinkButton(
-                          waitChild: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: shouldReturn
-                                  ? const Color.fromARGB(255, 99, 13, 0)
-                                  : Colors.black,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
-                            child: const Center(
-                                child: CircularProgressIndicator(
-                              color: Colors.white,
-                            )),
-                          ),
-                          onTap: onReturn,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: shouldReturn
-                                  ? const Color.fromARGB(255, 99, 13, 0)
-                                  : Colors.black,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
-                            child: const HeroIcon(HeroIcons.check,
-                                color: Colors.white),
-                          )),
+                        builder: (child) => EditDeleteLoanButton(
+                            color: shouldReturn
+                                ? const Color.fromARGB(255, 99, 13, 0)
+                                : Colors.black,
+                            child: child),
+                        onTap: onReturn,
+                        child: const HeroIcon(HeroIcons.check,
+                            color: Colors.white),
+                      ),
                     ],
                   ),
                 const SizedBox(height: 10),

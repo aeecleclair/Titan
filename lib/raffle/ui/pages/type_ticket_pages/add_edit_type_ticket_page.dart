@@ -94,8 +94,9 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                               keyboardType: TextInputType.number),
                           const SizedBox(height: 50),
                           ShrinkButton(
-                              waitChild: const BlueBtn(
-                                  text: RaffleTextConstants.waiting),
+                              builder: (child) => BlueBtn(
+                                    child: child,
+                                  ),
                               onTap: () async {
                                 if (formKey.currentState!.validate()) {
                                   final ticketPrice = double.tryParse(
@@ -150,11 +151,15 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                                       RaffleTextConstants.addingError);
                                 }
                               },
-                              child: BlueBtn(
-                                  text: isEdit
-                                      ? RaffleTextConstants.editTypeTicketSimple
-                                      : RaffleTextConstants
-                                          .addTypeTicketSimple)),
+                              child: Text(
+                                isEdit
+                                    ? RaffleTextConstants.editTypeTicketSimple
+                                    : RaffleTextConstants.addTypeTicketSimple,
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: RaffleColorConstants.gradient2),
+                              )),
                           const SizedBox(height: 40),
                         ],
                       ),

@@ -621,17 +621,7 @@ class AddEditEventPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 50),
                         ShrinkButton(
-                          waitChild: const AddEditButton(
-                            child: Center(
-                              child: SizedBox(
-                                height: 25,
-                                width: 25,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
+                          builder: (child) => AddEditButton(child: child),
                           onTap: () async {
                             if (key.currentState == null) {
                               return;
@@ -740,15 +730,14 @@ class AddEditEventPage extends HookConsumerWidget {
                               }
                             }
                           },
-                          child: AddEditButton(
-                              child: Text(
-                                  isEdit
-                                      ? EventTextConstants.edit
-                                      : EventTextConstants.add,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold))),
+                          child: Text(
+                              isEdit
+                                  ? EventTextConstants.edit
+                                  : EventTextConstants.add,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold)),
                         ),
                       ],
                     ),

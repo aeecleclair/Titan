@@ -59,8 +59,7 @@ class AdminSessionCard extends HookConsumerWidget {
                             fit: BoxFit.cover,
                           );
                         } else {
-                          Future.delayed(
-                              const Duration(milliseconds: 1), () {
+                          Future.delayed(const Duration(milliseconds: 1), () {
                             sessionPosterMapNotifier.setTData(
                                 session, const AsyncLoading());
                           });
@@ -149,42 +148,23 @@ class AdminSessionCard extends HookConsumerWidget {
                         ),
                         ShrinkButton(
                           onTap: onDelete,
-                          waitChild: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
-                            child: const Center(
-                                child: CircularProgressIndicator(
-                              color: Colors.white,
-                            )),
-                          ),
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
-                            child: const HeroIcon(HeroIcons.trash,
-                                color: Colors.white),
-                          ),
+                          builder: (child) => Container(
+                              width: 40,
+                              height: 40,
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(30),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 3))
+                                ],
+                              ),
+                              child: child),
+                          child: const HeroIcon(HeroIcons.trash,
+                              color: Colors.white),
                         ),
                       ],
                     ),

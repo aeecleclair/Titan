@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 
 class BlueBtn extends StatelessWidget {
-  final String text;
+  final Widget child;
 
-  const BlueBtn({Key? key, required this.text}) : super(key: key);
+  const BlueBtn({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +33,7 @@ class BlueBtn extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(13)),
           color: Colors.white,
         ),
-        child: Text(
-          text,
-          style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: RaffleColorConstants.gradient2),
-        ),
+        child: child,
       ),
     );
   }

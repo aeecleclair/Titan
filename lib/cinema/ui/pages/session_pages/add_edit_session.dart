@@ -129,17 +129,11 @@ class AddEditSessionPage extends HookConsumerWidget {
                             });
                           });
                         },
-                        waitChild: const ImdbButton(
-                          child: CircularProgressIndicator(
-                            color: Colors.black,
-                          ),
-                        ),
-                        child: const ImdbButton(
-                          child: HeroIcon(
-                            HeroIcons.arrowRight,
-                            size: 22,
-                            color: Colors.black,
-                          ),
+                        builder: (child) => ImdbButton(child: child),
+                        child: const HeroIcon(
+                          HeroIcons.arrowRight,
+                          size: 22,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -290,17 +284,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 50),
                 ShrinkButton(
-                  waitChild: const AddEditButton(
-                    child: Center(
-                      child: SizedBox(
-                        height: 30,
-                        width: 30,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
+                  builder: (child) => AddEditButton(child: child),
                   onTap: () async {
                     if (key.currentState == null) {
                       return;
@@ -401,15 +385,14 @@ class AddEditSessionPage extends HookConsumerWidget {
                           CinemaTextConstants.incorrectOrMissingFields);
                     }
                   },
-                  child: AddEditButton(
-                      child: Text(
-                          isEdit
-                              ? CinemaTextConstants.edit
-                              : CinemaTextConstants.add,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold))),
+                  child: Text(
+                      isEdit
+                          ? CinemaTextConstants.edit
+                          : CinemaTextConstants.add,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold)),
                 ),
                 const SizedBox(height: 20),
               ]),

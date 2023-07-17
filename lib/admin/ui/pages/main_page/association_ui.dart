@@ -65,23 +65,15 @@ class AssociationUi extends HookConsumerWidget {
               width: 10,
             ),
             ShrinkButton(
-                waitChild: const AssociationButton(
-                  gradient1: ColorConstants.gradient1,
-                  gradient2: ColorConstants.gradient2,
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
                 onTap: onDelete,
-                child: const AssociationButton(
-                  gradient1: ColorConstants.gradient1,
-                  gradient2: ColorConstants.gradient2,
-                  child: HeroIcon(
-                    HeroIcons.xMark,
-                    color: Colors.white,
-                  ),
+                builder: (child) => AssociationButton(
+                      gradient1: ColorConstants.gradient1,
+                      gradient2: ColorConstants.gradient2,
+                      child: child,
+                    ),
+                child: const HeroIcon(
+                  HeroIcons.xMark,
+                  color: Colors.white,
                 )),
           ],
         ),

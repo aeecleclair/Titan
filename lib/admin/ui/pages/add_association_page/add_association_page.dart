@@ -36,27 +36,15 @@ class AddAssociationPage extends HookConsumerWidget {
               child: Form(
                 key: key,
                 child: Column(children: [
-                  const PageTitle(
-                    title: AdminTextConstants.addAssociation
-                  ),
+                  const PageTitle(title: AdminTextConstants.addAssociation),
                   const SizedBox(
                     height: 30,
                   ),
-                  TextEditing(
-                      controller: name, label: AdminTextConstants.name),
+                  TextEditing(controller: name, label: AdminTextConstants.name),
                   TextEditing(
                       controller: description,
                       label: AdminTextConstants.description),
                   ShrinkButton(
-                    waitChild: const AdminButton(
-                      child: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
                         final value = await groupListNotifier.createGroup(
@@ -74,14 +62,13 @@ class AddAssociationPage extends HookConsumerWidget {
                         }
                       });
                     },
-                    child: const AdminButton(
-                      child: Text(
-                        AdminTextConstants.add,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                        ),
+                    builder: (child) => AdminButton(child: child),
+                    child: const Text(
+                      AdminTextConstants.add,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 255, 255, 255),
                       ),
                     ),
                   )

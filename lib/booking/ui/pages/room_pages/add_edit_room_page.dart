@@ -8,7 +8,6 @@ import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/components/add_edit_button.dart';
-import 'package:myecl/booking/ui/components/waiter.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -74,8 +73,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                     height: 50,
                   ),
                   ShrinkButton(
-                    waitChild:
-                        const AddEditButton(child: Waiter(color: Colors.white)),
+                    builder: (child) => AddEditButton(child: child),
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
                         Room newRoom =
@@ -99,15 +97,14 @@ class AddEditRoomPage extends HookConsumerWidget {
                         }
                       });
                     },
-                    child: AddEditButton(
-                        child: Text(
-                            isEdit
-                                ? BookingTextConstants.edit
-                                : BookingTextConstants.add,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold))),
+                    child: Text(
+                        isEdit
+                            ? BookingTextConstants.edit
+                            : BookingTextConstants.add,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 30),
                 ],

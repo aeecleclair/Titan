@@ -126,7 +126,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                       children: [
                         const Spacer(),
                         ShrinkButton(
-                          waitChild: Container(
+                          builder: (child) => Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 12),
                               decoration: BoxDecoration(
@@ -145,11 +145,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                   ],
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(15))),
-                              child: const Center(
-                                child: CircularProgressIndicator(
-                                  color: RaffleColorConstants.textDark,
-                                ),
-                              )),
+                              child: child),
                           onTap: () async {
                             if (b < typeTicket.price) {
                               displayToastWithContext(TypeMsg.error,
@@ -171,30 +167,11 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                               });
                             }
                           },
-                          child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 12),
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Colors.grey.shade100,
-                                      Colors.grey.shade200,
-                                    ],
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.shade300
-                                            .withOpacity(0.5),
-                                        blurRadius: 10,
-                                        offset: const Offset(2, 3))
-                                  ],
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(15))),
-                              child: const HeroIcon(
-                                HeroIcons.check,
-                                color: RaffleColorConstants.textDark,
-                                size: 40,
-                              )),
+                          child: const HeroIcon(
+                            HeroIcons.check,
+                            color: RaffleColorConstants.textDark,
+                            size: 40,
+                          ),
                         ),
                         const Spacer(
                           flex: 3,

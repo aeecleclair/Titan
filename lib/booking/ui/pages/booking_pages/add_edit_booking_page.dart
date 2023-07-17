@@ -335,8 +335,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                           ),
                     const SizedBox(height: 50),
                     ShrinkButton(
-                      waitChild: const AddEditButton(
-                          child: Waiter(color: Colors.white)),
+                      builder: (child) => AddEditButton(child: child),
                       onTap: () async {
                         if (key.currentState == null) {
                           return;
@@ -459,15 +458,14 @@ class AddEditBookingPage extends HookConsumerWidget {
                               BookingTextConstants.incorrectOrMissingFields);
                         }
                       },
-                      child: AddEditButton(
-                          child: Text(
-                              isEdit
-                                  ? BookingTextConstants.edit
-                                  : BookingTextConstants.add,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold))),
+                      child: Text(
+                          isEdit
+                              ? BookingTextConstants.edit
+                              : BookingTextConstants.add,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold)),
                     ),
                     const SizedBox(height: 30),
                   ]),

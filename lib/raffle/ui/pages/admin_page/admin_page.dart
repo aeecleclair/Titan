@@ -56,57 +56,58 @@ class AdminPage extends HookConsumerWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 30, vertical: 12),
                       child: ShrinkButton(
-                          waitChild:
-                              const BlueBtn(text: RaffleTextConstants.waiting),
-                          onTap: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              await showDialog(
-                                  context: context,
-                                  builder: (context) => CustomDialogBox(
-                                        title: raffle.raffleStatusType ==
-                                                RaffleStatusType.creation
-                                            ? RaffleTextConstants.openRaffle
-                                            : RaffleTextConstants.closeRaffle,
-                                        descriptions: raffle.raffleStatusType ==
-                                                RaffleStatusType.creation
-                                            ? RaffleTextConstants
-                                                .openRaffleDescription
-                                            : RaffleTextConstants
-                                                .closeRaffleDescription,
-                                        onYes: () async {
-                                          switch (raffle.raffleStatusType) {
-                                            case RaffleStatusType.creation:
-                                              await raffleListNotifier
-                                                  .openRaffle(raffle.copyWith(
-                                                      description:
-                                                          raffle.description,
-                                                      raffleStatusType:
-                                                          RaffleStatusType
-                                                              .open));
-                                              break;
-                                            case RaffleStatusType.open:
-                                              await raffleListNotifier
-                                                  .lockRaffle(
+                        waitingColor: RaffleColorConstants.gradient2,
+                        builder: (child) => BlueBtn(child: child),
+                        onTap: () async {
+                          await tokenExpireWrapper(ref, () async {
+                            await showDialog(
+                                context: context,
+                                builder: (context) => CustomDialogBox(
+                                      title: raffle.raffleStatusType ==
+                                              RaffleStatusType.creation
+                                          ? RaffleTextConstants.openRaffle
+                                          : RaffleTextConstants.closeRaffle,
+                                      descriptions: raffle.raffleStatusType ==
+                                              RaffleStatusType.creation
+                                          ? RaffleTextConstants
+                                              .openRaffleDescription
+                                          : RaffleTextConstants
+                                              .closeRaffleDescription,
+                                      onYes: () async {
+                                        switch (raffle.raffleStatusType) {
+                                          case RaffleStatusType.creation:
+                                            await raffleListNotifier.openRaffle(
                                                 raffle.copyWith(
                                                     description:
                                                         raffle.description,
                                                     raffleStatusType:
-                                                        RaffleStatusType
-                                                            .locked),
-                                              );
-                                              break;
-                                            default:
-                                          }
-                                        },
-                                      ));
-                            });
-                          },
-                          child: BlueBtn(
-                              text: raffle.raffleStatusType ==
-                                      RaffleStatusType.open
-                                  ? RaffleTextConstants.close
-                                  : RaffleTextConstants.open)),
-                    )
+                                                        RaffleStatusType.open));
+                                            break;
+                                          case RaffleStatusType.open:
+                                            await raffleListNotifier.lockRaffle(
+                                              raffle.copyWith(
+                                                  description:
+                                                      raffle.description,
+                                                  raffleStatusType:
+                                                      RaffleStatusType.locked),
+                                            );
+                                            break;
+                                          default:
+                                        }
+                                      },
+                                    ));
+                          });
+                        },
+                        child: Text(
+                          raffle.raffleStatusType == RaffleStatusType.open
+                              ? RaffleTextConstants.close
+                              : RaffleTextConstants.open,
+                          style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: RaffleColorConstants.gradient2),
+                        ),
+                      ))
                   : Container(
                       margin: const EdgeInsets.only(bottom: 30),
                       child: Row(

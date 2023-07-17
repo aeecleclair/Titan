@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:myecl/amap/tools/constants.dart';
 
 class GreenBtn extends StatelessWidget {
-  final String text;
+  final Widget child;
 
-  const GreenBtn({Key? key, required this.text}) : super(key: key);
+  const GreenBtn({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +27,7 @@ class GreenBtn extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
         alignment: Alignment.center,
-        child: Text(
-          text,
-          style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: AMAPColorConstants.background),
-        ),
+        child: child,
       ),
     );
   }

@@ -283,42 +283,23 @@ class BookingCard extends HookConsumerWidget {
                     if (!isAdmin)
                       ShrinkButton(
                         onTap: onDelete,
-                        waitChild: Container(
-                          width: 40,
-                          height: 40,
-                          padding: const EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3))
-                            ],
-                          ),
-                          child: const CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.white),
-                          ),
-                        ),
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          padding: const EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                            color: darkIconBackgroundColor,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3))
-                            ],
-                          ),
-                          child: const HeroIcon(HeroIcons.trash,
-                              color: Colors.white),
-                        ),
+                        builder: (child) => Container(
+                            width: 40,
+                            height: 40,
+                            padding: const EdgeInsets.all(7),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 3))
+                              ],
+                            ),
+                            child: child),
+                        child: const HeroIcon(HeroIcons.trash,
+                            color: Colors.white),
                       ),
                   ],
                 ),

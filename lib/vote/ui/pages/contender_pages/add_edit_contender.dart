@@ -54,8 +54,7 @@ class AddEditContenderPage extends HookConsumerWidget {
     final member = useState(SimpleUser.empty());
     final members = ref.watch(contenderMembersProvider);
     final membersNotifier = ref.read(contenderMembersProvider.notifier);
-    final contenderLogosNotifier =
-    ref.read(contenderLogosProvider.notifier);
+    final contenderLogosNotifier = ref.read(contenderLogosProvider.notifier);
     final logoNotifier = ref.read(contenderLogoProvider.notifier);
     final logo = useState<Uint8List?>(null);
     final logoFile = useState<Image?>(null);
@@ -114,34 +113,34 @@ class AddEditContenderPage extends HookConsumerWidget {
                       ),
                       child: logoFile.value != null
                           ? Container(
-                        width: 160,
-                        height: 160,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: logo.value != null
-                                ? Image.memory(
-                              logo.value!,
-                              fit: BoxFit.cover,
-                            ).image
-                                : logoFile.value!.image,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      )
+                              width: 160,
+                              height: 160,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: logo.value != null
+                                      ? Image.memory(
+                                          logo.value!,
+                                          fit: BoxFit.cover,
+                                        ).image
+                                      : logoFile.value!.image,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
                           : const HeroIcon(
-                        HeroIcons.userCircle,
-                        size: 160,
-                        color: Colors.grey,
-                      ),
+                              HeroIcons.userCircle,
+                              size: 160,
+                              color: Colors.grey,
+                            ),
                     ),
                     Positioned(
                       bottom: 0,
                       left: 0,
                       child: GestureDetector(
                         onTap: () async {
-                          final XFile? image =
-                          await picker.pickImage(source: ImageSource.gallery);
+                          final XFile? image = await picker.pickImage(
+                              source: ImageSource.gallery);
                           if (image != null) {
                             if (kIsWeb) {
                               logo.value = await image.readAsBytes();
@@ -169,7 +168,8 @@ class AddEditContenderPage extends HookConsumerWidget {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: ColorConstants.gradient2.withOpacity(0.3),
+                                color:
+                                    ColorConstants.gradient2.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 4,
                                 offset: const Offset(2, 3),
@@ -205,15 +205,15 @@ class AddEditContenderPage extends HookConsumerWidget {
                     const SizedBox(width: 15),
                     ...ListType.values.where((e) => e != ListType.blank).map(
                           (e) => SectionChip(
-                        label: capitalize(e.toString().split('.').last),
-                        selected: listType.value == e,
-                        isAdmin: false,
-                        onTap: () async {
-                          listType.value = e;
-                        },
-                        onDelete: () {},
-                      ),
-                    ),
+                            label: capitalize(e.toString().split('.').last),
+                            selected: listType.value == e,
+                            isAdmin: false,
+                            onTap: () async {
+                              listType.value = e;
+                            },
+                            onDelete: () {},
+                          ),
+                        ),
                     const SizedBox(width: 15),
                   ],
                 ),
@@ -236,7 +236,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                   children: [
                     const SizedBox(width: 15),
                     ...members.map(
-                          (e) => MemberCard(
+                      (e) => MemberCard(
                         member: e,
                         onDelete: () async {
                           membersNotifier.removeMember(e);
@@ -293,8 +293,8 @@ class AddEditContenderPage extends HookConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                                 focusedBorder: UnderlineInputBorder(
-                                  borderSide:
-                                  BorderSide(color: Colors.black, width: 2.0),
+                                  borderSide: BorderSide(
+                                      color: Colors.black, width: 2.0),
                                 ),
                               ),
                             ),
@@ -336,7 +336,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                               child: Container(
                                   width: double.infinity,
                                   padding:
-                                  const EdgeInsets.only(top: 8, bottom: 12),
+                                      const EdgeInsets.only(top: 8, bottom: 12),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     color: Colors.black,
@@ -379,7 +379,7 @@ class AddEditContenderPage extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: ShrinkButton(
-                  waitChild: Container(
+                  builder: (child) => Container(
                       width: double.infinity,
                       padding: const EdgeInsets.only(top: 8, bottom: 12),
                       alignment: Alignment.center,
@@ -395,18 +395,14 @@ class AddEditContenderPage extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      child: const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ))),
+                      child: child),
                   onTap: () async {
                     if (key.currentState == null) {
                       return;
                     }
                     if (key.currentState!.validate()) {
                       await tokenExpireWrapper(ref, () async {
-                        final contenderList =
-                        ref.watch(contenderListProvider);
+                        final contenderList = ref.watch(contenderListProvider);
                         Contender newContender = Contender(
                           name: name.text,
                           id: isEdit ? contender.id : '',
@@ -418,22 +414,22 @@ class AddEditContenderPage extends HookConsumerWidget {
                         );
                         final value = isEdit
                             ? await contenderListNotifier
-                            .updateContender(newContender)
+                                .updateContender(newContender)
                             : await contenderListNotifier
-                            .addContender(newContender);
+                                .addContender(newContender);
                         if (value) {
                           QR.back();
                           if (isEdit) {
-                            displayVoteToastWithContext(
-                                TypeMsg.msg, VoteTextConstants.editedPretendance);
+                            displayVoteToastWithContext(TypeMsg.msg,
+                                VoteTextConstants.editedPretendance);
                             contenderList.when(
                                 data: (list) {
                                   if (logo.value != null) {
-                                    Future.delayed(const Duration(milliseconds: 1),
-                                            () {contenderLogosNotifier.setTData(
-                                            contender,
-                                                const AsyncLoading());
-                                        });
+                                    Future.delayed(
+                                        const Duration(milliseconds: 1), () {
+                                      contenderLogosNotifier.setTData(
+                                          contender, const AsyncLoading());
+                                    });
                                     logoNotifier.updateLogo(
                                         contender.id, logo.value!);
                                     contenderLogosNotifier.setTData(
@@ -449,17 +445,17 @@ class AddEditContenderPage extends HookConsumerWidget {
                                 error: (error, s) {},
                                 loading: () {});
                           } else {
-                            displayVoteToastWithContext(
-                                TypeMsg.msg, VoteTextConstants.addedPretendance);
+                            displayVoteToastWithContext(TypeMsg.msg,
+                                VoteTextConstants.addedPretendance);
                             contenderList.when(
                                 data: (list) {
                                   final newContender = list.last;
                                   if (logo.value != null) {
-                                    Future.delayed(const Duration(milliseconds: 1),
-                                            () {contenderLogosNotifier.setTData(
-                                            contender,
-                                            const AsyncLoading());
-                                        });
+                                    Future.delayed(
+                                        const Duration(milliseconds: 1), () {
+                                      contenderLogosNotifier.setTData(
+                                          contender, const AsyncLoading());
+                                    });
                                     logoNotifier.updateLogo(
                                         newContender.id, logo.value!);
                                     contenderLogosNotifier.setTData(
@@ -488,27 +484,11 @@ class AddEditContenderPage extends HookConsumerWidget {
                           VoteTextConstants.incorrectOrMissingFields);
                     }
                   },
-                  child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(top: 8, bottom: 12),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(3, 3),
-                          ),
-                        ],
-                      ),
-                      child: const Text(VoteTextConstants.edit,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold))),
+                  child: const Text(VoteTextConstants.edit,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold)),
                 ),
               ),
               const SizedBox(height: 30),

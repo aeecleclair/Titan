@@ -158,8 +158,8 @@ class AddEditProduct extends HookConsumerWidget {
                                 borderSide: BorderSide(
                                     color: AMAPColorConstants.enabled)),
                             errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: AMAPColorConstants.red)),
+                                borderSide:
+                                    BorderSide(color: AMAPColorConstants.red)),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                               color: AMAPColorConstants.greenGradient2,
@@ -208,9 +208,8 @@ class AddEditProduct extends HookConsumerWidget {
                             AMAPTextConstants.createCategory,
                         onChanged: (value) {
                           newCategory.text = value ?? "";
-                          newCategory.selection =
-                              TextSelection.fromPosition(TextPosition(
-                                  offset: newCategory.text.length));
+                          newCategory.selection = TextSelection.fromPosition(
+                              TextPosition(offset: newCategory.text.length));
                         },
                         textEditingController: newCategory,
                         keyboardType: TextInputType.text,
@@ -219,9 +218,8 @@ class AddEditProduct extends HookConsumerWidget {
                         height: 40,
                       ),
                       ShrinkButton(
-                        waitChild: const GreenBtn(
-                          text: AMAPTextConstants.waiting,
-                        ),
+                        waitingColor: AMAPColorConstants.background,
+                        builder: (child) => GreenBtn(child: child),
                         onTap: () async {
                           if (formKey.currentState!.validate()) {
                             String cate = categoryController ==
@@ -270,10 +268,14 @@ class AddEditProduct extends HookConsumerWidget {
                             });
                           }
                         },
-                        child: GreenBtn(
-                          text: isEdit
+                        child: Text(
+                          isEdit
                               ? AMAPTextConstants.update
                               : AMAPTextConstants.add,
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: AMAPColorConstants.background),
                         ),
                       ),
                       const SizedBox(
