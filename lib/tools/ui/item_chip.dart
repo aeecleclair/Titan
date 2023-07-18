@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class EventTypeChip extends StatelessWidget {
+class ItemChip extends StatelessWidget {
   final bool selected;
-  final String label;
   final Function() onTap;
-  const EventTypeChip(
+  final Widget child;
+  const ItemChip(
       {super.key,
-      required this.label,
       required this.selected,
-      required this.onTap});
+      required this.onTap,
+        required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +19,7 @@ class EventTypeChip extends StatelessWidget {
           child: Chip(
             label: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                label,
-                style: TextStyle(
-                    color: selected ? Colors.white : Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
+              child: child,
             ),
             backgroundColor: selected ? Colors.black : Colors.grey.shade200,
           )),

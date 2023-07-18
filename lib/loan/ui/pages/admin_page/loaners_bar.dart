@@ -3,9 +3,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/ui/components/loaner_chip.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/item_chip.dart';
 
 class LoanersBar extends HookConsumerWidget {
   final Function(Loaner) onTap;
@@ -20,19 +20,24 @@ class LoanersBar extends HookConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            
             const SizedBox(width: 15),
-            ...loans
-                .map((key, value) => MapEntry(
-                    LoanerChip(
-                      label: capitalize(key.name),
-                      selected: loaner.id == key.id,
-                      onTap: () async {
-                        onTap(key);
-                      },
+            ...loans.map((key, value) {
+              final selected = loaner.id == key.id;
+              return MapEntry(
+                  ItemChip(
+                    selected: selected,
+                    onTap: () async {
+                      onTap(key);
+                    },
+                    child: Text(
+                      capitalize(key.name),
+                      style: TextStyle(
+                          color: selected ? Colors.white : Colors.black,
+                          fontWeight: FontWeight.bold),
                     ),
-                    value))
-                .keys,
+                  ),
+                  value);
+            }).keys,
             const SizedBox(width: 15),
           ],
         ),
