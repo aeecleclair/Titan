@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/raffle/class/raffle.dart';
@@ -14,6 +13,7 @@ import 'package:myecl/raffle/ui/components/section_title.dart';
 import 'package:myecl/raffle/ui/pages/main_page/raffle_card.dart';
 import 'package:myecl/raffle/ui/pages/main_page/ticket_card.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
+import 'package:myecl/tools/ui/admin_button.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -53,35 +53,10 @@ class RaffleMainPage extends HookConsumerWidget {
                 children: [
                   const SectionTitle(text: RaffleTextConstants.tickets),
                   if (isAdmin)
-                    GestureDetector(
+                    AdminButton(
                       onTap: () {
                         QR.to(RaffleRouter.root + RaffleRouter.admin);
                       },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 8),
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 5))
-                            ]),
-                        child: const Row(
-                          children: [
-                            HeroIcon(HeroIcons.userGroup,
-                                color: Colors.white, size: 20),
-                            SizedBox(width: 10),
-                            Text("Admin",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
-                          ],
-                        ),
-                      ),
                     ),
                 ],
               ),

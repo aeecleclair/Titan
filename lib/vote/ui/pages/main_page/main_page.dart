@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/ui/admin_button.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/is_ae_member_provider.dart';
@@ -50,8 +50,7 @@ class VoteMainPage extends HookConsumerWidget {
       ref.watch(votedSectionProvider.notifier).getVotedSections();
     }
     final logosNotifier = ref.watch(contenderLogoProvider.notifier);
-    final contenderLogosNotifier =
-        ref.watch(contenderLogosProvider.notifier);
+    final contenderLogosNotifier = ref.watch(contenderLogosProvider.notifier);
 
     final isAEMember = ref.watch(isAEMemberProvider);
 
@@ -110,7 +109,8 @@ class VoteMainPage extends HookConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               ListSideItem(
-                                  sectionList: sectionList, animation: animation),
+                                  sectionList: sectionList,
+                                  animation: animation),
                               Expanded(
                                 child: SizedBox(
                                   width: double.infinity,
@@ -120,50 +120,17 @@ class VoteMainPage extends HookConsumerWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          SectionTitle(sectionList: sectionList),
+                                          SectionTitle(
+                                              sectionList: sectionList),
                                           if (isAdmin)
                                             Container(
                                               margin: const EdgeInsets.only(
                                                   right: 20),
-                                              child: GestureDetector(
+                                              child: AdminButton(
                                                 onTap: () {
                                                   QR.to(VoteRouter.root +
                                                       VoteRouter.admin);
                                                 },
-                                                child: Container(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                          horizontal: 12,
-                                                          vertical: 8),
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.black,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                            color: Colors.black
-                                                                .withOpacity(0.2),
-                                                            blurRadius: 10,
-                                                            offset: const Offset(
-                                                                0, 5))
-                                                      ]),
-                                                  child: const Row(
-                                                    children: [
-                                                      HeroIcon(
-                                                          HeroIcons.userGroup,
-                                                          color: Colors.white),
-                                                      SizedBox(width: 10),
-                                                      Text("Admin",
-                                                          style: TextStyle(
-                                                              fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight.bold,
-                                                              color:
-                                                                  Colors.white)),
-                                                    ],
-                                                  ),
-                                                ),
                                               ),
                                             )
                                         ],

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/cinema/providers/cinema_topic_provider.dart';
 import 'package:myecl/cinema/providers/is_cinema_admin.dart';
@@ -13,6 +12,7 @@ import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/cinema/ui/pages/main_page/session_card.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
+import 'package:myecl/tools/ui/admin_button.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -64,36 +64,11 @@ class CinemaMainPage extends HookConsumerWidget {
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 149, 149, 149))),
                         if (isAdmin)
-                          GestureDetector(
+                          AdminButton(
                             onTap: () {
                               QR.to(CinemaRouter.root + CinemaRouter.admin);
                               initialPageNotifier.setMainPageIndex(currentPage);
                             },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 8),
-                              decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
-                                        blurRadius: 10,
-                                        offset: const Offset(0, 5))
-                                  ]),
-                              child: const Row(
-                                children: [
-                                  HeroIcon(HeroIcons.userGroup,
-                                      color: Colors.white, size: 20),
-                                  SizedBox(width: 10),
-                                  Text("Admin",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white)),
-                                ],
-                              ),
-                            ),
                           )
                       ],
                     ),

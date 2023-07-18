@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
@@ -12,6 +11,7 @@ import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
+import 'package:myecl/tools/ui/admin_button.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -164,34 +164,10 @@ class LoanMainPage extends HookConsumerWidget {
             Positioned(
               top: 30,
               right: 30,
-              child: GestureDetector(
+              child: AdminButton(
                 onTap: () {
                   QR.to(LoanRouter.root + LoanRouter.admin);
                 },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 10,
-                            offset: const Offset(0, 5))
-                      ]),
-                  child: const Row(
-                    children: [
-                      HeroIcon(HeroIcons.userGroup, color: Colors.white),
-                      SizedBox(width: 10),
-                      Text("Admin",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)),
-                    ],
-                  ),
-                ),
               ),
             )
         ],
