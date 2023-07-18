@@ -11,6 +11,7 @@ import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/item_chip.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -145,21 +146,16 @@ class SettingsMainPage extends HookConsumerWidget {
                   width: 15,
                 ),
                 ...me.groups
-                    .map(
-                      (e) => Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Chip(
-                              label: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  capitalize(e.name),
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              backgroundColor: Colors.black)),
-                    )
+                    .map((e) => ItemChip(
+                          selected: true,
+                          onTap: () {},
+                          child: Text(
+                            capitalize(e.name),
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ))
                     .toList(),
                 const SizedBox(
                   width: 15,
@@ -225,7 +221,8 @@ class SettingsMainPage extends HookConsumerWidget {
                   SettingsItem(
                     icon: HeroIcons.lockClosed,
                     onTap: () {
-                      QR.to(SettingsRouter.root + SettingsRouter.changePassword);
+                      QR.to(
+                          SettingsRouter.root + SettingsRouter.changePassword);
                     },
                     child: const Text(SettingsTextConstants.editPassword,
                         style: TextStyle(fontSize: 16, color: Colors.black)),

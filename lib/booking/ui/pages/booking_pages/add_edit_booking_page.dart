@@ -10,7 +10,6 @@ import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/components/room_chip.dart';
 import 'package:myecl/booking/ui/components/waiter.dart';
 import 'package:myecl/booking/ui/components/add_edit_button.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
@@ -20,6 +19,7 @@ import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/item_chip.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -110,13 +110,23 @@ class AddEditBookingPage extends HookConsumerWidget {
                             children: [
                               const SizedBox(width: 15),
                               ...data.map(
-                                (e) => RoomChip(
-                                  label: capitalize(e.name),
-                                  selected: room.value.id == e.id,
-                                  onTap: () async {
-                                    room.value = e;
-                                  },
-                                ),
+                                (e) {
+                                  final selected = room.value.id == e.id;
+                                  return ItemChip(
+                                    selected: selected,
+                                    onTap: () async {
+                                      room.value = e;
+                                    },
+                                    child: Text(
+                                      capitalize(e.name),
+                                      style: TextStyle(
+                                          color: selected
+                                              ? Colors.white
+                                              : Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  );
+                                },
                               ),
                               const SizedBox(width: 15),
                             ],

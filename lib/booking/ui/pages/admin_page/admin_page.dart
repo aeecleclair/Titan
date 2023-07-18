@@ -13,9 +13,9 @@ import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar.dart';
 import 'package:myecl/booking/ui/components/waiter.dart';
 import 'package:myecl/booking/ui/pages/admin_page/list_booking.dart';
-import 'package:myecl/booking/ui/components/room_chip.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/item_chip.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -107,55 +107,57 @@ class AdminPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 30),
             roomList.when(
-              data: (List<Room> data) => HorizontalListView(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 15),
-                    GestureDetector(
-                      onTap: () {
-                        roomNotifier.setRoom(Room.empty());
-                        QR.to(BookingRouter.root +
-                            BookingRouter.admin +
-                            BookingRouter.room);
-                      },
-                      child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Chip(
-                            label: const Padding(
-                              padding: EdgeInsets.all(6.0),
-                              child: HeroIcon(
-                                HeroIcons.plus,
-                                color: Colors.black,
-                                size: 20,
-                              ),
+                data: (List<Room> data) => HorizontalListView(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(width: 15),
+                          ItemChip(
+                            onTap: () {
+                              roomNotifier.setRoom(Room.empty());
+                              QR.to(BookingRouter.root +
+                                  BookingRouter.admin +
+                                  BookingRouter.room);
+                            },
+                            selected: false,
+                            child: const HeroIcon(
+                              HeroIcons.plus,
+                              color: Colors.black,
+                              size: 20,
                             ),
-                            backgroundColor: Colors.grey.shade200,
-                          )),
-                    ),
-                    ...data.map(
-                      (e) => RoomChip(
-                        label: capitalize(e.name),
-                        selected: room.id == e.id,
-                        onTap: () {
-                          roomNotifier.setRoom(e);
-                          QR.to(BookingRouter.root +
-                              BookingRouter.admin +
-                              BookingRouter.room);
-                        },
+                          ),
+                          ...data.map(
+                            (e) {
+                              final selected = room.id == e.id;
+                              return ItemChip(
+                                selected: selected,
+                                onTap: () {
+                                  roomNotifier.setRoom(e);
+                                  QR.to(BookingRouter.root +
+                                      BookingRouter.admin +
+                                      BookingRouter.room);
+                                },
+                                child: Text(
+                                  capitalize(e.name),
+                                  style: TextStyle(
+                                      color: selected
+                                          ? Colors.white
+                                          : Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(width: 15),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 15),
-                  ],
-                ),
-              ),
-              error: (Object error, StackTrace? stackTrace) {
-                return Center(child: Text('Error $error'));
-              },
-              loading: () {
-                return const Waiter();
-              },
-            ),
+                error: (Object error, StackTrace? stackTrace) {
+                  return Center(child: Text('Error $error'));
+                },
+                loading: () {
+                  return const Waiter();
+                }),
             const SizedBox(height: 30),
           ],
         ),

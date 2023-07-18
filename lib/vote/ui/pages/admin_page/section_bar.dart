@@ -5,6 +5,7 @@ import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/item_chip.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/providers/sections_contender_provider.dart';
@@ -40,24 +41,16 @@ class SectionBar extends HookConsumerWidget {
         children: [
           const SizedBox(width: 15),
           if (status == Status.waiting)
-            GestureDetector(
+            ItemChip(
               onTap: () {
-                QR.to(VoteRouter.root +
-                    VoteRouter.admin +
-                    VoteRouter.addSection);
+                QR.to(
+                    VoteRouter.root + VoteRouter.admin + VoteRouter.addSection);
               },
-              child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Chip(
-                    label: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: HeroIcon(
-                        HeroIcons.plus,
-                        color: Colors.black,
-                      ),
-                    ),
-                    backgroundColor: Colors.grey.shade200,
-                  )),
+              selected: false,
+              child: const HeroIcon(
+                HeroIcons.plus,
+                color: Colors.black,
+              ),
             ),
           if (section.id != Section.empty().id)
             ...sectionContender.when(data: (sections) {

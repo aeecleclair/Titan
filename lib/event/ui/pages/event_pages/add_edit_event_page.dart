@@ -14,11 +14,11 @@ import 'package:myecl/event/providers/selected_days_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/event/ui/pages/event_pages/event_type_chip.dart';
 import 'package:myecl/event/ui/pages/event_pages/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/item_chip.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -110,15 +110,21 @@ class AddEditEventPage extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(width: 15),
-                      ...CalendarEventType.values.map(
-                        (e) => EventTypeChip(
-                          label: calendarEventTypeToString(e),
-                          selected: eventType.value == e,
+                      ...CalendarEventType.values.map((e) {
+                        final selected = eventType.value == e;
+                        return ItemChip(
+                          selected: selected,
                           onTap: () async {
                             eventType.value = e;
                           },
-                        ),
-                      ),
+                          child: Text(
+                            calendarEventTypeToString(e),
+                            style: TextStyle(
+                                color: selected ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      }),
                       const SizedBox(width: 15),
                     ],
                   ),
@@ -509,50 +515,27 @@ class AddEditEventPage extends HookConsumerWidget {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        GestureDetector(
+                        ItemChip(
                             onTap: () {
                               isRoomNotifier.setIsRoom(true);
                             },
-                            child: Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 10.0),
-                                child: Chip(
-                                  label: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text("Salle",
-                                          style: TextStyle(
-                                            color: isRoom
-                                                ? Colors.white
-                                                : Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                          ))),
-                                  backgroundColor: isRoom
-                                      ? Colors.black
-                                      : Colors.grey.shade200,
+                            selected: isRoom,
+                            child: Text("Salle",
+                                style: TextStyle(
+                                  color: isRoom ? Colors.white : Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ))),
-                        GestureDetector(
+                        ItemChip(
                           onTap: () {
                             isRoomNotifier.setIsRoom(false);
                             roomIdNotifier.setRoomId("");
                           },
-                          child: Container(
-                            margin:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Chip(
-                                label: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Autre",
-                                      style: TextStyle(
-                                        color: isRoom
-                                            ? Colors.black
-                                            : Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                ),
-                                backgroundColor: isRoom
-                                    ? Colors.grey.shade200
-                                    : Colors.black),
-                          ),
+                          selected: !isRoom,
+                          child: Text("Autre",
+                              style: TextStyle(
+                                color: isRoom ? Colors.black : Colors.white,
+                                fontWeight: FontWeight.bold,
+                              )),
                         )
                       ]),
                   const SizedBox(height: 20),
@@ -567,31 +550,20 @@ class AddEditEventPage extends HookConsumerWidget {
                                   itemCount: rooms.length,
                                   itemBuilder: (context, index) {
                                     final selected = rooms[index].id == roomId;
-                                    return GestureDetector(
-                                      child: Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 10.0),
-                                        child: Chip(
-                                            label: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(rooms[index].name,
-                                                  style: TextStyle(
-                                                    color: selected
-                                                        ? Colors.white
-                                                        : Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  )),
-                                            ),
-                                            backgroundColor: selected
-                                                ? Colors.black
-                                                : Colors.grey.shade200),
-                                      ),
+                                    return ItemChip(
                                       onTap: () {
                                         location.text = rooms[index].name;
                                         roomIdNotifier
                                             .setRoomId(rooms[index].id);
                                       },
+                                      selected: selected,
+                                      child: Text(rooms[index].name,
+                                          style: TextStyle(
+                                            color: selected
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                          )),
                                     );
                                   }),
                               error: (e, s) => Text(e.toString()),
