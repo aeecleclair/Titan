@@ -9,9 +9,9 @@ import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/event/ui/components/button_card.dart';
 import 'package:myecl/event/ui/components/edit_delete_button.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -283,55 +283,64 @@ class EventUi extends ConsumerWidget {
                           ),
                           Row(
                             children: [
-                              ButtonCard(
+                              GestureDetector(
                                 onTap: onEdit,
-                                backGroundColor: Colors.grey.shade200,
-                                icon: const HeroIcon(HeroIcons.pencil,
-                                    color: Colors.black),
+                                child: CardButton(
+                                  gradient1: Colors.grey.shade200,
+                                  shadowColor: Colors.grey.withOpacity(0.2),
+                                  child: const HeroIcon(HeroIcons.pencil,
+                                      color: Colors.black),
+                                ),
                               ),
                               const Spacer(),
-                              ButtonCard(
+                              GestureDetector(
                                 onTap: onCopy,
-                                backGroundColor: Colors.black,
-                                icon: const HeroIcon(
-                                    HeroIcons.documentDuplicate,
-                                    color: Colors.white),
+                                child: const CardButton(
+                                  gradient1: Colors.black,
+                                  child: HeroIcon(HeroIcons.documentDuplicate,
+                                      color: Colors.white),
+                                ),
                               ),
                               const Spacer(),
-                              ButtonCard(
+                              GestureDetector(
                                 onTap: () {
                                   if (event.decision != Decision.approved) {
                                     onConfirm();
                                   }
                                 },
-                                backGroundColor: Colors.grey.shade200,
-                                icon: const HeroIcon(HeroIcons.check,
-                                    color: Colors.black),
-                                border: Border.all(
-                                    color: isAdmin
-                                        ? event.decision == Decision.approved
-                                            ? Colors.black
-                                            : Colors.transparent
-                                        : Colors.transparent,
-                                    width: 2),
+                                child: CardButton(
+                                  gradient1: Colors.grey.shade200,
+                                  shadowColor: Colors.grey.withOpacity(0.2),
+                                  border: Border.all(
+                                      color: isAdmin
+                                          ? event.decision == Decision.approved
+                                              ? Colors.black
+                                              : Colors.transparent
+                                          : Colors.transparent,
+                                      width: 2),
+                                  child: const HeroIcon(HeroIcons.check,
+                                      color: Colors.black),
+                                ),
                               ),
                               const Spacer(),
-                              ButtonCard(
+                              GestureDetector(
                                 onTap: () {
                                   if (event.decision != Decision.declined) {
                                     onDecline();
                                   }
                                 },
-                                backGroundColor: Colors.black,
-                                icon: const HeroIcon(HeroIcons.xMark,
-                                    color: Colors.white),
-                                border: Border.all(
-                                    color: isAdmin
-                                        ? event.decision == Decision.declined
-                                            ? Colors.white
-                                            : Colors.transparent
-                                        : Colors.transparent,
-                                    width: 2),
+                                child: CardButton(
+                                  gradient1: Colors.black,
+                                  border: Border.all(
+                                      color: isAdmin
+                                          ? event.decision == Decision.declined
+                                              ? Colors.white
+                                              : Colors.transparent
+                                          : Colors.transparent,
+                                      width: 2),
+                                  child: const HeroIcon(HeroIcons.xMark,
+                                      color: Colors.white),
+                                ),
                               )
                             ],
                           ),

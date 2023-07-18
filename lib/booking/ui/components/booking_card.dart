@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class BookingCard extends HookConsumerWidget {
@@ -178,74 +179,36 @@ class BookingCard extends HookConsumerWidget {
                     if (showButton || isAdmin)
                       GestureDetector(
                         onTap: onEdit,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          padding: const EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                            color: lightIconBackgroundColor,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3))
-                            ],
-                          ),
-                          child: HeroIcon(
-                            HeroIcons.pencil,
-                            color: lightIconColor,
-                          ),
+                        child: CardButton(
+                          gradient1: Colors.grey.shade200,
+                          shadowColor: Colors.grey.withOpacity(0.2),
+                          child: const HeroIcon(HeroIcons.pencil,
+                              color: Colors.black),
                         ),
                       ),
                     if (showButton || isAdmin) const Spacer(),
                     GestureDetector(
                       onTap: onCopy,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        padding: const EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                          color: lightIconBackgroundColor,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 10,
-                                offset: const Offset(2, 3))
-                          ],
-                        ),
-                        child: HeroIcon(
-                          HeroIcons.documentDuplicate,
-                          color: lightIconColor,
-                        ),
+                      child: const CardButton(
+                        gradient1: Colors.black,
+                        child: HeroIcon(HeroIcons.documentDuplicate,
+                            color: Colors.white),
                       ),
                     ),
                     if (showButton && isAdmin) const Spacer(),
                     if (showButton && isAdmin)
                       GestureDetector(
                         onTap: onConfirm,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          padding: const EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(
-                                color: isAdmin
-                                    ? booking.decision == Decision.approved
-                                        ? Colors.black
-                                        : Colors.transparent
-                                    : Colors.transparent,
-                                width: 2),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3))
-                            ],
-                          ),
+                        child: CardButton(
+                          gradient1: Colors.grey.shade200,
+                          shadowColor: Colors.grey.withOpacity(0.2),
+                          border: Border.all(
+                              color: isAdmin
+                                  ? booking.decision == Decision.approved
+                                      ? Colors.black
+                                      : Colors.transparent
+                                  : Colors.transparent,
+                              width: 2),
                           child: const HeroIcon(HeroIcons.check,
                               color: Colors.black),
                         ),
@@ -254,27 +217,15 @@ class BookingCard extends HookConsumerWidget {
                     if (showButton && isAdmin)
                       GestureDetector(
                         onTap: onDecline,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          padding: const EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(
-                                color: isAdmin
-                                    ? booking.decision == Decision.declined
-                                        ? Colors.white
-                                        : Colors.transparent
-                                    : Colors.transparent,
-                                width: 2),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3))
-                            ],
-                          ),
+                        child: CardButton(
+                          gradient1: Colors.black,
+                          border: Border.all(
+                              color: isAdmin
+                                  ? booking.decision == Decision.declined
+                                      ? Colors.white
+                                      : Colors.transparent
+                                  : Colors.transparent,
+                              width: 2),
                           child: const HeroIcon(HeroIcons.xMark,
                               color: Colors.white),
                         ),
@@ -283,21 +234,8 @@ class BookingCard extends HookConsumerWidget {
                     if (!isAdmin)
                       ShrinkButton(
                         onTap: onDelete,
-                        builder: (child) => Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(7),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
-                            child: child),
+                        builder: (child) =>
+                            CardButton(gradient1: Colors.black, child: child),
                         child: const HeroIcon(HeroIcons.trash,
                             color: Colors.white),
                       ),

@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/vote/class/members.dart';
 
 class MemberCard extends StatelessWidget {
@@ -42,7 +43,7 @@ class MemberCard extends StatelessWidget {
             children: [
               const SizedBox(height: 10),
               AutoSizeText(
-                  member.nickname!= null ? member.nickname! : member.firstname,
+                  member.nickname != null ? member.nickname! : member.firstname,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -77,40 +78,19 @@ class MemberCard extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: onEdit,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                blurRadius: 10,
-                                offset: const Offset(2, 3))
-                          ],
-                        ),
-                        child: const HeroIcon(HeroIcons.pencil, color: Colors.black),
+                      child: CardButton(
+                        gradient1: Colors.grey.shade200,
+                        shadowColor: Colors.grey.withOpacity(0.2),
+                        child: const HeroIcon(HeroIcons.pencil,
+                            color: Colors.black),
                       ),
                     ),
                     GestureDetector(
                       onTap: onDelete,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 10,
-                                offset: const Offset(2, 3))
-                          ],
-                        ),
-                        child: const HeroIcon(HeroIcons.trash, color: Colors.white),
+                      child: const CardButton(
+                        gradient1: Colors.black,
+                        child: HeroIcon(HeroIcons.trash,
+                            color: Colors.white),
                       ),
                     ),
                   ],

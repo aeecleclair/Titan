@@ -8,7 +8,7 @@ import 'package:myecl/amap/providers/cash_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/components/edit_delete_button.dart';
+import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -168,7 +168,7 @@ class DetailOrderUI extends HookConsumerWidget {
                             });
                           })));
                 },
-                builder: (child) => EditDeleteButton(
+                builder: (child) => CardButton(
                     gradient1: AMAPColorConstants.redGradient1,
                     gradient2: AMAPColorConstants.redGradient2,
                     child: child),

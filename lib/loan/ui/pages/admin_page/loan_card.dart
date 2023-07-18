@@ -4,8 +4,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
-import 'package:myecl/loan/ui/pages/admin_page/edit_delete_loan_button.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class LoanCard extends StatelessWidget {
@@ -152,8 +152,8 @@ class LoanCard extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: onEdit,
-                        child: EditDeleteLoanButton(
-                          color: shouldReturn
+                        child: CardButton(
+                          gradient1: shouldReturn
                               ? Colors.white.withOpacity(0.7)
                               : Colors.grey.shade200,
                           child: HeroIcon(HeroIcons.pencil,
@@ -166,8 +166,8 @@ class LoanCard extends StatelessWidget {
                         waitingColor: shouldReturn
                             ? const Color.fromARGB(255, 99, 13, 0)
                             : Colors.black,
-                        builder: (child) => EditDeleteLoanButton(
-                            color: shouldReturn
+                        builder: (child) => CardButton(
+                            gradient1: shouldReturn
                                 ? Colors.white.withOpacity(0.7)
                                 : Colors.grey.shade200,
                             child: child),
@@ -178,8 +178,8 @@ class LoanCard extends StatelessWidget {
                                 : Colors.black),
                       ),
                       ShrinkButton(
-                        builder: (child) => EditDeleteLoanButton(
-                            color: shouldReturn
+                        builder: (child) => CardButton(
+                            gradient1: shouldReturn
                                 ? const Color.fromARGB(255, 99, 13, 0)
                                 : Colors.black,
                             child: child),
