@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/raffle/class/type_ticket_simple.dart';
 import 'package:myecl/raffle/tools/constants.dart';
+import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class TicketUI extends HookConsumerWidget {
@@ -65,54 +66,17 @@ class TicketUI extends HookConsumerWidget {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 GestureDetector(
                   onTap: onEdit,
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    padding: const EdgeInsets.all(7),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.grey.shade100,
-                          Colors.grey.shade200,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.shade300.withOpacity(0.5),
-                            blurRadius: 10,
-                            offset: const Offset(2, 3))
-                      ],
-                    ),
+                  child: CardButton(
+                    gradient1: Colors.grey.shade100,
+                    gradient2: Colors.grey.shade200,
                     child: const HeroIcon(HeroIcons.pencil,
                         color: RaffleColorConstants.textDark),
                   ),
                 ),
                 ShrinkButton(
-                  builder: (child) => Container(
-                      width: 40,
-                      height: 40,
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            RaffleColorConstants.redGradient1,
-                            RaffleColorConstants.redGradient2,
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                              color: RaffleColorConstants.redGradient2
-                                  .withOpacity(0.5),
-                              blurRadius: 10,
-                              offset: const Offset(2, 3))
-                        ],
-                      ),
+                  builder: (child) => CardButton(
+                      gradient1: RaffleColorConstants.redGradient1,
+                      gradient2: RaffleColorConstants.redGradient2,
                       child: child),
                   onTap: onDelete,
                   child: const HeroIcon(HeroIcons.trash, color: Colors.white),

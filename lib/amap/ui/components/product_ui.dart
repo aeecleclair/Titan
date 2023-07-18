@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/components/edit_delete_button.dart';
+import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class ProductCard extends StatelessWidget {
@@ -83,7 +83,7 @@ class ProductCard extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: onEdit,
-                          child: const EditDeleteButton(
+                          child: const CardButton(
                             gradient1: AMAPColorConstants.greenGradient2,
                             gradient2: AMAPColorConstants.textDark,
                             child:
@@ -92,7 +92,7 @@ class ProductCard extends StatelessWidget {
                         ),
                         ShrinkButton(
                           onTap: onDelete,
-                          builder: (child) => EditDeleteButton(
+                          builder: (child) => CardButton(
                               gradient1: AMAPColorConstants.redGradient1,
                               gradient2: AMAPColorConstants.redGradient2,
                               child: child),

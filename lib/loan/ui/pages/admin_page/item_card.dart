@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
-import 'package:myecl/loan/ui/pages/admin_page/edit_delete_item_button.dart';
 
 class ItemCard extends StatelessWidget {
   final Item item;
@@ -79,13 +79,17 @@ class ItemCard extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: onEdit,
-                      child: const EditDeleteItemButton(
-                        child: HeroIcon(HeroIcons.pencil,
+                      child: CardButton(
+                        gradient1: Colors.grey.shade200,
+                        shadowColor: Colors.grey.withOpacity(0.2),
+                        child: const HeroIcon(HeroIcons.pencil,
                             color: Colors.black),
                       ),
                     ),
                     ShrinkButton(
-                      builder: (child) => EditDeleteItemButton(child: child),
+                      builder: (child) => CardButton(
+                          gradient1: Colors.grey.shade200,
+                          shadowColor: Colors.grey.withOpacity(0.2), child: child),
                       onTap: onDelete,
                       child:
                           const HeroIcon(HeroIcons.trash, color: Colors.white),

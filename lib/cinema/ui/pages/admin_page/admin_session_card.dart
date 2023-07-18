@@ -6,6 +6,7 @@ import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AdminSessionCard extends HookConsumerWidget {
@@ -128,41 +129,17 @@ class AdminSessionCard extends HookConsumerWidget {
                       children: [
                         GestureDetector(
                           onTap: onEdit,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
+                          child: CardButton(
+                            gradient1: Colors.grey.shade200,
+                            shadowColor: Colors.grey.withOpacity(0.2),
                             child: const HeroIcon(HeroIcons.pencil,
                                 color: Colors.black),
                           ),
                         ),
                         ShrinkButton(
                           onTap: onDelete,
-                          builder: (child) => Container(
-                              width: 40,
-                              height: 40,
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(30),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 3))
-                                ],
-                              ),
-                              child: child),
+                          builder: (child) =>
+                              CardButton(gradient1: Colors.black, child: child),
                           child: const HeroIcon(HeroIcons.trash,
                               color: Colors.white),
                         ),

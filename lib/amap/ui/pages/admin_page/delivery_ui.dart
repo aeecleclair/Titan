@@ -11,7 +11,7 @@ import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/components/edit_delete_button.dart';
+import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -200,7 +200,7 @@ class DeliveryUi extends HookConsumerWidget {
                         error: (error, stack) {},
                       );
                     },
-                    child: const EditDeleteButton(
+                    child: const CardButton(
                       gradient1: AMAPColorConstants.greenGradient1,
                       gradient2: AMAPColorConstants.greenGradient1,
                       child: HeroIcon(
@@ -235,7 +235,7 @@ class DeliveryUi extends HookConsumerWidget {
                                 });
                               })));
                     },
-                    builder: (child) => EditDeleteButton(
+                    builder: (child) => CardButton(
                         gradient1: AMAPColorConstants.redGradient1,
                         gradient2: AMAPColorConstants.redGradient2,
                         child: child),

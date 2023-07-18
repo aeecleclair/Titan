@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/raffle/class/prize.dart';
 import 'package:myecl/raffle/class/raffle_status_type.dart';
 import 'package:myecl/raffle/tools/constants.dart';
+import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class PrizeCard extends StatelessWidget {
@@ -77,55 +78,17 @@ class PrizeCard extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: onEdit,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(7),
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                colors: [
-                                  RaffleColorConstants.gradient2,
-                                  RaffleColorConstants.textDark,
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: RaffleColorConstants.textDark
-                                        .withOpacity(0.5),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
-                            child: const HeroIcon(HeroIcons.pencil,
-                                color: Colors.white),
+                          child: const CardButton(
+                            gradient1: RaffleColorConstants.gradient2,
+                            gradient2: RaffleColorConstants.textDark,
+                            child:
+                                HeroIcon(HeroIcons.pencil, color: Colors.white),
                           ),
                         ),
                         ShrinkButton(
-                          builder: (child) => Container(
-                              width: 40,
-                              height: 40,
-                              padding: const EdgeInsets.all(7),
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    RaffleColorConstants.redGradient1,
-                                    RaffleColorConstants.redGradient2,
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: RaffleColorConstants.redGradient2
-                                          .withOpacity(0.5),
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 3))
-                                ],
-                              ),
+                          builder: (child) => CardButton(
+                              gradient1: RaffleColorConstants.redGradient1,
+                              gradient2: RaffleColorConstants.redGradient2,
                               child: child),
                           onTap: onDelete,
                           child: const HeroIcon(HeroIcons.trash,
@@ -137,29 +100,9 @@ class PrizeCard extends StatelessWidget {
                       ? prize.quantity > 0
                           ? Center(
                               child: ShrinkButton(
-                                  builder: (child) => Container(
-                                      width: 40,
-                                      height: 40,
-                                      padding: const EdgeInsets.all(7),
-                                      decoration: BoxDecoration(
-                                        gradient: const LinearGradient(
-                                          colors: [
-                                            RaffleColorConstants.gradient2,
-                                            RaffleColorConstants.textDark,
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                        ),
-                                        borderRadius: BorderRadius.circular(15),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: RaffleColorConstants
-                                                  .textDark
-                                                  .withOpacity(0.5),
-                                              blurRadius: 10,
-                                              offset: const Offset(2, 3))
-                                        ],
-                                      ),
+                                  builder: (child) => CardButton(
+                                      gradient1: RaffleColorConstants.gradient2,
+                                      gradient2: RaffleColorConstants.textDark,
                                       child: child),
                                   onTap: onDraw,
                                   child: const Row(

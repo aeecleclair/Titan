@@ -7,6 +7,7 @@ import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/card_button.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Calendar extends HookConsumerWidget {
@@ -67,20 +68,10 @@ class Calendar extends HookConsumerWidget {
                           right: -10,
                           child: GestureDetector(
                               onTap: () => Navigator.pop(context),
-                              child: Container(
-                                  height: 40,
-                                  width: 40,
-                                  padding: const EdgeInsets.all(7),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey.shade500
-                                                .withOpacity(0.3),
-                                            blurRadius: 5,
-                                            spreadRadius: 1)
-                                      ],
-                                      borderRadius: BorderRadius.circular(15)),
+                              child: CardButton(
+                                  gradient1: Colors.white,
+                                  shadowColor:
+                                      Colors.grey.shade500.withOpacity(0.3),
                                   child: const HeroIcon(
                                     HeroIcons.xMark,
                                     size: 20,

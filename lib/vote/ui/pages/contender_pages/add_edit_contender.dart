@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/class/list_users.dart';
@@ -152,31 +153,10 @@ class AddEditContenderPage extends HookConsumerWidget {
                             }
                           }
                         },
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          padding: const EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              colors: [
-                                ColorConstants.gradient1,
-                                ColorConstants.gradient2,
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color:
-                                    ColorConstants.gradient2.withOpacity(0.3),
-                                spreadRadius: 2,
-                                blurRadius: 4,
-                                offset: const Offset(2, 3),
-                              ),
-                            ],
-                          ),
-                          child: const HeroIcon(
+                        child: const CardButton(
+                          gradient1: ColorConstants.gradient1,
+                                gradient2: ColorConstants.gradient2,
+                          child: HeroIcon(
                             HeroIcons.photo,
                             color: Colors.white,
                           ),
