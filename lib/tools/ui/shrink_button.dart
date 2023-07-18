@@ -22,13 +22,9 @@ class ShrinkButton extends HookWidget {
         lowerBound: 0.0,
         upperBound: 0.1);
 
-    void shrinkButtonSize() {
-      animationController.forward();
-    }
+    void shrinkButtonSize() => animationController.forward();
 
-    void restoreButtonSize() {
-      animationController.reverse();
-    }
+    void restoreButtonSize() => animationController.reverse();
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -41,12 +37,7 @@ class ShrinkButton extends HookWidget {
           clicked.value = false;
         });
       },
-      onTapDown: (_) {
-        shrinkButtonSize();
-      },
-      onTapCancel: () {
-        restoreButtonSize();
-      },
+      onTapCancel: restoreButtonSize,
       child: AnimatedBuilder(
           animation: animationController,
           builder: (context, child) => Transform.scale(
