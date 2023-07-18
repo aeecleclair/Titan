@@ -9,6 +9,7 @@ import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/components/event_ui.dart';
+import 'package:myecl/tools/ui/admin_button.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -49,35 +50,10 @@ class EventMainPage extends HookConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromARGB(255, 149, 149, 149))),
                           if (isAdmin)
-                            GestureDetector(
+                            AdminButton(
                               onTap: () {
                                 QR.to(EventRouter.root + EventRouter.admin);
                               },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 8),
-                                decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black.withOpacity(0.2),
-                                          blurRadius: 10,
-                                          offset: const Offset(0, 5))
-                                    ]),
-                                child: const Row(
-                                  children: [
-                                    HeroIcon(HeroIcons.userGroup,
-                                        color: Colors.white, size: 20),
-                                    SizedBox(width: 10),
-                                    Text("Admin",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white)),
-                                  ],
-                                ),
-                              ),
                             )
                         ],
                       ),

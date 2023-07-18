@@ -6,6 +6,9 @@ class ColorConstants {
   static const Color background2 = Color(0xFF222643);
 }
 
+class TextConstants {
+  static const String admin = 'Admin';
+}
 const String previousEmailRegex =
     r'^[\w\-.]*@((ecl\d{2})|(alternance\d{4})|(master)|(auditeur)).ec-lyon.fr$';
 

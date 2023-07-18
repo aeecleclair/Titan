@@ -16,6 +16,7 @@ import 'package:myecl/booking/ui/calendar.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/admin_button.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
@@ -66,36 +67,11 @@ class BookingMainPage extends HookConsumerWidget {
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 149, 149, 149))),
                     if (isAdmin)
-                      GestureDetector(
+                      AdminButton(
                         onTap: () {
                           QR.to(BookingRouter.root + BookingRouter.admin);
                         },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 5))
-                              ]),
-                          child: const Row(
-                            children: [
-                              HeroIcon(HeroIcons.userGroup,
-                                  color: Colors.white, size: 20),
-                              SizedBox(width: 10),
-                              Text("Admin",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white)),
-                            ],
-                          ),
-                        ),
-                      )
+                      ),
                   ],
                 ),
               ),

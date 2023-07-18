@@ -3,6 +3,7 @@ import 'package:myecl/amap/providers/available_deliveries.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/admin_button.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -72,60 +73,30 @@ class AmapMainPage extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Text(
-                              balance.when(
-                                  data: (s) =>
-                                      "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
-                                  error: (e, s) => AMAPTextConstants.error,
-                                  loading: () => AMAPTextConstants.loading),
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: AMAPColorConstants.greenGradient1))),
-                      if (isAdmin)
-                        GestureDetector(
-                          onTap: () {
-                            QR.to(AmapRouter.root + AmapRouter.admin);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 8),
-                            decoration: BoxDecoration(
-                                gradient: const RadialGradient(
-                                  colors: [
-                                    AMAPColorConstants.greenGradient1,
-                                    AMAPColorConstants.greenGradient2
-                                  ],
-                                  center: Alignment.topLeft,
-                                  radius: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: AMAPColorConstants.textDark
-                                          .withOpacity(0.2),
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 5))
-                                ]),
-                            child: const Row(
-                              children: [
-                                HeroIcon(HeroIcons.userGroup,
-                                    color: Colors.white),
-                                SizedBox(width: 10),
-                                Text(AMAPTextConstants.admin,
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                              ],
-                            ),
-                          ),
-                        ),
-                    ]),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Text(
+                            balance.when(
+                                data: (s) =>
+                                    "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
+                                error: (e, s) => AMAPTextConstants.error,
+                                loading: () => AMAPTextConstants.loading),
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: AMAPColorConstants.greenGradient1))),
+                    if (isAdmin)
+                      AdminButton(
+                        onTap: () {
+                          QR.to(AmapRouter.root + AmapRouter.admin);
+                        },
+                        backgroundColor: AMAPColorConstants.greenGradient1,
+                        gradientColor: AMAPColorConstants.greenGradient2,
+                      ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 20,
