@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/text_entry.dart';
 
 class TextEditing extends StatelessWidget {
   final TextEditingController controller;
@@ -30,23 +30,10 @@ class TextEditing extends StatelessWidget {
               ),
             ),
             SizedBox(
-              child: TextFormField(
+              child: TextEntry(
+                label: label,
                 controller: controller,
-                decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.all(10),
-                    isDense: true,
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: ColorConstants.gradient1))),
-                validator: (value) {
-                  if (value == null) {
-                    return AdminTextConstants.emptyFieldError;
-                  } else if (value.isEmpty) {
-                    return AdminTextConstants.emptyFieldError;
-                  } else {
-                    return null;
-                  }
-                },
+                color: ColorConstants.gradient1,
               ),
             ),
           ],

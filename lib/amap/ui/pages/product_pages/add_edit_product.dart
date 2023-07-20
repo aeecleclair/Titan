@@ -10,10 +10,10 @@ import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/components/amap_button.dart';
-import 'package:myecl/amap/ui/pages/product_pages/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditProduct extends HookConsumerWidget {
@@ -85,17 +85,13 @@ class AddEditProduct extends HookConsumerWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      TextEntry(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return AMAPTextConstants.fillField;
-                          }
-                          return null;
-                        },
-                        enabled: true,
-                        onChanged: (_) {},
-                        textEditingController: nameController,
-                        keyboardType: TextInputType.text,
+                      Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        child: TextEntry(
+                          label: AMAPTextConstants.name,
+                          controller: nameController,
+                        ),
                       ),
                       const SizedBox(
                         height: 30,
@@ -111,21 +107,15 @@ class AddEditProduct extends HookConsumerWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      TextEntry(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return AMAPTextConstants.fillField;
-                            } else if (double.tryParse(
-                                    value.replaceAll(',', '.')) ==
-                                null) {
-                              return AMAPTextConstants.expectingNumber;
-                            }
-                            return null;
-                          },
-                          enabled: true,
-                          onChanged: (_) {},
-                          keyboardType: TextInputType.number,
-                          textEditingController: priceController),
+                      Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        child: TextEntry(
+                            label: AMAPTextConstants.price,
+                            isDouble: true,
+                            keyboardType: TextInputType.number,
+                            controller: priceController),
+                      ),
                       const SizedBox(
                         height: 30,
                       ),
@@ -195,24 +185,27 @@ class AddEditProduct extends HookConsumerWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      TextEntry(
-                        validator: ((value) {
-                          if ((value == null || value.isEmpty) &&
-                              categoryController ==
-                                  AMAPTextConstants.createCategory) {
-                            return AMAPTextConstants.pickChooseCategory;
-                          }
-                          return null;
-                        }),
-                        enabled: categoryController ==
-                            AMAPTextConstants.createCategory,
-                        onChanged: (value) {
-                          newCategory.text = value ?? "";
-                          newCategory.selection = TextSelection.fromPosition(
-                              TextPosition(offset: newCategory.text.length));
-                        },
-                        textEditingController: newCategory,
-                        keyboardType: TextInputType.text,
+                      Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        child: TextEntry(
+                          label: AMAPTextConstants.createCategory,
+                          validator: ((value) {
+                            if (categoryController ==
+                                AMAPTextConstants.createCategory) {
+                              return AMAPTextConstants.pickChooseCategory;
+                            }
+                            return null;
+                          }),
+                          enabled: categoryController ==
+                              AMAPTextConstants.createCategory,
+                          onChanged: (value) {
+                            newCategory.text = value;
+                            newCategory.selection = TextSelection.fromPosition(
+                                TextPosition(offset: newCategory.text.length));
+                          },
+                          controller: newCategory,
+                        ),
                       ),
                       const SizedBox(
                         height: 40,

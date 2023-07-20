@@ -14,12 +14,12 @@ import 'package:myecl/event/providers/selected_days_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/event/ui/pages/event_pages/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -136,19 +136,13 @@ class AddEditEventPage extends HookConsumerWidget {
                     child: Column(
                       children: [
                         TextEntry(
-                          keyboardType: TextInputType.text,
                           controller: name,
-                          isInt: false,
                           label: EventTextConstants.name,
-                          suffix: '',
                         ),
                         const SizedBox(height: 30),
                         TextEntry(
-                          keyboardType: TextInputType.text,
                           controller: organizer,
-                          isInt: false,
                           label: EventTextConstants.organizer,
-                          suffix: '',
                         ),
                         const SizedBox(height: 30),
                         CheckBoxEntry(
@@ -572,11 +566,8 @@ class AddEditEventPage extends HookConsumerWidget {
                       : Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: TextEntry(
-                            keyboardType: TextInputType.text,
                             controller: location,
-                            isInt: false,
                             label: EventTextConstants.location,
-                            suffix: '',
                           ),
                         ),
                   const SizedBox(height: 30),
@@ -585,11 +576,8 @@ class AddEditEventPage extends HookConsumerWidget {
                     child: Column(
                       children: [
                         TextEntry(
-                          keyboardType: TextInputType.text,
                           controller: description,
-                          isInt: false,
                           label: EventTextConstants.description,
-                          suffix: '',
                         ),
                         const SizedBox(height: 50),
                         ShrinkButton(
