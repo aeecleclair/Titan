@@ -14,13 +14,13 @@ import 'package:myecl/booking/ui/components/waiter.dart';
 import 'package:myecl/booking/ui/components/add_edit_button.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/date_entry.dart';
-import 'package:myecl/booking/ui/pages/booking_pages/text_entry.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -141,26 +141,17 @@ class AddEditBookingPage extends HookConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Column(children: [
                     TextEntry(
-                      keyboardType: TextInputType.text,
                       controller: entity,
-                      isInt: false,
                       label: BookingTextConstants.entity,
-                      suffix: '',
                     ),
                     const SizedBox(height: 30),
                     TextEntry(
-                      keyboardType: TextInputType.text,
                       controller: motif,
-                      isInt: false,
                       label: BookingTextConstants.reason,
-                      suffix: '',
                     ),
                     const SizedBox(height: 30),
                     TextEntry(
-                      keyboardType: TextInputType.text,
                       label: BookingTextConstants.note,
-                      suffix: '',
-                      isInt: false,
                       controller: note,
                     ),
                     const SizedBox(height: 20),

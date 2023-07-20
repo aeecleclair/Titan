@@ -16,10 +16,10 @@ import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/cinema/ui/pages/session_pages/add_edit_button.dart';
 import 'package:myecl/cinema/ui/pages/session_pages/imdb_button.dart';
-import 'package:myecl/cinema/ui/pages/session_pages/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditSessionPage extends HookConsumerWidget {
@@ -167,19 +167,12 @@ class AddEditSessionPage extends HookConsumerWidget {
                     : Image.memory(logo.value!, fit: BoxFit.cover),
                 const SizedBox(height: 30),
                 TextEntry(
-                  keyboardType: TextInputType.text,
                   label: CinemaTextConstants.name,
-                  suffix: '',
-                  isInt: false,
                   controller: name,
-                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
-                  keyboardType: TextInputType.text,
                   label: CinemaTextConstants.posterUrl,
-                  suffix: '',
-                  isInt: false,
                   controller: posterUrl,
                   onChanged: (value) async {
                     logo.value = await File(posterUrl.text).readAsBytes();
@@ -254,33 +247,21 @@ class AddEditSessionPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
-                  keyboardType: TextInputType.text,
                   label: CinemaTextConstants.genre,
-                  suffix: '',
-                  isInt: false,
                   controller: genre,
                   canBeEmpty: true,
-                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
-                  keyboardType: TextInputType.text,
                   label: CinemaTextConstants.overview,
-                  suffix: '',
-                  isInt: false,
                   controller: overview,
                   canBeEmpty: true,
-                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
-                  keyboardType: TextInputType.text,
                   label: CinemaTextConstants.tagline,
-                  suffix: '',
-                  isInt: false,
                   controller: tagline,
                   canBeEmpty: true,
-                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 50),
                 ShrinkButton(

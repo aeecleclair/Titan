@@ -4,11 +4,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/components/text_entry.dart';
 import 'package:myecl/vote/ui/vote.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -51,20 +51,14 @@ class AddSectionPage extends HookConsumerWidget {
                   ),
                   TextEntry(
                     controller: name,
-                    isInt: false,
-                    keyboardType: TextInputType.text,
                     label: VoteTextConstants.sectionName,
-                    suffix: '',
                   ),
                   const SizedBox(
                     height: 30,
                   ),
                   TextEntry(
                     controller: description,
-                    isInt: false,
-                    keyboardType: TextInputType.text,
                     label: VoteTextConstants.sectionDescription,
-                    suffix: '',
                   ),
                   const SizedBox(
                     height: 50,

@@ -8,11 +8,11 @@ import 'package:myecl/raffle/providers/raffle_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/components/section_title.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/blue_btn.dart';
-import 'package:myecl/raffle/ui/components/text_entry.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditPrizePage extends HookConsumerWidget {
@@ -62,38 +62,24 @@ class AddEditPrizePage extends HookConsumerWidget {
                           const SectionTitle(text: "Quantité"),
                           const SizedBox(height: 5),
                           TextEntry(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return RaffleTextConstants.fillField;
-                                }
-                                if (int.tryParse(value) == null) {
-                                  return RaffleTextConstants.numberExpected;
-                                }
-                                if (int.parse(value) < 1) {
-                                  return RaffleTextConstants.mustBePositive;
-                                }
-                                return null;
-                              },
-                              textEditingController: quantity,
+                              label: "Quantité",
+                              isInt: true,
+                              controller: quantity,
                               keyboardType: TextInputType.number),
                           const SizedBox(height: 50),
                           const SectionTitle(text: "Nom"),
                           const SizedBox(height: 5),
                           TextEntry(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return RaffleTextConstants.fillField;
-                                }
-                                return null;
-                              },
-                              textEditingController: name,
+                              label: "Nom",
+                              controller: name,
                               keyboardType: TextInputType.text),
                           const SizedBox(height: 50),
                           const SectionTitle(text: "Description"),
                           const SizedBox(height: 5),
                           TextEntry(
-                              validator: (value) => null,
-                              textEditingController: description,
+                              label: "Description",
+                              canBeEmpty: true,
+                              controller: description,
                               keyboardType: TextInputType.text),
                           const SizedBox(height: 50),
                           ShrinkButton(

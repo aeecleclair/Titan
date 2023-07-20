@@ -8,10 +8,10 @@ import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan.dart';
-import 'package:myecl/loan/ui/components/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditItemPage extends HookConsumerWidget {
@@ -62,17 +62,13 @@ class AddEditItemPage extends HookConsumerWidget {
                 child: Column(children: [
                   const SizedBox(height: 30),
                   TextEntry(
-                    keyboardType: TextInputType.text,
                     label: LoanTextConstants.name,
-                    suffix: '',
-                    isInt: false,
                     controller: name,
                   ),
                   const SizedBox(height: 30),
                   TextEntry(
                     keyboardType: TextInputType.number,
                     label: LoanTextConstants.quantity,
-                    suffix: '',
                     isInt: true,
                     controller: quantity,
                   ),
