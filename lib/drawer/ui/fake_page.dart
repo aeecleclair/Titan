@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myecl/drawer/tools/constants.dart';
 
 class FakePage extends StatelessWidget {
-  const FakePage({Key? key}) : super(key: key);
+  const FakePage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends HookConsumerWidget {
   final bool isAdmin;
-  const DetailPage({Key? key, required this.isAdmin}) : super(key: key);
+  const DetailPage({super.key, required this.isAdmin});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

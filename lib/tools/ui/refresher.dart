@@ -9,11 +9,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class Refresher extends HookConsumerWidget {
   final Widget child;
   final Future Function() onRefresh;
-  const Refresher({
-    Key? key,
-    required this.onRefresh,
-    required this.child,
-  }) : super(key: key);
+  const Refresher({super.key, required this.onRefresh, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

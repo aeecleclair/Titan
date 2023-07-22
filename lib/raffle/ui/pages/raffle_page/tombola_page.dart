@@ -12,7 +12,7 @@ import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
 class RaffleInfoPage extends HookConsumerWidget {
-  const RaffleInfoPage({Key? key}) : super(key: key);
+  const RaffleInfoPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

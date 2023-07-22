@@ -19,12 +19,11 @@ class ListEvent extends HookConsumerWidget {
   final List<Event> events;
   final bool canToggle;
   final String title;
-  const ListEvent({
-    Key? key,
-    required this.events,
-    required this.title,
-    this.canToggle = true,
-  }) : super(key: key);
+  const ListEvent(
+      {super.key,
+      required this.events,
+      required this.title,
+      this.canToggle = true});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

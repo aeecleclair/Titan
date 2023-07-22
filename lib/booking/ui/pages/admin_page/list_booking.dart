@@ -18,12 +18,11 @@ class ListBooking extends HookConsumerWidget {
   final List<Booking> bookings;
   final bool canToggle;
   final String title;
-  const ListBooking({
-    Key? key,
-    required this.bookings,
-    required this.title,
-    this.canToggle = true,
-  }) : super(key: key);
+  const ListBooking(
+      {super.key,
+      required this.bookings,
+      required this.title,
+      this.canToggle = true});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

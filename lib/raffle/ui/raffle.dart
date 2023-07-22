@@ -6,7 +6,7 @@ import 'package:myecl/drawer/providers/swipe_provider.dart';
 
 class RaffleTemplate extends HookConsumerWidget {
   final Widget child;
-  const RaffleTemplate({Key? key, required this.child}) : super(key: key);
+  const RaffleTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

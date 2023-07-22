@@ -20,7 +20,7 @@ import 'package:myecl/version/providers/titan_version_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SettingsMainPage extends HookConsumerWidget {
-  const SettingsMainPage({Key? key}) : super(key: key);
+  const SettingsMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

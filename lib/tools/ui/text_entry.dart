@@ -15,25 +15,24 @@ class TextEntry extends StatelessWidget {
   static void noChange(String value) {}
   static String? noValidation(String value) => null;
 
-  const TextEntry({
-    Key? key,
-    required this.label,
-    required this.controller,
-    this.onChanged = noChange,
-    this.validator = noValidation,
-    this.prefix = '',
-    this.suffix = '',
-    this.enabled = true,
-    this.isInt = false,
-    this.isDouble = false,
-    this.keyboardType = TextInputType.text,
-    this.canBeEmpty = false,
-    this.color = Colors.black,
-    this.enabledColor = Colors.black,
-    this.errorColor = ColorConstants.error,
-    this.noValueError = TextConstants.noValue,
-    this.suffixIcon,
-  }) : super(key: key);
+  const TextEntry(
+      {super.key,
+      required this.label,
+      required this.controller,
+      this.onChanged = noChange,
+      this.validator = noValidation,
+      this.prefix = '',
+      this.suffix = '',
+      this.enabled = true,
+      this.isInt = false,
+      this.isDouble = false,
+      this.keyboardType = TextInputType.text,
+      this.canBeEmpty = false,
+      this.color = Colors.black,
+      this.enabledColor = Colors.black,
+      this.errorColor = ColorConstants.error,
+      this.noValueError = TextConstants.noValue,
+      this.suffixIcon});
 
   @override
   Widget build(BuildContext context) {

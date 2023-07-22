@@ -27,7 +27,7 @@ class DrawerTemplate extends HookConsumerWidget {
   static bool shouldDrag = false;
   final Widget child;
 
-  const DrawerTemplate({Key? key, required this.child}) : super(key: key);
+  const DrawerTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

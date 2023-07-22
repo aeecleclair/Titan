@@ -16,7 +16,7 @@ import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditPrizePage extends HookConsumerWidget {
-  const AddEditPrizePage({Key? key}) : super(key: key);
+  const AddEditPrizePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -22,7 +22,7 @@ class EventUi extends ConsumerWidget {
   final bool isDetailPage, isAdmin;
   final Function() onEdit, onConfirm, onDecline, onCopy, onInfo;
   const EventUi(
-      {Key? key,
+      {super.key,
       required this.event,
       required this.isDetailPage,
       required this.isAdmin,
@@ -30,8 +30,7 @@ class EventUi extends ConsumerWidget {
       required this.onConfirm,
       required this.onDecline,
       required this.onInfo,
-      required this.onCopy})
-      : super(key: key);
+      required this.onCopy});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

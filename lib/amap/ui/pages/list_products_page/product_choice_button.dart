@@ -15,7 +15,7 @@ import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ProductChoiceButton extends HookConsumerWidget {
-  const ProductChoiceButton({Key? key}) : super(key: key);
+  const ProductChoiceButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

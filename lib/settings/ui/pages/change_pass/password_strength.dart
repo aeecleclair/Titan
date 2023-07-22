@@ -9,8 +9,7 @@ class PasswordStrength extends HookConsumerWidget {
   final Color textColor;
 
   const PasswordStrength(
-      {Key? key, required this.newPassword, this.textColor = Colors.black})
-      : super(key: key);
+      {super.key, required this.newPassword, this.textColor = Colors.black});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

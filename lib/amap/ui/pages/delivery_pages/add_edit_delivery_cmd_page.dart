@@ -20,7 +20,7 @@ import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditDeliveryPage extends HookConsumerWidget {
-  const AddEditDeliveryPage({Key? key}) : super(key: key);
+  const AddEditDeliveryPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

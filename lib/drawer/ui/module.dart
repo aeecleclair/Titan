@@ -10,10 +10,10 @@ import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ModuleUI extends HookConsumerWidget {
+  const ModuleUI({super.key, required this.module});
+
   static Duration duration = const Duration(milliseconds: 200);
   final Module module;
-
-  const ModuleUI({Key? key, required this.module}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

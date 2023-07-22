@@ -6,11 +6,10 @@ class UserFieldModifier extends StatelessWidget {
   final TextInputType keyboardType;
   final TextEditingController controller;
   const UserFieldModifier(
-      {Key? key,
+      {super.key,
       required this.label,
       required this.keyboardType,
-      required this.controller})
-      : super(key: key);
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,7 @@ import 'package:myecl/tools/ui/card_button.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Calendar extends HookConsumerWidget {
-  const Calendar({Key? key}) : super(key: key);
+  const Calendar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

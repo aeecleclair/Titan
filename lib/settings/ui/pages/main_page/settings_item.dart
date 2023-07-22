@@ -6,12 +6,11 @@ class SettingsItem extends StatelessWidget {
   final HeroIcons icon;
   final void Function() onTap;
 
-  const SettingsItem({
-    Key? key,
-    required this.icon,
-    required this.onTap,
-    required this.child,
-  }) : super(key: key);
+  const SettingsItem(
+      {super.key,
+      required this.icon,
+      required this.onTap,
+      required this.child});
 
   @override
   Widget build(BuildContext context) {

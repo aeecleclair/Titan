@@ -3,7 +3,7 @@ import 'package:myecl/amap/tools/constants.dart';
 
 class UserCashUiLayout extends StatelessWidget {
   final Widget child;
-  const UserCashUiLayout({Key? key, required this.child}) : super(key: key);
+  const UserCashUiLayout({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

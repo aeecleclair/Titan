@@ -9,7 +9,7 @@ import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
 
 class NoInternetPage extends HookConsumerWidget {
-  const NoInternetPage({Key? key}) : super(key: key);
+  const NoInternetPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

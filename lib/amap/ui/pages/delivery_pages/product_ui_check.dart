@@ -8,11 +8,10 @@ class ProductUi extends ConsumerWidget {
   final Function onclick;
   final bool isModification;
   const ProductUi(
-      {Key? key,
+      {super.key,
       required this.product,
       required this.onclick,
-      required this.isModification})
-      : super(key: key);
+      required this.isModification});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

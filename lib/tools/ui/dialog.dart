@@ -16,12 +16,11 @@ class CustomDialogBox extends StatelessWidget {
 
   static const Color background = Color(0xfffafafa);
   const CustomDialogBox(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.descriptions,
       required this.onYes,
-      this.onNo})
-      : super(key: key);
+      this.onNo});
 
   @override
   Widget build(BuildContext context) {

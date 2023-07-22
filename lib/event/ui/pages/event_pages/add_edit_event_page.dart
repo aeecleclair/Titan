@@ -26,7 +26,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEditEventPage extends HookConsumerWidget {
-  const AddEditEventPage({Key? key}) : super(key: key);
+  const AddEditEventPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

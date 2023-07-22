@@ -10,7 +10,7 @@ import 'package:myecl/event/ui/pages/admin_page/list_event.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
 class AdminPage extends HookConsumerWidget {
-  const AdminPage({Key? key}) : super(key: key);
+  const AdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

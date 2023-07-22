@@ -10,7 +10,7 @@ import 'package:myecl/version/providers/version_verifier_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LoadingPage extends ConsumerWidget {
-  const LoadingPage({Key? key}) : super(key: key);
+  const LoadingPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

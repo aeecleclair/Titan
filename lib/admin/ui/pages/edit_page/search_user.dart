@@ -16,7 +16,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchUser extends HookConsumerWidget {
-  const SearchUser({Key? key}) : super(key: key);
+  const SearchUser({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

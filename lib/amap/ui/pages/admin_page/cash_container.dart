@@ -5,7 +5,7 @@ import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/amap/ui/pages/admin_page/user_cash_ui.dart';
 
 class CashContainer extends HookConsumerWidget {
-  const CashContainer({Key? key}) : super(key: key);
+  const CashContainer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

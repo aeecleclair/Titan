@@ -7,7 +7,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class AmapTemplate extends StatelessWidget {
   final Widget child;
-  const AmapTemplate({Key? key, required this.child}) : super(key: key);
+  const AmapTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

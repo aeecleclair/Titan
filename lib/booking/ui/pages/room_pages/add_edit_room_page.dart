@@ -15,7 +15,7 @@ import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditRoomPage extends HookConsumerWidget {
-  const AddEditRoomPage({Key? key}) : super(key: key);
+  const AddEditRoomPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

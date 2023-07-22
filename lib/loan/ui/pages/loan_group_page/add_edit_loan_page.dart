@@ -22,7 +22,7 @@ import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AddEditLoanPage extends HookConsumerWidget {
-  const AddEditLoanPage({Key? key}) : super(key: key);
+  const AddEditLoanPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

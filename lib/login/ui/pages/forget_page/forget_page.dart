@@ -14,7 +14,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ForgetPassword extends HookConsumerWidget {
-  const ForgetPassword({Key? key}) : super(key: key);
+  const ForgetPassword({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

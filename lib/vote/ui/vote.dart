@@ -5,7 +5,7 @@ import 'package:myecl/vote/tools/constants.dart';
 
 class VoteTemplate extends StatelessWidget {
   final Widget child;
-  const VoteTemplate({Key? key, required this.child}) : super(key: key);
+  const VoteTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

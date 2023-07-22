@@ -17,7 +17,7 @@ import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CinemaMainPage extends HookConsumerWidget {
-  const CinemaMainPage({Key? key}) : super(key: key);
+  const CinemaMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

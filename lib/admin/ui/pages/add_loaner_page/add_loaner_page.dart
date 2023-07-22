@@ -13,7 +13,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddLoanerPage extends HookConsumerWidget {
-  const AddLoanerPage({Key? key}) : super(key: key);
+  const AddLoanerPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

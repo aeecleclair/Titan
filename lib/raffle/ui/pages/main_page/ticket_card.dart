@@ -9,8 +9,7 @@ import 'package:myecl/raffle/ui/pages/main_page/ticket_card_background.dart';
 class TicketWidget extends HookConsumerWidget {
   final List<Ticket> ticket;
   final double price;
-  const TicketWidget({Key? key, required this.ticket, required this.price})
-      : super(key: key);
+  const TicketWidget({super.key, required this.ticket, required this.price});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

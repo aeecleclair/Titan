@@ -5,11 +5,9 @@ import 'package:myecl/raffle/class/prize.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 
 class PrizeDialog extends HookConsumerWidget {
-  const PrizeDialog({
-    Key? key,
-    required this.prize,
-  }) : super(key: key);
   final Prize prize;
+  const PrizeDialog({super.key, required this.prize});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Dialog(

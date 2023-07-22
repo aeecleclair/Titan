@@ -24,7 +24,7 @@ import 'package:myecl/vote/ui/vote.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class VoteMainPage extends HookConsumerWidget {
-  const VoteMainPage({Key? key}) : super(key: key);
+  const VoteMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

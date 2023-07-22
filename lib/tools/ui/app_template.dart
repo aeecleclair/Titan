@@ -8,7 +8,7 @@ import 'package:myecl/version/providers/version_verifier_provider.dart';
 
 class AppTemplate extends HookConsumerWidget {
   final Widget child;
-  const AppTemplate({Key? key, required this.child}) : super(key: key);
+  const AppTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

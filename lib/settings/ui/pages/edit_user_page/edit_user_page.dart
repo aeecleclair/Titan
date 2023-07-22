@@ -20,7 +20,7 @@ import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EditUserPage extends HookConsumerWidget {
-  const EditUserPage({Key? key}) : super(key: key);
+  const EditUserPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

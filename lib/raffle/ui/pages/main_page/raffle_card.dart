@@ -17,7 +17,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleWidget extends HookConsumerWidget {
   final Raffle raffle;
-  const RaffleWidget({Key? key, required this.raffle}) : super(key: key);
+  const RaffleWidget({super.key, required this.raffle});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

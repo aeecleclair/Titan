@@ -8,7 +8,7 @@ import 'package:myecl/amap/ui/pages/list_products_page/list_products.dart';
 import 'package:myecl/amap/ui/pages/list_products_page/page_view_dots.dart';
 
 class ListProductPage extends HookConsumerWidget {
-  const ListProductPage({Key? key}) : super(key: key);
+  const ListProductPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
