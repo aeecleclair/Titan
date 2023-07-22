@@ -201,9 +201,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                 child: TextEntry(
                   keyboardType: TextInputType.multiline,
                   controller: description,
-                  isInt: false,
                   label: VoteTextConstants.description,
-                  suffix: '',
                 ),
               ),
               const SizedBox(height: 30),
@@ -249,7 +247,8 @@ class AddEditContenderPage extends HookConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: Column(children: <Widget>[
-                            TextFormField(
+                            TextEntry(
+                              label: VoteTextConstants.members,
                               onChanged: (newQuery) {
                                 showNotifier.setId(true);
                                 tokenExpireWrapper(ref, () async {
@@ -261,19 +260,8 @@ class AddEditContenderPage extends HookConsumerWidget {
                                   }
                                 });
                               },
-                              cursorColor: Colors.black,
+                              color: Colors.black,
                               controller: queryController,
-                              decoration: const InputDecoration(
-                                labelText: VoteTextConstants.members,
-                                floatingLabelStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 2.0),
-                                ),
-                              ),
                             ),
                             const SizedBox(
                               height: 10,
@@ -283,10 +271,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                                 queryController: queryController),
                             TextEntry(
                                 label: VoteTextConstants.role,
-                                suffix: '',
-                                isInt: false,
-                                controller: role,
-                                keyboardType: TextInputType.text),
+                                controller: role),
                             const SizedBox(height: 30),
                             GestureDetector(
                               onTap: () async {
@@ -347,8 +332,6 @@ class AddEditContenderPage extends HookConsumerWidget {
                 child: TextEntry(
                   keyboardType: TextInputType.multiline,
                   label: VoteTextConstants.program,
-                  suffix: '',
-                  isInt: false,
                   controller: program,
                 ),
               ),

@@ -14,6 +14,7 @@ import 'package:myecl/login/ui/components/sign_in_up_bar.dart';
 import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/user/class/floors.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -164,43 +165,14 @@ class CreateAccountPage extends HookConsumerWidget {
         const SizedBox(
           height: 1,
         ),
-        GestureDetector(
-          onTap: () {
-            getOnlyDayDate(context, birthday);
-          },
-          child: AbsorbPointer(
-            child: Form(
-              key: formKeys[6],
-              child: TextFormField(
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-                controller: birthday,
-                cursorColor: Colors.white,
-                decoration: const InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: ColorConstants.background2)),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                      color: Colors.white,
-                    )),
-                    errorBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                      color: Colors.white,
-                    )),
-                    errorStyle: TextStyle(color: Colors.white)),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return LoginTextConstants.emptyFieldError;
-                  }
-                  return null;
-                },
-              ),
-            ),
-          ),
+        DateEntry(
+          onTap: () => getOnlyDayDate(context, birthday),
+          key: formKeys[5],
+          label: LoginTextConstants.birthday,
+          controller: birthday,
+          color: Colors.white,
+          enabledColor: ColorConstants.background2,
+          errorColor: Colors.white,
         ),
       ]),
       CreateAccountField(

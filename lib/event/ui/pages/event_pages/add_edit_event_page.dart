@@ -16,6 +16,7 @@ import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -225,62 +226,13 @@ class AddEditEventPage extends HookConsumerWidget {
                                           style:
                                               TextStyle(color: Colors.black)),
                                       const SizedBox(height: 10),
-                                      TextFormField(
-                                        decoration: InputDecoration(
-                                          prefix: Container(
-                                            margin: const EdgeInsets.only(
-                                                right: 10),
-                                            child: const Text(
-                                                EventTextConstants.eventEvery,
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.black)),
-                                          ),
-                                          suffix: const Text(
-                                              EventTextConstants.weeks,
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black)),
-                                          labelText:
-                                              EventTextConstants.interval,
-                                          labelStyle: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                          ),
-                                          floatingLabelStyle: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          focusedBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.black,
-                                                width: 2.0),
-                                          ),
-                                        ),
+                                      TextEntry(
+                                        label: EventTextConstants.interval,
                                         controller: interval,
-                                        validator: (value) {
-                                          if (value == null) {
-                                            return EventTextConstants
-                                                .noDescriptionError;
-                                          } else if (int.tryParse(value) ==
-                                              null) {
-                                            return EventTextConstants
-                                                .invalidIntervalError;
-                                          } else if (int.parse(value) < 1) {
-                                            return EventTextConstants
-                                                .invalidIntervalError;
-                                          }
-                                          return null;
-                                        },
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black,
-                                        ),
+                                        prefix: EventTextConstants.eventEvery,
+                                        suffix: EventTextConstants.weeks,
+                                        isInt: true,
+                                        keyboardType: TextInputType.number,
                                       ),
                                       const SizedBox(
                                         height: 30,
@@ -288,218 +240,53 @@ class AddEditEventPage extends HookConsumerWidget {
                                       if (!allDay.value)
                                         Column(
                                           children: [
-                                            GestureDetector(
-                                              onTap: () => getOnlyHourDate(
-                                                  context, start),
-                                              child: SizedBox(
-                                                child: AbsorbPointer(
-                                                  child: TextFormField(
-                                                    controller: start,
-                                                    decoration:
-                                                        const InputDecoration(
-                                                      labelText:
-                                                          EventTextConstants
-                                                              .startHour,
-                                                      floatingLabelStyle:
-                                                          TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                      focusedBorder:
-                                                          UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors.black,
-                                                            width: 2.0),
-                                                      ),
-                                                    ),
-                                                    validator: (value) {
-                                                      if (value!.isEmpty) {
-                                                        return EventTextConstants
-                                                            .noDateError;
-                                                      }
-                                                      return null;
-                                                    },
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
+                                            DateEntry(
+                                                onTap: () => getOnlyHourDate(
+                                                    context, start),
+                                                controller: start,
+                                                label: EventTextConstants
+                                                    .startHour),
                                             const SizedBox(
                                               height: 30,
                                             ),
-                                            GestureDetector(
-                                              onTap: () =>
-                                                  getOnlyHourDate(context, end),
-                                              child: SizedBox(
-                                                child: AbsorbPointer(
-                                                  child: TextFormField(
-                                                    controller: end,
-                                                    decoration:
-                                                        const InputDecoration(
-                                                      labelText:
-                                                          EventTextConstants
-                                                              .endHour,
-                                                      floatingLabelStyle:
-                                                          TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                      focusedBorder:
-                                                          UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors.black,
-                                                            width: 2.0),
-                                                      ),
-                                                    ),
-                                                    validator: (value) {
-                                                      if (value!.isEmpty) {
-                                                        return EventTextConstants
-                                                            .noDateError;
-                                                      }
-                                                      return null;
-                                                    },
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
+                                            DateEntry(
+                                                onTap: () => getOnlyHourDate(
+                                                    context, end),
+                                                controller: end,
+                                                label:
+                                                    EventTextConstants.endHour),
                                             const SizedBox(
                                               height: 30,
                                             ),
                                           ],
                                         ),
-                                      GestureDetector(
-                                        onTap: () => getOnlyDayDate(
-                                            context, recurrenceEndDate),
-                                        child: SizedBox(
-                                          child: AbsorbPointer(
-                                            child: TextFormField(
-                                              controller: recurrenceEndDate,
-                                              decoration: const InputDecoration(
-                                                labelText: EventTextConstants
-                                                    .recurrenceEndDate,
-                                                floatingLabelStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                                focusedBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.black,
-                                                      width: 2.0),
-                                                ),
-                                              ),
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return EventTextConstants
-                                                      .noDateError;
-                                                }
-                                                return null;
-                                              },
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                      DateEntry(
+                                          onTap: () => getOnlyDayDate(
+                                              context, recurrenceEndDate),
+                                          controller: recurrenceEndDate,
+                                          label: EventTextConstants
+                                              .recurrenceEndDate),
                                     ],
                                   ),
                                 ],
                               )
                             : Column(
                                 children: [
-                                  GestureDetector(
-                                    onTap: () => allDay.value
-                                        ? getOnlyDayDate(context, start)
-                                        : getFullDate(context, start),
-                                    child: SizedBox(
-                                      child: AbsorbPointer(
-                                        child: TextFormField(
-                                          controller: start,
-                                          decoration: const InputDecoration(
-                                            labelText:
-                                                EventTextConstants.startDate,
-                                            floatingLabelStyle: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.black,
-                                                  width: 2.0),
-                                            ),
-                                          ),
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return EventTextConstants
-                                                  .noDateError;
-                                            }
-                                            return null;
-                                          },
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  DateEntry(
+                                      onTap: () => allDay.value
+                                          ? getOnlyDayDate(context, start)
+                                          : getFullDate(context, start),
+                                      controller: start,
+                                      label: EventTextConstants.startDate),
                                   const SizedBox(
                                     height: 30,
                                   ),
-                                  GestureDetector(
-                                    onTap: () => allDay.value
-                                        ? getOnlyDayDate(context, end)
-                                        : getFullDate(context, end),
-                                    child: SizedBox(
-                                      child: AbsorbPointer(
-                                        child: TextFormField(
-                                          controller: end,
-                                          decoration: const InputDecoration(
-                                            labelText:
-                                                EventTextConstants.endDate,
-                                            floatingLabelStyle: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.black,
-                                                  width: 2.0),
-                                            ),
-                                          ),
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return EventTextConstants
-                                                  .noDateError;
-                                            }
-                                            return null;
-                                          },
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  DateEntry(
+                                      onTap: () => allDay.value
+                                          ? getOnlyDayDate(context, end)
+                                          : getFullDate(context, end),
+                                      controller: end,
+                                      label: EventTextConstants.endDate),
                                 ],
                               ),
                       ],

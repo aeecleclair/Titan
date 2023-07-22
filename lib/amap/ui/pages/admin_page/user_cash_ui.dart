@@ -12,6 +12,7 @@ import 'package:myecl/amap/ui/pages/admin_page/user_cash_ui_layout.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/text_entry.dart';
 
 class UserCashUi extends HookConsumerWidget {
   final Cash cash;
@@ -125,38 +126,14 @@ class UserCashUi extends HookConsumerWidget {
                           children: [
                             SizedBox(
                               width: 50,
-                              child: TextFormField(
+                              child: TextEntry(
+                                label: '',
                                 controller: amount,
                                 keyboardType: TextInputType.number,
-                                validator: (value) => value!.isEmpty
-                                    ? AMAPTextConstants.add
-                                    : double.tryParse(
-                                                value.replaceAll(',', '.')) ==
-                                            null
-                                        ? AMAPTextConstants.expectingNumber
-                                        : null,
-                                cursorColor: AMAPColorConstants.textDark,
-                                decoration: const InputDecoration(
-                                  suffixText: '€',
-                                  suffixStyle: TextStyle(
-                                    color: AMAPColorConstants.textDark,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  contentPadding: EdgeInsets.all(0),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AMAPColorConstants.textDark,
-                                      width: 2,
-                                    ),
-                                  ),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AMAPColorConstants.green3,
-                                      width: 2,
-                                    ),
-                                  ),
-                                ),
+                                isDouble: true,
+                                color: AMAPColorConstants.textDark,
+                                enabledColor: AMAPColorConstants.green3,
+                                suffix: '€',
                               ),
                             ),
                             const SizedBox(

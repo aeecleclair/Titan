@@ -13,10 +13,10 @@ import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/components/waiter.dart';
 import 'package:myecl/booking/ui/components/add_edit_button.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
-import 'package:myecl/booking/ui/pages/booking_pages/date_entry.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -230,56 +230,12 @@ class AddEditBookingPage extends HookConsumerWidget {
                               const Text(BookingTextConstants.interval,
                                   style: TextStyle(color: Colors.black)),
                               const SizedBox(height: 10),
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  prefix: Container(
-                                    margin: const EdgeInsets.only(right: 10),
-                                    child: const Text(
-                                        BookingTextConstants.eventEvery,
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black)),
-                                  ),
-                                  suffix: const Text(BookingTextConstants.weeks,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black)),
-                                  labelText: BookingTextConstants.interval,
-                                  labelStyle: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
-                                  floatingLabelStyle: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  focusedBorder: const UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 2.0),
-                                  ),
-                                ),
+                              TextEntry(
+                                label: BookingTextConstants.interval,
+                                prefix: BookingTextConstants.eventEvery,
+                                suffix: BookingTextConstants.weeks,
                                 controller: interval,
-                                validator: (value) {
-                                  if (value == null) {
-                                    return BookingTextConstants
-                                        .noDescriptionError;
-                                  } else if (int.tryParse(value) == null) {
-                                    return BookingTextConstants
-                                        .invalidIntervalError;
-                                  } else if (int.parse(value) < 1) {
-                                    return BookingTextConstants
-                                        .invalidIntervalError;
-                                  }
-                                  return null;
-                                },
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
+                                isInt: true,
                               ),
                               const SizedBox(
                                 height: 30,
@@ -291,7 +247,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                         onTap: () =>
                                             getOnlyHourDate(context, start),
                                         controller: start,
-                                        title: BookingTextConstants.startHour),
+                                        label: BookingTextConstants.startHour),
                                     const SizedBox(
                                       height: 30,
                                     ),
@@ -299,7 +255,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                       onTap: () =>
                                           getOnlyHourDate(context, end),
                                       controller: end,
-                                      title: BookingTextConstants.endHour,
+                                      label: BookingTextConstants.endHour,
                                     ),
                                     const SizedBox(
                                       height: 30,
@@ -310,7 +266,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 onTap: () =>
                                     getOnlyDayDate(context, recurrenceEndDate),
                                 controller: recurrenceEndDate,
-                                title: BookingTextConstants.recurrenceEndDate,
+                                label: BookingTextConstants.recurrenceEndDate,
                               ),
                             ],
                           )
@@ -321,7 +277,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                       ? getOnlyDayDate(context, start)
                                       : getFullDate(context, start),
                                   controller: start,
-                                  title: BookingTextConstants.startDate),
+                                  label: BookingTextConstants.startDate),
                               const SizedBox(
                                 height: 30,
                               ),
@@ -330,7 +286,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                     ? getOnlyDayDate(context, end)
                                     : getFullDate(context, end),
                                 controller: end,
-                                title: BookingTextConstants.endDate,
+                                label: BookingTextConstants.endDate,
                               ),
                             ],
                           ),

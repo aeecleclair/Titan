@@ -18,6 +18,7 @@ import 'package:myecl/cinema/ui/pages/session_pages/add_edit_button.dart';
 import 'package:myecl/cinema/ui/pages/session_pages/imdb_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -180,71 +181,16 @@ class AddEditSessionPage extends HookConsumerWidget {
                   canBeEmpty: true,
                 ),
                 const SizedBox(height: 30),
-                GestureDetector(
+                DateEntry(
                   onTap: () => getFullDate(context, start),
-                  child: SizedBox(
-                    child: AbsorbPointer(
-                      child: TextFormField(
-                        controller: start,
-                        decoration: const InputDecoration(
-                          labelText: CinemaTextConstants.sessionDate,
-                          floatingLabelStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 2.0),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return CinemaTextConstants.noDateError;
-                          }
-                          return null;
-                        },
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
+                  label: CinemaTextConstants.sessionDate,
+                  controller: start,
                 ),
                 const SizedBox(height: 30),
-                GestureDetector(
-                  onTap: () => getOnlyHourDate(context, duration),
-                  child: SizedBox(
-                    child: AbsorbPointer(
-                      child: TextFormField(
-                        controller: duration,
-                        decoration: const InputDecoration(
-                          labelText: CinemaTextConstants.duration,
-                          floatingLabelStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 2.0),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return CinemaTextConstants.noDuration;
-                          }
-                          return null;
-                        },
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                DateEntry(
+                    onTap: () => getOnlyHourDate(context, duration),
+                    label: CinemaTextConstants.duration,
+                    controller: duration),
                 const SizedBox(height: 30),
                 TextEntry(
                   label: CinemaTextConstants.genre,

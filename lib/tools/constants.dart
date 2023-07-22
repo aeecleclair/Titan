@@ -11,6 +11,7 @@ class TextConstants {
   static const String admin = 'Admin';
   static const String noValue = "Veuillez entrer une valeur";
   static const String invalidNumber = "Veuillez entrer un nombre";
+  static const String noDateError = "Veuillez entrer une date";
 }
 const String previousEmailRegex =
     r'^[\w\-.]*@((ecl\d{2})|(alternance\d{4})|(master)|(auditeur)).ec-lyon.fr$';

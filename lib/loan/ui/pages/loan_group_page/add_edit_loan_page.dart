@@ -11,7 +11,6 @@ import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/add_edit_button.dart';
-import 'package:myecl/loan/ui/pages/loan_group_page/caution_text_entry.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/end_date_entry.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/item_bar.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/number_selected_text.dart';
@@ -31,6 +30,7 @@ class AddEditLoanPage extends HookConsumerWidget {
     final loan = ref.watch(loanProvider);
     final isEdit = loan.id != Loan.empty().id;
     final note = useTextEditingController(text: loan.notes);
+    final caution = ref.watch(cautionProvider);
     final cautionNotifier = ref.watch(cautionProvider.notifier);
     cautionNotifier.setCaution(loan.caution);
     final usersNotifier = ref.watch(userList.notifier);
@@ -75,8 +75,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                     controller: editingController,
                     cursorColor: const Color.fromARGB(255, 149, 149, 149),
                     decoration: InputDecoration(
-                        labelText:
-                        isEdit
+                        labelText: isEdit
                             ? LoanTextConstants.editLoan
                             : LoanTextConstants.addLoan,
                         labelStyle: const TextStyle(
@@ -111,7 +110,8 @@ class AddEditLoanPage extends HookConsumerWidget {
                   const SizedBox(height: 20),
                   const NumberSelectedText(),
                   const SizedBox(height: 20),
-                  TextFormField(
+                  TextEntry(
+                    label: LoanTextConstants.borrower,
                     onChanged: (value) {
                       tokenExpireWrapper(ref, () async {
                         if (queryController.text.isNotEmpty) {
@@ -121,18 +121,8 @@ class AddEditLoanPage extends HookConsumerWidget {
                         }
                       });
                     },
-                    cursorColor: Colors.black,
+                    canBeEmpty: true,
                     controller: queryController,
-                    decoration: const InputDecoration(
-                      labelText: LoanTextConstants.borrower,
-                      floatingLabelStyle: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 2.0),
-                      ),
-                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -148,7 +138,8 @@ class AddEditLoanPage extends HookConsumerWidget {
                     controller: note,
                   ),
                   const SizedBox(height: 30),
-                  const CautionTextEntry(),
+                  TextEntry(
+                      label: LoanTextConstants.caution, controller: caution),
                   const SizedBox(height: 50),
                   AddEditButton(
                     isEdit: isEdit,

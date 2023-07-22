@@ -15,6 +15,7 @@ import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/amap/ui/pages/delivery_pages/product_ui_check.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -66,49 +67,13 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                           ),
                           Container(
                               margin: const EdgeInsets.symmetric(vertical: 30),
-                              child: GestureDetector(
+                              child: DateEntry(
                                 onTap: () =>
                                     getOnlyDayDate(context, dateController),
-                                child: SizedBox(
-                                  child: AbsorbPointer(
-                                    child: TextFormField(
-                                      controller: dateController,
-                                      decoration: const InputDecoration(
-                                        hintText: AMAPTextConstants.commandDate,
-                                        hintStyle: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                          color:
-                                              Color.fromARGB(255, 85, 85, 85),
-                                        ),
-                                        enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: AMAPColorConstants
-                                                    .enabled)),
-                                        errorBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color.fromARGB(
-                                                    255, 201, 23, 23))),
-                                        focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                          color:
-                                              AMAPColorConstants.greenGradient2,
-                                        )),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return AMAPTextConstants.requiredDate;
-                                        }
-                                        return null;
-                                      },
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: Color.fromARGB(255, 0, 0, 0),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                label: AMAPTextConstants.commandDate,
+                                controller: dateController,
+                                enabledColor: AMAPColorConstants.enabled,
+                                color: AMAPColorConstants.greenGradient2,
                               )),
                           const SizedBox(
                             height: 15,

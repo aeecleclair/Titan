@@ -11,6 +11,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/text_entry.dart';
 
 class UserCashUi extends HookConsumerWidget {
   final Cash cash;
@@ -81,8 +82,8 @@ class UserCashUi extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
-                              color:
-                                  RaffleColorConstants.textDark.withOpacity(0.2),
+                              color: RaffleColorConstants.textDark
+                                  .withOpacity(0.2),
                               spreadRadius: 5,
                               blurRadius: 10,
                               offset: const Offset(3, 3),
@@ -163,8 +164,8 @@ class UserCashUi extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
-                              color:
-                                  RaffleColorConstants.textDark.withOpacity(0.2),
+                              color: RaffleColorConstants.textDark
+                                  .withOpacity(0.2),
                               spreadRadius: 5,
                               blurRadius: 10,
                               offset: const Offset(3, 3),
@@ -181,34 +182,14 @@ class UserCashUi extends HookConsumerWidget {
                               children: [
                                 SizedBox(
                                   width: 50,
-                                  child: TextFormField(
+                                  child: TextEntry(
+                                    label: '',
                                     controller: amount,
                                     keyboardType: TextInputType.number,
-                                    validator: (value) => value!.isEmpty
-                                        ? RaffleTextConstants.add
-                                        : null,
-                                    cursorColor: RaffleColorConstants.textDark,
-                                    decoration: const InputDecoration(
-                                      suffixText: '€',
-                                      suffixStyle: TextStyle(
-                                        color: RaffleColorConstants.textDark,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      contentPadding: EdgeInsets.all(0),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: RaffleColorConstants.textDark,
-                                          width: 2,
-                                        ),
-                                      ),
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.white,
-                                          width: 2,
-                                        ),
-                                      ),
-                                    ),
+                                    isInt: true,
+                                    color: RaffleColorConstants.textDark,
+                                    enabledColor: Colors.white,
+                                    suffix: '€',
                                   ),
                                 ),
                                 const SizedBox(
