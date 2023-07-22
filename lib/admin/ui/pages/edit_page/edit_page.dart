@@ -15,6 +15,7 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EditAssociationPage extends HookConsumerWidget {
@@ -92,43 +93,13 @@ class EditAssociationPage extends HookConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    child: TextFormField(
+                                    child: TextEntry(
                                       controller: name,
-                                      cursorColor: ColorConstants.gradient1,
-                                      decoration: InputDecoration(
-                                          labelText: "Name",
-                                          labelStyle: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          suffixIcon: Container(
-                                            padding: const EdgeInsets.all(10),
-                                            child: const HeroIcon(
-                                              HeroIcons.pencil,
-                                            ),
-                                          ),
-                                          enabledBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Colors.transparent,
-                                            ),
-                                          ),
-                                          focusedBorder:
-                                              const UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: ColorConstants
-                                                          .gradient1))),
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return AdminTextConstants
-                                              .emptyFieldError;
-                                        } else if (value.isEmpty) {
-                                          return AdminTextConstants
-                                              .emptyFieldError;
-                                        } else {
-                                          return null;
-                                        }
-                                      },
+                                      color: ColorConstants.gradient1,
+                                      label: "Name",
+                                      suffixIcon:
+                                          const HeroIcon(HeroIcons.pencil),
+                                      enabledColor: Colors.transparent,
                                     ),
                                   ),
                                 ],
@@ -141,43 +112,13 @@ class EditAssociationPage extends HookConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    child: TextFormField(
+                                    child: TextEntry(
                                       controller: description,
-                                      cursorColor: ColorConstants.gradient1,
-                                      decoration: InputDecoration(
-                                          labelText: "Description",
-                                          labelStyle: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          suffixIcon: Container(
-                                            padding: const EdgeInsets.all(10),
-                                            child: const HeroIcon(
-                                              HeroIcons.pencil,
-                                            ),
-                                          ),
-                                          enabledBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Colors.transparent,
-                                            ),
-                                          ),
-                                          focusedBorder:
-                                              const UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: ColorConstants
-                                                          .gradient1))),
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return AdminTextConstants
-                                              .emptyFieldError;
-                                        } else if (value.isEmpty) {
-                                          return AdminTextConstants
-                                              .emptyFieldError;
-                                        } else {
-                                          return null;
-                                        }
-                                      },
+                                      color: ColorConstants.gradient1,
+                                      label: "Description",
+                                      suffixIcon:
+                                          const HeroIcon(HeroIcons.pencil),
+                                      enabledColor: Colors.transparent,
                                     ),
                                   ),
                                 ],
@@ -209,12 +150,12 @@ class EditAssociationPage extends HookConsumerWidget {
                             },
                             builder: (child) => AdminButton(child: child),
                             child: const Text(
-                                AdminTextConstants.edit,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                ),
+                              AdminTextConstants.edit,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
                             ),
                           ),
                           const SizedBox(

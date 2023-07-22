@@ -8,6 +8,7 @@ import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/date_entry.dart';
 
 class StartDateEntry extends HookConsumerWidget {
   const StartDateEntry({
@@ -24,7 +25,7 @@ class StartDateEntry extends HookConsumerWidget {
     final initialDateNotifier = ref.watch(initialDateProvider.notifier);
     final DateTime now = DateTime.now();
 
-    return GestureDetector(
+    return DateEntry(
       onTap: () => getOnlyDayDateFunction(
         context,
         (date) {
@@ -57,30 +58,8 @@ class StartDateEntry extends HookConsumerWidget {
             start.isNotEmpty ? DateTime.parse(processDateBack(start)) : now,
         firstDate: DateTime(now.year - 1, now.month, now.day),
       ),
-      child: SizedBox(
-        child: AbsorbPointer(
-          child: TextFormField(
-            controller: TextEditingController(text: start),
-            cursorColor: Colors.black,
-            decoration: const InputDecoration(
-              labelText: LoanTextConstants.beginDate,
-              floatingLabelStyle: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.black, width: 2.0),
-              ),
-            ),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return LoanTextConstants.enterDate;
-              }
-              return null;
-            },
-          ),
-        ),
-      ),
+      label: LoanTextConstants.beginDate,
+      controller: TextEditingController(text: start),
     );
   }
 }

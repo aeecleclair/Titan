@@ -71,16 +71,14 @@ class AddEditPrizePage extends HookConsumerWidget {
                           const SizedBox(height: 5),
                           TextEntry(
                               label: "Nom",
-                              controller: name,
-                              keyboardType: TextInputType.text),
+                              controller: name,),
                           const SizedBox(height: 50),
                           const SectionTitle(text: "Description"),
                           const SizedBox(height: 5),
                           TextEntry(
                               label: "Description",
                               canBeEmpty: true,
-                              controller: description,
-                              keyboardType: TextInputType.text),
+                              controller: description,),
                           const SizedBox(height: 50),
                           ShrinkButton(
                               builder: (child) => BlueBtn(

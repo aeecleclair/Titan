@@ -13,6 +13,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:myecl/user/class/floors.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
@@ -231,34 +232,9 @@ class EditUserPage extends HookConsumerWidget {
                     ),
                     Expanded(
                       child: AbsorbPointer(
-                        child: TextFormField(
+                        child: TextEntry(
+                          label: SettingsTextConstants.birthday,
                           controller: dateController,
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.all(10),
-                            isDense: true,
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey)),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.blue)),
-                            errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red)),
-                            border: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color.fromARGB(255, 158, 158, 158),
-                              ),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return SettingsTextConstants.expectingDate;
-                            }
-                            return null;
-                          },
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
                         ),
                       ),
                     ),
