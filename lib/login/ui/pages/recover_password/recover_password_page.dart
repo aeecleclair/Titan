@@ -18,7 +18,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RecoverPasswordPage extends HookConsumerWidget {
-  const RecoverPasswordPage({Key? key}) : super(key: key);
+  const RecoverPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

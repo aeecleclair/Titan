@@ -8,7 +8,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PresentationPage extends HookConsumerWidget {
-  const PresentationPage({Key? key}) : super(key: key);
+  const PresentationPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

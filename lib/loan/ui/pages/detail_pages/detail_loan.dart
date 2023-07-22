@@ -8,7 +8,7 @@ import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
 import 'package:myecl/tools/functions.dart';
 
 class DetailLoanPage extends HookConsumerWidget {
-  const DetailLoanPage({Key? key}) : super(key: key);
+  const DetailLoanPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

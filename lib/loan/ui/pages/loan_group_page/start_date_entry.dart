@@ -11,9 +11,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
 
 class StartDateEntry extends HookConsumerWidget {
-  const StartDateEntry({
-    Key? key,
-  }) : super(key: key);
+  const StartDateEntry({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -15,11 +15,10 @@ class CategoryPage extends HookConsumerWidget {
   final int index;
   final AnimationController hideAnimation;
   const CategoryPage(
-      {Key? key,
+      {super.key,
       required this.index,
       required this.hideAnimation,
-      required this.category})
-      : super(key: key);
+      required this.category});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

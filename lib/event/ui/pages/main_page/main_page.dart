@@ -14,7 +14,7 @@ import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventMainPage extends HookConsumerWidget {
-  const EventMainPage({Key? key}) : super(key: key);
+  const EventMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

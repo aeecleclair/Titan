@@ -5,7 +5,7 @@ import 'package:myecl/tools/ui/top_bar.dart';
 
 class EventTemplate extends StatelessWidget {
   final Widget child;
-  const EventTemplate({Key? key, required this.child}) : super(key: key);
+  const EventTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

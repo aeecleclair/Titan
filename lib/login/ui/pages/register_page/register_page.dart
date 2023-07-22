@@ -15,7 +15,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class Register extends HookConsumerWidget {
-  const Register({Key? key}) : super(key: key);
+  const Register({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

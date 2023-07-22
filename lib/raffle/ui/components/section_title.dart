@@ -3,7 +3,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 
 class SectionTitle extends StatelessWidget {
   final String text;
-  const SectionTitle({Key? key, required this.text}) : super(key: key);
+  const SectionTitle({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {

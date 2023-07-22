@@ -7,7 +7,7 @@ import 'package:myecl/amap/ui/components/order_ui.dart';
 import 'package:myecl/amap/ui/components/product_ui.dart';
 
 class DetailPage extends HookConsumerWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  const DetailPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

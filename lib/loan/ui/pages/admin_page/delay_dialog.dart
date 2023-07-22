@@ -4,7 +4,7 @@ import 'package:numberpicker/numberpicker.dart';
 
 class DelayDialog extends StatefulWidget {
   final void Function(int i) onYes;
-  const DelayDialog({Key? key, required this.onYes}) : super(key: key);
+  const DelayDialog({super.key, required this.onYes});
 
   @override
   IntegerExampleState createState() => IntegerExampleState();

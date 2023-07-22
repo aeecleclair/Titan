@@ -10,8 +10,7 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
   final TypeTicketSimple typeTicket;
   final Raffle raffle;
   const BuyTypeTicketSimple(
-      {Key? key, required this.typeTicket, required this.raffle})
-      : super(key: key);
+      {super.key, required this.typeTicket, required this.raffle});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

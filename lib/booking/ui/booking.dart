@@ -5,7 +5,7 @@ import 'package:myecl/tools/ui/top_bar.dart';
 
 class BookingTemplate extends StatelessWidget {
   final Widget child;
-  const BookingTemplate({Key? key, required this.child}) : super(key: key);
+  const BookingTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

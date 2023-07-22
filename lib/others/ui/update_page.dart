@@ -5,7 +5,7 @@ import 'package:myecl/others/tools/constants.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 
 class UpdatePage extends HookConsumerWidget {
-  const UpdatePage({Key? key}) : super(key: key);
+  const UpdatePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

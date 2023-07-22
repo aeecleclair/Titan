@@ -28,7 +28,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 class AddEditBookingPage extends HookConsumerWidget {
   final bool isAdmin;
 
-  const AddEditBookingPage({Key? key, required this.isAdmin}) : super(key: key);
+  const AddEditBookingPage({super.key, required this.isAdmin});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

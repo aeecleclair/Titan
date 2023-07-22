@@ -23,7 +23,7 @@ import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class BookingMainPage extends HookConsumerWidget {
-  const BookingMainPage({Key? key}) : super(key: key);
+  const BookingMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

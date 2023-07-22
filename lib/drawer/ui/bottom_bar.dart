@@ -4,8 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/providers/display_quit_popup.dart';
 import 'package:myecl/drawer/tools/constants.dart';
 class BottomBar extends ConsumerWidget {
-  const BottomBar({Key? key})
-      : super(key: key);
+  const BottomBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

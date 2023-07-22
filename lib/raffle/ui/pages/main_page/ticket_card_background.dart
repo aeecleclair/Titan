@@ -10,8 +10,7 @@ class TicketCardBackground extends HookConsumerWidget {
   final bool isWinningTicket;
   final Widget child;
   const TicketCardBackground(
-      {Key? key, required this.isWinningTicket, required this.child})
-      : super(key: key);
+      {super.key, required this.isWinningTicket, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

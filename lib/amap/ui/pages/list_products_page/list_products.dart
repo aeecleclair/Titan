@@ -12,7 +12,7 @@ import 'package:myecl/amap/ui/pages/list_products_page/web_page_navigation_butto
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 
 class ListProducts extends HookConsumerWidget {
-  const ListProducts({Key? key}) : super(key: key);
+  const ListProducts({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

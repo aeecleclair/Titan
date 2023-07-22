@@ -18,7 +18,7 @@ import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleMainPage extends HookConsumerWidget {
-  const RaffleMainPage({Key? key}) : super(key: key);
+  const RaffleMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

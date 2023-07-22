@@ -12,7 +12,7 @@ import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/ui/top_bar.dart';
 
 class HomePage extends HookConsumerWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

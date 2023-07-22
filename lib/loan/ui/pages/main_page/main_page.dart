@@ -17,7 +17,7 @@ import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LoanMainPage extends HookConsumerWidget {
-  const LoanMainPage({Key? key}) : super(key: key);
+  const LoanMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

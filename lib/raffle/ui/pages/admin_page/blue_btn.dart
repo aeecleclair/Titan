@@ -4,7 +4,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 class BlueBtn extends StatelessWidget {
   final Widget child;
 
-  const BlueBtn({Key? key, required this.child}) : super(key: key);
+  const BlueBtn({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

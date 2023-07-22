@@ -6,7 +6,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Dots extends HookConsumerWidget {
-  const Dots({Key? key}) : super(key: key);
+  const Dots({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

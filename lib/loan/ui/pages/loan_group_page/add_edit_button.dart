@@ -23,12 +23,11 @@ class AddEditButton extends HookConsumerWidget {
   final TextEditingController note;
   final bool isEdit;
   final Future Function(Function) onAddEdit;
-  const AddEditButton({
-    Key? key,
-    required this.note,
-    required this.isEdit,
-    required this.onAddEdit,
-  }) : super(key: key);
+  const AddEditButton(
+      {super.key,
+      required this.note,
+      required this.isEdit,
+      required this.onAddEdit});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

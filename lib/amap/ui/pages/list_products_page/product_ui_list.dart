@@ -8,7 +8,7 @@ import 'package:myecl/amap/tools/constants.dart';
 
 class ProductUiInList extends ConsumerWidget {
   final Product p;
-  const ProductUiInList({Key? key, required this.p}) : super(key: key);
+  const ProductUiInList({super.key, required this.p});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

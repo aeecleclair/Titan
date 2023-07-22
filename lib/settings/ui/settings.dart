@@ -5,7 +5,7 @@ import 'package:myecl/tools/ui/top_bar.dart';
 
 class SettingsTemplate extends StatelessWidget {
   final Widget child;
-  const SettingsTemplate({Key? key, required this.child}) : super(key: key);
+  const SettingsTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

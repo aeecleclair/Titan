@@ -7,7 +7,7 @@ import 'package:myecl/login/ui/components/background_painter.dart';
 class LoginTemplate extends HookConsumerWidget {
   final Widget child;
   final void Function(AnimationController) callback;
-  const LoginTemplate({Key? key, required this.child, required this.callback}) : super(key: key);
+  const LoginTemplate({super.key, required this.child, required this.callback});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

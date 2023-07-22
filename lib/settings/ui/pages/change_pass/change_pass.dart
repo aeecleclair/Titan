@@ -13,7 +13,7 @@ import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ChangePassPage extends HookConsumerWidget {
-  const ChangePassPage({Key? key}) : super(key: key);
+  const ChangePassPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

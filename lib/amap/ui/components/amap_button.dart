@@ -4,7 +4,7 @@ import 'package:myecl/amap/tools/constants.dart';
 class GreenBtn extends StatelessWidget {
   final Widget child;
 
-  const GreenBtn({Key? key, required this.child}) : super(key: key);
+  const GreenBtn({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

@@ -13,7 +13,7 @@ import 'package:myecl/vote/ui/vote.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddSectionPage extends HookConsumerWidget {
-  const AddSectionPage({Key? key}) : super(key: key);
+  const AddSectionPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

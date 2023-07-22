@@ -13,7 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DetailBookingPage extends HookConsumerWidget {
   final bool isAdmin;
-  const DetailBookingPage({Key? key, required this.isAdmin}) : super(key: key);
+  const DetailBookingPage({super.key, required this.isAdmin});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

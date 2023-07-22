@@ -8,7 +8,7 @@ import 'package:myecl/user/providers/user_provider.dart';
 
 class AdminTemplate extends HookConsumerWidget {
   final Widget child;
-  const AdminTemplate({Key? key, required this.child}) : super(key: key);
+  const AdminTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

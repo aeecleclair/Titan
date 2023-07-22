@@ -34,7 +34,7 @@ import 'package:myecl/vote/ui/vote.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditContenderPage extends HookConsumerWidget {
-  const AddEditContenderPage({Key? key}) : super(key: key);
+  const AddEditContenderPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

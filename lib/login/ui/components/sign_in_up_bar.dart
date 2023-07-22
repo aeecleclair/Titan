@@ -3,18 +3,17 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class SignInUpBar extends StatelessWidget {
-  const SignInUpBar({
-    Key? key,
-    required this.label,
-    required this.onPressed,
-    required this.isLoading,
-    this.color = Colors.white,
-    this.icon = const HeroIcon(
-      HeroIcons.arrowRight,
-      color: Colors.white,
-      size: 35.0,
-    ),
-  }) : super(key: key);
+  const SignInUpBar(
+      {super.key,
+      required this.label,
+      required this.onPressed,
+      required this.isLoading,
+      this.color = Colors.white,
+      this.icon = const HeroIcon(
+        HeroIcons.arrowRight,
+        color: Colors.white,
+        size: 35.0,
+      )});
 
   final String label;
   final Future Function() onPressed;

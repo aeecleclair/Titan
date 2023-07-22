@@ -18,7 +18,7 @@ import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminMainPage extends HookConsumerWidget {
-  const AdminMainPage({Key? key}) : super(key: key);
+  const AdminMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
