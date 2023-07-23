@@ -10,10 +10,10 @@ import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/providers/sorted_by_category_products.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/amap/ui/components/amap_button.dart';
 import 'package:myecl/amap/ui/pages/delivery_pages/product_ui_check.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -145,8 +145,12 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                         height: 30,
                                       ),
                                       ShrinkButton(
-                                        builder: (child) =>
-                                            GreenBtn(child: child),
+                                        builder: (child) => AddEditButtonLayout(
+                                            color: AMAPColorConstants
+                                                .greenGradient1,
+                                            gradient: AMAPColorConstants
+                                                .greenGradient2,
+                                            child: child),
                                         onTap: () async {
                                           if (formKey.currentState!
                                               .validate()) {

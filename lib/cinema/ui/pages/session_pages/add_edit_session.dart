@@ -14,10 +14,10 @@ import 'package:myecl/cinema/providers/the_movie_db_genre_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
-import 'package:myecl/cinema/ui/pages/session_pages/add_edit_button.dart';
 import 'package:myecl/cinema/ui/pages/session_pages/imdb_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
@@ -211,7 +211,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 50),
                 ShrinkButton(
-                  builder: (child) => AddEditButton(child: child),
+                  builder: (child) => AddEditButtonLayout(child: child),
                   onTap: () async {
                     if (key.currentState == null) {
                       return;

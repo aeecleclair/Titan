@@ -77,9 +77,7 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                               keyboardType: TextInputType.number),
                           const SizedBox(height: 50),
                           ShrinkButton(
-                              builder: (child) => BlueBtn(
-                                    child: child,
-                                  ),
+                              builder: (child) => BlueBtn(child: child),
                               onTap: () async {
                                 if (formKey.currentState!.validate()) {
                                   final ticketPrice = double.tryParse(

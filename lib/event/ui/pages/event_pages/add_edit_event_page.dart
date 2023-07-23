@@ -6,7 +6,6 @@ import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/event/providers/is_room_provider.dart';
 import 'package:myecl/event/providers/room_id_provider.dart';
 import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/ui/pages/event_pages/add_edit_button.dart';
 import 'package:myecl/event/ui/pages/event_pages/checkbox_entry.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_provider.dart';
@@ -16,6 +15,7 @@ import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
@@ -368,7 +368,7 @@ class AddEditEventPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 50),
                         ShrinkButton(
-                          builder: (child) => AddEditButton(child: child),
+                          builder: (child) => AddEditButtonLayout(child: child),
                           onTap: () async {
                             if (key.currentState == null) {
                               return;

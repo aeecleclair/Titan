@@ -10,11 +10,11 @@ import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/components/add_edit_button.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
@@ -292,7 +292,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                           ),
                     const SizedBox(height: 50),
                     ShrinkButton(
-                      builder: (child) => AddEditButton(child: child),
+                      builder: (child) => AddEditButtonLayout(child: child),
                       onTap: () async {
                         if (key.currentState == null) {
                           return;
