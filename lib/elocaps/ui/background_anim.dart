@@ -13,7 +13,7 @@ class Bottle {
 
   static Bottle generateNextBottle(double width, double height) {
     Bottle newBottle = Bottle(
-        (Random().nextDouble()-0.5) * 200,
+        (0.5 + Random().nextDouble()) * width/2,
         height + 20,
         81,
         25,
@@ -48,15 +48,15 @@ class MyCustomPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     //print(bottles.length);
     //print("Size width: ${size.width} et height: ${size.height}");
-    if (Random().nextDouble() < 0.15) {
+    if (Random().nextDouble() < 0.10) {
       bottles.add(Bottle.generateNextBottle(size.width, size.height));
     }
     int i = 0;
     while (i < bottles.length) {
       Bottle bottle = bottles[i];
-      if (bottle.x - bottle.w > 500) { //500 pour tester mais y a des problèmes de size.width
+      if (bottle.x - bottle.w > size.width) { //500 pour tester mais y a des problèmes de size.width
         bottles.remove(bottle);
-      } else if (bottle.x + bottle.w < -500) {
+      } else if (bottle.x + bottle.w < 0) {
         bottles.remove(bottle);
       } else if (bottle.y + bottle.h < 0) {
         bottles.remove(bottle);
