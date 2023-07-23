@@ -44,15 +44,23 @@ class TextEntry extends StatelessWidget {
       textInputAction: TextInputAction.next,
       enabled: enabled,
       decoration: InputDecoration(
-        labelText: label,
-        suffix: Container(
-          padding: const EdgeInsets.all(10),
-          child: suffixIcon ?? Text(suffix, style: TextStyle(color: color)),
+        label: Text(
+          label,
+          style: TextStyle(color: color, height: 0.5),
         ),
-        prefix: Container(
-          padding: const EdgeInsets.all(10),
-          child: Text(prefix, style: TextStyle(color: color)),
-        ),
+        suffix: suffixIcon == null && suffix.isEmpty
+            ? null
+            : Container(
+                padding: const EdgeInsets.only(left: 10),
+                child:
+                    suffixIcon ?? Text(suffix, style: TextStyle(color: color)),
+              ),
+        prefix: prefix.isEmpty
+            ? null
+            : Container(
+                padding: const EdgeInsets.only(right: 10),
+                child: Text(prefix, style: TextStyle(color: color)),
+              ),
         floatingLabelStyle: const TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,
@@ -72,18 +80,12 @@ class TextEntry extends StatelessWidget {
         if (value == null || value.isEmpty) {
           return noValueError;
         }
-        if (!isInt) {
-          return null;
-        }
         final intValue = int.tryParse(value);
-        if (intValue == null || intValue < 0) {
+        if (isInt && (intValue == null || intValue < 0)) {
           return TextConstants.invalidNumber;
         }
-        if (!isDouble) {
-          return null;
-        }
         final doubleValue = double.tryParse(value.replaceAll(',', '.'));
-        if (doubleValue == null || doubleValue < 0) {
+        if (isDouble && (doubleValue == null || doubleValue < 0)) {
           return TextConstants.invalidNumber;
         }
         validator(value);
