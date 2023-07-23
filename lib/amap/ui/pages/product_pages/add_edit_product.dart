@@ -9,9 +9,9 @@ import 'package:myecl/amap/providers/selected_category_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/amap/ui/components/amap_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -76,8 +76,7 @@ class AddEditProduct extends HookConsumerWidget {
                     children: [
                       Center(
                         child: TextEntry(
-                          label:
-                          AMAPTextConstants.name,
+                          label: AMAPTextConstants.name,
                           controller: nameController,
                           color: AMAPColorConstants.greenGradient2,
                           enabledColor: AMAPColorConstants.enabled,
@@ -179,7 +178,10 @@ class AddEditProduct extends HookConsumerWidget {
                       ),
                       ShrinkButton(
                         waitingColor: AMAPColorConstants.background,
-                        builder: (child) => GreenBtn(child: child),
+                        builder: (child) => AddEditButtonLayout(
+                            color: AMAPColorConstants.greenGradient1,
+                            gradient: AMAPColorConstants.greenGradient2,
+                            child: child),
                         onTap: () async {
                           if (formKey.currentState!.validate()) {
                             String cate = categoryController ==
