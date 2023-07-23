@@ -74,45 +74,24 @@ class AddEditProduct extends HookConsumerWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        AMAPTextConstants.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 20,
-                          color: AMAPColorConstants.greenGradient2,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        height: 50,
+                      Center(
                         child: TextEntry(
-                          label: AMAPTextConstants.name,
+                          label:
+                          AMAPTextConstants.name,
                           controller: nameController,
+                          color: AMAPColorConstants.greenGradient2,
+                          enabledColor: AMAPColorConstants.enabled,
                         ),
                       ),
                       const SizedBox(
                         height: 30,
                       ),
-                      const Text(
-                        AMAPTextConstants.price,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 20,
-                          color: AMAPColorConstants.greenGradient2,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        height: 50,
+                      Center(
                         child: TextEntry(
                             label: AMAPTextConstants.price,
                             isDouble: true,
+                            color: AMAPColorConstants.greenGradient2,
+                            enabledColor: AMAPColorConstants.enabled,
                             keyboardType: TextInputType.number,
                             controller: priceController),
                       ),
@@ -130,8 +109,7 @@ class AddEditProduct extends HookConsumerWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      Container(
-                        alignment: Alignment.center,
+                      Center(
                         child: DropdownButtonFormField<String>(
                           value: categoryController,
                           validator: ((value) {
@@ -174,20 +152,7 @@ class AddEditProduct extends HookConsumerWidget {
                       const SizedBox(
                         height: 30,
                       ),
-                      const Text(
-                        AMAPTextConstants.createCategory,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 20,
-                          color: AMAPColorConstants.greenGradient2,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        height: 50,
+                      Center(
                         child: TextEntry(
                           label: AMAPTextConstants.createCategory,
                           validator: ((value) {
@@ -204,6 +169,8 @@ class AddEditProduct extends HookConsumerWidget {
                             newCategory.selection = TextSelection.fromPosition(
                                 TextPosition(offset: newCategory.text.length));
                           },
+                          color: AMAPColorConstants.greenGradient2,
+                          enabledColor: AMAPColorConstants.enabled,
                           controller: newCategory,
                         ),
                       ),
