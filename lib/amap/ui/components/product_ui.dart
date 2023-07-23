@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/ui/card_button.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class ProductCard extends StatelessWidget {
@@ -20,99 +21,80 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12.0),
-      margin: const EdgeInsets.only(bottom: 10),
-      child: Container(
-        width: 130,
-        height: showButton ? 160 : 130,
-        decoration: BoxDecoration(
-          gradient: const RadialGradient(
-            colors: [
-              AMAPColorConstants.lightGradient1,
-              AMAPColorConstants.lightGradient2,
-            ],
-            center: Alignment.topLeft,
-            radius: 1.2,
-          ),
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            BoxShadow(
-              color: AMAPColorConstants.textDark.withOpacity(0.3),
-              spreadRadius: 5,
-              blurRadius: 10,
-              offset: const Offset(3, 3),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10),
-              AutoSizeText(product.category,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AMAPColorConstants.darkGreen)),
-              const SizedBox(height: 4),
-              AutoSizeText(product.name,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white)),
-              const SizedBox(height: 4),
-              AutoSizeText('${product.price.toStringAsFixed(2)} €',
-                  maxLines: 1,
-                  minFontSize: 10,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AMAPColorConstants.darkGreen)),
-              const Spacer(),
-              showButton
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: onEdit,
-                          child: const CardButton(
-                            gradient1: AMAPColorConstants.greenGradient2,
-                            gradient2: AMAPColorConstants.textDark,
-                            child:
-                                HeroIcon(HeroIcons.pencil, color: Colors.white),
-                          ),
+    return CardLayout(
+      width: 130,
+      height: showButton ? 160 : 130,
+      colors: const [
+        AMAPColorConstants.lightGradient1,
+        AMAPColorConstants.lightGradient2,
+      ],
+      child: Padding(
+        padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 10),
+            AutoSizeText(product.category,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AMAPColorConstants.darkGreen)),
+            const SizedBox(height: 4),
+            AutoSizeText(product.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white)),
+            const SizedBox(height: 4),
+            AutoSizeText('${product.price.toStringAsFixed(2)} €',
+                maxLines: 1,
+                minFontSize: 10,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AMAPColorConstants.darkGreen)),
+            const Spacer(),
+            showButton
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: onEdit,
+                        child: const CardButton(
+                          gradient1: AMAPColorConstants.greenGradient2,
+                          gradient2: AMAPColorConstants.textDark,
+                          child:
+                              HeroIcon(HeroIcons.pencil, color: Colors.white),
                         ),
-                        ShrinkButton(
-                          onTap: onDelete,
-                          builder: (child) => CardButton(
-                              gradient1: AMAPColorConstants.redGradient1,
-                              gradient2: AMAPColorConstants.redGradient2,
-                              child: child),
-                          child: const HeroIcon(HeroIcons.trash,
-                              color: Colors.white),
-                        )
-                      ],
-                    )
-                  : Container(
-                      margin: const EdgeInsets.only(bottom: 5),
-                      child: Text(
-                          "${AMAPTextConstants.quantity} : ${product.quantity}",
-                          style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: AMAPColorConstants.darkGreen)),
-                    ),
-              const SizedBox(height: 10),
-            ],
-          ),
+                      ),
+                      ShrinkButton(
+                        onTap: onDelete,
+                        builder: (child) => CardButton(
+                            gradient1: AMAPColorConstants.redGradient1,
+                            gradient2: AMAPColorConstants.redGradient2,
+                            child: child),
+                        child: const HeroIcon(HeroIcons.trash,
+                            color: Colors.white),
+                      )
+                    ],
+                  )
+                : Container(
+                    margin: const EdgeInsets.only(bottom: 5),
+                    child: Text(
+                        "${AMAPTextConstants.quantity} : ${product.quantity}",
+                        style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: AMAPColorConstants.darkGreen)),
+                  ),
+            const SizedBox(height: 10),
+          ],
         ),
       ),
     );

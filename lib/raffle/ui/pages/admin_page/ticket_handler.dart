@@ -11,6 +11,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/ticket_ui.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/loader.dart';
@@ -59,24 +60,12 @@ class TicketHandler extends HookConsumerWidget {
                           RaffleRouter.admin +
                           RaffleRouter.addEditTypeTicket);
                     },
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          left: 12.0, right: 12.0, bottom: 12, top: 8),
-                      padding: const EdgeInsets.all(12.0),
+                    child: CardLayout(
                       height: 125,
                       width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: RaffleColorConstants.ticketBack,
-                        boxShadow: [
-                          BoxShadow(
-                            color: RaffleColorConstants.ticketBack
-                                .withOpacity(0.3),
-                            blurRadius: 8,
-                            offset: const Offset(2, 3),
-                          ),
-                        ],
-                      ),
+                      colors: const [RaffleColorConstants.ticketBack],
+                      shadowColor:
+                          RaffleColorConstants.ticketBack.withOpacity(0.3),
                       child: const Center(
                         child: HeroIcon(
                           HeroIcons.plus,

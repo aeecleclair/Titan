@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -60,38 +61,15 @@ class SectionContenderItems extends HookConsumerWidget {
                                       VoteRouter.admin +
                                       VoteRouter.addEditContender);
                                 },
-                                child: Container(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: Container(
-                                    width: 120,
-                                    height: 180,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.shade200
-                                              .withOpacity(0.5),
-                                          spreadRadius: 5,
-                                          blurRadius: 10,
-                                          offset: const Offset(3, 3),
-                                        ),
-                                        BoxShadow(
-                                          color: Colors.grey.shade200
-                                              .withOpacity(0.5),
-                                          spreadRadius: 5,
-                                          blurRadius: 10,
-                                          offset: const Offset(3, 3),
-                                        ),
-                                      ],
-                                    ),
-                                    child: const Center(
-                                        child: HeroIcon(
-                                      HeroIcons.plus,
-                                      size: 40.0,
-                                      color: Colors.black,
-                                    )),
-                                  ),
+                                child: const CardLayout(
+                                  width: 120,
+                                  height: 180,
+                                  child: Center(
+                                      child: HeroIcon(
+                                    HeroIcons.plus,
+                                    size: 40.0,
+                                    color: Colors.black,
+                                  )),
                                 ),
                               ),
                             ...data

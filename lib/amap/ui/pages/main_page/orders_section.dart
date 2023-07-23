@@ -9,6 +9,7 @@ import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/components/order_ui.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/loader.dart';
 
@@ -65,32 +66,14 @@ class OrderSection extends HookConsumerWidget {
                   orderNotifier.setOrder(e);
                   addOrder();
                 },
-                child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 15.0),
-                    padding: const EdgeInsets.all(12.0),
+                child: const CardLayout(
                     width: 100,
                     height: 150,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      gradient: const RadialGradient(
-                        colors: [
-                          AMAPColorConstants.lightGradient1,
-                          AMAPColorConstants.greenGradient1,
-                        ],
-                        center: Alignment.topLeft,
-                        radius: 1.3,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AMAPColorConstants.greenGradient2
-                              .withOpacity(0.3),
-                          spreadRadius: 5,
-                          blurRadius: 10,
-                          offset: const Offset(3, 3),
-                        ),
-                      ],
-                    ),
-                    child: const Center(
+                    colors: [
+                      AMAPColorConstants.lightGradient1,
+                      AMAPColorConstants.greenGradient1
+                    ],
+                    child: Center(
                       child: HeroIcon(
                         HeroIcons.plus,
                         color: Colors.white,

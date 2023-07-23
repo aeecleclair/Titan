@@ -6,6 +6,7 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tools/ui/card_button.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class BookingCard extends HookConsumerWidget {

@@ -10,6 +10,7 @@ import 'package:myecl/raffle/providers/cash_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
 
@@ -65,176 +66,139 @@ class UserCashUi extends HookConsumerWidget {
             alignment: Alignment.center,
             transform: transform,
             child: isFrontImage(angle.abs())
-                ? Container(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Container(
-                        width: 150,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          gradient: const RadialGradient(
-                            colors: [
-                              RaffleColorConstants.gradient1,
-                              RaffleColorConstants.gradient2,
-                            ],
-                            center: Alignment.topLeft,
-                            radius: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: RaffleColorConstants.textDark
-                                  .withOpacity(0.2),
-                              spreadRadius: 5,
-                              blurRadius: 10,
-                              offset: const Offset(3, 3),
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 17.0, vertical: 5),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                ? CardLayout(
+                    width: 150,
+                    height: 100,
+                    colors: const [
+                      RaffleColorConstants.gradient1,
+                      RaffleColorConstants.gradient2
+                    ],
+                    shadowColor: RaffleColorConstants.textDark.withOpacity(0.2),
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 17.0, vertical: 5),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 8),
+                            AutoSizeText(
+                                cash.user.nickname != null
+                                    ? cash.user.nickname!
+                                    : cash.user.firstname,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+                            const SizedBox(height: 5),
+                            AutoSizeText(
+                                cash.user.nickname != null
+                                    ? '${cash.user.firstname} ${cash.user.name}'
+                                    : cash.user.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: RaffleColorConstants.textDark)),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const SizedBox(height: 8),
                                 AutoSizeText(
-                                    cash.user.nickname != null
-                                        ? cash.user.nickname!
-                                        : cash.user.firstname,
+                                    '${cash.balance.toStringAsFixed(2)} €',
                                     maxLines: 1,
+                                    minFontSize: 10,
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white)),
-                                const SizedBox(height: 5),
-                                AutoSizeText(
-                                    cash.user.nickname != null
-                                        ? '${cash.user.firstname} ${cash.user.name}'
-                                        : cash.user.name,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold,
-                                        color: RaffleColorConstants.textDark)),
-                                const SizedBox(height: 5),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    AutoSizeText(
-                                        '${cash.balance.toStringAsFixed(2)} €',
-                                        maxLines: 1,
-                                        minFontSize: 10,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white)),
-                                    const HeroIcon(
-                                      HeroIcons.plus,
-                                      color: Colors.white,
-                                      size: 20,
-                                    ),
-                                  ],
+                                const HeroIcon(
+                                  HeroIcons.plus,
+                                  color: Colors.white,
+                                  size: 20,
                                 ),
-                                const SizedBox(height: 10),
                               ],
-                            ))))
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        )))
                 : Transform(
                     transform: Matrix4.identity()..rotateX(pi),
                     alignment: Alignment.center,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        width: 140,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          gradient: const RadialGradient(
-                            colors: [
-                              RaffleColorConstants.gradient1,
-                              RaffleColorConstants.gradient2,
-                            ],
-                            center: Alignment.topLeft,
-                            radius: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: RaffleColorConstants.textDark
-                                  .withOpacity(0.2),
-                              spreadRadius: 5,
-                              blurRadius: 10,
-                              offset: const Offset(3, 3),
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 17.0),
-                          child: Form(
-                            key: key,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 50,
-                                  child: TextEntry(
-                                    label: '',
-                                    controller: amount,
-                                    keyboardType: TextInputType.number,
-                                    isInt: true,
-                                    color: RaffleColorConstants.textDark,
-                                    enabledColor: Colors.white,
-                                    suffix: '€',
-                                  ),
+                    child: CardLayout(
+                      width: 150,
+                      height: 100,
+                      colors: const [
+                        RaffleColorConstants.gradient1,
+                        RaffleColorConstants.gradient2
+                      ],
+                      shadowColor:
+                          RaffleColorConstants.textDark.withOpacity(0.2),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                        child: Form(
+                          key: key,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 50,
+                                child: TextEntry(
+                                  label: '',
+                                  controller: amount,
+                                  keyboardType: TextInputType.number,
+                                  isInt: true,
+                                  color: RaffleColorConstants.textDark,
+                                  enabledColor: Colors.white,
+                                  suffix: '€',
                                 ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                ShrinkButton(
-                                  builder: (child) => child,
-                                  onTap: () async {
-                                    if (key.currentState == null) {
-                                      return;
-                                    }
-                                    if (key.currentState!.validate()) {
-                                      await tokenExpireWrapper(ref, () async {
-                                        await ref
-                                            .read(cashProvider.notifier)
-                                            .updateCash(
-                                              cash,
-                                              int.parse(amount.text),
-                                            )
-                                            .then((value) {
-                                          if (value) {
-                                            key.currentState!.reset();
-                                            toggle();
-                                            displayVoteWithContext(
-                                                TypeMsg.msg,
-                                                RaffleTextConstants
-                                                    .updatedAmount);
-                                          } else {
-                                            displayVoteWithContext(
-                                                TypeMsg.error,
-                                                RaffleTextConstants
-                                                    .updatingError);
-                                          }
-                                        });
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              ShrinkButton(
+                                builder: (child) => child,
+                                onTap: () async {
+                                  if (key.currentState == null) {
+                                    return;
+                                  }
+                                  if (key.currentState!.validate()) {
+                                    await tokenExpireWrapper(ref, () async {
+                                      await ref
+                                          .read(cashProvider.notifier)
+                                          .updateCash(
+                                            cash,
+                                            int.parse(amount.text),
+                                          )
+                                          .then((value) {
+                                        if (value) {
+                                          key.currentState!.reset();
+                                          toggle();
+                                          displayVoteWithContext(
+                                              TypeMsg.msg,
+                                              RaffleTextConstants
+                                                  .updatedAmount);
+                                        } else {
+                                          displayVoteWithContext(
+                                              TypeMsg.error,
+                                              RaffleTextConstants
+                                                  .updatingError);
+                                        }
                                       });
-                                    }
-                                  },
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
+                                    });
+                                  }
+                                },
+                                child: const Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                  size: 30,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

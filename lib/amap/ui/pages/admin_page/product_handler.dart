@@ -9,6 +9,7 @@ import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/components/product_ui.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
@@ -60,37 +61,19 @@ class ProductHandler extends HookConsumerWidget {
                       AmapRouter.admin +
                       AmapRouter.addEditProduct);
                 },
-                child: Container(
+                child: CardLayout(
                     height: 185,
-                    margin: const EdgeInsets.only(left: 5.0, bottom: 10),
-                    padding: const EdgeInsets.all(12.0),
-                    child: Container(
-                      width: 100,
-                      decoration: BoxDecoration(
-                        gradient: const RadialGradient(
-                          colors: [
-                            AMAPColorConstants.lightGradient1,
-                            AMAPColorConstants.lightGradient2,
-                          ],
-                          center: Alignment.topLeft,
-                          radius: 1.2,
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AMAPColorConstants.textDark.withOpacity(0.3),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(3, 3),
-                          ),
-                        ],
-                      ),
-                      child: const Center(
-                        child: HeroIcon(
-                          HeroIcons.plus,
-                          color: Colors.white,
-                          size: 50,
-                        ),
+                    width: 100,
+                    colors: const [
+                      AMAPColorConstants.lightGradient1,
+                      AMAPColorConstants.lightGradient2
+                    ],
+                    shadowColor: AMAPColorConstants.textDark.withOpacity(0.3),
+                    child: const Center(
+                      child: HeroIcon(
+                        HeroIcons.plus,
+                        color: Colors.white,
+                        size: 50,
                       ),
                     )),
               ),

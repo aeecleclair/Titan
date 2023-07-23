@@ -17,6 +17,7 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/admin_button.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
@@ -95,31 +96,15 @@ class BookingMainPage extends HookConsumerWidget {
                             selectedDaysNotifier.clear();
                             QR.to(BookingRouter.root + BookingRouter.addEdit);
                           },
-                          child: Container(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Container(
-                              width: 120,
-                              height: 200,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(30),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color:
-                                        Colors.grey.shade200.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 10,
-                                    offset: const Offset(3, 3),
-                                  ),
-                                ],
-                              ),
-                              child: const Center(
-                                  child: HeroIcon(
-                                HeroIcons.plus,
-                                size: 40.0,
-                                color: Colors.black,
-                              )),
-                            ),
+                          child: const CardLayout(
+                            width: 120,
+                            height: 200,
+                            child: Center(
+                                child: HeroIcon(
+                              HeroIcons.plus,
+                              size: 40.0,
+                              color: Colors.black,
+                            )),
                           ),
                         ),
                       ),
