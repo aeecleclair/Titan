@@ -15,6 +15,7 @@ import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/local_notification_service.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DetailPage extends HookConsumerWidget {
@@ -48,68 +49,65 @@ class DetailPage extends HookConsumerWidget {
             sessionPosterMap.when(
                 data: (data) {
                   if (data[session] != null) {
-                    return data[session]!.when(data: (data) {
-                      if (data.isNotEmpty) {
-                        return Container(
-                          width: double.infinity,
-                          decoration: const BoxDecoration(boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              spreadRadius: 7,
-                              offset: Offset(0, 5),
+                    return data[session]!.when(
+                        data: (data) {
+                          if (data.isNotEmpty) {
+                            return Container(
+                              width: double.infinity,
+                              decoration: const BoxDecoration(boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 10,
+                                  spreadRadius: 7,
+                                  offset: Offset(0, 5),
+                                ),
+                              ]),
+                              child: Image(
+                                image: data.first.image,
+                                fit: BoxFit.fill,
+                              ),
+                            );
+                          } else {
+                            Future.delayed(const Duration(milliseconds: 1), () {
+                              sessionPosterMapNotifier.setTData(
+                                  session, const AsyncLoading());
+                            });
+                            tokenExpireWrapper(ref, () async {
+                              sessionPosterNotifier
+                                  .getLogo(session.id)
+                                  .then((value) {
+                                sessionPosterMapNotifier.setTData(
+                                    session, AsyncData([value]));
+                              });
+                            });
+                            return Container(
+                              width: double.infinity,
+                              decoration: const BoxDecoration(boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 10,
+                                  spreadRadius: 7,
+                                  offset: Offset(0, 5),
+                                ),
+                              ]),
+                            );
+                          }
+                        },
+                        loading: () => const SizedBox(
+                              width: double.infinity,
+                              child: Loader(),
                             ),
-                          ]),
-                          child: Image(
-                            image: data.first.image,
-                            fit: BoxFit.fill,
-                          ),
-                        );
-                      } else {
-                        Future.delayed(const Duration(milliseconds: 1), () {
-                          sessionPosterMapNotifier.setTData(
-                              session, const AsyncLoading());
-                        });
-                        tokenExpireWrapper(ref, () async {
-                          sessionPosterNotifier
-                              .getLogo(session.id)
-                              .then((value) {
-                            sessionPosterMapNotifier.setTData(
-                                session, AsyncData([value]));
-                          });
-                        });
-                        return Container(
-                          width: double.infinity,
-                          decoration: const BoxDecoration(boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              spreadRadius: 7,
-                              offset: Offset(0, 5),
-                            ),
-                          ]),
-                        );
-                      }
-                    }, loading: () {
-                      return const SizedBox(
-                        width: double.infinity,
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    }, error: (error, stack) {
-                      return const SizedBox(
-                        width: double.infinity,
-                        child: Center(
-                          child: HeroIcon(HeroIcons.exclamationCircle),
-                        ),
-                      );
-                    });
+                        error: (error, stack) => const SizedBox(
+                              width: double.infinity,
+                              child: Center(
+                                child: HeroIcon(HeroIcons.exclamationCircle),
+                              ),
+                            ));
                   } else {
                     return const SizedBox.shrink();
                   }
                 },
-                loading: () => const CircularProgressIndicator(),
+                loading: () => const Loader(),
                 error: (error, stack) => Text('Error $error')),
           ],
         ),

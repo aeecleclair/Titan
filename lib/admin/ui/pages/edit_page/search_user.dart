@@ -13,6 +13,7 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchUser extends HookConsumerWidget {
@@ -35,141 +36,141 @@ class SearchUser extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return simpleGroupsGroups.when(data: (value) {
-      final g = value[groupId];
-      if (g == null) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-      return g.when(
-        data: (g) {
-          return Column(
-            children: [
-              TextField(
-                focusNode: focusNode,
-                onChanged: (value) {
-                  tokenExpireWrapper(ref, () async {
-                    if (editingController.text.isNotEmpty) {
-                      await usersNotifier.filterUsers(editingController.text,
-                          excludeGroup: [group.value!.toSimpleGroup()]);
-                    } else {
-                      usersNotifier.clear();
-                    }
-                  });
-                },
-                controller: editingController,
-                cursorColor: ColorConstants.gradient1,
-                decoration: InputDecoration(
-                    labelText: AdminTextConstants.members,
-                    labelStyle: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: ColorConstants.background2),
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        add.value = !add.value;
-                        if (!add.value) {
-                          editingController.clear();
-                          usersNotifier.clear();
-                          focusNode.unfocus();
+    return simpleGroupsGroups.when(
+        data: (value) {
+          final g = value[groupId];
+          if (g == null) {
+            return const Loader();
+          }
+          return g.when(
+            data: (g) {
+              return Column(
+                children: [
+                  TextField(
+                    focusNode: focusNode,
+                    onChanged: (value) {
+                      tokenExpireWrapper(ref, () async {
+                        if (editingController.text.isNotEmpty) {
+                          await usersNotifier.filterUsers(
+                              editingController.text,
+                              excludeGroup: [group.value!.toSimpleGroup()]);
                         } else {
-                          focusNode.requestFocus();
+                          usersNotifier.clear();
                         }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(7.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                                colors: [
-                                  ColorConstants.gradient1,
-                                  ColorConstants.gradient2
+                      });
+                    },
+                    controller: editingController,
+                    cursorColor: ColorConstants.gradient1,
+                    decoration: InputDecoration(
+                        labelText: AdminTextConstants.members,
+                        labelStyle: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: ColorConstants.background2),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            add.value = !add.value;
+                            if (!add.value) {
+                              editingController.clear();
+                              usersNotifier.clear();
+                              focusNode.unfocus();
+                            } else {
+                              focusNode.requestFocus();
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(7.0),
+                            child: Container(
+                              padding: const EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                    colors: [
+                                      ColorConstants.gradient1,
+                                      ColorConstants.gradient2
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: ColorConstants.gradient2
+                                          .withOpacity(0.4),
+                                      offset: const Offset(2, 3),
+                                      blurRadius: 5)
                                 ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight),
-                            boxShadow: [
-                              BoxShadow(
-                                  color:
-                                      ColorConstants.gradient2.withOpacity(0.4),
-                                  offset: const Offset(2, 3),
-                                  blurRadius: 5)
-                            ],
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: HeroIcon(
-                            !add.value ? HeroIcons.plus : HeroIcons.xMark,
-                            size: 20,
-                            color: Colors.white,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: HeroIcon(
+                                !add.value ? HeroIcons.plus : HeroIcons.xMark,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
-                    ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: ColorConstants.gradient1,
-                      ),
-                    )),
-              ),
-              if (add.value) const SizedBox(height: 10),
-              if (add.value) const MemberResults(),
-              if (!add.value)
-                ...g[0].members.map((x) => UserUi(
-                    user: x,
-                    onDelete: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => CustomDialogBox(
-                              descriptions:
-                                  AdminTextConstants.removeAssociationMember,
-                              title: AdminTextConstants.deleting,
-                              onYes: () async {
-                                await tokenExpireWrapper(ref, () async {
-                                  Group newGroup = g[0].copyWith(
-                                      members: g[0]
-                                          .members
-                                          .where(
-                                              (element) => element.id != x.id)
-                                          .toList());
-                                  final value = await groupNotifier
-                                      .deleteMember(newGroup, x);
-                                  if (value) {
-                                    simpleGroupGroupsNotifier.setTData(
-                                        newGroup.id, AsyncData([newGroup]));
-                                    displayToastWithContext(TypeMsg.msg,
-                                        AdminTextConstants.updatedAssociation);
-                                  } else {
-                                    displayToastWithContext(TypeMsg.msg,
-                                        AdminTextConstants.updatingError);
-                                  }
-                                });
-                              }));
-                    })),
-            ],
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          ),
+                        ),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: ColorConstants.gradient1,
+                          ),
+                        )),
+                  ),
+                  if (add.value) const SizedBox(height: 10),
+                  if (add.value) const MemberResults(),
+                  if (!add.value)
+                    ...g[0].members.map((x) => UserUi(
+                        user: x,
+                        onDelete: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  CustomDialogBox(
+                                      descriptions: AdminTextConstants
+                                          .removeAssociationMember,
+                                      title: AdminTextConstants.deleting,
+                                      onYes: () async {
+                                        await tokenExpireWrapper(ref, () async {
+                                          Group newGroup = g[0].copyWith(
+                                              members: g[0]
+                                                  .members
+                                                  .where((element) =>
+                                                      element.id != x.id)
+                                                  .toList());
+                                          final value = await groupNotifier
+                                              .deleteMember(newGroup, x);
+                                          if (value) {
+                                            simpleGroupGroupsNotifier.setTData(
+                                                newGroup.id,
+                                                AsyncData([newGroup]));
+                                            displayToastWithContext(
+                                                TypeMsg.msg,
+                                                AdminTextConstants
+                                                    .updatedAssociation);
+                                          } else {
+                                            displayToastWithContext(
+                                                TypeMsg.msg,
+                                                AdminTextConstants
+                                                    .updatingError);
+                                          }
+                                        });
+                                      }));
+                        })),
+                ],
+              );
+            },
+            loading: () => const Loader(),
+            error: (e, s) => const Center(
+              child: Text(AdminTextConstants.error),
+            ),
           );
         },
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        loading: () => const Loader(),
         error: (e, s) => const Center(
-          child: Text(AdminTextConstants.error),
-        ),
-      );
-    }, loading: () {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }, error: (e, s) {
-      return const Center(
-        child: Text(AdminTextConstants.error),
-      );
-    });
+              child: Text(AdminTextConstants.error),
+            ));
   }
 }

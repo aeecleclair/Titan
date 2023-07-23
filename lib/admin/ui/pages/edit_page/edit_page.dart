@@ -14,6 +14,7 @@ import 'package:myecl/admin/ui/pages/edit_page/search_user.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -42,148 +43,141 @@ class EditAssociationPage extends HookConsumerWidget {
           physics: const BouncingScrollPhysics(),
           child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: simpleGroupsGroups.when(data: (value) {
-                final g = value[groupId];
-                if (g == null) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return g.when(
-                  data: (groups) {
-                    if (groups.isEmpty) {
-                      Future.delayed(
-                          const Duration(milliseconds: 1),
-                          () => simpleGroupsGroupsNotifier.setTData(
-                              groupId, const AsyncLoading()));
-                      tokenExpireWrapper(ref, () async {
-                        final loadedGroup =
-                            await groupNotifier.loadGroup(groupId);
-                        loadedGroup.whenData((value) {
-                          simpleGroupsGroupsNotifier.setTData(
-                              groupId, AsyncData([value]));
-                        });
-                      });
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
+              child: simpleGroupsGroups.when(
+                  data: (value) {
+                    final g = value[groupId];
+                    if (g == null) {
+                      return const Loader();
                     }
-                    name.text = groups[0].name;
-                    description.text = groups[0].description;
-                    return Column(children: [
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(AdminTextConstants.edit,
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: ColorConstants.gradient1)),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Form(
-                        key: key,
-                        child: Column(children: [
-                          Container(
-                              margin: const EdgeInsets.symmetric(vertical: 10),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    child: TextEntry(
-                                      controller: name,
-                                      color: ColorConstants.gradient1,
-                                      label: "Name",
-                                      suffixIcon:
-                                          const HeroIcon(HeroIcons.pencil),
-                                      enabledColor: Colors.transparent,
-                                    ),
-                                  ),
-                                ],
-                              )),
-                          Container(
-                              margin: const EdgeInsets.symmetric(vertical: 10),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    child: TextEntry(
-                                      controller: description,
-                                      color: ColorConstants.gradient1,
-                                      label: "Description",
-                                      suffixIcon:
-                                          const HeroIcon(HeroIcons.pencil),
-                                      enabledColor: Colors.transparent,
-                                    ),
-                                  ),
-                                ],
-                              )),
+                    return g.when(
+                      data: (groups) {
+                        if (groups.isEmpty) {
+                          Future.delayed(
+                              const Duration(milliseconds: 1),
+                              () => simpleGroupsGroupsNotifier.setTData(
+                                  groupId, const AsyncLoading()));
+                          tokenExpireWrapper(ref, () async {
+                            final loadedGroup =
+                                await groupNotifier.loadGroup(groupId);
+                            loadedGroup.whenData((value) {
+                              simpleGroupsGroupsNotifier.setTData(
+                                  groupId, AsyncData([value]));
+                            });
+                          });
+                          return const Loader();
+                        }
+                        name.text = groups[0].name;
+                        description.text = groups[0].description;
+                        return Column(children: [
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(AdminTextConstants.edit,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: ColorConstants.gradient1)),
+                          ),
                           const SizedBox(
                             height: 20,
                           ),
-                          ShrinkButton(
-                            onTap: () async {
-                              if (!key.currentState!.validate()) {
-                                return;
-                              }
-                              await tokenExpireWrapper(ref, () async {
-                                Group newGroup = groups[0].copyWith(
-                                    name: name.text,
-                                    description: description.text);
-                                groupNotifier.setGroup(newGroup);
-                                final value = await groupListNotifier
-                                    .updateGroup(newGroup.toSimpleGroup());
-                                if (value) {
-                                  QR.back();
-                                  displayToastWithContext(TypeMsg.msg,
-                                      AdminTextConstants.updatedAssociation);
-                                } else {
-                                  displayToastWithContext(TypeMsg.msg,
-                                      AdminTextConstants.updatingError);
-                                }
-                              });
-                            },
-                            builder: (child) => AdminButton(child: child),
-                            child: const Text(
-                              AdminTextConstants.edit,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(255, 255, 255, 255),
+                          Form(
+                            key: key,
+                            child: Column(children: [
+                              Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        child: TextEntry(
+                                          controller: name,
+                                          color: ColorConstants.gradient1,
+                                          label: "Name",
+                                          suffixIcon:
+                                              const HeroIcon(HeroIcons.pencil),
+                                          enabledColor: Colors.transparent,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                              Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        child: TextEntry(
+                                          controller: description,
+                                          color: ColorConstants.gradient1,
+                                          label: "Description",
+                                          suffixIcon:
+                                              const HeroIcon(HeroIcons.pencil),
+                                          enabledColor: Colors.transparent,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                              const SizedBox(
+                                height: 20,
                               ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const SearchUser(),
-                        ]),
-                      )
-                    ]);
+                              ShrinkButton(
+                                onTap: () async {
+                                  if (!key.currentState!.validate()) {
+                                    return;
+                                  }
+                                  await tokenExpireWrapper(ref, () async {
+                                    Group newGroup = groups[0].copyWith(
+                                        name: name.text,
+                                        description: description.text);
+                                    groupNotifier.setGroup(newGroup);
+                                    final value = await groupListNotifier
+                                        .updateGroup(newGroup.toSimpleGroup());
+                                    if (value) {
+                                      QR.back();
+                                      displayToastWithContext(
+                                          TypeMsg.msg,
+                                          AdminTextConstants
+                                              .updatedAssociation);
+                                    } else {
+                                      displayToastWithContext(TypeMsg.msg,
+                                          AdminTextConstants.updatingError);
+                                    }
+                                  });
+                                },
+                                builder: (child) => AdminButton(child: child),
+                                child: const Text(
+                                  AdminTextConstants.edit,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const SearchUser(),
+                            ]),
+                          )
+                        ]);
+                      },
+                      error: (Object error, StackTrace? stackTrace) =>
+                          Text("$error"),
+                      loading: () => const Loader(color: Colors.white),
+                    );
                   },
-                  error: (Object error, StackTrace? stackTrace) {
-                    return Text("$error");
-                  },
-                  loading: () {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation(Colors.white),
-                    ));
-                  },
-                );
-              }, error: (Object error, StackTrace stackTrace) {
-                return Text("$error");
-              }, loading: () {
-                return const Center(
-                    child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(Colors.white),
-                ));
-              }))),
+                  error: (Object error, StackTrace stackTrace) =>
+                      Text("$error"),
+                  loading: () => const Loader(color: Colors.white)))),
     );
   }
 }

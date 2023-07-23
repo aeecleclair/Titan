@@ -11,11 +11,11 @@ import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar.dart';
-import 'package:myecl/booking/ui/components/waiter.dart';
 import 'package:myecl/booking/ui/pages/admin_page/list_booking.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -152,12 +152,9 @@ class AdminPage extends HookConsumerWidget {
                         ],
                       ),
                     ),
-                error: (Object error, StackTrace? stackTrace) {
-                  return Center(child: Text('Error $error'));
-                },
-                loading: () {
-                  return const Waiter();
-                }),
+                error: (Object error, StackTrace? stackTrace) =>
+                    Center(child: Text('Error $error')),
+                loading: () => const Loader()),
             const SizedBox(height: 30),
           ],
         ),

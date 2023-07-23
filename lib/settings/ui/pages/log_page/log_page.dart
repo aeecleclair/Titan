@@ -6,6 +6,7 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/log_page/log_card.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
 class LogPage extends HookConsumerWidget {
@@ -70,18 +71,11 @@ class LogPage extends HookConsumerWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                logs.when(data: (data) {
-                  return Column(
-                      children: data.map((e) => LogCard(log: e)).toList());
-                }, loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }, error: (e, s) {
-                  return Center(
-                    child: Text("Error : $e"),
-                  );
-                }),
+                logs.when(
+                    data: (data) => Column(
+                        children: data.map((e) => LogCard(log: e)).toList()),
+                    loading: () => const Loader(),
+                    error: (e, s) => Center(child: Text("Error : $e"))),
                 const SizedBox(
                   height: 20,
                 ),

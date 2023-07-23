@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/card_button.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/contender_logo_provider.dart';
 import 'package:myecl/vote/providers/contender_provider.dart';
@@ -39,8 +40,7 @@ class ContenderCard extends HookConsumerWidget {
     final selectedContenderNotifier =
         ref.read(selectedContenderProvider.notifier);
     final contenderLogos = ref.watch(contenderLogosProvider);
-    final contenderLogosNotifier =
-        ref.read(contenderLogosProvider.notifier);
+    final contenderLogosNotifier = ref.read(contenderLogosProvider.notifier);
     final logoNotifier = ref.read(contenderLogoProvider.notifier);
     final status = ref.watch(statusProvider);
     final s = status.when(
@@ -160,63 +160,56 @@ class ContenderCard extends HookConsumerWidget {
                                   if (data[contender] != null) {
                                     return data[contender]!.when(
                                         data: (data) {
-                                      if (data.isNotEmpty) {
-                                        return Container(
-                                          width: 40,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: data.first.image,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        );
-                                      } else {
-                                        Future.delayed(
-                                            const Duration(milliseconds: 1),
-                                            () {
-                                          contenderLogosNotifier.setTData(
-                                              contender, const AsyncLoading());
-                                        });
-                                        tokenExpireWrapper(ref, () async {
-                                          logoNotifier
-                                              .getLogo(contender.id)
-                                              .then((value) {
-                                            contenderLogosNotifier.setTData(
-                                                contender,
-                                                AsyncData([value]));
-                                          });
-                                        });
-                                        return const HeroIcon(
-                                          HeroIcons.userCircle,
-                                          size: 40,
-                                        );
-                                      }
-                                    }, loading: () {
-                                      return const SizedBox(
-                                        height: 40,
-                                        width: 40,
-                                        child: Center(
-                                          child: CircularProgressIndicator(),
-                                        ),
-                                      );
-                                    }, error: (error, stack) {
-                                      return const SizedBox(
-                                        height: 40,
-                                        width: 40,
-                                        child: Center(
-                                          child: HeroIcon(
-                                              HeroIcons.exclamationCircle),
-                                        ),
-                                      );
-                                    });
+                                          if (data.isNotEmpty) {
+                                            return Container(
+                                              width: 40,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: DecorationImage(
+                                                  image: data.first.image,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            Future.delayed(
+                                                const Duration(milliseconds: 1),
+                                                () {
+                                              contenderLogosNotifier.setTData(
+                                                  contender,
+                                                  const AsyncLoading());
+                                            });
+                                            tokenExpireWrapper(ref, () async {
+                                              logoNotifier
+                                                  .getLogo(contender.id)
+                                                  .then((value) {
+                                                contenderLogosNotifier.setTData(
+                                                    contender,
+                                                    AsyncData([value]));
+                                              });
+                                            });
+                                            return const HeroIcon(
+                                              HeroIcons.userCircle,
+                                              size: 40,
+                                            );
+                                          }
+                                        },
+                                        loading: () => const SizedBox(
+                                            height: 40,
+                                            width: 40,
+                                            child: Loader()),
+                                        error: (error, stack) => const SizedBox(
+                                            height: 40,
+                                            width: 40,
+                                            child: Center(
+                                                child: HeroIcon(HeroIcons
+                                                    .exclamationCircle))));
                                   } else {
                                     return const SizedBox.shrink();
                                   }
                                 },
-                                loading: () =>
-                                    const CircularProgressIndicator(),
+                                loading: () => const Loader(),
                                 error: (error, stack) => Text('Error $error'))
                             : const HeroIcon(
                                 HeroIcons.cubeTransparent,
@@ -257,8 +250,7 @@ class ContenderCard extends HookConsumerWidget {
                             ? GestureDetector(
                                 onTap: () {
                                   contenderNotifier.setId(contender);
-                                  QR.to(VoteRouter.root +
-                                      VoteRouter.detail);
+                                  QR.to(VoteRouter.root + VoteRouter.detail);
                                 },
                                 child: const HeroIcon(
                                   HeroIcons.informationCircle,
@@ -297,9 +289,8 @@ class ContenderCard extends HookConsumerWidget {
                                         loading: () {});
                                   },
                                   child: const CardButton(
-                                      gradient1: Colors.black,
-                                    child: HeroIcon(
-                                        HeroIcons.envelopeOpen,
+                                    gradient1: Colors.black,
+                                    child: HeroIcon(HeroIcons.envelopeOpen,
                                         color: Colors.white),
                                   ),
                                 )

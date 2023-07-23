@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class Waiter extends StatelessWidget {
+class Loader extends StatelessWidget {
   final Color color;
-  const Waiter({super.key, this.color = Colors.black});
+  const Loader({super.key, this.color = Colors.black});
 
   @override
   Widget build(BuildContext context) {

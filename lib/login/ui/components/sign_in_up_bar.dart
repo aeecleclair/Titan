@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class SignInUpBar extends StatelessWidget {
@@ -47,11 +48,7 @@ class SignInUpBar extends StatelessWidget {
               ),
               child: Container(
                 margin: const EdgeInsets.only(left: 20),
-                child: isLoading
-                    ? CircularProgressIndicator(
-                        color: color,
-                      )
-                    : icon,
+                child: isLoading ? Loader(color: color) : icon,
               ),
             )));
   }

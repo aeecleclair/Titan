@@ -16,6 +16,7 @@ import 'package:myecl/raffle/ui/pages/admin_page/winning_ticket_handler.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
@@ -134,11 +135,8 @@ class AdminPage extends HookConsumerWidget {
                                     ],
                                   ),
                               error: (e, s) => const Text("Error"),
-                              loading: () => const Center(
-                                    child: CircularProgressIndicator(
-                                      color: RaffleColorConstants.textDark,
-                                    ),
-                                  )),
+                              loading: () => const Loader(
+                                  color: RaffleColorConstants.textDark)),
                           const Spacer(),
                           raffleStats.when(
                               data: (stats) => Column(
@@ -161,11 +159,8 @@ class AdminPage extends HookConsumerWidget {
                                     ],
                                   ),
                               error: (e, s) => const Text("Error"),
-                              loading: () => const Center(
-                                    child: CircularProgressIndicator(
-                                      color: RaffleColorConstants.textDark,
-                                    ),
-                                  )),
+                              loading: () => const Loader(
+                                  color: RaffleColorConstants.textDark)),
                           const Spacer(),
                         ],
                       ),

@@ -11,11 +11,11 @@ import 'package:myecl/amap/providers/sorted_by_category_products.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/components/amap_button.dart';
-import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/amap/ui/pages/delivery_pages/product_ui_check.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -230,15 +230,11 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                       ),
                                     ],
                                   ),
-                              error: (Object error, StackTrace stackTrace) {
-                                return const Text('error');
-                              },
-                              loading: () {
-                                return const Waiter();
-                              }),
-                          const SizedBox(
-                            height: 40,
-                          ),
+                              error: (Object error, StackTrace stackTrace) =>
+                                  const Text('error'),
+                              loading: () => const Loader(
+                                  color: AMAPColorConstants.greenGradient2)),
+                          const SizedBox(height: 40),
                         ]))))),
       ),
     );

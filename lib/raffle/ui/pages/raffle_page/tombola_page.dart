@@ -9,6 +9,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/buy_type_ticket_card.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/prize_card.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
 class RaffleInfoPage extends HookConsumerWidget {
@@ -82,7 +83,8 @@ class RaffleInfoPage extends HookConsumerWidget {
                             scrollDirection: Axis.horizontal,
                             itemCount: typeTickets.length + 2,
                             itemBuilder: (context, index) {
-                              if (index == 0 || index == typeTickets.length + 1) {
+                              if (index == 0 ||
+                                  index == typeTickets.length + 1) {
                                 return const SizedBox(
                                   width: 15,
                                 );
@@ -98,9 +100,7 @@ class RaffleInfoPage extends HookConsumerWidget {
               loading: () => Container(
                   height: 190,
                   padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  )),
+                  child: const Loader()),
               error: (error, stack) => Container(
                     height: 190,
                     padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -150,7 +150,8 @@ class RaffleInfoPage extends HookConsumerWidget {
                                 scrollDirection: Axis.horizontal,
                                 itemCount: prizes.length + 2,
                                 itemBuilder: (context, index) {
-                                  if (index == 0 || index == prizes.length + 1) {
+                                  if (index == 0 ||
+                                      index == prizes.length + 1) {
                                     return const SizedBox(
                                       width: 20,
                                     );
@@ -179,9 +180,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                         SizedBox(
                           height: 10,
                         ),
-                        Center(
-                          child: CircularProgressIndicator(),
-                        )
+                        Loader()
                       ])),
               error: (error, stack) => Container(
                   height: 120,
@@ -202,8 +201,8 @@ class RaffleInfoPage extends HookConsumerWidget {
                       ]))),
           if (raffle.description != null)
             Container(
-              padding:
-                  const EdgeInsets.only(top: 20, bottom: 10, left: 30, right: 30),
+              padding: const EdgeInsets.only(
+                  top: 20, bottom: 10, left: 30, right: 30),
               child: const Text("Description",
                   style: TextStyle(
                       fontSize: 25,
@@ -211,8 +210,8 @@ class RaffleInfoPage extends HookConsumerWidget {
                       color: RaffleColorConstants.gradient2)),
             ),
           Container(
-              padding:
-                  const EdgeInsets.only(top: 20, bottom: 10, left: 30, right: 30),
+              padding: const EdgeInsets.only(
+                  top: 20, bottom: 10, left: 30, right: 30),
               child: Text(raffle.description ?? "",
                   style: const TextStyle(fontSize: 15))),
         ]),

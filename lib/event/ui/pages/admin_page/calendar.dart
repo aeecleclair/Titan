@@ -8,6 +8,7 @@ import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/card_button.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Calendar extends HookConsumerWidget {
@@ -88,118 +89,115 @@ class Calendar extends HookConsumerWidget {
       return SizedBox(
         height: constraints.maxHeight,
         width: constraints.maxWidth,
-        child: events.when(data: (res) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 5),
-            child: Stack(
-              children: [
-                SfCalendar(
-                  onTap: (details) => calendarTapped(details, context),
-                  dataSource: _getCalendarDataSource(res),
-                  view: CalendarView.week,
-                  controller: calendarController,
-                  selectionDecoration: BoxDecoration(
-                    color: Colors.transparent,
-                    border: Border.all(color: Colors.black, width: 2),
-                    borderRadius: const BorderRadius.all(Radius.circular(5)),
-                    shape: BoxShape.rectangle,
-                  ),
-                  todayHighlightColor: Colors.black,
-                  todayTextStyle: const TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                  firstDayOfWeek: 1,
-                  timeZone: 'Europe/Paris',
-                  timeSlotViewSettings: const TimeSlotViewSettings(
-                    timeFormat: 'HH:mm',
-                  ),
-                  viewHeaderStyle: const ViewHeaderStyle(
-                      dayTextStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
+        child: events.when(
+            data: (res) {
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 5),
+                child: Stack(
+                  children: [
+                    SfCalendar(
+                      onTap: (details) => calendarTapped(details, context),
+                      dataSource: _getCalendarDataSource(res),
+                      view: CalendarView.week,
+                      controller: calendarController,
+                      selectionDecoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border.all(color: Colors.black, width: 2),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
+                        shape: BoxShape.rectangle,
                       ),
-                      dateTextStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      )),
-                  headerStyle: const CalendarHeaderStyle(
-                    textAlign: TextAlign.center,
-                    textStyle: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
+                      todayHighlightColor: Colors.black,
+                      todayTextStyle: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                      firstDayOfWeek: 1,
+                      timeZone: 'Europe/Paris',
+                      timeSlotViewSettings: const TimeSlotViewSettings(
+                        timeFormat: 'HH:mm',
+                      ),
+                      viewHeaderStyle: const ViewHeaderStyle(
+                          dayTextStyle: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          dateTextStyle: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          )),
+                      headerStyle: const CalendarHeaderStyle(
+                        textAlign: TextAlign.center,
+                        textStyle: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
-                  ),
+                    if (isWebFormat)
+                      Positioned(
+                        right: 30,
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                    color:
+                                        Colors.grey.shade700.withOpacity(0.3),
+                                    blurRadius: 5,
+                                    spreadRadius: 1)
+                              ]),
+                          child: IconButton(
+                            onPressed: () {
+                              calendarController.forward!();
+                            },
+                            icon: const HeroIcon(
+                              HeroIcons.arrowRight,
+                              size: 25,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (isWebFormat)
+                      Positioned(
+                        left: 30,
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                    color:
+                                        Colors.grey.shade700.withOpacity(0.3),
+                                    blurRadius: 5,
+                                    spreadRadius: 1)
+                              ]),
+                          child: IconButton(
+                            onPressed: () {
+                              calendarController.backward!();
+                            },
+                            icon: const HeroIcon(
+                              HeroIcons.arrowLeft,
+                              size: 25,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
-                if (isWebFormat)
-                  Positioned(
-                    right: 30,
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.shade700.withOpacity(0.3),
-                                blurRadius: 5,
-                                spreadRadius: 1)
-                          ]),
-                      child: IconButton(
-                        onPressed: () {
-                          calendarController.forward!();
-                        },
-                        icon: const HeroIcon(
-                          HeroIcons.arrowRight,
-                          size: 25,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                if (isWebFormat)
-                  Positioned(
-                    left: 30,
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.shade700.withOpacity(0.3),
-                                blurRadius: 5,
-                                spreadRadius: 1)
-                          ]),
-                      child: IconButton(
-                        onPressed: () {
-                          calendarController.backward!();
-                        },
-                        icon: const HeroIcon(
-                          HeroIcons.arrowLeft,
-                          size: 25,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          );
-        }, error: (Object error, StackTrace? stackTrace) {
-          return Center(
-            child: Text(error.toString()),
-          );
-        }, loading: () {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: ColorConstants.background2,
-            ),
-          );
-        }),
+              );
+            },
+            error: (Object error, StackTrace? stackTrace) =>
+                Center(child: Text(error.toString())),
+            loading: () => const Loader(color: ColorConstants.background2)),
       );
     });
   }

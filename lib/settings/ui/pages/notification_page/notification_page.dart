@@ -7,6 +7,7 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/service/tools/functions.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
 class NotificationPage extends HookConsumerWidget {
@@ -110,9 +111,7 @@ class NotificationPage extends HookConsumerWidget {
                             ))
                         .toList()),
                 error: (e, s) => Text('Error $e'),
-                loading: () => const CircularProgressIndicator(
-                  color: ColorConstants.gradient1,
-                ),
+                loading: () => const Loader(color: ColorConstants.gradient1),
               ),
             ]),
           )),
