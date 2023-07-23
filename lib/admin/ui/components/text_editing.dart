@@ -3,16 +3,14 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
 
 class TextEditing extends StatelessWidget {
-  final TextEditingController controller;
   final String label;
+  final TextEditingController controller;
   const TextEditing({super.key, required this.controller, required this.label});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.symmetric(
-          vertical: 20,
-        ),
+        margin: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,

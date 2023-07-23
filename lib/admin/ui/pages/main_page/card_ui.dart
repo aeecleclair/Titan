@@ -19,6 +19,7 @@ class CardUi extends StatelessWidget {
                 spreadRadius: 2)
           ]),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: children,
       ),
     );
