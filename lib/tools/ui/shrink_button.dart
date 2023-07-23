@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:myecl/tools/ui/loader.dart';
 
 class ShrinkButton extends HookWidget {
   final Widget child;
@@ -43,7 +44,7 @@ class ShrinkButton extends HookWidget {
           builder: (context, child) => Transform.scale(
               scale: 1 - animationController.value, child: builder(child!)),
           child: clicked.value
-              ? Center(child: CircularProgressIndicator(color: waitingColor))
+              ? Loader(color: waitingColor)
               : child),
     );
   }

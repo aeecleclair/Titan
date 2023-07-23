@@ -9,6 +9,7 @@ import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/cinema/ui/pages/admin_page/admin_session_card.dart';
 import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminPage extends HookConsumerWidget {
@@ -86,12 +87,8 @@ class AdminPage extends HookConsumerWidget {
             ),
           );
         },
-        error: (Object error, StackTrace? stackTrace) {
-          return Text('error $error');
-        },
-        loading: () {
-          return const Center(child: CircularProgressIndicator());
-        },
+        loading: () => const Loader(),
+        error: (Object error, StackTrace? stackTrace) => Text('error $error'),
       ),
     );
   }

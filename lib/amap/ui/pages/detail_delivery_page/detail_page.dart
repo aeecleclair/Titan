@@ -10,10 +10,10 @@ import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/providers/sorted_delivery_product.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/amap/ui/pages/detail_delivery_page/order_detail_ui.dart';
 import 'package:myecl/amap/ui/pages/detail_delivery_page/product_detail_ui.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
 class DetailDeliveryPage extends HookConsumerWidget {
@@ -144,7 +144,8 @@ class DetailDeliveryPage extends HookConsumerWidget {
                 data: (data) {
                   final orders = data[delivery.id];
                   if (orders == null) {
-                    return const Waiter();
+                    return const Loader(
+                        color: AMAPColorConstants.greenGradient2);
                   }
                   return orders.item1.when(
                     data: (data) {
@@ -168,16 +169,19 @@ class DetailDeliveryPage extends HookConsumerWidget {
                               }).toList(),
                             );
                           },
-                          loading: () => const Waiter(),
+                          loading: () => const Loader(
+                              color: AMAPColorConstants.greenGradient2),
                           error: (error, stack) => Text(error.toString()),
                         );
                       }
                     },
-                    loading: () => const Waiter(),
+                    loading: () =>
+                        const Loader(color: AMAPColorConstants.greenGradient2),
                     error: (error, stack) => Text(error.toString()),
                   );
                 },
-                loading: () => const Waiter(),
+                loading: () =>
+                    const Loader(color: AMAPColorConstants.greenGradient2),
                 error: (error, stack) => Text(error.toString()),
               ),
             ),

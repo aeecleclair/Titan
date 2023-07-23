@@ -12,6 +12,7 @@ import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -43,100 +44,95 @@ class SettingsMainPage extends HookConsumerWidget {
             const SizedBox(
               height: 25,
             ),
-            profilePicture.when(data: (profile) {
-              return Center(
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            spreadRadius: 6,
-                            blurRadius: 10,
-                            offset: const Offset(0, 2),
+            profilePicture.when(
+                data: (profile) {
+                  return Center(
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                spreadRadius: 6,
+                                blurRadius: 10,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: CircleAvatar(
-                        radius: 70,
-                        backgroundImage: profile.isEmpty
-                            ? const AssetImage('assets/images/logo.png')
-                            : Image.memory(profile).image,
-                      ),
-                    ),
-                    Positioned(
-                      top: 0,
-                      left: -MediaQuery.of(context).size.width / 2 + 70,
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 125,
+                          child: CircleAvatar(
+                            radius: 70,
+                            backgroundImage: profile.isEmpty
+                                ? const AssetImage('assets/images/logo.png')
+                                : Image.memory(profile).image,
                           ),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.white.withOpacity(0.5),
-                                  spreadRadius: 5,
-                                  blurRadius: 10,
-                                  offset: const Offset(-2, -3),
+                        ),
+                        Positioned(
+                          top: 0,
+                          left: -MediaQuery.of(context).size.width / 2 + 70,
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 125,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.white.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 10,
+                                      offset: const Offset(-2, -3),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Column(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
+                                    Column(
+                                      children: [
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          me.nickname != null
+                                              ? me.nickname!
+                                              : me.firstname,
+                                          style: const TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                     const SizedBox(
-                                      height: 8,
+                                      height: 3,
                                     ),
                                     Text(
                                       me.nickname != null
-                                          ? me.nickname!
-                                          : me.firstname,
+                                          ? "${me.firstname} ${me.name}"
+                                          : me.name,
                                       style: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
                                       ),
                                     ),
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  me.nickname != null
-                                      ? "${me.firstname} ${me.name}"
-                                      : me.name,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              );
-            }, loading: () {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }, error: (e, s) {
-              return const HeroIcon(
-                HeroIcons.userCircle,
-                size: 140,
-              );
-            }),
+                  );
+                },
+                loading: () => const Loader(),
+                error: (e, s) =>
+                    const HeroIcon(HeroIcons.userCircle, size: 140)),
             const SizedBox(
               height: 100,
             ),

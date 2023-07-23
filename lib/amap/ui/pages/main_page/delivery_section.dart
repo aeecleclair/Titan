@@ -4,13 +4,14 @@ import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/amap/ui/pages/main_page/delivery_ui.dart';
+import 'package:myecl/tools/ui/loader.dart';
 
 class DeliverySection extends HookConsumerWidget {
   final bool showSelected;
   final bool editable;
-  const DeliverySection({super.key, this.showSelected = true, this.editable = true});
+  const DeliverySection(
+      {super.key, this.showSelected = true, this.editable = true});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -57,10 +58,12 @@ class DeliverySection extends HookConsumerWidget {
                       child: DeliveryUi(
                         delivery: availableDeliveries[i],
                         onTap: () {
-                          {if (editable && showSelected) {
-                            deliveryIdNotifier
-                                .setId(availableDeliveries[i].id);
-                          }}
+                          {
+                            if (editable && showSelected) {
+                              deliveryIdNotifier
+                                  .setId(availableDeliveries[i].id);
+                            }
+                          }
                         },
                         showSelected: showSelected,
                       ),
@@ -69,7 +72,7 @@ class DeliverySection extends HookConsumerWidget {
               ),
             );
           },
-          loading: () => const Waiter(),
+          loading: () => const Loader(color: AMAPColorConstants.greenGradient2),
           error: (error, stack) => Text(error.toString()),
         ),
       ],

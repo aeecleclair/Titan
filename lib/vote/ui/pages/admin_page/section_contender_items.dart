@@ -5,6 +5,7 @@ import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/contender_list_provider.dart';
 import 'package:myecl/vote/providers/contender_members.dart';
@@ -53,8 +54,7 @@ class SectionContenderItems extends HookConsumerWidget {
                             if (status == Status.waiting)
                               GestureDetector(
                                 onTap: () {
-                                  contenderNotifier
-                                      .setId(Contender.empty());
+                                  contenderNotifier.setId(Contender.empty());
                                   membersNotifier.setMembers([]);
                                   QR.to(VoteRouter.root +
                                       VoteRouter.admin +
@@ -153,15 +153,9 @@ class SectionContenderItems extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                error: (Object error, StackTrace? stackTrace) {
-                  return Center(child: Text('Error $error'));
-                },
-                loading: () {
-                  return const Center(
-                      child: CircularProgressIndicator(
-                    color: Colors.black,
-                  ));
-                });
+                error: (Object error, StackTrace? stackTrace) =>
+                    Center(child: Text('Error $error')),
+                loading: () => const Loader());
           } else {
             return const SizedBox(
               height: 200,
@@ -169,15 +163,9 @@ class SectionContenderItems extends HookConsumerWidget {
             );
           }
         },
-        error: (Object error, StackTrace? stackTrace) {
-          return Center(child: Text('Error $error'));
-        },
-        loading: () {
-          return const Center(
-              child: CircularProgressIndicator(
-            color: Colors.black,
-          ));
-        },
+        error: (Object error, StackTrace? stackTrace) =>
+            Center(child: Text('Error $error')),
+        loading: () => const Loader(color: Colors.black),
       )
     ]);
   }

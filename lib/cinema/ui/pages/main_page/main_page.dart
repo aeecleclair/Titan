@@ -13,6 +13,7 @@ import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/cinema/ui/pages/main_page/session_card.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/tools/ui/admin_button.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -75,59 +76,56 @@ class CinemaMainPage extends HookConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                sessionList.when(data: (data) {
-                  data.sort((a, b) => a.start.compareTo(b.start));
-                  if (data.isEmpty) {
-                    return const SizedBox(
-                      height: 200,
-                      child: Center(
-                        child: Text(CinemaTextConstants.noSession,
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black)),
-                      ),
-                    );
-                  }
-                  return Expanded(
-                    child: isWebFormat
-                        ? ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            controller: pageController,
-                            itemCount: data.length,
-                            itemBuilder: (context, index) {
-                              return SessionCard(
-                                session: data[index],
-                                index: index,
-                                onTap: () {},
-                              );
-                            })
-                        : PageView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            controller: pageController,
-                            itemCount: data.length,
-                            itemBuilder: (context, index) {
-                              return SessionCard(
-                                session: data[index],
-                                index: index,
-                                onTap: () {
-                                  sessionNotifier.setSession(data[index]);
-                                  QR.to(
-                                      CinemaRouter.root + CinemaRouter.detail);
-                                  initialPageNotifier.setMainPageIndex(index);
-                                },
-                              );
-                            }),
-                  );
-                }, loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }, error: (error, stackTrace) {
-                  return Center(
-                    child: Text(error.toString()),
-                  );
-                }),
+                sessionList.when(
+                    data: (data) {
+                      data.sort((a, b) => a.start.compareTo(b.start));
+                      if (data.isEmpty) {
+                        return const SizedBox(
+                          height: 200,
+                          child: Center(
+                            child: Text(CinemaTextConstants.noSession,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black)),
+                          ),
+                        );
+                      }
+                      return Expanded(
+                        child: isWebFormat
+                            ? ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                controller: pageController,
+                                itemCount: data.length,
+                                itemBuilder: (context, index) {
+                                  return SessionCard(
+                                    session: data[index],
+                                    index: index,
+                                    onTap: () {},
+                                  );
+                                })
+                            : PageView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                controller: pageController,
+                                itemCount: data.length,
+                                itemBuilder: (context, index) {
+                                  return SessionCard(
+                                    session: data[index],
+                                    index: index,
+                                    onTap: () {
+                                      sessionNotifier.setSession(data[index]);
+                                      QR.to(CinemaRouter.root +
+                                          CinemaRouter.detail);
+                                      initialPageNotifier
+                                          .setMainPageIndex(index);
+                                    },
+                                  );
+                                }),
+                      );
+                    },
+                    loading: () => const Loader(),
+                    error: (error, stackTrace) =>
+                        Center(child: Text(error.toString()))),
               ],
             ),
           )),

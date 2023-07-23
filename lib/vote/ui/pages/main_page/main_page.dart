@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/admin_button.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/is_ae_member_provider.dart';
@@ -143,9 +144,7 @@ class VoteMainPage extends HookConsumerWidget {
                                         animation: animation,
                                       ))
                                     ]),
-                                    loading: () => const Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
+                                    loading: () => const Loader(),
                                     error: (error, stack) => Center(
                                       child: Text('Error : $error'),
                                     ),
@@ -165,8 +164,7 @@ class VoteMainPage extends HookConsumerWidget {
                         ),
                       ],
                     ),
-                    loading: () =>
-                        const Center(child: CircularProgressIndicator()),
+                    loading: () => const Loader(),
                     error: (error, stack) => const Center(child: Text('Error')),
                   ),
                 ])),

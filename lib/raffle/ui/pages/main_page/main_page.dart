@@ -14,6 +14,7 @@ import 'package:myecl/raffle/ui/pages/main_page/raffle_card.dart';
 import 'package:myecl/raffle/ui/pages/main_page/ticket_card.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/ui/admin_button.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -118,12 +119,7 @@ class RaffleMainPage extends HookConsumerWidget {
                                   ));
                             }));
               },
-              loading: () => const SizedBox(
-                height: 120,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
+              loading: () => const SizedBox(height: 120, child: Loader()),
               error: (error, stack) => SizedBox(
                   height: 120,
                   child: Center(
@@ -203,12 +199,7 @@ class RaffleMainPage extends HookConsumerWidget {
                           child: Text("Error $error",
                               style: const TextStyle(fontSize: 20)))),
                   loading: () => const Center(
-                          child: SizedBox(
-                        height: 120,
-                        child: CircularProgressIndicator(
-                          color: Colors.black,
-                        ),
-                      ))),
+                      child: SizedBox(height: 120, child: Loader()))),
             ),
           ],
         ),

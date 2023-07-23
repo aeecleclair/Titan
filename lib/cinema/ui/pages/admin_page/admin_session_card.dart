@@ -7,6 +7,7 @@ import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/card_button.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AdminSessionCard extends HookConsumerWidget {
@@ -51,61 +52,59 @@ class AdminSessionCard extends HookConsumerWidget {
               sessionPosterMap.when(
                   data: (data) {
                     if (data[session] != null) {
-                      return data[session]!.when(data: (data) {
-                        if (data.isNotEmpty) {
-                          return Image(
-                            image: data.first.image,
-                            height: 200,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          );
-                        } else {
-                          Future.delayed(const Duration(milliseconds: 1), () {
-                            sessionPosterMapNotifier.setTData(
-                                session, const AsyncLoading());
-                          });
-                          tokenExpireWrapper(ref, () async {
-                            sessionPosterNotifier
-                                .getLogo(session.id)
-                                .then((value) {
-                              sessionPosterMapNotifier.setTData(
-                                  session, AsyncData([value]));
-                            });
-                          });
-                          return Container(
-                            width: double.infinity,
-                            decoration: const BoxDecoration(boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 10,
-                                spreadRadius: 7,
-                                offset: Offset(0, 5),
+                      return data[session]!.when(
+                          data: (data) {
+                            if (data.isNotEmpty) {
+                              return Image(
+                                image: data.first.image,
+                                height: 200,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              );
+                            } else {
+                              Future.delayed(const Duration(milliseconds: 1),
+                                  () {
+                                sessionPosterMapNotifier.setTData(
+                                    session, const AsyncLoading());
+                              });
+                              tokenExpireWrapper(ref, () async {
+                                sessionPosterNotifier
+                                    .getLogo(session.id)
+                                    .then((value) {
+                                  sessionPosterMapNotifier.setTData(
+                                      session, AsyncData([value]));
+                                });
+                              });
+                              return Container(
+                                width: double.infinity,
+                                decoration: const BoxDecoration(boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 10,
+                                    spreadRadius: 7,
+                                    offset: Offset(0, 5),
+                                  ),
+                                ]),
+                              );
+                            }
+                          },
+                          loading: () => const SizedBox(
+                                width: double.infinity,
+                                height: 200,
+                                child: Loader(),
                               ),
-                            ]),
-                          );
-                        }
-                      }, loading: () {
-                        return const SizedBox(
-                          width: double.infinity,
-                          height: 200,
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }, error: (error, stack) {
-                        return const SizedBox(
-                          width: double.infinity,
-                          height: 200,
-                          child: Center(
-                            child: HeroIcon(HeroIcons.exclamationCircle),
-                          ),
-                        );
-                      });
+                          error: (error, stack) => const SizedBox(
+                                width: double.infinity,
+                                height: 200,
+                                child: Center(
+                                  child: HeroIcon(HeroIcons.exclamationCircle),
+                                ),
+                              ));
                     } else {
                       return const SizedBox.shrink();
                     }
                   },
-                  loading: () => const CircularProgressIndicator(),
+                  loading: () => const Loader(),
                   error: (error, stack) => Text('Error $error')),
               Container(
                 padding:

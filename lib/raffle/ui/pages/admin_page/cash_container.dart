@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/raffle/providers/cash_provider.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/user_cash_ui.dart';
+import 'package:myecl/tools/ui/loader.dart';
 
 class CashContainer extends HookConsumerWidget {
   const CashContainer({super.key});
@@ -12,7 +13,7 @@ class CashContainer extends HookConsumerWidget {
     return cash.when(
       data: (c) => Row(children: c.map((e) => UserCashUi(cash: e)).toList()),
       error: (e, s) => Text(e.toString()),
-      loading: () => const CircularProgressIndicator(),
+      loading: () => const Loader(),
     );
   }
 }

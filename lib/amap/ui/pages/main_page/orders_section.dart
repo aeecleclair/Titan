@@ -9,8 +9,8 @@ import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/components/order_ui.dart';
-import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/loader.dart';
 
 class OrderSection extends HookConsumerWidget {
   final VoidCallback onTap, addOrder, onEdit;
@@ -116,9 +116,8 @@ class OrderSection extends HookConsumerWidget {
                           showButton: canEdit);
                     }).toList();
                   },
-                  loading: () => [
-                        const Waiter()
-                      ],
+                  loading: () =>
+                      [const Loader(color: AMAPColorConstants.greenGradient2)],
                   error: (error, stack) => [Text(error.toString())]),
               const SizedBox(
                 width: 25,

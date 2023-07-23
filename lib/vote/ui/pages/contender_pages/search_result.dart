@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/providers/display_results.dart';
@@ -51,7 +52,7 @@ class SearchResult extends HookConsumerWidget {
                           }))
                       .toList());
             },
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Loader(),
             error: (e, s) => Text(e.toString()))
         : const SizedBox();
   }

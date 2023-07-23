@@ -7,9 +7,9 @@ import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/components/waiter.dart';
 import 'package:myecl/amap/ui/pages/admin_page/delivery_ui.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DeliveryHandler extends HookConsumerWidget {
@@ -89,11 +89,10 @@ class DeliveryHandler extends HookConsumerWidget {
                   },
                   error: (Object e, StackTrace? s) =>
                       Text("${AMAPTextConstants.error}: ${e.toString()}"),
-                  loading: () => const Waiter(),
+                  loading: () =>
+                      const Loader(color: AMAPColorConstants.greenGradient2),
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
+                const SizedBox(width: 5),
               ],
             ),
           ),

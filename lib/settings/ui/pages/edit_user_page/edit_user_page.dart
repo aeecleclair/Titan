@@ -10,6 +10,7 @@ import 'package:myecl/settings/ui/pages/edit_user_page/picture_button.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -70,127 +71,125 @@ class EditUserPage extends HookConsumerWidget {
                             color: Color.fromARGB(255, 149, 149, 149))),
                   ),
                   const SizedBox(height: 40),
-                  profilePicture.when(data: (profile) {
-                    return Center(
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  spreadRadius: 5,
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3),
+                  profilePicture.when(
+                      data: (profile) {
+                        return Center(
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      spreadRadius: 5,
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 3),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            child: CircleAvatar(
-                              radius: 80,
-                              backgroundImage: profile.isEmpty
-                                  ? const AssetImage(
-                                      'assets/images/profile.png')
-                                  : Image.memory(profile).image,
-                            ),
+                                child: CircleAvatar(
+                                  radius: 80,
+                                  backgroundImage: profile.isEmpty
+                                      ? const AssetImage(
+                                          'assets/images/profile.png')
+                                      : Image.memory(profile).image,
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    final value = await profilePictureNotifier
+                                        .setProfilePicture(ImageSource.gallery);
+                                    if (value != null) {
+                                      if (value) {
+                                        displayToastWithContext(
+                                            TypeMsg.msg,
+                                            SettingsTextConstants
+                                                .updatedProfilePicture);
+                                      } else {
+                                        displayToastWithContext(
+                                            TypeMsg.error,
+                                            SettingsTextConstants
+                                                .tooHeavyProfilePicture);
+                                      }
+                                    } else {
+                                      displayToastWithContext(
+                                          TypeMsg.error,
+                                          SettingsTextConstants
+                                              .errorProfilePicture);
+                                    }
+                                  },
+                                  child: const PictureButton(
+                                      icon: HeroIcons.photo),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    final value = await profilePictureNotifier
+                                        .setProfilePicture(ImageSource.camera);
+                                    if (value != null) {
+                                      if (value) {
+                                        displayToastWithContext(
+                                            TypeMsg.msg,
+                                            SettingsTextConstants
+                                                .updatedProfilePicture);
+                                      } else {
+                                        displayToastWithContext(
+                                            TypeMsg.error,
+                                            SettingsTextConstants
+                                                .tooHeavyProfilePicture);
+                                      }
+                                    } else {
+                                      displayToastWithContext(
+                                          TypeMsg.error,
+                                          SettingsTextConstants
+                                              .errorProfilePicture);
+                                    }
+                                  },
+                                  child: const PictureButton(
+                                      icon: HeroIcons.camera),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: -20,
+                                right: 60,
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    final value = await profilePictureNotifier
+                                        .cropImage();
+                                    if (value != null) {
+                                      if (value) {
+                                        displayToastWithContext(
+                                            TypeMsg.msg,
+                                            SettingsTextConstants
+                                                .updatedProfilePicture);
+                                      } else {
+                                        displayToastWithContext(
+                                            TypeMsg.error,
+                                            SettingsTextConstants
+                                                .errorProfilePicture);
+                                      }
+                                    }
+                                  },
+                                  child: const PictureButton(
+                                      icon: HeroIcons.sparkles),
+                                ),
+                              )
+                            ],
                           ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            child: GestureDetector(
-                              onTap: () async {
-                                final value = await profilePictureNotifier
-                                    .setProfilePicture(ImageSource.gallery);
-                                if (value != null) {
-                                  if (value) {
-                                    displayToastWithContext(
-                                        TypeMsg.msg,
-                                        SettingsTextConstants
-                                            .updatedProfilePicture);
-                                  } else {
-                                    displayToastWithContext(
-                                        TypeMsg.error,
-                                        SettingsTextConstants
-                                            .tooHeavyProfilePicture);
-                                  }
-                                } else {
-                                  displayToastWithContext(
-                                      TypeMsg.error,
-                                      SettingsTextConstants
-                                          .errorProfilePicture);
-                                }
-                              },
-                              child: const PictureButton(icon: HeroIcons.photo),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: GestureDetector(
-                              onTap: () async {
-                                final value = await profilePictureNotifier
-                                    .setProfilePicture(ImageSource.camera);
-                                if (value != null) {
-                                  if (value) {
-                                    displayToastWithContext(
-                                        TypeMsg.msg,
-                                        SettingsTextConstants
-                                            .updatedProfilePicture);
-                                  } else {
-                                    displayToastWithContext(
-                                        TypeMsg.error,
-                                        SettingsTextConstants
-                                            .tooHeavyProfilePicture);
-                                  }
-                                } else {
-                                  displayToastWithContext(
-                                      TypeMsg.error,
-                                      SettingsTextConstants
-                                          .errorProfilePicture);
-                                }
-                              },
-                              child:
-                                  const PictureButton(icon: HeroIcons.camera),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: -20,
-                            right: 60,
-                            child: GestureDetector(
-                              onTap: () async {
-                                final value =
-                                    await profilePictureNotifier.cropImage();
-                                if (value != null) {
-                                  if (value) {
-                                    displayToastWithContext(
-                                        TypeMsg.msg,
-                                        SettingsTextConstants
-                                            .updatedProfilePicture);
-                                  } else {
-                                    displayToastWithContext(
-                                        TypeMsg.error,
-                                        SettingsTextConstants
-                                            .errorProfilePicture);
-                                  }
-                                }
-                              },
-                              child:
-                                  const PictureButton(icon: HeroIcons.sparkles),
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  }, loading: () {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }, error: (e, s) {
-                    return const Center(
-                      child: Text(SettingsTextConstants.errorProfilePicture),
-                    );
-                  }),
+                        );
+                      },
+                      loading: () => const Loader(),
+                      error: (e, s) => const Center(
+                          child:
+                              Text(SettingsTextConstants.errorProfilePicture))),
                   const SizedBox(height: 50),
                   Text(
                     '${SettingsTextConstants.promo} ${user.promo}',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/vote/providers/section_vote_count_provide.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/sections_stats_provider.dart';
@@ -58,17 +59,13 @@ class VoteCount extends HookConsumerWidget {
               )),
             );
           },
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
+          loading: () => const Loader(),
           error: (error, stack) => Center(
             child: Text('Error $error'),
           ),
         );
       },
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
+      loading: () => const Loader(),
       error: (error, stack) => Center(
         child: Text('Error $error'),
       ),

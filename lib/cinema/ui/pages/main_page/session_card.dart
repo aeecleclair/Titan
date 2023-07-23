@@ -14,6 +14,7 @@ import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/local_notification_service.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/loader.dart';
 
 class SessionCard extends HookConsumerWidget {
   final Session session;
@@ -259,9 +260,7 @@ class SessionCard extends HookConsumerWidget {
                       return SizedBox(
                         height: maxHeight * scale,
                         width: double.infinity,
-                        child: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
+                        child: const Loader(),
                       );
                     }, error: (error, stack) {
                       return SizedBox(
@@ -276,7 +275,7 @@ class SessionCard extends HookConsumerWidget {
                     return const SizedBox.shrink();
                   }
                 },
-                loading: () => const CircularProgressIndicator(),
+                loading: () => const Loader(),
                 error: (error, stack) => Text('Error $error')),
             const SizedBox(
               height: 15,

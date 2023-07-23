@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/card_button.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/contender_logo_provider.dart';
@@ -105,12 +106,7 @@ class ContenderCard extends HookConsumerWidget {
                               }
                             }, loading: () {
                               return const SizedBox(
-                                height: 40,
-                                width: 40,
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
+                                  height: 40, width: 40, child: Loader());
                             }, error: (error, stack) {
                               return const SizedBox(
                                 height: 40,
@@ -124,7 +120,7 @@ class ContenderCard extends HookConsumerWidget {
                             return const SizedBox.shrink();
                           }
                         },
-                        loading: () => const CircularProgressIndicator(),
+                        loading: () => const Loader(),
                         error: (error, stack) => Text('Error $error')),
                     const SizedBox(
                       width: 10,
