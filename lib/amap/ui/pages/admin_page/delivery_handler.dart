@@ -8,6 +8,7 @@ import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/delivery_ui.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -51,23 +52,10 @@ class DeliveryHandler extends HookConsumerWidget {
                           AmapRouter.admin +
                           AmapRouter.addEditDelivery);
                     },
-                    child: Container(
-                      margin: const EdgeInsets.all(15.0),
-                      padding: const EdgeInsets.all(12.0),
+                    child: CardLayout(
                       height: 160,
                       width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AMAPColorConstants.textDark.withOpacity(0.2),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(3, 3),
-                          ),
-                        ],
-                      ),
+                      shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
                       child: const Center(
                         child: HeroIcon(
                           HeroIcons.plus,

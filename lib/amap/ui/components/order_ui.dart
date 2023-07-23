@@ -8,6 +8,7 @@ import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/ui/card_button.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -34,30 +35,13 @@ class OrderUI extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15.0),
-        padding: const EdgeInsets.all(12.0),
+    return CardLayout(
         width: 195,
         height: isDetail ? 100 : 150,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          gradient: const RadialGradient(
-            colors: [
-              AMAPColorConstants.lightGradient1,
-              AMAPColorConstants.greenGradient1,
-            ],
-            center: Alignment.topLeft,
-            radius: 1.3,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: AMAPColorConstants.greenGradient2.withOpacity(0.3),
-              spreadRadius: 5,
-              blurRadius: 10,
-              offset: const Offset(3, 3),
-            ),
-          ],
-        ),
+        colors: const [
+          AMAPColorConstants.lightGradient1,
+          AMAPColorConstants.greenGradient1,
+        ],
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5.0),
           child: Column(

@@ -11,6 +11,7 @@ import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/admin_page/item_card.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -110,32 +111,14 @@ class LoanersItems extends HookConsumerWidget {
                                         LoanRouter.admin +
                                         LoanRouter.addEditItem);
                                   },
-                                  child: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 5.0),
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Container(
-                                      width: 120,
-                                      height: 160,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(30),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.shade200
-                                                .withOpacity(0.5),
-                                            spreadRadius: 5,
-                                            blurRadius: 10,
-                                            offset: const Offset(3, 3),
-                                          ),
-                                        ],
-                                      ),
-                                      child: const Center(
-                                        child: HeroIcon(
-                                          HeroIcons.plus,
-                                          size: 40.0,
-                                          color: Colors.black,
-                                        ),
+                                  child: const CardLayout(
+                                    width: 120,
+                                    height: 160,
+                                    child: Center(
+                                      child: HeroIcon(
+                                        HeroIcons.plus,
+                                        size: 40.0,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),

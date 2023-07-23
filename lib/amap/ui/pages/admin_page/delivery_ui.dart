@@ -12,6 +12,7 @@ import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/ui/card_button.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -94,23 +95,10 @@ class DeliveryUi extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 15.0),
-      padding: const EdgeInsets.all(10.0),
+    return CardLayout(
       height: 160,
       width: 280,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: AMAPColorConstants.textDark.withOpacity(0.2),
-            spreadRadius: 5,
-            blurRadius: 10,
-            offset: const Offset(3, 3),
-          ),
-        ],
-      ),
+      shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,

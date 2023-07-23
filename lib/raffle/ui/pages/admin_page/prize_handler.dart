@@ -12,6 +12,7 @@ import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/prize_card.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
@@ -105,38 +106,16 @@ class PrizeHandler extends HookConsumerWidget {
                       RaffleRouter.admin +
                       RaffleRouter.addEditPrize);
                 },
-                child: Container(
-                    margin: const EdgeInsets.only(left: 5.0, bottom: 10),
-                    padding: const EdgeInsets.all(12.0),
-                    child: Container(
-                      width: 100,
-                      height: 125,
-                      decoration: BoxDecoration(
-                        gradient: const RadialGradient(
-                          colors: [
-                            Color(0xff0193a5),
-                            Color(0xff004a59),
-                          ],
-                          center: Alignment.topLeft,
-                          radius: 1.2,
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                                RaffleColorConstants.textDark.withOpacity(0.2),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(3, 3),
-                          ),
-                        ],
-                      ),
-                      child: const Center(
-                        child: HeroIcon(
-                          HeroIcons.plus,
-                          color: Colors.white,
-                          size: 50,
-                        ),
+                child: CardLayout(
+                    width: 100,
+                    height: 125,
+                    colors: const [Color(0xff0193a5), Color(0xff004a59)],
+                    shadowColor: RaffleColorConstants.textDark.withOpacity(0.2),
+                    child: const Center(
+                      child: HeroIcon(
+                        HeroIcons.plus,
+                        color: Colors.white,
+                        size: 50,
                       ),
                     )),
               ),

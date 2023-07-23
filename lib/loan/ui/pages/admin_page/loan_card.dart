@@ -6,6 +6,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/card_button.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class LoanCard extends StatelessWidget {
@@ -36,32 +37,18 @@ class LoanCard extends StatelessWidget {
       },
       child: Container(
         padding: const EdgeInsets.all(15.0),
-        child: Container(
+        child: CardLayout(
           width: 250,
           height: (isAdmin && !isHistory && !isDetail) ? 200 : 185,
-          decoration: BoxDecoration(
-            gradient: RadialGradient(
-              colors: shouldReturn
-                  ? [
-                      const Color.fromARGB(255, 250, 66, 38),
-                      const Color.fromARGB(255, 172, 32, 10)
-                    ]
-                  : [Colors.white, Colors.grey.shade50],
-              center: Alignment.topLeft,
-              radius: 1.5,
-            ),
-            borderRadius: BorderRadius.circular(30),
-            boxShadow: [
-              BoxShadow(
-                color: shouldReturn
-                    ? const Color.fromARGB(255, 172, 32, 10).withOpacity(0.25)
-                    : Colors.grey.shade200.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 10,
-                offset: const Offset(3, 3),
-              ),
-            ],
-          ),
+          colors: shouldReturn
+              ? [
+                  const Color.fromARGB(255, 250, 66, 38),
+                  const Color.fromARGB(255, 172, 32, 10)
+                ]
+              : [Colors.white, Colors.grey.shade50],
+          shadowColor: shouldReturn
+              ? const Color.fromARGB(255, 172, 32, 10).withOpacity(0.25)
+              : Colors.grey.shade200.withOpacity(0.5),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
