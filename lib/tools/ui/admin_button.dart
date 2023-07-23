@@ -22,10 +22,7 @@ class AdminButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
             gradient: RadialGradient(
-              colors: [
-                backgroundColor,
-                gradientColor ?? backgroundColor,
-              ],
+              colors: [backgroundColor, gradientColor ?? backgroundColor],
               center: Alignment.topLeft,
               radius: 2,
             ),
