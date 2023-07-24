@@ -24,67 +24,64 @@ class ItemCard extends StatelessWidget {
     var availableQuantity = item.totalQuantity - item.loanedQuantity;
     return CardLayout(
       width: 140,
-      height: (showButtons) ? 160 : 105,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 17.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 15),
-            AutoSizeText(item.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black)),
-            const SizedBox(height: 5),
-            Text(
-                availableQuantity > 0
-                    ? '$availableQuantity ${availableQuantity <= 1 ? LoanTextConstants.available : LoanTextConstants.availableMultiple}'
-                    : LoanTextConstants.unavailable,
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: availableQuantity > 0
-                        ? Colors.grey.shade400
-                        : const Color.fromARGB(255, 172, 32, 10))),
-            const SizedBox(height: 5),
-            AutoSizeText('${item.caution.toStringAsFixed(2)} €',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black)),
-            const Spacer(),
-            if (showButtons)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: onEdit,
-                    child: CardButton(
-                      gradient1: Colors.grey.shade200,
-                      shadowColor: Colors.grey.withOpacity(0.2),
-                      child:
-                          const HeroIcon(HeroIcons.pencil, color: Colors.black),
-                    ),
+      height: (showButtons) ? 140 : 95,
+      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 15),
+          AutoSizeText(item.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black)),
+          const SizedBox(height: 5),
+          Text(
+              availableQuantity > 0
+                  ? '$availableQuantity ${availableQuantity <= 1 ? LoanTextConstants.available : LoanTextConstants.availableMultiple}'
+                  : LoanTextConstants.unavailable,
+              style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: availableQuantity > 0
+                      ? Colors.grey.shade400
+                      : const Color.fromARGB(255, 172, 32, 10))),
+          const SizedBox(height: 5),
+          AutoSizeText('${item.caution.toStringAsFixed(2)} €',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black)),
+          const Spacer(),
+          if (showButtons)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: onEdit,
+                  child: CardButton(
+                    color: Colors.grey.shade200,
+                    shadowColor: Colors.grey.withOpacity(0.2),
+                    child:
+                        const HeroIcon(HeroIcons.pencil, color: Colors.black),
                   ),
-                  ShrinkButton(
-                    builder: (child) => CardButton(
-                        gradient1: Colors.grey.shade200,
-                        shadowColor: Colors.grey.withOpacity(0.2),
-                        child: child),
-                    onTap: onDelete,
-                    child: const HeroIcon(HeroIcons.trash, color: Colors.white),
-                  ),
-                ],
-              ),
-            if (showButtons) const SizedBox(height: 10),
-          ],
-        ),
+                ),
+                ShrinkButton(
+                  builder: (child) => CardButton(
+                      color: Colors.black,
+                      child: child),
+                  onTap: onDelete,
+                  child: const HeroIcon(HeroIcons.trash, color: Colors.white),
+                ),
+              ],
+            ),
+          if (showButtons) const SizedBox(height: 10),
+        ],
       ),
     );
   }

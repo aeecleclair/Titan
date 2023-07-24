@@ -111,7 +111,7 @@ class OnGoingLoan extends HookConsumerWidget {
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
-                        height: 210,
+                        height: 170,
                         child: HorizontalListView(
                           child: Row(
                             children: [
@@ -130,8 +130,8 @@ class OnGoingLoan extends HookConsumerWidget {
                                       loaner, itemList);
                                 },
                                 child: const CardLayout(
-                                  width: 120,
-                                  height: 200,
+                                  width: 100,
+                                  height: 170,
                                   child: Center(
                                       child: HeroIcon(
                                     HeroIcons.plus,

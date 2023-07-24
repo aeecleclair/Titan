@@ -70,7 +70,7 @@ class ListBooking extends HookConsumerWidget {
           if (toggle.value)
             Container(
               margin: const EdgeInsets.only(top: 10),
-              height: 210,
+              height: 175,
               child: HorizontalListView(
                 child: Row(
                   children: [

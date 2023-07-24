@@ -9,6 +9,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/adding_user_container.dart';
 import 'package:myecl/amap/ui/pages/admin_page/cash_container.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
@@ -86,77 +87,57 @@ class AccountHandler extends HookConsumerWidget {
               const SizedBox(
                 width: 15,
               ),
-              Container(
-                  height: 135,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 12.0, vertical: 17),
-                  child: Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      gradient: const RadialGradient(
-                        colors: [
-                          AMAPColorConstants.green1,
-                          AMAPColorConstants.textLight,
+              CardLayout(
+                height: 100,
+                width: 100,
+                colors: const [
+                  AMAPColorConstants.green1,
+                  AMAPColorConstants.textLight
+                ],
+                shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
+                padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                child: !searchingAmapUser
+                    ? Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              searchingAmapUserNotifier.setProduct(true);
+                            },
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: const HeroIcon(
+                                HeroIcons.xMark,
+                                color: AMAPColorConstants.green3,
+                                size: 50,
+                              ),
+                            ),
+                          ),
+                          AddingUserContainer(onAdd: () async {
+                            searchingAmapUserNotifier.setProduct(true);
+                          })
                         ],
-                        center: Alignment.topLeft,
-                        radius: 1.3,
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AMAPColorConstants.textDark.withOpacity(0.2),
-                          spreadRadius: 5,
-                          blurRadius: 10,
-                          offset: const Offset(3, 3),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 17.0),
-                      child: !searchingAmapUser
-                          ? Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    searchingAmapUserNotifier.setProduct(true);
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12.0),
-                                    child: const HeroIcon(
-                                      HeroIcons.xMark,
-                                      color: AMAPColorConstants.green3,
-                                      size: 50,
-                                    ),
-                                  ),
-                                ),
-                                AddingUserContainer(onAdd: () async {
-                                  searchingAmapUserNotifier.setProduct(true);
-                                })
-                              ],
-                            )
-                          : GestureDetector(
-                              onTap: () async {
-                                searchingAmapUserNotifier.setProduct(false);
-                                if (editingController.text.isNotEmpty) {
-                                  await usersNotifier
-                                      .filterUsers(editingController.text);
-                                } else {
-                                  usersNotifier.clear();
-                                }
-                                focusNotifier.setFocus(true);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0),
-                                child: const HeroIcon(
-                                  HeroIcons.plus,
-                                  color: AMAPColorConstants.green3,
-                                  size: 50,
-                                ),
-                              )),
-                    ),
-                  )),
+                      )
+                    : GestureDetector(
+                        onTap: () async {
+                          searchingAmapUserNotifier.setProduct(false);
+                          if (editingController.text.isNotEmpty) {
+                            await usersNotifier
+                                .filterUsers(editingController.text);
+                          } else {
+                            usersNotifier.clear();
+                          }
+                          focusNotifier.setFocus(true);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          child: const HeroIcon(
+                            HeroIcons.plus,
+                            color: AMAPColorConstants.green3,
+                            size: 50,
+                          ),
+                        )),
+              ),
               const CashContainer(),
               const SizedBox(
                 width: 10,

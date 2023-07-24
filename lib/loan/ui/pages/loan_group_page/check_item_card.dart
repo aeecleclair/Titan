@@ -18,48 +18,46 @@ class CheckItemCard extends StatelessWidget {
       borderColor: isSelected ? Colors.black : Colors.transparent,
       shadowColor: (isSelected ? Colors.grey.shade400 : Colors.grey.shade200)
           .withOpacity(0.5),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 17.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 15),
-            AutoSizeText(item.name,
-                maxLines: 1,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black)),
-            const SizedBox(height: 5),
-            Text(
-                item.loanedQuantity < item.totalQuantity
-                    ? '${item.totalQuantity - item.loanedQuantity} ${LoanTextConstants.available}'
-                    : LoanTextConstants.unavailable,
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: item.loanedQuantity < item.totalQuantity
-                        ? Colors.grey.shade400
-                        : const Color.fromARGB(255, 172, 32, 10))),
-            const SizedBox(height: 5),
-            AutoSizeText('${item.caution.toStringAsFixed(2)} €',
-                maxLines: 1,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black)),
-            const SizedBox(height: 5),
-            AutoSizeText(
-                '${LoanTextConstants.duration} : ${item.suggestedLendingDuration.toInt()} ${LoanTextConstants.days}',
-                maxLines: 1,
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey.shade400)),
-            const SizedBox(height: 10),
-          ],
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 15),
+          AutoSizeText(item.name,
+              maxLines: 1,
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black)),
+          const SizedBox(height: 5),
+          Text(
+              item.loanedQuantity < item.totalQuantity
+                  ? '${item.totalQuantity - item.loanedQuantity} ${LoanTextConstants.available}'
+                  : LoanTextConstants.unavailable,
+              style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: item.loanedQuantity < item.totalQuantity
+                      ? Colors.grey.shade400
+                      : const Color.fromARGB(255, 172, 32, 10))),
+          const SizedBox(height: 5),
+          AutoSizeText('${item.caution.toStringAsFixed(2)} €',
+              maxLines: 1,
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black)),
+          const SizedBox(height: 5),
+          AutoSizeText(
+              '${LoanTextConstants.duration} : ${item.suggestedLendingDuration.toInt()} ${LoanTextConstants.days}',
+              maxLines: 1,
+              style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade400)),
+          const SizedBox(height: 10),
+        ],
       ),
     );
   }

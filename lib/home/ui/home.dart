@@ -72,10 +72,7 @@ class HomePage extends HookConsumerWidget {
                                 .map((key, value) => MapEntry(
                                     key,
                                     DaysEvent(
-                                      day: key,
-                                      now: now,
-                                      events: value,
-                                    )))
+                                        day: key, now: now, events: value)))
                                 .values
                                 .toList())
                         : const Center(

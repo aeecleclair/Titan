@@ -70,7 +70,7 @@ class Calendar extends HookConsumerWidget {
                           child: GestureDetector(
                               onTap: () => Navigator.pop(context),
                               child: CardButton(
-                                  gradient1: Colors.white,
+                                  color: Colors.white,
                                   shadowColor:
                                       Colors.grey.shade500.withOpacity(0.3),
                                   child: const HeroIcon(

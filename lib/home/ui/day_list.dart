@@ -43,37 +43,36 @@ class DayList extends HookConsumerWidget {
     }
 
     return SizedBox(
-        height: 125,
-        child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      controller: scrollController,
-                      itemCount: numberDay + 2,
-                      itemBuilder: (BuildContext context, int i) {
-                        if (i == 0 || i == days.length + 1) {
-                          return const SizedBox(
-                            width: 15,
-                          );
-                        }
-                        final day = days[i - 1];
-                        return DayCard(
-                          isToday: i == 1,
-                          day: day,
-                          numberOfEvent: daySortedEventList.keys.contains(day)
-                              ? daySortedEventList[day]!.length
-                              : 0,
-                          index: i - 1,
-                          onTap: () {
-                            needReload.value = true;
-                            daysEventScrollController.animateTo(
-                                widgetPositions[formatDelayToToday(day, now)] ??
-                                    0.0,
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.decelerate);
-                          },
-                        );
-                      },
-                    ),
-                  );
+      height: 125,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        controller: scrollController,
+        itemCount: numberDay + 2,
+        itemBuilder: (BuildContext context, int i) {
+          if (i == 0 || i == days.length + 1) {
+            return const SizedBox(
+              width: 15,
+            );
+          }
+          final day = days[i - 1];
+          return DayCard(
+            isToday: i == 1,
+            day: day,
+            numberOfEvent: daySortedEventList.keys.contains(day)
+                ? daySortedEventList[day]!.length
+                : 0,
+            index: i - 1,
+            onTap: () {
+              needReload.value = true;
+              daysEventScrollController.animateTo(
+                  widgetPositions[formatDelayToToday(day, now)] ?? 0.0,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.decelerate);
+            },
+          );
+        },
+      ),
+    );
   }
 }

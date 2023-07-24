@@ -154,8 +154,8 @@ class AddEditContenderPage extends HookConsumerWidget {
                           }
                         },
                         child: const CardButton(
-                          gradient1: ColorConstants.gradient1,
-                                gradient2: ColorConstants.gradient2,
+                          color: ColorConstants.gradient1,
+                                gradient: ColorConstants.gradient2,
                           child: HeroIcon(
                             HeroIcons.photo,
                             color: Colors.white,

@@ -66,16 +66,16 @@ class TicketUI extends HookConsumerWidget {
                 GestureDetector(
                   onTap: onEdit,
                   child: CardButton(
-                    gradient1: Colors.grey.shade100,
-                    gradient2: Colors.grey.shade200,
+                    color: Colors.grey.shade100,
+                    gradient: Colors.grey.shade200,
                     child: const HeroIcon(HeroIcons.pencil,
                         color: RaffleColorConstants.textDark),
                   ),
                 ),
                 ShrinkButton(
                   builder: (child) => CardButton(
-                      gradient1: RaffleColorConstants.redGradient1,
-                      gradient2: RaffleColorConstants.redGradient2,
+                      color: RaffleColorConstants.redGradient1,
+                      gradient: RaffleColorConstants.redGradient2,
                       child: child),
                   onTap: onDelete,
                   child: const HeroIcon(HeroIcons.trash, color: Colors.white),

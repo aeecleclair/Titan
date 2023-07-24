@@ -97,8 +97,8 @@ class BookingMainPage extends HookConsumerWidget {
                             QR.to(BookingRouter.root + BookingRouter.addEdit);
                           },
                           child: const CardLayout(
-                            width: 120,
-                            height: 200,
+                            width: 100,
+                            height: 170,
                             child: Center(
                                 child: HeroIcon(
                               HeroIcons.plus,

@@ -138,68 +138,62 @@ class UserCashUi extends HookConsumerWidget {
                       ],
                       shadowColor:
                           RaffleColorConstants.textDark.withOpacity(0.2),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 17.0),
-                        child: Form(
-                          key: key,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 50,
-                                child: TextEntry(
-                                  label: '',
-                                  controller: amount,
-                                  keyboardType: TextInputType.number,
-                                  isInt: true,
-                                  color: RaffleColorConstants.textDark,
-                                  enabledColor: Colors.white,
-                                  suffix: '€',
-                                ),
+                      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                      child: Form(
+                        key: key,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 50,
+                              child: TextEntry(
+                                label: '',
+                                controller: amount,
+                                keyboardType: TextInputType.number,
+                                isInt: true,
+                                color: RaffleColorConstants.textDark,
+                                enabledColor: Colors.white,
+                                suffix: '€',
                               ),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              ShrinkButton(
-                                builder: (child) => child,
-                                onTap: () async {
-                                  if (key.currentState == null) {
-                                    return;
-                                  }
-                                  if (key.currentState!.validate()) {
-                                    await tokenExpireWrapper(ref, () async {
-                                      await ref
-                                          .read(cashProvider.notifier)
-                                          .updateCash(
-                                            cash,
-                                            int.parse(amount.text),
-                                          )
-                                          .then((value) {
-                                        if (value) {
-                                          key.currentState!.reset();
-                                          toggle();
-                                          displayVoteWithContext(
-                                              TypeMsg.msg,
-                                              RaffleTextConstants
-                                                  .updatedAmount);
-                                        } else {
-                                          displayVoteWithContext(
-                                              TypeMsg.error,
-                                              RaffleTextConstants
-                                                  .updatingError);
-                                        }
-                                      });
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            ShrinkButton(
+                              builder: (child) => child,
+                              onTap: () async {
+                                if (key.currentState == null) {
+                                  return;
+                                }
+                                if (key.currentState!.validate()) {
+                                  await tokenExpireWrapper(ref, () async {
+                                    await ref
+                                        .read(cashProvider.notifier)
+                                        .updateCash(
+                                          cash,
+                                          int.parse(amount.text),
+                                        )
+                                        .then((value) {
+                                      if (value) {
+                                        key.currentState!.reset();
+                                        toggle();
+                                        displayVoteWithContext(TypeMsg.msg,
+                                            RaffleTextConstants.updatedAmount);
+                                      } else {
+                                        displayVoteWithContext(TypeMsg.error,
+                                            RaffleTextConstants.updatingError);
+                                      }
                                     });
-                                  }
-                                },
-                                child: const Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
+                                  });
+                                }
+                              },
+                              child: const Icon(
+                                Icons.add,
+                                color: Colors.white,
+                                size: 30,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

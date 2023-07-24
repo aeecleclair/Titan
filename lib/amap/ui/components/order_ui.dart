@@ -37,139 +37,133 @@ class OrderUI extends HookConsumerWidget {
     }
 
     return CardLayout(
-        width: 195,
-        height: isDetail ? 100 : 150,
-        colors: const [
-          AMAPColorConstants.lightGradient1,
-          AMAPColorConstants.greenGradient1,
-        ],
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+      width: 195,
+      height: isDetail ? 100 : 150,
+      colors: const [
+        AMAPColorConstants.lightGradient1,
+        AMAPColorConstants.greenGradient1,
+      ],
+      padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 12),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                      '${AMAPTextConstants.the} ${processDate(order.deliveryDate)}',
-                      style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: AMAPColorConstants.textDark)),
-                  if (!isDetail)
-                    GestureDetector(
-                      onTap: () {
-                        orderNotifier.setOrder(order);
-                        onTap();
-                      },
-                      child: const HeroIcon(
-                        HeroIcons.informationCircle,
-                        color: AMAPColorConstants.textDark,
-                        size: 30,
-                      ),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 3),
-              Row(
-                children: [
-                  Text(
-                    "${order.products.length} ${AMAPTextConstants.product}${order.products.length != 1 ? "s" : ""}",
-                    style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                  ),
-                  const Spacer(),
-                  Text(
-                    "${order.amount.toStringAsFixed(2)}€",
-                    style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 3),
               Text(
-                collectionSlotToString(order.collectionSlot),
+                  '${AMAPTextConstants.the} ${processDate(order.deliveryDate)}',
+                  style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AMAPColorConstants.textDark)),
+              if (!isDetail)
+                GestureDetector(
+                  onTap: () {
+                    orderNotifier.setOrder(order);
+                    onTap();
+                  },
+                  child: const HeroIcon(
+                    HeroIcons.informationCircle,
+                    color: AMAPColorConstants.textDark,
+                    size: 30,
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 3),
+          Row(
+            children: [
+              Text(
+                "${order.products.length} ${AMAPTextConstants.product}${order.products.length != 1 ? "s" : ""}",
                 style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w700,
-                    color: AMAPColorConstants.textDark),
+                    color: Colors.white),
               ),
               const Spacer(),
-              if (!isDetail)
-                showButton
-                    ? Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              orderNotifier.setOrder(order);
-                              onEdit();
-                            },
-                            child: const CardButton(
-                              gradient1: AMAPColorConstants.greenGradient1,
-                              gradient2: AMAPColorConstants.greenGradient2,
-                              child: HeroIcon(
-                                HeroIcons.pencil,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          const Spacer(),
-                          ShrinkButton(
-                            onTap: () async {
-                              await showDialog(
-                                  context: context,
-                                  builder: ((context) => CustomDialogBox(
-                                      title: AMAPTextConstants.delete,
-                                      descriptions:
-                                          AMAPTextConstants.deletingOrder,
-                                      onYes: () async {
-                                        await tokenExpireWrapper(ref, () async {
-                                          orderListNotifier
-                                              .deleteOrder(order)
-                                              .then((value) {
-                                            if (value) {
-                                              balanceNotifier
-                                                  .updateCash(order.amount);
-                                              displayToastWithContext(
-                                                  TypeMsg.msg,
-                                                  AMAPTextConstants
-                                                      .deletedOrder);
-                                            } else {
-                                              displayToastWithContext(
-                                                  TypeMsg.error,
-                                                  AMAPTextConstants
-                                                      .deletingError);
-                                            }
-                                          });
-                                        });
-                                      })));
-                            },
-                            builder: (child) => CardButton(
-                                gradient1: AMAPColorConstants.redGradient1,
-                                gradient2: AMAPColorConstants.redGradient2,
-                                child: child),
-                            child: const HeroIcon(
-                              HeroIcons.trash,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      )
-                    : const Text(
-                        AMAPTextConstants.locked,
-                        style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w700,
-                            color: AMAPColorConstants.textDark),
-                      )
+              Text(
+                "${order.amount.toStringAsFixed(2)}€",
+                style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white),
+              ),
             ],
           ),
-        ));
+          const SizedBox(height: 3),
+          Text(
+            collectionSlotToString(order.collectionSlot),
+            style: const TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w700,
+                color: AMAPColorConstants.textDark),
+          ),
+          const Spacer(),
+          if (!isDetail)
+            showButton
+                ? Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          orderNotifier.setOrder(order);
+                          onEdit();
+                        },
+                        child: const CardButton(
+                          color: AMAPColorConstants.greenGradient1,
+                          gradient: AMAPColorConstants.greenGradient2,
+                          child: HeroIcon(
+                            HeroIcons.pencil,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      ShrinkButton(
+                        onTap: () async {
+                          await showDialog(
+                              context: context,
+                              builder: ((context) => CustomDialogBox(
+                                  title: AMAPTextConstants.delete,
+                                  descriptions: AMAPTextConstants.deletingOrder,
+                                  onYes: () async {
+                                    await tokenExpireWrapper(ref, () async {
+                                      orderListNotifier
+                                          .deleteOrder(order)
+                                          .then((value) {
+                                        if (value) {
+                                          balanceNotifier
+                                              .updateCash(order.amount);
+                                          displayToastWithContext(TypeMsg.msg,
+                                              AMAPTextConstants.deletedOrder);
+                                        } else {
+                                          displayToastWithContext(TypeMsg.error,
+                                              AMAPTextConstants.deletingError);
+                                        }
+                                      });
+                                    });
+                                  })));
+                        },
+                        builder: (child) => CardButton(
+                            color: AMAPColorConstants.redGradient1,
+                            gradient: AMAPColorConstants.redGradient2,
+                            child: child),
+                        child: const HeroIcon(
+                          HeroIcons.trash,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  )
+                : const Text(
+                    AMAPTextConstants.locked,
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                        color: AMAPColorConstants.textDark),
+                  )
+        ],
+      ),
+    );
   }
 }
