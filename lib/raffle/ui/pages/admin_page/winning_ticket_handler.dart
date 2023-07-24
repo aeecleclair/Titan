@@ -43,11 +43,7 @@ class WinningTicketHandler extends HookConsumerWidget {
                     }
                     return Row(
                         children: data
-                            .map((e) => WinningTicketUI(
-                                  ticket: e,
-                                  onEdit: () {},
-                                  onDelete: () async {},
-                                ))
+                            .map((e) => WinningTicketUI(ticket: e))
                             .toList());
                   },
                   error: (Object e, StackTrace? s) => SizedBox(

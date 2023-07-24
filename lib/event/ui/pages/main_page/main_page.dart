@@ -118,16 +118,7 @@ class EventMainPage extends HookConsumerWidget {
                                   height: 80,
                                 );
                               }
-                              return EventUi(
-                                event: events[index - 1],
-                                isAdmin: false,
-                                isDetailPage: false,
-                                onConfirm: () {},
-                                onCopy: () {},
-                                onDecline: () {},
-                                onEdit: () {},
-                                onInfo: () {},
-                              );
+                              return EventUi(event: events[index - 1]);
                             }),
                       ),
                     ],

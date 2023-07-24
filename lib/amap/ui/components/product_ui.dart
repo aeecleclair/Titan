@@ -12,11 +12,13 @@ class ProductCard extends StatelessWidget {
   final Function() onEdit;
   final Future Function() onDelete;
   final bool showButton;
+  static void noAction() {}
+  static Future noAsyncAction() async {}
   const ProductCard(
       {super.key,
       required this.product,
-      required this.onEdit,
-      required this.onDelete,
+      this.onEdit = noAction,
+      this.onDelete = noAsyncAction,
       this.showButton = true});
 
   @override

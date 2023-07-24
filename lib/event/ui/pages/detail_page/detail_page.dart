@@ -92,7 +92,7 @@ class DetailPage extends HookConsumerWidget {
                               if (isAdmin)
                                 Column(
                                   children: [
-                                                              GestureDetector(
+                                    GestureDetector(
                                       onTap: () async {
                                         try {
                                           await launchUrl(Uri.parse(
@@ -132,7 +132,8 @@ class DetailPage extends HookConsumerWidget {
                                                     'tel:${event.applicant.phone}'));
                                               } catch (e) {
                                                 displayToastWithoutContext(
-                                                    TypeMsg.error, e.toString());
+                                                    TypeMsg.error,
+                                                    e.toString());
                                               }
                                             }
                                           },
@@ -174,7 +175,8 @@ class DetailPage extends HookConsumerWidget {
                                                     'sms:${event.applicant.phone}'));
                                               } catch (e) {
                                                 displayToastWithoutContext(
-                                                    TypeMsg.error, e.toString());
+                                                    TypeMsg.error,
+                                                    e.toString());
                                               }
                                             }
                                           },
@@ -226,16 +228,7 @@ class DetailPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
-                child: EventUi(
-                  event: event,
-                  isAdmin: false,
-                  isDetailPage: true,
-                  onConfirm: () {},
-                  onCopy: () {},
-                  onDecline: () {},
-                  onEdit: () {},
-                  onInfo: () {},
-                ),
+                child: EventUi(event: event, isDetailPage: true),
               ),
             )
           ],

@@ -101,7 +101,6 @@ class CinemaMainPage extends HookConsumerWidget {
                                   return SessionCard(
                                     session: data[index],
                                     index: index,
-                                    onTap: () {},
                                   );
                                 })
                             : PageView.builder(

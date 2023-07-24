@@ -119,7 +119,6 @@ class AdminPage extends HookConsumerWidget {
                                   BookingRouter.admin +
                                   BookingRouter.room);
                             },
-                            selected: false,
                             child: const HeroIcon(
                               HeroIcons.plus,
                               color: Colors.black,

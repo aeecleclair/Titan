@@ -158,7 +158,6 @@ class AddEditBookingPage extends HookConsumerWidget {
                     CheckBoxEntry(
                       title: BookingTextConstants.necessaryKey,
                       valueNotifier: keyRequired,
-                      onChanged: () {},
                     ),
                     const SizedBox(height: 20),
                     CheckBoxEntry(

@@ -144,7 +144,6 @@ class SettingsMainPage extends HookConsumerWidget {
                 ...me.groups
                     .map((e) => ItemChip(
                           selected: true,
-                          onTap: () {},
                           child: Text(
                             capitalize(e.name),
                             style: const TextStyle(

@@ -144,7 +144,6 @@ class OnGoingLoan extends HookConsumerWidget {
                                   .map((e) => LoanCard(
                                         loan: e,
                                         isAdmin: true,
-                                        isDetail: false,
                                         onEdit: () async {
                                           await loanNotifier.setLoan(e);
                                           ref.watch(itemListProvider);

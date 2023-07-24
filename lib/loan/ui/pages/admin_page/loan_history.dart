@@ -95,16 +95,8 @@ class HistoryLoan extends HookConsumerWidget {
                             children: [
                               const SizedBox(width: 10),
                               ...data
-                                  .map((e) => LoanCard(
-                                        loan: e,
-                                        isAdmin: false,
-                                        isDetail: false,
-                                        isHistory: true,
-                                        onEdit: () async {},
-                                        onCalendar: () async {},
-                                        onReturn: () async {},
-                                        onInfo: () {},
-                                      ))
+                                  .map(
+                                      (e) => LoanCard(loan: e, isHistory: true))
                                   .toList(),
                               const SizedBox(width: 10),
                             ],

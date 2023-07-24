@@ -6,13 +6,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 
 class WinningTicketUI extends HookConsumerWidget {
   final Ticket ticket;
-  final VoidCallback onEdit;
-  final Future Function() onDelete;
-  const WinningTicketUI(
-      {super.key,
-      required this.ticket,
-      required this.onEdit,
-      required this.onDelete});
+  const WinningTicketUI({super.key, required this.ticket});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

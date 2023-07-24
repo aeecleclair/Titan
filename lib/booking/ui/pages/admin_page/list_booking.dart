@@ -78,7 +78,6 @@ class ListBooking extends HookConsumerWidget {
                     ...bookings.map((e) => BookingCard(
                           booking: e,
                           isAdmin: true,
-                          isDetail: false,
                           onEdit: () {
                             bookingNotifier.setBooking(e);
                             QR.to(BookingRouter.root +
@@ -147,7 +146,6 @@ class ListBooking extends HookConsumerWidget {
                                 BookingRouter.admin +
                                 BookingRouter.addEdit);
                           },
-                          onDelete: () async {},
                         )),
                     const SizedBox(width: 10),
                   ],

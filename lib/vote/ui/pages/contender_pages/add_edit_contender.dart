@@ -184,11 +184,9 @@ class AddEditContenderPage extends HookConsumerWidget {
                           (e) => SectionChip(
                             label: capitalize(e.toString().split('.').last),
                             selected: listType.value == e,
-                            isAdmin: false,
                             onTap: () async {
                               listType.value = e;
                             },
-                            onDelete: () {},
                           ),
                         ),
                     const SizedBox(width: 15),
@@ -213,10 +211,10 @@ class AddEditContenderPage extends HookConsumerWidget {
                     ...members.map(
                       (e) => MemberCard(
                         member: e,
+                        isAdmin: true,
                         onDelete: () async {
                           membersNotifier.removeMember(e);
                         },
-                        onEdit: () {},
                       ),
                     ),
                     const SizedBox(width: 15),
