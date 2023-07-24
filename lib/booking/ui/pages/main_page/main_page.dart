@@ -110,8 +110,6 @@ class BookingMainPage extends HookConsumerWidget {
                       ),
                       ...data.map((e) => BookingCard(
                             booking: e,
-                            isAdmin: false,
-                            isDetail: false,
                             onEdit: () {
                               bookingNotifier.setBooking(e);
                               final recurrent = e.recurrenceRule != "";
@@ -143,8 +141,6 @@ class BookingMainPage extends HookConsumerWidget {
                               bookingNotifier.setBooking(e);
                               QR.to(BookingRouter.root + BookingRouter.detail);
                             },
-                            onConfirm: () {},
-                            onDecline: () {},
                             onDelete: () async {
                               await tokenExpireWrapper(ref, () async {
                                 await showDialog(

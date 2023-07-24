@@ -105,12 +105,7 @@ class DetailLoanPage extends HookConsumerWidget {
               child: Center(
                 child: LoanCard(
                   loan: loan,
-                  onEdit: () {},
-                  onReturn: () async {},
-                  onInfo: () {},
-                  isAdmin: false,
                   isDetail: true,
-                  onCalendar: () async {},
                 ),
               ),
             )

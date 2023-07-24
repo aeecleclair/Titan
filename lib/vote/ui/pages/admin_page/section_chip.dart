@@ -4,13 +4,14 @@ class SectionChip extends StatelessWidget {
   final bool selected, isAdmin;
   final String label;
   final Function() onTap, onDelete;
+  static void noAction() {}
   const SectionChip(
       {super.key,
       required this.label,
-      required this.isAdmin,
-      required this.selected,
-      required this.onTap,
-      required this.onDelete});
+      this.isAdmin = false,
+      this.selected = false,
+      this.onTap = noAction,
+      this.onDelete = noAction});
 
   @override
   Widget build(BuildContext context) {

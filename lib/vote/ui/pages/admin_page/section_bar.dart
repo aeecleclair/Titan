@@ -46,7 +46,6 @@ class SectionBar extends HookConsumerWidget {
                 QR.to(
                     VoteRouter.root + VoteRouter.admin + VoteRouter.addSection);
               },
-              selected: false,
               child: const HeroIcon(
                 HeroIcons.plus,
                 color: Colors.black,

@@ -61,8 +61,6 @@ class DetailPage extends HookConsumerWidget {
                                 children: order.products
                                     .map((product) => ProductCard(
                                           product: product,
-                                          onDelete: () async {},
-                                          onEdit: () {},
                                           showButton: false,
                                         ))
                                     .toList(),
@@ -82,8 +80,6 @@ class DetailPage extends HookConsumerWidget {
               child: Center(
                 child: OrderUI(
                   order: order,
-                  onTap: () {},
-                  onEdit: () {},
                   showButton: false,
                   isDetail: true,
                 ),

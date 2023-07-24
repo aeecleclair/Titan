@@ -9,12 +9,13 @@ class MemberCard extends StatelessWidget {
   final Member member;
   final Function() onEdit, onDelete;
   final bool isAdmin;
+  static void noAction() {}
   const MemberCard(
       {super.key,
       required this.member,
-      required this.onEdit,
-      required this.onDelete,
-      this.isAdmin = true});
+      this.onEdit = noAction,
+      this.onDelete = noAction,
+      this.isAdmin = false});
 
   @override
   Widget build(BuildContext context) {

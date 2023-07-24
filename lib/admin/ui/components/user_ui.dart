@@ -6,7 +6,7 @@ import 'package:myecl/user/class/list_users.dart';
 
 class UserUi extends HookConsumerWidget {
   final SimpleUser user;
-  final Function onDelete;
+  final void Function() onDelete;
 
   const UserUi({super.key, required this.user, required this.onDelete});
 
@@ -26,6 +26,7 @@ class UserUi extends HookConsumerWidget {
               ),
             ),
             GestureDetector(
+              onTap: onDelete,
               child: Container(
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
@@ -48,9 +49,6 @@ class UserUi extends HookConsumerWidget {
                   color: Colors.white,
                 ),
               ),
-              onTap: () {
-                onDelete();
-              },
             ),
           ],
         ));

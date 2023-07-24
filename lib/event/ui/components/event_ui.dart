@@ -21,16 +21,17 @@ class EventUi extends ConsumerWidget {
   final Event event;
   final bool isDetailPage, isAdmin;
   final Function() onEdit, onConfirm, onDecline, onCopy, onInfo;
+  static void noAction() {}
   const EventUi(
       {super.key,
       required this.event,
-      required this.isDetailPage,
-      required this.isAdmin,
-      required this.onEdit,
-      required this.onConfirm,
-      required this.onDecline,
-      required this.onInfo,
-      required this.onCopy});
+      this.isDetailPage = false,
+      this.isAdmin = false,
+      this.onEdit = noAction,
+      this.onConfirm = noAction,
+      this.onDecline = noAction,
+      this.onInfo = noAction,
+      this.onCopy = noAction});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

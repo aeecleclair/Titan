@@ -14,15 +14,17 @@ class LoanCard extends StatelessWidget {
   final bool isAdmin, isDetail, isHistory;
   final Function() onEdit, onInfo;
   final Future Function() onCalendar, onReturn;
+  static void noAction() {}
+  static Future noAsyncAction() async {}
   const LoanCard(
       {super.key,
       required this.loan,
-      required this.onEdit,
-      required this.onCalendar,
-      required this.onReturn,
-      required this.onInfo,
-      required this.isAdmin,
-      required this.isDetail,
+      this.onEdit = noAction,
+      this.onCalendar = noAsyncAction,
+      this.onReturn = noAsyncAction,
+      this.onInfo = noAction,
+      this.isAdmin = false,
+      this.isDetail = false,
       this.isHistory = false});
 
   @override

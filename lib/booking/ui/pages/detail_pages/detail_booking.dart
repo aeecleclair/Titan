@@ -199,14 +199,7 @@ class DetailBookingPage extends HookConsumerWidget {
             child: Center(
               child: BookingCard(
                 booking: booking,
-                onEdit: () {},
-                onInfo: () {},
-                isAdmin: false,
                 isDetail: true,
-                onConfirm: () {},
-                onDecline: () {},
-                onCopy: () {},
-                onDelete: () async {},
               ),
             ),
           ),

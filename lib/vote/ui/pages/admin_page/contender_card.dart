@@ -22,13 +22,15 @@ class ContenderCard extends HookConsumerWidget {
   final bool isAdmin, isDetail;
   final Function() onEdit;
   final Future Function() onDelete;
+  static void noAction() {}
+  static Future noAsyncAction() async {}
   const ContenderCard(
       {super.key,
       required this.contender,
-      required this.onEdit,
-      required this.onDelete,
-      required this.isAdmin,
-      required this.isDetail});
+      this.onEdit = noAction,
+      this.onDelete = noAsyncAction,
+      this.isAdmin = false,
+      this.isDetail = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

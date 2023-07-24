@@ -81,11 +81,6 @@ class LoanMainPage extends HookConsumerWidget {
                                   const SizedBox(width: 10),
                                   ...dictCateListWidget[0].map((e) => LoanCard(
                                         loan: e,
-                                        isAdmin: false,
-                                        isDetail: false,
-                                        onEdit: () {},
-                                        onCalendar: () async {},
-                                        onReturn: () async {},
                                         onInfo: () {
                                           loanNotifier.setLoan(e);
                                           QR.to(LoanRouter.root +
@@ -142,11 +137,6 @@ class LoanMainPage extends HookConsumerWidget {
                               ...dictCateListWidget[1]
                                   .map((e) => LoanCard(
                                         loan: e,
-                                        isAdmin: false,
-                                        isDetail: false,
-                                        onEdit: () {},
-                                        onCalendar: () async {},
-                                        onReturn: () async {},
                                         onInfo: () {
                                           loanNotifier.setLoan(e);
                                           QR.to(LoanRouter.root +

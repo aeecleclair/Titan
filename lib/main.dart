@@ -88,9 +88,7 @@ class MyApp extends HookConsumerWidget {
             if (child == null) {
               return const SizedBox();
             }
-            return AppTemplate(
-              child: child,
-            );
+            return AppTemplate(child: child);
           },
           routerDelegate: QRouterDelegate(
             appRouter.routes,

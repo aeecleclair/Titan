@@ -17,12 +17,13 @@ import 'package:myecl/tools/ui/shrink_button.dart';
 class OrderUI extends HookConsumerWidget {
   final Order order;
   final void Function() onTap, onEdit;
+  static void noAction() {}
   final bool showButton, isDetail;
   const OrderUI(
       {super.key,
       required this.order,
-      required this.onTap,
-      required this.onEdit,
+      this.onTap = noAction,
+      this.onEdit = noAction,
       this.showButton = true,
       this.isDetail = false});
 

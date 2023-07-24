@@ -13,18 +13,20 @@ class BookingCard extends HookConsumerWidget {
   final Booking booking;
   final Function() onEdit, onConfirm, onDecline, onCopy, onInfo;
   final Future Function() onDelete;
+  static void noAction() {}
+  static Future noAsyncAction() async {}
   final bool isAdmin, isDetail;
   const BookingCard(
       {super.key,
       required this.booking,
-      required this.onEdit,
-      required this.onConfirm,
-      required this.onDecline,
-      required this.onInfo,
-      required this.onCopy,
-      required this.onDelete,
-      required this.isAdmin,
-      required this.isDetail});
+      this.onEdit = noAction,
+      this.onConfirm = noAction,
+      this.onDecline = noAction,
+      this.onInfo = noAction,
+      this.onCopy = noAction,
+      this.onDelete = noAsyncAction,
+      this.isAdmin = false,
+      this.isDetail = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
