@@ -7,6 +7,7 @@ class CardLayout extends StatelessWidget {
   final List<Color>? colors;
   final Color shadowColor;
   final Color? borderColor;
+  final EdgeInsetsGeometry padding, margin;
   const CardLayout(
       {super.key,
       required this.child,
@@ -15,33 +16,37 @@ class CardLayout extends StatelessWidget {
       this.colors,
       this.color = Colors.white,
       this.shadowColor = const Color(0x80EEEEEE),
-      this.borderColor});
+      this.borderColor,
+      this.padding = const EdgeInsets.all(12.0),
+      this.margin = const EdgeInsets.symmetric(horizontal: 15.0)});
 
   @override
   Widget build(BuildContext context) {
+    final useColors = colors != null && colors!.length > 1;
+    final useShadow = !useColors || (useColors && colors!.last == Colors.white);
     return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15.0),
-        padding: const EdgeInsets.all(12.0),
+        margin: margin,
+        padding: padding,
         width: width,
         height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          gradient: (colors == null || colors!.length > 1)
-              ? null
-              : RadialGradient(
+          gradient: useColors
+              ? RadialGradient(
                   colors: colors!,
                   center: Alignment.topLeft,
                   radius: 1.3,
-                ),
-          color: colors == null || colors!.length > 1 ? color : null,
+                )
+              : null,
+          color: useColors ? null : color,
           border: borderColor != null
               ? Border.all(color: borderColor!, width: 2)
               : null,
           boxShadow: [
             BoxShadow(
-              color: (colors == null || colors!.length > 1)
-                  ? colors!.last.withOpacity(0.3)
-                  : shadowColor,
+              color: (useShadow || !useColors)
+                  ? shadowColor
+                  : colors!.last.withOpacity(0.3),
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),

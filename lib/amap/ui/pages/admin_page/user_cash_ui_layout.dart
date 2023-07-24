@@ -11,13 +11,9 @@ class UserCashUiLayout extends StatelessWidget {
     return CardLayout(
         width: 150,
         height: 100,
-        colors: const [
-          AMAPColorConstants.green1,
-          AMAPColorConstants.textLight,
-        ],
+        colors: const [AMAPColorConstants.green1, AMAPColorConstants.textLight],
         shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
-        child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 5),
-            child: child));
+        padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 5),
+        child: child);
   }
 }

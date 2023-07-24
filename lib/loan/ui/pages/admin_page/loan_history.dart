@@ -89,7 +89,7 @@ class HistoryLoan extends HookConsumerWidget {
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
-                        height: 170,
+                        height: 110,
                         child: HorizontalListView(
                           child: Row(
                             children: [

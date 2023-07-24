@@ -62,7 +62,7 @@ class ProductHandler extends HookConsumerWidget {
                       AmapRouter.addEditProduct);
                 },
                 child: CardLayout(
-                    height: 185,
+                    height: 155,
                     width: 100,
                     colors: const [
                       AMAPColorConstants.lightGradient1,

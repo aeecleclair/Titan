@@ -99,7 +99,7 @@ class LoanersItems extends HookConsumerWidget {
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
-                          height: 170,
+                          height: 140,
                           child: HorizontalListView(
                             child: Row(
                               children: [
@@ -112,8 +112,8 @@ class LoanersItems extends HookConsumerWidget {
                                         LoanRouter.addEditItem);
                                   },
                                   child: const CardLayout(
-                                    width: 120,
-                                    height: 160,
+                                    width: 100,
+                                    height: 140,
                                     child: Center(
                                       child: HeroIcon(
                                         HeroIcons.plus,

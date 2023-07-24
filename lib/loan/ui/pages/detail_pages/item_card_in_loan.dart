@@ -14,29 +14,27 @@ class ItemCardInLoan extends StatelessWidget {
     return CardLayout(
       width: 140,
       height: 80,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 17.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            AutoSizeText(item.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black)),
-            const SizedBox(height: 10),
-            Text(
-              '${itemQty.quantity} ${itemQty.quantity <= 1 ? LoanTextConstants.borrowed : LoanTextConstants.borrowedMultiple}',
-              style: TextStyle(
-                  fontSize: 13,
+      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          AutoSizeText(item.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey.shade400),
-            ),
-          ],
-        ),
+                  color: Colors.black)),
+          const SizedBox(height: 10),
+          Text(
+            '${itemQty.quantity} ${itemQty.quantity <= 1 ? LoanTextConstants.borrowed : LoanTextConstants.borrowedMultiple}',
+            style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade400),
+          ),
+        ],
       ),
     );
   }

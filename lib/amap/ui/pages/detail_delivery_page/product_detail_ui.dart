@@ -20,40 +20,38 @@ class ProductDetailCard extends StatelessWidget {
         AMAPColorConstants.lightGradient2
       ],
       shadowColor: AMAPColorConstants.textDark.withOpacity(0.3),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-            AutoSizeText(product.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AMAPColorConstants.darkGreen)),
-            const SizedBox(height: 4),
-            AutoSizeText("${AMAPTextConstants.quantity} : $quantity",
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white)),
-            const SizedBox(height: 4),
-            AutoSizeText('${(product.price * quantity).toStringAsFixed(2)} €',
-                maxLines: 1,
-                minFontSize: 10,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AMAPColorConstants.darkGreen)),
-            const SizedBox(height: 10),
-          ],
-        ),
+      padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 10),
+          AutoSizeText(product.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AMAPColorConstants.darkGreen)),
+          const SizedBox(height: 4),
+          AutoSizeText("${AMAPTextConstants.quantity} : $quantity",
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white)),
+          const SizedBox(height: 4),
+          AutoSizeText('${(product.price * quantity).toStringAsFixed(2)} €',
+              maxLines: 1,
+              minFontSize: 10,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AMAPColorConstants.darkGreen)),
+          const SizedBox(height: 10),
+        ],
       ),
     );
   }

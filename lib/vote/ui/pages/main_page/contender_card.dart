@@ -289,7 +289,7 @@ class ContenderCard extends HookConsumerWidget {
                                         loading: () {});
                                   },
                                   child: const CardButton(
-                                    gradient1: Colors.black,
+                                    color: Colors.black,
                                     child: HeroIcon(HeroIcons.envelopeOpen,
                                         color: Colors.white),
                                   ),

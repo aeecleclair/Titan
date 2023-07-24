@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class CardButton extends StatelessWidget {
   final Widget child;
-  final Color gradient1;
-  final Color? gradient2;
+  final Color color;
+  final Color? gradient;
   final Color? shadowColor;
   final Border border;
   const CardButton(
       {super.key,
       required this.child,
-      required this.gradient1,
-      this.gradient2,
+      required this.color,
+      this.gradient,
       this.shadowColor,
       this.border = const Border.fromBorderSide(BorderSide.none)});
 
@@ -23,14 +23,14 @@ class CardButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         gradient: LinearGradient(
-          colors: [gradient1, gradient2 ?? gradient1],
+          colors: [color, gradient ?? color],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         border: border,
         boxShadow: [
           BoxShadow(
-              color: shadowColor ?? (gradient2 ?? gradient1).withOpacity(0.5),
+              color: shadowColor ?? (gradient ?? color).withOpacity(0.5),
               blurRadius: 10,
               offset: const Offset(2, 3))
         ],

@@ -129,7 +129,7 @@ class AdminSessionCard extends HookConsumerWidget {
                         GestureDetector(
                           onTap: onEdit,
                           child: CardButton(
-                            gradient1: Colors.grey.shade200,
+                            color: Colors.grey.shade200,
                             shadowColor: Colors.grey.withOpacity(0.2),
                             child: const HeroIcon(HeroIcons.pencil,
                                 color: Colors.black),
@@ -138,7 +138,7 @@ class AdminSessionCard extends HookConsumerWidget {
                         ShrinkButton(
                           onTap: onDelete,
                           builder: (child) =>
-                              CardButton(gradient1: Colors.black, child: child),
+                              CardButton(color: Colors.black, child: child),
                           child: const HeroIcon(HeroIcons.trash,
                               color: Colors.white),
                         ),

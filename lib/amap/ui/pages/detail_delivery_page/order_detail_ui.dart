@@ -44,6 +44,7 @@ class DetailOrderUI extends HookConsumerWidget {
         AMAPColorConstants.lightGradient1,
         AMAPColorConstants.greenGradient1
       ],
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 17.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,8 +154,8 @@ class DetailOrderUI extends HookConsumerWidget {
                           })));
                 },
                 builder: (child) => CardButton(
-                    gradient1: AMAPColorConstants.redGradient1,
-                    gradient2: AMAPColorConstants.redGradient2,
+                    color: AMAPColorConstants.redGradient1,
+                    gradient: AMAPColorConstants.redGradient2,
                     child: child),
                 child: const HeroIcon(
                   HeroIcons.trash,

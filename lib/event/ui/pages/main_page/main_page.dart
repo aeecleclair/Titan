@@ -10,6 +10,7 @@ import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/components/event_ui.dart';
 import 'package:myecl/tools/ui/admin_button.dart';
+import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -78,7 +79,7 @@ class EventMainPage extends HookConsumerWidget {
                                     QR.to(
                                         EventRouter.root + EventRouter.addEdit);
                                   },
-                                  child: Container(
+                                  child: CardLayout(
                                       margin: const EdgeInsets.only(
                                           bottom: 10,
                                           top: 20,
@@ -86,26 +87,7 @@ class EventMainPage extends HookConsumerWidget {
                                           right: 40),
                                       width: double.infinity,
                                       height: 100,
-                                      decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              Colors.white,
-                                              Colors.grey.shade100,
-                                            ],
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.2),
-                                              spreadRadius: 5,
-                                              blurRadius: 10,
-                                              offset: const Offset(3, 3),
-                                            )
-                                          ]),
+                                      color: Colors.white,
                                       child: Center(
                                           child: HeroIcon(
                                         HeroIcons.plus,
@@ -114,9 +96,7 @@ class EventMainPage extends HookConsumerWidget {
                                       ))),
                                 );
                               } else if (index == events.length + 1) {
-                                return Container(
-                                  height: 80,
-                                );
+                                return Container(height: 80);
                               }
                               return EventUi(event: events[index - 1]);
                             }),

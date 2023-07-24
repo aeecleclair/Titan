@@ -99,6 +99,7 @@ class DeliveryUi extends HookConsumerWidget {
       height: 160,
       width: 280,
       shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
+      padding: const EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,8 +190,8 @@ class DeliveryUi extends HookConsumerWidget {
                       );
                     },
                     child: const CardButton(
-                      gradient1: AMAPColorConstants.greenGradient1,
-                      gradient2: AMAPColorConstants.greenGradient1,
+                      color: AMAPColorConstants.greenGradient1,
+                      gradient: AMAPColorConstants.greenGradient1,
                       child: HeroIcon(
                         HeroIcons.pencil,
                         color: Colors.white,
@@ -224,8 +225,8 @@ class DeliveryUi extends HookConsumerWidget {
                               })));
                     },
                     builder: (child) => CardButton(
-                        gradient1: AMAPColorConstants.redGradient1,
-                        gradient2: AMAPColorConstants.redGradient2,
+                        color: AMAPColorConstants.redGradient1,
+                        gradient: AMAPColorConstants.redGradient2,
                         child: child),
                     child: const HeroIcon(
                       HeroIcons.trash,
