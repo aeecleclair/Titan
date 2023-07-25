@@ -196,7 +196,7 @@ class RaffleMainPage extends HookConsumerWidget {
                   error: (Object error, StackTrace stackTrace) => Center(
                       child: SizedBox(
                           height: 120,
-                          child: Text("Error $error",
+                          child: Text("${RaffleTextConstants.error} $error",
                               style: const TextStyle(fontSize: 20)))),
                   loading: () => const Center(
                       child: SizedBox(height: 120, child: Loader()))),

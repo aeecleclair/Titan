@@ -98,7 +98,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    "${typeTicket.packSize} tickets",
+                    "${typeTicket.packSize} ${RaffleTextConstants.tickets}",
                     style: TextStyle(
                         color: Colors.white.withOpacity(0.8),
                         fontSize: 38,
@@ -148,7 +148,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                           onTap: () async {
                             if (b < typeTicket.price) {
                               displayToastWithContext(TypeMsg.error,
-                                  "Vous n'avez pas assez d'argent");
+                                  RaffleTextConstants.notEnoughMoney);
                             } else {
                               await tokenExpireWrapper(ref, () async {
                                 final value = await userTicketListNotifier

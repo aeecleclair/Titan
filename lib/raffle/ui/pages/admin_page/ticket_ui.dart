@@ -52,7 +52,7 @@ class TicketUI extends HookConsumerWidget {
                   height: showButton ? 5 : 10,
                 ),
                 Text(
-                  "${typeTicket.packSize} tickets",
+                  "${typeTicket.packSize} ${RaffleTextConstants.ticket}${typeTicket.packSize > 1 ? "s" : ""}",
                   style: TextStyle(
                       color: Colors.white.withOpacity(0.8),
                       fontSize: 18,

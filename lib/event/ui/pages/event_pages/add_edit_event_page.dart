@@ -301,7 +301,7 @@ class AddEditEventPage extends HookConsumerWidget {
                               isRoomNotifier.setIsRoom(true);
                             },
                             selected: isRoom,
-                            child: Text("Salle",
+                            child: Text(EventTextConstants.room,
                                 style: TextStyle(
                                   color: isRoom ? Colors.white : Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -312,7 +312,7 @@ class AddEditEventPage extends HookConsumerWidget {
                             roomIdNotifier.setRoomId("");
                           },
                           selected: !isRoom,
-                          child: Text("Autre",
+                          child: Text(EventTextConstants.other,
                               style: TextStyle(
                                 color: isRoom ? Colors.black : Colors.white,
                                 fontWeight: FontWeight.bold,

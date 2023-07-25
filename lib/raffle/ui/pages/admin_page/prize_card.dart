@@ -6,6 +6,7 @@ import 'package:myecl/raffle/class/raffle_status_type.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/card_layout.dart';
+import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class PrizeCard extends StatelessWidget {
@@ -89,7 +90,7 @@ class PrizeCard extends StatelessWidget {
                                   HeroIcon(HeroIcons.envelopeOpen,
                                       color: Colors.white),
                                   SizedBox(width: 15),
-                                  Text("Tirer",
+                                  Text(RaffleTextConstants.draw,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold)),
@@ -104,25 +105,14 @@ class PrizeCard extends StatelessWidget {
                             children: [
                               HeroIcon(HeroIcons.check, color: Colors.white),
                               SizedBox(width: 15),
-                              Text("Tiré",
+                              Text(RaffleTextConstants.drawn,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold)),
                             ],
                           ),
                         )
-                  : const Expanded(
-                      child: Column(
-                        children: [
-                          Center(
-                              child: Text("En Attente",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold))),
-                          Spacer()
-                        ],
-                      ),
-                    ),
+                  : const Expanded(child: Loader()),
           const SizedBox(height: 10),
         ],
       ),

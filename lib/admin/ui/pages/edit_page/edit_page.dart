@@ -96,7 +96,7 @@ class EditAssociationPage extends HookConsumerWidget {
                                         child: TextEntry(
                                           controller: name,
                                           color: ColorConstants.gradient1,
-                                          label: "Name",
+                                          label: AdminTextConstants.name,
                                           suffixIcon:
                                               const HeroIcon(HeroIcons.pencil),
                                           enabledColor: Colors.transparent,
@@ -117,7 +117,7 @@ class EditAssociationPage extends HookConsumerWidget {
                                         child: TextEntry(
                                           controller: description,
                                           color: ColorConstants.gradient1,
-                                          label: "Description",
+                                          label: AdminTextConstants.description,
                                           suffixIcon:
                                               const HeroIcon(HeroIcons.pencil),
                                           enabledColor: Colors.transparent,

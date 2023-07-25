@@ -59,18 +59,19 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                             ),
                           ),
                           const SizedBox(height: 35),
-                          const SectionTitle(text: "Nombre de ticket"),
+                          const SectionTitle(
+                              text: RaffleTextConstants.ticketNumber),
                           const SizedBox(height: 5),
                           TextEntry(
-                              label: "Nombre de ticket",
+                              label: RaffleTextConstants.ticketNumber,
                               isInt: true,
                               controller: packSize,
                               keyboardType: TextInputType.number),
                           const SizedBox(height: 50),
-                          const SectionTitle(text: "Prix"),
+                          const SectionTitle(text: RaffleTextConstants.price),
                           const SizedBox(height: 5),
                           TextEntry(
-                              label: "Prix",
+                              label: RaffleTextConstants.price,
                               isDouble: true,
                               suffix: "€",
                               controller: price,

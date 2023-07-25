@@ -133,7 +133,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                           ),
                         ),
                     error: (Object error, StackTrace? stackTrace) => Center(
-                          child: Text("Error : $error"),
+                          child: Text("${BookingTextConstants.error} : $error"),
                         ),
                     loading: () => const Loader()),
                 const SizedBox(height: 10),
