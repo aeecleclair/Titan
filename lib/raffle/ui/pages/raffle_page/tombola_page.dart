@@ -59,9 +59,9 @@ class RaffleInfoPage extends HookConsumerWidget {
               child: Text(
                   balance.when(
                       data: (s) =>
-                          "Solde : ${s.balance.toStringAsFixed(2)}€", //Attention là c'est les soldes AMAP à finir
-                      error: (e, s) => "Erreur",
-                      loading: () => "Loading"),
+                          "${RaffleTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€", //Attention là c'est les soldes AMAP à finir
+                      error: (e, s) => RaffleTextConstants.error,
+                      loading: () => RaffleTextConstants.loading),
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -178,7 +178,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                                 color: RaffleColorConstants.gradient2,
                                 fontWeight: FontWeight.bold)),
                         SizedBox(
-                          height: 10,
+                          height: 10
                         ),
                         Loader()
                       ])),
@@ -203,7 +203,7 @@ class RaffleInfoPage extends HookConsumerWidget {
             Container(
               padding: const EdgeInsets.only(
                   top: 20, bottom: 10, left: 30, right: 30),
-              child: const Text("Description",
+              child: const Text(RaffleTextConstants.description,
                   style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,

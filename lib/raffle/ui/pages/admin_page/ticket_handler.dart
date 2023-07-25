@@ -36,7 +36,7 @@ class TicketHandler extends HookConsumerWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           alignment: Alignment.centerLeft,
-          child: const Text("Tickets",
+          child: const Text(RaffleTextConstants.tickets,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -92,9 +92,10 @@ class TicketHandler extends HookConsumerWidget {
                                     await showDialog(
                                         context: context,
                                         builder: (context) => CustomDialogBox(
-                                              title: "Supprimer le ticket",
-                                              descriptions:
-                                                  "Voulez-vous vraiment supprimer ce ticket?",
+                                              title: RaffleTextConstants
+                                                  .deleteTicket,
+                                              descriptions: RaffleTextConstants
+                                                  .deleteTicketDescription,
                                               onYes: () {
                                                 tokenExpireWrapper(ref,
                                                     () async {
@@ -121,7 +122,7 @@ class TicketHandler extends HookConsumerWidget {
                             .toList());
                   },
                   error: (Object e, StackTrace? s) =>
-                      Text("Error: ${e.toString()}"),
+                      Text("${RaffleTextConstants.error}: ${e.toString()}"),
                   loading: () => const Loader(
                         color: RaffleColorConstants.gradient2,
                       )),

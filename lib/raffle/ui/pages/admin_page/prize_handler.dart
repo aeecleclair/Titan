@@ -46,7 +46,7 @@ class PrizeHandler extends HookConsumerWidget {
                 child: Column(
                   children: [
                     Text(
-                      "Gagnant${winningTickets.length > 1 ? 's' : ''}",
+                      "${RaffleTextConstants.winner}${winningTickets.length > 1 ? 's' : ''}",
                       style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class PrizeHandler extends HookConsumerWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           alignment: Alignment.centerLeft,
-          child: const Text("Lots",
+          child: const Text(RaffleTextConstants.prizes,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -128,7 +128,7 @@ class PrizeHandler extends HookConsumerWidget {
                       ? const SizedBox(
                           height: 150,
                           child: Center(
-                            child: Text("Aucun Lot"),
+                            child: Text(RaffleTextConstants.noPrize),
                           ),
                         )
                       : Row(
@@ -140,9 +140,10 @@ class PrizeHandler extends HookConsumerWidget {
                                     await showDialog(
                                         context: context,
                                         builder: (context) => CustomDialogBox(
-                                              title: "Supprimer le produit",
-                                              descriptions:
-                                                  "Voulez-vous vraiment supprimer ce produit?",
+                                              title: RaffleTextConstants
+                                                  .deletePrize,
+                                              descriptions: RaffleTextConstants
+                                                  .deletePrizeDescription,
                                               onYes: () {
                                                 tokenExpireWrapper(ref,
                                                     () async {
@@ -175,9 +176,10 @@ class PrizeHandler extends HookConsumerWidget {
                                     await showDialog(
                                         context: context,
                                         builder: (context) => CustomDialogBox(
-                                              title: "Tirage",
-                                              descriptions:
-                                                  "Tirer le gagnant de ce lot ?",
+                                              title:
+                                                  RaffleTextConstants.drawing,
+                                              descriptions: RaffleTextConstants
+                                                  .drawingDescription,
                                               onYes: () {
                                                 tokenExpireWrapper(ref,
                                                     () async {
@@ -211,8 +213,8 @@ class PrizeHandler extends HookConsumerWidget {
                               .toList(),
                         );
                 },
-                error: (Object error, StackTrace stackTrace) =>
-                    Center(child: Text("error : $error")),
+                error: (Object error, StackTrace stackTrace) => Center(
+                    child: Text("${RaffleTextConstants.error} : $error")),
                 loading: () => const Loader()),
             const SizedBox(
               width: 10,

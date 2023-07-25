@@ -41,6 +41,7 @@ class BookingTextConstants {
   static const String endDate = "Date de fin";
   static const String endHour = "Heure de fin";
   static const String entity = "Pour qui ?";
+  static const String error = "Erreur";
   static const String eventEvery = "Tous les";
   static const String historyPage = "Historique";
   static const String incorrectOrMissingFields =

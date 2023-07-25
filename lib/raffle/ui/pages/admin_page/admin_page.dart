@@ -125,7 +125,7 @@ class AdminPage extends HookConsumerWidget {
                                             fontSize: 30),
                                       ),
                                       const Text(
-                                        "Tickets",
+                                        RaffleTextConstants.tickets,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color:
@@ -134,7 +134,8 @@ class AdminPage extends HookConsumerWidget {
                                       ),
                                     ],
                                   ),
-                              error: (e, s) => const Text("Error"),
+                              error: (e, s) =>
+                                  const Text(RaffleTextConstants.error),
                               loading: () => const Loader(
                                   color: RaffleColorConstants.textDark)),
                           const Spacer(),
@@ -149,7 +150,7 @@ class AdminPage extends HookConsumerWidget {
                                             fontSize: 30),
                                       ),
                                       const Text(
-                                        "Récoltés",
+                                        RaffleTextConstants.gathered,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color:
@@ -158,7 +159,8 @@ class AdminPage extends HookConsumerWidget {
                                       ),
                                     ],
                                   ),
-                              error: (e, s) => const Text("Error"),
+                              error: (e, s) =>
+                                  const Text(RaffleTextConstants.error),
                               loading: () => const Loader(
                                   color: RaffleColorConstants.textDark)),
                           const Spacer(),

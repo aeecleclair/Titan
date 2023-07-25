@@ -111,7 +111,7 @@ class RaffleWidget extends HookConsumerWidget {
                                         fontSize: 30),
                                   ),
                                   const Text(
-                                    "Tickets",
+                                    RaffleTextConstants.tickets,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: RaffleColorConstants.textDark,
@@ -131,7 +131,7 @@ class RaffleWidget extends HookConsumerWidget {
                                         fontSize: 30),
                                   ),
                                   const Text(
-                                    "Récoltés",
+                                    RaffleTextConstants.gathered,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: RaffleColorConstants.textDark,

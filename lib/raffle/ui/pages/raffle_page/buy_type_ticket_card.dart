@@ -84,7 +84,7 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                "${typeTicket.packSize} tickets",
+                "${typeTicket.packSize} ${RaffleTextConstants.ticket}${typeTicket.packSize > 1 ? "s" : ""}",
                 style: TextStyle(
                     color: Colors.white.withOpacity(0.8),
                     fontSize: 18,
@@ -113,11 +113,11 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
                       fit: BoxFit.fitWidth,
                       child: Text(
                           raffle.raffleStatusType == RaffleStatusType.open
-                              ? "Acheter ce ticket"
+                              ? RaffleTextConstants.buyThisTicket
                               : raffle.raffleStatusType ==
                                       RaffleStatusType.locked
-                                  ? "Tombola fermée"
-                                  : "Pas encore disponible",
+                                  ? RaffleTextConstants.lockedRaffle
+                                  : RaffleTextConstants.unavailableRaffle,
                           style: TextStyle(
                               color: raffle.raffleStatusType !=
                                       RaffleStatusType.open

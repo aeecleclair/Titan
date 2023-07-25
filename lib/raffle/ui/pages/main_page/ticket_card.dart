@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/raffle/class/raffle.dart';
 import 'package:myecl/raffle/class/tickets.dart';
 import 'package:myecl/raffle/providers/raffle_list_provider.dart';
+import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/main_page/ticket_card_background.dart';
 
 class TicketWidget extends HookConsumerWidget {
@@ -55,7 +56,7 @@ class TicketWidget extends HookConsumerWidget {
                     Expanded(
                       child: AutoSizeText(
                         isWinningTicket
-                            ? "Gagnant !"
+                            ? "${RaffleTextConstants.winner} !"
                             : "${price.toStringAsFixed(2)} €",
                         maxLines: 1,
                         textAlign: TextAlign.right,
@@ -72,7 +73,7 @@ class TicketWidget extends HookConsumerWidget {
                 AutoSizeText(
                   isWinningTicket
                       ? ticket[0].prize!.name
-                      : "${ticket.length} ticket${ticket.length > 1 ? "s" : ""}",
+                      : "${ticket.length} ${RaffleTextConstants.ticket}${ticket.length > 1 ? "s" : ""}",
                   maxLines: 2,
                   style: TextStyle(
                       color: isWinningTicket

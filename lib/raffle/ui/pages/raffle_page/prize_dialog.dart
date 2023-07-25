@@ -49,14 +49,12 @@ class PrizeDialog extends HookConsumerWidget {
                         fontSize: 30,
                         fontWeight: FontWeight.bold),
                   ))),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Center(
                   child: FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Text(
-                        "${prize.quantity} lot${prize.quantity > 1 ? "s" : ""} gagnable${prize.quantity > 1 ? "s" : ""}",
+                        "${prize.quantity} ${RaffleTextConstants.prize}${prize.quantity > 1 ? "s" : ""} ${RaffleTextConstants.winnable}${prize.quantity > 1 ? "s" : ""}",
                         style: const TextStyle(
                             color: RaffleColorConstants.writtenWhite,
                             fontSize: 50,
@@ -65,7 +63,7 @@ class PrizeDialog extends HookConsumerWidget {
               const Spacer(),
               AutoSizeText(
                 prize.description == null || prize.description!.isEmpty
-                    ? "Pas de description"
+                    ? RaffleTextConstants.noDescription
                     : prize.description!,
                 maxLines: 4,
                 textAlign: TextAlign.justify,
@@ -74,9 +72,7 @@ class PrizeDialog extends HookConsumerWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
             ])));
   }
 }

@@ -59,31 +59,32 @@ class AddEditPrizePage extends HookConsumerWidget {
                             ),
                           ),
                           const SizedBox(height: 35),
-                          const SectionTitle(text: "Quantité"),
+                          const SectionTitle(
+                              text: RaffleTextConstants.quantity),
                           const SizedBox(height: 5),
                           TextEntry(
-                              label: "Quantité",
+                              label: RaffleTextConstants.quantity,
                               isInt: true,
                               controller: quantity,
                               keyboardType: TextInputType.number),
                           const SizedBox(height: 50),
-                          const SectionTitle(text: "Nom"),
+                          const SectionTitle(text: RaffleTextConstants.name),
                           const SizedBox(height: 5),
                           TextEntry(
-                              label: "Nom",
-                              controller: name,),
+                              label: RaffleTextConstants.name,
+                              controller: name),
                           const SizedBox(height: 50),
-                          const SectionTitle(text: "Description"),
+                          const SectionTitle(
+                              text: RaffleTextConstants.description),
                           const SizedBox(height: 5),
                           TextEntry(
-                              label: "Description",
-                              canBeEmpty: true,
-                              controller: description,),
+                            label: RaffleTextConstants.description,
+                            canBeEmpty: true,
+                            controller: description,
+                          ),
                           const SizedBox(height: 50),
                           ShrinkButton(
-                              builder: (child) => BlueBtn(
-                                    child: child,
-                                  ),
+                              builder: (child) => BlueBtn(child: child),
                               onTap: () async {
                                 if (formKey.currentState!.validate()) {
                                   await tokenExpireWrapper(ref, () async {

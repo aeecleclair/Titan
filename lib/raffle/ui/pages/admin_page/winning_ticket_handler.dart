@@ -17,7 +17,7 @@ class WinningTicketHandler extends HookConsumerWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           alignment: Alignment.centerLeft,
-          child: const Text("Tickets gagnants",
+          child: const Text(RaffleTextConstants.winningTickets,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -38,8 +38,7 @@ class WinningTicketHandler extends HookConsumerWidget {
                     if (data.isEmpty) {
                       return const SizedBox(
                           height: 150,
-                          child:
-                              Text("Les tickets gagnants seront affichés ici"));
+                          child: Text(RaffleTextConstants.noWinningTicketYet));
                     }
                     return Row(
                         children: data
@@ -47,7 +46,9 @@ class WinningTicketHandler extends HookConsumerWidget {
                             .toList());
                   },
                   error: (Object e, StackTrace? s) => SizedBox(
-                      height: 150, child: Text("Error: ${e.toString()}")),
+                      height: 150,
+                      child: Text(
+                          "${RaffleTextConstants.error}: ${e.toString()}")),
                   loading: () => const SizedBox(
                       height: 150,
                       child: Loader(color: RaffleColorConstants.gradient2))),

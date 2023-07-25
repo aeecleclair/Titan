@@ -105,7 +105,7 @@ class EventMainPage extends HookConsumerWidget {
                   );
                 },
                 loading: () => const Loader(),
-                error: (error, stack) => Center(child: Text("Error $error")))
+                error: (error, stack) => Center(child: Text("${EventTextConstants.error} $error")))
           ],
         ),
       ),
