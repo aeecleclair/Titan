@@ -52,15 +52,9 @@ class ContenderListNotifier extends ListNotifier<Contender> {
 
   Future<AsyncValue<List<Contender>>> copy() async {
     return state.when(
-      data: (contenders) async {
-        return AsyncValue.data(contenders);
-      },
-      loading: () async {
-        return const AsyncValue.loading();
-      },
-      error: (error, stackTrace) async {
-        return AsyncValue.error(error, stackTrace);
-      },
+      data: (contenders) async => AsyncValue.data(contenders),
+      loading: () async => const AsyncValue.loading(),
+      error: (error, stackTrace) async => AsyncValue.error(error, stackTrace),
     );
   }
 

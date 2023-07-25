@@ -30,9 +30,7 @@ class ProductUi extends ConsumerWidget {
             ),
             Row(
               children: [
-                Container(
-                  width: 15,
-                ),
+                const SizedBox(width: 15),
                 Container(
                   width: 50,
                   alignment: Alignment.centerRight,
@@ -41,9 +39,7 @@ class ProductUi extends ConsumerWidget {
                     style: const TextStyle(fontSize: 13),
                   ),
                 ),
-                Container(
-                  width: 15,
-                ),
+                const SizedBox(width: 15),
                 Checkbox(
                   value: isModification,
                   checkColor: AMAPColorConstants.background,

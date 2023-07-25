@@ -356,9 +356,7 @@ class DeliveryUi extends HookConsumerWidget {
                               color: Colors.white, fontSize: 20),
                         ),
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      const SizedBox(width: 10),
                       HeroIcon(
                         delivery.status == DeliveryStatus.creation
                             ? HeroIcons.lockOpen

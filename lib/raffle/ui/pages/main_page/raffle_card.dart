@@ -157,9 +157,7 @@ class RaffleWidget extends HookConsumerWidget {
                           });
                           return const SizedBox();
                         },
-                        error: (error, stack) {
-                          return const SizedBox();
-                        },
+                        error: (error, stack) => const SizedBox(),
                       );
                     } else {
                       Future.delayed(const Duration(milliseconds: 1), () {
@@ -176,12 +174,8 @@ class RaffleWidget extends HookConsumerWidget {
                       return const SizedBox();
                     }
                   },
-                  error: (Object error, StackTrace stackTrace) {
-                    return const SizedBox();
-                  },
-                  loading: () {
-                    return const SizedBox();
-                  },
+                  error: (Object error, StackTrace stackTrace) => const SizedBox(),
+                  loading: () => const SizedBox(),
                 ),
               ],
             ),

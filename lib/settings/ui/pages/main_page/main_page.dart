@@ -41,9 +41,7 @@ class SettingsMainPage extends HookConsumerWidget {
             await meNotifier.loadMe();
           },
           child: Column(children: [
-            const SizedBox(
-              height: 25,
-            ),
+            const SizedBox(height: 25),
             profilePicture.when(
                 data: (profile) {
                   return Center(
@@ -74,9 +72,7 @@ class SettingsMainPage extends HookConsumerWidget {
                           left: -MediaQuery.of(context).size.width / 2 + 70,
                           child: Column(
                             children: [
-                              const SizedBox(
-                                height: 125,
-                              ),
+                              const SizedBox(height: 125),
                               Container(
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
@@ -95,9 +91,7 @@ class SettingsMainPage extends HookConsumerWidget {
                                   children: [
                                     Column(
                                       children: [
-                                        const SizedBox(
-                                          height: 8,
-                                        ),
+                                        const SizedBox(height: 8),
                                         Text(
                                           me.nickname != null
                                               ? me.nickname!
@@ -109,16 +103,12 @@ class SettingsMainPage extends HookConsumerWidget {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(
-                                      height: 3,
-                                    ),
+                                    const SizedBox(height: 3),
                                     Text(
                                       me.nickname != null
                                           ? "${me.firstname} ${me.name}"
                                           : me.name,
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                      ),
+                                      style: const TextStyle(fontSize: 20),
                                     ),
                                   ],
                                 ),
@@ -133,14 +123,10 @@ class SettingsMainPage extends HookConsumerWidget {
                 loading: () => const Loader(),
                 error: (e, s) =>
                     const HeroIcon(HeroIcons.userCircle, size: 140)),
-            const SizedBox(
-              height: 100,
-            ),
+            const SizedBox(height: 100),
             HorizontalListView(
               child: Row(children: [
-                const SizedBox(
-                  width: 15,
-                ),
+                const SizedBox(width: 15),
                 ...me.groups
                     .map((e) => ItemChip(
                           selected: true,
@@ -152,14 +138,10 @@ class SettingsMainPage extends HookConsumerWidget {
                           ),
                         ))
                     .toList(),
-                const SizedBox(
-                  width: 15,
-                )
+                const SizedBox(width: 15)
               ]),
             ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Column(
@@ -172,9 +154,7 @@ class SettingsMainPage extends HookConsumerWidget {
                             fontWeight: FontWeight.w700,
                             color: Colors.black)),
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   SettingsItem(
                     icon: HeroIcons.pencil,
                     onTap: () {
@@ -183,9 +163,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     child: const Text(SettingsTextConstants.editAccount,
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   SettingsItem(
                     icon: HeroIcons.calendarDays,
                     onTap: () {
@@ -199,9 +177,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     child: const Text(SettingsTextConstants.eventsIcal,
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(SettingsTextConstants.security,
@@ -210,9 +186,7 @@ class SettingsMainPage extends HookConsumerWidget {
                             fontWeight: FontWeight.w700,
                             color: Colors.black)),
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   SettingsItem(
                     icon: HeroIcons.lockClosed,
                     onTap: () {
@@ -222,9 +196,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     child: const Text(SettingsTextConstants.editPassword,
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(SettingsTextConstants.help,
@@ -233,9 +205,7 @@ class SettingsMainPage extends HookConsumerWidget {
                             fontWeight: FontWeight.w700,
                             color: Colors.black)),
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   SettingsItem(
                     icon: HeroIcons.clipboardDocumentList,
                     onTap: () {
@@ -244,9 +214,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     child: const Text(SettingsTextConstants.logs,
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(SettingsTextConstants.personalisation,
@@ -255,9 +223,7 @@ class SettingsMainPage extends HookConsumerWidget {
                             fontWeight: FontWeight.w700,
                             color: Colors.black)),
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   SettingsItem(
                     icon: HeroIcons.queueList,
                     onTap: () {
@@ -266,9 +232,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     child: const Text(SettingsTextConstants.modules,
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   SettingsItem(
                     icon: HeroIcons.bellAlert,
                     onTap: () {
@@ -277,9 +241,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     child: const Text(SettingsTextConstants.notifications,
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(SettingsTextConstants.personalData,
@@ -288,9 +250,7 @@ class SettingsMainPage extends HookConsumerWidget {
                             fontWeight: FontWeight.w700,
                             color: Colors.black)),
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   SettingsItem(
                     icon: HeroIcons.circleStack,
                     onTap: () async {
@@ -317,17 +277,13 @@ class SettingsMainPage extends HookConsumerWidget {
                     child: const Text(SettingsTextConstants.detelePersonalData,
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
-                  const SizedBox(
-                    height: 60,
-                  ),
+                  const SizedBox(height: 60),
                   Text("${SettingsTextConstants.version} $titanVersion",
                       style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
                           color: Colors.black)),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   AutoSizeText(Repository.displayHost,
                       maxLines: 1,
                       minFontSize: 10,
@@ -335,9 +291,7 @@ class SettingsMainPage extends HookConsumerWidget {
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
                           color: Colors.black)),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                 ],
               ),
             )

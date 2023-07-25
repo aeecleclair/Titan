@@ -136,9 +136,7 @@ class UserCashUi extends HookConsumerWidget {
                                 suffix: '€',
                               ),
                             ),
-                            const SizedBox(
-                              width: 20,
-                            ),
+                            const SizedBox(width: 20),
                             ShrinkButton(
                               builder: (child) => child,
                               onTap: () async {

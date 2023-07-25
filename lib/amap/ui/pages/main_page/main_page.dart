@@ -67,9 +67,7 @@ class AmapMainPage extends HookConsumerWidget {
           },
           child: Column(
             children: [
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Row(
@@ -98,9 +96,7 @@ class AmapMainPage extends HookConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Stack(
                 children: [
                   Column(
@@ -123,12 +119,8 @@ class AmapMainPage extends HookConsumerWidget {
                           );
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const DeliverySection(
-                        showSelected: false,
-                      ),
+                      const SizedBox(height: 20),
+                      const DeliverySection(showSelected: false),
                     ],
                   ),
                   AnimatedBuilder(
@@ -169,9 +161,7 @@ class AmapMainPage extends HookConsumerWidget {
                       ),
                       child: Column(
                         children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 20),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 30),
                             child: Row(
@@ -201,9 +191,7 @@ class AmapMainPage extends HookConsumerWidget {
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          const SizedBox(height: 30),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 50),
                             child: Container(
@@ -220,15 +208,10 @@ class AmapMainPage extends HookConsumerWidget {
                                             collectionSlot: e))
                                         .toList())),
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          const SizedBox(height: 30),
                           DeliverySection(
-                            editable: order.id == Order.empty().id,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                              editable: order.id == Order.empty().id),
+                          const SizedBox(height: 20),
                           ShrinkButton(
                               onTap: () async {
                                 if (availableDeliveriesIds

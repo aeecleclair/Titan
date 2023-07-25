@@ -61,47 +61,49 @@ class ContenderCard extends HookConsumerWidget {
                 contenderLogos.when(
                     data: (data) {
                       if (data[contender] != null) {
-                        return data[contender]!.when(data: (data) {
-                          if (data.isNotEmpty) {
-                            return Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: data.first.image,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            );
-                          } else {
-                            Future.delayed(
-                                const Duration(milliseconds: 1),
-                                () => contenderLogosNotifier.setTData(
-                                    contender, const AsyncLoading()));
-                            tokenExpireWrapper(ref, () async {
-                              logoNotifier.getLogo(contender.id).then((value) {
-                                contenderLogosNotifier.setTData(
-                                    contender, AsyncData([value]));
-                              });
-                            });
-                            return const HeroIcon(
-                              HeroIcons.userCircle,
-                              size: 40,
-                            );
-                          }
-                        }, loading: () {
-                          return const SizedBox(
-                              height: 40, width: 40, child: Loader());
-                        }, error: (error, stack) {
-                          return const SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: Center(
-                              child: HeroIcon(HeroIcons.exclamationCircle),
-                            ),
-                          );
-                        });
+                        return data[contender]!.when(
+                            data: (data) {
+                              if (data.isNotEmpty) {
+                                return Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: data.first.image,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                Future.delayed(
+                                    const Duration(milliseconds: 1),
+                                    () => contenderLogosNotifier.setTData(
+                                        contender, const AsyncLoading()));
+                                tokenExpireWrapper(ref, () async {
+                                  logoNotifier
+                                      .getLogo(contender.id)
+                                      .then((value) {
+                                    contenderLogosNotifier.setTData(
+                                        contender, AsyncData([value]));
+                                  });
+                                });
+                                return const HeroIcon(
+                                  HeroIcons.userCircle,
+                                  size: 40,
+                                );
+                              }
+                            },
+                            loading: () => const SizedBox(
+                                height: 40, width: 40, child: Loader()),
+                            error: (error, stack) => const SizedBox(
+                                  height: 40,
+                                  width: 40,
+                                  child: Center(
+                                    child:
+                                        HeroIcon(HeroIcons.exclamationCircle),
+                                  ),
+                                ));
                       } else {
                         return const SizedBox.shrink();
                       }

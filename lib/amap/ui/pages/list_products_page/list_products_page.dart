@@ -12,9 +12,9 @@ class ListProductPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final animation = useAnimationController(
-        duration: const Duration(milliseconds: 200), initialValue: 0)
-      ..repeat();
+    final animation =
+        useAnimationController(duration: const Duration(milliseconds: 200))
+          ..repeat();
     return AmapTemplate(
       child: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -22,9 +22,7 @@ class ListProductPage extends HookConsumerWidget {
           children: [
             Column(
               children: [
-                const SizedBox(
-                  height: 50,
-                ),
+                const SizedBox(height: 50),
                 Expanded(
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,

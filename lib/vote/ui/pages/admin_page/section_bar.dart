@@ -52,61 +52,54 @@ class SectionBar extends HookConsumerWidget {
               ),
             ),
           if (section.id != Section.empty().id)
-            ...sectionContender.when(data: (sections) {
-              return sections
-                  .map((key, value) => MapEntry(
-                      SectionChip(
-                          label: key.name,
-                          selected: section.id == key.id,
-                          isAdmin: status == Status.waiting,
-                          onTap: () async {
-                            tokenExpireWrapper(ref, () async {
-                              sectionIdNotifier.setId(key.id);
-                            });
-                          },
-                          onDelete: () async {
-                            tokenExpireWrapper(ref, () async {
-                              await showDialog(
-                                  context: context,
-                                  builder: (context) => CustomDialogBox(
-                                        title: VoteTextConstants.deleteSection,
-                                        descriptions: VoteTextConstants
-                                            .deleteSectionDescription,
-                                        onYes: () async {
-                                          final result = await sectionsNotifier
-                                              .deleteSection(key);
-                                          if (result) {
-                                            sectionContenderListNotifier
-                                                .deleteT(key);
-                                            displayVoteToastWithContext(
-                                                TypeMsg.msg,
-                                                VoteTextConstants
-                                                    .deletedSection);
-                                          } else {
-                                            displayVoteToastWithContext(
-                                                TypeMsg.error,
-                                                VoteTextConstants
-                                                    .deletingError);
-                                          }
-                                        },
-                                      ));
-                            });
-                          }),
-                      value))
-                  .keys;
-            }, loading: () {
-              return const [
-                SizedBox(
-                  width: 20,
-                )
-              ];
-            }, error: (error, stack) {
-              return const [
-                SizedBox(
-                  width: 20,
-                )
-              ];
-            }),
+            ...sectionContender.when(
+                data: (sections) {
+                  return sections
+                      .map((key, value) => MapEntry(
+                          SectionChip(
+                              label: key.name,
+                              selected: section.id == key.id,
+                              isAdmin: status == Status.waiting,
+                              onTap: () async {
+                                tokenExpireWrapper(ref, () async {
+                                  sectionIdNotifier.setId(key.id);
+                                });
+                              },
+                              onDelete: () async {
+                                tokenExpireWrapper(ref, () async {
+                                  await showDialog(
+                                      context: context,
+                                      builder: (context) => CustomDialogBox(
+                                            title:
+                                                VoteTextConstants.deleteSection,
+                                            descriptions: VoteTextConstants
+                                                .deleteSectionDescription,
+                                            onYes: () async {
+                                              final result =
+                                                  await sectionsNotifier
+                                                      .deleteSection(key);
+                                              if (result) {
+                                                sectionContenderListNotifier
+                                                    .deleteT(key);
+                                                displayVoteToastWithContext(
+                                                    TypeMsg.msg,
+                                                    VoteTextConstants
+                                                        .deletedSection);
+                                              } else {
+                                                displayVoteToastWithContext(
+                                                    TypeMsg.error,
+                                                    VoteTextConstants
+                                                        .deletingError);
+                                              }
+                                            },
+                                          ));
+                                });
+                              }),
+                          value))
+                      .keys;
+                },
+                loading: () => const [SizedBox(width: 20)],
+                error: (error, stack) => const [SizedBox(width: 20)]),
           const SizedBox(width: 15),
         ],
       ),

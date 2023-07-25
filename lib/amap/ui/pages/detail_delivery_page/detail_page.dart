@@ -44,13 +44,9 @@ class DetailDeliveryPage extends HookConsumerWidget {
                   Text(
                     "${AMAPTextConstants.deliveryDate} : ${processDate(delivery.deliveryDate)}",
                     style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text("${AMAPTextConstants.products} :",
@@ -99,9 +95,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
+                        const SizedBox(height: 5),
                         Wrap(
                           children: value
                               .map((e) => Container(
@@ -114,18 +108,14 @@ class DetailDeliveryPage extends HookConsumerWidget {
                                   ))
                               .toList(),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                       ],
                     ),
                   );
                 })
                 .values
                 .toList(),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Container(
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 30),
@@ -135,9 +125,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                       fontWeight: FontWeight.bold,
                       color: AMAPColorConstants.textDark)),
             ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 10),
               child: deliveryOrders.when(

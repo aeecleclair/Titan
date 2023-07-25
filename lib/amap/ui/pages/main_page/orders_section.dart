@@ -48,17 +48,13 @@ class OrderSection extends HookConsumerWidget {
           ),
         ),
       ),
-      const SizedBox(
-        height: 10,
-      ),
+      const SizedBox(height: 10),
       SizedBox(
         height: 195,
         child: HorizontalListView(
           child: Row(
             children: [
-              const SizedBox(
-                width: 15,
-              ),
+              const SizedBox(width: 15),
               GestureDetector(
                 onTap: () {
                   final e = Order.empty();
@@ -102,9 +98,7 @@ class OrderSection extends HookConsumerWidget {
                   loading: () =>
                       [const Loader(color: AMAPColorConstants.greenGradient2)],
                   error: (error, stack) => [Text(error.toString())]),
-              const SizedBox(
-                width: 25,
-              ),
+              const SizedBox(width: 25),
             ],
           ),
         ),
