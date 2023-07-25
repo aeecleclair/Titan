@@ -145,15 +145,9 @@ class UserOrderListNotifier extends ListNotifier<Order> {
 
   Future<AsyncValue<List<Order>>> copy() async {
     return state.when(
-      data: (orders) async {
-        return AsyncValue.data(orders.sublist(0));
-      },
-      error: (error, stackTrace) {
-        return AsyncValue.error(error, stackTrace);
-      },
-      loading: () {
-        return const AsyncValue.loading();
-      },
+      data: (orders) async => AsyncValue.data(orders.sublist(0)),
+      error: (error, stackTrace) => AsyncValue.error(error, stackTrace),
+      loading: () => const AsyncValue.loading(),
     );
   }
 }

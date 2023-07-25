@@ -21,9 +21,7 @@ class DetailPage extends HookConsumerWidget {
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 60,
-                  ),
+                  const SizedBox(height: 60),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -39,9 +37,7 @@ class DetailPage extends HookConsumerWidget {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 50,
-                        ),
+                        const SizedBox(height: 50),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           alignment: Alignment.centerLeft,
@@ -53,22 +49,17 @@ class DetailPage extends HookConsumerWidget {
                                 color: Colors.black),
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        order.products.isNotEmpty
-                            ? Wrap(
-                                children: order.products
-                                    .map((product) => ProductCard(
-                                          product: product,
-                                          showButton: false,
-                                        ))
-                                    .toList(),
-                              )
-                            : const SizedBox(),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 10),
+                        if (order.products.isNotEmpty)
+                          Wrap(
+                            children: order.products
+                                .map((product) => ProductCard(
+                                      product: product,
+                                      showButton: false,
+                                    ))
+                                .toList(),
+                          ),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -78,11 +69,7 @@ class DetailPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
-                child: OrderUI(
-                  order: order,
-                  showButton: false,
-                  isDetail: true,
-                ),
+                child: OrderUI(order: order, showButton: false, isDetail: true),
               ),
             )
           ],

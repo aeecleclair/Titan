@@ -20,9 +20,7 @@ class PresentationPage extends HookConsumerWidget {
             padding: const EdgeInsets.only(bottom: 30, left: 20, right: 30),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 RichText(
                     text: TextSpan(children: [
                   TextSpan(
@@ -59,16 +57,13 @@ class PresentationPage extends HookConsumerWidget {
                                   AMAPTextConstants.errorLink);
                             }
                           }),
-                    error: (Object error, StackTrace stackTrace) {
-                      return const TextSpan(
-                          text: AMAPTextConstants.loadingError,
-                          style: TextStyle(color: Colors.red));
-                    },
-                    loading: () {
-                      return const TextSpan(
-                          text: AMAPTextConstants.loading,
-                          style: TextStyle(color: Colors.red));
-                    },
+                    error: (Object error, StackTrace stackTrace) =>
+                        const TextSpan(
+                            text: AMAPTextConstants.loadingError,
+                            style: TextStyle(color: Colors.red)),
+                    loading: () => const TextSpan(
+                        text: AMAPTextConstants.loading,
+                        style: TextStyle(color: Colors.red)),
                   ),
                   TextSpan(
                     text: AMAPTextConstants.presentation2,
@@ -87,9 +82,7 @@ class PresentationPage extends HookConsumerWidget {
                               const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0))),
                   )
                 ])),
-                Container(
-                  height: 15,
-                ),
+                const SizedBox(height: 15),
                 information.when(
                   data: (info) => Text(
                     "${AMAPTextConstants.contact} : ${info.manager}	",
@@ -98,14 +91,11 @@ class PresentationPage extends HookConsumerWidget {
                         fontWeight: FontWeight.w600,
                         color: AMAPColorConstants.textDark),
                   ),
-                  error: (Object error, StackTrace stackTrace) {
-                    return const Text(AMAPTextConstants.loadingError,
-                        style: TextStyle(color: Colors.red));
-                  },
-                  loading: () {
-                    return const Text(AMAPTextConstants.loading,
-                        style: TextStyle(color: Colors.red));
-                  },
+                  error: (Object error, StackTrace stackTrace) => const Text(
+                      AMAPTextConstants.loadingError,
+                      style: TextStyle(color: Colors.red)),
+                  loading: () => const Text(AMAPTextConstants.loading,
+                      style: TextStyle(color: Colors.red)),
                 )
               ],
             ),

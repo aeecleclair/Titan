@@ -27,13 +27,9 @@ class AdminPage extends HookConsumerWidget {
           child: const Column(
             children: [
               AccountHandler(),
-              SizedBox(
-                height: 12,
-              ),
+              SizedBox(height: 12),
               DeliveryHandler(),
-              SizedBox(
-                height: 12,
-              ),
+              SizedBox(height: 12),
               ProductHandler(),
             ],
           )),

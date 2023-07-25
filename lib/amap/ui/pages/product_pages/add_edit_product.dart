@@ -52,9 +52,7 @@ class AddEditProduct extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -68,9 +66,7 @@ class AddEditProduct extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 40,
-                  ),
+                  const SizedBox(height: 40),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -82,9 +78,7 @@ class AddEditProduct extends HookConsumerWidget {
                           enabledColor: AMAPColorConstants.enabled,
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      const SizedBox(height: 30),
                       Center(
                         child: TextEntry(
                             label: AMAPTextConstants.price,
@@ -94,9 +88,7 @@ class AddEditProduct extends HookConsumerWidget {
                             keyboardType: TextInputType.number,
                             controller: priceController),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      const SizedBox(height: 30),
                       const Text(
                         AMAPTextConstants.category,
                         style: TextStyle(
@@ -105,9 +97,7 @@ class AddEditProduct extends HookConsumerWidget {
                           color: AMAPColorConstants.greenGradient2,
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       Center(
                         child: DropdownButtonFormField<String>(
                           value: categoryController,
@@ -148,9 +138,7 @@ class AddEditProduct extends HookConsumerWidget {
                           },
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      const SizedBox(height: 30),
                       Center(
                         child: TextEntry(
                           label: AMAPTextConstants.createCategory,
@@ -173,9 +161,7 @@ class AddEditProduct extends HookConsumerWidget {
                           controller: newCategory,
                         ),
                       ),
-                      const SizedBox(
-                        height: 40,
-                      ),
+                      const SizedBox(height: 40),
                       ShrinkButton(
                         waitingColor: AMAPColorConstants.background,
                         builder: (child) => AddEditButtonLayout(
@@ -240,9 +226,7 @@ class AddEditProduct extends HookConsumerWidget {
                               color: AMAPColorConstants.background),
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ],

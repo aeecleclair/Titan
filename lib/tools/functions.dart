@@ -58,9 +58,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
                   alignment: Alignment.center,
                   child: HeroIcon(icon, color: Colors.white),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Center(
                     child: AutoSizeText(

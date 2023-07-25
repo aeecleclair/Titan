@@ -24,9 +24,7 @@ class ProductUiInList extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              width: 20,
-            ),
+            const SizedBox(width: 20),
             Expanded(
               child: AutoSizeText(
                 p.name,
@@ -44,9 +42,7 @@ class ProductUiInList extends ConsumerWidget {
                     style: const TextStyle(fontSize: 15),
                   ),
                 ),
-                Container(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 GestureDetector(
                   child: Container(
                     width: 25,
@@ -81,9 +77,7 @@ class ProductUiInList extends ConsumerWidget {
                     }
                   },
                 ),
-                const SizedBox(
-                  width: 3,
-                ),
+                const SizedBox(width: 3),
                 Container(
                   alignment: Alignment.center,
                   child: Text(
@@ -92,9 +86,7 @@ class ProductUiInList extends ConsumerWidget {
                         fontSize: 15, fontWeight: FontWeight.w700),
                   ),
                 ),
-                const SizedBox(
-                  width: 3,
-                ),
+                const SizedBox(width: 3),
                 GestureDetector(
                   child: Container(
                     width: 25,
@@ -122,9 +114,7 @@ class ProductUiInList extends ConsumerWidget {
                     }
                   },
                 ),
-                Container(
-                  width: 20,
-                ),
+                const SizedBox(width: 20),
               ],
             )
           ],

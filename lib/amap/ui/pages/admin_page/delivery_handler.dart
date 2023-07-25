@@ -32,18 +32,13 @@ class DeliveryHandler extends HookConsumerWidget {
                   fontWeight: FontWeight.bold,
                   color: AMAPColorConstants.textDark)),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         SizedBox(
           height: 200,
           child: HorizontalListView(
             child: Row(
               children: [
-                const SizedBox(
-                  width: 15,
-                  height: 195,
-                ),
+                const SizedBox(width: 15, height: 195),
                 GestureDetector(
                     onTap: () {
                       selectedNotifier.clear();

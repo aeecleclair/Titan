@@ -96,7 +96,7 @@ class EventMainPage extends HookConsumerWidget {
                                       ))),
                                 );
                               } else if (index == events.length + 1) {
-                                return Container(height: 80);
+                                return const SizedBox(height: 80);
                               }
                               return EventUi(event: events[index - 1]);
                             }),

@@ -44,16 +44,12 @@ class ProductHandler extends HookConsumerWidget {
                   fontWeight: FontWeight.bold,
                   color: AMAPColorConstants.textDark)),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         SizedBox(
           height: 185,
           child: HorizontalListView(
             child: Row(children: [
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               GestureDetector(
                 onTap: () {
                   productNotifier.setProduct(Product.empty());
@@ -78,9 +74,7 @@ class ProductHandler extends HookConsumerWidget {
                     )),
               ),
               products.isEmpty
-                  ? const Center(
-                      child: Text(AMAPTextConstants.noProduct),
-                    )
+                  ? const Center(child: Text(AMAPTextConstants.noProduct))
                   : Row(
                       children: products
                           .map(
@@ -124,15 +118,11 @@ class ProductHandler extends HookConsumerWidget {
                           )
                           .toList(),
                     ),
-              const SizedBox(
-                width: 10,
-              )
+              const SizedBox(width: 10)
             ]),
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
       ],
     );
   }
