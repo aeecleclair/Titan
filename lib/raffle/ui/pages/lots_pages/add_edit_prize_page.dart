@@ -11,6 +11,7 @@ import 'package:myecl/raffle/ui/pages/admin_page/blue_btn.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -47,16 +48,10 @@ class AddEditPrizePage extends HookConsumerWidget {
                       child: Column(
                         children: [
                           const SizedBox(height: 20),
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              RaffleTextConstants.addPrize,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 25,
-                                color: RaffleColorConstants.gradient1,
-                              ),
-                            ),
+                          const AlignLeftText(
+                            RaffleTextConstants.addPrize,
+                            fontSize: 25,
+                            color: RaffleColorConstants.gradient1,
                           ),
                           const SizedBox(height: 35),
                           const SectionTitle(

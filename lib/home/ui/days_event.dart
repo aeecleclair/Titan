@@ -7,6 +7,7 @@ import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/home/tools/constants.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -28,17 +29,8 @@ class DaysEvent extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(day,
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: Color.fromARGB(255, 149, 149, 149),
-                      fontWeight: FontWeight.bold)),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
+            AlignLeftText(day, color: const Color.fromARGB(255, 149, 149, 149)),
+            const SizedBox(height: 10),
             ...events.map((event) {
               final start = DateTime(event.start.year, event.start.month,
                   event.start.day, event.start.hour, event.start.minute);
@@ -83,9 +75,7 @@ class DaysEvent extends HookConsumerWidget {
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             eventNotifier.setEvent(event);
@@ -98,17 +88,13 @@ class DaysEvent extends HookConsumerWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 7,
-                    ),
+                    const SizedBox(height: 7),
                     Text(
                       formatDates(start, end, event.allDay),
                       style: TextStyle(
                           color: textColor.withOpacity(0.7), fontSize: 13),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -122,9 +108,7 @@ class DaysEvent extends HookConsumerWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     Text(
                       event.description,
                       maxLines: 2,

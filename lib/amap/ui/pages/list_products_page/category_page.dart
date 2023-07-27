@@ -9,6 +9,7 @@ import 'package:myecl/amap/providers/sorted_delivery_product.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/list_products_page/product_ui_list.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 
 class CategoryPage extends HookConsumerWidget {
   final String category;
@@ -62,18 +63,14 @@ class CategoryPage extends HookConsumerWidget {
               child: Builder(
                 builder: (BuildContext context) {
                   List<Widget> listWidgetProduct = [
-                    Container(
+                    SizedBox(
                       height: 50,
-                      alignment: Alignment.centerLeft,
-                      padding:
-                          const EdgeInsets.only(left: 20, top: 20, right: 20),
-                      child: Text(
+                      child: AlignLeftText(
                         capitalize(category),
-                        style: const TextStyle(
-                          fontSize: 25,
-                          color: AMAPColorConstants.textDark,
-                          fontWeight: FontWeight.w700,
-                        ),
+                        padding:
+                            const EdgeInsets.only(left: 20, top: 20, right: 20),
+                        color: AMAPColorConstants.textDark,
+                        fontSize: 25,
                       ),
                     )
                   ];

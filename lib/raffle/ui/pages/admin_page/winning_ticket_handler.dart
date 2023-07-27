@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/raffle/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/winning_ticket_card.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/loader.dart';
 
@@ -14,15 +15,9 @@ class WinningTicketHandler extends HookConsumerWidget {
     final winningTicketList = ref.watch(winningTicketListProvider);
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
-          child: const Text(RaffleTextConstants.winningTickets,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: RaffleColorConstants.textDark)),
-        ),
+        const AlignLeftText(RaffleTextConstants.winningTickets,
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            color: RaffleColorConstants.textDark),
         const SizedBox(
           height: 10,
         ),
@@ -52,9 +47,7 @@ class WinningTicketHandler extends HookConsumerWidget {
                   loading: () => const SizedBox(
                       height: 150,
                       child: Loader(color: RaffleColorConstants.gradient2))),
-              const SizedBox(
-                width: 5,
-              ),
+              const SizedBox(width: 5),
             ],
           ),
         ),

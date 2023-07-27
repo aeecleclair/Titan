@@ -14,6 +14,7 @@ import 'package:myecl/admin/ui/pages/edit_page/search_user.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
@@ -69,17 +70,9 @@ class EditAssociationPage extends HookConsumerWidget {
                         name.text = groups[0].name;
                         description.text = groups[0].description;
                         return Column(children: [
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(AdminTextConstants.edit,
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: ColorConstants.gradient1)),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          const AlignLeftText(AdminTextConstants.edit,
+                              fontSize: 20, color: ColorConstants.gradient1),
+                          const SizedBox(height: 20),
                           Form(
                             key: key,
                             child: Column(children: [
@@ -125,9 +118,7 @@ class EditAssociationPage extends HookConsumerWidget {
                                       ),
                                     ],
                                   )),
-                              const SizedBox(
-                                height: 20,
-                              ),
+                              const SizedBox(height: 20),
                               ShrinkButton(
                                 onTap: () async {
                                   if (!key.currentState!.validate()) {
@@ -162,9 +153,7 @@ class EditAssociationPage extends HookConsumerWidget {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 20,
-                              ),
+                              const SizedBox(height: 20),
                               const SearchUser(),
                             ]),
                           )

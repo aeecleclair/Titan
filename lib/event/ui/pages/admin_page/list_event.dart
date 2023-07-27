@@ -11,6 +11,7 @@ import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/event/ui/components/event_ui.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -50,14 +51,9 @@ class ListEvent extends HookConsumerWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                          "$title${incomingEvents.length > 1 ? "s" : ""} (${incomingEvents.length})",
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 149, 149, 149))),
+                    AlignLeftText(
+                      "$title${incomingEvents.length > 1 ? "s" : ""} (${incomingEvents.length})",
+                      color: const Color.fromARGB(255, 149, 149, 149),
                     ),
                     if (canToggle)
                       HeroIcon(

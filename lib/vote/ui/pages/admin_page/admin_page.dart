@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/refresher.dart';
@@ -79,16 +80,10 @@ class AdminPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               const SectionBar(),
               const SizedBox(height: 30),
-              const Padding(
+              const AlignLeftText(
+                VoteTextConstants.pretendance,
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(VoteTextConstants.pretendance,
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 149, 149, 149))),
-                ),
+                color: Color.fromARGB(255, 149, 149, 149),
               ),
               const SizedBox(height: 10),
               const SectionContenderItems(),

@@ -8,6 +8,7 @@ import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
 import 'package:myecl/settings/ui/settings.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
@@ -146,14 +147,8 @@ class SettingsMainPage extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Column(
                 children: [
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(SettingsTextConstants.account,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black)),
-                  ),
+                  const AlignLeftText(SettingsTextConstants.account,
+                      fontSize: 25),
                   const SizedBox(height: 30),
                   SettingsItem(
                     icon: HeroIcons.pencil,
@@ -178,14 +173,8 @@ class SettingsMainPage extends HookConsumerWidget {
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
                   const SizedBox(height: 50),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(SettingsTextConstants.security,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black)),
-                  ),
+                  const AlignLeftText(SettingsTextConstants.security,
+                      fontSize: 25),
                   const SizedBox(height: 30),
                   SettingsItem(
                     icon: HeroIcons.lockClosed,
@@ -197,14 +186,7 @@ class SettingsMainPage extends HookConsumerWidget {
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
                   const SizedBox(height: 50),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(SettingsTextConstants.help,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black)),
-                  ),
+                  const AlignLeftText(SettingsTextConstants.help, fontSize: 25),
                   const SizedBox(height: 30),
                   SettingsItem(
                     icon: HeroIcons.clipboardDocumentList,
@@ -215,14 +197,8 @@ class SettingsMainPage extends HookConsumerWidget {
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
                   const SizedBox(height: 50),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(SettingsTextConstants.personalisation,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black)),
-                  ),
+                  const AlignLeftText(SettingsTextConstants.personalisation,
+                      fontSize: 25),
                   const SizedBox(height: 30),
                   SettingsItem(
                     icon: HeroIcons.queueList,
@@ -242,13 +218,9 @@ class SettingsMainPage extends HookConsumerWidget {
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
                   const SizedBox(height: 50),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(SettingsTextConstants.personalData,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black)),
+                  const AlignLeftText(
+                    SettingsTextConstants.personalData,
+                    fontSize: 25,
                   ),
                   const SizedBox(height: 30),
                   SettingsItem(

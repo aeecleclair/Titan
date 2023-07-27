@@ -12,6 +12,7 @@ import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/prize_card.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -52,9 +53,7 @@ class PrizeHandler extends HookConsumerWidget {
                           fontWeight: FontWeight.bold,
                           color: RaffleColorConstants.textDark),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const SizedBox(height: 10),
                     ListView.builder(
                         shrinkWrap: true,
                         itemCount: winningTickets.length,
@@ -81,23 +80,13 @@ class PrizeHandler extends HookConsumerWidget {
 
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
-          child: const Text(RaffleTextConstants.prizes,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: RaffleColorConstants.textDark)),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
+        const AlignLeftText(RaffleTextConstants.prizes,
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            color: RaffleColorConstants.textDark),
+        const SizedBox(height: 10),
         HorizontalListView(
           child: Row(children: [
-            const SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
             if (raffle.raffleStatusType == RaffleStatusType.creation)
               GestureDetector(
                 onTap: () {
@@ -216,14 +205,10 @@ class PrizeHandler extends HookConsumerWidget {
                 error: (Object error, StackTrace stackTrace) => Center(
                     child: Text("${RaffleTextConstants.error} : $error")),
                 loading: () => const Loader()),
-            const SizedBox(
-              width: 10,
-            )
+            const SizedBox(width: 10)
           ]),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
       ],
     );
   }

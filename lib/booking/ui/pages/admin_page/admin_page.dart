@@ -13,6 +13,7 @@ import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar.dart';
 import 'package:myecl/booking/ui/pages/admin_page/list_booking.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
 import 'package:myecl/tools/ui/loader.dart';
@@ -94,16 +95,10 @@ class AdminPage extends HookConsumerWidget {
               bookings: canceledBookings,
             ),
             const SizedBox(height: 10),
-            const Padding(
+            const AlignLeftText(
+              BookingTextConstants.room,
               padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(BookingTextConstants.room,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 149, 149, 149))),
-              ),
+              color: Color.fromARGB(255, 149, 149, 149),
             ),
             const SizedBox(height: 30),
             roomList.when(

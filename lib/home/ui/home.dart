@@ -8,6 +8,7 @@ import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/home/ui/day_list.dart';
 import 'package:myecl/home/ui/days_event.dart';
 import 'package:myecl/home/ui/month_bar.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/ui/top_bar.dart';
 
@@ -40,27 +41,13 @@ class HomePage extends HookConsumerWidget {
               MonthBar(
                   scrollController: scrollController,
                   width: MediaQuery.of(context).size.width),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               DayList(scrollController, daysEventScrollController),
-              const SizedBox(
-                height: 15,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(HomeTextConstants.incomingEvents,
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black)),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 15),
+              const AlignLeftText(HomeTextConstants.incomingEvents,
+                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  fontSize: 25),
+              const SizedBox(height: 10),
               SizedBox(
                   height: MediaQuery.of(context).size.height - 320,
                   child: SingleChildScrollView(

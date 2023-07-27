@@ -14,6 +14,7 @@ import 'package:myecl/login/ui/components/sign_in_up_bar.dart';
 import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/user/class/floors.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -150,21 +151,13 @@ class CreateAccountPage extends HookConsumerWidget {
         hint: LoginTextConstants.canBeEmpty,
       ),
       Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        const SizedBox(
-          height: 9,
+        const SizedBox(height: 9),
+        const AlignLeftText(
+          LoginTextConstants.birthday,
+          fontSize: 20,
+          color: ColorConstants.background2,
         ),
-        const Align(
-          alignment: Alignment.centerLeft,
-          child: Text(LoginTextConstants.birthday,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: ColorConstants.background2,
-              )),
-        ),
-        const SizedBox(
-          height: 1,
-        ),
+        const SizedBox(height: 1),
         DateEntry(
           onTap: () => getOnlyDayDate(context, birthday),
           key: formKeys[5],
@@ -202,21 +195,10 @@ class CreateAccountPage extends HookConsumerWidget {
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 8,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(LoginTextConstants.floor,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: ColorConstants.background2,
-                )),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
+          const SizedBox(height: 8),
+          const AlignLeftText(LoginTextConstants.floor,
+              fontSize: 20, color: ColorConstants.background2),
+          const SizedBox(height: 8),
           AutofillGroup(
             child: DropdownButtonFormField(
               items: items,
@@ -348,9 +330,7 @@ class CreateAccountPage extends HookConsumerWidget {
                             currentPage.value = value;
                           },
                           children: steps)),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -418,9 +398,7 @@ class CreateAccountPage extends HookConsumerWidget {
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 12,
-                  ),
+                  const SizedBox(height: 12),
                 ],
               ),
             ),

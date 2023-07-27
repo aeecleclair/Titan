@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/change_pass/secure_bar.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 
 class PasswordStrength extends HookConsumerWidget {
   final TextEditingController newPassword;
@@ -21,18 +22,11 @@ class PasswordStrength extends HookConsumerWidget {
         builder: (context, value, child) {
           return Column(
             children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                    "${SettingsTextConstants.passwordStrength} : ${currentStrength.value}",
-                    style: TextStyle(fontSize: 18, color: textColor)),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
+              AlignLeftText(
+                  "${SettingsTextConstants.passwordStrength} : ${currentStrength.value}",
+                  color: textColor),
+              const SizedBox(height: 10),
               FlutterPasswordStrength(
                   password: newPassword.text,
                   backgroundColor: Colors.transparent,

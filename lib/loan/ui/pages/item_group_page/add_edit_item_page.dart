@@ -10,6 +10,8 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -44,18 +46,12 @@ class AddEditItemPage extends HookConsumerWidget {
             key: key,
             child: Column(children: [
               const SizedBox(height: 30),
-              Padding(
+              AlignLeftText(
+                isEdit
+                    ? LoanTextConstants.editItem
+                    : LoanTextConstants.addObject,
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        isEdit
-                            ? LoanTextConstants.editItem
-                            : LoanTextConstants.addObject,
-                        style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149)))),
+                color: const Color.fromARGB(255, 149, 149, 149),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -90,24 +86,8 @@ class AddEditItemPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 50),
                   ShrinkButton(
-                      builder: (child) => Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.only(top: 8, bottom: 12),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 10,
-                                offset: const Offset(
-                                    3, 3), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          child: child),
+                      builder: (child) => AddEditButtonLayout(
+                          color: Colors.black, child: child),
                       onTap: () async {
                         if (key.currentState == null) {
                           return;

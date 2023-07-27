@@ -5,6 +5,7 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/settings/ui/pages/change_pass/test_entry_style.dart';
 import 'package:myecl/settings/ui/settings.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -39,20 +40,10 @@ class ChangePassPage extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(SettingsTextConstants.changePassword,
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black)),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
+                const AlignLeftText(SettingsTextConstants.changePassword,
+                    fontSize: 20),
+                const SizedBox(height: 30),
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: TextFormField(
@@ -69,9 +60,7 @@ class ChangePassPage extends HookConsumerWidget {
                         return null;
                       },
                     )),
-                const SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: TextFormField(
@@ -88,9 +77,7 @@ class ChangePassPage extends HookConsumerWidget {
                         return null;
                       },
                     )),
-                const SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: TextFormField(
@@ -109,13 +96,9 @@ class ChangePassPage extends HookConsumerWidget {
                         return null;
                       },
                     )),
-                const SizedBox(
-                  height: 40,
-                ),
+                const SizedBox(height: 40),
                 PasswordStrength(newPassword: newPassword),
-                const SizedBox(
-                  height: 60,
-                ),
+                const SizedBox(height: 60),
                 ShrinkButton(
                   builder: (child) => Container(
                     width: double.infinity,

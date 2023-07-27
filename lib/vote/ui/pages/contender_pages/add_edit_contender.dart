@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -81,20 +82,12 @@ class AddEditContenderPage extends HookConsumerWidget {
           child: Form(
             key: key,
             child: Column(children: [
-              const SizedBox(
-                height: 30,
+              const AlignLeftText(
+                VoteTextConstants.addPretendance,
+                padding:
+                    EdgeInsets.only(top: 40, left: 30, right: 30, bottom: 50),
+                color: Color.fromARGB(255, 149, 149, 149),
               ),
-              const Padding(
-                padding: EdgeInsets.only(top: 10, left: 30, right: 30),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(VoteTextConstants.addPretendance,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149)))),
-              ),
-              const SizedBox(height: 50),
               Center(
                 child: Stack(
                   clipBehavior: Clip.none,
@@ -155,7 +148,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                         },
                         child: const CardButton(
                           color: ColorConstants.gradient1,
-                                gradient: ColorConstants.gradient2,
+                          gradient: ColorConstants.gradient2,
                           child: HeroIcon(
                             HeroIcons.photo,
                             color: Colors.white,

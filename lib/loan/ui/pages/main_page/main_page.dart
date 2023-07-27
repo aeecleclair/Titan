@@ -12,6 +12,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
 import 'package:myecl/tools/ui/admin_button.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -60,17 +61,10 @@ class LoanMainPage extends HookConsumerWidget {
                 const SizedBox(height: 40),
                 (dictCateListWidget[0].isNotEmpty)
                     ? Column(children: [
-                        Padding(
+                        AlignLeftText(
+                          '${dictCateListWidget[0].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[0].length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                                '${dictCateListWidget[0].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[0].length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 149, 149, 149))),
-                          ),
+                          color: const Color.fromARGB(255, 149, 149, 149),
                         ),
                         const SizedBox(height: 10),
                         SizedBox(
@@ -115,17 +109,10 @@ class LoanMainPage extends HookConsumerWidget {
                 if (dictCateListWidget[1].isNotEmpty)
                   Column(children: [
                     const SizedBox(height: 30),
-                    Padding(
+                    AlignLeftText(
+                      '${dictCateListWidget[1].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''}',
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                            '${dictCateListWidget[1].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''}',
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 149, 149, 149))),
-                      ),
+                      color: const Color.fromARGB(255, 149, 149, 149),
                     ),
                     const SizedBox(height: 10),
                     SizedBox(
