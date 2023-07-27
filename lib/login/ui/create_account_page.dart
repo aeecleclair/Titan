@@ -33,6 +33,7 @@ class CreateAccountPage extends HookConsumerWidget {
     final nickname = useTextEditingController();
     final birthday = useTextEditingController();
     final phone = useTextEditingController();
+    final promo = useTextEditingController();
     final lastIndex = useState(0);
     List<DropdownMenuItem> items = Floors.values
         .map((e) => DropdownMenuItem(
@@ -49,6 +50,7 @@ class CreateAccountPage extends HookConsumerWidget {
     }
 
     List<GlobalKey<FormState>> formKeys = [
+      GlobalKey<FormState>(),
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
@@ -185,6 +187,18 @@ class CreateAccountPage extends HookConsumerWidget {
         canBeEmpty: true,
         hint: LoginTextConstants.canBeEmpty,
       ),
+      CreateAccountField(
+        controller: promo,
+        label: LoginTextConstants.promo,
+        index: 8,
+        pageController: pageController,
+        currentPage: currentPage,
+        formKey: formKeys[7],
+        keyboardType: TextInputType.number,
+        canBeEmpty: true,
+        mustBeInt: true,
+        hint: LoginTextConstants.canBeEmpty,
+      ),
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -248,6 +262,7 @@ class CreateAccountPage extends HookConsumerWidget {
               nickname: nickname.text.isEmpty ? null : nickname.text,
               birthday: DateTime.parse(processDateBack(birthday.text)),
               phone: phone.text.isEmpty ? null : phone.text,
+              promo: promo.text.isEmpty ? null : int.parse(promo.text),
               floor: floor.text,
               activationToken: activationCode.text,
               password: password.text,

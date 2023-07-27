@@ -5,3 +5,8 @@ class ColorConstants {
   static const Color gradient2 = Color(0xffeb3e1b);
   static const Color background2 = Color(0xFF222643);
 }
+
+const String previousEmailRegex =
+    r'^[\w\-.]*@((ecl\d{2})|(alternance\d{4})|(master)).ec-lyon.fr$';
+
+const String studentRegex = r'^[\w\-.]*@etu(-enise)?.ec-lyon.fr$';

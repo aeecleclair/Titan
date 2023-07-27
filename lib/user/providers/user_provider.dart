@@ -41,6 +41,10 @@ class UserNotifier extends SingleNotifier<User> {
   Future<bool> deletePersonal() async {
     return await _userRepository.deletePersonalData();
   }
+
+  Future<bool> askMailMigration(String mail) async {
+    return await _userRepository.askMailMigration(mail);
+  }
 }
 
 final asyncUserProvider =
