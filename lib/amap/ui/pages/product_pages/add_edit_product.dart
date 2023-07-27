@@ -12,6 +12,7 @@ import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -53,22 +54,14 @@ class AddEditProduct extends HookConsumerWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      isEdit
-                          ? AMAPTextConstants.editProduct
-                          : AMAPTextConstants.addProduct,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18,
-                        color: AMAPColorConstants.green2,
-                      ),
-                    ),
+                  AlignLeftText(
+                    isEdit
+                        ? AMAPTextConstants.editProduct
+                        : AMAPTextConstants.addProduct,
+                    color: AMAPColorConstants.green2,
                   ),
                   const SizedBox(height: 40),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
                         child: TextEntry(
@@ -89,13 +82,10 @@ class AddEditProduct extends HookConsumerWidget {
                             controller: priceController),
                       ),
                       const SizedBox(height: 30),
-                      const Text(
+                      const AlignLeftText(
                         AMAPTextConstants.category,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 20,
-                          color: AMAPColorConstants.greenGradient2,
-                        ),
+                        fontSize: 20,
+                        color: AMAPColorConstants.greenGradient2,
                       ),
                       const SizedBox(height: 10),
                       Center(

@@ -18,6 +18,7 @@ import 'package:myecl/cinema/ui/pages/session_pages/imdb_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
@@ -71,16 +72,11 @@ class AddEditSessionPage extends HookConsumerWidget {
             child: Form(
               key: key,
               child: Column(children: [
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        isEdit
-                            ? CinemaTextConstants.editSession
-                            : CinemaTextConstants.addSession,
-                        style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149)))),
+                AlignLeftText(
+                    isEdit
+                        ? CinemaTextConstants.editSession
+                        : CinemaTextConstants.addSession,
+                    color: const Color.fromARGB(255, 149, 149, 149)),
                 const SizedBox(height: 30),
                 TextField(
                   controller: imdbUrl,

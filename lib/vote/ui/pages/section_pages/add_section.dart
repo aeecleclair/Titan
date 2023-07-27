@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:myecl/vote/class/section.dart';
@@ -33,37 +34,24 @@ class AddSectionPage extends HookConsumerWidget {
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(children: [
-            const SizedBox(
-              height: 50,
-            ),
-            const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(VoteTextConstants.addSection,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 149, 149, 149)))),
+            const SizedBox(height: 50),
+            const AlignLeftText(VoteTextConstants.addSection,
+                color: Color.fromARGB(255, 149, 149, 149)),
             Form(
               key: key,
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   TextEntry(
                     controller: name,
                     label: VoteTextConstants.sectionName,
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   TextEntry(
                     controller: description,
                     label: VoteTextConstants.sectionDescription,
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   ShrinkButton(
                     builder: (child) => AddEditButtonLayout(child: child),
                     onTap: () async {

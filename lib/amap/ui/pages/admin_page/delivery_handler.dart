@@ -8,6 +8,7 @@ import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/delivery_ui.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/loader.dart';
@@ -23,15 +24,9 @@ class DeliveryHandler extends HookConsumerWidget {
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
-          child: const Text(AMAPTextConstants.deliveries,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AMAPColorConstants.textDark)),
-        ),
+        const AlignLeftText(AMAPTextConstants.deliveries,
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            color: AMAPColorConstants.textDark),
         const SizedBox(height: 10),
         SizedBox(
           height: 200,

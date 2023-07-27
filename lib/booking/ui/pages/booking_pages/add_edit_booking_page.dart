@@ -15,6 +15,7 @@ import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
@@ -91,16 +92,11 @@ class AddEditBookingPage extends HookConsumerWidget {
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                          isEdit
-                              ? BookingTextConstants.editBooking
-                              : BookingTextConstants.addBooking,
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 149, 149, 149)))),
+                  child: AlignLeftText(
+                      isEdit
+                          ? BookingTextConstants.editBooking
+                          : BookingTextConstants.addBooking,
+                      color: const Color.fromARGB(255, 149, 149, 149)),
                 ),
                 const SizedBox(height: 20),
                 rooms.when(

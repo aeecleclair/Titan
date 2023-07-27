@@ -9,6 +9,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/buy_type_ticket_card.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/prize_card.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
@@ -85,9 +86,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                             itemBuilder: (context, index) {
                               if (index == 0 ||
                                   index == typeTickets.length + 1) {
-                                return const SizedBox(
-                                  width: 15,
-                                );
+                                return const SizedBox(width: 15);
                               }
                               return Container(
                                   margin: const EdgeInsets.symmetric(
@@ -124,25 +123,19 @@ class RaffleInfoPage extends HookConsumerWidget {
                                       fontSize: 25,
                                       color: RaffleColorConstants.gradient2,
                                       fontWeight: FontWeight.bold)),
-                              SizedBox(
-                                height: 10,
-                              ),
+                              SizedBox(height: 10),
                               Text(RaffleTextConstants.noPrize),
                             ]))
                     : Column(children: [
-                        Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 30),
-                            child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                    prizes.isEmpty
-                                        ? RaffleTextConstants.noPrize
-                                        : RaffleTextConstants.actualPrize,
-                                    style: const TextStyle(
-                                        fontSize: 25,
-                                        color: RaffleColorConstants.gradient2,
-                                        fontWeight: FontWeight.bold)))),
+                        AlignLeftText(
+                          prizes.isEmpty
+                              ? RaffleTextConstants.noPrize
+                              : RaffleTextConstants.actualPrize,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 30),
+                          fontSize: 25,
+                          color: RaffleColorConstants.gradient2,
+                        ),
                         SizedBox(
                             height: 120,
                             child: ListView.builder(
@@ -177,9 +170,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                                 fontSize: 25,
                                 color: RaffleColorConstants.gradient2,
                                 fontWeight: FontWeight.bold)),
-                        SizedBox(
-                          height: 10
-                        ),
+                        SizedBox(height: 10),
                         Loader()
                       ])),
               error: (error, stack) => Container(
@@ -194,9 +185,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                                 fontSize: 25,
                                 color: RaffleColorConstants.gradient2,
                                 fontWeight: FontWeight.bold)),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         Text('Error $error'),
                       ]))),
           if (raffle.description != null)

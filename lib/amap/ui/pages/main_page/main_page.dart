@@ -4,6 +4,7 @@ import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/admin_button.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -167,16 +168,8 @@ class AmapMainPage extends HookConsumerWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    AMAPTextConstants.addOrder,
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  ),
-                                ),
+                                const AlignLeftText(AMAPTextConstants.addOrder,
+                                    color: Colors.white),
                                 IconButton(
                                   icon: const HeroIcon(
                                     HeroIcons.xMark,

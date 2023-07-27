@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/vote/providers/contender_logo_provider.dart';
 import 'package:myecl/vote/providers/contender_logos_provider.dart';
@@ -27,9 +28,7 @@ class DetailPage extends HookConsumerWidget {
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 80,
-                  ),
+                  const SizedBox(height: 80),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -45,9 +44,7 @@ class DetailPage extends HookConsumerWidget {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 50,
-                        ),
+                        const SizedBox(height: 50),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           alignment: Alignment.center,
@@ -119,9 +116,7 @@ class DetailPage extends HookConsumerWidget {
                                   loading: () => const Loader(),
                                   error: (error, stack) =>
                                       Text('Error $error')),
-                              const SizedBox(
-                                height: 20,
-                              ),
+                              const SizedBox(height: 20),
                               Text(
                                 contender.section.name,
                                 style: const TextStyle(
@@ -129,21 +124,10 @@ class DetailPage extends HookConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  contender.description,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20,
+                              AlignLeftText(
+                                contender.description,
+                                padding:
+                                    const EdgeInsets.only(top: 15, bottom: 20),
                               ),
                             ],
                           ),
@@ -157,9 +141,7 @@ class DetailPage extends HookConsumerWidget {
                                       .toList(),
                                 ))
                             : const SizedBox(),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           child: Text(
@@ -170,9 +152,7 @@ class DetailPage extends HookConsumerWidget {
                           ),
                         ),
                         if (contender.program.trim().isNotEmpty)
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 20),
                       ],
                     ),
                   ),

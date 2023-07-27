@@ -5,6 +5,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/components/order_ui.dart';
 import 'package:myecl/amap/ui/components/product_ui.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});
@@ -38,16 +39,10 @@ class DetailPage extends HookConsumerWidget {
                     child: Column(
                       children: [
                         const SizedBox(height: 50),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          alignment: Alignment.centerLeft,
-                          child: const Text(
-                            AMAPTextConstants.products,
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
+                        const AlignLeftText(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          AMAPTextConstants.products,
+                          fontSize: 25,
                         ),
                         const SizedBox(height: 10),
                         if (order.products.isNotEmpty)

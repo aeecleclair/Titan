@@ -13,6 +13,7 @@ import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/pages/detail_delivery_page/order_detail_ui.dart';
 import 'package:myecl/amap/ui/pages/detail_delivery_page/product_detail_ui.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
@@ -47,13 +48,9 @@ class DetailDeliveryPage extends HookConsumerWidget {
                         fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("${AMAPTextConstants.products} :",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AMAPColorConstants.textDark)),
+                  const AlignLeftText(
+                    "${AMAPTextConstants.products} :",
+                    color: AMAPColorConstants.textDark,
                   ),
                 ],
               ),
@@ -116,14 +113,10 @@ class DetailDeliveryPage extends HookConsumerWidget {
                 .values
                 .toList(),
             const SizedBox(height: 20),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 30),
-              child: const Text("${AMAPTextConstants.orders} :",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AMAPColorConstants.textDark)),
+            const AlignLeftText(
+              "${AMAPTextConstants.orders} :",
+              padding: EdgeInsets.only(left: 30),
+              color: AMAPColorConstants.textDark,
             ),
             const SizedBox(height: 30),
             Container(

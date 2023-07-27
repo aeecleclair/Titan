@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
 
 class TextEditing extends StatelessWidget {
@@ -15,24 +16,17 @@ class TextEditing extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(bottom: 3),
-              child: Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Color.fromARGB(255, 158, 158, 158),
-                ),
-              ),
+            AlignLeftText(
+              padding: const EdgeInsets.only(bottom: 3),
+              label,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: const Color.fromARGB(255, 158, 158, 158),
             ),
-            SizedBox(
-              child: TextEntry(
-                label: label,
-                controller: controller,
-                color: ColorConstants.gradient1,
-              ),
+            TextEntry(
+              label: label,
+              controller: controller,
+              color: ColorConstants.gradient1,
             ),
           ],
         ));

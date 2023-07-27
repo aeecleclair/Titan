@@ -7,6 +7,7 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/service/tools/functions.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
@@ -25,19 +26,10 @@ class NotificationPage extends HookConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Column(children: [
-              const SizedBox(
-                height: 30,
-              ),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(SettingsTextConstants.updateNotification,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 149, 149, 149))),
-              ),
-              const SizedBox(
-                height: 30,
+              const AlignLeftText(
+                SettingsTextConstants.updateNotification,
+                padding: EdgeInsets.symmetric(vertical: 30),
+                color: Color.fromARGB(255, 149, 149, 149),
               ),
               topics.when(
                 data: (g) => Column(

@@ -5,6 +5,7 @@ import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/main_page/delivery_ui.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/loader.dart';
 
 class DeliverySection extends HookConsumerWidget {
@@ -26,21 +27,9 @@ class DeliverySection extends HookConsumerWidget {
       ..sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              AMAPTextConstants.deliveries,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: showSelected
-                      ? Colors.white
-                      : AMAPColorConstants.textDark),
-            ),
-          ),
-        ),
+        AlignLeftText(AMAPTextConstants.deliveries,
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            color: showSelected ? Colors.white : AMAPColorConstants.textDark),
         deliveries.when(
           data: (data) {
             if (availableDeliveries.isEmpty) {

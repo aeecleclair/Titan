@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 
 class CreateAccountField extends HookConsumerWidget {
   final TextEditingController controller;
@@ -42,18 +43,12 @@ class CreateAccountField extends HookConsumerWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(label,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: ColorConstants.background2,
-              )),
+        AlignLeftText(
+          label,
+          fontSize: 20,
+          color: ColorConstants.background2,
         ),
-        const SizedBox(
-          height: 12,
-        ),
+        const SizedBox(height: 12),
         AutofillGroup(
             child: Form(
           key: formKey,
@@ -76,62 +71,43 @@ class CreateAccountField extends HookConsumerWidget {
             obscureText: hidePassword.value,
             controller: controller,
             cursorColor: Colors.white,
-            decoration: (keyboardType == TextInputType.visiblePassword)
-                ? InputDecoration(
-                    hintText: hint,
-                    hintStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.5),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        hidePassword.value
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        hidePassword.value = !hidePassword.value;
-                      },
-                    ),
-                    enabledBorder: const UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: ColorConstants.background2)),
-                    focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                      color: Colors.white,
-                    )),
-                    errorBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                      color: Colors.white,
-                    )),
-                    errorStyle: const TextStyle(color: Colors.white))
-                : InputDecoration(
-                    hintText: hint,
-                    hintStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.5),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                    enabledBorder: const UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: ColorConstants.background2)),
-                    focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                      color: Colors.white,
-                    )),
-                    errorBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                      color: Colors.white,
-                    )),
-                    errorStyle: const TextStyle(color: Colors.white)),
+            decoration: InputDecoration(
+                hintText: hint,
+                hintStyle: TextStyle(
+                    color: Colors.white.withOpacity(0.5),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20),
+                suffixIcon: (keyboardType == TextInputType.visiblePassword)
+                    ? IconButton(
+                        icon: Icon(
+                          hidePassword.value
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          hidePassword.value = !hidePassword.value;
+                        },
+                      )
+                    : null,
+                enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: ColorConstants.background2)),
+                focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                  color: Colors.white,
+                )),
+                errorBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                  color: Colors.white,
+                )),
+                errorStyle: const TextStyle(color: Colors.white)),
             validator: (value) {
               if (canBeEmpty) {
                 return null;
               }
               if (value == null || value.isEmpty) {
                 return LoginTextConstants.emptyFieldError;
-              } 
-              if (isPassword && value.length < 6) {
+              } else if (isPassword && (value != null && value.length < 6)) {
                 return LoginTextConstants.passwordLengthError;
               } 
               if (mustBeInt && int.tryParse(value) == null) {

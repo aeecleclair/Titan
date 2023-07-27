@@ -9,6 +9,7 @@ import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/components/booking_card.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
@@ -47,14 +48,9 @@ class ListBooking extends HookConsumerWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                          "$title${bookings.length > 1 ? "s" : ""} (${bookings.length})",
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 149, 149, 149))),
+                    AlignLeftText(
+                      "$title${bookings.length > 1 ? "s" : ""} (${bookings.length})",
+                      color: const Color.fromARGB(255, 149, 149, 149),
                     ),
                     if (canToggle)
                       HeroIcon(

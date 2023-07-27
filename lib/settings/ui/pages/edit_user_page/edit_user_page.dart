@@ -10,6 +10,7 @@ import 'package:myecl/settings/ui/pages/edit_user_page/picture_button.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -59,16 +60,10 @@ class EditUserPage extends HookConsumerWidget {
             child: Form(
                 key: key,
                 child: Column(children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(SettingsTextConstants.editAccount,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149))),
+                  const SizedBox(height: 20),
+                  const AlignLeftText(
+                    SettingsTextConstants.editAccount,
+                    color: Color.fromARGB(255, 149, 149, 149),
                   ),
                   const SizedBox(height: 40),
                   profilePicture.when(

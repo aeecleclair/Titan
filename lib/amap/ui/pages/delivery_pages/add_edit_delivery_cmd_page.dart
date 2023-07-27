@@ -14,6 +14,7 @@ import 'package:myecl/amap/ui/pages/delivery_pages/product_ui_check.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -51,19 +52,10 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                     child: SingleChildScrollView(
                         physics: const BouncingScrollPhysics(),
                         child: Column(children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              AMAPTextConstants.addDelivery,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 18,
-                                color: AMAPColorConstants.green2,
-                              ),
-                            ),
+                          const SizedBox(height: 20),
+                          const AlignLeftText(
+                            AMAPTextConstants.addDelivery,
+                            color: AMAPColorConstants.green2,
                           ),
                           Container(
                               margin: const EdgeInsets.symmetric(vertical: 30),
@@ -75,22 +67,10 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                 enabledColor: AMAPColorConstants.enabled,
                                 color: AMAPColorConstants.greenGradient2,
                               )),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              AMAPTextConstants.commandProducts,
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.black),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 35,
-                          ),
+                          const SizedBox(height: 15),
+                          const AlignLeftText(AMAPTextConstants.commandProducts,
+                              fontSize: 25),
+                          const SizedBox(height: 35),
                           productList.when(
                               data: (products) => Column(
                                     children: [
@@ -117,8 +97,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                                         ),
                                                       ),
                                                       const SizedBox(
-                                                        height: 10,
-                                                      ),
+                                                          height: 10),
                                                       ...value
                                                           .map((e) => ProductUi(
                                                                 isModification:
@@ -134,16 +113,13 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                                                 product: e,
                                                               )),
                                                       const SizedBox(
-                                                        height: 20,
-                                                      ),
+                                                          height: 20),
                                                     ],
                                                   )))
                                               .values
                                               .toList(),
                                         ),
-                                      const SizedBox(
-                                        height: 30,
-                                      ),
+                                      const SizedBox(height: 30),
                                       ShrinkButton(
                                         builder: (child) => AddEditButtonLayout(
                                             color: AMAPColorConstants

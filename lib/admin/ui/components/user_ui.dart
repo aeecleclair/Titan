@@ -12,9 +12,8 @@ class UserUi extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
+    return SizedBox(
         height: 55,
-        alignment: Alignment.centerLeft,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

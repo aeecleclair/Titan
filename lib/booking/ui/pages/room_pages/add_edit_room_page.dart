@@ -11,6 +11,7 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -32,19 +33,12 @@ class AddEditRoomPage extends HookConsumerWidget {
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(children: [
-            const SizedBox(
-              height: 50,
-            ),
-            Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                    isEdit
-                        ? BookingTextConstants.editRoom
-                        : BookingTextConstants.addRoom,
-                    style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 149, 149, 149)))),
+            const SizedBox(height: 50),
+            AlignLeftText(
+                isEdit
+                    ? BookingTextConstants.editRoom
+                    : BookingTextConstants.addRoom,
+                color: const Color.fromARGB(255, 149, 149, 149)),
             Form(
               key: key,
               child: Column(
@@ -69,9 +63,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   ShrinkButton(
                     builder: (child) => AddEditButtonLayout(child: child),
                     onTap: () async {

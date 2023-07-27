@@ -11,6 +11,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/ticket_ui.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
@@ -33,25 +34,14 @@ class TicketHandler extends HookConsumerWidget {
 
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
-          child: const Text(RaffleTextConstants.tickets,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: RaffleColorConstants.textDark)),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
+        const AlignLeftText(RaffleTextConstants.tickets,
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            color: RaffleColorConstants.textDark),
+        const SizedBox(height: 10),
         HorizontalListView(
           child: Row(
             children: [
-              const SizedBox(
-                width: 15,
-                height: 125,
-              ),
+              const SizedBox(width: 15, height: 125),
               if (raffle.raffleStatusType == RaffleStatusType.creation)
                 GestureDetector(
                     onTap: () {

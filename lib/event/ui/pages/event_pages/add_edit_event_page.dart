@@ -16,6 +16,7 @@ import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
@@ -92,19 +93,12 @@ class AddEditEventPage extends HookConsumerWidget {
           child: Form(
               key: key,
               child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                          isEdit
-                              ? EventTextConstants.editEvent
-                              : EventTextConstants.addEvent,
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 149, 149, 149)))),
-                ),
+                AlignLeftText(
+                    isEdit
+                        ? EventTextConstants.editEvent
+                        : EventTextConstants.addEvent,
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    color: const Color.fromARGB(255, 149, 149, 149)),
                 const SizedBox(height: 30),
                 HorizontalListView(
                   child: Row(
