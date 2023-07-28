@@ -25,12 +25,11 @@ class VoteButton extends HookConsumerWidget {
     final votedSectionNotifier = ref.watch(votedSectionProvider.notifier);
     final votedSection = ref.watch(votedSectionProvider);
     List<String> alreadyVotedSection = [];
-    votedSection.when(
+    votedSection.maybeWhen(
         data: (voted) {
           alreadyVotedSection = voted;
         },
-        error: (error, stackTrace) {},
-        loading: () {});
+        orElse: () {});
 
     final status = ref.watch(statusProvider);
     final s = status.maybeWhen(

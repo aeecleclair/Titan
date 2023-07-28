@@ -11,7 +11,6 @@ import 'package:myecl/raffle/ui/pages/raffle_page/prize_card.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
 class RaffleInfoPage extends HookConsumerWidget {
@@ -68,42 +67,36 @@ class RaffleInfoPage extends HookConsumerWidget {
                         color: RaffleColorConstants.gradient2)),
                 loaderColor: RaffleColorConstants.gradient2,
               )),
-          typeTicketList.when(
-              data: (typeTickets) => SizedBox(
-                  height: 190,
-                  child: typeTickets.isEmpty
-                      ? Container(
-                          height: 190,
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                          child:
-                              const Text(RaffleTextConstants.noTicketBuyable),
-                        )
-                      : ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: typeTickets.length + 2,
-                          itemBuilder: (context, index) {
-                            if (index == 0 || index == typeTickets.length + 1) {
-                              return const SizedBox(width: 15);
-                            }
-                            return Container(
-                                margin: const EdgeInsets.all(10),
-                                child: BuyTypeTicketSimple(
-                                    typeTicket: typeTickets[index - 1],
-                                    raffle: raffle));
-                          })),
-              loading: () => Container(
+          AsyncChild(
+              value: typeTicketList,
+              builder: (context, typeTickets) => typeTickets.isEmpty
+                  ? Container(
+                      height: 190,
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: const Text(RaffleTextConstants.noTicketBuyable),
+                    )
+                  : ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: typeTickets.length + 2,
+                      itemBuilder: (context, index) {
+                        if (index == 0 || index == typeTickets.length + 1) {
+                          return const SizedBox(width: 15);
+                        }
+                        return Container(
+                            margin: const EdgeInsets.all(10),
+                            child: BuyTypeTicketSimple(
+                                typeTicket: typeTickets[index - 1],
+                                raffle: raffle));
+                      }),
+              orElseBuilder: (context, child) => Container(
                   height: 190,
                   padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: const Loader()),
-              error: (error, stack) => Container(
-                    height: 190,
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Text('Error $error'),
-                  )),
-          prizeList.when(
-              data: (prizes) {
+                  child: child)),
+          AsyncChild(
+              value: prizeList,
+              builder: (context, prizes) {
                 prizes = prizes
                     .where((element) => element.raffleId == raffle.id)
                     .toList();
@@ -155,22 +148,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                                 }))
                       ]);
               },
-              loading: () => Container(
-                  height: 120,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                  child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(RaffleTextConstants.actualPrize,
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: RaffleColorConstants.gradient2,
-                                fontWeight: FontWeight.bold)),
-                        SizedBox(height: 10),
-                        Loader()
-                      ])),
-              error: (error, stack) => Container(
+              orElseBuilder: (context, child) => Container(
                   height: 120,
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -183,7 +161,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                                 color: RaffleColorConstants.gradient2,
                                 fontWeight: FontWeight.bold)),
                         const SizedBox(height: 10),
-                        Text('Error $error'),
+                        child
                       ]))),
           if (raffle.description != null)
             Container(
