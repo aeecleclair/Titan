@@ -36,60 +36,51 @@ class DeliveryUi extends HookConsumerWidget {
         ref.watch(orderByDeliveryListProvider.notifier);
 
     final orders = [];
-    deliveryOrders.when(
+    deliveryOrders.maybeWhen(
       data: (data) {
         if (data.containsKey(delivery.id)) {
-          data[delivery.id]!.item1.when(
+          data[delivery.id]!.item1.maybeWhen(
                 data: (d) {
                   if (d.isNotEmpty) {
                     orders.addAll(d);
                   } else if (!data[delivery.id]!.item2) {
-                    Future.delayed(const Duration(milliseconds: 1), () {
-                      deliveryOrdersNotifier.setTData(
-                          delivery.id, const AsyncLoading());
-                    });
-                    tokenExpireWrapper(ref, () async {
-                      final ordersByDelivery =
-                          await ordersByDeliveryListNotifier
-                              .loadDeliveryOrderList(delivery.id);
-                      await deliveryOrdersNotifier.setTData(
-                          delivery.id, ordersByDelivery);
-                      ordersByDelivery.when(
+                    deliveryOrdersNotifier.autoLoad(
+                        ref,
+                        delivery.id,
+                        (deliveryId) => ordersByDeliveryListNotifier
+                            .loadDeliveryOrderList(deliveryId),
+                        (ordersByDelivery) {
+                      ordersByDelivery.maybeWhen(
                         data: (data) {
                           orders.addAll(data);
                         },
-                        loading: () {},
-                        error: (error, stack) {},
+                        orElse: () {},
                       );
                       deliveryOrdersNotifier.toggleExpanded(delivery.id);
                     });
                   }
                 },
-                loading: () {},
-                error: (error, stack) {},
+                orElse: () {},
               );
         } else {
-          Future.delayed(const Duration(milliseconds: 1), () {
-            deliveryOrdersNotifier.setTData(delivery.id, const AsyncLoading());
-          });
-          tokenExpireWrapper(ref, () async {
-            final ordersByDelivery = await ordersByDeliveryListNotifier
-                .loadDeliveryOrderList(delivery.id);
-            await deliveryOrdersNotifier.setTData(
-                delivery.id, ordersByDelivery);
-            ordersByDelivery.when(
-              data: (data) {
-                orders.addAll(data);
-              },
-              loading: () {},
-              error: (error, stack) {},
-            );
-            deliveryOrdersNotifier.toggleExpanded(delivery.id);
-          });
+          deliveryOrdersNotifier.autoLoad(
+              ref,
+              delivery.id,
+                  (deliveryId) => ordersByDeliveryListNotifier
+                  .loadDeliveryOrderList(deliveryId),
+                  (ordersByDelivery) {
+                ordersByDelivery.maybeWhen(
+                  data: (data) {
+                    orders.addAll(data);
+                  },
+                  orElse: () {},
+                );
+                deliveryOrdersNotifier.toggleExpanded(delivery.id);
+              });
+
         }
       },
-      loading: () {},
-      error: (error, stack) {},
+      orElse: () {},
     );
     void displayVoteWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

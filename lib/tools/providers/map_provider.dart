@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class MapNotifier<T, E>
     extends StateNotifier<AsyncValue<Map<T, AsyncValue<List<E>>>>> {
@@ -14,13 +15,12 @@ class MapNotifier<T, E>
   }
 
   Future addT(T t) async {
-    state.when(
+    state.maybeWhen(
       data: (loanersItems) async {
         loanersItems[t] = const AsyncValue.data([]);
         state = AsyncValue.data(loanersItems);
       },
-      loading: () {},
-      error: (e, s) {},
+      orElse: () {},
     );
   }
 
@@ -107,6 +107,30 @@ class MapNotifier<T, E>
       state =
           const AsyncValue.error("Cannot add while loading", StackTrace.empty);
       return false;
+    });
+  }
+
+  Future<void> autoLoad(
+      WidgetRef ref, T t, Future<E> Function(T t) loader) async {
+    Future.delayed(const Duration(milliseconds: 1), () {
+      setTData(t, const AsyncLoading());
+    });
+    tokenExpireWrapper(ref, () async {
+      loader(t).then((value) {
+        setTData(t, AsyncData([value]));
+      });
+    });
+  }
+
+  Future<void> autoLoadList(
+      WidgetRef ref, T t, Future<AsyncValue<List<E>>> Function(T t) loader) async {
+    Future.delayed(const Duration(milliseconds: 1), () {
+      setTData(t, const AsyncLoading());
+    });
+    tokenExpireWrapper(ref, () async {
+      loader(t).then((value) {
+        setTData(t, value);
+      });
     });
   }
 }

@@ -12,7 +12,6 @@ import 'package:myecl/raffle/providers/type_ticket_provider.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -83,33 +82,32 @@ class RaffleWidget extends HookConsumerWidget {
                   builder: (context, statsList) {
                     final stats = statsList[raffle.id];
                     if (stats == null) {
-                      Future.delayed(const Duration(milliseconds: 1), () {
-                        rafflesStatsNotifier.setTData(
-                            raffle.id, const AsyncLoading());
-                      });
-                      tokenExpireWrapper(ref, () async {
-                        final stats = await singleRaffleStats.loadRaffleStats(
-                            customRaffleId: raffle.id);
-                        final statsList = stats
-                            .whenData<List<RaffleStats>>((value) => [value]);
-                        rafflesStatsNotifier.setTData(raffle.id, statsList);
-                      });
+                      rafflesStatsNotifier.autoLoad(
+                          ref,
+                          raffle.id,
+                          (raffleId) async =>
+                              (await singleRaffleStats.loadRaffleStats(
+                                      customRaffleId: raffleId))
+                                  .maybeWhen(
+                                data: (value) => value,
+                                orElse: () => RaffleStats.empty(),
+                              ));
                       return const SizedBox();
                     }
-                    return stats.when(
-                      data: (stats) {
+                    return AsyncChild(
+                      value: stats,
+                      builder: (context, stats) {
                         if (stats.isEmpty) {
-                          Future.delayed(const Duration(milliseconds: 1), () {
-                            rafflesStatsNotifier.setTData(
-                                raffle.id, const AsyncLoading());
-                          });
-                          tokenExpireWrapper(ref, () async {
-                            final stats = await singleRaffleStats
-                                .loadRaffleStats(customRaffleId: raffle.id);
-                            final statsList = stats.whenData<List<RaffleStats>>(
-                                (value) => [value]);
-                            rafflesStatsNotifier.setTData(raffle.id, statsList);
-                          });
+                          rafflesStatsNotifier.autoLoad(
+                              ref,
+                              raffle.id,
+                              (raffleId) async =>
+                                  (await singleRaffleStats.loadRaffleStats(
+                                          customRaffleId: raffleId))
+                                      .maybeWhen(
+                                    data: (value) => value,
+                                    orElse: () => RaffleStats.empty(),
+                                  ));
                           return const SizedBox();
                         }
                         return Row(
@@ -154,21 +152,6 @@ class RaffleWidget extends HookConsumerWidget {
                           ],
                         );
                       },
-                      loading: () {
-                        Future.delayed(const Duration(milliseconds: 1), () {
-                          rafflesStatsNotifier.setTData(
-                              raffle.id, const AsyncLoading());
-                        });
-                        tokenExpireWrapper(ref, () async {
-                          final stats = await singleRaffleStats.loadRaffleStats(
-                              customRaffleId: raffle.id);
-                          final statsList = stats
-                              .whenData<List<RaffleStats>>((value) => [value]);
-                          rafflesStatsNotifier.setTData(raffle.id, statsList);
-                        });
-                        return const SizedBox();
-                      },
-                      error: (error, stack) => const SizedBox(),
                     );
                   },
                 ),

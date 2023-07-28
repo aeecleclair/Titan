@@ -35,10 +35,10 @@ class VoteBars extends HookConsumerWidget {
     final Map<int, String> sectionIds = {};
     int total = 0;
 
-    sectionsContender.when(
+    sectionsContender.maybeWhen(
         data: (data) {
           if (data[section] != null) {
-            data[section]!.when(
+            data[section]!.maybeWhen(
                 data: ((data) {
                   sectionNames = data.map((e) => e.name).toList();
                   sectionIds
@@ -72,12 +72,10 @@ class VoteBars extends HookConsumerWidget {
                           ))
                       .toList();
                 }),
-                error: (Object error, StackTrace? stackTrace) {},
-                loading: () {});
+                orElse: () {});
           }
         },
-        error: (Object error, StackTrace? stackTrace) {},
-        loading: () {});
+        orElse: () {});
 
     return Expanded(
       child: Container(

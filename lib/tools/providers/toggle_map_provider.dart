@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:tuple/tuple.dart';
 
 class ToggleMapNotifier<T, E> extends StateNotifier<
@@ -15,22 +16,19 @@ class ToggleMapNotifier<T, E> extends StateNotifier<
   }
 
   Future addT(T t) async {
-    state.when(
+    state.maybeWhen(
       data: (tMap) async {
         tMap[t] = const Tuple2(AsyncValue.data([]), false);
         state = AsyncValue.data(tMap);
       },
-      loading: () {},
-      error: (e, s) {},
+      orElse: () {},
     );
   }
 
   Future addE(T t, E e) {
     return state.when(data: (d) async {
       try {
-        List<E> eList = d[t]!
-            .item1
-            .maybeWhen(data: (d) => d, orElse: () => []);
+        List<E> eList = d[t]!.item1.maybeWhen(data: (d) => d, orElse: () => []);
         d[t] = Tuple2(AsyncValue.data(eList + [e]), d[t]!.item2);
         state = AsyncValue.data(d);
         return true;
@@ -59,9 +57,7 @@ class ToggleMapNotifier<T, E> extends StateNotifier<
   Future<bool> deleteE(T t, int index) {
     return state.when(data: (d) async {
       try {
-        List<E> eList = d[t]!
-            .item1
-            .maybeWhen(data: (d) => d, orElse: () => []);
+        List<E> eList = d[t]!.item1.maybeWhen(data: (d) => d, orElse: () => []);
         eList.removeAt(index);
         d[t] = Tuple2(AsyncValue.data(eList), d[t]!.item2);
         state = AsyncValue.data(d);
@@ -132,6 +128,20 @@ class ToggleMapNotifier<T, E> extends StateNotifier<
       return false;
     }, loading: () async {
       return false;
+    });
+  }
+
+  Future<void> autoLoad(WidgetRef ref, T t,
+      Future<AsyncValue<List<E>>> Function(T t) loader,
+      Function(AsyncValue<List<E>> value)? postProcess) async {
+    Future.delayed(const Duration(milliseconds: 1), () {
+      setTData(t, const AsyncLoading());
+    });
+    tokenExpireWrapper(ref, () async {
+      loader(t).then((value) {
+        setTData(t, value);
+        postProcess?.call(value);
+      });
     });
   }
 }

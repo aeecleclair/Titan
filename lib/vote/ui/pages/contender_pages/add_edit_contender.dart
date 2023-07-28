@@ -373,54 +373,34 @@ class AddEditContenderPage extends HookConsumerWidget {
                           if (isEdit) {
                             displayVoteToastWithContext(TypeMsg.msg,
                                 VoteTextConstants.editedPretendance);
-                            contenderList.when(
+                            contenderList.maybeWhen(
                                 data: (list) {
-                                  if (logo.value != null) {
-                                    Future.delayed(
-                                        const Duration(milliseconds: 1), () {
-                                      contenderLogosNotifier.setTData(
-                                          contender, const AsyncLoading());
-                                    });
-                                    logoNotifier.updateLogo(
-                                        contender.id, logo.value!);
-                                    contenderLogosNotifier.setTData(
+                                  final logoBytes = logo.value;
+                                  if (logoBytes != null) {
+                                    contenderLogosNotifier.autoLoad(
+                                        ref,
                                         contender,
-                                        AsyncData([
-                                          Image.memory(
-                                            logo.value!,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ]));
+                                        (contender) => logoNotifier.updateLogo(
+                                            contender.id, logoBytes));
                                   }
                                 },
-                                error: (error, s) {},
-                                loading: () {});
+                                orElse: () {});
                           } else {
                             displayVoteToastWithContext(TypeMsg.msg,
                                 VoteTextConstants.addedPretendance);
-                            contenderList.when(
+                            contenderList.maybeWhen(
                                 data: (list) {
                                   final newContender = list.last;
-                                  if (logo.value != null) {
-                                    Future.delayed(
-                                        const Duration(milliseconds: 1), () {
-                                      contenderLogosNotifier.setTData(
-                                          contender, const AsyncLoading());
-                                    });
-                                    logoNotifier.updateLogo(
-                                        newContender.id, logo.value!);
-                                    contenderLogosNotifier.setTData(
+                                  final logoBytes = logo.value;
+                                  if (logoBytes != null) {
+                                    contenderLogosNotifier.autoLoad(
+                                        ref,
                                         newContender,
-                                        AsyncData([
-                                          Image.memory(
-                                            logo.value!,
-                                            fit: BoxFit.cover,
-                                          )
-                                        ]));
+                                        (contender) => logoNotifier.updateLogo(
+                                            contender.id, logoBytes));
                                   }
                                 },
-                                error: (error, s) {},
-                                loading: () {});
+                                orElse: () {});
                           }
                           membersNotifier.clearMembers();
                           await sectionsNotifier.setTData(section.value,

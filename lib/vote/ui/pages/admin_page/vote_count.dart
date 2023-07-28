@@ -20,28 +20,24 @@ class VoteCount extends HookConsumerWidget {
       builder: (context, data) {
         final voteCount = data[section];
         if (voteCount == null) {
-          Future.delayed(const Duration(milliseconds: 1),
-              () => statsNotifier.setTData(section, const AsyncLoading()));
-          tokenExpireWrapper(ref, () async {
-            final count = await sectionVoteNotifier.loadCount(section.id);
-            count.whenData(
-              (data) => statsNotifier.setTData(section, AsyncData([data])),
-            );
-          });
+          statsNotifier.autoLoad(
+              ref,
+              section,
+              (section) async =>
+                  (await sectionVoteNotifier.loadCount(section.id))
+                      .maybeWhen(data: (data) => data, orElse: () => -1));
           return const Center(child: Text('Error'));
         }
         return AsyncChild(
           value: voteCount,
           builder: (context, data) {
             if (data.isEmpty) {
-              Future.delayed(const Duration(milliseconds: 1),
-                  () => statsNotifier.setTData(section, const AsyncLoading()));
-              tokenExpireWrapper(ref, () async {
-                final count = await sectionVoteNotifier.loadCount(section.id);
-                count.whenData(
-                  (data) => statsNotifier.setTData(section, AsyncData([data])),
-                );
-              });
+              statsNotifier.autoLoad(
+                  ref,
+                  section,
+                  (section) async =>
+                      (await sectionVoteNotifier.loadCount(section.id))
+                          .maybeWhen(data: (data) => data, orElse: () => -1));
               return const Center(child: Text('No votes'));
             }
             return Padding(

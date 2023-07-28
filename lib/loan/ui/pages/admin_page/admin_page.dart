@@ -47,7 +47,8 @@ class AdminPage extends HookConsumerWidget {
           final loanListNotifier = ref.read(loanerLoanListProvider.notifier);
           final historyLoanListNotifier =
               ref.read(historyLoanerLoanListProvider.notifier);
-          final adminLoanListNotifier = ref.read(adminLoanListProvider.notifier);
+          final adminLoanListNotifier =
+              ref.read(adminLoanListProvider.notifier);
           final adminHistoryLoanListNotifier =
               ref.read(adminHistoryLoanListProvider.notifier);
           itemListNotifier.loadItemList(loaner.id);
@@ -72,25 +73,17 @@ class AdminPage extends HookConsumerWidget {
                           ref.read(itemListProvider.notifier);
                       final loanersItemsNotifier =
                           ref.read(loanersItemsProvider.notifier);
-                      if (value[key] != null) {
-                        value[key]!.whenData((value) async {
+                      final listItems = value[key];
+                      if (listItems == null) {
+                        loanersItemsNotifier.autoLoadList(ref, key,
+                            (key) => itemListNotifier.loadItemList(key.id));
+                      } else {
+                        listItems.whenData((value) async {
                           if (value.isEmpty) {
-                            Future.delayed(
-                                const Duration(milliseconds: 1),
-                                () => loanersItemsNotifier.setTData(
-                                    key, const AsyncLoading()));
-                            final res =
-                                await itemListNotifier.loadItemList(key.id);
-                            loanersItemsNotifier.setTData(key, res);
+                            loanersItemsNotifier.autoLoadList(ref, key,
+                                (key) => itemListNotifier.loadItemList(key.id));
                           }
                         });
-                      } else {
-                        Future.delayed(
-                            const Duration(milliseconds: 1),
-                            () => loanersItemsNotifier.setTData(
-                                key, const AsyncLoading()));
-                        final res = await itemListNotifier.loadItemList(key.id);
-                        loanersItemsNotifier.setTData(key, res);
                       }
                     },
                   );
@@ -100,24 +93,17 @@ class AdminPage extends HookConsumerWidget {
                           ref.read(loanerLoanListProvider.notifier);
                       final adminLoanListNotifier =
                           ref.read(adminLoanListProvider.notifier);
-                      if (value[key] != null) {
-                        value[key]!.whenData((value) async {
+                      final listItems = value[key];
+                      if (listItems == null) {
+                        adminLoanListNotifier.autoLoadList(ref, key,
+                            (key) => loanListNotifier.loadLoan(key.id));
+                      } else {
+                        listItems.whenData((value) async {
                           if (value.isEmpty) {
-                            Future.delayed(
-                                const Duration(milliseconds: 1),
-                                () => adminLoanListNotifier.setTData(
-                                    key, const AsyncLoading()));
-                            final res = await loanListNotifier.loadLoan(key.id);
-                            adminLoanListNotifier.setTData(key, res);
+                            adminLoanListNotifier.autoLoadList(ref, key,
+                                (key) => loanListNotifier.loadLoan(key.id));
                           }
                         });
-                      } else {
-                        Future.delayed(
-                            const Duration(milliseconds: 1),
-                            () => adminLoanListNotifier.setTData(
-                                key, const AsyncLoading()));
-                        final res = await loanListNotifier.loadLoan(key.id);
-                        adminLoanListNotifier.setTData(key, res);
                       }
                     },
                   );
@@ -127,26 +113,20 @@ class AdminPage extends HookConsumerWidget {
                           ref.read(historyLoanerLoanListProvider.notifier);
                       final adminHistoryLoanListNotifier =
                           ref.read(adminHistoryLoanListProvider.notifier);
-                      if (value[key] != null) {
-                        value[key]!.whenData((value) async {
+                      final listItems = value[key];
+                      if (listItems == null) {
+                        adminHistoryLoanListNotifier.autoLoadList(ref, key,
+                            (key) => historyLoanListNotifier.loadLoan(key.id));
+                      } else {
+                        listItems.whenData((value) async {
                           if (value.isEmpty) {
-                            Future.delayed(
-                                const Duration(milliseconds: 1),
-                                () => adminHistoryLoanListNotifier.setTData(
-                                    key, const AsyncLoading()));
-                            final res =
-                                await historyLoanListNotifier.loadLoan(key.id);
-                            adminHistoryLoanListNotifier.setTData(key, res);
+                            adminHistoryLoanListNotifier.autoLoadList(
+                                ref,
+                                key,
+                                (key) =>
+                                    historyLoanListNotifier.loadLoan(key.id));
                           }
                         });
-                      } else {
-                        Future.delayed(
-                            const Duration(milliseconds: 1),
-                            () => adminHistoryLoanListNotifier.setTData(
-                                key, const AsyncLoading()));
-                        final res =
-                            await historyLoanListNotifier.loadLoan(key.id);
-                        adminHistoryLoanListNotifier.setTData(key, res);
                       }
                     },
                   );
