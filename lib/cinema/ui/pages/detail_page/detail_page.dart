@@ -14,7 +14,6 @@ import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/local_notification_service.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -47,43 +46,26 @@ class DetailPage extends HookConsumerWidget {
         AsyncChild(
             value: sessionPosterMap,
             builder: (context, data) {
-              if (data[session] != null) {
+              final sessionPoster = data[session];
+              if (sessionPoster == null) {
+                sessionPosterMapNotifier.autoLoad(
+                    ref,
+                    session,
+                        (session) =>
+                        sessionPosterNotifier.getLogo(session.id));
                 return const SizedBox.shrink();
               }
               return SizedBox(
                   width: double.infinity,
                   child: AsyncChild(
-                      value: data[session]!,
+                      value: sessionPoster,
                       builder: (context, data) {
-                        if (data.isNotEmpty) {
-                          return Container(
-                            width: double.infinity,
-                            decoration: const BoxDecoration(boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 10,
-                                spreadRadius: 7,
-                                offset: Offset(0, 5),
-                              ),
-                            ]),
-                            child: Image(
-                              image: data.first.image,
-                              fit: BoxFit.fill,
-                            ),
-                          );
-                        } else {
-                          Future.delayed(const Duration(milliseconds: 1), () {
-                            sessionPosterMapNotifier.setTData(
-                                session, const AsyncLoading());
-                          });
-                          tokenExpireWrapper(ref, () async {
-                            sessionPosterNotifier
-                                .getLogo(session.id)
-                                .then((value) {
-                              sessionPosterMapNotifier.setTData(
-                                  session, AsyncData([value]));
-                            });
-                          });
+                        if (data.isEmpty) {
+                          sessionPosterMapNotifier.autoLoad(
+                              ref,
+                              session,
+                              (session) =>
+                                  sessionPosterNotifier.getLogo(session.id));
                           return Container(
                             width: double.infinity,
                             decoration: const BoxDecoration(boxShadow: [
@@ -96,6 +78,21 @@ class DetailPage extends HookConsumerWidget {
                             ]),
                           );
                         }
+                        return Container(
+                          width: double.infinity,
+                          decoration: const BoxDecoration(boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 10,
+                              spreadRadius: 7,
+                              offset: Offset(0, 5),
+                            ),
+                          ]),
+                          child: Image(
+                            image: data.first.image,
+                            fit: BoxFit.fill,
+                          ),
+                        );
                       },
                       errorBuilder: (error, stack) => const Center(
                             child: HeroIcon(HeroIcons.exclamationCircle),

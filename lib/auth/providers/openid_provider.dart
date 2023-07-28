@@ -310,21 +310,19 @@ class OpenIdTokenProvider
               refreshToken: token[refreshTokenKey] as String,
             ),
           );
-          if (resp != null) {
-            state = AsyncValue.data({
-              tokenKey: resp.accessToken!,
-              refreshTokenKey: resp.refreshToken!,
-            });
-            storeToken();
-            return true;
-          } else {
+          if (resp == null) {
             state = const AsyncValue.error("Error", StackTrace.empty);
             return false;
           }
-        } else {
-          state = const AsyncValue.error(e, StackTrace.empty);
-          return false;
+          state = AsyncValue.data({
+            tokenKey: resp.accessToken!,
+            refreshTokenKey: resp.refreshToken!,
+          });
+          storeToken();
+          return true;
         }
+        state = const AsyncValue.error(e, StackTrace.empty);
+        return false;
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error, stackTrace);

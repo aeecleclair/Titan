@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/contender_logo_provider.dart';
@@ -20,6 +19,8 @@ class ContenderLogo extends HookConsumerWidget {
         value: contenderLogos,
         builder: (context, data) {
           if (data[contender] == null) {
+            contenderLogosNotifier.autoLoad(ref, contender,
+                    (contender) => logoNotifier.getLogo(contender.id));
             return const SizedBox.shrink();
           }
           return SizedBox(
@@ -29,16 +30,8 @@ class ContenderLogo extends HookConsumerWidget {
                   value: data[contender]!,
                   builder: (context, data) {
                     if (data.isEmpty) {
-                      Future.delayed(const Duration(milliseconds: 1), () {
-                        contenderLogosNotifier.setTData(
-                            contender, const AsyncLoading());
-                      });
-                      tokenExpireWrapper(ref, () async {
-                        logoNotifier.getLogo(contender.id).then((value) {
-                          contenderLogosNotifier.setTData(
-                              contender, AsyncData([value]));
-                        });
-                      });
+                      contenderLogosNotifier.autoLoad(ref, contender,
+                          (contender) => logoNotifier.getLogo(contender.id));
                       return const HeroIcon(
                         HeroIcons.userCircle,
                         size: 40,

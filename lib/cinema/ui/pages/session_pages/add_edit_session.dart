@@ -237,59 +237,38 @@ class AddEditSessionPage extends HookConsumerWidget {
                         if (value) {
                           QR.back();
                           if (isEdit) {
-                            sessionList.when(
+                            sessionList.maybeWhen(
                                 data: (list) async {
-                                  if (logo.value != null) {
+                                  final logoBytes = logo.value;
+                                  if (logoBytes != null) {
                                     final sessionPosterMapNotifier = ref.read(
                                         sessionPosterMapProvider.notifier);
-                                    Future.delayed(
-                                        const Duration(milliseconds: 1), () {
-                                      sessionPosterMapNotifier.setTData(
-                                          session, const AsyncLoading());
-                                    });
-                                    Image image = await sessionPosterNotifier
-                                        .updateLogo(session.id, logo.value!);
-                                    sessionPosterMapNotifier.setTData(
+                                    sessionPosterMapNotifier.autoLoad(
+                                        ref,
                                         session,
-                                        AsyncData([
-                                          Image(
-                                            image: image.image,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ]));
+                                        (session) => sessionPosterNotifier
+                                            .updateLogo(session.id, logoBytes));
                                   }
                                 },
-                                error: (error, s) {},
-                                loading: () {});
+                                orElse: () {});
                             displayToastWithContext(
                                 TypeMsg.msg, CinemaTextConstants.editedSession);
                           } else {
-                            sessionList.when(
+                            sessionList.maybeWhen(
                                 data: (list) async {
-                                  final newContender = list.last;
-                                  if (logo.value != null) {
+                                  final newSession = list.last;
+                                  final logoBytes = logo.value;
+                                  if (logoBytes != null) {
                                     final sessionPosterMapNotifier = ref.read(
                                         sessionPosterMapProvider.notifier);
-                                    Future.delayed(
-                                        const Duration(milliseconds: 1), () {
-                                      sessionPosterMapNotifier.setTData(
-                                          session, const AsyncLoading());
-                                    });
-                                    Image image =
-                                        await sessionPosterNotifier.updateLogo(
-                                            newContender.id, logo.value!);
-                                    sessionPosterMapNotifier.setTData(
-                                        newContender,
-                                        AsyncData([
-                                          Image(
-                                            image: image.image,
-                                            fit: BoxFit.cover,
-                                          )
-                                        ]));
+                                    sessionPosterMapNotifier.autoLoad(
+                                        ref,
+                                        newSession,
+                                            (session) => sessionPosterNotifier
+                                            .updateLogo(session.id, logoBytes));
                                   }
                                 },
-                                error: (error, s) {},
-                                loading: () {});
+                                orElse: () {});
                             displayToastWithContext(
                                 TypeMsg.msg, CinemaTextConstants.addedSession);
                           }

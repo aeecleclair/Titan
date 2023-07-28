@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -53,6 +52,11 @@ class AdminSessionCard extends HookConsumerWidget {
                 value: sessionPosterMap,
                 builder: (context, data) {
                   if (data[session] == null) {
+                    sessionPosterMapNotifier.autoLoad(
+                        ref,
+                        session,
+                            (session) =>
+                            sessionPosterNotifier.getLogo(session.id));
                     return const SizedBox.shrink();
                   }
                   return SizedBox(
@@ -67,18 +71,11 @@ class AdminSessionCard extends HookConsumerWidget {
                               fit: BoxFit.cover,
                             );
                           } else {
-                            Future.delayed(const Duration(milliseconds: 1), () {
-                              sessionPosterMapNotifier.setTData(
-                                  session, const AsyncLoading());
-                            });
-                            tokenExpireWrapper(ref, () async {
-                              sessionPosterNotifier
-                                  .getLogo(session.id)
-                                  .then((value) {
-                                sessionPosterMapNotifier.setTData(
-                                    session, AsyncData([value]));
-                              });
-                            });
+                            sessionPosterMapNotifier.autoLoad(
+                                ref,
+                                session,
+                                (session) =>
+                                    sessionPosterNotifier.getLogo(session.id));
                             return Container(
                               decoration: const BoxDecoration(boxShadow: [
                                 BoxShadow(

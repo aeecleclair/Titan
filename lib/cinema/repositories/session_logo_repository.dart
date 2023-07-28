@@ -18,6 +18,7 @@ class SessionPosterRepository extends LogoRepository {
   }
 
   Future<Image> addSessionLogo(Uint8List bytes, String id) async {
-    return Image.memory(await addLogo(bytes, id, suffix: "/poster"));
+    return Image.memory(await addLogo(bytes, id, suffix: "/poster"),
+        fit: BoxFit.cover);
   }
 }

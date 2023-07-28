@@ -50,24 +50,28 @@ class EditAssociationPage extends HookConsumerWidget {
                   builder: (context, value) {
                     final group = value[groupId];
                     if (group == null) {
+                      simpleGroupsGroupsNotifier.autoLoad(
+                          ref,
+                          groupId,
+                          (groupId) async =>
+                              (await groupNotifier.loadGroup(groupId))
+                                  .maybeWhen(
+                                      data: (groups) => groups,
+                                      orElse: () => Group.empty()));
                       return const Loader();
                     }
                     return AsyncChild(
                         value: group,
                         builder: (context, groups) {
                           if (groups.isEmpty) {
-                            Future.delayed(
-                                const Duration(milliseconds: 1),
-                                () => simpleGroupsGroupsNotifier.setTData(
-                                    groupId, const AsyncLoading()));
-                            tokenExpireWrapper(ref, () async {
-                              final loadedGroup =
-                                  await groupNotifier.loadGroup(groupId);
-                              loadedGroup.whenData((value) {
-                                simpleGroupsGroupsNotifier.setTData(
-                                    groupId, AsyncData([value]));
-                              });
-                            });
+                            simpleGroupsGroupsNotifier.autoLoad(
+                                ref,
+                                groupId,
+                                (groupId) async =>
+                                    (await groupNotifier.loadGroup(groupId))
+                                        .maybeWhen(
+                                            data: (groups) => groups,
+                                            orElse: () => Group.empty()));
                             return const Loader();
                           }
                           name.text = groups[0].name;

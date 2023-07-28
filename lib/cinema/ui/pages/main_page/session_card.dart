@@ -13,7 +13,6 @@ import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/local_notification_service.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/async_child.dart';
 
 class SessionCard extends HookConsumerWidget {
@@ -107,141 +106,24 @@ class SessionCard extends HookConsumerWidget {
             AsyncChild(
                 value: sessionPosterMap,
                 builder: (context, data) {
-                  if (data[session] == null) {
+                  final sessionPoster = data[session];
+                  if (sessionPoster == null) {
+                    sessionPosterMapNotifier.autoLoad(ref, session,
+                        (session) => sessionPosterNotifier.getLogo(session.id));
                     return const SizedBox.shrink();
                   }
                   return SizedBox(
                     height: maxHeight * scale,
                     width: double.infinity,
                     child: AsyncChild(
-                        value: data[session]!,
+                        value: sessionPoster,
                         builder: (context, data) {
-                          if (data.isNotEmpty) {
-                            return isWebFormat
-                                ? Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          child: AspectRatio(
-                                            aspectRatio: 2 / 3,
-                                            child: Image(
-                                              image: data.first.image,
-                                              fit: BoxFit.cover, // use this
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 50),
-                                        Expanded(
-                                          child: Column(
-                                            children: [
-                                              Text(session.name,
-                                                  textAlign: TextAlign.center,
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                  )),
-                                              const SizedBox(height: 10),
-                                              Text(formatDate(session.start),
-                                                  textAlign: TextAlign.center,
-                                                  style: const TextStyle(
-                                                    fontSize: 16,
-                                                  )),
-                                              const SizedBox(height: 10),
-                                              Text(
-                                                  formatDuration(
-                                                      session.duration),
-                                                  textAlign: TextAlign.center,
-                                                  style: const TextStyle(
-                                                    fontSize: 16,
-                                                  )),
-                                              const SizedBox(height: 10),
-                                              Text(
-                                                  session.overview ??
-                                                      CinemaTextConstants
-                                                          .noOverview,
-                                                  textAlign: TextAlign.center,
-                                                  style: const TextStyle(
-                                                    fontSize: 16,
-                                                  )),
-                                            ],
-                                          ),
-                                        ),
-                                        const SizedBox(width: 50),
-                                      ],
-                                    ),
-                                  )
-                                : Stack(
-                                    children: [
-                                      Container(
-                                        height: maxHeight * scale,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            image: DecorationImage(
-                                                image: data.first.image,
-                                                fit: BoxFit.cover),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey
-                                                    .withOpacity(0.2),
-                                                spreadRadius: 5,
-                                                blurRadius: 7,
-                                                offset: const Offset(0, 3),
-                                              ),
-                                            ],
-                                            border: (selected &&
-                                                    session.start.isAfter(
-                                                        DateTime.now()))
-                                                ? Border.all(
-                                                    color: Colors.black,
-                                                    width: 3)
-                                                : null),
-                                      ),
-                                      if (selected &&
-                                          session.start.isAfter(DateTime.now()))
-                                        Positioned(
-                                          top: 0,
-                                          right: 0,
-                                          child: Container(
-                                            width: 80,
-                                            height: 60,
-                                            decoration: const BoxDecoration(
-                                                color: Colors.black,
-                                                borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(30),
-                                                  bottomLeft:
-                                                      Radius.circular(30),
-                                                )),
-                                            child: const Center(
-                                              child: HeroIcon(
-                                                HeroIcons.bell,
-                                                size: 30,
-                                                color: Colors.red,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                    ],
-                                  );
-                          } else {
-                            Future.delayed(const Duration(milliseconds: 1), () {
-                              sessionPosterMapNotifier.setTData(
-                                  session, const AsyncLoading());
-                            });
-                            tokenExpireWrapper(ref, () async {
-                              final image = await sessionPosterNotifier
-                                  .getLogo(session.id);
-                              sessionPosterMapNotifier.setTData(
-                                  session, AsyncData([image]));
-                            });
+                          if (data.isEmpty) {
+                            sessionPosterMapNotifier.autoLoad(
+                                ref,
+                                session,
+                                (session) =>
+                                    sessionPosterNotifier.getLogo(session.id));
                             return Container(
                               height: maxHeight * scale,
                               decoration: BoxDecoration(
@@ -257,6 +139,117 @@ class SessionCard extends HookConsumerWidget {
                               ),
                             );
                           }
+                          return isWebFormat
+                              ? Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(30),
+                                        child: AspectRatio(
+                                          aspectRatio: 2 / 3,
+                                          child: Image(
+                                            image: data.first.image,
+                                            fit: BoxFit.cover, // use this
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 50),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            Text(session.name,
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                            const SizedBox(height: 10),
+                                            Text(formatDate(session.start),
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                )),
+                                            const SizedBox(height: 10),
+                                            Text(
+                                                formatDuration(
+                                                    session.duration),
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                )),
+                                            const SizedBox(height: 10),
+                                            Text(
+                                                session.overview ??
+                                                    CinemaTextConstants
+                                                        .noOverview,
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                )),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(width: 50),
+                                    ],
+                                  ),
+                                )
+                              : Stack(
+                                  children: [
+                                    Container(
+                                      height: maxHeight * scale,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          image: DecorationImage(
+                                              image: data.first.image,
+                                              fit: BoxFit.cover),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.2),
+                                              spreadRadius: 5,
+                                              blurRadius: 7,
+                                              offset: const Offset(0, 3),
+                                            ),
+                                          ],
+                                          border: (selected &&
+                                                  session.start
+                                                      .isAfter(DateTime.now()))
+                                              ? Border.all(
+                                                  color: Colors.black, width: 3)
+                                              : null),
+                                    ),
+                                    if (selected &&
+                                        session.start.isAfter(DateTime.now()))
+                                      Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        child: Container(
+                                          width: 80,
+                                          height: 60,
+                                          decoration: const BoxDecoration(
+                                              color: Colors.black,
+                                              borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(30),
+                                                bottomLeft: Radius.circular(30),
+                                              )),
+                                          child: const Center(
+                                            child: HeroIcon(
+                                              HeroIcons.bell,
+                                              size: 30,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                );
                         },
                         errorBuilder: (error, stack) => const Center(
                               child: HeroIcon(HeroIcons.exclamationCircle),
