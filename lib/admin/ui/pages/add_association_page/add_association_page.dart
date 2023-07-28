@@ -6,10 +6,10 @@ import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/components/admin_button.dart';
-import 'package:myecl/admin/ui/components/page_title.dart';
 import 'package:myecl/admin/ui/components/text_editing.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/align_left_text.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -36,7 +36,7 @@ class AddAssociationPage extends HookConsumerWidget {
               child: Form(
                 key: key,
                 child: Column(children: [
-                  const PageTitle(title: AdminTextConstants.addAssociation),
+                  const AlignLeftText(AdminTextConstants.addAssociation),
                   const SizedBox(
                     height: 30,
                   ),
