@@ -3,9 +3,8 @@ import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
 
 final isLoanAdminProvider = StateProvider<bool>((ref) {
   final loaners = ref.watch(userLoanerListProvider);
-  final loanersName = loaners.when(
+  final loanersName = loaners.maybeWhen(
       data: (loaners) => loaners.map((e) => e.name).toList(),
-      loading: () => [],
-      error: (error, stackTrace) => []);
+      orElse: () => []);
   return loanersName.isNotEmpty;
 });

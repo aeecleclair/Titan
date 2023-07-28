@@ -15,7 +15,7 @@ import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/local_notification_service.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/loader.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DetailPage extends HookConsumerWidget {
@@ -44,73 +44,63 @@ class DetailPage extends HookConsumerWidget {
         CurvedAnimation(parent: animation, curve: Curves.easeInOut);
     return Stack(
       children: [
-        Stack(
-          children: [
-            sessionPosterMap.when(
-                data: (data) {
-                  if (data[session] != null) {
-                    return data[session]!.when(
-                        data: (data) {
-                          if (data.isNotEmpty) {
-                            return Container(
-                              width: double.infinity,
-                              decoration: const BoxDecoration(boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  blurRadius: 10,
-                                  spreadRadius: 7,
-                                  offset: Offset(0, 5),
-                                ),
-                              ]),
-                              child: Image(
-                                image: data.first.image,
-                                fit: BoxFit.fill,
+        AsyncChild(
+            value: sessionPosterMap,
+            builder: (context, data) {
+              if (data[session] != null) {
+                return const SizedBox.shrink();
+              }
+              return SizedBox(
+                  width: double.infinity,
+                  child: AsyncChild(
+                      value: data[session]!,
+                      builder: (context, data) {
+                        if (data.isNotEmpty) {
+                          return Container(
+                            width: double.infinity,
+                            decoration: const BoxDecoration(boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 10,
+                                spreadRadius: 7,
+                                offset: Offset(0, 5),
                               ),
-                            );
-                          } else {
-                            Future.delayed(const Duration(milliseconds: 1), () {
-                              sessionPosterMapNotifier.setTData(
-                                  session, const AsyncLoading());
-                            });
-                            tokenExpireWrapper(ref, () async {
-                              sessionPosterNotifier
-                                  .getLogo(session.id)
-                                  .then((value) {
-                                sessionPosterMapNotifier.setTData(
-                                    session, AsyncData([value]));
-                              });
-                            });
-                            return Container(
-                              width: double.infinity,
-                              decoration: const BoxDecoration(boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  blurRadius: 10,
-                                  spreadRadius: 7,
-                                  offset: Offset(0, 5),
-                                ),
-                              ]),
-                            );
-                          }
-                        },
-                        loading: () => const SizedBox(
-                              width: double.infinity,
-                              child: Loader(),
+                            ]),
+                            child: Image(
+                              image: data.first.image,
+                              fit: BoxFit.fill,
                             ),
-                        error: (error, stack) => const SizedBox(
-                              width: double.infinity,
-                              child: Center(
-                                child: HeroIcon(HeroIcons.exclamationCircle),
+                          );
+                        } else {
+                          Future.delayed(const Duration(milliseconds: 1), () {
+                            sessionPosterMapNotifier.setTData(
+                                session, const AsyncLoading());
+                          });
+                          tokenExpireWrapper(ref, () async {
+                            sessionPosterNotifier
+                                .getLogo(session.id)
+                                .then((value) {
+                              sessionPosterMapNotifier.setTData(
+                                  session, AsyncData([value]));
+                            });
+                          });
+                          return Container(
+                            width: double.infinity,
+                            decoration: const BoxDecoration(boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 10,
+                                spreadRadius: 7,
+                                offset: Offset(0, 5),
                               ),
-                            ));
-                  } else {
-                    return const SizedBox.shrink();
-                  }
-                },
-                loading: () => const Loader(),
-                error: (error, stack) => Text('Error $error')),
-          ],
-        ),
+                            ]),
+                          );
+                        }
+                      },
+                      errorBuilder: (error, stack) => const Center(
+                            child: HeroIcon(HeroIcons.exclamationCircle),
+                          )));
+            }),
         SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -138,9 +128,7 @@ class DetailPage extends HookConsumerWidget {
                 color: Colors.grey.shade50,
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       alignment: Alignment.center,
@@ -154,9 +142,7 @@ class DetailPage extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       alignment: Alignment.center,
@@ -167,9 +153,7 @@ class DetailPage extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     SizedBox(
                       height: 35,
                       child: ListView.builder(
@@ -202,9 +186,7 @@ class DetailPage extends HookConsumerWidget {
                         },
                       ),
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: Text(

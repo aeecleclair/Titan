@@ -4,8 +4,8 @@ import 'package:myecl/raffle/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/winning_ticket_card.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/loader.dart';
 
 class WinningTicketHandler extends HookConsumerWidget {
   const WinningTicketHandler({super.key});
@@ -18,35 +18,26 @@ class WinningTicketHandler extends HookConsumerWidget {
         const AlignLeftText(RaffleTextConstants.winningTickets,
             padding: EdgeInsets.symmetric(horizontal: 30),
             color: RaffleColorConstants.textDark),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         HorizontalListView(
           child: Row(
             children: [
-              const SizedBox(
-                width: 15,
-                height: 125,
-              ),
-              winningTicketList.when(
-                  data: (data) {
-                    if (data.isEmpty) {
-                      return const SizedBox(
-                          height: 150,
-                          child: Text(RaffleTextConstants.noWinningTicketYet));
-                    }
-                    return Row(
-                        children: data
-                            .map((e) => WinningTicketUI(ticket: e))
-                            .toList());
-                  },
-                  error: (Object e, StackTrace? s) => SizedBox(
-                      height: 150,
-                      child: Text(
-                          "${RaffleTextConstants.error}: ${e.toString()}")),
-                  loading: () => const SizedBox(
-                      height: 150,
-                      child: Loader(color: RaffleColorConstants.gradient2))),
+              const SizedBox(width: 15),
+              SizedBox(
+                  height: 150,
+                  child: AsyncChild(
+                      value: winningTicketList,
+                      builder: (context, data) {
+                        if (data.isEmpty) {
+                          return const Text(
+                              RaffleTextConstants.noWinningTicketYet);
+                        }
+                        return Row(
+                            children: data
+                                .map((e) => WinningTicketUI(ticket: e))
+                                .toList());
+                      },
+                      loaderColor: RaffleColorConstants.gradient2)),
               const SizedBox(width: 5),
             ],
           ),

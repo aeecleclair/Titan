@@ -15,6 +15,7 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
@@ -44,129 +45,110 @@ class EditAssociationPage extends HookConsumerWidget {
           physics: const BouncingScrollPhysics(),
           child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: simpleGroupsGroups.when(
-                  data: (value) {
-                    final g = value[groupId];
-                    if (g == null) {
+              child: AsyncChild(
+                  value: simpleGroupsGroups,
+                  builder: (context, value) {
+                    final group = value[groupId];
+                    if (group == null) {
                       return const Loader();
                     }
-                    return g.when(
-                      data: (groups) {
-                        if (groups.isEmpty) {
-                          Future.delayed(
-                              const Duration(milliseconds: 1),
-                              () => simpleGroupsGroupsNotifier.setTData(
-                                  groupId, const AsyncLoading()));
-                          tokenExpireWrapper(ref, () async {
-                            final loadedGroup =
-                                await groupNotifier.loadGroup(groupId);
-                            loadedGroup.whenData((value) {
-                              simpleGroupsGroupsNotifier.setTData(
-                                  groupId, AsyncData([value]));
+                    return AsyncChild(
+                        value: group,
+                        builder: (context, groups) {
+                          if (groups.isEmpty) {
+                            Future.delayed(
+                                const Duration(milliseconds: 1),
+                                () => simpleGroupsGroupsNotifier.setTData(
+                                    groupId, const AsyncLoading()));
+                            tokenExpireWrapper(ref, () async {
+                              final loadedGroup =
+                                  await groupNotifier.loadGroup(groupId);
+                              loadedGroup.whenData((value) {
+                                simpleGroupsGroupsNotifier.setTData(
+                                    groupId, AsyncData([value]));
+                              });
                             });
-                          });
-                          return const Loader();
-                        }
-                        name.text = groups[0].name;
-                        description.text = groups[0].description;
-                        return Column(children: [
-                          const AlignLeftText(AdminTextConstants.edit,
-                              fontSize: 20, color: ColorConstants.gradient1),
-                          const SizedBox(height: 20),
-                          Form(
-                            key: key,
-                            child: Column(children: [
-                              Container(
+                            return const Loader();
+                          }
+                          name.text = groups[0].name;
+                          description.text = groups[0].description;
+                          return Column(children: [
+                            const AlignLeftText(AdminTextConstants.edit,
+                                fontSize: 20, color: ColorConstants.gradient1),
+                            const SizedBox(height: 20),
+                            Form(
+                              key: key,
+                              child: Column(children: [
+                                Container(
                                   margin:
                                       const EdgeInsets.symmetric(vertical: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        child: TextEntry(
-                                          controller: name,
-                                          color: ColorConstants.gradient1,
-                                          label: AdminTextConstants.name,
-                                          suffixIcon:
-                                              const HeroIcon(HeroIcons.pencil),
-                                          enabledColor: Colors.transparent,
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                              Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        child: TextEntry(
-                                          controller: description,
-                                          color: ColorConstants.gradient1,
-                                          label: AdminTextConstants.description,
-                                          suffixIcon:
-                                              const HeroIcon(HeroIcons.pencil),
-                                          enabledColor: Colors.transparent,
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                              const SizedBox(height: 20),
-                              ShrinkButton(
-                                onTap: () async {
-                                  if (!key.currentState!.validate()) {
-                                    return;
-                                  }
-                                  await tokenExpireWrapper(ref, () async {
-                                    Group newGroup = groups[0].copyWith(
-                                        name: name.text,
-                                        description: description.text);
-                                    groupNotifier.setGroup(newGroup);
-                                    final value = await groupListNotifier
-                                        .updateGroup(newGroup.toSimpleGroup());
-                                    if (value) {
-                                      QR.back();
-                                      displayToastWithContext(
-                                          TypeMsg.msg,
-                                          AdminTextConstants
-                                              .updatedAssociation);
-                                    } else {
-                                      displayToastWithContext(TypeMsg.msg,
-                                          AdminTextConstants.updatingError);
-                                    }
-                                  });
-                                },
-                                builder: (child) => AdminButton(child: child),
-                                child: const Text(
-                                  AdminTextConstants.edit,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromARGB(255, 255, 255, 255),
+                                  alignment: Alignment.centerLeft,
+                                  child: TextEntry(
+                                    controller: name,
+                                    color: ColorConstants.gradient1,
+                                    label: AdminTextConstants.name,
+                                    suffixIcon:
+                                        const HeroIcon(HeroIcons.pencil),
+                                    enabledColor: Colors.transparent,
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 20),
-                              const SearchUser(),
-                            ]),
-                          )
-                        ]);
-                      },
-                      error: (Object error, StackTrace? stackTrace) =>
-                          Text("$error"),
-                      loading: () => const Loader(color: Colors.white),
-                    );
+                                Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    alignment: Alignment.centerLeft,
+                                    child: TextEntry(
+                                      controller: description,
+                                      color: ColorConstants.gradient1,
+                                      label: AdminTextConstants.description,
+                                      suffixIcon:
+                                          const HeroIcon(HeroIcons.pencil),
+                                      enabledColor: Colors.transparent,
+                                    )),
+                                const SizedBox(height: 20),
+                                ShrinkButton(
+                                  onTap: () async {
+                                    if (!key.currentState!.validate()) {
+                                      return;
+                                    }
+                                    await tokenExpireWrapper(ref, () async {
+                                      Group newGroup = groups[0].copyWith(
+                                          name: name.text,
+                                          description: description.text);
+                                      groupNotifier.setGroup(newGroup);
+                                      final value =
+                                          await groupListNotifier.updateGroup(
+                                              newGroup.toSimpleGroup());
+                                      if (value) {
+                                        QR.back();
+                                        displayToastWithContext(
+                                            TypeMsg.msg,
+                                            AdminTextConstants
+                                                .updatedAssociation);
+                                      } else {
+                                        displayToastWithContext(TypeMsg.msg,
+                                            AdminTextConstants.updatingError);
+                                      }
+                                    });
+                                  },
+                                  builder: (child) => AdminButton(child: child),
+                                  child: const Text(
+                                    AdminTextConstants.edit,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                const SearchUser(),
+                              ]),
+                            )
+                          ]);
+                        },
+                        loaderColor: Colors.white);
                   },
-                  error: (Object error, StackTrace stackTrace) =>
-                      Text("$error"),
-                  loading: () => const Loader(color: Colors.white)))),
+                  loaderColor: Colors.white))),
     );
   }
 }

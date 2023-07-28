@@ -57,10 +57,7 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
   }
 
   Future<AsyncValue<List<Loan>>> copy() async {
-    return state.when(
-        loading: () => const AsyncValue.loading(),
-        data: (loans) => AsyncValue.data(loans.sublist(0)),
-        error: (error, s) => AsyncValue.error(error, s));
+    return state.whenData((loans) => loans.sublist(0));
   }
 
   Future<AsyncValue<List<Loan>>> loadHistory(String loanerId) async {

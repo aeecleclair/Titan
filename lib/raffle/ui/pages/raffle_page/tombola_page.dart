@@ -10,6 +10,7 @@ import 'package:myecl/raffle/ui/pages/raffle_page/buy_type_ticket_card.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/prize_card.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
@@ -57,45 +58,41 @@ class RaffleInfoPage extends HookConsumerWidget {
           ),
           Container(
               margin: const EdgeInsets.only(left: 30, top: 20),
-              child: Text(
-                  balance.when(
-                      data: (s) =>
-                          "${RaffleTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€", //Attention là c'est les soldes AMAP à finir
-                      error: (e, s) => RaffleTextConstants.error,
-                      loading: () => RaffleTextConstants.loading),
-                  style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: RaffleColorConstants.gradient2))),
+              child: AsyncChild(
+                value: balance,
+                builder: (context, s) => Text(
+                    "${RaffleTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
+                    style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: RaffleColorConstants.gradient2)),
+                loaderColor: RaffleColorConstants.gradient2,
+              )),
           typeTicketList.when(
-              data: (typeTickets) {
-                return SizedBox(
-                    height: 190,
-                    child: typeTickets.isEmpty
-                        ? Container(
-                            height: 190,
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
-                            child:
-                                const Text(RaffleTextConstants.noTicketBuyable),
-                          )
-                        : ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: typeTickets.length + 2,
-                            itemBuilder: (context, index) {
-                              if (index == 0 ||
-                                  index == typeTickets.length + 1) {
-                                return const SizedBox(width: 15);
-                              }
-                              return Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  child: BuyTypeTicketSimple(
-                                      typeTicket: typeTickets[index - 1],
-                                      raffle: raffle));
-                            }));
-              },
+              data: (typeTickets) => SizedBox(
+                  height: 190,
+                  child: typeTickets.isEmpty
+                      ? Container(
+                          height: 190,
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child:
+                              const Text(RaffleTextConstants.noTicketBuyable),
+                        )
+                      : ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: typeTickets.length + 2,
+                          itemBuilder: (context, index) {
+                            if (index == 0 || index == typeTickets.length + 1) {
+                              return const SizedBox(width: 15);
+                            }
+                            return Container(
+                                margin: const EdgeInsets.all(10),
+                                child: BuyTypeTicketSimple(
+                                    typeTicket: typeTickets[index - 1],
+                                    raffle: raffle));
+                          })),
               loading: () => Container(
                   height: 190,
                   padding: const EdgeInsets.symmetric(horizontal: 30),

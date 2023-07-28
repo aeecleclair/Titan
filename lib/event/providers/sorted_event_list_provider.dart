@@ -9,7 +9,7 @@ final sortedEventListProvider = Provider<Map<String, List<Event>>>((ref) {
   final dateTitle = <String, DateTime>{};
   final now = DateTime.now();
   final normalizedNow = normalizedDate(now);
-  return eventList.when(
+  return eventList.maybeWhen(
       data: (events) {
         for (final event in events) {
           List<DateTime> normalizedDates = [];
@@ -55,6 +55,5 @@ final sortedEventListProvider = Provider<Map<String, List<Event>>>((ref) {
           ..sort((k1, k2) => dateTitle[k1]!.compareTo(dateTitle[k2]!));
         return {for (var k in sortedKeys) k: sortedEventList[k]!};
       },
-      loading: () => {},
-      error: (error, stack) => {});
+      orElse: () => {});
 });

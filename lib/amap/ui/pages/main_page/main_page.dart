@@ -5,6 +5,7 @@ import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/admin_button.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -75,17 +76,18 @@ class AmapMainPage extends HookConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Text(
-                            balance.when(
-                                data: (s) =>
-                                    "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
-                                error: (e, s) => AMAPTextConstants.error,
-                                loading: () => AMAPTextConstants.loading),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: AsyncChild(
+                        value: balance,
+                        builder: (context, s) => Text(
+                            "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
                             style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: AMAPColorConstants.greenGradient1))),
+                                color: AMAPColorConstants.greenGradient1)),
+                        loaderColor: AMAPColorConstants.greenGradient1,
+                      ),
+                    ),
                     if (isAdmin)
                       AdminButton(
                         onTap: () {

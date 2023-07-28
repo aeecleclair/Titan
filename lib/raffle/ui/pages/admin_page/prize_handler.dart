@@ -13,11 +13,11 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/prize_card.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PrizeHandler extends HookConsumerWidget {
@@ -108,8 +108,9 @@ class PrizeHandler extends HookConsumerWidget {
                       ),
                     )),
               ),
-            prizeList.when(
-                data: (prizes) {
+            AsyncChild(
+                value: prizeList,
+                builder: (context, prizes) {
                   prizes = prizes
                       .where((element) => element.raffleId == raffle.id)
                       .toList();
@@ -201,10 +202,7 @@ class PrizeHandler extends HookConsumerWidget {
                               )
                               .toList(),
                         );
-                },
-                error: (Object error, StackTrace stackTrace) => Center(
-                    child: Text("${RaffleTextConstants.error} : $error")),
-                loading: () => const Loader()),
+                }),
             const SizedBox(width: 10)
           ]),
         ),

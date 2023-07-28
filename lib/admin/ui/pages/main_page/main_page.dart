@@ -10,9 +10,9 @@ import 'package:myecl/admin/ui/pages/main_page/card_ui.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -33,10 +33,9 @@ class AdminMainPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final loanersId = [];
-
-    loans.whenData(
-        (value) => loanersId.addAll(value.map((e) => e.groupManagerId)));
+    final List<String> loanersId = loans.maybeWhen(
+        data: (value) => value.map((e) => e.groupManagerId).toList(),
+        orElse: () => []);
 
     return AdminTemplate(
       child: Refresher(
@@ -46,8 +45,9 @@ class AdminMainPage extends HookConsumerWidget {
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: groups.when(
-              data: (g) {
+          child: AsyncChild(
+              value: groups,
+              builder: (context, g) {
                 g.sort((a, b) =>
                     a.name.toLowerCase().compareTo(b.name.toLowerCase()));
                 return Column(children: [
@@ -147,15 +147,12 @@ class AdminMainPage extends HookConsumerWidget {
                                 },
                               ))
                           .toList(),
-                      const SizedBox(
-                        height: 20,
-                      )
+                      const SizedBox(height: 20)
                     ],
                   ),
                 ]);
               },
-              error: (e, s) => Text(e.toString()),
-              loading: () => const Loader(color: ColorConstants.gradient1)),
+              loaderColor: ColorConstants.gradient1),
         ),
       ),
     );

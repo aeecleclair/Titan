@@ -10,6 +10,7 @@ import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/pages/edit_page/results.dart';
 import 'package:myecl/admin/ui/components/user_ui.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -36,14 +37,12 @@ class SearchUser extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return simpleGroupsGroups.when(
-        data: (value) {
-          final g = value[groupId];
-          if (g == null) {
+    return AsyncChild(value: simpleGroupsGroups, builder: (context, value) {
+          final simpleGroup = value[groupId];
+          if (simpleGroup == null) {
             return const Loader();
           }
-          return g.when(
-            data: (g) {
+          return AsyncChild(value: simpleGroup, builder: (context, g) {
               return Column(
                 children: [
                   TextField(
@@ -161,16 +160,8 @@ class SearchUser extends HookConsumerWidget {
                         })),
                 ],
               );
-            },
-            loading: () => const Loader(),
-            error: (e, s) => const Center(
-              child: Text(AdminTextConstants.error),
-            ),
+            }
           );
-        },
-        loading: () => const Loader(),
-        error: (e, s) => const Center(
-              child: Text(AdminTextConstants.error),
-            ));
+        });
   }
 }

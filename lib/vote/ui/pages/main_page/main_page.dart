@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/admin_button.dart';
-import 'package:myecl/tools/ui/loader.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/is_ae_member_provider.dart';
@@ -42,11 +42,8 @@ class VoteMainPage extends HookConsumerWidget {
       duration: const Duration(milliseconds: 2400),
     );
     final status = ref.watch(statusProvider);
-    final s = status.when(
-      data: (value) => value,
-      loading: () => Status.closed,
-      error: (e, s) => Status.closed,
-    );
+    final s =
+        status.maybeWhen(data: (value) => value, orElse: () => Status.closed);
     if (s == Status.open) {
       ref.watch(votedSectionProvider.notifier).getVotedSections();
     }
@@ -55,123 +52,7 @@ class VoteMainPage extends HookConsumerWidget {
 
     final isAEMember = ref.watch(isAEMemberProvider);
 
-    if (isAEMember) {
-      return VoteTemplate(
-        child: Refresher(
-          onRefresh: () async {
-            await statusNotifier.loadStatus();
-            if (s == Status.open) {
-              await ref.watch(votedSectionProvider.notifier).getVotedSections();
-            }
-            await contendersNotifier.loadContenderList();
-            final sections = await sectionsNotifier.loadSectionList();
-            sections.whenData((value) {
-              List<Contender> list = [];
-              contenders.whenData((contender) {
-                list = contender;
-              });
-              sectionContenderNotifier.loadTList(value);
-              contenderLogosNotifier.loadTList(list);
-              for (final l in value) {
-                sectionContenderNotifier.setTData(
-                    l,
-                    AsyncValue.data(list
-                        .where((element) => element.section.id == l.id)
-                        .toList()));
-              }
-              for (final l in list) {
-                logosNotifier.getLogo(l.id).then((value) =>
-                    contenderLogosNotifier.setTData(
-                        l, AsyncValue.data([value])));
-              }
-            });
-          },
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height - 100,
-            child: Padding(
-                padding: const EdgeInsets.only(left: 30.0),
-                child: Column(children: [
-                  SizedBox(
-                    height: isAdmin ? 10 : 15,
-                  ),
-                  sections.when(
-                    data: (sectionList) => Column(
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height -
-                              (s == Status.open
-                                  ? isAdmin
-                                      ? 215
-                                      : 220
-                                  : isAdmin
-                                      ? 150
-                                      : 155),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              ListSideItem(
-                                  sectionList: sectionList,
-                                  animation: animation),
-                              Expanded(
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: sectionsContenders.when(
-                                    data: (contenderList) => Column(children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SectionTitle(
-                                              sectionList: sectionList),
-                                          if (isAdmin)
-                                            Container(
-                                              margin: const EdgeInsets.only(
-                                                  right: 20),
-                                              child: AdminButton(
-                                                onTap: () {
-                                                  QR.to(VoteRouter.root +
-                                                      VoteRouter.admin);
-                                                },
-                                              ),
-                                            )
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      Expanded(
-                                          child: ListContenderCard(
-                                        animation: animation,
-                                      ))
-                                    ]),
-                                    loading: () => const Loader(),
-                                    error: (error, stack) => Center(
-                                      child: Text('Error : $error'),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        if (sectionList.isNotEmpty && s == Status.open)
-                          const VoteButton(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
-                    loading: () => const Loader(),
-                    error: (error, stack) => const Center(child: Text('Error')),
-                  ),
-                ])),
-          ),
-        ),
-      );
-    } else {
+    if (!isAEMember) {
       return VoteTemplate(
         child: SizedBox(
             height: MediaQuery.of(context).size.height - 100,
@@ -185,5 +66,112 @@ class VoteMainPage extends HookConsumerWidget {
                 ))),
       );
     }
+    return VoteTemplate(
+      child: Refresher(
+        onRefresh: () async {
+          await statusNotifier.loadStatus();
+          if (s == Status.open) {
+            await ref.watch(votedSectionProvider.notifier).getVotedSections();
+          }
+          await contendersNotifier.loadContenderList();
+          final sections = await sectionsNotifier.loadSectionList();
+          sections.whenData((value) {
+            List<Contender> list = [];
+            contenders.whenData((contender) {
+              list = contender;
+            });
+            sectionContenderNotifier.loadTList(value);
+            contenderLogosNotifier.loadTList(list);
+            for (final l in value) {
+              sectionContenderNotifier.setTData(
+                  l,
+                  AsyncValue.data(list
+                      .where((element) => element.section.id == l.id)
+                      .toList()));
+            }
+            for (final l in list) {
+              logosNotifier.getLogo(l.id).then((value) =>
+                  contenderLogosNotifier.setTData(l, AsyncValue.data([value])));
+            }
+          });
+        },
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height - 100,
+          child: Padding(
+              padding: const EdgeInsets.only(left: 30.0),
+              child: Column(children: [
+                SizedBox(
+                  height: isAdmin ? 10 : 15,
+                ),
+                AsyncChild(
+                    value: sections,
+                    builder: (context, sectionList) => Column(
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height -
+                                  (s == Status.open
+                                      ? isAdmin
+                                          ? 215
+                                          : 220
+                                      : isAdmin
+                                          ? 150
+                                          : 155),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  ListSideItem(
+                                      sectionList: sectionList,
+                                      animation: animation),
+                                  Expanded(
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: AsyncChild(
+                                          value: sectionsContenders,
+                                          builder: (context, contenderList) =>
+                                              Column(children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    SectionTitle(
+                                                        sectionList:
+                                                            sectionList),
+                                                    if (isAdmin)
+                                                      Container(
+                                                        margin: const EdgeInsets
+                                                            .only(right: 20),
+                                                        child: AdminButton(
+                                                          onTap: () {
+                                                            QR.to(VoteRouter
+                                                                    .root +
+                                                                VoteRouter
+                                                                    .admin);
+                                                          },
+                                                        ),
+                                                      )
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 15),
+                                                Expanded(
+                                                    child: ListContenderCard(
+                                                  animation: animation,
+                                                ))
+                                              ])),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            if (sectionList.isNotEmpty && s == Status.open)
+                              const VoteButton(),
+                            const SizedBox(height: 20),
+                          ],
+                        )),
+              ])),
+        ),
+      ),
+    );
   }
 }

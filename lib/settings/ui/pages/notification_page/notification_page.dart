@@ -8,7 +8,7 @@ import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/service/tools/functions.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/loader.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
 class NotificationPage extends HookConsumerWidget {
@@ -31,80 +31,31 @@ class NotificationPage extends HookConsumerWidget {
                 padding: EdgeInsets.symmetric(vertical: 30),
                 color: Color.fromARGB(255, 149, 149, 149),
               ),
-              topics.when(
-                data: (g) => Column(
-                    children: Topic.values
-                        .map((e) => Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(topicToFrenchString(e),
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700,
-                                          color: ColorConstants.background2)),
-                                  LoadSwitch(
-                                    value: g.contains(e),
-                                    future: () =>
-                                        topicsNotifier.toggleSubscription(e),
-                                    height: 30,
-                                    width: 60,
-                                    curveIn: Curves.easeInBack,
-                                    curveOut: Curves.easeOutBack,
-                                    animationDuration:
-                                        const Duration(milliseconds: 500),
-                                    switchDecoration: (value) => BoxDecoration(
-                                      color: value
-                                          ? ColorConstants.gradient1
-                                              .withOpacity(0.3)
-                                          : Colors.grey.shade200,
-                                      borderRadius: BorderRadius.circular(30),
-                                      shape: BoxShape.rectangle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: value
-                                              ? ColorConstants.gradient1
-                                                  .withOpacity(0.2)
-                                              : Colors.grey.withOpacity(0.2),
-                                          spreadRadius: 1,
-                                          blurRadius: 3,
-                                          offset: const Offset(0, 1),
-                                        ),
-                                      ],
-                                    ),
-                                    spinColor: (value) => value
-                                              ? ColorConstants.gradient1
-                                              : Colors.grey,
-                                    spinStrokeWidth: 2,
-                                    thumbDecoration: (value) => BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      shape: BoxShape.rectangle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: value
-                                              ? ColorConstants.gradient1
-                                                  .withOpacity(0.2)
-                                              : Colors.grey.shade200.withOpacity(0.2),
-                                          spreadRadius: 5,
-                                          blurRadius: 7,
-                                          offset: const Offset(0,
-                                              3), // changes position of shadow
-                                        ),
-                                      ],
-                                    ),
-                                    onChange: (v) {},
-                                    onTap: (v) {},
-                                  ),
-                                ],
-                              ),
-                            ))
-                        .toList()),
-                error: (e, s) => Text('Error $e'),
-                loading: () => const Loader(color: ColorConstants.gradient1),
-              ),
+              AsyncChild(
+                  value: topics,
+                  builder: (context, topic) => Column(
+                      children: topic
+                          .map((e) => Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(capitalize(e.name),
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                            color: ColorConstants.background2)),
+                                    Switch(
+                                        value: true,
+                                        activeColor: ColorConstants.gradient1,
+                                        onChanged: (value) {})
+                                  ],
+                                ),
+                              ))
+                          .toList()),
+                  loaderColor: ColorConstants.gradient1),
             ]),
           )),
     );

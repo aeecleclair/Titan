@@ -14,6 +14,7 @@ import 'package:myecl/raffle/ui/pages/main_page/raffle_card.dart';
 import 'package:myecl/raffle/ui/pages/main_page/ticket_card.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/ui/admin_button.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -63,69 +64,61 @@ class RaffleMainPage extends HookConsumerWidget {
               ),
             ),
             const SizedBox(height: 10),
-            userTicketList.when(
-              data: (tickets) {
-                tickets = tickets
-                    .where((t) =>
-                        t.prize != null ||
-                        (rafflesStatus.containsKey(t.typeTicket.raffleId) &&
-                            rafflesStatus[t.typeTicket.raffleId] !=
-                                RaffleStatusType.locked))
-                    .toList();
-                final ticketSum = <String, List<Ticket>>{};
-                final ticketPrice = <String, double>{};
-                for (final ticket in tickets) {
-                  if (ticket.prize == null) {
-                    final id = ticket.typeTicket.raffleId;
-                    if (ticketSum.containsKey(id)) {
-                      ticketSum[id]!.add(ticket);
-                      ticketPrice[id] = ticketPrice[id]! +
-                          ticket.typeTicket.price / ticket.typeTicket.packSize;
+            SizedBox(
+              height: 210,
+              child: AsyncChild(
+                value: userTicketList,
+                builder: (context, tickets) {
+                  tickets = tickets
+                      .where((t) =>
+                          t.prize != null ||
+                          (rafflesStatus.containsKey(t.typeTicket.raffleId) &&
+                              rafflesStatus[t.typeTicket.raffleId] !=
+                                  RaffleStatusType.locked))
+                      .toList();
+                  final ticketSum = <String, List<Ticket>>{};
+                  final ticketPrice = <String, double>{};
+                  for (final ticket in tickets) {
+                    if (ticket.prize == null) {
+                      final id = ticket.typeTicket.raffleId;
+                      if (ticketSum.containsKey(id)) {
+                        ticketSum[id]!.add(ticket);
+                        ticketPrice[id] = ticketPrice[id]! +
+                            ticket.typeTicket.price /
+                                ticket.typeTicket.packSize;
+                      } else {
+                        ticketSum[id] = [ticket];
+                        ticketPrice[id] = ticket.typeTicket.price /
+                            ticket.typeTicket.packSize;
+                      }
                     } else {
+                      final id = ticketSum.length.toString();
                       ticketSum[id] = [ticket];
                       ticketPrice[id] =
                           ticket.typeTicket.price / ticket.typeTicket.packSize;
                     }
-                  } else {
-                    final id = ticketSum.length.toString();
-                    ticketSum[id] = [ticket];
-                    ticketPrice[id] =
-                        ticket.typeTicket.price / ticket.typeTicket.packSize;
                   }
-                }
-                return ticketSum.isEmpty
-                    ? const Center(
-                        child: Text(RaffleTextConstants.noTicket),
-                      )
-                    : SizedBox(
-                        height: 210,
-                        child: ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: ticketSum.length + 2,
-                            itemBuilder: (context, index) {
-                              if (index == 0 || index == ticketSum.length + 1) {
-                                return const SizedBox(
-                                  width: 15,
-                                );
-                              }
-                              final key = ticketSum.keys.toList()[index - 1];
-                              return Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  child: TicketWidget(
-                                    ticket: ticketSum[key]!,
-                                    price: ticketPrice[key]!,
-                                  ));
-                            }));
-              },
-              loading: () => const SizedBox(height: 120, child: Loader()),
-              error: (error, stack) => SizedBox(
-                  height: 120,
-                  child: Center(
-                    child: Text('Error $error',
-                        style: const TextStyle(fontSize: 20)),
-                  )),
+                  return ticketSum.isEmpty
+                      ? const Center(child: Text(RaffleTextConstants.noTicket))
+                      : ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: ticketSum.length + 2,
+                          itemBuilder: (context, index) {
+                            if (index == 0 || index == ticketSum.length + 1) {
+                              return const SizedBox(width: 15);
+                            }
+                            final key = ticketSum.keys.toList()[index - 1];
+                            return Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: TicketWidget(
+                                  ticket: ticketSum[key]!,
+                                  price: ticketPrice[key]!,
+                                ));
+                          });
+                },
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),

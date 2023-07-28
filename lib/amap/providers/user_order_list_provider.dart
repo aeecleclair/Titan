@@ -28,16 +28,12 @@ class UserOrderListNotifier extends ListNotifier<Order> {
   }
 
   Future<bool> addOrder(Order order) async {
-    return await add(
-        (o) async => _orderListRepository.createOrder(o),
-        order);
+    return await add((o) async => _orderListRepository.createOrder(o), order);
   }
 
-  Future<bool> updateOrder(
-      Order order) async {
+  Future<bool> updateOrder(Order order) async {
     return await update(
-        (o) async =>
-            _orderListRepository.updateOrder(order),
+        (o) async => _orderListRepository.updateOrder(order),
         (orders, order) =>
             orders..[orders.indexWhere((o) => o.id == order.id)] = order,
         order);
@@ -144,11 +140,7 @@ class UserOrderListNotifier extends ListNotifier<Order> {
   }
 
   Future<AsyncValue<List<Order>>> copy() async {
-    return state.when(
-      data: (orders) async => AsyncValue.data(orders.sublist(0)),
-      error: (error, stackTrace) => AsyncValue.error(error, stackTrace),
-      loading: () => const AsyncValue.loading(),
-    );
+    return state.whenData((orders) => orders.sublist(0));
   }
 }
 

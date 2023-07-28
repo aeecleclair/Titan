@@ -14,14 +14,13 @@ class RoomIdNotifier extends StateNotifier<String> {
 final roomIdProvider = StateNotifierProvider<RoomIdNotifier, String>((ref) {
   final event = ref.watch(eventProvider);
   final rooms = ref.watch(roomListProvider);
-  final id = rooms.when(
+  final id = rooms.maybeWhen(
       data: (data) => data
           .firstWhere(
             (element) => element.name == event.location,
             orElse: () => Room.empty(),
           )
           .id,
-      loading: () => "",
-      error: (e, s) => "");
+      orElse: () => "");
   return RoomIdNotifier(id);
 });

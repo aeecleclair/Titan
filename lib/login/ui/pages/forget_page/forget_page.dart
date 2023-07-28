@@ -69,9 +69,7 @@ class ForgetPassword extends HookConsumerWidget {
                 flex: 5,
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: AutofillGroup(
@@ -90,15 +88,12 @@ class ForgetPassword extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     SignInUpBar(
                       label: LoginTextConstants.recover,
-                      isLoading: ref.watch(loadingProvider).when(
-                          data: (data) => data,
-                          error: (e, s) => false,
-                          loading: () => false),
+                      isLoading: ref
+                          .watch(loadingProvider)
+                          .maybeWhen(data: (data) => data, orElse: () => false),
                       onPressed: () async {
                         final value =
                             await signUpNotifier.recoverUser(email.text);
@@ -109,8 +104,8 @@ class ForgetPassword extends HookConsumerWidget {
                           QR.to(LoginRouter.forgotPassword +
                               LoginRouter.mailReceived);
                         } else {
-                          displayToastWithContext(
-                              TypeMsg.error, LoginTextConstants.mailSendingError);
+                          displayToastWithContext(TypeMsg.error,
+                              LoginTextConstants.mailSendingError);
                         }
                       },
                     ),
@@ -122,7 +117,8 @@ class ForgetPassword extends HookConsumerWidget {
                             height: 40,
                             alignment: Alignment.centerLeft,
                             child: InkWell(
-                              splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                              splashColor:
+                                  const Color.fromRGBO(255, 255, 255, 1),
                               onTap: () {
                                 QR.to(LoginRouter.root);
                               },
@@ -140,7 +136,8 @@ class ForgetPassword extends HookConsumerWidget {
                             height: 40,
                             alignment: Alignment.centerLeft,
                             child: InkWell(
-                              splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                              splashColor:
+                                  const Color.fromRGBO(255, 255, 255, 1),
                               onTap: () {
                                 QR.to(LoginRouter.forgotPassword +
                                     LoginRouter.mailReceived);

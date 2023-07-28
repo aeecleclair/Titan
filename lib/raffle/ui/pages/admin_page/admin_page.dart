@@ -15,8 +15,8 @@ import 'package:myecl/raffle/ui/pages/admin_page/prize_handler.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/winning_ticket_handler.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/dialog.dart';
-import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
@@ -114,8 +114,9 @@ class AdminPage extends HookConsumerWidget {
                       child: Row(
                         children: [
                           const Spacer(),
-                          raffleStats.when(
-                              data: (stats) => Column(
+                          AsyncChild(
+                              value: raffleStats,
+                              builder: (context, stats) => Column(
                                     children: [
                                       Text(
                                         stats.ticketsSold.toString(),
@@ -134,13 +135,11 @@ class AdminPage extends HookConsumerWidget {
                                       ),
                                     ],
                                   ),
-                              error: (e, s) =>
-                                  const Text(RaffleTextConstants.error),
-                              loading: () => const Loader(
-                                  color: RaffleColorConstants.textDark)),
+                              loaderColor: RaffleColorConstants.textDark),
                           const Spacer(),
-                          raffleStats.when(
-                              data: (stats) => Column(
+                          AsyncChild(
+                              value: raffleStats,
+                              builder: (context, stats) => Column(
                                     children: [
                                       Text(
                                         "${stats.amountRaised.toStringAsFixed(2)} €",
@@ -159,10 +158,7 @@ class AdminPage extends HookConsumerWidget {
                                       ),
                                     ],
                                   ),
-                              error: (e, s) =>
-                                  const Text(RaffleTextConstants.error),
-                              loading: () => const Loader(
-                                  color: RaffleColorConstants.textDark)),
+                              loaderColor: RaffleColorConstants.textDark),
                           const Spacer(),
                         ],
                       ),

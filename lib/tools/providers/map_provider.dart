@@ -28,7 +28,7 @@ class MapNotifier<T, E>
     state.when(data: (d) async {
       try {
         List<E> currentLoans =
-            d[t]!.when(data: (d) => d, error: (e, s) => [], loading: () => []);
+            d[t]!.maybeWhen(data: (d) => d, orElse: () => []);
         d[t] = AsyncValue.data(currentLoans + [e]);
         state = AsyncValue.data(d);
         return true;

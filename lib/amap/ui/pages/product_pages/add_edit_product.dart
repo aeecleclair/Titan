@@ -186,10 +186,9 @@ class AddEditProduct extends HookConsumerWidget {
                                 } else {
                                   ref
                                       .watch(selectedListProvider.notifier)
-                                      .rebuild(products.when(
+                                      .rebuild(products.maybeWhen(
                                           data: (data) => data,
-                                          error: (e, s) => [],
-                                          loading: () => []));
+                                          orElse: () => []));
                                   displayToastWithContext(TypeMsg.msg,
                                       AMAPTextConstants.addedProduct);
                                 }

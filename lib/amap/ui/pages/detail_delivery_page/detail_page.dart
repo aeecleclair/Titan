@@ -14,6 +14,7 @@ import 'package:myecl/amap/ui/pages/detail_delivery_page/order_detail_ui.dart';
 import 'package:myecl/amap/ui/pages/detail_delivery_page/product_detail_ui.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
@@ -58,11 +59,11 @@ class DetailDeliveryPage extends HookConsumerWidget {
             ...sortedByCategoryDeliveryProducts
                 .map((key, value) {
                   Map<String, int> productsQuantity = {};
-                  deliveryOrders.when(
+                  deliveryOrders.maybeWhen(
                       data: (orderMap) {
                         final deliveryOrderList = orderMap[delivery.id];
                         if (deliveryOrderList != null) {
-                          deliveryOrderList.item1.when(
+                          deliveryOrderList.item1.maybeWhen(
                               data: (listOrders) {
                                 for (Order o in listOrders) {
                                   for (Product p in o.products) {
@@ -75,12 +76,10 @@ class DetailDeliveryPage extends HookConsumerWidget {
                                   }
                                 }
                               },
-                              error: (e, s) {},
-                              loading: () {});
+                              orElse: () {});
                         }
                       },
-                      error: (Object error, StackTrace stackTrace) {},
-                      loading: () {});
+                      orElse: () {});
                   return MapEntry(
                     key,
                     Column(
@@ -121,50 +120,44 @@ class DetailDeliveryPage extends HookConsumerWidget {
             const SizedBox(height: 30),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 10),
-              child: deliveryOrders.when(
-                data: (data) {
-                  final orders = data[delivery.id];
-                  if (orders == null) {
-                    return const Loader(
-                        color: AMAPColorConstants.greenGradient2);
-                  }
-                  return orders.item1.when(
-                    data: (data) {
-                      if (data.isEmpty) {
-                        return Container(
-                            margin: const EdgeInsets.only(bottom: 50),
-                            child: const Center(
-                                child: Text(AMAPTextConstants.noOrder)));
-                      } else {
-                        return cash.when(
-                          data: (cash) {
-                            return Wrap(
-                              children: data.map((e) {
-                                final userCash = cash.firstWhere(
-                                    (element) => element.user.id == e.user.id);
-                                return DetailOrderUI(
-                                  order: e,
-                                  userCash: userCash,
-                                  deliveryId: delivery.id,
+              child: AsyncChild(
+                  value: deliveryOrders,
+                  builder: (context, data) {
+                    final orders = data[delivery.id];
+                    if (orders == null) {
+                      return const Loader(
+                          color: AMAPColorConstants.greenGradient2);
+                    }
+                    return AsyncChild(
+                        value: orders.item1,
+                        builder: (context, data) {
+                          if (data.isEmpty) {
+                            return Container(
+                                margin: const EdgeInsets.only(bottom: 50),
+                                child: const Center(
+                                    child: Text(AMAPTextConstants.noOrder)));
+                          }
+                          return AsyncChild(
+                              value: cash,
+                              builder: (context, cash) {
+                                return Wrap(
+                                  children: data.map((e) {
+                                    final userCash = cash.firstWhere(
+                                        (element) =>
+                                            element.user.id == e.user.id);
+                                    return DetailOrderUI(
+                                      order: e,
+                                      userCash: userCash,
+                                      deliveryId: delivery.id,
+                                    );
+                                  }).toList(),
                                 );
-                              }).toList(),
-                            );
-                          },
-                          loading: () => const Loader(
-                              color: AMAPColorConstants.greenGradient2),
-                          error: (error, stack) => Text(error.toString()),
-                        );
-                      }
-                    },
-                    loading: () =>
-                        const Loader(color: AMAPColorConstants.greenGradient2),
-                    error: (error, stack) => Text(error.toString()),
-                  );
-                },
-                loading: () =>
-                    const Loader(color: AMAPColorConstants.greenGradient2),
-                error: (error, stack) => Text(error.toString()),
-              ),
+                              },
+                              loaderColor: AMAPColorConstants.greenGradient2);
+                        },
+                        loaderColor: AMAPColorConstants.greenGradient2);
+                  },
+                  loaderColor: AMAPColorConstants.greenGradient2),
             ),
           ],
         ),
