@@ -12,8 +12,8 @@ import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/check_item_card.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/loader.dart';
 
 class ItemBar extends HookConsumerWidget {
   final bool isEdit;
@@ -29,25 +29,48 @@ class ItemBar extends HookConsumerWidget {
     final start = ref.watch(startProvider);
     final itemListForSelected = ref.watch(itemListProvider);
     final cautionNotifier = ref.watch(cautionProvider.notifier);
-    return itemListForSelected.when(
-        data: (data) {
-          final sortedAvailableData = data
-              .where(
-                  (element) => element.loanedQuantity < element.totalQuantity)
-              .toList()
-            ..sort((a, b) => a.name.compareTo(b.name));
-          final sortedUnavailableData = data
-              .where(
-                  (element) => element.loanedQuantity >= element.totalQuantity)
-              .toList()
-            ..sort((a, b) => a.name.compareTo(b.name));
-          data = sortedAvailableData + sortedUnavailableData;
-          return loanersItems.when(
-              data: (items) {
-                if (items[loaner] != null) {
-                  return items[loaner]!.when(
-                      data: (itemList) {
-                        if (itemList.isNotEmpty) {
+    return SizedBox(
+        height: 160,
+        child: AsyncChild(
+            value: itemListForSelected,
+            builder: (context, data) {
+              final sortedAvailableData = data
+                  .where((element) =>
+                      element.loanedQuantity < element.totalQuantity)
+                  .toList()
+                ..sort((a, b) => a.name.compareTo(b.name));
+              final sortedUnavailableData = data
+                  .where((element) =>
+                      element.loanedQuantity >= element.totalQuantity)
+                  .toList()
+                ..sort((a, b) => a.name.compareTo(b.name));
+              data = sortedAvailableData + sortedUnavailableData;
+              return AsyncChild(
+                  value: loanersItems,
+                  builder: (context, items) {
+                    if (items[loaner] == null) {
+                      return const SizedBox(
+                        height: 160,
+                        child: Center(
+                            child: Text(LoanTextConstants.noItems,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500))),
+                      );
+                    }
+                    return AsyncChild(
+                        value: items[loaner]!,
+                        builder: (context, itemList) {
+                          if (itemList.isEmpty) {
+                            return const SizedBox(
+                              height: 198,
+                              child: Center(
+                                  child: Text(LoanTextConstants.noItems,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500))),
+                            );
+                          }
                           final sortedAvailable = itemList
                               .where((element) =>
                                   element.loanedQuantity <
@@ -208,55 +231,11 @@ class ItemBar extends HookConsumerWidget {
                                 }),
                                 const SizedBox(width: 15),
                               ]));
-                        } else {
-                          return const SizedBox(
-                            height: 198,
-                            child: Center(
-                                child: Text(LoanTextConstants.noItems,
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500))),
-                          );
-                        }
-                      },
-                      error: (error, s) => SizedBox(
-                            height: 160,
-                            child: Text(error.toString(),
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500)),
-                          ),
-                      loading: () => const SizedBox(
-                          height: 160,
-                          child: Loader(color: ColorConstants.background2)));
-                } else {
-                  return const SizedBox(
-                    height: 160,
-                    child: Center(
-                        child: Text(LoanTextConstants.noItems,
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500))),
-                  );
-                }
-              },
-              error: (Object error, StackTrace stackTrace) => const SizedBox(
-                    height: 160,
-                    child: Center(
-                        child: Text(LoanTextConstants.noItems,
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500))),
-                  ),
-              loading: () => const SizedBox(
-                  height: 160,
-                  child: Loader(color: ColorConstants.background2)));
-        },
-        error: (Object error, StackTrace stackTrace) => const SizedBox(
-              height: 160,
-              child: Center(
-                  child: Text(LoanTextConstants.noItems,
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w500))),
-            ),
-        loading: () => const SizedBox(
-            height: 160, child: Loader(color: ColorConstants.background2)));
+                        },
+                        loaderColor: ColorConstants.background2);
+                  },
+                  loaderColor: ColorConstants.background2);
+            },
+            loaderColor: ColorConstants.background2));
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -52,54 +53,54 @@ class SectionBar extends HookConsumerWidget {
               ),
             ),
           if (section.id != Section.empty().id)
-            ...sectionContender.when(
-                data: (sections) {
-                  return sections
-                      .map((key, value) => MapEntry(
-                          SectionChip(
-                              label: key.name,
-                              selected: section.id == key.id,
-                              isAdmin: status == Status.waiting,
-                              onTap: () async {
-                                tokenExpireWrapper(ref, () async {
-                                  sectionIdNotifier.setId(key.id);
-                                });
-                              },
-                              onDelete: () async {
-                                tokenExpireWrapper(ref, () async {
-                                  await showDialog(
-                                      context: context,
-                                      builder: (context) => CustomDialogBox(
-                                            title:
-                                                VoteTextConstants.deleteSection,
-                                            descriptions: VoteTextConstants
-                                                .deleteSectionDescription,
-                                            onYes: () async {
-                                              final result =
-                                                  await sectionsNotifier
-                                                      .deleteSection(key);
-                                              if (result) {
-                                                sectionContenderListNotifier
-                                                    .deleteT(key);
-                                                displayVoteToastWithContext(
-                                                    TypeMsg.msg,
-                                                    VoteTextConstants
-                                                        .deletedSection);
-                                              } else {
-                                                displayVoteToastWithContext(
-                                                    TypeMsg.error,
-                                                    VoteTextConstants
-                                                        .deletingError);
-                                              }
-                                            },
-                                          ));
-                                });
-                              }),
-                          value))
-                      .keys;
-                },
-                loading: () => const [SizedBox(width: 20)],
-                error: (error, stack) => const [SizedBox(width: 20)]),
+            AsyncChild(
+                value: sectionContender,
+                builder: (context, sections) => Row(
+                      children: sections
+                          .map((key, value) => MapEntry(
+                              SectionChip(
+                                  label: key.name,
+                                  selected: section.id == key.id,
+                                  isAdmin: status == Status.waiting,
+                                  onTap: () async {
+                                    tokenExpireWrapper(ref, () async {
+                                      sectionIdNotifier.setId(key.id);
+                                    });
+                                  },
+                                  onDelete: () async {
+                                    tokenExpireWrapper(ref, () async {
+                                      await showDialog(
+                                          context: context,
+                                          builder: (context) => CustomDialogBox(
+                                                title: VoteTextConstants
+                                                    .deleteSection,
+                                                descriptions: VoteTextConstants
+                                                    .deleteSectionDescription,
+                                                onYes: () async {
+                                                  final result =
+                                                      await sectionsNotifier
+                                                          .deleteSection(key);
+                                                  if (result) {
+                                                    sectionContenderListNotifier
+                                                        .deleteT(key);
+                                                    displayVoteToastWithContext(
+                                                        TypeMsg.msg,
+                                                        VoteTextConstants
+                                                            .deletedSection);
+                                                  } else {
+                                                    displayVoteToastWithContext(
+                                                        TypeMsg.error,
+                                                        VoteTextConstants
+                                                            .deletingError);
+                                                  }
+                                                },
+                                              ));
+                                    });
+                                  }),
+                              value))
+                          .keys
+                          .toList(),
+                    )),
           const SizedBox(width: 15),
         ],
       ),

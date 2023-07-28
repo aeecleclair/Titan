@@ -7,23 +7,30 @@ class AsyncChild<T> extends StatelessWidget {
   final AsyncValue<T> value;
   final Widget Function(BuildContext context, T value) builder;
   final Widget Function(Object? error, StackTrace? stack)? errorBuilder;
+  final Widget Function(BuildContext context)? loadingBuilder;
+  final Widget Function(BuildContext context, Widget child)? orElseBuilder;
   final Color? loaderColor;
   const AsyncChild(
       {super.key,
       required this.value,
       required this.builder,
       this.errorBuilder,
-      this.loaderColor});
+      this.loaderColor,
+      this.orElseBuilder,
+      this.loadingBuilder});
 
   @override
   Widget build(BuildContext context) {
+    final nonNullOrElseBuilder = orElseBuilder ?? (context, child) => child;
+    final nonNullLoadingBuilder =
+        loadingBuilder ?? (context) => Loader(color: loaderColor);
+    final nonNullErrorBuilder = errorBuilder ??
+        (error, stack) => Center(child: Text("${TextConstants.error}:$error"));
     return value.when(
         data: (value) => builder(context, value),
-        loading: () => Loader(color: loaderColor),
-        error: (error, stack) => errorBuilder != null
-            ? errorBuilder!(error, stack)
-            : Center(
-                child: Text("${TextConstants.error}:$error"),
-              ));
+        loading: () =>
+            nonNullOrElseBuilder(context, nonNullLoadingBuilder(context)),
+        error: (error, stack) =>
+            nonNullOrElseBuilder(context, nonNullErrorBuilder(error, stack)));
   }
 }
