@@ -9,6 +9,7 @@ class ColorConstants {
 
 class TextConstants {
   static const String admin = 'Admin';
+  static const String error = "Une erreur est survenue";
   static const String noValue = "Veuillez entrer une valeur";
   static const String invalidNumber = "Veuillez entrer un nombre";
   static const String noDateError = "Veuillez entrer une date";

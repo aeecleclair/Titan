@@ -15,8 +15,8 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
-import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -71,8 +71,9 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                           const AlignLeftText(AMAPTextConstants.commandProducts,
                               fontSize: 25),
                           const SizedBox(height: 35),
-                          productList.when(
-                              data: (products) => Column(
+                          AsyncChild(
+                              value: productList,
+                              builder: (context, products) => Column(
                                     children: [
                                       if (products.isNotEmpty)
                                         Column(
@@ -210,10 +211,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                       ),
                                     ],
                                   ),
-                              error: (Object error, StackTrace stackTrace) =>
-                                  const Text('error'),
-                              loading: () => const Loader(
-                                  color: AMAPColorConstants.greenGradient2)),
+                              loaderColor: AMAPColorConstants.greenGradient2),
                           const SizedBox(height: 40),
                         ]))))),
       ),

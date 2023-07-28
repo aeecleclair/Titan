@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/loader.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/vote/providers/contender_logo_provider.dart';
 import 'package:myecl/vote/providers/contender_logos_provider.dart';
 import 'package:myecl/vote/providers/contender_provider.dart';
@@ -52,70 +52,61 @@ class DetailPage extends HookConsumerWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              contenderLogos.when(
-                                  data: (data) {
-                                    if (data[contender] != null) {
-                                      return data[contender]!.when(
-                                          data: (data) {
-                                            if (data.isNotEmpty) {
-                                              return Container(
-                                                height: 140,
-                                                width: 140,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.grey.shade50,
-                                                  image: DecorationImage(
-                                                    image: data.first.image,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.grey
-                                                          .withOpacity(0.2),
-                                                      blurRadius: 10,
-                                                      spreadRadius: 5,
-                                                      offset:
-                                                          const Offset(0, 5),
-                                                    ),
-                                                  ],
+                              const SizedBox(height: 30),
+                              AsyncChild(
+                                value: contenderLogos,
+                                builder: (context, data) {
+                                  if (data[contender] == null) {
+                                    return const SizedBox.shrink();
+                                  }
+                                  return SizedBox(
+                                    height: 140,
+                                    width: 140,
+                                    child: AsyncChild(
+                                        value: data[contender]!,
+                                        builder: (context, data) {
+                                          if (data.isEmpty) {
+                                            logoNotifier
+                                                .getLogo(contender.id)
+                                                .then((value) {
+                                              contenderLogosNotifier.setTData(
+                                                  contender,
+                                                  AsyncData([value]));
+                                            });
+                                            return const HeroIcon(
+                                              HeroIcons.userCircle,
+                                              size: 40,
+                                            );
+                                          }
+                                          return Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.grey.shade50,
+                                              image: DecorationImage(
+                                                image: data.first.image,
+                                                fit: BoxFit.cover,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey
+                                                      .withOpacity(0.2),
+                                                  blurRadius: 10,
+                                                  spreadRadius: 5,
+                                                  offset: const Offset(0, 5),
                                                 ),
-                                              );
-                                            } else {
-                                              logoNotifier
-                                                  .getLogo(contender.id)
-                                                  .then((value) {
-                                                contenderLogosNotifier.setTData(
-                                                    contender,
-                                                    AsyncData([value]));
-                                              });
-                                              return const HeroIcon(
-                                                HeroIcons.userCircle,
-                                                size: 40,
-                                              );
-                                            }
-                                          },
-                                          loading: () => const SizedBox(
-                                              height: 50,
-                                              width: 50,
-                                              child: Loader()),
-                                          error: (error, stack) =>
-                                              const SizedBox(
-                                                  height: 50,
-                                                  width: 50,
-                                                  child: Center(
-                                                    child: HeroIcon(HeroIcons
-                                                        .exclamationCircle),
-                                                  )));
-                                    } else {
-                                      return const SizedBox.shrink();
-                                    }
-                                  },
-                                  loading: () => const Loader(),
-                                  error: (error, stack) =>
-                                      Text('Error $error')),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                        errorBuilder: (error, stack) =>
+                                            const Center(
+                                              child: HeroIcon(
+                                                  HeroIcons.exclamationCircle,
+                                                  size: 40),
+                                            )),
+                                  );
+                                },
+                              ),
                               const SizedBox(height: 20),
                               Text(
                                 contender.section.name,

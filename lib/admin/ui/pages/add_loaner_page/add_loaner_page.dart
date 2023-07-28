@@ -10,7 +10,7 @@ import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/loader.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddLoanerPage extends HookConsumerWidget {
@@ -39,8 +39,9 @@ class AddLoanerPage extends HookConsumerWidget {
                     child: Column(children: [
                   const AlignLeftText(AdminTextConstants.addLoaningAssociation),
                   const SizedBox(height: 30),
-                  associations.when(
-                      data: (associationList) {
+                  AsyncChild(
+                      value: associations,
+                      builder: (context, associationList) {
                         final canAdd = associationList
                             .where((x) => !loanersId.contains(x.id))
                             .toList();
@@ -96,10 +97,7 @@ class AddLoanerPage extends HookConsumerWidget {
                                     .toList())
                             : const Center(
                                 child: Text(AdminTextConstants.noMoreLoaner));
-                      },
-                      error: (Object error, StackTrace? stackTrace) =>
-                          Text(error.toString()),
-                      loading: () => const Loader())
+                      })
                 ]))
               ],
             ),

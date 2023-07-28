@@ -4,11 +4,10 @@ import 'package:myecl/amap/providers/delivery_list_provider.dart';
 
 final availableDeliveriesProvider = Provider((ref) {
   final deliveryList = ref.watch(deliveryListProvider);
-  return deliveryList.when(
+  return deliveryList.maybeWhen(
     data: (deliveryList) => deliveryList
         .where((delivery) => delivery.status == DeliveryStatus.available)
         .toList(),
-    error: (error, stackTrace) => [],
-    loading: () => [],
+    orElse: () => [],
   );
 });

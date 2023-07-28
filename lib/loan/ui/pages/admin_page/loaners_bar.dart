@@ -4,9 +4,9 @@ import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
-import 'package:myecl/tools/ui/loader.dart';
 
 class LoanersBar extends HookConsumerWidget {
   final Function(Loaner) onTap;
@@ -16,35 +16,34 @@ class LoanersBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final adminLoanList = ref.watch(adminLoanListProvider);
     final loaner = ref.watch(loanerProvider);
-    return adminLoanList.when(
-        data: (loans) => HorizontalListView(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(width: 15),
-                  ...loans.map((key, value) {
-                    final selected = loaner.id == key.id;
-                    return MapEntry(
-                        ItemChip(
-                          selected: selected,
-                          onTap: () async {
-                            onTap(key);
-                          },
-                          child: Text(
-                            capitalize(key.name),
-                            style: TextStyle(
-                                color: selected ? Colors.white : Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        value);
-                  }).keys,
-                  const SizedBox(width: 15),
-                ],
-              ),
-            ),
-        error: (Object error, StackTrace stackTrace) =>
-            Center(child: Text('Error: $error')),
-        loading: () => const Loader());
+    return AsyncChild(
+      value: adminLoanList,
+      builder: (context, loans) => HorizontalListView(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(width: 15),
+            ...loans.map((key, value) {
+              final selected = loaner.id == key.id;
+              return MapEntry(
+                  ItemChip(
+                    selected: selected,
+                    onTap: () async {
+                      onTap(key);
+                    },
+                    child: Text(
+                      capitalize(key.name),
+                      style: TextStyle(
+                          color: selected ? Colors.white : Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  value);
+            }).keys,
+            const SizedBox(width: 15),
+          ],
+        ),
+      ),
+    );
   }
 }

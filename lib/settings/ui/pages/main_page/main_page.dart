@@ -9,11 +9,11 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
-import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -43,8 +43,9 @@ class SettingsMainPage extends HookConsumerWidget {
           },
           child: Column(children: [
             const SizedBox(height: 25),
-            profilePicture.when(
-                data: (profile) {
+            AsyncChild(
+                value: profilePicture,
+                builder: (context, profile) {
                   return Center(
                     child: Stack(
                       clipBehavior: Clip.none,
@@ -121,8 +122,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     ),
                   );
                 },
-                loading: () => const Loader(),
-                error: (e, s) =>
+                errorBuilder: (e, s) =>
                     const HeroIcon(HeroIcons.userCircle, size: 140)),
             const SizedBox(height: 100),
             HorizontalListView(

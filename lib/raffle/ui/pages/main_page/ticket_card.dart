@@ -16,11 +16,10 @@ class TicketWidget extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isWinningTicket = ticket[0].prize != null;
     final raffleList = ref.watch(raffleListProvider);
-    final raffle = raffleList.when(
+    final raffle = raffleList.maybeWhen(
         data: (data) => data.firstWhere(
             (element) => element.id == ticket[0].typeTicket.raffleId),
-        loading: () => Raffle.empty(),
-        error: (_, __) => Raffle.empty());
+        orElse: () => Raffle.empty());
     return Stack(children: [
       TicketCardBackground(
           isWinningTicket: isWinningTicket,

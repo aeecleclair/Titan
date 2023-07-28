@@ -17,6 +17,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
@@ -317,33 +318,31 @@ class AddEditEventPage extends HookConsumerWidget {
                   isRoom
                       ? SizedBox(
                           height: 59,
-                          child: rooms.when(
-                              data: (rooms) => ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: rooms.length,
-                                  itemBuilder: (context, index) {
-                                    final selected = rooms[index].id == roomId;
-                                    return ItemChip(
-                                      onTap: () {
-                                        location.text = rooms[index].name;
-                                        roomIdNotifier
-                                            .setRoomId(rooms[index].id);
-                                      },
-                                      selected: selected,
-                                      child: Text(rooms[index].name,
-                                          style: TextStyle(
-                                            color: selected
-                                                ? Colors.white
-                                                : Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                    );
-                                  }),
-                              error: (e, s) => Text(e.toString()),
-                              loading: () => const SizedBox()),
-                        )
+                          child: AsyncChild(
+                            value: rooms,
+                            builder: (context, rooms) => ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: rooms.length,
+                                itemBuilder: (context, index) {
+                                  final selected = rooms[index].id == roomId;
+                                  return ItemChip(
+                                    onTap: () {
+                                      location.text = rooms[index].name;
+                                      roomIdNotifier.setRoomId(rooms[index].id);
+                                    },
+                                    selected: selected,
+                                    child: Text(rooms[index].name,
+                                        style: TextStyle(
+                                          color: selected
+                                              ? Colors.white
+                                              : Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  );
+                                }),
+                          ))
                       : Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: TextEntry(

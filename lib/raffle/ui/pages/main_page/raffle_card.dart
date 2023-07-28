@@ -13,6 +13,7 @@ import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleWidget extends HookConsumerWidget {
@@ -76,90 +77,12 @@ class RaffleWidget extends HookConsumerWidget {
                         ),
                       ]),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                raffleStats.when(
-                  data: (statsList) {
+                const SizedBox(height: 20),
+                AsyncChild(
+                  value: raffleStats,
+                  builder: (context, statsList) {
                     final stats = statsList[raffle.id];
-                    if (stats != null) {
-                      return stats.when(
-                        data: (stats) {
-                          if (stats.isEmpty) {
-                            Future.delayed(const Duration(milliseconds: 1), () {
-                              rafflesStatsNotifier.setTData(
-                                  raffle.id, const AsyncLoading());
-                            });
-                            tokenExpireWrapper(ref, () async {
-                              final stats = await singleRaffleStats
-                                  .loadRaffleStats(customRaffleId: raffle.id);
-                              final statsList = stats.whenData<List<RaffleStats>>(
-                                  (value) => [value]);
-                              rafflesStatsNotifier.setTData(raffle.id, statsList);
-                            });
-                            return const SizedBox();
-                          }
-                          return Row(
-                            children: [
-                              const Spacer(),
-                              Column(
-                                children: [
-                                  Text(
-                                    stats[0].ticketsSold.toString(),
-                                    style: const TextStyle(
-                                        color: RaffleColorConstants.textDark,
-                                        fontSize: 30),
-                                  ),
-                                  const Text(
-                                    RaffleTextConstants.tickets,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: RaffleColorConstants.textDark,
-                                        fontSize: 20),
-                                  ),
-                                ],
-                              ),
-                              const Spacer(
-                                flex: 2,
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    "${stats[0].amountRaised.toStringAsFixed(2)} €",
-                                    style: const TextStyle(
-                                        color: RaffleColorConstants.textDark,
-                                        fontSize: 30),
-                                  ),
-                                  const Text(
-                                    RaffleTextConstants.gathered,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: RaffleColorConstants.textDark,
-                                        fontSize: 20),
-                                  ),
-                                ],
-                              ),
-                              const Spacer(),
-                            ],
-                          );
-                        },
-                        loading: () {
-                          Future.delayed(const Duration(milliseconds: 1), () {
-                            rafflesStatsNotifier.setTData(
-                                raffle.id, const AsyncLoading());
-                          });
-                          tokenExpireWrapper(ref, () async {
-                            final stats = await singleRaffleStats.loadRaffleStats(
-                                customRaffleId: raffle.id);
-                            final statsList = stats
-                                .whenData<List<RaffleStats>>((value) => [value]);
-                            rafflesStatsNotifier.setTData(raffle.id, statsList);
-                          });
-                          return const SizedBox();
-                        },
-                        error: (error, stack) => const SizedBox(),
-                      );
-                    } else {
+                    if (stats == null) {
                       Future.delayed(const Duration(milliseconds: 1), () {
                         rafflesStatsNotifier.setTData(
                             raffle.id, const AsyncLoading());
@@ -167,15 +90,87 @@ class RaffleWidget extends HookConsumerWidget {
                       tokenExpireWrapper(ref, () async {
                         final stats = await singleRaffleStats.loadRaffleStats(
                             customRaffleId: raffle.id);
-                        final statsList =
-                            stats.whenData<List<RaffleStats>>((value) => [value]);
+                        final statsList = stats
+                            .whenData<List<RaffleStats>>((value) => [value]);
                         rafflesStatsNotifier.setTData(raffle.id, statsList);
                       });
                       return const SizedBox();
                     }
+                    return stats.when(
+                      data: (stats) {
+                        if (stats.isEmpty) {
+                          Future.delayed(const Duration(milliseconds: 1), () {
+                            rafflesStatsNotifier.setTData(
+                                raffle.id, const AsyncLoading());
+                          });
+                          tokenExpireWrapper(ref, () async {
+                            final stats = await singleRaffleStats
+                                .loadRaffleStats(customRaffleId: raffle.id);
+                            final statsList = stats.whenData<List<RaffleStats>>(
+                                (value) => [value]);
+                            rafflesStatsNotifier.setTData(raffle.id, statsList);
+                          });
+                          return const SizedBox();
+                        }
+                        return Row(
+                          children: [
+                            const Spacer(),
+                            Column(
+                              children: [
+                                Text(
+                                  stats[0].ticketsSold.toString(),
+                                  style: const TextStyle(
+                                      color: RaffleColorConstants.textDark,
+                                      fontSize: 30),
+                                ),
+                                const Text(
+                                  RaffleTextConstants.tickets,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: RaffleColorConstants.textDark,
+                                      fontSize: 20),
+                                ),
+                              ],
+                            ),
+                            const Spacer(flex: 2),
+                            Column(
+                              children: [
+                                Text(
+                                  "${stats[0].amountRaised.toStringAsFixed(2)} €",
+                                  style: const TextStyle(
+                                      color: RaffleColorConstants.textDark,
+                                      fontSize: 30),
+                                ),
+                                const Text(
+                                  RaffleTextConstants.gathered,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: RaffleColorConstants.textDark,
+                                      fontSize: 20),
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                          ],
+                        );
+                      },
+                      loading: () {
+                        Future.delayed(const Duration(milliseconds: 1), () {
+                          rafflesStatsNotifier.setTData(
+                              raffle.id, const AsyncLoading());
+                        });
+                        tokenExpireWrapper(ref, () async {
+                          final stats = await singleRaffleStats.loadRaffleStats(
+                              customRaffleId: raffle.id);
+                          final statsList = stats
+                              .whenData<List<RaffleStats>>((value) => [value]);
+                          rafflesStatsNotifier.setTData(raffle.id, statsList);
+                        });
+                        return const SizedBox();
+                      },
+                      error: (error, stack) => const SizedBox(),
+                    );
                   },
-                  error: (Object error, StackTrace stackTrace) => const SizedBox(),
-                  loading: () => const SizedBox(),
                 ),
               ],
             ),

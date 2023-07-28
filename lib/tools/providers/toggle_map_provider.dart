@@ -30,7 +30,7 @@ class ToggleMapNotifier<T, E> extends StateNotifier<
       try {
         List<E> eList = d[t]!
             .item1
-            .when(data: (d) => d, error: (e, s) => [], loading: () => []);
+            .maybeWhen(data: (d) => d, orElse: () => []);
         d[t] = Tuple2(AsyncValue.data(eList + [e]), d[t]!.item2);
         state = AsyncValue.data(d);
         return true;
@@ -61,7 +61,7 @@ class ToggleMapNotifier<T, E> extends StateNotifier<
       try {
         List<E> eList = d[t]!
             .item1
-            .when(data: (d) => d, error: (e, s) => [], loading: () => []);
+            .maybeWhen(data: (d) => d, orElse: () => []);
         eList.removeAt(index);
         d[t] = Tuple2(AsyncValue.data(eList), d[t]!.item2);
         state = AsyncValue.data(d);

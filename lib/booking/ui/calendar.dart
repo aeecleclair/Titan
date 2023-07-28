@@ -7,8 +7,8 @@ import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/card_button.dart';
-import 'package:myecl/tools/ui/loader.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Calendar extends HookConsumerWidget {
@@ -89,8 +89,9 @@ class Calendar extends HookConsumerWidget {
       return SizedBox(
         height: constraints.maxHeight,
         width: constraints.maxWidth,
-        child: bookings.when(
-            data: (res) {
+        child: AsyncChild(
+            value: bookings,
+            builder: (context, res) {
               return Container(
                 margin: const EdgeInsets.symmetric(horizontal: 5),
                 child: Stack(
@@ -195,10 +196,7 @@ class Calendar extends HookConsumerWidget {
                 ),
               );
             },
-            error: (Object error, StackTrace? stackTrace) => Center(
-                  child: Text(error.toString()),
-                ),
-            loading: () => const Loader(color: ColorConstants.background2)),
+            loaderColor: ColorConstants.background2),
       );
     });
   }

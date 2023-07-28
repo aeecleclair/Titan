@@ -11,7 +11,7 @@ import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart'
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/loader.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
@@ -66,8 +66,9 @@ class EditUserPage extends HookConsumerWidget {
                     color: Color.fromARGB(255, 149, 149, 149),
                   ),
                   const SizedBox(height: 40),
-                  profilePicture.when(
-                      data: (profile) {
+                  AsyncChild(
+                      value: profilePicture,
+                      builder: (context, profile) {
                         return Center(
                           child: Stack(
                             clipBehavior: Clip.none,
@@ -180,11 +181,7 @@ class EditUserPage extends HookConsumerWidget {
                             ],
                           ),
                         );
-                      },
-                      loading: () => const Loader(),
-                      error: (e, s) => const Center(
-                          child:
-                              Text(SettingsTextConstants.errorProfilePicture))),
+                      }),
                   const SizedBox(height: 50),
                   Text(
                     '${SettingsTextConstants.promo} ${user.promo}',

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Loader extends StatelessWidget {
-  final Color color;
+  final Color? color;
   const Loader({super.key, this.color = Colors.black});
 
   @override

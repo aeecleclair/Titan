@@ -14,9 +14,9 @@ import 'package:myecl/booking/ui/calendar.dart';
 import 'package:myecl/booking/ui/pages/admin_page/list_booking.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
-import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -101,54 +101,51 @@ class AdminPage extends HookConsumerWidget {
               color: Color.fromARGB(255, 149, 149, 149),
             ),
             const SizedBox(height: 30),
-            roomList.when(
-                data: (List<Room> data) => HorizontalListView(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 15),
-                          ItemChip(
-                            onTap: () {
-                              roomNotifier.setRoom(Room.empty());
-                              QR.to(BookingRouter.root +
-                                  BookingRouter.admin +
-                                  BookingRouter.room);
-                            },
-                            child: const HeroIcon(
-                              HeroIcons.plus,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                          ),
-                          ...data.map(
-                            (e) {
-                              final selected = room.id == e.id;
-                              return ItemChip(
-                                selected: selected,
-                                onTap: () {
-                                  roomNotifier.setRoom(e);
-                                  QR.to(BookingRouter.root +
-                                      BookingRouter.admin +
-                                      BookingRouter.room);
-                                },
-                                child: Text(
-                                  capitalize(e.name),
-                                  style: TextStyle(
-                                      color: selected
-                                          ? Colors.white
-                                          : Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(width: 15),
-                        ],
+            AsyncChild(
+              value: roomList,
+              builder: (context, data) => HorizontalListView(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(width: 15),
+                    ItemChip(
+                      onTap: () {
+                        roomNotifier.setRoom(Room.empty());
+                        QR.to(BookingRouter.root +
+                            BookingRouter.admin +
+                            BookingRouter.room);
+                      },
+                      child: const HeroIcon(
+                        HeroIcons.plus,
+                        color: Colors.black,
+                        size: 20,
                       ),
                     ),
-                error: (Object error, StackTrace? stackTrace) =>
-                    Center(child: Text('Error $error')),
-                loading: () => const Loader()),
+                    ...data.map(
+                      (e) {
+                        final selected = room.id == e.id;
+                        return ItemChip(
+                          selected: selected,
+                          onTap: () {
+                            roomNotifier.setRoom(e);
+                            QR.to(BookingRouter.root +
+                                BookingRouter.admin +
+                                BookingRouter.room);
+                          },
+                          child: Text(
+                            capitalize(e.name),
+                            style: TextStyle(
+                                color: selected ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(width: 15),
+                  ],
+                ),
+              ),
+            ),
             const SizedBox(height: 30),
           ],
         ),

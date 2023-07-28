@@ -5,7 +5,6 @@ import 'package:myecl/drawer/ui/drawer_template.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
 
-
 class AppTemplate extends HookConsumerWidget {
   final Widget child;
   const AppTemplate({super.key, required this.child});
@@ -18,19 +17,16 @@ class AppTemplate extends HookConsumerWidget {
     final check = versionVerifier
         .whenData((value) => value.minimalTitanVersion <= titanVersion);
 
-    return check.when(
+    return check.maybeWhen(
         data: (value) {
-          if (value) {
-            if (isLoggedIn) {
-              return DrawerTemplate(child: child);
-            } else {
-              return child;
-            }
-          } else {
+          if (!value) {
             return child;
           }
+          if (!isLoggedIn) {
+            return child;
+          }
+          return DrawerTemplate(child: child);
         },
-        loading: () => child,
-        error: (error, stack) => child);
+        orElse: () => child);
   }
 }

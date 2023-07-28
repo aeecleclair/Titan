@@ -127,11 +127,10 @@ class DetailOrderUI extends HookConsumerWidget {
                           descriptions: AMAPTextConstants.deletingOrder,
                           onYes: () async {
                             await tokenExpireWrapper(ref, () async {
-                              final index = orderList.when(
+                              final index = orderList.maybeWhen(
                                   data: (data) => data.indexWhere(
                                       (element) => element.id == order.id),
-                                  loading: () => -1,
-                                  error: (error, stack) => -1);
+                                  orElse: () => -1);
                               await orderListNotifier
                                   .deleteOrder(order)
                                   .then((value) {

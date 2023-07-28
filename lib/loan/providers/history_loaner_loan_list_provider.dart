@@ -15,8 +15,7 @@ class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
   }
 
   Future<AsyncValue<List<Loan>>> loadLoan(String loanerId) async {
-    return await loadList(
-        () async => loanRepository.getHistory(loanerId));
+    return await loadList(() async => loanRepository.getHistory(loanerId));
   }
 
   Future<bool> addLoan(Loan loan) async {
@@ -57,10 +56,7 @@ class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
   }
 
   Future<AsyncValue<List<Loan>>> copy() async {
-    return state.when(
-        loading: () => const AsyncValue.loading(),
-        data: (loans) => AsyncValue.data(loans.sublist(0)),
-        error: (error, s) => AsyncValue.error(error, s));
+    return state.whenData((loans) => loans.sublist(0));
   }
 
   Future<AsyncValue<List<Loan>>> loadHistory(String loanerId) async {
@@ -80,7 +76,10 @@ class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
   Future<AsyncValue<List<Loan>>> filterLoans(String query) async {
     return state.whenData((loans) => loans
         .where((loan) =>
-            loan.borrower.getName().toLowerCase().contains(query.toLowerCase()) ||
+            loan.borrower
+                .getName()
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
             loan.itemsQuantity
                 .map((e) => e.itemSimple.name
                     .toLowerCase()
@@ -90,9 +89,8 @@ class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
   }
 }
 
-final historyLoanerLoanListProvider =
-    StateNotifierProvider<HistoryLoanerLoanListNotifier, AsyncValue<List<Loan>>>(
-        (ref) {
+final historyLoanerLoanListProvider = StateNotifierProvider<
+    HistoryLoanerLoanListNotifier, AsyncValue<List<Loan>>>((ref) {
   final token = ref.watch(tokenProvider);
   HistoryLoanerLoanListNotifier historyLoanerLoanListNotifier =
       HistoryLoanerLoanListNotifier(token: token);

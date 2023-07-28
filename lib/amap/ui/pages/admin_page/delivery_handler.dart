@@ -9,9 +9,9 @@ import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/delivery_ui.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DeliveryHandler extends HookConsumerWidget {
@@ -54,21 +54,16 @@ class DeliveryHandler extends HookConsumerWidget {
                         ),
                       ),
                     )),
-                deliveries.when(
-                  data: (data) {
+                AsyncChild(
+                  value: deliveries,
+                  builder: (context, data) {
                     data.sort(
                         (a, b) => a.deliveryDate.compareTo(b.deliveryDate));
                     return Row(
-                        children: data
-                            .map((e) => DeliveryUi(
-                                  delivery: e,
-                                ))
-                            .toList());
+                        children:
+                            data.map((e) => DeliveryUi(delivery: e)).toList());
                   },
-                  error: (Object e, StackTrace? s) =>
-                      Text("${AMAPTextConstants.error}: ${e.toString()}"),
-                  loading: () =>
-                      const Loader(color: AMAPColorConstants.greenGradient2),
+                  loaderColor: AMAPColorConstants.greenGradient2,
                 ),
                 const SizedBox(width: 5),
               ],

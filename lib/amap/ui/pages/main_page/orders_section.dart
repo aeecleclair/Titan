@@ -10,9 +10,9 @@ import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/components/order_ui.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/card_layout.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/loader.dart';
 
 class OrderSection extends HookConsumerWidget {
   final VoidCallback onTap, addOrder, onEdit;
@@ -28,12 +28,11 @@ class OrderSection extends HookConsumerWidget {
     final orderNotifier = ref.read(orderProvider.notifier);
     final deliveryIdNotifier = ref.read(deliveryIdProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
-    final availableDeliveries = deliveries.when<List<Delivery>>(
+    final availableDeliveries = deliveries.maybeWhen<List<Delivery>>(
         data: (data) => data
             .where((element) => element.status == DeliveryStatus.available)
             .toList(),
-        loading: () => [],
-        error: (_, __) => []);
+        orElse: () => []);
 
     return Column(children: [
       const AlignLeftText(AMAPTextConstants.orders,
@@ -68,11 +67,13 @@ class OrderSection extends HookConsumerWidget {
                       ),
                     )),
               ),
-              ...orders.when(
-                  data: (data) {
+              AsyncChild(
+                  value: orders,
+                  builder: (context, data) {
                     data.sort(
                         (a, b) => a.deliveryDate.compareTo(b.deliveryDate));
-                    return data.map((e) {
+                    return Column(
+                        children: data.map((e) {
                       final canEdit = availableDeliveries
                           .any((element) => element.id == e.deliveryId);
                       return OrderUI(
@@ -84,11 +85,9 @@ class OrderSection extends HookConsumerWidget {
                             onEdit();
                           },
                           showButton: canEdit);
-                    }).toList();
+                    }).toList());
                   },
-                  loading: () =>
-                      [const Loader(color: AMAPColorConstants.greenGradient2)],
-                  error: (error, stack) => [Text(error.toString())]),
+                  loaderColor: AMAPColorConstants.greenGradient2),
               const SizedBox(width: 25),
             ],
           ),

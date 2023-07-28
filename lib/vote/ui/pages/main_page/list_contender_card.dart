@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/loader.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/vote/providers/result_provider.dart';
 import 'package:myecl/vote/providers/scroll_controller_provider.dart';
 import 'package:myecl/vote/providers/sections_contender_provider.dart';
@@ -26,10 +26,8 @@ class ListContenderCard extends HookConsumerWidget {
         duration: const Duration(milliseconds: 200), initialValue: 1);
 
     final status = ref.watch(statusProvider);
-    final s = status.when(
-        data: (value) => value,
-        loading: () => Status.closed,
-        error: (error, stack) => Status.closed);
+    final s =
+        status.maybeWhen(data: (value) => value, orElse: () => Status.closed);
 
     Map<String, int> results = {};
     if (s == Status.published) {
@@ -79,117 +77,110 @@ class ListContenderCard extends HookConsumerWidget {
       animation.forward();
       pageOpened.value = true;
     }
-    return sectionsContender.when(
-        data: (contenders) {
-          return Stack(
-            children: [
-              SingleChildScrollView(
-                controller: scrollController,
-                physics: const BouncingScrollPhysics(),
-                child: contenders.isNotEmpty
-                    ? Column(
-                        children: contenders[section]!.when(
-                        data: (contenderList) => contenderList.map((e) {
-                          final index = contenderList.indexOf(e);
-                          return ContenderCard(
-                            index: index,
-                            contender: e,
-                            animation: animation,
-                            enableVote:
-                                !alreadyVotedSection.contains(section.id),
-                            votesPercent: votesPercent.keys.contains(e.id)
-                                ? votesPercent[e.id]!
-                                : 0,
-                          );
-                        }).toList(),
-                        loading: () => const [Loader()],
-                        error: (error, stack) =>
-                            [Center(child: Text("Error : $error"))],
-                      ))
-                    : const SizedBox(
-                        height: 150,
-                        child: Center(
-                          child: Text(VoteTextConstants.noPretendanceList),
+    return AsyncChild(
+        value: sectionsContender,
+        builder: (context, contenders) => Stack(
+              children: [
+                SingleChildScrollView(
+                  controller: scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  child: contenders.isNotEmpty
+                      ? AsyncChild(
+                          value: contenders[section]!,
+                          builder: (context, contenderList) => Column(
+                                children: contenderList.map((e) {
+                                  final index = contenderList.indexOf(e);
+                                  return ContenderCard(
+                                    index: index,
+                                    contender: e,
+                                    animation: animation,
+                                    enableVote: !alreadyVotedSection
+                                        .contains(section.id),
+                                    votesPercent:
+                                        votesPercent.keys.contains(e.id)
+                                            ? votesPercent[e.id]!
+                                            : 0,
+                                  );
+                                }).toList(),
+                              ))
+                      : const SizedBox(
+                          height: 150,
+                          child: Center(
+                            child: Text(VoteTextConstants.noPretendanceList),
+                          ),
                         ),
-                      ),
-              ),
-              if (h > 0)
-                Positioned(
-                    bottom: 10,
-                    right: MediaQuery.of(context).size.width / 2 - 100,
-                    child: FadeTransition(
-                      opacity: hideAnimation,
-                      child: ScaleTransition(
-                        scale: hideAnimation,
-                        child: GestureDetector(
-                          onTap: (() {
-                            hideAnimation.animateTo(0);
-                            scrollController.animateTo(h + 25,
-                                duration: const Duration(milliseconds: 350),
-                                curve: Curves.decelerate);
-                          }),
-                          child: SlideTransition(
-                            position: Tween<Offset>(
-                              begin: const Offset(2, 0),
-                              end: const Offset(0, 0),
-                            ).animate(CurvedAnimation(
-                                parent: animation,
-                                curve: const Interval(0.2, 0.4,
-                                    curve: Curves.easeOut))),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 8),
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    colors: [
-                                      ColorConstants.background2
-                                          .withOpacity(0.8),
-                                      Colors.black.withOpacity(0.8)
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: ColorConstants.background2
-                                          .withOpacity(0.4),
-                                      offset: const Offset(2, 3),
-                                      blurRadius: 5)
-                                ],
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(25)),
-                              ),
-                              alignment: Alignment.center,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  HeroIcon(
-                                    HeroIcons.chevronDoubleDown,
-                                    size: 15,
-                                    color: Colors.grey.shade100,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    VoteTextConstants.seeMore,
-                                    style: TextStyle(
-                                      fontSize: 18,
+                ),
+                if (h > 0)
+                  Positioned(
+                      bottom: 10,
+                      right: MediaQuery.of(context).size.width / 2 - 100,
+                      child: FadeTransition(
+                        opacity: hideAnimation,
+                        child: ScaleTransition(
+                          scale: hideAnimation,
+                          child: GestureDetector(
+                            onTap: (() {
+                              hideAnimation.animateTo(0);
+                              scrollController.animateTo(h + 25,
+                                  duration: const Duration(milliseconds: 350),
+                                  curve: Curves.decelerate);
+                            }),
+                            child: SlideTransition(
+                              position: Tween<Offset>(
+                                begin: const Offset(2, 0),
+                                end: const Offset(0, 0),
+                              ).animate(CurvedAnimation(
+                                  parent: animation,
+                                  curve: const Interval(0.2, 0.4,
+                                      curve: Curves.easeOut))),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 8),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: [
+                                        ColorConstants.background2
+                                            .withOpacity(0.8),
+                                        Colors.black.withOpacity(0.8)
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: ColorConstants.background2
+                                            .withOpacity(0.4),
+                                        offset: const Offset(2, 3),
+                                        blurRadius: 5)
+                                  ],
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(25)),
+                                ),
+                                alignment: Alignment.center,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    HeroIcon(
+                                      HeroIcons.chevronDoubleDown,
+                                      size: 15,
                                       color: Colors.grey.shade100,
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      VoteTextConstants.seeMore,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.grey.shade100,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ))
-            ],
-          );
-        },
-        error: (Object error, StackTrace stackTrace) =>
-            Center(child: Text("Error : $error")),
-        loading: () => const Loader());
+                      ))
+              ],
+            ));
   }
 }

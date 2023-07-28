@@ -6,11 +6,10 @@ import 'package:myecl/raffle/providers/raffle_list_provider.dart';
 final raffleProvider = Provider<Raffle>((ref) {
   final raffleId = ref.watch(raffleIdProvider);
   final raffleList = ref.watch(raffleListProvider);
-  return raffleList.when(
+  return raffleList.maybeWhen(
     data: (raffleList) => raffleList.firstWhere(
         (raffle) => raffle.id == raffleId,
         orElse: () => Raffle.empty()),
-    error: (error, stackTrace) => Raffle.empty(),
-    loading: () => Raffle.empty(),
+    orElse: () => Raffle.empty(),
   );
 });

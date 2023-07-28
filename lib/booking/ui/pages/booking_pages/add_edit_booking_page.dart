@@ -16,10 +16,10 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 import 'package:myecl/tools/ui/date_entry.dart';
 import 'package:myecl/tools/ui/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/item_chip.dart';
-import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/tools/ui/text_entry.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -99,8 +99,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                       color: const Color.fromARGB(255, 149, 149, 149)),
                 ),
                 const SizedBox(height: 20),
-                rooms.when(
-                    data: (data) => HorizontalListView(
+                AsyncChild(
+                    value: rooms,
+                    builder: (context, data) => HorizontalListView(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -127,11 +128,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                               const SizedBox(width: 15),
                             ],
                           ),
-                        ),
-                    error: (Object error, StackTrace? stackTrace) => Center(
-                          child: Text("${BookingTextConstants.error} : $error"),
-                        ),
-                    loading: () => const Loader()),
+                        )),
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -382,10 +379,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                                       BookingTextConstants.editedBooking);
                                 } else {
                                   if (!isAdmin) {
-                                    newBooking = bookings.when(
+                                    newBooking = bookings.maybeWhen(
                                         data: (value) => value.last,
-                                        error: (e, s) => Booking.empty(),
-                                        loading: () => Booking.empty());
+                                        orElse: () => Booking.empty());
                                     if (newBooking.id != Booking.empty().id) {
                                       await usersBookingsNotifier
                                           .addBooking(newBooking);

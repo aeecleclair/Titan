@@ -3,18 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/card_button.dart';
 import 'package:myecl/tools/ui/card_layout.dart';
-import 'package:myecl/tools/ui/loader.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/contender_logo_provider.dart';
-import 'package:myecl/vote/providers/contender_logos_provider.dart';
 import 'package:myecl/vote/providers/contender_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/router.dart';
+import 'package:myecl/vote/ui/components/contender_logo.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ContenderCard extends HookConsumerWidget {
@@ -35,14 +32,9 @@ class ContenderCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final contenderNotifier = ref.watch(contenderProvider.notifier);
-    final status = ref.watch(statusProvider).when(
-          data: (status) => status,
-          loading: () => Status.waiting,
-          error: (error, stackTrace) => Status.waiting,
-        );
-    final contenderLogos = ref.watch(contenderLogosProvider);
-    final contenderLogosNotifier = ref.watch(contenderLogosProvider.notifier);
-    final logoNotifier = ref.watch(contenderLogoProvider.notifier);
+    final status = ref
+        .watch(statusProvider)
+        .maybeWhen(data: (status) => status, orElse: () => Status.waiting);
     return CardLayout(
         width: 250,
         height: (contender.listType != ListType.blank &&
@@ -58,61 +50,8 @@ class ContenderCard extends HookConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                contenderLogos.when(
-                    data: (data) {
-                      if (data[contender] != null) {
-                        return data[contender]!.when(
-                            data: (data) {
-                              if (data.isNotEmpty) {
-                                return Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image: data.first.image,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                Future.delayed(
-                                    const Duration(milliseconds: 1),
-                                    () => contenderLogosNotifier.setTData(
-                                        contender, const AsyncLoading()));
-                                tokenExpireWrapper(ref, () async {
-                                  logoNotifier
-                                      .getLogo(contender.id)
-                                      .then((value) {
-                                    contenderLogosNotifier.setTData(
-                                        contender, AsyncData([value]));
-                                  });
-                                });
-                                return const HeroIcon(
-                                  HeroIcons.userCircle,
-                                  size: 40,
-                                );
-                              }
-                            },
-                            loading: () => const SizedBox(
-                                height: 40, width: 40, child: Loader()),
-                            error: (error, stack) => const SizedBox(
-                                  height: 40,
-                                  width: 40,
-                                  child: Center(
-                                    child:
-                                        HeroIcon(HeroIcons.exclamationCircle),
-                                  ),
-                                ));
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                    loading: () => const Loader(),
-                    error: (error, stack) => Text('Error $error')),
-                const SizedBox(
-                  width: 10,
-                ),
+                ContenderLogo(contender),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     children: [
@@ -130,19 +69,13 @@ class ContenderCard extends HookConsumerWidget {
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                               color: Colors.black)),
-                      const SizedBox(
-                        height: 3,
-                      ),
+                      const SizedBox(height: 3),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
+                const SizedBox(width: 5),
                 isDetail || contender.listType == ListType.blank
-                    ? Container(
-                        width: 30,
-                      )
+                    ? Container(width: 30)
                     : GestureDetector(
                         onTap: () {
                           contenderNotifier.setId(contender);

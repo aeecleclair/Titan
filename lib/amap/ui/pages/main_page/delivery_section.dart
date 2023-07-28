@@ -6,7 +6,7 @@ import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/main_page/delivery_ui.dart';
 import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/loader.dart';
+import 'package:myecl/tools/ui/async_child.dart';
 
 class DeliverySection extends HookConsumerWidget {
   final bool showSelected;
@@ -18,52 +18,50 @@ class DeliverySection extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryIdNotifier = ref.read(deliveryIdProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
-    final availableDeliveries = deliveries.when<List<Delivery>>(
+    final availableDeliveries = deliveries.maybeWhen<List<Delivery>>(
         data: (data) => data
             .where((element) => element.status == DeliveryStatus.available)
             .toList(),
-        loading: () => [],
-        error: (_, __) => [])
+        orElse: () => [])
       ..sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
     return Column(
       children: [
         AlignLeftText(AMAPTextConstants.deliveries,
             padding: const EdgeInsets.symmetric(horizontal: 30),
             color: showSelected ? Colors.white : AMAPColorConstants.textDark),
-        deliveries.when(
-          data: (data) {
-            if (availableDeliveries.isEmpty) {
-              return const Center(
-                child: Text(AMAPTextConstants.notPlannedDelivery),
-              );
-            }
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  for (var i = 0; i < availableDeliveries.length; i++)
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: DeliveryUi(
-                        delivery: availableDeliveries[i],
-                        onTap: () {
-                          {
-                            if (editable && showSelected) {
-                              deliveryIdNotifier
-                                  .setId(availableDeliveries[i].id);
+        AsyncChild(
+            value: deliveries,
+            builder: (context, data) {
+              if (availableDeliveries.isEmpty) {
+                return const Center(
+                  child: Text(AMAPTextConstants.notPlannedDelivery),
+                );
+              }
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    for (var i = 0; i < availableDeliveries.length; i++)
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: DeliveryUi(
+                          delivery: availableDeliveries[i],
+                          onTap: () {
+                            {
+                              if (editable && showSelected) {
+                                deliveryIdNotifier
+                                    .setId(availableDeliveries[i].id);
+                              }
                             }
-                          }
-                        },
-                        showSelected: showSelected,
+                          },
+                          showSelected: showSelected,
+                        ),
                       ),
-                    ),
-                ],
-              ),
-            );
-          },
-          loading: () => const Loader(color: AMAPColorConstants.greenGradient2),
-          error: (error, stack) => Text(error.toString()),
-        ),
+                  ],
+                ),
+              );
+            },
+            loaderColor: AMAPColorConstants.greenGradient2),
       ],
     );
   }
