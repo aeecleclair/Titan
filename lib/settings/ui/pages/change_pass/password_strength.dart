@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/change_pass/secure_bar.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 
 class PasswordStrength extends HookConsumerWidget {
   final TextEditingController newPassword;

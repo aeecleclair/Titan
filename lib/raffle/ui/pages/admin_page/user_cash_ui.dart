@@ -10,9 +10,9 @@ import 'package:myecl/raffle/providers/cash_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/card_layout.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
-import 'package:myecl/tools/ui/text_entry.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/widgets/text_entry.dart';
 
 class UserCashUi extends HookConsumerWidget {
   final Cash cash;

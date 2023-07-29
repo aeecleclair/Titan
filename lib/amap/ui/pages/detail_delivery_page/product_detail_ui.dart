@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/tools/ui/card_layout.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
 class ProductDetailCard extends StatelessWidget {
   final Product product;

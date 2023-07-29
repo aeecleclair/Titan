@@ -9,7 +9,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/adding_user_container.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/cash_container.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AccountHandler extends HookConsumerWidget {

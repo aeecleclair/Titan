@@ -3,8 +3,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/raffle/class/type_ticket_simple.dart';
 import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/tools/ui/card_button.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/layouts/card_button.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
 
 class TicketUI extends HookConsumerWidget {
   final TypeTicketSimple typeTicket;

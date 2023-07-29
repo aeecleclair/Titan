@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/ui/loader.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/widgets/loader.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
 
 class SignInUpBar extends StatelessWidget {
   const SignInUpBar(

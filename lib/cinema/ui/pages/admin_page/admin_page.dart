@@ -8,9 +8,9 @@ import 'package:myecl/cinema/router.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/cinema/ui/pages/admin_page/admin_session_card.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/card_layout.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminPage extends HookConsumerWidget {

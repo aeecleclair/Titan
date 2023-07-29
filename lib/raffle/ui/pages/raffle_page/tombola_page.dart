@@ -9,9 +9,9 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/buy_type_ticket_card.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/prize_card.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class RaffleInfoPage extends HookConsumerWidget {
   const RaffleInfoPage({super.key});

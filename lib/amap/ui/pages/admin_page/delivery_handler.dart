@@ -8,10 +8,10 @@ import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/delivery_ui.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/card_layout.dart';
-import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DeliveryHandler extends HookConsumerWidget {

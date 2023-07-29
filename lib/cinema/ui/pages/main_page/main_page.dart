@@ -12,9 +12,9 @@ import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/cinema/ui/pages/main_page/session_card.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
-import 'package:myecl/tools/ui/admin_button.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CinemaMainPage extends HookConsumerWidget {

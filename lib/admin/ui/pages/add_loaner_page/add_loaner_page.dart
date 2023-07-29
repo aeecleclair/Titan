@@ -9,8 +9,8 @@ import 'package:myecl/loan/providers/all_loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/async_child.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddLoanerPage extends HookConsumerWidget {

@@ -5,9 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/card_button.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/card_button.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
 
 class AdminSessionCard extends HookConsumerWidget {
   final Session session;

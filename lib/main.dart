@@ -15,7 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/router.dart';
 import 'package:myecl/service/tools/setup.dart';
-import 'package:myecl/tools/ui/app_template.dart';
+import 'package:myecl/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 void main() async {

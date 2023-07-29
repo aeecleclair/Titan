@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/raffle/providers/cash_provider.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/user_cash_ui.dart';
-import 'package:myecl/tools/ui/async_child.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 
 class CashContainer extends HookConsumerWidget {
   const CashContainer({super.key});

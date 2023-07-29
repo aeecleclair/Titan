@@ -12,7 +12,7 @@ import 'package:myecl/raffle/providers/type_ticket_provider.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
-import 'package:myecl/tools/ui/async_child.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleWidget extends HookConsumerWidget {

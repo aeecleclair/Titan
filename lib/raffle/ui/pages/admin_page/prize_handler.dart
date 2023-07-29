@@ -12,12 +12,12 @@ import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/prize_card.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/card_layout.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PrizeHandler extends HookConsumerWidget {

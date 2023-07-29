@@ -10,11 +10,11 @@ import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/pages/edit_page/results.dart';
 import 'package:myecl/admin/ui/components/user_ui.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/loader.dart';
+import 'package:myecl/tools/ui/widgets/loader.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchUser extends HookConsumerWidget {

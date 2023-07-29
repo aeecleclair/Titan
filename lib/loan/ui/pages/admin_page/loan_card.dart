@@ -5,9 +5,9 @@ import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/card_button.dart';
-import 'package:myecl/tools/ui/card_layout.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/layouts/card_button.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;

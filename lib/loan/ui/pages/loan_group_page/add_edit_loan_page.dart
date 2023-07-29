@@ -18,7 +18,7 @@ import 'package:myecl/loan/ui/pages/loan_group_page/search_result.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/start_date_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/text_entry.dart';
+import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AddEditLoanPage extends HookConsumerWidget {

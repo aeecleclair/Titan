@@ -13,11 +13,11 @@ import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar.dart';
 import 'package:myecl/booking/ui/pages/admin_page/list_booking.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/item_chip.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminPage extends HookConsumerWidget {

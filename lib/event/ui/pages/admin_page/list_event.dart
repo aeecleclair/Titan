@@ -11,9 +11,9 @@ import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/event/ui/components/event_ui.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/dialog.dart';
-import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ListEvent extends HookConsumerWidget {

@@ -14,11 +14,11 @@ import 'package:myecl/admin/ui/pages/edit_page/search_user.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/loader.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
-import 'package:myecl/tools/ui/text_entry.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/widgets/loader.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EditAssociationPage extends HookConsumerWidget {

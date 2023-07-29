@@ -4,10 +4,10 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/raffle/class/prize.dart';
 import 'package:myecl/raffle/class/raffle_status_type.dart';
 import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/tools/ui/card_button.dart';
-import 'package:myecl/tools/ui/card_layout.dart';
-import 'package:myecl/tools/ui/loader.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/layouts/card_button.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/tools/ui/widgets/loader.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
 
 class PrizeCard extends StatelessWidget {
   final Prize prize;

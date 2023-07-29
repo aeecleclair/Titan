@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/async_child.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/vote/providers/section_vote_count_provide.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/sections_stats_provider.dart';

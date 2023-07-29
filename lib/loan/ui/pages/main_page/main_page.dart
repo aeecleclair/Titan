@@ -11,10 +11,10 @@ import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
-import 'package:myecl/tools/ui/admin_button.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/refresher.dart';
-import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LoanMainPage extends HookConsumerWidget {

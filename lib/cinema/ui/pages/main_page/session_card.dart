@@ -13,7 +13,7 @@ import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/local_notification_service.dart';
-import 'package:myecl/tools/ui/async_child.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 
 class SessionCard extends HookConsumerWidget {
   final Session session;

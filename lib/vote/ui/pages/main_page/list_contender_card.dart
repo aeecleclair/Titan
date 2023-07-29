@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/async_child.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/vote/providers/result_provider.dart';
 import 'package:myecl/vote/providers/scroll_controller_provider.dart';
 import 'package:myecl/vote/providers/sections_contender_provider.dart';

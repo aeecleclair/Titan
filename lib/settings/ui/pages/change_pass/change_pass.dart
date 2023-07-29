@@ -5,11 +5,11 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/settings/ui/pages/change_pass/test_entry_style.dart';
 import 'package:myecl/settings/ui/settings.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
