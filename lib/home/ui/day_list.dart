@@ -7,6 +7,7 @@ import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/home/providers/days_provider.dart';
 import 'package:myecl/home/providers/number_day_provider.dart';
 import 'package:myecl/home/ui/day_card.dart';
+import 'package:myecl/tools/functions.dart';
 
 class DayList extends HookConsumerWidget {
   final ScrollController scrollController, daysEventScrollController;
