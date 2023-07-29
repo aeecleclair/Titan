@@ -1,17 +1,23 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:myecl/elocaps/tools/constants.dart';
 
 class Podium extends StatelessWidget {
   const Podium(
-      {Key? key, required this.rank, required this.text, required this.color,this.width = 100})
+      {Key? key, required this.rank, required this.text,this.width = 100,this.height = 30})
       : super(key: key);
 
   final int rank;
   final String text;
-  final Color color;
   final double? width;
-
+  final double? height;
+  
   @override
   Widget build(BuildContext context) {
+    final int grisLev = 157 - 2*min(rank,75);
+    final Color color = rank <= 3 ? ElocapsColorConstant.podium_color[rank-1] : Color.fromARGB(255, grisLev, grisLev, grisLev);
+
     return Container(
       decoration: BoxDecoration(
         gradient: RadialGradient(
@@ -28,7 +34,7 @@ class Podium extends StatelessWidget {
         ),
       ),
       margin: const EdgeInsets.all(5),
-      height:  rank < 4 ? (4 - rank) * 50.0 : 30.0,
+      height:  height,
       width: width,
       child: Text(text,
           textAlign: TextAlign.center,

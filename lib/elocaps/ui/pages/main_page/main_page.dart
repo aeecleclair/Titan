@@ -15,11 +15,6 @@ class EloCapsMainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<String> ranking = ['Izgû', 'a', 'b', 'c', 'd', 'e'];
-    final List<Color> color_rank = [
-      const Color.fromARGB(255, 244, 26, 11),
-      const Color.fromARGB(255, 248, 164, 39),
-      Color.fromARGB(255, 235, 187, 28)
-    ];
 
     final animation = useAnimationController(
         duration: const Duration(milliseconds: 3000), initialValue: 0)
@@ -60,21 +55,39 @@ class EloCapsMainPage extends HookConsumerWidget {
                         ).createShader(bounds),
                     child: const Text("Classement général",
                         style: TextStyle(fontSize: 30, color: Colors.black))),
+                const SizedBox(height: 15),
                 SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: ranking.asMap().entries.map((entry) {
-                          int idx = entry.key;
-                          String nom = entry.value;
-
+                        children: [Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Podium(
+                                rank: 2,
+                                text: "2. ${ranking[1]}",
+                                height: 70),
+                            Podium(
+                                rank: 1,
+                                text: "1. ${ranking[0]}",
+                                height: 100),
+                            Podium(
+                              rank: 3,
+                              text: "3. ${ranking[2]}",
+                              height: 50,
+                            ),
+                          ],
+                        ),
+                        ...List.generate(ranking.length - 3, (index) {
+                          index += 3;
                           return Podium(
-                            rank: idx + 1,
-                            text: "${idx + 1}. $nom",
-                            color: idx < 3 ? color_rank[idx] : Colors.grey,
-                          );
-                        }).toList())),
+                              rank: index + 1,
+                              text: "${index + 1}. ${ranking[index]}",
+                              );
+                        })])),
+
                 const SizedBox(height: 25),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [GestureDetector(
