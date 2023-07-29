@@ -35,7 +35,8 @@ class AddEditBookingPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
     final usersBookingsNotifier = ref.watch(userBookingListProvider.notifier);
-    final confirmedBookingListNotifier = ref.watch(confirmedBookingListProvider.notifier);
+    final confirmedBookingListNotifier =
+        ref.watch(confirmedBookingListProvider.notifier);
     final bookingsNotifier = ref.watch(bookingListProvider.notifier);
     final bookings = ref.watch(bookingListProvider);
     final booking = ref.watch(bookingProvider);
@@ -49,13 +50,17 @@ class AddEditBookingPage extends HookConsumerWidget {
         booking.start.minute == 0 &&
         booking.end.minute == 59);
     final start = useTextEditingController(
-        text: recurrent.value
-            ? processDateOnlyHour(booking.start)
-            : processDateWithHour(booking.start));
+        text: isEdit
+            ? recurrent.value
+                ? processDateOnlyHour(booking.start)
+                : processDateWithHour(booking.start)
+            : "");
     final end = useTextEditingController(
-        text: recurrent.value
-            ? processDateOnlyHour(booking.end)
-            : processDateWithHour(booking.end));
+        text: isEdit
+            ? recurrent.value
+                ? processDateOnlyHour(booking.end)
+                : processDateWithHour(booking.end)
+            : "");
     final motif = useTextEditingController(text: booking.reason);
     final note = useTextEditingController(text: booking.note);
     final entity = useTextEditingController(text: booking.entity);
@@ -599,8 +604,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                               if (value) {
                                 QR.back();
                                 if (isEdit) {
-                                  if (booking.decision ==
-                                      Decision.approved) {
+                                  if (booking.decision == Decision.approved) {
                                     await confirmedBookingListNotifier
                                         .updateBooking(newBooking);
                                   }

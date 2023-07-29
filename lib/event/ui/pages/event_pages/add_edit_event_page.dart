@@ -50,21 +50,25 @@ class AddEditEventPage extends HookConsumerWidget {
         ? event.recurrenceRule.contains("BYDAY")
         : false);
     final start = useTextEditingController(
-        text: recurrent.value
-            ? allDay.value
-                ? ""
-                : processDateOnlyHour(event.start)
-            : allDay.value
-                ? processDate(event.start)
-                : processDateWithHour(event.start));
+        text: isEdit
+            ? recurrent.value
+                ? allDay.value
+                    ? ""
+                    : processDateOnlyHour(event.start)
+                : allDay.value
+                    ? processDate(event.start)
+                    : processDateWithHour(event.start)
+            : "");
     final end = useTextEditingController(
-        text: recurrent.value
-            ? allDay.value
-                ? ""
-                : processDateOnlyHour(event.end)
-            : allDay.value
-                ? processDate(event.end)
-                : processDateWithHour(event.end));
+        text: isEdit
+            ? recurrent.value
+                ? allDay.value
+                    ? ""
+                    : processDateOnlyHour(event.end)
+                : allDay.value
+                    ? processDate(event.end)
+                    : processDateWithHour(event.end)
+            : "");
     final interval = useTextEditingController(
         text: event.recurrenceRule != ""
             ? event.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
