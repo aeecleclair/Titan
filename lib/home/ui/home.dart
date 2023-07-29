@@ -6,6 +6,7 @@ import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/providers/sorted_event_list_provider.dart';
+import 'package:myecl/home/providers/already_displayed_popup.dart';
 import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/home/ui/day_list.dart';
 import 'package:myecl/home/ui/days_event.dart';
@@ -24,6 +25,8 @@ class HomePage extends HookConsumerWidget {
     final confimedEventListNotifier =
         ref.watch(confirmedEventListProvider.notifier);
     final sortedEventList = ref.watch(sortedEventListProvider);
+    final alreadyDisplayed = ref.watch(alreadyDisplayedProvider);
+    final alreadyDisplayedNotifier = ref.watch(alreadyDisplayedProvider.notifier);
     DateTime now = DateTime.now();
     final ScrollController scrollController = useScrollController();
     final daysEventScrollController = useScrollController();
@@ -37,11 +40,13 @@ class HomePage extends HookConsumerWidget {
     final displayedDialog = useState(false);
 
     Future(() {
-      if (isLoggedIn && shouldNotify && QR.context != null && !displayedDialog.value) {
+      if (isLoggedIn && shouldNotify && QR.context != null && !displayedDialog.value && !alreadyDisplayed) {
         displayedDialog.value = true;
         showDialog(
             context: QR.context!,
-            builder: (BuildContext context) => const EmailChangeDialog());
+            builder: (BuildContext context) => const EmailChangeDialog()).then((value) {
+              alreadyDisplayedNotifier.setAlreadyDisplayed();
+            });
       }
     });
 
