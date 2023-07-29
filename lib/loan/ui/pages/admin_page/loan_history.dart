@@ -7,10 +7,10 @@ import 'package:myecl/loan/providers/loan_focus_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
+import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
 
 class HistoryLoan extends HookConsumerWidget {
   const HistoryLoan({super.key});
@@ -34,61 +34,31 @@ class HistoryLoan extends HookConsumerWidget {
     return AsyncChild(
         value: adminLoanList,
         builder: (context, loans) {
-          if (loans[loaner] == null) {
+          final loan = loans[loaner];
+          if (loan == null) {
             return const Loader();
           }
           return AsyncChild(
-              value: loans[loaner]!,
+              value: loan,
               builder: (context, data) {
                 if (data.isNotEmpty) {
                   data.sort((a, b) => b.end.compareTo(a.end));
                 }
                 return Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: TextField(
-                          onChanged: (value) {
-                            tokenExpireWrapper(ref, () async {
-                              if (editingController.text.isNotEmpty) {
-                                adminHistoryLoanListNotifier.setTData(
-                                    loaner,
-                                    await historyLoanListNotifier
-                                        .filterLoans(editingController.text));
-                              } else {
-                                adminHistoryLoanListNotifier.setTData(
-                                    loaner, loanList);
-                              }
-                            });
-                          },
-                          focusNode: focusNode,
-                          controller: editingController,
-                          cursorColor: Colors.grey,
-                          decoration: const InputDecoration(
-                              labelText: LoanTextConstants.history,
-                              labelStyle: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                              suffixIcon: Icon(
-                                Icons.search,
-                                color: Colors.grey,
-                                size: 30,
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                ),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.grey,
-                                ),
-                              )),
-                        ),
-                      ),
+                    StyledSearchBar(
+                      label: LoanTextConstants.history,
+                      onChanged: (value) async {
+                        if (editingController.text.isNotEmpty) {
+                          adminHistoryLoanListNotifier.setTData(
+                              loaner,
+                              await historyLoanListNotifier
+                                  .filterLoans(editingController.text));
+                        } else {
+                          adminHistoryLoanListNotifier.setTData(
+                              loaner, loanList);
+                        }
+                      },
                     ),
                     const SizedBox(height: 10),
                     SizedBox(

@@ -24,6 +24,7 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
+import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class OnGoingLoan extends HookConsumerWidget {
@@ -67,49 +68,19 @@ class OnGoingLoan extends HookConsumerWidget {
                 }
                 return Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: TextField(
-                          onChanged: (value) {
-                            tokenExpireWrapper(ref, () async {
-                              if (editingController.text.isNotEmpty) {
-                                adminLoanListNotifier.setTData(
-                                    loaner,
-                                    await loanListNotifier
-                                        .filterLoans(editingController.text));
-                              } else {
-                                adminLoanListNotifier.setTData(
-                                    loaner, loanList);
-                              }
-                            });
-                          },
-                          focusNode: focusNode,
-                          controller: editingController,
-                          cursorColor: Colors.grey,
-                          decoration: InputDecoration(
-                              labelText:
-                                  '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
-                              labelStyle: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                              suffixIcon: const Icon(
-                                Icons.search,
-                                color: Colors.grey,
-                                size: 30,
-                              ),
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                ),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              )),
-                        ),
-                      ),
+                    StyledSearchBar(
+                      label:
+                          '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
+                      onChanged: (value) async {
+                        if (editingController.text.isNotEmpty) {
+                          adminLoanListNotifier.setTData(
+                              loaner,
+                              await loanListNotifier
+                                  .filterLoans(editingController.text));
+                        } else {
+                          adminLoanListNotifier.setTData(loaner, loanList);
+                        }
+                      },
                     ),
                     const SizedBox(height: 10),
                     SizedBox(
