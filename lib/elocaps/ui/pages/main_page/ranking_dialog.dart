@@ -12,8 +12,36 @@ class RankingDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<String> ranking = ['Izgû', 'a', 'b', 'c', 'd', 'e', 'f', 'g',  'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',  's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-    final double width = MediaQuery.of(context).size.width - 10 ;
+    final List<String> ranking = [
+      'Izgû',
+      'a',
+      'b',
+      'c',
+      'd',
+      'e',
+      'f',
+      'g',
+      'h',
+      'i',
+      'j',
+      'k',
+      'l',
+      'm',
+      'n',
+      'o',
+      'p',
+      'q',
+      'r',
+      's',
+      't',
+      'u',
+      'v',
+      'w',
+      'x',
+      'y',
+      'z'
+    ];
+    final double width = MediaQuery.of(context).size.width - 10;
 
     final animation = useAnimationController(
         duration: const Duration(milliseconds: 7000), initialValue: 0)
@@ -26,14 +54,14 @@ class RankingDialog extends HookConsumerWidget {
               backgroundColor: Colors.transparent,
               child: Container(
                   width: width,
-                  height: MediaQuery.of(context).size.height -50,
+                  height: MediaQuery.of(context).size.height - 50,
                   margin: const EdgeInsets.only(left: 10),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   decoration: BoxDecoration(
                       boxShadow: const [
                         BoxShadow(
-                          color:  Color.fromARGB(105, 35, 21, 0),
+                          color: Color.fromARGB(105, 35, 21, 0),
                           blurRadius: 10,
                           blurStyle: BlurStyle.outer,
                         ),
@@ -58,17 +86,22 @@ class RankingDialog extends HookConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Podium(
-                                rank: 2,
+                              rank: 2,
                                 text: "2. ${ranking[1]}",
-                                color: const Color.fromARGB(255, 248, 164, 39)),
+
+                                width: MediaQuery.of(context).size.width * 0.15,
+                                height: 60),
                             Podium(
                                 rank: 1,
                                 text: "1. ${ranking[0]}",
-                                color: const Color.fromARGB(255, 244, 26, 11)),
+                                width: MediaQuery.of(context).size.width * 0.15,
+                                height: 80),
                             Podium(
-                                rank: 3,
-                                text: "3. ${ranking[2]}",
-                                color: const Color.fromARGB(255, 235, 187, 28)),
+                              rank: 3,
+                              text: "3. ${ranking[2]}",
+                              width: MediaQuery.of(context).size.width * 0.15,
+                              height: 40,
+                            ),
                           ],
                         ),
                         ...List.generate(ranking.length - 3, (index) {
@@ -76,8 +109,7 @@ class RankingDialog extends HookConsumerWidget {
                           return Podium(
                               rank: index + 1,
                               text: "${index + 1}. ${ranking[index]}",
-                              color: Colors.grey,
-                              width: width-20);
+                              width: width - 20);
                         })
                       ]))));
         });
