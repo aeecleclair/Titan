@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/builders/shrink_button.dart';
 
@@ -48,52 +48,29 @@ class AdminSessionCard extends HookConsumerWidget {
           borderRadius: BorderRadius.circular(18),
           child: Column(
             children: [
-              AsyncChild(
-                value: sessionPosterMap,
-                builder: (context, data) {
-                  if (data[session] == null) {
-                    sessionPosterMapNotifier.autoLoad(
-                        ref,
-                        session,
-                            (session) =>
-                            sessionPosterNotifier.getLogo(session.id));
-                    return const SizedBox.shrink();
-                  }
-                  return SizedBox(
-                      width: double.infinity,
-                      height: 200,
-                      child: AsyncChild(
-                        value: data[session]!,
-                        builder: (context, data) {
-                          if (data.isNotEmpty) {
-                            return Image(
-                              image: data.first.image,
-                              fit: BoxFit.cover,
-                            );
-                          } else {
-                            sessionPosterMapNotifier.autoLoad(
-                                ref,
-                                session,
-                                (session) =>
-                                    sessionPosterNotifier.getLogo(session.id));
-                            return Container(
-                              decoration: const BoxDecoration(boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  blurRadius: 10,
-                                  spreadRadius: 7,
-                                  offset: Offset(0, 5),
-                                ),
-                              ]),
-                            );
-                          }
-                        },
-                        errorBuilder: (error, stack) => const Center(
-                          child: HeroIcon(HeroIcons.exclamationCircle),
-                        ),
-                      ));
-                },
-              ),
+              Container(
+                  decoration: const BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      spreadRadius: 7,
+                      offset: Offset(0, 5),
+                    ),
+                  ]),
+                  child: AutoLoaderChild(
+                    value: sessionPosterMap,
+                    notifier: sessionPosterMapNotifier,
+                    mapKey: session,
+                    loader: (session) =>
+                        sessionPosterNotifier.getLogo(session.id),
+                    dataBuilder: (context, data) => Image(
+                      image: data.image,
+                      fit: BoxFit.cover,
+                    ),
+                    errorBuilder: (error, stack) => const Center(
+                      child: HeroIcon(HeroIcons.exclamationCircle),
+                    ),
+                  )),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
