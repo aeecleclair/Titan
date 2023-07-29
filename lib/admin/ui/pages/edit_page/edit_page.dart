@@ -14,9 +14,8 @@ import 'package:myecl/admin/ui/pages/edit_page/search_user.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/loader.dart';
 import 'package:myecl/tools/ui/builders/shrink_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -41,118 +40,89 @@ class EditAssociationPage extends HookConsumerWidget {
     }
 
     return AdminTemplate(
-      child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: AsyncChild(
-                  value: simpleGroupsGroups,
-                  builder: (context, value) {
-                    final group = value[groupId];
-                    if (group == null) {
-                      simpleGroupsGroupsNotifier.autoLoad(
-                          ref,
-                          groupId,
-                          (groupId) async =>
-                              (await groupNotifier.loadGroup(groupId))
-                                  .maybeWhen(
-                                      data: (groups) => groups,
-                                      orElse: () => Group.empty()));
-                      return const Loader();
-                    }
-                    return AsyncChild(
-                        value: group,
-                        builder: (context, groups) {
-                          if (groups.isEmpty) {
-                            simpleGroupsGroupsNotifier.autoLoad(
-                                ref,
-                                groupId,
-                                (groupId) async =>
-                                    (await groupNotifier.loadGroup(groupId))
-                                        .maybeWhen(
-                                            data: (groups) => groups,
-                                            orElse: () => Group.empty()));
-                            return const Loader();
-                          }
-                          name.text = groups[0].name;
-                          description.text = groups[0].description;
-                          return Column(children: [
-                            const AlignLeftText(AdminTextConstants.edit,
-                                fontSize: 20, color: ColorConstants.gradient1),
+        child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: AutoLoaderChild(
+                    value: simpleGroupsGroups,
+                    notifier: simpleGroupsGroupsNotifier,
+                    mapKey: groupId,
+                    loader: (groupId) async =>
+                        (await groupNotifier.loadGroup(groupId)).maybeWhen(
+                            data: (groups) => groups,
+                            orElse: () => Group.empty()),
+                    dataBuilder: (context, group) {
+                      name.text = group.name;
+                      description.text = group.description;
+                      return Column(children: [
+                        const AlignLeftText(AdminTextConstants.edit,
+                            fontSize: 20, color: ColorConstants.gradient1),
+                        const SizedBox(height: 20),
+                        Form(
+                          key: key,
+                          child: Column(children: [
+                            Container(
+                              margin: const EdgeInsets.symmetric(vertical: 10),
+                              alignment: Alignment.centerLeft,
+                              child: TextEntry(
+                                controller: name,
+                                color: ColorConstants.gradient1,
+                                label: AdminTextConstants.name,
+                                suffixIcon: const HeroIcon(HeroIcons.pencil),
+                                enabledColor: Colors.transparent,
+                              ),
+                            ),
+                            Container(
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                alignment: Alignment.centerLeft,
+                                child: TextEntry(
+                                  controller: description,
+                                  color: ColorConstants.gradient1,
+                                  label: AdminTextConstants.description,
+                                  suffixIcon: const HeroIcon(HeroIcons.pencil),
+                                  enabledColor: Colors.transparent,
+                                )),
                             const SizedBox(height: 20),
-                            Form(
-                              key: key,
-                              child: Column(children: [
-                                Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  alignment: Alignment.centerLeft,
-                                  child: TextEntry(
-                                    controller: name,
-                                    color: ColorConstants.gradient1,
-                                    label: AdminTextConstants.name,
-                                    suffixIcon:
-                                        const HeroIcon(HeroIcons.pencil),
-                                    enabledColor: Colors.transparent,
-                                  ),
+                            ShrinkButton(
+                              onTap: () async {
+                                if (!key.currentState!.validate()) {
+                                  return;
+                                }
+                                await tokenExpireWrapper(ref, () async {
+                                  Group newGroup = group.copyWith(
+                                      name: name.text,
+                                      description: description.text);
+                                  groupNotifier.setGroup(newGroup);
+                                  final value = await groupListNotifier
+                                      .updateGroup(newGroup.toSimpleGroup());
+                                  if (value) {
+                                    QR.back();
+                                    displayToastWithContext(TypeMsg.msg,
+                                        AdminTextConstants.updatedAssociation);
+                                  } else {
+                                    displayToastWithContext(TypeMsg.msg,
+                                        AdminTextConstants.updatingError);
+                                  }
+                                });
+                              },
+                              builder: (child) => AdminButton(child: child),
+                              child: const Text(
+                                AdminTextConstants.edit,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 255, 255, 255),
                                 ),
-                                Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    alignment: Alignment.centerLeft,
-                                    child: TextEntry(
-                                      controller: description,
-                                      color: ColorConstants.gradient1,
-                                      label: AdminTextConstants.description,
-                                      suffixIcon:
-                                          const HeroIcon(HeroIcons.pencil),
-                                      enabledColor: Colors.transparent,
-                                    )),
-                                const SizedBox(height: 20),
-                                ShrinkButton(
-                                  onTap: () async {
-                                    if (!key.currentState!.validate()) {
-                                      return;
-                                    }
-                                    await tokenExpireWrapper(ref, () async {
-                                      Group newGroup = groups[0].copyWith(
-                                          name: name.text,
-                                          description: description.text);
-                                      groupNotifier.setGroup(newGroup);
-                                      final value =
-                                          await groupListNotifier.updateGroup(
-                                              newGroup.toSimpleGroup());
-                                      if (value) {
-                                        QR.back();
-                                        displayToastWithContext(
-                                            TypeMsg.msg,
-                                            AdminTextConstants
-                                                .updatedAssociation);
-                                      } else {
-                                        displayToastWithContext(TypeMsg.msg,
-                                            AdminTextConstants.updatingError);
-                                      }
-                                    });
-                                  },
-                                  builder: (child) => AdminButton(child: child),
-                                  child: const Text(
-                                    AdminTextConstants.edit,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                                const SearchUser(),
-                              ]),
-                            )
-                          ]);
-                        },
-                        loaderColor: Colors.white);
-                  },
-                  loaderColor: Colors.white))),
-    );
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            const SearchUser(),
+                          ]),
+                        )
+                      ]);
+                    },
+                    loaderColor: Colors.white))));
   }
 }

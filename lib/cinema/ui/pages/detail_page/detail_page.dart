@@ -14,7 +14,7 @@ import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/local_notification_service.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DetailPage extends HookConsumerWidget {
@@ -43,61 +43,30 @@ class DetailPage extends HookConsumerWidget {
         CurvedAnimation(parent: animation, curve: Curves.easeInOut);
     return Stack(
       children: [
-        AsyncChild(
-            value: sessionPosterMap,
-            builder: (context, data) {
-              final sessionPoster = data[session];
-              if (sessionPoster == null) {
-                sessionPosterMapNotifier.autoLoad(
-                    ref,
-                    session,
-                        (session) =>
-                        sessionPosterNotifier.getLogo(session.id));
-                return const SizedBox.shrink();
-              }
-              return SizedBox(
-                  width: double.infinity,
-                  child: AsyncChild(
-                      value: sessionPoster,
-                      builder: (context, data) {
-                        if (data.isEmpty) {
-                          sessionPosterMapNotifier.autoLoad(
-                              ref,
-                              session,
-                              (session) =>
-                                  sessionPosterNotifier.getLogo(session.id));
-                          return Container(
-                            width: double.infinity,
-                            decoration: const BoxDecoration(boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 10,
-                                spreadRadius: 7,
-                                offset: Offset(0, 5),
-                              ),
-                            ]),
-                          );
-                        }
-                        return Container(
-                          width: double.infinity,
-                          decoration: const BoxDecoration(boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              spreadRadius: 7,
-                              offset: Offset(0, 5),
-                            ),
-                          ]),
-                          child: Image(
-                            image: data.first.image,
-                            fit: BoxFit.fill,
-                          ),
-                        );
-                      },
-                      errorBuilder: (error, stack) => const Center(
-                            child: HeroIcon(HeroIcons.exclamationCircle),
-                          )));
-            }),
+        Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10,
+                spreadRadius: 7,
+                offset: Offset(0, 5),
+              ),
+            ]),
+            child: AutoLoaderChild(
+                value: sessionPosterMap,
+                notifier: sessionPosterMapNotifier,
+                mapKey: session,
+                loader: (session) => sessionPosterNotifier.getLogo(session.id),
+                dataBuilder: (context, data) {
+                  return Image(
+                    image: data.image,
+                    fit: BoxFit.fill,
+                  );
+                },
+                errorBuilder: (error, stack) => const Center(
+                      child: HeroIcon(HeroIcons.exclamationCircle),
+                    ))),
         SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(

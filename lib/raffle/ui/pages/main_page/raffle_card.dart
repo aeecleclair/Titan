@@ -12,7 +12,7 @@ import 'package:myecl/raffle/providers/type_ticket_provider.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleWidget extends HookConsumerWidget {
@@ -77,81 +77,57 @@ class RaffleWidget extends HookConsumerWidget {
                       ]),
                 ),
                 const SizedBox(height: 20),
-                AsyncChild(
+                AutoLoaderChild(
                   value: raffleStats,
-                  builder: (context, statsList) {
-                    final stats = statsList[raffle.id];
-                    if (stats == null) {
-                      rafflesStatsNotifier.autoLoad(
-                          ref,
-                          raffle.id,
-                          (raffleId) async =>
-                              (await singleRaffleStats.loadRaffleStats(
-                                      customRaffleId: raffleId))
-                                  .maybeWhen(
-                                data: (value) => value,
-                                orElse: () => RaffleStats.empty(),
-                              ));
-                      return const SizedBox();
-                    }
-                    return AsyncChild(
-                      value: stats,
-                      builder: (context, stats) {
-                        if (stats.isEmpty) {
-                          rafflesStatsNotifier.autoLoad(
-                              ref,
-                              raffle.id,
-                              (raffleId) async =>
-                                  (await singleRaffleStats.loadRaffleStats(
-                                          customRaffleId: raffleId))
-                                      .maybeWhen(
-                                    data: (value) => value,
-                                    orElse: () => RaffleStats.empty(),
-                                  ));
-                          return const SizedBox();
-                        }
-                        return Row(
+                  notifier: rafflesStatsNotifier,
+                  mapKey: raffle.id,
+                  loader: (raffleId) async => (await singleRaffleStats
+                          .loadRaffleStats(customRaffleId: raffleId))
+                      .maybeWhen(
+                    data: (value) => value,
+                    orElse: () => RaffleStats.empty(),
+                  ),
+                  dataBuilder: (context, stat) {
+                    return Row(
+                      children: [
+                        const Spacer(),
+                        Column(
                           children: [
-                            const Spacer(),
-                            Column(
-                              children: [
-                                Text(
-                                  stats[0].ticketsSold.toString(),
-                                  style: const TextStyle(
-                                      color: RaffleColorConstants.textDark,
-                                      fontSize: 30),
-                                ),
-                                const Text(
-                                  RaffleTextConstants.tickets,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: RaffleColorConstants.textDark,
-                                      fontSize: 20),
-                                ),
-                              ],
+                            Text(
+                              stat.ticketsSold.toString(),
+                              style: const TextStyle(
+                                  color: RaffleColorConstants.textDark,
+                                  fontSize: 30),
                             ),
-                            const Spacer(flex: 2),
-                            Column(
-                              children: [
-                                Text(
-                                  "${stats[0].amountRaised.toStringAsFixed(2)} €",
-                                  style: const TextStyle(
-                                      color: RaffleColorConstants.textDark,
-                                      fontSize: 30),
-                                ),
-                                const Text(
-                                  RaffleTextConstants.gathered,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: RaffleColorConstants.textDark,
-                                      fontSize: 20),
-                                ),
-                              ],
+                            const Text(
+                              RaffleTextConstants.tickets,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: RaffleColorConstants.textDark,
+                                  fontSize: 20),
                             ),
-                            const Spacer(),
                           ],
-                        );
-                      },
+                        ),
+                        const Spacer(flex: 2),
+                        Column(
+                          children: [
+                            Text(
+                              "${stat.amountRaised.toStringAsFixed(2)} €",
+                              style: const TextStyle(
+                                  color: RaffleColorConstants.textDark,
+                                  fontSize: 30),
+                            ),
+                            const Text(
+                              RaffleTextConstants.gathered,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: RaffleColorConstants.textDark,
+                                  fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                      ],
                     );
                   },
                 ),
