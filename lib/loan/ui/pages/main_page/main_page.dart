@@ -64,7 +64,7 @@ class LoanMainPage extends HookConsumerWidget {
                         AlignLeftText(
                           '${dictCateListWidget[0].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[0].length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          color: const Color.fromARGB(255, 149, 149, 149),
+                          color: Colors.grey,
                         ),
                         const SizedBox(height: 10),
                         SizedBox(
@@ -90,7 +90,7 @@ class LoanMainPage extends HookConsumerWidget {
                         ? SizedBox(
                             height: MediaQuery.of(context).size.height * 0.7,
                             width: MediaQuery.of(context).size.width,
-                            child: const Column(
+                            child: Column(
                               children: [
                                 Expanded(
                                   child: Center(
@@ -98,10 +98,10 @@ class LoanMainPage extends HookConsumerWidget {
                                           style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(
-                                                  255, 205, 205, 205)))),
+                                              color: Colors.grey.shade300))),
+
                                 ),
-                                Spacer()
+                                const Spacer()
                               ],
                             ),
                           )
@@ -112,7 +112,7 @@ class LoanMainPage extends HookConsumerWidget {
                     AlignLeftText(
                       '${dictCateListWidget[1].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''}',
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      color: const Color.fromARGB(255, 149, 149, 149),
+                      color: Colors.grey,
                     ),
                     const SizedBox(height: 10),
                     SizedBox(

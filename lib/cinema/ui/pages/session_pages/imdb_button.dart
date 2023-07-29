@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/cinema/tools/constants.dart';
 
 class ImdbButton extends StatelessWidget {
   final Widget child;
@@ -10,7 +11,7 @@ class ImdbButton extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: const Color(0xffe2b616),
+        color: CinemaColorConstants.imdbColor,
       ),
       child: child,
     );

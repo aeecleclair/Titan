@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 
 class UserFieldModifier extends StatelessWidget {
@@ -30,7 +31,7 @@ class UserFieldModifier extends StatelessWidget {
             label: label,
             keyboardType: keyboardType,
             controller: controller,
-            color: const Color(0xFFfb6d10),
+            color: ColorConstants.gradient1,
             isInt: keyboardType == TextInputType.number,
           ),
         ),

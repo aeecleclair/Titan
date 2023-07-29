@@ -7,6 +7,8 @@ class RaffleColorConstants extends ColorConstants {
   static const Color writtenWhite = Color(0xfffafaeb);
   static const Color gradient1 = Color(0xff1aa6b7);
   static const Color gradient2 = Color(0xff002d40);
+  static const Color blueGradient1 = Color(0xff0193a5);
+  static const Color blueGradient2 = Color(0xff004a59);
   static const Color textDark = Color.fromARGB(255, 0, 23, 32);
   static const Color redGradient1 = Color(0xFFfb6d10);
   static const Color redGradient2 = Color.fromARGB(255, 155, 51, 10);

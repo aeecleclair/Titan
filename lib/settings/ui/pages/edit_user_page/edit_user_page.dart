@@ -9,7 +9,9 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/picture_button.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart';
 import 'package:myecl/settings/ui/settings.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
@@ -63,7 +65,7 @@ class EditUserPage extends HookConsumerWidget {
                   const SizedBox(height: 20),
                   const AlignLeftText(
                     SettingsTextConstants.editAccount,
-                    color: Color.fromARGB(255, 149, 149, 149),
+                    color: Colors.grey,
                   ),
                   const SizedBox(height: 40),
                   AsyncChild(
@@ -240,15 +242,15 @@ class EditUserPage extends HookConsumerWidget {
                             decoration: BoxDecoration(
                                 gradient: const LinearGradient(
                                   colors: [
-                                    Color(0xFFfb6d10),
-                                    Color(0xffeb3e1b)
+                                    ColorConstants.gradient1,
+                                    ColorConstants.gradient2
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xffeb3e1b)
+                                    color: ColorConstants.gradient2
                                         .withOpacity(0.5),
                                     spreadRadius: 1,
                                     blurRadius: 7,
@@ -295,33 +297,17 @@ class EditUserPage extends HookConsumerWidget {
                               contentPadding: EdgeInsets.all(10),
                               isDense: true,
                               focusedBorder: UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xFFfb6d10)))),
+                                  borderSide: BorderSide(
+                                      color: ColorConstants.gradient1))),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 50),
                   ShrinkButton(
-                    builder: (child) => Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(
-                          bottom: 12, top: 8, right: 12, left: 12),
-                      decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFFfb6d10), Color(0xffeb3e1b)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xffeb3e1b).withOpacity(0.5),
-                              spreadRadius: 1,
-                              blurRadius: 7,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(20)),
+                    builder: (child) => AddEditButtonLayout(
+                      color: ColorConstants.gradient1,
+                      gradient: ColorConstants.gradient2,
                       child: child,
                     ),
                     onTap: () async {

@@ -130,7 +130,7 @@ class AdminPage extends HookConsumerWidget {
             const AlignLeftText(
               BookingTextConstants.room,
               padding: EdgeInsets.symmetric(horizontal: 30.0),
-              color: Color.fromARGB(255, 149, 149, 149),
+              color: Colors.grey,
             ),
             const SizedBox(height: 30),
             AsyncChild(

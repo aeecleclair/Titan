@@ -87,17 +87,17 @@ class OnGoingLoan extends HookConsumerWidget {
                           },
                           focusNode: focusNode,
                           controller: editingController,
-                          cursorColor: const Color.fromARGB(255, 149, 149, 149),
+                          cursorColor: Colors.grey,
                           decoration: InputDecoration(
                               labelText:
                                   '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
                               labelStyle: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 149, 149, 149)),
+                                  color: Colors.grey),
                               suffixIcon: const Icon(
                                 Icons.search,
-                                color: Color.fromARGB(255, 149, 149, 149),
+                                color: Colors.grey,
                                 size: 30,
                               ),
                               enabledBorder: const UnderlineInputBorder(
@@ -106,9 +106,7 @@ class OnGoingLoan extends HookConsumerWidget {
                                 ),
                               ),
                               focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 149, 149, 149),
-                                ),
+                                borderSide: BorderSide(color: Colors.grey),
                               )),
                         ),
                       ),

@@ -32,7 +32,7 @@ class LogPage extends HookConsumerWidget {
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149))),
+                            color: Colors.grey)),
                     GestureDetector(
                       onTap: () {
                         showDialog(

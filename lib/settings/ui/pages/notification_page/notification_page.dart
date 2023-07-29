@@ -27,7 +27,7 @@ class NotificationPage extends HookConsumerWidget {
               const AlignLeftText(
                 SettingsTextConstants.updateNotification,
                 padding: EdgeInsets.symmetric(vertical: 30),
-                color: Color.fromARGB(255, 149, 149, 149),
+                color: Colors.grey,
               ),
               AsyncChild(
                   value: topics,

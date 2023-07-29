@@ -83,7 +83,7 @@ class AdminPage extends HookConsumerWidget {
               const AlignLeftText(
                 VoteTextConstants.pretendance,
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
-                color: Color.fromARGB(255, 149, 149, 149),
+                color: Colors.grey,
               ),
               const SizedBox(height: 10),
               const SectionContenderItems(),
@@ -99,7 +99,7 @@ class AdminPage extends HookConsumerWidget {
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 149, 149, 149))),
+                              color: Colors.grey)),
                       if (showVotes && status == Status.counting)
                         Expanded(
                           child: Row(

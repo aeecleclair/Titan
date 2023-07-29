@@ -36,7 +36,7 @@ class AddSectionPage extends HookConsumerWidget {
           child: Column(children: [
             const SizedBox(height: 50),
             const AlignLeftText(VoteTextConstants.addSection,
-                color: Color.fromARGB(255, 149, 149, 149)),
+                color: Colors.grey),
             Form(
               key: key,
               child: Column(

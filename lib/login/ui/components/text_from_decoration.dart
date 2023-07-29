@@ -15,13 +15,13 @@ InputDecoration signInRegisterInputDecoration(
       focusedBorder: UnderlineInputBorder(
         borderSide: BorderSide(
             color: isSignIn
-                ? const Color.fromARGB(255, 124, 124, 124)
+                ? Colors.grey.shade600
                 : Colors.white),
       ),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(
             color: isSignIn
-                ? const Color.fromARGB(255, 124, 124, 124)
+                ? Colors.grey.shade600
                 : Colors.white),
       ),
       errorBorder: const UnderlineInputBorder(
@@ -38,7 +38,7 @@ InputDecoration signInRegisterInputDecoration(
               icon: Icon(
                 notifier.value ? Icons.visibility : Icons.visibility_off,
                 color: isSignIn
-                    ? const Color.fromARGB(255, 124, 124, 124)
+                    ? Colors.grey.shade600
                     : Colors.white,
               ),
               onPressed: () {

@@ -96,7 +96,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                       isEdit
                           ? BookingTextConstants.editBooking
                           : BookingTextConstants.addBooking,
-                      color: const Color.fromARGB(255, 149, 149, 149)),
+                      color: Colors.grey),
                 ),
                 const SizedBox(height: 20),
                 AsyncChild(

@@ -27,7 +27,10 @@ class PrizeCard extends StatelessWidget {
     return CardLayout(
       width: 130,
       height: 125,
-      colors: const [Color(0xff0193a5), Color(0xff004a59)],
+      colors: const [
+        RaffleColorConstants.blueGradient1,
+        RaffleColorConstants.blueGradient2
+      ],
       shadowColor: RaffleColorConstants.textDark.withOpacity(0.2),
       padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
       child: Column(

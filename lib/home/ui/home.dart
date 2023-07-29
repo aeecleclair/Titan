@@ -68,7 +68,7 @@ class HomePage extends HookConsumerWidget {
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 149, 149, 149)),
+                                  color: Colors.grey),
                             ),
                           ),
                   ))

@@ -38,7 +38,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                 isEdit
                     ? BookingTextConstants.editRoom
                     : BookingTextConstants.addRoom,
-                color: const Color.fromARGB(255, 149, 149, 149)),
+                color: Colors.grey),
             Form(
               key: key,
               child: Column(

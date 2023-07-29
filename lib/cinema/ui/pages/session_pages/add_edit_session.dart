@@ -76,7 +76,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                     isEdit
                         ? CinemaTextConstants.editSession
                         : CinemaTextConstants.addSession,
-                    color: const Color.fromARGB(255, 149, 149, 149)),
+                    color: Colors.grey),
                 const SizedBox(height: 30),
                 TextField(
                   controller: imdbUrl,

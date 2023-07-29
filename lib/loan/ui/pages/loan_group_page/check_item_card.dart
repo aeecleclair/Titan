@@ -40,7 +40,7 @@ class CheckItemCard extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: item.loanedQuantity < item.totalQuantity
                       ? Colors.grey.shade400
-                      : const Color.fromARGB(255, 172, 32, 10))),
+                      : LoanColorConstants.redGradient2)),
           const SizedBox(height: 5),
           AutoSizeText('${item.caution.toStringAsFixed(2)} €',
               maxLines: 1,

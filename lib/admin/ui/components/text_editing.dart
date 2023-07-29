@@ -21,7 +21,7 @@ class TextEditing extends StatelessWidget {
               label,
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: const Color.fromARGB(255, 158, 158, 158),
+              color: Colors.grey.shade500,
             ),
             TextEntry(
               label: label,

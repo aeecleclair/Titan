@@ -5,6 +5,8 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/settings/ui/pages/change_pass/test_entry_style.dart';
 import 'package:myecl/settings/ui/settings.dart';
+import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -47,7 +49,7 @@ class ChangePassPage extends HookConsumerWidget {
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: TextFormField(
-                      cursorColor: const Color(0xFFfb6d10),
+                      cursorColor: ColorConstants.gradient1,
                       decoration: changePassInputDecoration(
                           hintText: SettingsTextConstants.oldPassword,
                           notifier: hideOldPass),
@@ -64,7 +66,7 @@ class ChangePassPage extends HookConsumerWidget {
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: TextFormField(
-                      cursorColor: const Color(0xFFfb6d10),
+                      cursorColor: ColorConstants.gradient1,
                       decoration: changePassInputDecoration(
                           hintText: SettingsTextConstants.newPassword,
                           notifier: hideNewPass),
@@ -81,7 +83,7 @@ class ChangePassPage extends HookConsumerWidget {
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: TextFormField(
-                      cursorColor: const Color(0xFFfb6d10),
+                      cursorColor: ColorConstants.gradient1,
                       decoration: changePassInputDecoration(
                           hintText: SettingsTextConstants.confirmPassword,
                           notifier: hideConfirmPass),
@@ -100,24 +102,9 @@ class ChangePassPage extends HookConsumerWidget {
                 PasswordStrength(newPassword: newPassword),
                 const SizedBox(height: 60),
                 ShrinkButton(
-                  builder: (child) => Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(bottom: 16, top: 12),
-                    decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFfb6d10), Color(0xffeb3e1b)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xffeb3e1b).withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10)),
+                  builder: (child) => AddEditButtonLayout(
+                    color: ColorConstants.gradient1,
+                    gradient: ColorConstants.gradient2,
                     child: child,
                   ),
                   onTap: () async {
