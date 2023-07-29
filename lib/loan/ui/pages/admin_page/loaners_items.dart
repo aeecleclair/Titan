@@ -17,6 +17,7 @@ import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LoanersItems extends HookConsumerWidget {
@@ -44,62 +45,32 @@ class LoanersItems extends HookConsumerWidget {
     return AsyncChild(
         value: loanersItems,
         builder: (context, items) {
-          if (items[loaner] == null) {
+          final item = items[loaner];
+          if (item == null) {
             return const Center(
               child: Text(LoanTextConstants.noItems),
             );
           }
           return AsyncChild(
-            value: items[loaner]!,
+            value: item,
             builder: (context, data) {
               if (data.isNotEmpty) {
                 data.sort((a, b) => a.name.compareTo(b.name));
               }
               return Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: TextField(
-                        onChanged: (value) {
-                          tokenExpireWrapper(ref, () async {
-                            if (editingController.text.isNotEmpty) {
-                              loanersItemsNotifier.setTData(
-                                  loaner,
-                                  await itemListNotifier
-                                      .filterItems(editingController.text));
-                            } else {
-                              loanersItemsNotifier.setTData(loaner, itemList);
-                            }
-                          });
-                        },
-                        focusNode: focusNode,
-                        controller: editingController,
-                        cursorColor: Colors.grey,
-                        decoration: const InputDecoration(
-                            labelText: LoanTextConstants.itemHandling,
-                            labelStyle: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
-                            suffixIcon: Icon(
-                              Icons.search,
-                              color: Colors.grey,
-                              size: 30,
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.grey,
-                              ),
-                            )),
-                      ),
-                    ),
+                  StyledSearchBar(
+                    label: LoanTextConstants.itemHandling,
+                    onChanged: (value) async {
+                      if (editingController.text.isNotEmpty) {
+                        loanersItemsNotifier.setTData(
+                            loaner,
+                            await itemListNotifier
+                                .filterItems(editingController.text));
+                      } else {
+                        loanersItemsNotifier.setTData(loaner, itemList);
+                      }
+                    },
                   ),
                   const SizedBox(height: 10),
                   SizedBox(

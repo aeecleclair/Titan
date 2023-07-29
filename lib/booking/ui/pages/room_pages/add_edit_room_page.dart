@@ -43,13 +43,9 @@ class AddEditRoomPage extends HookConsumerWidget {
               key: key,
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   TextField(
-                    style: const TextStyle(
-                      color: ColorConstants.background2,
-                    ),
+                    style: const TextStyle(color: ColorConstants.background2),
                     controller: name,
                     cursorColor: Colors.black,
                     decoration: const InputDecoration(
