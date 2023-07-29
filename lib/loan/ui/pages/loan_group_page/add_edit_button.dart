@@ -15,8 +15,8 @@ import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditButton extends HookConsumerWidget {

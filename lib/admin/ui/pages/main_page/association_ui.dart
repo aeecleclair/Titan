@@ -5,7 +5,7 @@ import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/ui/pages/main_page/association_button.dart';
 import 'package:myecl/admin/ui/pages/main_page/card_ui.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
 
 class AssociationUi extends HookConsumerWidget {
   final SimpleGroup group;

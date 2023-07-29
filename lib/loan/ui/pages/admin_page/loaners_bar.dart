@@ -4,9 +4,9 @@ import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/item_chip.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 
 class LoanersBar extends HookConsumerWidget {
   final Function(Loaner) onTap;

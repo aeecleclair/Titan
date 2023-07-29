@@ -13,9 +13,9 @@ import 'package:myecl/raffle/ui/components/section_title.dart';
 import 'package:myecl/raffle/ui/pages/main_page/raffle_card.dart';
 import 'package:myecl/raffle/ui/pages/main_page/ticket_card.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
-import 'package:myecl/tools/ui/admin_button.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleMainPage extends HookConsumerWidget {

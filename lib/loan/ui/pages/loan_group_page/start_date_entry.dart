@@ -8,7 +8,7 @@ import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/date_entry.dart';
+import 'package:myecl/tools/ui/widgets/date_entry.dart';
 
 class StartDateEntry extends HookConsumerWidget {
   const StartDateEntry({super.key});

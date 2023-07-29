@@ -15,10 +15,10 @@ import 'package:myecl/raffle/ui/pages/admin_page/prize_handler.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/winning_ticket_handler.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/dialog.dart';
-import 'package:myecl/tools/ui/refresher.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});

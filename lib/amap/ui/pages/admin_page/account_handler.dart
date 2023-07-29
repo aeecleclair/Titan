@@ -9,8 +9,8 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/adding_user_container.dart';
 import 'package:myecl/amap/ui/pages/admin_page/cash_container.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/card_layout.dart';
-import 'package:myecl/tools/ui/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AccountHandler extends HookConsumerWidget {

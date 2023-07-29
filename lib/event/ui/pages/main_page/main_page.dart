@@ -9,10 +9,10 @@ import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/components/event_ui.dart';
-import 'package:myecl/tools/ui/admin_button.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/card_layout.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventMainPage extends HookConsumerWidget {

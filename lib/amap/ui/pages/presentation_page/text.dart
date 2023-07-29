@@ -5,7 +5,7 @@ import 'package:myecl/amap/providers/information_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/async_child.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PresentationPage extends HookConsumerWidget {

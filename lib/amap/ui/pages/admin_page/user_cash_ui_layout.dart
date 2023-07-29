@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/tools/ui/card_layout.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
 class UserCashUiLayout extends StatelessWidget {
   final Widget child;

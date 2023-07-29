@@ -7,8 +7,8 @@ import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/home/tools/constants.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/card_layout.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DaysEvent extends HookConsumerWidget {

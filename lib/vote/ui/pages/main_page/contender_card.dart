@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/card_button.dart';
+import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';

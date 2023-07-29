@@ -4,7 +4,7 @@ import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/initial_date_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/date_entry.dart';
+import 'package:myecl/tools/ui/widgets/date_entry.dart';
 
 class EndDateEntry extends HookConsumerWidget {
   const EndDateEntry({super.key});

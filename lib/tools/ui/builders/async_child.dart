@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/loader.dart';
+import 'package:myecl/tools/ui/widgets/loader.dart';
 
 class AsyncChild<T> extends StatelessWidget {
   final AsyncValue<T> value;

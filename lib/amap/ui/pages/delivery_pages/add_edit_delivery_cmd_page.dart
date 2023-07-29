@@ -13,11 +13,11 @@ import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/pages/delivery_pages/product_ui_check.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/date_entry.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/widgets/date_entry.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditDeliveryPage extends HookConsumerWidget {

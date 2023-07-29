@@ -8,8 +8,8 @@ import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class MemberResults extends HookConsumerWidget {

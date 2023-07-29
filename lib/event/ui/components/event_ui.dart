@@ -11,10 +11,10 @@ import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/components/edit_delete_button.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/card_button.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/layouts/card_button.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventUi extends ConsumerWidget {

@@ -5,7 +5,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/components/order_ui.dart';
 import 'package:myecl/amap/ui/components/product_ui.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});

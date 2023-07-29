@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:load_switch/load_switch.dart';
-import 'package:myecl/service/class/topic.dart';
 import 'package:myecl/service/providers/topic_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/service/tools/functions.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
-import 'package:myecl/tools/ui/async_child.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class NotificationPage extends HookConsumerWidget {
   const NotificationPage({super.key});

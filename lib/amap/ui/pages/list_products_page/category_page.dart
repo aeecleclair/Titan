@@ -9,7 +9,7 @@ import 'package:myecl/amap/providers/sorted_delivery_product.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/list_products_page/product_ui_list.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/align_left_text.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 
 class CategoryPage extends HookConsumerWidget {
   final String category;
