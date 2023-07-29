@@ -10,19 +10,21 @@ import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/components/booking_card.dart';
-import 'package:myecl/booking/ui/calendar.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/tools/ui/widgets/calendar.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class BookingMainPage extends HookConsumerWidget {
   const BookingMainPage({super.key});
@@ -33,6 +35,7 @@ class BookingMainPage extends HookConsumerWidget {
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final confirmedBookingsNotifier =
         ref.watch(confirmedBookingListProvider.notifier);
+    final confirmedBookings = ref.watch(confirmedBookingListProvider);
     final bookings = ref.watch(userBookingListProvider);
     final allBookingsNotifier = ref.watch(bookingListProvider.notifier);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
@@ -41,6 +44,38 @@ class BookingMainPage extends HookConsumerWidget {
     void displayToastWithContext(TypeMsg type, String message) {
       displayToast(context, type, message);
     }
+
+    List<Appointment> appointments = <Appointment>[];
+    confirmedBookings.whenData((confirmedBookings) {
+      confirmedBookings.map((e) {
+        if (e.recurrenceRule != "") {
+          final dates = getDateInRecurrence(e.recurrenceRule, e.start);
+          dates.map((data) {
+            appointments.add(Appointment(
+              startTime: combineDate(data, e.start),
+              endTime: combineDate(data, e.end),
+              subject: '${e.room.name} - ${e.reason}',
+              isAllDay: false,
+              startTimeZone: "Europe/Paris",
+              endTimeZone: "Europe/Paris",
+              notes: e.note,
+              color: generateColor(e.room.name),
+            ));
+          }).toList();
+        } else {
+          appointments.add(Appointment(
+            startTime: e.start,
+            endTime: e.end,
+            subject: '${e.room.name} - ${e.reason}',
+            isAllDay: false,
+            startTimeZone: "Europe/Paris",
+            endTimeZone: "Europe/Paris",
+            notes: e.note,
+            color: generateColor(e.room.name),
+          ));
+        }
+      }).toList();
+    });
 
     return BookingTemplate(
       child: Refresher(
@@ -52,7 +87,10 @@ class BookingMainPage extends HookConsumerWidget {
           height: MediaQuery.of(context).size.height - 85,
           child: Column(children: [
             const SizedBox(height: 20),
-            const Expanded(child: Calendar()),
+            Expanded(
+                child: Calendar(
+                    items: confirmedBookings,
+                    dataSource: AppointmentDataSource(appointments))),
             SizedBox(
               height: (isAdmin) ? 25 : 30,
             ),
