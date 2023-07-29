@@ -51,7 +51,7 @@ class AddEditItemPage extends HookConsumerWidget {
                     ? LoanTextConstants.editItem
                     : LoanTextConstants.addObject,
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                color: const Color.fromARGB(255, 149, 149, 149),
+                color: Colors.grey,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),

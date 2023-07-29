@@ -98,7 +98,10 @@ class PrizeHandler extends HookConsumerWidget {
                 child: CardLayout(
                     width: 100,
                     height: 125,
-                    colors: const [Color(0xff0193a5), Color(0xff004a59)],
+                    colors: const [
+                      RaffleColorConstants.blueGradient1,
+                      RaffleColorConstants.blueGradient2
+                    ],
                     shadowColor: RaffleColorConstants.textDark.withOpacity(0.2),
                     child: const Center(
                       child: HeroIcon(

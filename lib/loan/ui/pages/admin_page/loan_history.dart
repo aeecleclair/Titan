@@ -65,16 +65,16 @@ class HistoryLoan extends HookConsumerWidget {
                           },
                           focusNode: focusNode,
                           controller: editingController,
-                          cursorColor: const Color.fromARGB(255, 149, 149, 149),
+                          cursorColor: Colors.grey,
                           decoration: const InputDecoration(
                               labelText: LoanTextConstants.history,
                               labelStyle: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 149, 149, 149)),
+                                  color: Colors.grey),
                               suffixIcon: Icon(
                                 Icons.search,
-                                color: Color.fromARGB(255, 149, 149, 149),
+                                color: Colors.grey,
                                 size: 30,
                               ),
                               enabledBorder: UnderlineInputBorder(
@@ -84,7 +84,7 @@ class HistoryLoan extends HookConsumerWidget {
                               ),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 149, 149, 149),
+                                  color: Colors.grey,
                                 ),
                               )),
                         ),

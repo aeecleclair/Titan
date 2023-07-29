@@ -86,7 +86,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                 VoteTextConstants.addPretendance,
                 padding:
                     EdgeInsets.only(top: 40, left: 30, right: 30, bottom: 50),
-                color: Color.fromARGB(255, 149, 149, 149),
+                color: Colors.grey,
               ),
               Center(
                 child: Stack(

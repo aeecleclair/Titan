@@ -54,7 +54,7 @@ class MonthBar extends HookConsumerWidget {
                   style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 149, 149, 149))),
+                      color: Colors.grey)),
             ),
           ],
         ),
@@ -83,7 +83,7 @@ class MonthBar extends HookConsumerWidget {
                   style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 149, 149, 149))),
+                      color: Colors.grey)),
             ),
             const SizedBox(
               width: 30,

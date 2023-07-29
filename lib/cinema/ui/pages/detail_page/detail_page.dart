@@ -82,7 +82,7 @@ class DetailPage extends HookConsumerWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      const Color.fromARGB(0, 255, 255, 255),
+                      Colors.transparent,
                       Colors.grey.shade50.withOpacity(0.85),
                       Colors.grey.shade50,
                     ],

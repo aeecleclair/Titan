@@ -29,7 +29,7 @@ class DaysEvent extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
         child: Column(
           children: [
-            AlignLeftText(day, color: const Color.fromARGB(255, 149, 149, 149)),
+            AlignLeftText(day, color: Colors.grey),
             const SizedBox(height: 10),
             ...events.map((event) {
               final start = DateTime(event.start.year, event.start.month,

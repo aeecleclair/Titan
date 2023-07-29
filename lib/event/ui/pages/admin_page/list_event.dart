@@ -53,14 +53,14 @@ class ListEvent extends HookConsumerWidget {
                   children: [
                     AlignLeftText(
                       "$title${incomingEvents.length > 1 ? "s" : ""} (${incomingEvents.length})",
-                      color: const Color.fromARGB(255, 149, 149, 149),
+                      color: Colors.grey,
                     ),
                     if (canToggle)
                       HeroIcon(
                         toggle.value
                             ? HeroIcons.chevronUp
                             : HeroIcons.chevronDown,
-                        color: const Color.fromARGB(255, 149, 149, 149),
+                        color: Colors.grey,
                         size: 30,
                       ),
                   ],

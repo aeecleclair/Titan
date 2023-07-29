@@ -8,6 +8,11 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 class PasswordStrength extends HookConsumerWidget {
   final TextEditingController newPassword;
   final Color textColor;
+  final Color color0 = const Color(0xffd31336);
+  final Color color1 = const Color(0xff880e65);
+  final Color color2 = const Color(0xff1c1840);
+  final Color color3 = const Color(0xff3a5a81);
+  final Color color4 = const Color(0xff1791b1);
 
   const PasswordStrength(
       {super.key, required this.newPassword, this.textColor = Colors.black});
@@ -35,33 +40,29 @@ class PasswordStrength extends HookConsumerWidget {
                     TweenSequenceItem(
                       weight: 1.0,
                       tween: Tween<Color>(
-                        begin:
-                            useColor ? const Color(0xffd31336) : Colors.white,
-                        end: useColor ? const Color(0xff880e65) : Colors.white,
+                        begin: useColor ? color0 : Colors.white,
+                        end: useColor ? color1 : Colors.white,
                       ),
                     ),
                     TweenSequenceItem(
                       weight: 1.0,
                       tween: Tween<Color>(
-                        begin:
-                            useColor ? const Color(0xff880e65) : Colors.white,
-                        end: useColor ? const Color(0xff1c1840) : Colors.white,
+                        begin: useColor ? color1 : Colors.white,
+                        end: useColor ? color2 : Colors.white,
                       ),
                     ),
                     TweenSequenceItem(
                       weight: 1.0,
                       tween: Tween<Color>(
-                        begin:
-                            useColor ? const Color(0xff1c1840) : Colors.white,
-                        end: useColor ? const Color(0xff3a5a81) : Colors.white,
+                        begin: useColor ? color2 : Colors.white,
+                        end: useColor ? color3 : Colors.white,
                       ),
                     ),
                     TweenSequenceItem(
                       weight: 1.0,
                       tween: Tween<Color>(
-                        begin:
-                            useColor ? const Color(0xff3a5a81) : Colors.white,
-                        end: useColor ? const Color(0xff1791b1) : Colors.white,
+                        begin: useColor ? color3 : Colors.white,
+                        end: useColor ? color4 : Colors.white,
                       ),
                     ),
                   ]),

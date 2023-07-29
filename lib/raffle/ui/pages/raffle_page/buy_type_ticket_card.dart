@@ -35,7 +35,7 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
           decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: const Color.fromARGB(231, 4, 0, 11).withOpacity(0.4),
+                  color: Colors.black.withOpacity(0.4),
                   blurRadius: 8,
                   offset: const Offset(2, 3),
                 ),

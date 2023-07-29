@@ -73,7 +73,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                     },
                     focusNode: focusNode,
                     controller: editingController,
-                    cursorColor: const Color.fromARGB(255, 149, 149, 149),
+                    cursorColor: Colors.grey,
                     decoration: InputDecoration(
                         labelText: isEdit
                             ? LoanTextConstants.editLoan
@@ -81,10 +81,10 @@ class AddEditLoanPage extends HookConsumerWidget {
                         labelStyle: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149)),
+                            color: Colors.grey),
                         suffixIcon: const Icon(
                           Icons.search,
-                          color: Color.fromARGB(255, 149, 149, 149),
+                          color: Colors.grey,
                           size: 30,
                         ),
                         enabledBorder: const UnderlineInputBorder(
@@ -93,17 +93,13 @@ class AddEditLoanPage extends HookConsumerWidget {
                           ),
                         ),
                         focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color.fromARGB(255, 149, 149, 149),
-                          ),
+                          borderSide: BorderSide(color: Colors.grey),
                         )),
                   ),
                 ),
               ),
               const SizedBox(height: 10),
-              ItemBar(
-                isEdit: isEdit,
-              ),
+              ItemBar(isEdit: isEdit),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Column(children: [
@@ -124,9 +120,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                     canBeEmpty: true,
                     controller: queryController,
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   SearchResult(queryController: queryController),
                   const SizedBox(height: 30),
                   const StartDateEntry(),
@@ -144,12 +138,12 @@ class AddEditLoanPage extends HookConsumerWidget {
                   AddEditButton(
                     isEdit: isEdit,
                     note: note,
-                    onAddEdit: (p0) async {
+                    onAddEdit: (processingData) async {
                       if (key.currentState == null) {
                         return;
                       }
                       if (key.currentState!.validate()) {
-                        p0();
+                        processingData();
                       } else {
                         displayToast(context, TypeMsg.error,
                             LoanTextConstants.incorrectOrMissingFields);

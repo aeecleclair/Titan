@@ -99,7 +99,8 @@ class AddEditEventPage extends HookConsumerWidget {
                         ? EventTextConstants.editEvent
                         : EventTextConstants.addEvent,
                     padding: const EdgeInsets.symmetric(horizontal: 30),
-                    color: const Color.fromARGB(255, 149, 149, 149)),
+                    color: Colors.grey,
+                ),
                 const SizedBox(height: 30),
                 HorizontalListView(
                   child: Row(

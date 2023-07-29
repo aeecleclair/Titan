@@ -68,7 +68,7 @@ class AddAssociationPage extends HookConsumerWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 255, 255, 255),
+                        color: Colors.white,
                       ),
                     ),
                   )

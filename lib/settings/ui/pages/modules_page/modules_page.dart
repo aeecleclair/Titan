@@ -55,7 +55,7 @@ class ModulesPage extends HookConsumerWidget {
                     Text(
                       module.name,
                       style: const TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
+                        color: Colors.black,
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                       ),

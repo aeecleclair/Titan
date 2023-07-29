@@ -42,13 +42,13 @@ class LoanCard extends StatelessWidget {
         height: (isAdmin && !isDetail) ? 170 : isHistory ? 110 : 160,
         colors: shouldReturn
             ? [
-                const Color.fromARGB(255, 250, 66, 38),
-                const Color.fromARGB(255, 172, 32, 10)
+                LoanColorConstants.redGradient1,
+                LoanColorConstants.redGradient2,
               ]
             : [Colors.white, Colors.white],
         shadowColor: shouldReturn
-            ? const Color.fromARGB(255, 172, 32, 10).withOpacity(0.25)
-            : const Color(0x80EEEEEE),
+            ? LoanColorConstants.redGradient2.withOpacity(0.25)
+            : LoanColorConstants.shadowColor,
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -61,7 +61,7 @@ class LoanCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: 25,
+                      width: 25
                     ),
                     AutoSizeText(capitalize(loan.loaner.name),
                         maxLines: 1,
@@ -117,7 +117,7 @@ class LoanCard extends StatelessWidget {
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                         color: shouldReturn
-                            ? const Color.fromARGB(255, 99, 13, 0)
+                            ? LoanColorConstants.urgentRed
                             : Colors.grey.shade400)),
                 Text(processDate(loan.end),
                     style: TextStyle(
@@ -141,13 +141,13 @@ class LoanCard extends StatelessWidget {
                           : Colors.grey.shade200,
                       child: HeroIcon(HeroIcons.pencil,
                           color: shouldReturn
-                              ? const Color.fromARGB(255, 99, 13, 0)
+                              ? LoanColorConstants.urgentRed
                               : Colors.black),
                     ),
                   ),
                   ShrinkButton(
                     waitingColor: shouldReturn
-                        ? const Color.fromARGB(255, 99, 13, 0)
+                        ? LoanColorConstants.urgentRed
                         : Colors.black,
                     builder: (child) => CardButton(
                         color: shouldReturn
@@ -157,13 +157,13 @@ class LoanCard extends StatelessWidget {
                     onTap: onCalendar,
                     child: HeroIcon(HeroIcons.calendarDays,
                         color: shouldReturn
-                            ? const Color.fromARGB(255, 99, 13, 0)
+                            ? LoanColorConstants.urgentRed
                             : Colors.black),
                   ),
                   ShrinkButton(
                     builder: (child) => CardButton(
                         color: shouldReturn
-                            ? const Color.fromARGB(255, 99, 13, 0)
+                            ? LoanColorConstants.urgentRed
                             : Colors.black,
                         child: child),
                     onTap: onReturn,
