@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 final sortedEventListProvider = Provider<Map<String, List<Event>>>((ref) {
   final eventList = ref.watch(confirmedEventListProvider);

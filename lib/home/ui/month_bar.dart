@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/home/providers/days_provider.dart';
 import 'package:myecl/home/providers/number_day_provider.dart';
-import 'package:myecl/home/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class MonthBar extends HookConsumerWidget {
   final ScrollController scrollController;

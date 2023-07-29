@@ -10,7 +10,6 @@ import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/components/booking_card.dart';
 import 'package:myecl/tools/constants.dart';
