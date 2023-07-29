@@ -9,8 +9,8 @@ import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/calendar.dart';
 import 'package:myecl/booking/ui/pages/admin_page/list_booking.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -18,7 +18,9 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tools/ui/widgets/calendar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -32,7 +34,7 @@ class AdminPage extends HookConsumerWidget {
     final List<Booking> pendingBookings = [],
         confirmedBookings = [],
         canceledBookings = [];
-    bookings.when(
+    bookings.maybeWhen(
         data: (
           bookings,
         ) {
@@ -53,8 +55,36 @@ class AdminPage extends HookConsumerWidget {
           canceledBookings.sort((a, b) => b.start.compareTo(a.start));
           pendingBookings.sort((a, b) => b.start.compareTo(a.start));
         },
-        error: (e, s) {},
-        loading: () {});
+        orElse: () {});
+    List<Appointment> appointments = <Appointment>[];
+    confirmedBookings.map((e) {
+      if (e.recurrenceRule != "") {
+        final dates = getDateInRecurrence(e.recurrenceRule, e.start);
+        dates.map((data) {
+          appointments.add(Appointment(
+            startTime: combineDate(data, e.start),
+            endTime: combineDate(data, e.end),
+            subject: '${e.room.name} - ${e.reason}',
+            isAllDay: false,
+            startTimeZone: "Europe/Paris",
+            endTimeZone: "Europe/Paris",
+            notes: e.note,
+            color: generateColor(e.room.name),
+          ));
+        }).toList();
+      } else {
+        appointments.add(Appointment(
+          startTime: e.start,
+          endTime: e.end,
+          subject: '${e.room.name} - ${e.reason}',
+          isAllDay: false,
+          startTimeZone: "Europe/Paris",
+          endTimeZone: "Europe/Paris",
+          notes: e.note,
+          color: generateColor(e.room.name),
+        ));
+      }
+    }).toList();
     return BookingTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -69,7 +99,10 @@ class AdminPage extends HookConsumerWidget {
             const SizedBox(height: 20),
             SizedBox(
                 height: MediaQuery.of(context).size.height - 380,
-                child: const Calendar()),
+                child:
+                    Calendar(
+                        items: bookings,
+                        dataSource: AppointmentDataSource(appointments))),
             const SizedBox(height: 30),
             if (pendingBookings.isEmpty &&
                 confirmedBookings.isEmpty &&

@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
@@ -11,12 +10,21 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+
+class AppointmentDataSource extends CalendarDataSource {
+  AppointmentDataSource(List<Appointment> source) {
+    appointments = source;
+  }
+}
+
+
 class Calendar extends HookConsumerWidget {
-  const Calendar({super.key});
+  final CalendarDataSource<Object?>? dataSource;
+  final AsyncValue<List<Object?>> items;
+  const Calendar({super.key, required this.dataSource, required this.items});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookings = ref.watch(confirmedBookingListProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);
 
     void calendarTapped(CalendarTapDetails details, BuildContext context) {
@@ -90,7 +98,7 @@ class Calendar extends HookConsumerWidget {
         height: constraints.maxHeight,
         width: constraints.maxWidth,
         child: AsyncChild(
-            value: bookings,
+            value: items,
             builder: (context, res) {
               return Container(
                 margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -98,7 +106,7 @@ class Calendar extends HookConsumerWidget {
                   children: [
                     SfCalendar(
                       onTap: (details) => calendarTapped(details, context),
-                      dataSource: _getCalendarDataSource(res),
+                      dataSource: dataSource,
                       controller: calendarController,
                       view: CalendarView.week,
                       selectionDecoration: BoxDecoration(
@@ -199,44 +207,5 @@ class Calendar extends HookConsumerWidget {
             loaderColor: ColorConstants.background2),
       );
     });
-  }
-}
-
-_AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
-  List<Appointment> appointments = <Appointment>[];
-  res.map((e) {
-    if (e.recurrenceRule != "") {
-      final dates = getDateInRecurrence(e.recurrenceRule, e.start);
-      dates.map((data) {
-        appointments.add(Appointment(
-          startTime: combineDate(data, e.start),
-          endTime: combineDate(data, e.end),
-          subject: '${e.room.name} - ${e.reason}',
-          isAllDay: false,
-          startTimeZone: "Europe/Paris",
-          endTimeZone: "Europe/Paris",
-          notes: e.note,
-          color: generateColor(e.room.name),
-        ));
-      }).toList();
-    } else {
-      appointments.add(Appointment(
-        startTime: e.start,
-        endTime: e.end,
-        subject: '${e.room.name} - ${e.reason}',
-        isAllDay: false,
-        startTimeZone: "Europe/Paris",
-        endTimeZone: "Europe/Paris",
-        notes: e.note,
-        color: generateColor(e.room.name),
-      ));
-    }
-  }).toList();
-  return _AppointmentDataSource(appointments);
-}
-
-class _AppointmentDataSource extends CalendarDataSource {
-  _AppointmentDataSource(List<Appointment> source) {
-    appointments = source;
   }
 }
