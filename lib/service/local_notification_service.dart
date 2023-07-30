@@ -97,7 +97,7 @@ class LocalNotificationService {
             htmlFormatSummaryText: true);
     final AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails("fr.myecl.titan", "TitanNotification",
-            channelDescription: "Notifications channel forr Titan",
+            channelDescription: "Notifications channel for Titan",
             importance: Importance.max,
             priority: Priority.max,
             styleInformation: bigPictureStyleInformation,

@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,17 +11,15 @@ import 'package:myecl/drawer/providers/top_bar_callback_provider.dart';
 import 'package:myecl/login/providers/animation_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/service/local_notification_service.dart';
-import 'package:myecl/service/providers/firebase_token_provider.dart';
-import 'package:myecl/service/providers/messages_provider.dart';
 import 'package:myecl/router.dart';
+import 'package:myecl/service/tools/setup.dart';
 import 'package:myecl/tools/ui/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   QR.setUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -106,35 +103,4 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
         PointerDeviceKind.stylus,
         PointerDeviceKind.invertedStylus
       };
-}
-
-
-void setUpNotification(WidgetRef ref) {
-    final LocalNotificationService localNotificationService = LocalNotificationService();
-    localNotificationService.init();
-
-    final messages = ref.watch(messagesProvider);
-    final messageNotifier = ref.watch(messagesProvider.notifier);
-    final firebaseToken = ref.watch(firebaseTokenProvider);
-    
-    FirebaseMessaging.instance.requestPermission().then(
-      (value) => firebaseToken.then((value) {
-        messageNotifier.setFirebaseToken(value);
-        messageNotifier.registerDevice();
-      }),
-    );
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      messageNotifier.getMessages();
-      print('Got a message whilst in the foreground!');
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
-      if (message.notification != null) {
-        print("onMessageOpenedApp: ${message.notification!.body}");
-      }
-    });
-}
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
