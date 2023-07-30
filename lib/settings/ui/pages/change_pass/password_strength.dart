@@ -16,6 +16,7 @@ class PasswordStrength extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentStrength =
         useState(SettingsTextConstants.passwordStrengthVeryWeak);
+    final useColor = textColor == Colors.black;
     return ValueListenableBuilder(
         valueListenable: newPassword,
         builder: (context, value, child) {
@@ -41,29 +42,33 @@ class PasswordStrength extends HookConsumerWidget {
                     TweenSequenceItem(
                       weight: 1.0,
                       tween: Tween<Color>(
-                        begin: const Color(0xffd31336),
-                        end: const Color(0xff880e65),
+                        begin:
+                            useColor ? const Color(0xffd31336) : Colors.white,
+                        end: useColor ? const Color(0xff880e65) : Colors.white,
                       ),
                     ),
                     TweenSequenceItem(
                       weight: 1.0,
                       tween: Tween<Color>(
-                        begin: const Color(0xff880e65),
-                        end: const Color(0xff1c1840),
+                        begin:
+                            useColor ? const Color(0xff880e65) : Colors.white,
+                        end: useColor ? const Color(0xff1c1840) : Colors.white,
                       ),
                     ),
                     TweenSequenceItem(
                       weight: 1.0,
                       tween: Tween<Color>(
-                        begin: const Color(0xff1c1840),
-                        end: const Color(0xff3a5a81),
+                        begin:
+                            useColor ? const Color(0xff1c1840) : Colors.white,
+                        end: useColor ? const Color(0xff3a5a81) : Colors.white,
                       ),
                     ),
                     TweenSequenceItem(
                       weight: 1.0,
                       tween: Tween<Color>(
-                        begin: const Color(0xff3a5a81),
-                        end: const Color(0xff1791b1),
+                        begin:
+                            useColor ? const Color(0xff3a5a81) : Colors.white,
+                        end: useColor ? const Color(0xff1791b1) : Colors.white,
                       ),
                     ),
                   ]),
