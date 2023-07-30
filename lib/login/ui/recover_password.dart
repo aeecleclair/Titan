@@ -69,30 +69,30 @@ class RecoverPasswordPage extends HookConsumerWidget {
         ],
       ),
       SignInUpBar(
-        label: LoginTextConstants.endResetPassword,
-        isLoading: false,
-        onPressed: () async {
-          if (password.text.isNotEmpty && activationCode.text.isNotEmpty) {
-            RecoverRequest recoverRequest = RecoverRequest(
-              resetToken: activationCode.text,
-              newPassword: password.text,
-            );
-            final value = await signUpNotifier.resetPassword(recoverRequest);
-            if (value) {
-              displayToastWithContext(
-                  TypeMsg.msg, LoginTextConstants.resetedPassword);
-              authTokenNotifier.deleteToken();
-              QR.to(LoginRouter.root);
+          label: LoginTextConstants.endResetPassword,
+          isLoading: false,
+          onPressed: () async {
+            if (password.text.isNotEmpty && activationCode.text.isNotEmpty) {
+              RecoverRequest recoverRequest = RecoverRequest(
+                resetToken: activationCode.text,
+                newPassword: password.text,
+              );
+              final value = await signUpNotifier.resetPassword(recoverRequest);
+              if (value) {
+                displayToastWithContext(
+                    TypeMsg.msg, LoginTextConstants.resetedPassword);
+                authTokenNotifier.deleteToken();
+                QR.to(LoginRouter.root);
+              } else {
+                displayToastWithContext(
+                    TypeMsg.error, LoginTextConstants.invalidToken);
+              }
             } else {
               displayToastWithContext(
-                  TypeMsg.error, LoginTextConstants.invalidToken);
+                  TypeMsg.error, LoginTextConstants.fillAllFields);
             }
-          } else {
-            displayToastWithContext(
-                TypeMsg.error, LoginTextConstants.fillAllFields);
-          }
-        },
-      ),
+          },
+        ),
     ];
     final len = steps.length;
 
