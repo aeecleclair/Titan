@@ -3,6 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/providers/display_quit_popup.dart';
 import 'package:myecl/drawer/tools/constants.dart';
+import 'package:myecl/login/router.dart';
+import 'package:myecl/service/providers/messages_provider.dart';
+import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class BottomBar extends ConsumerWidget {
   const BottomBar({Key? key})
@@ -11,6 +16,7 @@ class BottomBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final displayQuitNotifier = ref.watch(displayQuitProvider.notifier);
+    final messageNotifier = ref.watch(messagesProvider.notifier);
     return Column(
       children: [
         SizedBox(
