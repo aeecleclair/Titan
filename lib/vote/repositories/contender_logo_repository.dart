@@ -9,7 +9,7 @@ class ContenderLogoRepository extends LogoRepository {
   final ext = 'campaign/lists/';
 
   Future<Image> getContenderLogo(String id) async {
-    final bytes =  await getLogo(id, suffix: "/logo");
+    final bytes = await getLogo(id, suffix: "/logo");
     if (bytes.isEmpty) {
       return Image.asset("assets/images/logo.png");
     }

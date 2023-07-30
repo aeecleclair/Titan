@@ -11,8 +11,7 @@ class SimpleGroupLogoNotifier extends MapNotifier<SimpleGroup, Image> {
 
 final allGroupLogosProvider = StateNotifierProvider<SimpleGroupLogoNotifier,
     AsyncValue<Map<SimpleGroup, AsyncValue<List<Image>>>>>((ref) {
-  SimpleGroupLogoNotifier simpleGroupLogoNotifier =
-      SimpleGroupLogoNotifier();
+  SimpleGroupLogoNotifier simpleGroupLogoNotifier = SimpleGroupLogoNotifier();
   tokenExpireWrapperAuth(ref, () async {
     ref.watch(allGroupListProvider).when(data: (allGroup) {
       simpleGroupLogoNotifier.loadTList(allGroup);

@@ -72,9 +72,8 @@ class ItemCard extends StatelessWidget {
                   ),
                 ),
                 ShrinkButton(
-                  builder: (child) => CardButton(
-                      color: Colors.black,
-                      child: child),
+                  builder: (child) =>
+                      CardButton(color: Colors.black, child: child),
                   onTap: onDelete,
                   child: const HeroIcon(HeroIcons.trash, color: Colors.white),
                 ),

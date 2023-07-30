@@ -29,10 +29,10 @@ final ticketsListProvider =
     StateNotifierProvider<TicketsListNotifier, AsyncValue<List<Ticket>>>((ref) {
   final token = ref.watch(tokenProvider);
   final notifier = TicketsListNotifier(token: token);
-      final raffleId = ref.watch(raffleIdProvider);
-    if (raffleId != Raffle.empty().id) {
-      notifier.setId(raffleId);
-      notifier.loadTicketList();
-    }
+  final raffleId = ref.watch(raffleIdProvider);
+  if (raffleId != Raffle.empty().id) {
+    notifier.setId(raffleId);
+    notifier.loadTicketList();
+  }
   return notifier;
 });

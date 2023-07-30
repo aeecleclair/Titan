@@ -40,8 +40,7 @@ class Session {
     return data;
   }
 
-  Session copyWith(
-      {id, name, start, duration, overview, genre, tagline}) {
+  Session copyWith({id, name, start, duration, overview, genre, tagline}) {
     return Session(
         id: id ?? this.id,
         name: name ?? this.name,

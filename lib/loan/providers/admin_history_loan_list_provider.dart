@@ -11,7 +11,8 @@ class AdminHistoryLoanListNotifier extends MapNotifier<Loaner, Loan> {
   AdminHistoryLoanListNotifier() : super();
 }
 
-final adminHistoryLoanListProvider = StateNotifierProvider<AdminHistoryLoanListNotifier,
+final adminHistoryLoanListProvider = StateNotifierProvider<
+    AdminHistoryLoanListNotifier,
     AsyncValue<Map<Loaner, AsyncValue<List<Loan>>>>>((ref) {
   AdminHistoryLoanListNotifier adminLoanListNotifier =
       AdminHistoryLoanListNotifier();

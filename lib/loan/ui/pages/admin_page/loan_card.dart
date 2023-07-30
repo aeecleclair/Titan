@@ -37,7 +37,11 @@ class LoanCard extends StatelessWidget {
       },
       child: CardLayout(
         width: 250,
-        height: (isAdmin && !isDetail) ? 170 : isHistory ? 110 : 160,
+        height: (isAdmin && !isDetail)
+            ? 170
+            : isHistory
+                ? 110
+                : 160,
         colors: shouldReturn
             ? [
                 LoanColorConstants.redGradient1,
@@ -58,9 +62,7 @@ class LoanCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: 25
-                    ),
+                    Container(width: 25),
                     AutoSizeText(capitalize(loan.loaner.name),
                         maxLines: 1,
                         style: TextStyle(

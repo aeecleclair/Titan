@@ -27,7 +27,7 @@ class GroupLogoNotifier extends SingleNotifier<Image> {
 }
 
 final groupLogoProvider =
-StateNotifierProvider<GroupLogoNotifier, AsyncValue<Image>>((ref) {
+    StateNotifierProvider<GroupLogoNotifier, AsyncValue<Image>>((ref) {
   final token = ref.watch(tokenProvider);
   return GroupLogoNotifier(token: token);
 });

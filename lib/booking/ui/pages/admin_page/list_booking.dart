@@ -30,7 +30,7 @@ class ListBooking extends HookConsumerWidget {
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     final bookingListNotifier = ref.watch(bookingListProvider.notifier);
     final confirmedBookingListNotifier =
-    ref.watch(confirmedBookingListProvider.notifier);
+        ref.watch(confirmedBookingListProvider.notifier);
 
     final toggle = useState(!canToggle);
     if (bookings.isEmpty) {
@@ -51,8 +51,7 @@ class ListBooking extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   AlignLeftText(
-                    "$title${bookings.length > 1 ? "s" : ""} (${bookings
-                        .length})",
+                    "$title${bookings.length > 1 ? "s" : ""} (${bookings.length})",
                     color: Colors.grey,
                   ),
                   if (canToggle)
@@ -74,8 +73,7 @@ class ListBooking extends HookConsumerWidget {
               child: Row(
                 children: [
                   const SizedBox(width: 10),
-                  ...bookings.map((e) =>
-                      BookingCard(
+                  ...bookings.map((e) => BookingCard(
                         booking: e,
                         isAdmin: true,
                         onEdit: () {
@@ -97,14 +95,14 @@ class ListBooking extends HookConsumerWidget {
                                 return CustomDialogBox(
                                     title: BookingTextConstants.confirm,
                                     descriptions:
-                                    BookingTextConstants.confirmBooking,
+                                        BookingTextConstants.confirmBooking,
                                     onYes: () async {
                                       await tokenExpireWrapper(ref, () async {
                                         Booking newBooking = e.copyWith(
                                             decision: Decision.approved);
                                         bookingListNotifier
                                             .toggleConfirmed(
-                                            newBooking, Decision.approved)
+                                                newBooking, Decision.approved)
                                             .then((value) {
                                           if (value) {
                                             confirmedBookingListNotifier
@@ -122,14 +120,14 @@ class ListBooking extends HookConsumerWidget {
                                 return CustomDialogBox(
                                     title: BookingTextConstants.decline,
                                     descriptions:
-                                    BookingTextConstants.declineBooking,
+                                        BookingTextConstants.declineBooking,
                                     onYes: () async {
                                       await tokenExpireWrapper(ref, () async {
                                         Booking newBooking = e.copyWith(
                                             decision: Decision.declined);
                                         bookingListNotifier
                                             .toggleConfirmed(
-                                            newBooking, Decision.declined)
+                                                newBooking, Decision.declined)
                                             .then((value) {
                                           if (value) {
                                             confirmedBookingListNotifier

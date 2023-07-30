@@ -158,7 +158,8 @@ class RecoverPasswordPage extends HookConsumerWidget {
                       currentPage.value != 0
                           ? GestureDetector(
                               onTap: (() {
-                                FocusScope.of(context).requestFocus(FocusNode());
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
                                 currentPage.value--;
                                 lastIndex.value = currentPage.value;
                                 pageController.previousPage(
@@ -181,7 +182,8 @@ class RecoverPasswordPage extends HookConsumerWidget {
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
                                   pageController.nextPage(
-                                      duration: const Duration(milliseconds: 500),
+                                      duration:
+                                          const Duration(milliseconds: 500),
                                       curve: Curves.decelerate);
                                   currentPage.value++;
                                   lastIndex.value = currentPage.value;

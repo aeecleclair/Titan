@@ -43,9 +43,7 @@ class ShrinkButton extends HookWidget {
           animation: animationController,
           builder: (context, child) => Transform.scale(
               scale: 1 - animationController.value, child: builder(child!)),
-          child: clicked.value
-              ? Loader(color: waitingColor)
-              : child),
+          child: clicked.value ? Loader(color: waitingColor) : child),
     );
   }
 }

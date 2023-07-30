@@ -11,13 +11,14 @@ class TheMovieDBResultNotifier extends ListNotifier<TheMovieDBSearchResult> {
     theMoviesDBRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<TheMovieDBSearchResult>>> loadMovies(String query) async {
+  Future<AsyncValue<List<TheMovieDBSearchResult>>> loadMovies(
+      String query) async {
     return await loadList(() => theMoviesDBRepository.searchMovie(query));
   }
 }
 
-final theMovieDBResultProvider =
-    StateNotifierProvider<TheMovieDBResultNotifier, AsyncValue<List<TheMovieDBSearchResult>>>((ref) {
+final theMovieDBResultProvider = StateNotifierProvider<TheMovieDBResultNotifier,
+    AsyncValue<List<TheMovieDBSearchResult>>>((ref) {
   final token = ref.watch(tokenProvider);
   TheMovieDBResultNotifier notifier = TheMovieDBResultNotifier(token: token);
   return notifier;

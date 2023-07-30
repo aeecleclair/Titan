@@ -32,9 +32,8 @@ class VoteButton extends HookConsumerWidget {
         orElse: () {});
 
     final status = ref.watch(statusProvider);
-    final s = status.maybeWhen(
-        data: (value) => value,
-        orElse: () => Status.closed);
+    final s =
+        status.maybeWhen(data: (value) => value, orElse: () => Status.closed);
 
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

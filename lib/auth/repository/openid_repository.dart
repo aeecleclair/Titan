@@ -22,8 +22,7 @@ class OpenIdRepository extends Repository {
     };
     try {
       final response = await http
-          .post(Uri.parse("${host}auth/token"),
-              headers: headers, body: body)
+          .post(Uri.parse("${host}auth/token"), headers: headers, body: body)
           .timeout(const Duration(seconds: 5));
       if (response.statusCode == 200) {
         final token = jsonDecode(response.body)["access_token"];

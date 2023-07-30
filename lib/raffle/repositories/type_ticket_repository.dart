@@ -10,7 +10,8 @@ class TypeTicketSimpleRepository extends Repository {
     return TypeTicketSimple.fromJson(await getOne(id));
   }
 
-  Future<TypeTicketSimple> createTypeTicketSimple(TypeTicketSimple ticket) async {
+  Future<TypeTicketSimple> createTypeTicketSimple(
+      TypeTicketSimple ticket) async {
     return TypeTicketSimple.fromJson(await create(ticket.toJson()));
   }
 

@@ -20,10 +20,7 @@ class SessionCard extends HookConsumerWidget {
   final int index;
   final VoidCallback? onTap;
   const SessionCard(
-      {super.key,
-      required this.session,
-      required this.index,
-      this.onTap});
+      {super.key, required this.session, required this.index, this.onTap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

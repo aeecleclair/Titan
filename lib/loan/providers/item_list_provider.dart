@@ -13,14 +13,12 @@ class ItemListNotifier extends ListNotifier<Item> {
     itemRepository.setToken(token);
   }
 
-
   Future<AsyncValue<List<Item>>> loadItemList(String id) async {
     return await loadList(() async => itemRepository.getItemList(id));
   }
 
   Future<bool> addItem(Item item, String loanerId) async {
-    return await add(
-        (i) async => itemRepository.createItem(loanerId, i), item);
+    return await add((i) async => itemRepository.createItem(loanerId, i), item);
   }
 
   Future<bool> updateItem(Item item, String loanerId) async {
@@ -45,8 +43,7 @@ class ItemListNotifier extends ListNotifier<Item> {
 
   Future<AsyncValue<List<Item>>> filterItems(String query) async {
     return state.whenData((items) => items
-        .where((item) =>
-            item.name.toLowerCase().contains(query.toLowerCase()))
+        .where((item) => item.name.toLowerCase().contains(query.toLowerCase()))
         .toList());
   }
 }

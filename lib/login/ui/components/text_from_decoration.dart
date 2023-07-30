@@ -13,16 +13,12 @@ InputDecoration signInRegisterInputDecoration(
       ),
       hintText: hintText,
       focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(
-            color: isSignIn
-                ? Colors.grey.shade600
-                : Colors.white),
+        borderSide:
+            BorderSide(color: isSignIn ? Colors.grey.shade600 : Colors.white),
       ),
       enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(
-            color: isSignIn
-                ? Colors.grey.shade600
-                : Colors.white),
+        borderSide:
+            BorderSide(color: isSignIn ? Colors.grey.shade600 : Colors.white),
       ),
       errorBorder: const UnderlineInputBorder(
         borderSide: BorderSide(color: ColorConstants.gradient2),
@@ -37,9 +33,7 @@ InputDecoration signInRegisterInputDecoration(
           : IconButton(
               icon: Icon(
                 notifier.value ? Icons.visibility : Icons.visibility_off,
-                color: isSignIn
-                    ? Colors.grey.shade600
-                    : Colors.white,
+                color: isSignIn ? Colors.grey.shade600 : Colors.white,
               ),
               onPressed: () {
                 notifier.value = !notifier.value;

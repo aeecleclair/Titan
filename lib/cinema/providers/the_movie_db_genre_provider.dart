@@ -16,8 +16,9 @@ class TheMovieDBGenreNotifier extends SingleNotifier<TheMovieDBMovie> {
   }
 }
 
-final theMovieDBMovieProvider = StateNotifierProvider<TheMovieDBGenreNotifier,
-    AsyncValue<TheMovieDBMovie>>((ref) {
+final theMovieDBMovieProvider =
+    StateNotifierProvider<TheMovieDBGenreNotifier, AsyncValue<TheMovieDBMovie>>(
+        (ref) {
   final token = ref.watch(tokenProvider);
   TheMovieDBGenreNotifier notifier = TheMovieDBGenreNotifier(token: token);
   return notifier;

@@ -27,7 +27,6 @@ String listTypeToString(ListType? type) {
   }
 }
 
-
 Status stringToStatus(String status) {
   switch (status) {
     case 'waiting':

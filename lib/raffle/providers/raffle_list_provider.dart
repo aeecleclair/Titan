@@ -13,14 +13,11 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
   }
 
   Future<AsyncValue<List<Raffle>>> loadRaffleList() async {
-    return await loadList(
-        () async => raffleRepository.getRaffleList());
+    return await loadList(() async => raffleRepository.getRaffleList());
   }
 
   Future<bool> createRaffle(Raffle raffle) async {
-    return await add(
-      (raffle) async => raffle,
-      raffle);
+    return await add((raffle) async => raffle, raffle);
   }
 
   Future<bool> updateRaffle(Raffle raffle) async {
