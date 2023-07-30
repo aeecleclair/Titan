@@ -13,6 +13,7 @@ import 'package:myecl/login/providers/animation_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/service/local_notification_service.dart';
+import 'package:myecl/service/providers/firebase_token_provider.dart';
 import 'package:myecl/service/providers/messages_provider.dart';
 import 'package:myecl/router.dart';
 import 'package:myecl/tools/ui/app_template.dart';
@@ -25,8 +26,6 @@ void main() async {
   QR.setUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseMessaging.instance.requestPermission();
-  // FirebaseMessaging.onBackgroundMessage((_) async {});
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(const ProviderScope(child: MyApp()));
@@ -38,22 +37,7 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final LocalNotificationService localNotificationService = LocalNotificationService();
-    localNotificationService.init();
-    final messages = ref.watch(messagesProvider);
-    final messageNotifier = ref.watch(messagesProvider.notifier);
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      messageNotifier.getMessages();
-      print('Got a message whilst in the foreground!');
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
-      if (message.notification != null) {
-        print("onMessageOpenedApp: ${message.notification!.body}");
-      }
-    });
+    setUpNotification(ref);
 
     final appRouter = ref.watch(appRouterProvider);
     final animationController =
@@ -124,5 +108,33 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
       };
 }
 
+
+void setUpNotification(WidgetRef ref) {
+    final LocalNotificationService localNotificationService = LocalNotificationService();
+    localNotificationService.init();
+
+    final messages = ref.watch(messagesProvider);
+    final messageNotifier = ref.watch(messagesProvider.notifier);
+    final firebaseToken = ref.watch(firebaseTokenProvider);
+    
+    FirebaseMessaging.instance.requestPermission().then(
+      (value) => firebaseToken.then((value) {
+        messageNotifier.setFirebaseToken(value);
+        messageNotifier.registerDevice();
+      }),
+    );
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      messageNotifier.getMessages();
+      print('Got a message whilst in the foreground!');
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      if (message.notification != null) {
+        print("onMessageOpenedApp: ${message.notification!.body}");
+      }
+    });
+}
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }

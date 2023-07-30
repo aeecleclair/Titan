@@ -25,7 +25,7 @@ dependencies:
   flutter_appauth: ^6.0.0
   flutter_dotenv: ^5.0.2
   flutter_hooks: ^0.20.0
-  flutter_local_notifications: ^13.0.0
+  flutter_local_notifications: ^15.0.0
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.1

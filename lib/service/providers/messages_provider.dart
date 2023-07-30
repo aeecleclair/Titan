@@ -22,6 +22,14 @@ class MessagesProvider extends ListNotifier<Message> {
     return await loadList(
         () async => notificationRepository.getMessages(firebaseToken));
   }
+
+  Future<bool> registerDevice() async {
+    return await notificationRepository.registerDevice(firebaseToken);
+  }
+
+  Future<bool> forgetDevice() async {
+    return await notificationRepository.forgetDevice(firebaseToken);
+  }
 }
 
 final messagesProvider =

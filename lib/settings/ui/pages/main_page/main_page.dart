@@ -227,7 +227,6 @@ class SettingsMainPage extends HookConsumerWidget {
                     icon: HeroIcons.lockClosed,
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.changePassword);
-                      // pageNotifier.setSettingsPage(SettingsPage.changePassword);
                     },
                     child: const Text(SettingsTextConstants.editPassword,
                         style: TextStyle(fontSize: 16, color: Colors.black)),
@@ -250,7 +249,6 @@ class SettingsMainPage extends HookConsumerWidget {
                     icon: HeroIcons.clipboardDocumentList,
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.logs);
-                      // pageNotifier.setSettingsPage(SettingsPage.logs);
                     },
                     child: const Text(SettingsTextConstants.logs,
                         style: TextStyle(fontSize: 16, color: Colors.black)),
@@ -273,7 +271,17 @@ class SettingsMainPage extends HookConsumerWidget {
                     icon: HeroIcons.queueList,
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.modules);
-                      // pageNotifier.setSettingsPage(SettingsPage.modules);
+                    },
+                    child: const Text(SettingsTextConstants.modules,
+                        style: TextStyle(fontSize: 16, color: Colors.black)),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  SettingsItem(
+                    icon: HeroIcons.bellAlert,
+                    onTap: () {
+                      QR.to(SettingsRouter.root + SettingsRouter.notifications);
                     },
                     child: const Text(SettingsTextConstants.modules,
                         style: TextStyle(fontSize: 16, color: Colors.black)),

@@ -1,5 +1,6 @@
 import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/class/topic.dart';
+import 'package:myecl/service/tools/functions.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class NotificationRepository extends Repository {
@@ -28,5 +29,10 @@ class NotificationRepository extends Repository {
   Future<bool> unsubscribeTopic(Topic topic) async {
     final String topicString = topic.toString().split('.').last;
     return await create({}, suffix: "topics/$topicString/unsubscribe");
+  }
+
+    Future<List<Topic>> getTopics() async {
+    return List<Topic>.from((await getList(suffix: "topics"))
+        .map((x) => stringToTopic(x)));
   }
 }

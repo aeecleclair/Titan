@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/group_list_provider.dart';
+import 'package:myecl/service/class/topic.dart';
+import 'package:myecl/service/providers/topic_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/constants.dart';
@@ -12,10 +13,13 @@ class NotificationPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final groups = ref.watch(allGroupListProvider);
+    final topics = ref.watch(topicsProvider);
+    final topicsNotifier = ref.read(topicsProvider.notifier);
     return SettingsTemplate(
       child: Refresher(
-          onRefresh: () async {},
+          onRefresh: () async {
+            await topicsNotifier.getTopics();
+          },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Column(children: [
@@ -33,13 +37,14 @@ class NotificationPage extends HookConsumerWidget {
               const SizedBox(
                 height: 30,
               ),
-              groups.when(
+              topics.when(
                 data: (g) => Column(
-                    children: g
+                    children: Topic.values
                         .map((e) => Padding(
                               padding: const EdgeInsets.symmetric(vertical: 12),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(capitalize(e.name),
                                       style: const TextStyle(
@@ -47,9 +52,15 @@ class NotificationPage extends HookConsumerWidget {
                                           fontWeight: FontWeight.w700,
                                           color: ColorConstants.background2)),
                                   Switch(
-                                      value: true,
+                                      value: g.contains(e),
                                       activeColor: ColorConstants.gradient1,
-                                      onChanged: (value) {})
+                                      onChanged: (value) {
+                                        if (value) {
+                                          topicsNotifier.subscribeTopic(e);
+                                        } else {
+                                          topicsNotifier.unsubscribeTopic(e);
+                                        }
+                                      })
                                 ],
                               ),
                             ))
