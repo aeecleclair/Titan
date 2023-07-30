@@ -1,4 +1,5 @@
-import 'package:myecl/cinema/class/session.dart';
+import 'package:myecl/cinema/class/session/session.dart';
+import 'package:myecl/cinema/class/session/session_return.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class SessionRepository extends Repository {
@@ -15,11 +16,13 @@ class SessionRepository extends Repository {
   }
 
   Future<Session> addSession(Session session) async {
-    return Session.fromJson(await create(session.toJson()));
+    final SessionReturn sessionReturn = SessionReturn.fromSession(session);
+    return Session.fromJson(await create(sessionReturn.toJson()));
   }
 
   Future<bool> updateSession(Session session) async {
-    return await update(session.toJson(), "/${session.id}");
+    final SessionReturn sessionReturn = SessionReturn.fromSession(session);
+    return await update(sessionReturn.toJson(), "/${session.id}");
   }
 
   Future<bool> deleteSession(String id) async {

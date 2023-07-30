@@ -50,3 +50,6 @@ app.*.map.json
 # Todo
 .TODO
 
+# Generated files
+**/*.freezed.dart
+**/*.g.dart
