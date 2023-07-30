@@ -18,13 +18,12 @@ import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 class SessionCard extends HookConsumerWidget {
   final Session session;
   final int index;
-  final VoidCallback onTap;
-  static void noAction() {}
+  final VoidCallback? onTap;
   const SessionCard(
       {super.key,
       required this.session,
       required this.index,
-      this.onTap = noAction});
+      this.onTap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

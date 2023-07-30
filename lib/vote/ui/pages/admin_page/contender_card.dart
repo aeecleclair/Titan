@@ -17,15 +17,13 @@ import 'package:qlevar_router/qlevar_router.dart';
 class ContenderCard extends HookConsumerWidget {
   final Contender contender;
   final bool isAdmin, isDetail;
-  final Function() onEdit;
-  final Future Function() onDelete;
-  static void noAction() {}
-  static Future noAsyncAction() async {}
+  final Function()? onEdit;
+  final Future Function()? onDelete;
   const ContenderCard(
       {super.key,
       required this.contender,
-      this.onEdit = noAction,
-      this.onDelete = noAsyncAction,
+      this.onEdit,
+      this.onDelete,
       this.isAdmin = false,
       this.isDetail = false});
 

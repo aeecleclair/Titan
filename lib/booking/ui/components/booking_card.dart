@@ -4,28 +4,26 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/builders/shrink_button.dart';
 
-import '../../../tools/functions.dart';
 
 class BookingCard extends HookConsumerWidget {
   final Booking booking;
-  final Function() onEdit, onConfirm, onDecline, onCopy, onInfo;
-  final Future Function() onDelete;
-  static void noAction() {}
-  static Future noAsyncAction() async {}
+  final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
+  final Future Function()? onDelete;
   final bool isAdmin, isDetail;
   const BookingCard(
       {super.key,
       required this.booking,
-      this.onEdit = noAction,
-      this.onConfirm = noAction,
-      this.onDecline = noAction,
-      this.onInfo = noAction,
-      this.onCopy = noAction,
-      this.onDelete = noAsyncAction,
+      this.onEdit,
+      this.onConfirm,
+      this.onDecline,
+      this.onInfo,
+      this.onCopy,
+      this.onDelete,
       this.isAdmin = false,
       this.isDetail = false});
 

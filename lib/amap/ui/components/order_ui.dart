@@ -16,14 +16,13 @@ import 'package:myecl/tools/ui/builders/shrink_button.dart';
 
 class OrderUI extends HookConsumerWidget {
   final Order order;
-  final void Function() onTap, onEdit;
-  static void noAction() {}
+  final void Function()? onTap, onEdit;
   final bool showButton, isDetail;
   const OrderUI(
       {super.key,
       required this.order,
-      this.onTap = noAction,
-      this.onEdit = noAction,
+      this.onTap,
+      this.onEdit,
       this.showButton = true,
       this.isDetail = false});
 
@@ -61,7 +60,7 @@ class OrderUI extends HookConsumerWidget {
                 GestureDetector(
                   onTap: () {
                     orderNotifier.setOrder(order);
-                    onTap();
+                    onTap?.call();
                   },
                   child: const HeroIcon(
                     HeroIcons.informationCircle,
@@ -107,7 +106,7 @@ class OrderUI extends HookConsumerWidget {
                       GestureDetector(
                         onTap: () {
                           orderNotifier.setOrder(order);
-                          onEdit();
+                          onEdit?.call();
                         },
                         child: const CardButton(
                           color: AMAPColorConstants.greenGradient1,

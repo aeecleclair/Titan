@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 class SectionChip extends StatelessWidget {
   final bool selected, isAdmin;
   final String label;
-  final Function() onTap, onDelete;
-  static void noAction() {}
+  final Function()? onTap, onDelete;
   const SectionChip(
       {super.key,
       required this.label,
       this.isAdmin = false,
       this.selected = false,
-      this.onTap = noAction,
-      this.onDelete = noAction});
+      this.onTap,
+      this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +37,7 @@ class SectionChip extends StatelessWidget {
                 margin: const EdgeInsets.only(left: 10.0),
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    onDelete();
-                  },
+                  onTap: onDelete,
                   child: const Icon(
                     Icons.close,
                     color: Colors.white,

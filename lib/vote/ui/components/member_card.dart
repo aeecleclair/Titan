@@ -7,14 +7,13 @@ import 'package:myecl/vote/class/members.dart';
 
 class MemberCard extends StatelessWidget {
   final Member member;
-  final Function() onEdit, onDelete;
+  final Function()? onEdit, onDelete;
   final bool isAdmin;
-  static void noAction() {}
   const MemberCard(
       {super.key,
       required this.member,
-      this.onEdit = noAction,
-      this.onDelete = noAction,
+      this.onEdit,
+      this.onDelete,
       this.isAdmin = false});
 
   @override
