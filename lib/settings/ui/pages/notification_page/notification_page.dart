@@ -65,8 +65,8 @@ class NotificationPage extends HookConsumerWidget {
                                     switchDecoration: (value) => BoxDecoration(
                                       color: value
                                           ? ColorConstants.gradient1
-                                              .withOpacity(0.1)
-                                          : Colors.grey[100],
+                                              .withOpacity(0.3)
+                                          : Colors.grey.shade200,
                                       borderRadius: BorderRadius.circular(30),
                                       shape: BoxShape.rectangle,
                                       boxShadow: [
@@ -81,8 +81,10 @@ class NotificationPage extends HookConsumerWidget {
                                         ),
                                       ],
                                     ),
-                                    spinColor: (value) => Colors.black,
-                                    spinStrokeWidth: 3,
+                                    spinColor: (value) => value
+                                              ? ColorConstants.gradient1
+                                              : Colors.grey,
+                                    spinStrokeWidth: 2,
                                     thumbDecoration: (value) => BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(30),
@@ -92,7 +94,7 @@ class NotificationPage extends HookConsumerWidget {
                                           color: value
                                               ? ColorConstants.gradient1
                                                   .withOpacity(0.2)
-                                              : Colors.grey.withOpacity(0.2),
+                                              : Colors.grey.shade200.withOpacity(0.2),
                                           spreadRadius: 5,
                                           blurRadius: 7,
                                           offset: const Offset(0,

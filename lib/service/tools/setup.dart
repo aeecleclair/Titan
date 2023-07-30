@@ -19,9 +19,6 @@ void setUpNotification(WidgetRef ref) {
 
   FirebaseMessaging.instance.requestPermission().then((value) {
     if (value.authorizationStatus == AuthorizationStatus.authorized) {
-      logger.writeLog(Log(
-          message: "Firebase messaging permission granted",
-          level: LogLevel.info));
       firebaseToken.then((value) {
         messageNotifier.setFirebaseToken(value);
         messageNotifier.registerDevice();

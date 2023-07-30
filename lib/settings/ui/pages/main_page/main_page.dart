@@ -283,7 +283,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.notifications);
                     },
-                    child: const Text(SettingsTextConstants.modules,
+                    child: const Text(SettingsTextConstants.notifications,
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
                   const SizedBox(
