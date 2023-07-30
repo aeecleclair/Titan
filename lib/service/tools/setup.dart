@@ -1,4 +1,3 @@
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/service/local_notification_service.dart';
@@ -35,7 +34,7 @@ void setUpNotification(WidgetRef ref) {
     final messages = await messageNotifier.getMessages();
     messages.when(
       data: (messageList) {
-        messageList.map((message) {
+        for (final message in messageList) {
           if (message.isVisible) {
             localNotificationService.showNotificationWithPayload(
               message.context,
@@ -44,7 +43,7 @@ void setUpNotification(WidgetRef ref) {
               message.actionId,
             );
           }
-        });
+        }
       },
       loading: () {},
       error: (error, stack) {

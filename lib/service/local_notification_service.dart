@@ -171,7 +171,8 @@ class LocalNotificationService {
     }
     if (response.payload!.isNotEmpty) {
       onNotificationClick.add(response.payload!);
-      print("onDidReceiveNotificationResponse : Notification clicked: ${response.payload}");
+      print(
+          "onDidReceiveNotificationResponse : Notification clicked: ${response.payload}");
     }
   }
 
