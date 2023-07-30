@@ -12,7 +12,8 @@ import 'package:myecl/drawer/providers/top_bar_callback_provider.dart';
 import 'package:myecl/login/providers/animation_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/service/push_notification_service.dart';
+import 'package:myecl/service/local_notification_service.dart';
+import 'package:myecl/service/providers/messages_provider.dart';
 import 'package:myecl/router.dart';
 import 'package:myecl/tools/ui/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -22,10 +23,10 @@ void main() async {
   await dotenv.load();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   QR.setUrlStrategy();
-  await Firebase.initializeApp();
-  PushNotificationService.initialize();
   WidgetsFlutterBinding.ensureInitialized();
-  FirebaseMessaging.onBackgroundMessage((_) async {});
+  await Firebase.initializeApp();
+  FirebaseMessaging.instance.requestPermission();
+  // FirebaseMessaging.onBackgroundMessage((_) async {});
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(const ProviderScope(child: MyApp()));
@@ -37,6 +38,22 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final LocalNotificationService localNotificationService = LocalNotificationService();
+    localNotificationService.init();
+    final messages = ref.watch(messagesProvider);
+    final messageNotifier = ref.watch(messagesProvider.notifier);
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      messageNotifier.getMessages();
+      print('Got a message whilst in the foreground!');
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      if (message.notification != null) {
+        print("onMessageOpenedApp: ${message.notification!.body}");
+      }
+    });
 
     final appRouter = ref.watch(appRouterProvider);
     final animationController =
