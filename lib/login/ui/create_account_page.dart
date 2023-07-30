@@ -26,7 +26,9 @@ class CreateAccountPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authTokenNotifier = ref.watch(authTokenProvider.notifier);
     final signUpNotifier = ref.watch(signUpProvider.notifier);
-    final activationCode = useTextEditingController();
+    final code = QR.params['code'] ?? '';
+    final isCodeGiven = code != '';
+    final activationCode = useTextEditingController(text: code.toString());
     final name = useTextEditingController();
     final password = useTextEditingController();
     final firstname = useTextEditingController();
@@ -34,7 +36,7 @@ class CreateAccountPage extends HookConsumerWidget {
     final birthday = useTextEditingController();
     final phone = useTextEditingController();
     final promo = useTextEditingController();
-    final lastIndex = useState(0);
+    final lastIndex = useState(isCodeGiven ? 1 : 0);
     List<DropdownMenuItem> items = Floors.values
         .map((e) => DropdownMenuItem(
               value: capitalize(e.toString().split('.').last),
@@ -43,8 +45,8 @@ class CreateAccountPage extends HookConsumerWidget {
         .toList();
 
     final floor = useTextEditingController(text: items[0].value.toString());
-    final currentPage = useState(0);
-    final pageController = usePageController();
+    final currentPage = useState(isCodeGiven ? 1 : 0);
+    final pageController = usePageController(initialPage: currentPage.value);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -62,14 +64,14 @@ class CreateAccountPage extends HookConsumerWidget {
     ];
 
     List<Widget> steps = [
-      CreateAccountField(
-        controller: activationCode,
-        label: LoginTextConstants.activationCode,
-        index: 1,
-        pageController: pageController,
-        currentPage: currentPage,
-        formKey: formKeys[0],
-      ),
+        CreateAccountField(
+          controller: activationCode,
+          label: LoginTextConstants.activationCode,
+          index: 1,
+          pageController: pageController,
+          currentPage: currentPage,
+          formKey: formKeys[0],
+        ),
       Column(
         children: [
           CreateAccountField(
@@ -352,10 +354,11 @@ class CreateAccountPage extends HookConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      currentPage.value != 0
+                      currentPage.value != (isCodeGiven ? 1 : 0)
                           ? GestureDetector(
                               onTap: (() {
-                                FocusScope.of(context).requestFocus(FocusNode());
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
                                 currentPage.value--;
                                 lastIndex.value = currentPage.value;
                                 pageController.previousPage(
@@ -378,7 +381,8 @@ class CreateAccountPage extends HookConsumerWidget {
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
                                   pageController.nextPage(
-                                      duration: const Duration(milliseconds: 500),
+                                      duration:
+                                          const Duration(milliseconds: 500),
                                       curve: Curves.decelerate);
                                   currentPage.value++;
                                   lastIndex.value = currentPage.value;

@@ -122,12 +122,14 @@ class CreateAccountField extends HookConsumerWidget {
                     )),
                     errorStyle: const TextStyle(color: Colors.white)),
             validator: (value) {
-              if (!canBeEmpty && (value == null || value.isEmpty)) {
+              if (canBeEmpty) {
+                return null;
+              }
+              if (value == null || value.isEmpty) {
                 return LoginTextConstants.emptyFieldError;
-              } else if (isPassword && (value != null && value.length < 6)) {
+              } else if (isPassword && value.length < 6) {
                 return LoginTextConstants.passwordLengthError;
-              } else if (mustBeInt &&
-                  (value != null && int.tryParse(value) == null)) {
+              } else if (mustBeInt && int.tryParse(value) == null) {
                 return LoginTextConstants.mustBeIntError;
               }
               return null;

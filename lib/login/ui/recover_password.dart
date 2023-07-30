@@ -24,11 +24,13 @@ class RecoverPasswordPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authTokenNotifier = ref.watch(authTokenProvider.notifier);
     final signUpNotifier = ref.watch(signUpProvider.notifier);
-    final activationCode = useTextEditingController();
+    final code = QR.params['code'] ?? '';
+    final isCodeGiven = code != '';
+    final activationCode = useTextEditingController(text: code.toString());
     final password = useTextEditingController();
-    final currentPage = useState(0);
-    final lastIndex = useState(0);
-    final pageController = usePageController();
+    final lastIndex = useState(isCodeGiven ? 1 : 0);
+    final currentPage = useState(isCodeGiven ? 1 : 0);
+    final pageController = usePageController(initialPage: currentPage.value);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -155,10 +157,11 @@ class RecoverPasswordPage extends HookConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      currentPage.value != 0
+                      currentPage.value != (isCodeGiven ? 1 : 0)
                           ? GestureDetector(
                               onTap: (() {
-                                FocusScope.of(context).requestFocus(FocusNode());
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
                                 currentPage.value--;
                                 lastIndex.value = currentPage.value;
                                 pageController.previousPage(
@@ -181,7 +184,8 @@ class RecoverPasswordPage extends HookConsumerWidget {
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
                                   pageController.nextPage(
-                                      duration: const Duration(milliseconds: 500),
+                                      duration:
+                                          const Duration(milliseconds: 500),
                                       curve: Curves.decelerate);
                                   currentPage.value++;
                                   lastIndex.value = currentPage.value;
