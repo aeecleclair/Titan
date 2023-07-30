@@ -12,17 +12,15 @@ import 'package:myecl/tools/ui/builders/shrink_button.dart';
 class LoanCard extends StatelessWidget {
   final Loan loan;
   final bool isAdmin, isDetail, isHistory;
-  final Function() onEdit, onInfo;
-  final Future Function() onCalendar, onReturn;
-  static void noAction() {}
-  static Future noAsyncAction() async {}
+  final Function()? onEdit, onInfo;
+  final Future Function()? onCalendar, onReturn;
   const LoanCard(
       {super.key,
       required this.loan,
-      this.onEdit = noAction,
-      this.onCalendar = noAsyncAction,
-      this.onReturn = noAsyncAction,
-      this.onInfo = noAction,
+      this.onEdit,
+      this.onCalendar,
+      this.onReturn,
+      this.onInfo,
       this.isAdmin = false,
       this.isDetail = false,
       this.isHistory = false});
@@ -34,7 +32,7 @@ class LoanCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (isAdmin) {
-          onInfo();
+          onInfo?.call();
         }
       },
       child: CardLayout(

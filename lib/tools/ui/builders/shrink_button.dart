@@ -6,7 +6,7 @@ class ShrinkButton extends HookWidget {
   final Widget child;
   final Widget Function(Widget) builder;
   final Color waitingColor;
-  final Future Function() onTap;
+  final Future Function()? onTap;
 
   const ShrinkButton(
       {super.key,
@@ -33,7 +33,7 @@ class ShrinkButton extends HookWidget {
         if (clicked.value) return;
         clicked.value = true;
         shrinkButtonSize();
-        onTap().then((_) {
+        onTap?.call().then((_) {
           restoreButtonSize();
           clicked.value = false;
         });

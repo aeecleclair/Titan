@@ -20,18 +20,17 @@ import 'package:qlevar_router/qlevar_router.dart';
 class EventUi extends ConsumerWidget {
   final Event event;
   final bool isDetailPage, isAdmin;
-  final Function() onEdit, onConfirm, onDecline, onCopy, onInfo;
-  static void noAction() {}
+  final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
   const EventUi(
       {super.key,
       required this.event,
       this.isDetailPage = false,
       this.isAdmin = false,
-      this.onEdit = noAction,
-      this.onConfirm = noAction,
-      this.onDecline = noAction,
-      this.onInfo = noAction,
-      this.onCopy = noAction});
+      this.onEdit,
+      this.onConfirm,
+      this.onDecline,
+      this.onInfo,
+      this.onCopy});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,7 +48,7 @@ class EventUi extends ConsumerWidget {
         behavior: HitTestBehavior.opaque,
         onTap: () {
           if (!isDetailPage || isAdmin) {
-            onInfo();
+            onInfo?.call();
           }
         },
         child: Container(
@@ -299,7 +298,7 @@ class EventUi extends ConsumerWidget {
                           GestureDetector(
                             onTap: () {
                               if (event.decision != Decision.approved) {
-                                onConfirm();
+                                onConfirm?.call();
                               }
                             },
                             child: CardButton(
@@ -320,7 +319,7 @@ class EventUi extends ConsumerWidget {
                           GestureDetector(
                             onTap: () {
                               if (event.decision != Decision.declined) {
-                                onDecline();
+                                onDecline?.call();
                               }
                             },
                             child: CardButton(

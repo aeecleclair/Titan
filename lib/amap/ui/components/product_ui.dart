@@ -9,16 +9,14 @@ import 'package:myecl/tools/ui/builders/shrink_button.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
-  final Function() onEdit;
-  final Future Function() onDelete;
+  final Function()? onEdit;
+  final Future Function()? onDelete;
   final bool showButton;
-  static void noAction() {}
-  static Future noAsyncAction() async {}
   const ProductCard(
       {super.key,
       required this.product,
-      this.onEdit = noAction,
-      this.onDelete = noAsyncAction,
+      this.onEdit,
+      this.onDelete,
       this.showButton = true});
 
   @override

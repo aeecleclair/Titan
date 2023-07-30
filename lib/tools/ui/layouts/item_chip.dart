@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 class ItemChip extends StatelessWidget {
   final bool selected;
-  final Function() onTap;
+  final Function()? onTap;
   final Widget child;
-  static void noAction() {}
   const ItemChip(
       {super.key,
       this.selected = false,
-      this.onTap = noAction,
+      this.onTap,
       required this.child});
 
   @override
