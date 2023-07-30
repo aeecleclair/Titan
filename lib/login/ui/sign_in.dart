@@ -3,9 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/login/providers/animation_provider.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/login/ui/components/sign_in_up_bar.dart';
+import 'package:myecl/login/ui/sign_in_up_bar.dart';
 import 'package:myecl/login/ui/main_page.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
@@ -19,6 +20,7 @@ class SignIn extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authNotifier = ref.watch(authTokenProvider.notifier);
     final pathForwarding = ref.read(pathForwardingProvider);
+    final controller = ref.watch(backgroundAnimationProvider);
 
     return LoginTemplate(
       callback: (AnimationController controller) {
@@ -59,7 +61,7 @@ class SignIn extends HookConsumerWidget {
                                 ),
                               ),
                               SignInUpBar(
-                                isLoading: ref.watch(loadingProvider).when(
+                                isLoading: ref.watch(loadingrovider).when(
                                     data: (data) => data,
                                     error: (e, s) => false,
                                     loading: () => false),
@@ -100,6 +102,7 @@ class SignIn extends HookConsumerWidget {
                                       const Color.fromRGBO(255, 255, 255, 1),
                                   onTap: () {
                                     QR.to(LoginRouter.createAccount);
+                                    controller?.forward();
                                   },
                                   child: const Text(
                                     LoginTextConstants.createAccount,
@@ -119,6 +122,7 @@ class SignIn extends HookConsumerWidget {
                                       const Color.fromRGBO(255, 255, 255, 1),
                                   onTap: () {
                                     QR.to(LoginRouter.forgotPassword);
+                                    controller?.forward();
                                   },
                                   child: const Text(
                                     LoginTextConstants.forgotPassword,

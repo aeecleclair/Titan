@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/login/ui/background_painter.dart';
 import 'package:myecl/login/ui/create_account_page.dart';
 import 'package:myecl/login/ui/forget.dart';
 import 'package:myecl/login/ui/recover_password.dart';

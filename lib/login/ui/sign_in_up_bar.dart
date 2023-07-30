@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
-class SignUpBar extends StatelessWidget {
-  const SignUpBar({
+class SignInUpBar extends StatelessWidget {
+  const SignInUpBar({
     Key? key,
     required this.label,
     required this.onPressed,
     required this.isLoading,
+    this.color = Colors.white,
+    this.icon = const HeroIcon(
+      HeroIcons.arrowRight,
+      color: Colors.white,
+      size: 35.0,
+    ),
   }) : super(key: key);
 
   final String label;
   final Future Function() onPressed;
   final bool isLoading;
+  final Color color;
+  final HeroIcon icon;
 
   @override
   Widget build(BuildContext context) {
@@ -21,113 +28,48 @@ class SignUpBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Container(
             height: 50,
-            alignment: Alignment.centerLeft,
+            width: double.infinity,
+            alignment:
+                color == Colors.white ? Alignment.centerLeft : Alignment.center,
             child: ShrinkButton(
               onTap: onPressed,
               waitChild: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     label,
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
-                        color: Colors.white),
+                        color: color),
                   ),
                   Container(
                       margin: const EdgeInsets.only(left: 20),
-                      child: const CircularProgressIndicator(
-                        color: Colors.white,
+                      child: CircularProgressIndicator(
+                        color: color,
                       )),
                 ],
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     label,
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
-                        color: Colors.white),
+                        color: color),
                   ),
                   Container(
                     margin: const EdgeInsets.only(left: 20),
                     child: isLoading
-                        ? const CircularProgressIndicator(
-                            color: Colors.white,
+                        ? CircularProgressIndicator(
+                            color: color,
                           )
-                        : const HeroIcon(
-                            HeroIcons.arrowRight,
-                            color: Colors.white,
-                            size: 35.0,
-                          ),
+                        : icon,
                   ),
                 ],
               ),
             )));
-  }
-}
-
-class SignInBar extends StatelessWidget {
-  const SignInBar(
-      {Key? key,
-      required this.label,
-      required this.onPressed,
-      required this.isLoading})
-      : super(key: key);
-
-  final String label;
-  final Future Function() onPressed;
-  final bool isLoading;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
-      child: ShrinkButton(
-        onTap: onPressed,
-        waitChild: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w800,
-                  color: ColorConstants.background2),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 20),
-              child: const CircularProgressIndicator(
-                      color: ColorConstants.background2,
-                    )
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w800,
-                  color: ColorConstants.background2),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 20),
-              child: isLoading
-                  ? const CircularProgressIndicator(
-                      color: ColorConstants.background2,
-                    )
-                  : const HeroIcon(
-                      HeroIcons.arrowRight,
-                      color: ColorConstants.background2,
-                      size: 35.0,
-                    ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

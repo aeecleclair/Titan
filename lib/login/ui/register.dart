@@ -5,6 +5,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/class/account_type.dart';
+import 'package:myecl/login/providers/animation_provider.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
@@ -23,6 +24,7 @@ class Register extends HookConsumerWidget {
     final mail = useTextEditingController();
     final hidePass = useState(true);
     final key = GlobalKey<FormState>();
+    final controller = ref.watch(backgroundAnimationProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -45,6 +47,7 @@ class Register extends HookConsumerWidget {
                 child: GestureDetector(
                   onTap: () {
                     QR.to(LoginRouter.root);
+                    controller?.reverse();
                   },
                   child: const HeroIcon(
                     HeroIcons.chevronLeft,
@@ -102,7 +105,7 @@ class Register extends HookConsumerWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    SignUpBar(
+                    SignInUpBar(
                         label: LoginTextConstants.create,
                         isLoading: ref.watch(loadingrovider).when(
                             data: (data) => data,
@@ -139,6 +142,7 @@ class Register extends HookConsumerWidget {
                               splashColor: const Color.fromRGBO(255, 255, 255, 1),
                               onTap: () {
                                 QR.to(LoginRouter.root);
+                                controller?.reverse();
                               },
                               child: const Text(
                                 LoginTextConstants.signIn,

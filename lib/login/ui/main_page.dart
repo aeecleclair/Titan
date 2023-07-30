@@ -7,13 +7,13 @@ import 'package:myecl/login/ui/background_painter.dart';
 class LoginTemplate extends HookConsumerWidget {
   final Widget child;
   final void Function(AnimationController) callback;
-  const LoginTemplate({Key? key, required this.child, required this.callback}) : super(key: key);
+  const LoginTemplate({Key? key, required this.child, required this.callback})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     AnimationController? controller = ref.watch(backgroundAnimationProvider);
-    controller ??= useAnimationController(
-        duration: const Duration(milliseconds: 500), initialValue: 0.0);
+    controller ??= useAnimationController(duration: const Duration(seconds: 2));
     callback(controller);
     return Scaffold(
       body: Stack(

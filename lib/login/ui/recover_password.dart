@@ -66,7 +66,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
           const Spacer(),
         ],
       ),
-      SignUpBar(
+      SignInUpBar(
         label: LoginTextConstants.endResetPassword,
         isLoading: false,
         onPressed: () async {

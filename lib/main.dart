@@ -27,8 +27,8 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
-    final animationController = useAnimationController(
-        duration: const Duration(milliseconds: 500), initialValue: 0.0);
+    final animationController =
+        useAnimationController(duration: const Duration(seconds: 2));
     final animationNotifier = ref.read(backgroundAnimationProvider.notifier);
 
     Future(() {

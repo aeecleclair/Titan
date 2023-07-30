@@ -246,7 +246,7 @@ class CreateAccountPage extends HookConsumerWidget {
           ),
         ],
       ),
-      SignUpBar(
+      SignInUpBar(
         label: LoginTextConstants.endActivation,
         isLoading: false,
         onPressed: () async {
