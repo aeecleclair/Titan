@@ -24,6 +24,18 @@ class TopicsProvider extends ListNotifier<Topic> {
     return await update(notificationRepository.unsubscribeTopic,
         (listT, t) => listT..remove(t), topic);
   }
+
+  Future<bool> toggleSubscription(Topic topic) async {
+    return state.maybeWhen(
+        data: (data) {
+          if (data.contains(topic)) {
+            return unsubscribeTopic(topic);
+          } else {
+            return subscribeTopic(topic);
+          }
+        },
+        orElse: () => false);
+  }
 }
 
 final topicsProvider =

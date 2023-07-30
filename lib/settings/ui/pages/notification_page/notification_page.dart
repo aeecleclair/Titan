@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:load_switch/load_switch.dart';
 import 'package:myecl/service/class/topic.dart';
 import 'package:myecl/service/providers/topic_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
@@ -51,16 +52,57 @@ class NotificationPage extends HookConsumerWidget {
                                           fontSize: 20,
                                           fontWeight: FontWeight.w700,
                                           color: ColorConstants.background2)),
-                                  Switch(
-                                      value: g.contains(e),
-                                      activeColor: ColorConstants.gradient1,
-                                      onChanged: (value) {
-                                        if (value) {
-                                          topicsNotifier.subscribeTopic(e);
-                                        } else {
-                                          topicsNotifier.unsubscribeTopic(e);
-                                        }
-                                      })
+                                  LoadSwitch(
+                                    value: g.contains(e),
+                                    future: () =>
+                                        topicsNotifier.toggleSubscription(e),
+                                    height: 30,
+                                    width: 60,
+                                    curveIn: Curves.easeInBack,
+                                    curveOut: Curves.easeOutBack,
+                                    animationDuration:
+                                        const Duration(milliseconds: 500),
+                                    switchDecoration: (value) => BoxDecoration(
+                                      color: value
+                                          ? ColorConstants.gradient1
+                                              .withOpacity(0.1)
+                                          : Colors.grey[100],
+                                      borderRadius: BorderRadius.circular(30),
+                                      shape: BoxShape.rectangle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: value
+                                              ? ColorConstants.gradient1
+                                                  .withOpacity(0.2)
+                                              : Colors.grey.withOpacity(0.2),
+                                          spreadRadius: 1,
+                                          blurRadius: 3,
+                                          offset: const Offset(0, 1),
+                                        ),
+                                      ],
+                                    ),
+                                    spinColor: (value) => Colors.black,
+                                    spinStrokeWidth: 3,
+                                    thumbDecoration: (value) => BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(30),
+                                      shape: BoxShape.rectangle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: value
+                                              ? ColorConstants.gradient1
+                                                  .withOpacity(0.2)
+                                              : Colors.grey.withOpacity(0.2),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: const Offset(0,
+                                              3), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    onChange: (v) {},
+                                    onTap: (v) {},
+                                  ),
                                 ],
                               ),
                             ))
