@@ -28,6 +28,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
     final isCodeGiven = code != '';
     final activationCode = useTextEditingController(text: code.toString());
     final password = useTextEditingController();
+    final passwordConfirmation = useTextEditingController();
     final lastIndex = useState(isCodeGiven ? 1 : 0);
     final currentPage = useState(isCodeGiven ? 1 : 0);
     final pageController = usePageController(initialPage: currentPage.value);
@@ -36,6 +37,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
     }
 
     List<GlobalKey<FormState>> formKeys = [
+      GlobalKey<FormState>(),
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
     ];
@@ -67,32 +69,59 @@ class RecoverPasswordPage extends HookConsumerWidget {
           ),
           const Spacer(),
         ],
-      ),
+      ),Column(
+          children: [
+            CreateAccountField(
+              controller: passwordConfirmation,
+              label: LoginTextConstants.confirmPassword,
+              index: 3,
+              pageController: pageController,
+              currentPage: currentPage,
+              formKey: formKeys[2],
+              keyboardType: TextInputType.visiblePassword,
+              validator: (value) {
+                if (value != password.text) {
+                  return LoginTextConstants.passwordMustMatch;
+                }
+                return null;
+              },
+            ),
+            const Spacer(),
+            PasswordStrength(
+              newPassword: passwordConfirmation,
+              textColor: ColorConstants.background2,
+            ),
+            const Spacer(),
+          ],
+        ),
       SignInUpBar(
-          label: LoginTextConstants.endResetPassword,
-          isLoading: false,
-          onPressed: () async {
-            if (password.text.isNotEmpty && activationCode.text.isNotEmpty) {
-              RecoverRequest recoverRequest = RecoverRequest(
-                resetToken: activationCode.text,
-                newPassword: password.text,
-              );
-              final value = await signUpNotifier.resetPassword(recoverRequest);
-              if (value) {
-                displayToastWithContext(
-                    TypeMsg.msg, LoginTextConstants.resetedPassword);
-                authTokenNotifier.deleteToken();
-                QR.to(LoginRouter.root);
-              } else {
-                displayToastWithContext(
-                    TypeMsg.error, LoginTextConstants.invalidToken);
-              }
+        label: LoginTextConstants.endResetPassword,
+        isLoading: false,
+        onPressed: () async {
+          if (password.text.isNotEmpty &&
+              activationCode.text.isNotEmpty &&
+              passwordConfirmation.text.isNotEmpty &&
+              password.text == passwordConfirmation.text) {
+            RecoverRequest recoverRequest = RecoverRequest(
+              resetToken: activationCode.text,
+              newPassword: password.text,
+            );
+            final value = await signUpNotifier.resetPassword(recoverRequest);
+            if (value) {
+              displayToastWithContext(
+                  TypeMsg.msg, LoginTextConstants.resetedPassword);
+              authTokenNotifier.deleteToken();
+              QR.to(LoginRouter.root);
             } else {
               displayToastWithContext(
-                  TypeMsg.error, LoginTextConstants.fillAllFields);
+                  TypeMsg.error, LoginTextConstants.invalidToken);
             }
-          },
-        ),
+          } else {
+            displayToastWithContext(
+                TypeMsg.error, LoginTextConstants.fillAllFields);
+          }
+        },
+      ),
     ];
     final len = steps.length;
 

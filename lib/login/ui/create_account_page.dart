@@ -31,6 +31,7 @@ class CreateAccountPage extends HookConsumerWidget {
     final activationCode = useTextEditingController(text: code.toString());
     final name = useTextEditingController();
     final password = useTextEditingController();
+    final passwordConfirmation = useTextEditingController();
     final firstname = useTextEditingController();
     final nickname = useTextEditingController();
     final birthday = useTextEditingController();
@@ -52,6 +53,7 @@ class CreateAccountPage extends HookConsumerWidget {
     }
 
     List<GlobalKey<FormState>> formKeys = [
+      GlobalKey<FormState>(),
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
@@ -91,33 +93,58 @@ class CreateAccountPage extends HookConsumerWidget {
           const Spacer(),
         ],
       ),
+      Column(
+        children: [
+          CreateAccountField(
+            controller: passwordConfirmation,
+            label: LoginTextConstants.confirmPassword,
+            index: 3,
+            pageController: pageController,
+            currentPage: currentPage,
+            formKey: formKeys[2],
+            keyboardType: TextInputType.visiblePassword,
+            validator: (value) {
+              if (value != password.text) {
+                return LoginTextConstants.passwordMustMatch;
+              }
+              return null;
+            },
+          ),
+          const Spacer(),
+          PasswordStrength(
+            newPassword: password,
+            textColor: ColorConstants.background2,
+          ),
+          const Spacer(),
+        ],
+      ),
       CreateAccountField(
         controller: name,
         label: LoginTextConstants.name,
-        index: 3,
+        index: 4,
         pageController: pageController,
         currentPage: currentPage,
-        formKey: formKeys[2],
+        formKey: formKeys[3],
         keyboardType: TextInputType.name,
         autofillHints: const [AutofillHints.familyName],
       ),
       CreateAccountField(
         controller: firstname,
         label: LoginTextConstants.firstname,
-        index: 4,
+        index: 5,
         pageController: pageController,
         currentPage: currentPage,
-        formKey: formKeys[3],
+        formKey: formKeys[4],
         keyboardType: TextInputType.name,
         autofillHints: const [AutofillHints.givenName],
       ),
       CreateAccountField(
         controller: nickname,
         label: LoginTextConstants.nickname,
-        index: 5,
+        index: 6,
         pageController: pageController,
         currentPage: currentPage,
-        formKey: formKeys[4],
+        formKey: formKeys[5],
         keyboardType: TextInputType.name,
         canBeEmpty: true,
         hint: LoginTextConstants.canBeEmpty,
@@ -144,7 +171,7 @@ class CreateAccountPage extends HookConsumerWidget {
           },
           child: AbsorbPointer(
             child: Form(
-              key: formKeys[5],
+              key: formKeys[6],
               child: TextFormField(
                 style: const TextStyle(
                   fontSize: 20,
@@ -180,10 +207,10 @@ class CreateAccountPage extends HookConsumerWidget {
       CreateAccountField(
         controller: phone,
         label: LoginTextConstants.phone,
-        index: 7,
+        index: 8,
         pageController: pageController,
         currentPage: currentPage,
-        formKey: formKeys[6],
+        formKey: formKeys[7],
         keyboardType: TextInputType.phone,
         autofillHints: const [AutofillHints.telephoneNumber],
         canBeEmpty: true,
@@ -192,10 +219,10 @@ class CreateAccountPage extends HookConsumerWidget {
       CreateAccountField(
         controller: promo,
         label: LoginTextConstants.promo,
-        index: 8,
+        index: 9,
         pageController: pageController,
         currentPage: currentPage,
-        formKey: formKeys[7],
+        formKey: formKeys[8],
         keyboardType: TextInputType.number,
         canBeEmpty: true,
         mustBeInt: true,
@@ -257,7 +284,9 @@ class CreateAccountPage extends HookConsumerWidget {
               birthday.text.isNotEmpty &&
               floor.text.isNotEmpty &&
               password.text.isNotEmpty &&
-              activationCode.text.isNotEmpty) {
+              activationCode.text.isNotEmpty &&
+              passwordConfirmation.text.isNotEmpty &&
+              password.text == passwordConfirmation.text) {
             CreateAccount finalcreateAccount = CreateAccount(
               name: name.text,
               firstname: firstname.text,
