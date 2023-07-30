@@ -99,7 +99,6 @@ class LoanMainPage extends HookConsumerWidget {
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.grey.shade300))),
-
                                 ),
                                 const Spacer()
                               ],

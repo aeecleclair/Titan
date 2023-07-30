@@ -7,7 +7,8 @@ class CashRepository extends Repository {
   final ext = "tombola/users/";
 
   Future<List<Cash>> getCashList() async {
-    return List<Cash>.from((await getList(suffix: "cash")).map((x) => Cash.fromJson(x)));
+    return List<Cash>.from(
+        (await getList(suffix: "cash")).map((x) => Cash.fromJson(x)));
   }
 
   Future<Cash> getCash(String userId) async {
@@ -15,7 +16,8 @@ class CashRepository extends Repository {
   }
 
   Future<Cash> createCash(Cash cash) async {
-    return Cash.fromJson(await create(cash.toJson(), suffix: "${cash.user.id}/cash"));
+    return Cash.fromJson(
+        await create(cash.toJson(), suffix: "${cash.user.id}/cash"));
   }
 
   Future<bool> updateCash(Cash cash) async {

@@ -66,18 +66,16 @@ class DeliveryUi extends HookConsumerWidget {
           deliveryOrdersNotifier.autoLoad(
               ref,
               delivery.id,
-                  (deliveryId) => ordersByDeliveryListNotifier
-                  .loadDeliveryOrderList(deliveryId),
-                  (ordersByDelivery) {
-                ordersByDelivery.maybeWhen(
-                  data: (data) {
-                    orders.addAll(data);
-                  },
-                  orElse: () {},
-                );
-                deliveryOrdersNotifier.toggleExpanded(delivery.id);
-              });
-
+              (deliveryId) => ordersByDeliveryListNotifier
+                  .loadDeliveryOrderList(deliveryId), (ordersByDelivery) {
+            ordersByDelivery.maybeWhen(
+              data: (data) {
+                orders.addAll(data);
+              },
+              orElse: () {},
+            );
+            deliveryOrdersNotifier.toggleExpanded(delivery.id);
+          });
         }
       },
       orElse: () {},

@@ -9,13 +9,11 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-
 class AppointmentDataSource extends CalendarDataSource {
   AppointmentDataSource(List<Appointment> source) {
     appointments = source;
   }
 }
-
 
 class Calendar extends HookConsumerWidget {
   final CalendarDataSource<Object?>? dataSource;

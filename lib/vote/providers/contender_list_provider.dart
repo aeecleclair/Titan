@@ -27,8 +27,7 @@ class ContenderListNotifier extends ListNotifier<Contender> {
     return await update(
         contenderRepository.updateContender,
         (contenders, contender) => contenders
-          ..[contenders.indexWhere((p) => p.id == contender.id)] =
-              contender,
+          ..[contenders.indexWhere((p) => p.id == contender.id)] = contender,
         contender);
   }
 
@@ -84,8 +83,9 @@ class ContenderListNotifier extends ListNotifier<Contender> {
   }
 }
 
-final contenderListProvider = StateNotifierProvider<ContenderListNotifier,
-    AsyncValue<List<Contender>>>((ref) {
+final contenderListProvider =
+    StateNotifierProvider<ContenderListNotifier, AsyncValue<List<Contender>>>(
+        (ref) {
   final token = ref.watch(tokenProvider);
   final contenderListNotifier = ContenderListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {

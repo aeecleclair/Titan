@@ -122,8 +122,8 @@ class MapNotifier<T, E>
     });
   }
 
-  Future<void> autoLoadList(
-      WidgetRef ref, T t, Future<AsyncValue<List<E>>> Function(T t) loader) async {
+  Future<void> autoLoadList(WidgetRef ref, T t,
+      Future<AsyncValue<List<E>>> Function(T t) loader) async {
     Future.delayed(const Duration(milliseconds: 1), () {
       setTData(t, const AsyncLoading());
     });

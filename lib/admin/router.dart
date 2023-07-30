@@ -26,9 +26,13 @@ class AdminRouter {
             AdminMiddleware(ref, isAdminProvider)
           ],
           children: [
-            QRoute(path: addAssociation, builder: () => const AddAssociationPage()),
+            QRoute(
+                path: addAssociation,
+                builder: () => const AddAssociationPage()),
             QRoute(path: addLoaner, builder: () => const AddLoanerPage()),
-            QRoute(path: editAssociation, builder: () => const EditAssociationPage()),
+            QRoute(
+                path: editAssociation,
+                builder: () => const EditAssociationPage()),
             QRoute(
                 path: editModuleVisibility,
                 builder: () => const EditModulesVisibilityPage()),

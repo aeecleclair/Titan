@@ -105,8 +105,7 @@ class Register extends HookConsumerWidget {
                     SignInUpBar(
                         label: LoginTextConstants.create,
                         isLoading: ref.watch(loadingProvider).maybeWhen(
-                            data: (data) => data,
-                            orElse: () => false),
+                            data: (data) => data, orElse: () => false),
                         onPressed: () async {
                           if (key.currentState!.validate()) {
                             final value = await signUpNotifier.createUser(
@@ -135,7 +134,8 @@ class Register extends HookConsumerWidget {
                             height: 40,
                             alignment: Alignment.centerLeft,
                             child: InkWell(
-                              splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                              splashColor:
+                                  const Color.fromRGBO(255, 255, 255, 1),
                               onTap: () {
                                 QR.to(LoginRouter.root);
                               },
@@ -153,7 +153,8 @@ class Register extends HookConsumerWidget {
                             height: 40,
                             alignment: Alignment.centerLeft,
                             child: InkWell(
-                              splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                              splashColor:
+                                  const Color.fromRGBO(255, 255, 255, 1),
                               onTap: () {
                                 QR.to(LoginRouter.createAccount +
                                     LoginRouter.mailReceived);

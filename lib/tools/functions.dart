@@ -256,11 +256,9 @@ String getMonth(int m) {
   return months[m % 12];
 }
 
-
 DateTime normalizedDate(DateTime date) {
   return DateTime(date.year, date.month, date.day, 0, 0, 0, 0, 0);
 }
-
 
 Future<TimeOfDay?> _getTime(BuildContext context) async {
   return await showTimePicker(

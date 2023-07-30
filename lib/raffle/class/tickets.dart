@@ -37,10 +37,11 @@ class Ticket {
     String? id,
   }) =>
       Ticket(
-          typeTicket: typeTicket ?? this.typeTicket,
-          user: user ?? this.user,
-          prize: lot,
-          id: id ?? this.id,);
+        typeTicket: typeTicket ?? this.typeTicket,
+        user: user ?? this.user,
+        prize: lot,
+        id: id ?? this.id,
+      );
 
   Ticket.empty() {
     typeTicket = TypeTicketSimple.empty();

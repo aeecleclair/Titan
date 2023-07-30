@@ -20,7 +20,7 @@ class ContenderLogo extends HookConsumerWidget {
         builder: (context, data) {
           if (data[contender] == null) {
             contenderLogosNotifier.autoLoad(ref, contender,
-                    (contender) => logoNotifier.getLogo(contender.id));
+                (contender) => logoNotifier.getLogo(contender.id));
             return const SizedBox.shrink();
           }
           return SizedBox(

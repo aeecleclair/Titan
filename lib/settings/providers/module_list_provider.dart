@@ -67,7 +67,8 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
       modulesName = allModulesName;
       saveModules();
     }
-    if (allSavedModulesName.isEmpty || !eq.equals(allSavedModulesName, allModulesName)) {
+    if (allSavedModulesName.isEmpty ||
+        !eq.equals(allSavedModulesName, allModulesName)) {
       allSavedModulesName = allModulesName;
       modulesName = allModulesName;
       saveAllModules();
@@ -76,8 +77,9 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
       allModules.sort((a, b) => allSavedModulesName
           .indexOf(a.root.toString())
           .compareTo(allSavedModulesName.indexOf(b.root.toString())));
-      modulesName.sort((a, b) =>
-          allSavedModulesName.indexOf(a).compareTo(allSavedModulesName.indexOf(b)));
+      modulesName.sort((a, b) => allSavedModulesName
+          .indexOf(a)
+          .compareTo(allSavedModulesName.indexOf(b)));
     }
     List<Module> modules = [];
     List<Module> toDelete = [];
@@ -113,8 +115,9 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     }
     allModules.insert(newIndex, allModules.removeAt(oldIndex));
     final modulesIds = state.map((e) => e.root.toString()).toList();
-    state =
-        allModules.where((e) => modulesIds.contains(e.root.toString())).toList();
+    state = allModules
+        .where((e) => modulesIds.contains(e.root.toString()))
+        .toList();
     saveAllModules();
   }
 

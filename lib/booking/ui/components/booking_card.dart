@@ -9,7 +9,6 @@ import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/builders/shrink_button.dart';
 
-
 class BookingCard extends HookConsumerWidget {
   final Booking booking;
   final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;

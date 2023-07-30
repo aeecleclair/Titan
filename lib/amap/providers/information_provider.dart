@@ -7,7 +7,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class InformationNotifier extends SingleNotifier<Information> {
   final informationRepository = InformationRepository();
-  InformationNotifier({required String token }) : super(const AsyncLoading()) {
+  InformationNotifier({required String token}) : super(const AsyncLoading()) {
     informationRepository.setToken(token);
   }
 
@@ -24,7 +24,8 @@ class InformationNotifier extends SingleNotifier<Information> {
   }
 
   Future<bool> deleteInformation(Information information) async {
-    return await delete(informationRepository.deleteInformation, information, "");
+    return await delete(
+        informationRepository.deleteInformation, information, "");
   }
 }
 

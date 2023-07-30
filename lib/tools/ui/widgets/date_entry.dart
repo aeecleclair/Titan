@@ -21,17 +21,17 @@ class DateEntry extends StatelessWidget {
       required this.label,
       required this.controller,
       required this.onTap,
-        this.onChanged = noChange,
-        this.validator = noValidation,
-        this.formKey,
-        this.prefix = '',
-        this.suffix = '',
-        this.enabled = true,
-        this.canBeEmpty = false,
-        this.color = Colors.black,
-        this.enabledColor = Colors.black,
-        this.errorColor = ColorConstants.error,
-        this.suffixIcon});
+      this.onChanged = noChange,
+      this.validator = noValidation,
+      this.formKey,
+      this.prefix = '',
+      this.suffix = '',
+      this.enabled = true,
+      this.canBeEmpty = false,
+      this.color = Colors.black,
+      this.enabledColor = Colors.black,
+      this.errorColor = ColorConstants.error,
+      this.suffixIcon});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

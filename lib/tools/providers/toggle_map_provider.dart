@@ -131,7 +131,9 @@ class ToggleMapNotifier<T, E> extends StateNotifier<
     });
   }
 
-  Future<void> autoLoad(WidgetRef ref, T t,
+  Future<void> autoLoad(
+      WidgetRef ref,
+      T t,
       Future<AsyncValue<List<E>>> Function(T t) loader,
       Function(AsyncValue<List<E>> value)? postProcess) async {
     Future.delayed(const Duration(milliseconds: 1), () {

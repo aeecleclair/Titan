@@ -11,8 +11,7 @@ class ContenderLogoNotifier extends MapNotifier<Contender, Image> {
 
 final contenderLogosProvider = StateNotifierProvider<ContenderLogoNotifier,
     AsyncValue<Map<Contender, AsyncValue<List<Image>>>>>((ref) {
-  ContenderLogoNotifier contenderLogoNotifier =
-      ContenderLogoNotifier();
+  ContenderLogoNotifier contenderLogoNotifier = ContenderLogoNotifier();
   tokenExpireWrapperAuth(ref, () async {
     ref.watch(contenderListProvider).when(data: (contender) {
       contenderLogoNotifier.loadTList(contender);

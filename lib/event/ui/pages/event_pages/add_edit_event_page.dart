@@ -95,11 +95,11 @@ class AddEditEventPage extends HookConsumerWidget {
               key: key,
               child: Column(children: [
                 AlignLeftText(
-                    isEdit
-                        ? EventTextConstants.editEvent
-                        : EventTextConstants.addEvent,
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    color: Colors.grey,
+                  isEdit
+                      ? EventTextConstants.editEvent
+                      : EventTextConstants.addEvent,
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  color: Colors.grey,
                 ),
                 const SizedBox(height: 30),
                 HorizontalListView(
