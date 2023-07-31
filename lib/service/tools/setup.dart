@@ -36,12 +36,21 @@ void setUpNotification(WidgetRef ref) {
       data: (messageList) {
         for (final message in messageList) {
           if (message.isVisible) {
-            localNotificationService.showNotificationWithPayload(
-              message.context,
-              message.title,
-              message.content,
-              message.actionId,
-            );
+            final action = message.action;
+            if (action == null) {
+              localNotificationService.showNotification(
+                message.context,
+                message.title,
+                message.content,
+              );
+            } else {
+              localNotificationService.showNotificationWithPayload(
+                message.context,
+                message.title,
+                message.content,
+                action.toJson().toString(),
+              );
+            }
           }
         }
       },
