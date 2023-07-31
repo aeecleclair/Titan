@@ -33,12 +33,10 @@ class ModuleUI extends HookConsumerWidget {
                 Container(
                   width: 25,
                 ),
-                SizedBox(
-                    height: 50,
-                    child: Center(
-                        child: m.getIcon(m.root == QR.currentPath
-                            ? DrawerColorConstants.selectedText
-                            : DrawerColorConstants.lightText))),
+                Center(
+                    child: m.getIcon(m.root == QR.currentPath
+                        ? DrawerColorConstants.selectedText
+                        : DrawerColorConstants.lightText)),
                 Container(
                   width: 20,
                 ),

@@ -22,10 +22,13 @@ class Module {
         selected: selected ?? this.selected,
       );
 
-  Widget getIcon(Color color) {
+  Widget getIcon(Color color, {double size = 30}) {
     return icon.fold(
-        (heroIcon) => HeroIcon(heroIcon, color: color),
+        (heroIcon) => HeroIcon(heroIcon, color: color, size: size),
         (svgPath) => SvgPicture.asset(svgPath,
-            colorFilter: ColorFilter.mode(color, BlendMode.srcIn)));
+            width: size,
+            height: size,
+              colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+        ));
   }
 }
