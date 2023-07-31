@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/settings/providers/module_list_provider.dart';
 import 'package:myecl/settings/ui/settings.dart';
 
@@ -48,10 +50,14 @@ class ModulesPage extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: Row(
                   children: [
-                    HeroIcon(
-                      module.icon,
-                      color: Colors.grey.shade700,
-                    ),
+                    module.icon.fold(
+                        (heroIcon) => HeroIcon(
+                              heroIcon,
+                              color: Colors.grey.shade700,
+                            ),
+                        (svgPath) => SvgPicture.asset(svgPath,
+                            colorFilter: ColorFilter.mode(
+                                Colors.grey.shade700, BlendMode.srcIn))),
                     const SizedBox(
                       width: 20,
                     ),

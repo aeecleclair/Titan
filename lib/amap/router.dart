@@ -1,3 +1,4 @@
+import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
@@ -26,7 +27,7 @@ class AmapRouter {
   static const String addEditProduct = '/add_edit_product';
   static final Module module = Module(
     name: "Amap",
-    icon: HeroIcons.shoppingCart,
+    icon: const Left(HeroIcons.shoppingCart),
     root: AmapRouter.root,
     selected: false,
   );

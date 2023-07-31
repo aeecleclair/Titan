@@ -1,3 +1,4 @@
+import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
@@ -20,7 +21,7 @@ class LoanRouter {
   static const String detail = '/detail';
   static final Module module = Module(
       name: "Prêt",
-      icon: HeroIcons.buildingLibrary,
+      icon: const Left(HeroIcons.buildingLibrary),
       root: LoanRouter.root,
       selected: false);
   LoanRouter(this.ref);

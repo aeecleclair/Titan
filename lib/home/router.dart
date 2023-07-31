@@ -1,3 +1,4 @@
+import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
@@ -10,7 +11,7 @@ class HomeRouter {
   static const String root = '/home';
   static final Module module = Module(
       name: "Calendrier",
-      icon: HeroIcons.calendarDays,
+      icon: const Left(HeroIcons.calendarDays),
       root: HomeRouter.root,
       selected: false);
   HomeRouter(this.ref);

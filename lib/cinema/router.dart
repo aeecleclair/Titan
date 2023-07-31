@@ -1,3 +1,4 @@
+import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/cinema/providers/is_cinema_admin.dart';
@@ -18,7 +19,7 @@ class CinemaRouter {
   static const String detail = '/detail';
   static final Module module = Module(
       name: "Cinéma",
-      icon: HeroIcons.ticket,
+      icon: const Left(HeroIcons.ticket),
       root: CinemaRouter.root,
       selected: false);
   CinemaRouter(this.ref);

@@ -1,9 +1,10 @@
+import 'package:either_dart/either.dart';
 import 'package:heroicons/heroicons.dart';
 
 
 class Module {
   String name;
-  HeroIcons icon;
+  Either<HeroIcons, String> icon;
   String root;
   bool selected;
 

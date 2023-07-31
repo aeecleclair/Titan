@@ -1,3 +1,4 @@
+import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
@@ -20,7 +21,7 @@ class VoteRouter {
   static const String detail = '/detail';
   static final Module module = Module(
       name: "Vote",
-      icon: HeroIcons.envelopeOpen,
+      icon: const Left(HeroIcons.envelopeOpen),
       root: VoteRouter.root,
       selected: false);
   VoteRouter(this.ref);

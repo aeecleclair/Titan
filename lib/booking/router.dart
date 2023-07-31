@@ -1,3 +1,4 @@
+import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
@@ -20,7 +21,7 @@ class BookingRouter {
   static const String room = '/room';
   static final Module module = Module(
       name: "Réservation",
-      icon: HeroIcons.tableCells,
+      icon: const Left(HeroIcons.tableCells),
       root: BookingRouter.root,
       selected: false);
   BookingRouter(this.ref);

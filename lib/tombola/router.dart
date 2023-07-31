@@ -1,3 +1,4 @@
+import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
@@ -20,7 +21,7 @@ class RaffleRouter {
   static const String tombola = '/tombola';
   static final Module module = Module(
       name: "Tombola",
-      icon: HeroIcons.gift,
+      icon: const Left(HeroIcons.gift),
       root: RaffleRouter.root,
       selected: false);
   RaffleRouter(this.ref);

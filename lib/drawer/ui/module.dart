@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/class/module.dart';
@@ -37,11 +38,19 @@ class ModuleUI extends HookConsumerWidget {
                 SizedBox(
                     height: 50,
                     child: Center(
-                        child: HeroIcon(
-                      m.icon,
-                      color: m.root == QR.currentPath
-                          ? DrawerColorConstants.selectedText
-                          : DrawerColorConstants.lightText,
+                        child: m.icon.fold(
+                      (heroIcon) => HeroIcon(
+                        heroIcon,
+                        color: m.root == QR.currentPath
+                            ? DrawerColorConstants.selectedText
+                            : DrawerColorConstants.lightText,
+                      ),
+                      (svgPath) => SvgPicture.asset(svgPath,
+                          colorFilter: ColorFilter.mode(
+                              m.root == QR.currentPath
+                                  ? DrawerColorConstants.selectedText
+                                  : DrawerColorConstants.lightText,
+                              BlendMode.srcIn)),
                     ))),
                 Container(
                   width: 20,
