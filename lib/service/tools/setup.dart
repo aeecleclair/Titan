@@ -10,9 +10,6 @@ import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-enum ModuleName {
-  cinema,
-}
 
 void setUpNotification(WidgetRef ref) {
   final LocalNotificationService localNotificationService =
@@ -37,23 +34,20 @@ void setUpNotification(WidgetRef ref) {
     }
   });
 
-  ModuleName getModuleName(String module) {
-    final enumsName = {for (var v in ModuleName.values) v.toString(): v};
-    return enumsName[module] ?? ModuleName.values.first;
-  }
-
-  Future<String> handleAction(WidgetRef ref, Action action) async {
-    final providers = [
-      cinemaProviders
-    ];
-    for (final provider in providers) {
-      if (provider.keys.first == action.module) {
-        final notifier = provider[action.table];
-        if (notifier != null) {
-          ref.read(notifier).refresh();
-        }
-      }
+  Future<String> handleAction(Action action) async {
+    final providers = {"cinema": cinemaProviders};
+    final provider = providers[action.module];
+    if (provider == null) {
+      return "";
     }
+    final information = provider[action.table];
+    if (information == null) {
+      return "";
+    }
+    final path = information.item1;
+    final notifier = information.item2;
+    ref.read(notifier).refresh();
+    return path;
   }
 
   void handleMessages() async {
