@@ -88,7 +88,10 @@ class DrawerTemplate extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(cornerval),
                           child: Stack(
                             children: [
-                              child,
+                              IgnorePointer(
+                                ignoring: controller.isCompleted,
+                                child: child,
+                              ),
                               MouseRegion(
                                 cursor: SystemMouseCursors.click,
                                 onEnter: (event) {
