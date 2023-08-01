@@ -109,14 +109,6 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     saveModules();
   }
 
-  String getFirstPage() {
-    if (state.isNotEmpty) {
-      return state[0].root;
-    } else {
-      return HomeRouter.root;
-    }
-  }
-
   void reorderModules(int oldIndex, int newIndex) {
     if (newIndex > oldIndex) {
       newIndex -= 1;
