@@ -12,10 +12,7 @@ class AmapTemplate extends StatelessWidget {
         color: Colors.white,
         child: SafeArea(
           child: Column(
-            children: [
-              const TopBar(),
-              Expanded(child: child),
-            ],
+            children: [const TopBar(), Expanded(child: child)],
           ),
         ),
       ),

@@ -3,18 +3,19 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class TopBar extends HookConsumerWidget {
-  final SwipeControllerNotifier controllerNotifier;
-  const TopBar({Key? key, required this.controllerNotifier}) : super(key: key);
+  const TopBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final meNotifier = ref.watch(asyncUserProvider.notifier);
+    final animation = ref.watch(animationProvider);
     return Column(
       children: [
         const SizedBox(
@@ -30,7 +31,11 @@ class TopBar extends HookConsumerWidget {
                   return IconButton(
                       onPressed: () async {
                         if (QR.currentPath == AdminRouter.root) {
-                          controllerNotifier.toggle();
+                          if (animation != null) {
+                            final controllerNotifier = ref.watch(
+                                swipeControllerProvider(animation).notifier);
+                            controllerNotifier.toggle();
+                          }
                           tokenExpireWrapper(ref, () async {
                             await meNotifier.loadMe();
                           });

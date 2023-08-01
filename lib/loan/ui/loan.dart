@@ -1,38 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/providers/animation_provider.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/loan/ui/top_bar.dart';
 
-class LoanTemplate extends HookConsumerWidget {
+class LoanTemplate extends StatelessWidget {
   final Widget child;
-  const LoanTemplate(
-      {Key? key, required this.child})
-      : super(key: key);
+  const LoanTemplate({Key? key, required this.child}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final animationNotifier = ref.watch(animationProvider.notifier);
-    final controller =
-    ref.watch(swipeControllerProvider(animationNotifier.animation!));
-    final controllerNotifier = ref
-        .watch(swipeControllerProvider(animationNotifier.animation!).notifier);
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         color: Colors.white,
         child: SafeArea(
-            child: IgnorePointer(
-              ignoring: controller.isCompleted,
-              child: Column(
-                children: [
-                  TopBar(
-                    controllerNotifier: controllerNotifier,
-                  ),
-                  Expanded(child: child),
-                ],
-              ),
-            ),
+          child: Column(
+            children: [const TopBar(), Expanded(child: child)],
           ),
+        ),
       ),
     );
   }

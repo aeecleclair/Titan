@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/providers/animation_provider.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/providers/sorted_event_list_provider.dart';
 import 'package:myecl/home/tools/constants.dart';
@@ -23,25 +21,18 @@ class HomePage extends HookConsumerWidget {
     DateTime now = DateTime.now();
     final ScrollController scrollController = useScrollController();
     final daysEventScrollController = useScrollController();
-    final animationNotifier = ref.watch(animationProvider.notifier);
-    final controller =
-        ref.watch(swipeControllerProvider(animationNotifier.animation!));
-    final controllerNotifier = ref
-        .watch(swipeControllerProvider(animationNotifier.animation!).notifier);
 
     return Scaffold(
         body: Container(
       color: Colors.white,
       child: SafeArea(
-          child: IgnorePointer(
-        ignoring: controller.isCompleted,
-        child: Refresher(
+          child: Refresher(
             onRefresh: () async {
               await confimedEventListNotifier.loadConfirmedEvent();
               now = DateTime.now();
             },
             child: Column(children: [
-              TopBar(controllerNotifier: controllerNotifier),
+              const TopBar(),
               MonthBar(
                   scrollController: scrollController,
                   width: MediaQuery.of(context).size.width),
@@ -95,6 +86,6 @@ class HomePage extends HookConsumerWidget {
                   ))
             ])),
       )),
-    ));
+    );
   }
 }
