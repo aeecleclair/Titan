@@ -54,11 +54,6 @@ void setUpNotification(WidgetRef ref) {
       messages.maybeWhen(
         data: (messageList) async {
           for (final message in messageList) {
-            final title = message.title;
-            final content = message.content;
-            if (title == null && content == null) {
-              continue;
-            }
             final actionModule = message.actionModule;
             final actionTable = message.actionTable;
             if (!message.isVisible) {
@@ -69,15 +64,15 @@ void setUpNotification(WidgetRef ref) {
             if (actionModule == null || actionTable == null) {
               localNotificationService.showNotification(
                 message.context,
-                message.title ?? "MyECL",
-                message.content ?? "",
+                message.title,
+                message.content,
               );
             } else {
               final path = await handleAction(actionModule, actionTable);
               localNotificationService.showNotificationWithPayload(
                 message.context,
-                message.title ?? "MyECL",
-                message.content ?? "",
+                message.title,
+                message.content,
                 path,
               );
             }

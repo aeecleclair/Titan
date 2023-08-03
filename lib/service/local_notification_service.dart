@@ -54,20 +54,20 @@ class LocalNotificationService {
         android: androidNotificationDetails, iOS: darwinNotificationDetails);
   }
 
-  Future<void> showNotification(String id, String title, String body) async {
+  Future<void> showNotification(String id, String? title, String? body) async {
     await _localNotificationService.show(
         generateIntFromString(id), title, body, await _notificationDetails());
   }
 
   Future<void> showNotificationWithPayload(
-      String id, String title, String body, String payload) async {
+      String id, String? title, String? body, String? payload) async {
     await _localNotificationService.show(
         generateIntFromString(id), title, body, await _notificationDetails(),
         payload: payload);
   }
 
   Future<void> showScheduledNotification(
-      String id, String title, String body, DateTime date) async {
+      String id, String? title, String? body, DateTime date) async {
     await _localNotificationService.zonedSchedule(
         generateIntFromString(id),
         title,
@@ -79,14 +79,14 @@ class LocalNotificationService {
             UILocalNotificationDateInterpretation.absoluteTime);
   }
 
-  Future<void> showPeriodicNotification(String id, String title, String body,
+  Future<void> showPeriodicNotification(String id, String? title, String? body,
       String? payload, RepeatInterval repeatInterval) async {
     await _localNotificationService.periodicallyShow(generateIntFromString(id),
         title, body, repeatInterval, await _notificationDetails(),
         payload: payload, androidAllowWhileIdle: true);
   }
 
-  Future<void> showNotificationWithImage(String id, String title, String body,
+  Future<void> showNotificationWithImage(String id, String? title, String? body,
       String payload, String imageUrl, String largeIcon) async {
     final BigPictureStyleInformation bigPictureStyleInformation =
         BigPictureStyleInformation(FilePathAndroidBitmap(imageUrl),
