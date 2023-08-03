@@ -8,11 +8,11 @@ class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
   final AsyncValue<Map<MapKey, AsyncValue<List<MapValue>>>> value;
   final MapNotifier<MapKey, MapValue> notifier;
   final MapKey mapKey;
+  final Future<MapValue> Function(MapKey t) loader;
   final Widget Function(BuildContext context, MapValue value) dataBuilder;
   final Widget Function(Object? error, StackTrace? stack)? errorBuilder;
   final Widget Function(BuildContext context)? loadingBuilder;
   final Widget Function(BuildContext context, Widget child)? orElseBuilder;
-  final Future<MapValue> Function(MapKey t) loader;
   final Color? loaderColor;
   const AutoLoaderChild(
       {super.key,
