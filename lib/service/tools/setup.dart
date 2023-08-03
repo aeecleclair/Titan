@@ -1,7 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/cinema/servide/cinema_service.dart';
-import 'package:myecl/service/class/action.dart';
 import 'package:myecl/service/local_notification_service.dart';
 import 'package:myecl/service/providers/firebase_token_provider.dart';
 import 'package:myecl/service/providers/messages_provider.dart';
@@ -9,7 +8,6 @@ import 'package:myecl/service/providers/topic_provider.dart';
 import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-
 
 void setUpNotification(WidgetRef ref) {
   final LocalNotificationService localNotificationService =
@@ -20,6 +18,7 @@ void setUpNotification(WidgetRef ref) {
   final firebaseToken = ref.watch(firebaseTokenProvider);
   final topicsNotifier = ref.watch(topicsProvider.notifier);
   final logger = Repository.logger;
+  final providers = {"cinema": cinemaProviders};
 
   FirebaseMessaging.instance.requestPermission().then((value) {
     if (value.authorizationStatus == AuthorizationStatus.authorized) {
@@ -34,13 +33,12 @@ void setUpNotification(WidgetRef ref) {
     }
   });
 
-  Future<String> handleAction(Action action) async {
-    final providers = {"cinema": cinemaProviders};
-    final provider = providers[action.module];
+  Future<String> handleAction(String actionModule, String actionTable) async {
+    final provider = providers[actionModule];
     if (provider == null) {
       return "";
     }
-    final information = provider[action.table];
+    final information = provider[actionTable];
     if (information == null) {
       return "";
     }
@@ -56,28 +54,32 @@ void setUpNotification(WidgetRef ref) {
       messages.maybeWhen(
         data: (messageList) async {
           for (final message in messageList) {
-            if (message.isVisible) {
-              final action = message.action;
-              if (action == null) {
-                localNotificationService.showNotification(
-                  message.context,
-                  message.title,
-                  message.content,
-                );
-              } else {
-                final path = await handleAction(action);
-                localNotificationService.showNotificationWithPayload(
-                  message.context,
-                  message.title,
-                  message.content,
-                  path,
-                );
+            final title = message.title;
+            final content = message.content;
+            if (title == null && content == null) {
+              continue;
+            }
+            final actionModule = message.actionModule;
+            final actionTable = message.actionTable;
+            if (!message.isVisible) {
+              if (actionModule != null && actionTable != null) {
+                handleAction(actionModule, actionTable);
               }
+            }
+            if (actionModule == null || actionTable == null) {
+              localNotificationService.showNotification(
+                message.context,
+                message.title ?? "MyECL",
+                message.content ?? "",
+              );
             } else {
-              final action = message.action;
-              if (action != null) {
-                handleAction(action);
-              }
+              final path = await handleAction(actionModule, actionTable);
+              localNotificationService.showNotificationWithPayload(
+                message.context,
+                message.title ?? "MyECL",
+                message.content ?? "",
+                path,
+              );
             }
           }
         },
