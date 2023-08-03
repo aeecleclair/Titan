@@ -52,9 +52,7 @@ class DayList extends HookConsumerWidget {
         itemCount: numberDay + 2,
         itemBuilder: (BuildContext context, int i) {
           if (i == 0 || i == days.length + 1) {
-            return const SizedBox(
-              width: 15,
-            );
+            return const SizedBox(width: 15);
           }
           final day = days[i - 1];
           return DayCard(

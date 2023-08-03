@@ -135,9 +135,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                                 itemBuilder: (context, index) {
                                   if (index == 0 ||
                                       index == prizes.length + 1) {
-                                    return const SizedBox(
-                                      width: 20,
-                                    );
+                                    return const SizedBox(width: 20);
                                   }
                                   return Container(
                                       margin: const EdgeInsets.symmetric(

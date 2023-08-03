@@ -127,9 +127,7 @@ class DetailPage extends HookConsumerWidget {
                         itemCount: genres.length + 2,
                         itemBuilder: (BuildContext context, int index) {
                           if (index == 0 || index == genres.length + 1) {
-                            return const SizedBox(
-                              width: 20,
-                            );
+                            return const SizedBox(width: 20);
                           } else {
                             return Container(
                               margin:

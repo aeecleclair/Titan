@@ -31,9 +31,7 @@ class SideItem extends HookConsumerWidget {
                       color: !alreadyVoted || isSelected
                           ? Colors.black
                           : Colors.grey.shade500)),
-              const SizedBox(
-                height: 7,
-              ),
+              const SizedBox(height: 7),
               isSelected
                   ? Container(
                       width: 8,

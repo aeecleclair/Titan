@@ -55,9 +55,7 @@ class AccountHandler extends HookConsumerWidget {
             child: HorizontalListView(
               child: Row(
                 children: [
-                  const SizedBox(
-                    width: 15,
-                  ),
+                  const SizedBox(width: 15),
                   Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Container(
@@ -135,15 +133,11 @@ class AccountHandler extends HookConsumerWidget {
                         ),
                       )),
                   const CashContainer(),
-                  const SizedBox(
-                    width: 10,
-                  ),
+                  const SizedBox(width: 10),
                 ],
               ),
             )),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
       ],
     );
   }

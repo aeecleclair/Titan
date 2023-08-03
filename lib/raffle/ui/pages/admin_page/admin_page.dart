@@ -42,15 +42,11 @@ class AdminPage extends HookConsumerWidget {
           child: Column(
             children: [
               const AccountHandler(),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               raffle.raffleStatusType != RaffleStatusType.locked
                   ? const TicketHandler()
                   : const WinningTicketHandler(),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               const PrizeHandler(),
               raffle.raffleStatusType != RaffleStatusType.locked
                   ? Padding(

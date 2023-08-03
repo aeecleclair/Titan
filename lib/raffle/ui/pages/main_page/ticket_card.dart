@@ -81,9 +81,7 @@ class TicketWidget extends HookConsumerWidget {
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 AutoSizeText(
                   raffle.name,
                   maxLines: 2,

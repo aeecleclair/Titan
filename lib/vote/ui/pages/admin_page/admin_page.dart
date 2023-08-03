@@ -342,9 +342,7 @@ class AdminPage extends HookConsumerWidget {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 50,
-                                ),
+                                const SizedBox(height: 50),
                                 SizedBox(
                                   width: double.infinity,
                                   child: Row(
@@ -419,9 +417,7 @@ class AdminPage extends HookConsumerWidget {
                                               ),
                                             )),
                                       ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
+                                      const SizedBox(width: 20),
                                       Expanded(
                                         child: WaitingButton(
                                           builder: (child) => CardLayout(

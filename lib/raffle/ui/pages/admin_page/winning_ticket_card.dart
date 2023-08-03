@@ -50,9 +50,7 @@ class WinningTicketUI extends HookConsumerWidget {
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(
-                  height: 6,
-                ),
+                const SizedBox(height: 6),
                 AutoSizeText(
                   ticket.user.nickname != null
                       ? "${ticket.user.firstname} ${ticket.user.name}"
@@ -65,9 +63,7 @@ class WinningTicketUI extends HookConsumerWidget {
                       fontSize: 15,
                       fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(
-                  height: 4,
-                ),
+                const SizedBox(height: 4),
               ],
             ),
           ],

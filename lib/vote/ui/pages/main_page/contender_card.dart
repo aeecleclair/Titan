@@ -152,9 +152,7 @@ class ContenderCard extends HookConsumerWidget {
                                 HeroIcons.cubeTransparent,
                                 size: 40,
                               ),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        const SizedBox(width: 10),
                         Expanded(
                           child: Column(
                             children: [
@@ -174,15 +172,11 @@ class ContenderCard extends HookConsumerWidget {
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black)),
-                              const SizedBox(
-                                height: 3,
-                              ),
+                              const SizedBox(height: 3),
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          width: 5,
-                        ),
+                        const SizedBox(width: 5),
                         contender.listType != ListType.blank
                             ? GestureDetector(
                                 onTap: () {
@@ -195,9 +189,7 @@ class ContenderCard extends HookConsumerWidget {
                                   size: 25,
                                 ),
                               )
-                            : const SizedBox(
-                                width: 25,
-                              ),
+                            : const SizedBox(width: 25),
                       ],
                     ),
                     Center(

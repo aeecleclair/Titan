@@ -254,9 +254,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                               color: Colors.black,
                               controller: queryController,
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                            const SizedBox(height: 10),
                             SearchResult(
                                 borrower: member,
                                 queryController: queryController),

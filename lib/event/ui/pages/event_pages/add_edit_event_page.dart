@@ -230,9 +230,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                         isInt: true,
                                         keyboardType: TextInputType.number,
                                       ),
-                                      const SizedBox(
-                                        height: 30,
-                                      ),
+                                      const SizedBox(height: 30),
                                       if (!allDay.value)
                                         Column(
                                           children: [
@@ -242,18 +240,14 @@ class AddEditEventPage extends HookConsumerWidget {
                                                 controller: start,
                                                 label: EventTextConstants
                                                     .startHour),
-                                            const SizedBox(
-                                              height: 30,
-                                            ),
+                                            const SizedBox(height: 30),
                                             DateEntry(
                                                 onTap: () => getOnlyHourDate(
                                                     context, end),
                                                 controller: end,
                                                 label:
                                                     EventTextConstants.endHour),
-                                            const SizedBox(
-                                              height: 30,
-                                            ),
+                                            const SizedBox(height: 30),
                                           ],
                                         ),
                                       DateEntry(
@@ -274,9 +268,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                           : getFullDate(context, start),
                                       controller: start,
                                       label: EventTextConstants.startDate),
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
+                                  const SizedBox(height: 30),
                                   DateEntry(
                                       onTap: () => allDay.value
                                           ? getOnlyDayDate(context, end)

@@ -149,9 +149,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
                           },
                           physics: const BouncingScrollPhysics(),
                           children: steps)),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -219,9 +217,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
