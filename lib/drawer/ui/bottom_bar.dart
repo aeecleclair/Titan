@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/tools/ui/dialog.dart';
@@ -10,8 +9,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class BottomBar extends ConsumerWidget {
-  final SwipeControllerNotifier controllerNotifier;
-  const BottomBar({Key? key, required this.controllerNotifier})
+  const BottomBar({Key? key})
       : super(key: key);
 
   @override

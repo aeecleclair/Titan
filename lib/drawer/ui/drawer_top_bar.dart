@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/is_admin.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/auth/providers/is_connected_provider.dart';
+import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
@@ -15,8 +16,7 @@ import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DrawerTopBar extends HookConsumerWidget {
-  final SwipeControllerNotifier controllerNotifier;
-  const DrawerTopBar({Key? key, required this.controllerNotifier}) : super(key: key);
+  const DrawerTopBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,8 +25,19 @@ class DrawerTopBar extends HookConsumerWidget {
     final hasScrolled = ref.watch(hasScrolledProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
     final isConnected = ref.watch(isConnectedProvider);
-    final animation = useAnimationController(
+    final animation = ref.watch(animationProvider);
+    final dropDownAnimation = useAnimationController(
         duration: const Duration(milliseconds: 250), initialValue: 0.0);
+
+    void onBack() {
+      if (animation != null) {
+        final controllerNotifier =
+            ref.watch(swipeControllerProvider(animation).notifier);
+        controllerNotifier.toggle();
+      }
+      QR.to(SettingsRouter.root);
+      hasScrolled.setHasScrolled(false);
+    }
 
     return Column(children: [
       Container(
@@ -43,15 +54,13 @@ class DrawerTopBar extends HookConsumerWidget {
               GestureDetector(
                 onTap: () {
                   if (isAdmin) {
-                    if (animation.isDismissed) {
-                      animation.forward();
+                    if (dropDownAnimation.isDismissed) {
+                      dropDownAnimation.forward();
                     } else {
-                      animation.reverse();
+                      dropDownAnimation.reverse();
                     }
                   } else {
-                    QR.to(SettingsRouter.root);
-                    controllerNotifier.toggle();
-                    hasScrolled.setHasScrolled(false);
+                    onBack();
                   }
                 },
                 behavior: HitTestBehavior.opaque,
@@ -180,20 +189,16 @@ class DrawerTopBar extends HookConsumerWidget {
       AnimatedBuilder(
         builder: (context, child) {
           return Opacity(
-            opacity: animation.value,
+            opacity: dropDownAnimation.value,
             child: Padding(
               padding: const EdgeInsets.only(left: 25, top: 15),
               child: Column(
                 children: [
                   Transform.translate(
-                    offset: Offset(0, -10 * (1 - animation.value)),
+                    offset: Offset(0, -10 * (1 - dropDownAnimation.value)),
                     child: GestureDetector(
                       behavior: HitTestBehavior.translucent,
-                      onTap: () {
-                        QR.to(SettingsRouter.root);
-                        controllerNotifier.toggle();
-                        hasScrolled.setHasScrolled(false);
-                      },
+                      onTap: onBack,
                       child: Row(
                         children: [
                           HeroIcon(
@@ -224,14 +229,10 @@ class DrawerTopBar extends HookConsumerWidget {
                   ),
                   if (isAdmin)
                     Transform.translate(
-                      offset: Offset(0, -15 * (1 - animation.value)),
+                      offset: Offset(0, -15 * (1 - dropDownAnimation.value)),
                       child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
-                        onTap: () {
-                          QR.to(AdminRouter.root);
-                          controllerNotifier.toggle();
-                          hasScrolled.setHasScrolled(false);
-                        },
+                        onTap: onBack,
                         child: Row(
                           children: [
                             HeroIcon(
@@ -264,7 +265,7 @@ class DrawerTopBar extends HookConsumerWidget {
             ),
           );
         },
-        animation: animation,
+        animation: dropDownAnimation,
       )
     ]);
   }
