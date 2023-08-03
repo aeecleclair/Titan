@@ -12,7 +12,7 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class OrderUI extends HookConsumerWidget {
   final Order order;
@@ -118,7 +118,7 @@ class OrderUI extends HookConsumerWidget {
                         ),
                       ),
                       const Spacer(),
-                      ShrinkButton(
+                      WaitingButton(
                         onTap: () async {
                           await showDialog(
                               context: context,

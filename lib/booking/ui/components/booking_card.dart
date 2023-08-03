@@ -7,7 +7,7 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class BookingCard extends HookConsumerWidget {
   final Booking booking;
@@ -181,7 +181,7 @@ class BookingCard extends HookConsumerWidget {
                       GestureDetector(
                         onTap: onEdit,
                         child: CardButton(
-                          gradient1: Colors.grey.shade200,
+                          color: Colors.grey.shade200,
                           shadowColor: Colors.grey.withOpacity(0.2),
                           child: const HeroIcon(HeroIcons.pencil,
                               color: Colors.black),
@@ -191,7 +191,7 @@ class BookingCard extends HookConsumerWidget {
                     GestureDetector(
                       onTap: onCopy,
                       child: const CardButton(
-                        gradient1: Colors.black,
+                        color: Colors.black,
                         child: HeroIcon(HeroIcons.documentDuplicate,
                             color: Colors.white),
                       ),
@@ -201,7 +201,7 @@ class BookingCard extends HookConsumerWidget {
                       GestureDetector(
                         onTap: onConfirm,
                         child: CardButton(
-                          gradient1: Colors.grey.shade200,
+                          color: Colors.grey.shade200,
                           shadowColor: Colors.grey.withOpacity(0.2),
                           border: Border.all(
                               color: isAdmin
@@ -219,7 +219,7 @@ class BookingCard extends HookConsumerWidget {
                       GestureDetector(
                         onTap: onDecline,
                         child: CardButton(
-                          gradient1: Colors.black,
+                          color: Colors.black,
                           border: Border.all(
                               color: isAdmin
                                   ? booking.decision == Decision.declined
@@ -233,10 +233,10 @@ class BookingCard extends HookConsumerWidget {
                       ),
                     if (!isAdmin) const Spacer(),
                     if (!isAdmin)
-                      ShrinkButton(
+                      WaitingButton(
                         onTap: onDelete,
                         builder: (child) =>
-                            CardButton(gradient1: Colors.black, child: child),
+                            CardButton(color: Colors.black, child: child),
                         child: const HeroIcon(HeroIcons.trash,
                             color: Colors.white),
                       ),

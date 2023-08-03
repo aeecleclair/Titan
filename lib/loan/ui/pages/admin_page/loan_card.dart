@@ -7,7 +7,7 @@ import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;
@@ -145,7 +145,7 @@ class LoanCard extends StatelessWidget {
                               : Colors.black),
                     ),
                   ),
-                  ShrinkButton(
+                  WaitingButton(
                     waitingColor: shouldReturn
                         ? LoanColorConstants.urgentRed
                         : Colors.black,
@@ -160,7 +160,7 @@ class LoanCard extends StatelessWidget {
                             ? LoanColorConstants.urgentRed
                             : Colors.black),
                   ),
-                  ShrinkButton(
+                  WaitingButton(
                     builder: (child) => CardButton(
                         color: shouldReturn
                             ? LoanColorConstants.urgentRed

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
 
-class ShrinkButton extends HookWidget {
+class WaitingButton extends HookWidget {
   final Widget child;
   final Widget Function(Widget) builder;
   final Color waitingColor;
   final Future Function()? onTap;
 
-  const ShrinkButton(
+  const WaitingButton(
       {super.key,
       required this.child,
       required this.onTap,

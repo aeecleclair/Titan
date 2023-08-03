@@ -16,7 +16,7 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/class/floors.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -304,7 +304,7 @@ class EditUserPage extends HookConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 50),
-                  ShrinkButton(
+                  WaitingButton(
                     builder: (child) => AddEditButtonLayout(
                       color: ColorConstants.gradient1,
                       gradient: ColorConstants.gradient2,

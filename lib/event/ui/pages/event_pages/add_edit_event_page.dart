@@ -21,7 +21,7 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/date_entry.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -361,7 +361,7 @@ class AddEditEventPage extends HookConsumerWidget {
                           label: EventTextConstants.description,
                         ),
                         const SizedBox(height: 50),
-                        ShrinkButton(
+                        WaitingButton(
                           builder: (child) => AddEditButtonLayout(child: child),
                           onTap: () async {
                             if (key.currentState == null) {

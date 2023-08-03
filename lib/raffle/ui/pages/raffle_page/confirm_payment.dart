@@ -9,7 +9,7 @@ import 'package:myecl/raffle/providers/user_tickets_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class ConfirmPaymentDialog extends HookConsumerWidget {
   final TypeTicketSimple typeTicket;
@@ -124,7 +124,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Spacer(),
-                        ShrinkButton(
+                        WaitingButton(
                           builder: (child) => Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 12),

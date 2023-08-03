@@ -12,7 +12,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -85,7 +85,7 @@ class AddEditItemPage extends HookConsumerWidget {
                     suffix: LoanTextConstants.days,
                   ),
                   const SizedBox(height: 50),
-                  ShrinkButton(
+                  WaitingButton(
                       builder: (child) => AddEditButtonLayout(
                           color: Colors.black, child: child),
                       onTap: () async {

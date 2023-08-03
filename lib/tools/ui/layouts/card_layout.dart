@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CardLayout extends StatelessWidget {
   final Widget child;
-  final double width, height;
+  final double? width, height;
   final Color color;
   final List<Color>? colors;
   final Color shadowColor;
@@ -11,8 +11,8 @@ class CardLayout extends StatelessWidget {
   const CardLayout(
       {super.key,
       required this.child,
-      required this.width,
-      required this.height,
+      this.width,
+      this.height,
       this.colors,
       this.color = Colors.white,
       this.shadowColor = const Color(0x80EEEEEE),

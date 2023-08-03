@@ -9,7 +9,7 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class MemberResults extends HookConsumerWidget {
@@ -45,7 +45,7 @@ class MemberResults extends HookConsumerWidget {
                             ),
                             Row(
                               children: [
-                                ShrinkButton(
+                                WaitingButton(
                                     onTap: () async {
                                       if (!group.value!.members.contains(e)) {
                                         Group newGroup = group.value!.copyWith(

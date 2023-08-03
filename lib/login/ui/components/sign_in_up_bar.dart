@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class SignInUpBar extends StatelessWidget {
   const SignInUpBar(
@@ -31,7 +31,7 @@ class SignInUpBar extends StatelessWidget {
             width: double.infinity,
             alignment:
                 color == Colors.white ? Alignment.centerLeft : Alignment.center,
-            child: ShrinkButton(
+            child: WaitingButton(
               onTap: onPressed,
               builder: (child) => Row(
                 mainAxisAlignment: MainAxisAlignment.center,

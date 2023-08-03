@@ -16,7 +16,7 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DeliveryUi extends HookConsumerWidget {
@@ -189,7 +189,7 @@ class DeliveryUi extends HookConsumerWidget {
                     ),
                   ),
                 if (delivery.status == DeliveryStatus.creation)
-                  ShrinkButton(
+                  WaitingButton(
                     onTap: () async {
                       await showDialog(
                           context: context,
@@ -223,7 +223,7 @@ class DeliveryUi extends HookConsumerWidget {
                       size: 22,
                     ),
                   ),
-                ShrinkButton(
+                WaitingButton(
                   onTap: () async {
                     await showDialog(
                         context: context,

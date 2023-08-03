@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class Consts {
@@ -155,7 +155,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                       )),
                                     ),
                                   ),
-                                  ShrinkButton(
+                                  WaitingButton(
                                     onTap: () async {
                                       if (formKey.currentState!.validate()) {
                                         currentState.value =

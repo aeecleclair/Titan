@@ -17,7 +17,7 @@ import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/date_entry.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditDeliveryPage extends HookConsumerWidget {
@@ -121,7 +121,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                               .toList(),
                                         ),
                                       const SizedBox(height: 30),
-                                      ShrinkButton(
+                                      WaitingButton(
                                         builder: (child) => AddEditButtonLayout(
                                             color: AMAPColorConstants
                                                 .greenGradient1,
