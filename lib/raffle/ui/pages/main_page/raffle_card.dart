@@ -87,7 +87,8 @@ class RaffleWidget extends HookConsumerWidget {
                     data: (value) => value,
                     orElse: () => RaffleStats.empty(),
                   ),
-                  dataBuilder: (context, stat) {
+                  dataBuilder: (context, stats) {
+                    final stat = stats.first;
                     return Row(
                       children: [
                         const Spacer(),

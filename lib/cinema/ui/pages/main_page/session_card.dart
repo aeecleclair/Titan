@@ -132,7 +132,7 @@ class SessionCard extends HookConsumerWidget {
                                   child: AspectRatio(
                                     aspectRatio: 2 / 3,
                                     child: Image(
-                                      image: data.image,
+                                      image: data.first.image,
                                       fit: BoxFit.cover, // use this
                                     ),
                                   ),
@@ -179,7 +179,7 @@ class SessionCard extends HookConsumerWidget {
                               Container(
                                   decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: data.image, fit: BoxFit.cover),
+                                    image: data.first.image, fit: BoxFit.cover),
                               )),
                               if (selected &&
                                   session.start.isAfter(DateTime.now()))

@@ -52,7 +52,8 @@ class EditAssociationPage extends HookConsumerWidget {
                         (await groupNotifier.loadGroup(groupId)).maybeWhen(
                             data: (groups) => groups,
                             orElse: () => Group.empty()),
-                    dataBuilder: (context, group) {
+                    dataBuilder: (context, groups) {
+                      final group = groups.first;
                       name.text = group.name;
                       description.text = group.description;
                       return Column(children: [

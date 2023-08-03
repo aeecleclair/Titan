@@ -58,12 +58,10 @@ class DetailPage extends HookConsumerWidget {
                 notifier: sessionPosterMapNotifier,
                 mapKey: session,
                 loader: (session) => sessionPosterNotifier.getLogo(session.id),
-                dataBuilder: (context, data) {
-                  return Image(
-                    image: data.image,
-                    fit: BoxFit.fill,
-                  );
-                },
+                dataBuilder: (context, data) => Image(
+                      image: data.first.image,
+                      fit: BoxFit.fill,
+                    ),
                 errorBuilder: (error, stack) => const Center(
                       child: HeroIcon(HeroIcons.exclamationCircle),
                     ))),

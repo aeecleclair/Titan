@@ -11,6 +11,7 @@ import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -35,51 +36,6 @@ class DeliveryUi extends HookConsumerWidget {
     final ordersByDeliveryListNotifier =
         ref.watch(orderByDeliveryListProvider.notifier);
 
-    final orders = [];
-    deliveryOrders.maybeWhen(
-      data: (data) {
-        if (data.containsKey(delivery.id)) {
-          data[delivery.id]!.item1.maybeWhen(
-                data: (d) {
-                  if (d.isNotEmpty) {
-                    orders.addAll(d);
-                  } else if (!data[delivery.id]!.item2) {
-                    deliveryOrdersNotifier.autoLoad(
-                        ref,
-                        delivery.id,
-                        (deliveryId) => ordersByDeliveryListNotifier
-                            .loadDeliveryOrderList(deliveryId),
-                        (ordersByDelivery) {
-                      ordersByDelivery.maybeWhen(
-                        data: (data) {
-                          orders.addAll(data);
-                        },
-                        orElse: () {},
-                      );
-                      deliveryOrdersNotifier.toggleExpanded(delivery.id);
-                    });
-                  }
-                },
-                orElse: () {},
-              );
-        } else {
-          deliveryOrdersNotifier.autoLoad(
-              ref,
-              delivery.id,
-              (deliveryId) => ordersByDeliveryListNotifier
-                  .loadDeliveryOrderList(deliveryId), (ordersByDelivery) {
-            ordersByDelivery.maybeWhen(
-              data: (data) {
-                orders.addAll(data);
-              },
-              orElse: () {},
-            );
-            deliveryOrdersNotifier.toggleExpanded(delivery.id);
-          });
-        }
-      },
-      orElse: () {},
-    );
     void displayVoteWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -126,14 +82,23 @@ class DeliveryUi extends HookConsumerWidget {
                       ),
                     ],
                   ),
-                  Text(
-                      orders.isEmpty
-                          ? AMAPTextConstants.noCurrentOrder
-                          : '${orders.length} ${AMAPTextConstants.oneOrder}${orders.length != 1 ? "s" : ""}',
-                      style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: AMAPColorConstants.textDark)),
+                  AutoLoaderChild(
+                    value: deliveryOrders,
+                    notifier: deliveryOrdersNotifier,
+                    mapKey: delivery.id,
+                    listLoader: (deliveryId) => ordersByDeliveryListNotifier
+                        .loadDeliveryOrderList(deliveryId),
+                    dataBuilder: (context, orders) {
+                      return Text(
+                          orders.isEmpty
+                              ? AMAPTextConstants.noCurrentOrder
+                              : '${orders.length} ${AMAPTextConstants.oneOrder}${orders.length != 1 ? "s" : ""}',
+                          style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: AMAPColorConstants.textDark));
+                    },
+                  ),
                   Text(
                     "${delivery.products.length} ${AMAPTextConstants.product}${delivery.products.length != 1 ? "s" : ""}",
                     style: const TextStyle(
