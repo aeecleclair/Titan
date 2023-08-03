@@ -11,18 +11,16 @@ class DateEntry extends StatelessWidget {
   final Color color, enabledColor, errorColor;
   final Widget? suffixIcon;
   final GlobalKey<FormState>? formKey;
-  final Function(String) onChanged;
-  final String? Function(String) validator;
-  static void noChange(String value) {}
-  static String? noValidation(String value) => null;
+  final Function(String)? onChanged;
+  final String? Function(String)? validator;
 
   const DateEntry(
       {super.key,
       required this.label,
       required this.controller,
       required this.onTap,
-      this.onChanged = noChange,
-      this.validator = noValidation,
+      this.onChanged,
+      this.validator,
       this.formKey,
       this.prefix = '',
       this.suffix = '',
