@@ -120,18 +120,14 @@ class EventUi extends ConsumerWidget {
                           ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 7,
-                    ),
+                    const SizedBox(height: 7),
                     Text(
                       formatRecurrenceRule(event.start, event.end,
                           event.recurrenceRule, event.allDay),
                       style: TextStyle(
                           color: textColor.withOpacity(0.7), fontSize: 13),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -142,18 +138,14 @@ class EventUi extends ConsumerWidget {
                             style: TextStyle(color: textColor, fontSize: 15),
                           ),
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        const SizedBox(width: 10),
                         Text(
                           event.organizer,
                           style: TextStyle(color: textColor, fontSize: 15),
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     Text(
                       event.description,
                       maxLines: 2,
@@ -161,9 +153,7 @@ class EventUi extends ConsumerWidget {
                       style: TextStyle(
                           color: textColor.withOpacity(0.7), fontSize: 13),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     Align(
                       alignment: Alignment.center,
                       child: Text(
@@ -178,9 +168,7 @@ class EventUi extends ConsumerWidget {
                     if (!isDetailPage)
                       Column(
                         children: [
-                          const SizedBox(
-                            height: 15,
-                          ),
+                          const SizedBox(height: 15),
                           Row(
                             children: [
                               Expanded(
@@ -214,9 +202,7 @@ class EventUi extends ConsumerWidget {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                width: 10,
-                              ),
+                              const SizedBox(width: 10),
                               Expanded(
                                 child: WaitingButton(
                                   onTap: () async {

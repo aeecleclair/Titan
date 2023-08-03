@@ -49,9 +49,7 @@ class IntegerExampleState extends State<DelayDialog> {
                     fontWeight: FontWeight.w800,
                     color: Colors.black),
               ),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               NumberPicker(
                 value: _currentIntValue,
                 minValue: 1,
@@ -60,9 +58,7 @@ class IntegerExampleState extends State<DelayDialog> {
                 haptics: true,
                 onChanged: (value) => setState(() => _currentIntValue = value),
               ),
-              const SizedBox(
-                height: 22,
-              ),
+              const SizedBox(height: 22),
               Align(
                   alignment: Alignment.bottomCenter,
                   child: Row(

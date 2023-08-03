@@ -242,9 +242,7 @@ class SessionCard extends HookConsumerWidget {
                         HeroIcons.clock,
                         size: 20,
                       ),
-                      const SizedBox(
-                        width: 7,
-                      ),
+                      const SizedBox(width: 7),
                       Text(formatDuration(session.duration),
                           style: const TextStyle(fontSize: 16)),
                     ],

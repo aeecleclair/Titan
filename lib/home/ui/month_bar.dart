@@ -34,9 +34,7 @@ class MonthBar extends HookConsumerWidget {
       children: [
         Row(
           children: [
-            const SizedBox(
-              width: 30,
-            ),
+            const SizedBox(width: 30),
             GestureDetector(
               onTap: () {
                 final deltaDay = DateTime(currentDay.value.year,
@@ -85,9 +83,7 @@ class MonthBar extends HookConsumerWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.grey)),
             ),
-            const SizedBox(
-              width: 30,
-            ),
+            const SizedBox(width: 30),
           ],
         )
       ],

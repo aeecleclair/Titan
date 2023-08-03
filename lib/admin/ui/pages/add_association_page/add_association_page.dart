@@ -37,9 +37,7 @@ class AddAssociationPage extends HookConsumerWidget {
                 key: key,
                 child: Column(children: [
                   const AlignLeftText(AdminTextConstants.addAssociation),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   TextEditing(controller: name, label: AdminTextConstants.name),
                   TextEditing(
                       controller: description,

@@ -229,9 +229,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 controller: interval,
                                 isInt: true,
                               ),
-                              const SizedBox(
-                                height: 30,
-                              ),
+                              const SizedBox(height: 30),
                               if (!allDay.value)
                                 Column(
                                   children: [
@@ -240,18 +238,14 @@ class AddEditBookingPage extends HookConsumerWidget {
                                             getOnlyHourDate(context, start),
                                         controller: start,
                                         label: BookingTextConstants.startHour),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
+                                    const SizedBox(height: 30),
                                     DateEntry(
                                       onTap: () =>
                                           getOnlyHourDate(context, end),
                                       controller: end,
                                       label: BookingTextConstants.endHour,
                                     ),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
+                                    const SizedBox(height: 30),
                                   ],
                                 ),
                               DateEntry(
@@ -270,9 +264,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                       : getFullDate(context, start),
                                   controller: start,
                                   label: BookingTextConstants.startDate),
-                              const SizedBox(
-                                height: 30,
-                              ),
+                              const SizedBox(height: 30),
                               DateEntry(
                                 onTap: () => allDay.value
                                     ? getOnlyDayDate(context, end)

@@ -99,9 +99,7 @@ class Register extends HookConsumerWidget {
                             return null;
                           },
                         ))),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     SignInUpBar(
                         label: LoginTextConstants.create,
                         isLoading: ref.watch(loadingProvider).maybeWhen(

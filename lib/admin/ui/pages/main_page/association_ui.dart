@@ -23,9 +23,7 @@ class AssociationUi extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return CardUi(
       children: [
-        const SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         if (isLoaner)
           Row(
             children: [
@@ -33,9 +31,7 @@ class AssociationUi extends HookConsumerWidget {
                 HeroIcons.buildingLibrary,
                 color: Colors.grey.shade700,
               ),
-              const SizedBox(
-                width: 15,
-              ),
+              const SizedBox(width: 15),
             ],
           ),
         Expanded(
@@ -45,9 +41,7 @@ class AssociationUi extends HookConsumerWidget {
                 color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
-        const SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Row(
           children: [
             GestureDetector(
@@ -61,9 +55,7 @@ class AssociationUi extends HookConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
             WaitingButton(
                 onTap: onDelete,
                 builder: (child) => AssociationButton(

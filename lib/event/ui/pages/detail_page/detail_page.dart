@@ -30,9 +30,7 @@ class DetailPage extends HookConsumerWidget {
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 80,
-                  ),
+                  const SizedBox(height: 80),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -48,9 +46,7 @@ class DetailPage extends HookConsumerWidget {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 60,
-                        ),
+                        const SizedBox(height: 60),
                         Container(
                           padding: const EdgeInsets.all(30.0),
                           alignment: Alignment.centerLeft,
@@ -64,9 +60,7 @@ class DetailPage extends HookConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              const SizedBox(height: 10),
                               Text(
                                 event.description,
                                 style: const TextStyle(
@@ -74,9 +68,7 @@ class DetailPage extends HookConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 30,
-                              ),
+                              const SizedBox(height: 30),
                               AutoSizeText(
                                 event.applicant.getName(),
                                 maxLines: 2,
@@ -86,9 +78,7 @@ class DetailPage extends HookConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 20,
-                              ),
+                              const SizedBox(height: 20),
                               if (isAdmin)
                                 Column(
                                   children: [
@@ -110,17 +100,13 @@ class DetailPage extends HookConsumerWidget {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
+                                    const SizedBox(height: 30),
                                     Text(
                                       event.applicant.phone ??
                                           EventTextConstants.noPhoneRegistered,
                                       style: const TextStyle(fontSize: 25),
                                     ),
-                                    const SizedBox(
-                                      height: 50,
-                                    ),
+                                    const SizedBox(height: 50),
                                     Row(
                                       children: [
                                         const Spacer(),
@@ -211,9 +197,7 @@ class DetailPage extends HookConsumerWidget {
                                         const Spacer(),
                                       ],
                                     ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
+                                    const SizedBox(height: 20),
                                   ],
                                 ),
                             ],
