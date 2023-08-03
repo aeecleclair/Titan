@@ -10,17 +10,15 @@ class TextEntry extends StatelessWidget {
   final TextInputType keyboardType;
   final Color color, enabledColor, errorColor;
   final Widget? suffixIcon;
-  final Function(String) onChanged;
-  final String? Function(String) validator;
-  static void noChange(String value) {}
-  static String? noValidation(String value) => null;
+  final Function(String)? onChanged;
+  final String? Function(String)? validator;
 
   const TextEntry(
       {super.key,
       required this.label,
       required this.controller,
-      this.onChanged = noChange,
-      this.validator = noValidation,
+      this.onChanged,
+      this.validator,
       this.prefix = '',
       this.suffix = '',
       this.enabled = true,
@@ -88,7 +86,7 @@ class TextEntry extends StatelessWidget {
         if (isDouble && (doubleValue == null || doubleValue < 0)) {
           return TextConstants.invalidNumber;
         }
-        validator(value);
+        validator?.call(value);
         return null;
       },
     );
