@@ -8,8 +8,9 @@ class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
   final AsyncValue<Map<MapKey, AsyncValue<List<MapValue>>>> value;
   final MapNotifier<MapKey, MapValue> notifier;
   final MapKey mapKey;
-  final Future<MapValue> Function(MapKey t) loader;
-  final Widget Function(BuildContext context, MapValue value) dataBuilder;
+  final Future<MapValue> Function(MapKey t)? loader;
+  final Future<AsyncValue<List<MapValue>>> Function(MapKey t)? listLoader;
+  final Widget Function(BuildContext context, List<MapValue> value) dataBuilder;
   final Widget Function(Object? error, StackTrace? stack)? errorBuilder;
   final Widget Function(BuildContext context)? loadingBuilder;
   final Widget Function(BuildContext context, Widget child)? orElseBuilder;
@@ -19,8 +20,9 @@ class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
       required this.value,
       required this.notifier,
       required this.mapKey,
-      required this.loader,
       required this.dataBuilder,
+      this.loader,
+      this.listLoader,
       this.errorBuilder,
       this.loaderColor,
       this.orElseBuilder,
@@ -28,6 +30,7 @@ class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    assert(loader != null || listLoader != null);
     final nonNullLoadingBuilder =
         loadingBuilder ?? (context) => Loader(color: loaderColor);
     return AsyncChild(
@@ -35,17 +38,21 @@ class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
         builder: (context, value) {
           final group = value[mapKey];
           if (group == null) {
-            notifier.autoLoad(ref, mapKey, loader);
+            loader == null
+                ? notifier.autoLoadList(ref, mapKey, listLoader!)
+                : notifier.autoLoad(ref, mapKey, loader!);
             return nonNullLoadingBuilder(context);
           }
           return AsyncChild(
               value: group,
               builder: (context, list) {
                 if (list.isEmpty) {
-                  notifier.autoLoad(ref, mapKey, loader);
+                  loader == null
+                      ? notifier.autoLoadList(ref, mapKey, listLoader!)
+                      : notifier.autoLoad(ref, mapKey, loader!);
                   return nonNullLoadingBuilder(context);
                 }
-                return dataBuilder(context, list.first);
+                return dataBuilder(context, list);
               },
               orElseBuilder: orElseBuilder,
               errorBuilder: errorBuilder,

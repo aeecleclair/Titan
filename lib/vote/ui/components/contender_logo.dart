@@ -23,7 +23,7 @@ class ContenderLogo extends HookConsumerWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: logo.image,
+                  image: logo.first.image,
                   fit: BoxFit.cover,
                 ),
               ),

@@ -110,6 +110,36 @@ class MapNotifier<T, E>
     });
   }
 
+  Future<bool> deleteE(T t, int index) {
+    return state.when(data: (d) async {
+      try {
+        List<E> eList = d[t]!.maybeWhen(data: (d) => d, orElse: () => []);
+        eList.removeAt(index);
+        d[t] = AsyncValue.data(eList);
+        state = AsyncValue.data(d);
+        return true;
+      } catch (error) {
+        state = AsyncValue.data(d);
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          rethrow;
+        } else {
+          return false;
+        }
+      }
+    }, error: (error, s) async {
+      if (error is AppException && error.type == ErrorType.tokenExpire) {
+        throw error;
+      } else {
+        state = AsyncValue.error(error, s);
+        return false;
+      }
+    }, loading: () async {
+      state =
+          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
+      return false;
+    });
+  }
+
   Future<void> autoLoad(
       WidgetRef ref, T t, Future<E> Function(T t) loader) async {
     Future.delayed(const Duration(milliseconds: 1), () {

@@ -63,7 +63,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                       data: (orderMap) {
                         final deliveryOrderList = orderMap[delivery.id];
                         if (deliveryOrderList != null) {
-                          deliveryOrderList.item1.maybeWhen(
+                          deliveryOrderList.maybeWhen(
                               data: (listOrders) {
                                 for (Order o in listOrders) {
                                   for (Product p in o.products) {
@@ -129,7 +129,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                           color: AMAPColorConstants.greenGradient2);
                     }
                     return AsyncChild(
-                        value: orders.item1,
+                        value: orders,
                         builder: (context, data) {
                           if (data.isEmpty) {
                             return Container(

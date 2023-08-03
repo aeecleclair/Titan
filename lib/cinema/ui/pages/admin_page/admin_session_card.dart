@@ -64,7 +64,7 @@ class AdminSessionCard extends HookConsumerWidget {
                     loader: (session) =>
                         sessionPosterNotifier.getLogo(session.id),
                     dataBuilder: (context, data) => Image(
-                      image: data.image,
+                      image: data.first.image,
                       fit: BoxFit.cover,
                     ),
                     errorBuilder: (error, stack) => const Center(
