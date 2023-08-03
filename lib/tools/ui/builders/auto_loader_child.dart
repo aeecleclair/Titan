@@ -34,14 +34,14 @@ class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
           final group = value[mapKey];
           if (group == null) {
             notifier.autoLoad(ref, mapKey, loader);
-            return const Loader();
+            return Loader(color: loaderColor);
           }
           return AsyncChild(
               value: group,
               builder: (context, list) {
                 if (list.isEmpty) {
                   notifier.autoLoad(ref, mapKey, loader);
-                  return const Loader();
+                  return Loader(color: loaderColor);
                 }
                 return dataBuilder(context, list.first);
               },
