@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/event/ui/top_bar.dart';
+import 'package:myecl/event/router.dart';
+import 'package:myecl/event/tools/constants.dart';
+import 'package:myecl/tools/ui/top_bar.dart';
 
 class EventTemplate extends StatelessWidget {
   final Widget child;
@@ -13,7 +15,10 @@ class EventTemplate extends StatelessWidget {
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [const TopBar(), Expanded(child: child)],
+            children: [const TopBar(
+              title: EventTextConstants.title,
+              root: EventRouter.root,
+            ), Expanded(child: child)],
           ),
         ),
       ),

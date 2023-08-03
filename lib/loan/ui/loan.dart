@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/loan/ui/top_bar.dart';
+import 'package:myecl/loan/router.dart';
+import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/tools/ui/top_bar.dart';
 
 class LoanTemplate extends StatelessWidget {
   final Widget child;
@@ -12,7 +14,10 @@ class LoanTemplate extends StatelessWidget {
         color: Colors.white,
         child: SafeArea(
           child: Column(
-            children: [const TopBar(), Expanded(child: child)],
+            children: [const TopBar(
+              title: LoanTextConstants.loan,
+              root: LoanRouter.root,
+            ), Expanded(child: child)],
           ),
         ),
       ),

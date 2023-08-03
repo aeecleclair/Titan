@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tombola/ui/top_bar.dart';
+import 'package:myecl/tombola/router.dart';
+import 'package:myecl/tombola/tools/constants.dart';
+import 'package:myecl/tools/ui/top_bar.dart';
 
 class TombolaTemplate extends StatelessWidget {
   final Widget child;
@@ -12,7 +14,13 @@ class TombolaTemplate extends StatelessWidget {
         color: Colors.white,
         child: SafeArea(
           child: Column(
-            children: [const TopBar(), Expanded(child: child)],
+            children: [
+              const TopBar(
+                title: TombolaTextConstants.raffle,
+                root: RaffleRouter.root,
+              ),
+              Expanded(child: child)
+            ],
           ),
         ),
       ),

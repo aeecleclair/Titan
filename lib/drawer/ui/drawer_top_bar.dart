@@ -14,9 +14,9 @@ import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class TopBar extends HookConsumerWidget {
+class DrawerTopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
-  const TopBar({Key? key, required this.controllerNotifier}) : super(key: key);
+  const DrawerTopBar({Key? key, required this.controllerNotifier}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

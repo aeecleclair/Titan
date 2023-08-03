@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/ui/top_bar.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:myecl/amap/router.dart';
+import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/tools/ui/top_bar.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class AmapTemplate extends StatelessWidget {
   final Widget child;
@@ -12,7 +16,24 @@ class AmapTemplate extends StatelessWidget {
         color: Colors.white,
         child: SafeArea(
           child: Column(
-            children: [const TopBar(), Expanded(child: child)],
+            children: [
+              TopBar(
+                title: AMAPTextConstants.amap,
+                root: AmapRouter.root,
+                rightIcon: QR.currentPath == AmapRouter.root
+                    ? IconButton(
+                        onPressed: () {
+                          QR.to(AmapRouter.root + AmapRouter.presentation);
+                        },
+                        icon: const HeroIcon(
+                          HeroIcons.informationCircle,
+                          color: Colors.black,
+                          size: 40,
+                        ))
+                    : null,
+              ),
+              Expanded(child: child)
+            ],
           ),
         ),
       ),

@@ -3,12 +3,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/providers/sorted_event_list_provider.dart';
+import 'package:myecl/home/router.dart';
 import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/home/ui/day_list.dart';
 import 'package:myecl/home/ui/days_event.dart';
 import 'package:myecl/home/ui/month_bar.dart';
-import 'package:myecl/home/ui/top_bar.dart';
 import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/top_bar.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -32,7 +33,10 @@ class HomePage extends HookConsumerWidget {
               now = DateTime.now();
             },
             child: Column(children: [
-              const TopBar(),
+              const TopBar(
+                title: HomeTextConstants.calendar,
+                root: HomeRouter.root,
+              ),
               MonthBar(
                   scrollController: scrollController,
                   width: MediaQuery.of(context).size.width),

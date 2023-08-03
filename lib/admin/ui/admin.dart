@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/admin/ui/top_bar.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/router.dart';
+import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/top_bar.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
-class AdminTemplate extends StatelessWidget {
+class AdminTemplate extends HookConsumerWidget {
   final Widget child;
   const AdminTemplate({Key? key, required this.child}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final meNotifier = ref.watch(asyncUserProvider.notifier);
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -15,7 +21,17 @@ class AdminTemplate extends StatelessWidget {
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [const TopBar(), Expanded(child: child)],
+            children: [
+              TopBar(
+                  title: AdminTextConstants.administration,
+                  root: AdminRouter.root,
+                  onBack: () {
+                    tokenExpireWrapper(ref, () async {
+                      await meNotifier.loadMe();
+                    });
+                  }),
+              Expanded(child: child)
+            ],
           ),
         ),
       ),

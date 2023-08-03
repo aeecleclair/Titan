@@ -6,7 +6,7 @@ import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/drawer/ui/bottom_bar.dart';
 import 'package:myecl/drawer/ui/fake_page.dart';
 import 'package:myecl/drawer/ui/list_module.dart';
-import 'package:myecl/drawer/ui/top_bar.dart';
+import 'package:myecl/drawer/ui/drawer_top_bar.dart';
 
 class CustomDrawer extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -32,7 +32,7 @@ class CustomDrawer extends HookConsumerWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TopBar(controllerNotifier: controllerNotifier),
+                DrawerTopBar(controllerNotifier: controllerNotifier),
                 BottomBar(controllerNotifier: controllerNotifier),
               ],
             ),

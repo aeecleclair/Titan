@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/settings/ui/top_bar.dart';
+import 'package:myecl/settings/router.dart';
+import 'package:myecl/settings/tools/constants.dart';
+import 'package:myecl/tools/ui/top_bar.dart';
 
 class SettingsTemplate extends StatelessWidget {
   final Widget child;
@@ -15,7 +17,13 @@ class SettingsTemplate extends StatelessWidget {
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [const TopBar(), Expanded(child: child)],
+            children: [
+              const TopBar(
+                title: SettingsTextConstants.settings,
+                root: SettingsRouter.root,
+              ),
+              Expanded(child: child)
+            ],
           ),
         ),
       ),

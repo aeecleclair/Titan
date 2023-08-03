@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/booking/ui/top_bar.dart';
+import 'package:myecl/booking/router.dart';
+import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/tools/ui/top_bar.dart';
 
 class BookingTemplate extends StatelessWidget {
   final Widget child;
@@ -13,7 +15,13 @@ class BookingTemplate extends StatelessWidget {
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [const TopBar(), Expanded(child: child)],
+            children: [
+              const TopBar(
+                title: BookingTextConstants.booking,
+                root: BookingRouter.root,
+              ),
+              Expanded(child: child)
+            ],
           ),
         ),
       ),
