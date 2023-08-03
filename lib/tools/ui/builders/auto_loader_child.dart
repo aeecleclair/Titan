@@ -28,20 +28,22 @@ class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final nonNullLoadingBuilder =
+        loadingBuilder ?? (context) => Loader(color: loaderColor);
     return AsyncChild(
         value: value,
         builder: (context, value) {
           final group = value[mapKey];
           if (group == null) {
             notifier.autoLoad(ref, mapKey, loader);
-            return Loader(color: loaderColor);
+            return nonNullLoadingBuilder(context);
           }
           return AsyncChild(
               value: group,
               builder: (context, list) {
                 if (list.isEmpty) {
                   notifier.autoLoad(ref, mapKey, loader);
-                  return Loader(color: loaderColor);
+                  return nonNullLoadingBuilder(context);
                 }
                 return dataBuilder(context, list.first);
               },
