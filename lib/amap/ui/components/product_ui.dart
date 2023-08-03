@@ -5,7 +5,7 @@ import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -71,7 +71,7 @@ class ProductCard extends StatelessWidget {
                         child: HeroIcon(HeroIcons.pencil, color: Colors.white),
                       ),
                     ),
-                    ShrinkButton(
+                    WaitingButton(
                       onTap: onDelete,
                       builder: (child) => CardButton(
                           color: AMAPColorConstants.redGradient1,

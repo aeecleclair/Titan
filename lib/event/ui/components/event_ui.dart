@@ -14,7 +14,7 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventUi extends ConsumerWidget {
@@ -218,7 +218,7 @@ class EventUi extends ConsumerWidget {
                                 width: 10,
                               ),
                               Expanded(
-                                child: ShrinkButton(
+                                child: WaitingButton(
                                   onTap: () async {
                                     showDialog(
                                         context: context,

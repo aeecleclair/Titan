@@ -18,7 +18,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -56,7 +56,7 @@ class AdminPage extends HookConsumerWidget {
                   ? Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 30, vertical: 12),
-                      child: ShrinkButton(
+                      child: WaitingButton(
                         waitingColor: RaffleColorConstants.gradient2,
                         builder: (child) => BlueBtn(child: child),
                         onTap: () async {

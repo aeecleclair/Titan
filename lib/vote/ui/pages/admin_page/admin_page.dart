@@ -3,12 +3,13 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/contender_list_provider.dart';
@@ -115,7 +116,7 @@ class AdminPage extends HookConsumerWidget {
                                   color: Colors.black,
                                 ),
                               ),
-                              ShrinkButton(
+                              WaitingButton(
                                 builder: (child) => AdminButton(child: child),
                                 onTap: () async {
                                   await showDialog(
@@ -142,7 +143,7 @@ class AdminPage extends HookConsumerWidget {
                         ),
                       if (status == Status.counting ||
                           status == Status.published)
-                        ShrinkButton(
+                        WaitingButton(
                           builder: (child) => AdminButton(child: child),
                           onTap: () async {
                             await showDialog(
@@ -230,28 +231,12 @@ class AdminPage extends HookConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 30.0, vertical: 50),
-                          child: ShrinkButton(
-                            builder: (child) => Container(
+                          child: WaitingButton(
+                            builder: (child) => CardLayout(
                                 padding:
                                     const EdgeInsets.only(top: 10, bottom: 12),
                                 width: double.infinity,
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          Colors.grey.shade900,
-                                          Colors.black
-                                        ]),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
-                                        spreadRadius: 5,
-                                        blurRadius: 10,
-                                        offset: const Offset(3, 3),
-                                      )
-                                    ]),
+                                colors: [Colors.grey.shade900, Colors.black],
                                 child: child),
                             onTap: () async {
                               await tokenExpireWrapper(ref, () async {
@@ -280,30 +265,15 @@ class AdminPage extends HookConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 30.0, vertical: 50),
-                          child: ShrinkButton(
-                            builder: (child) => Container(
+                          child: WaitingButton(
+                            builder: (child) => CardLayout(
                                 padding:
                                     const EdgeInsets.only(top: 10, bottom: 12),
                                 width: double.infinity,
-                                decoration: BoxDecoration(
-                                    gradient: const LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        ColorConstants.gradient1,
-                                        ColorConstants.gradient2,
-                                      ],
-                                    ),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: ColorConstants.gradient2
-                                            .withOpacity(0.2),
-                                        spreadRadius: 5,
-                                        blurRadius: 10,
-                                        offset: const Offset(3, 3),
-                                      )
-                                    ]),
+                                colors: const [
+                                  ColorConstants.gradient1,
+                                  ColorConstants.gradient2,
+                                ],
                                 child: child),
                             onTap: () async {
                               await tokenExpireWrapper(ref, () async {
@@ -335,34 +305,14 @@ class AdminPage extends HookConsumerWidget {
                                 horizontal: 30.0, vertical: 50),
                             child: Column(
                               children: [
-                                ShrinkButton(
+                                WaitingButton(
                                   waitingColor: Colors.black,
-                                  builder: (child) => Container(
+                                  builder: (child) => CardLayout(
                                       padding: const EdgeInsets.only(
                                           top: 10, bottom: 12),
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              Colors.white,
-                                              Colors.grey.shade50,
-                                            ],
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          border: Border.all(
-                                              color: Colors.black, width: 2),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.2),
-                                              spreadRadius: 5,
-                                              blurRadius: 10,
-                                              offset: const Offset(3, 3),
-                                            )
-                                          ]),
+                                      margin: const EdgeInsets.all(0),
+                                      color: Colors.white,
+                                      borderColor: Colors.black,
                                       child: child),
                                   onTap: () async {
                                     await tokenExpireWrapper(ref, () async {
@@ -402,42 +352,18 @@ class AdminPage extends HookConsumerWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Expanded(
-                                        child: ShrinkButton(
-                                            builder: (child) => Container(
+                                        child: WaitingButton(
+                                            builder: (child) => CardLayout(
                                                 padding: const EdgeInsets.only(
                                                     top: 10, bottom: 12),
-                                                decoration: BoxDecoration(
-                                                    gradient:
-                                                        const LinearGradient(
-                                                      begin: Alignment.topLeft,
-                                                      end:
-                                                          Alignment.bottomRight,
-                                                      colors: [
-                                                        AMAPColorConstants
-                                                            .redGradient1,
-                                                        AMAPColorConstants
-                                                            .redGradient2,
-                                                      ],
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    border: Border.all(
-                                                        color: Colors.white,
-                                                        width: 2),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color:
-                                                            AMAPColorConstants
-                                                                .redGradient2
-                                                                .withOpacity(
-                                                                    0.2),
-                                                        spreadRadius: 5,
-                                                        blurRadius: 10,
-                                                        offset:
-                                                            const Offset(3, 3),
-                                                      )
-                                                    ]),
+                                                margin: const EdgeInsets.all(0),
+                                                colors: const [
+                                                  AMAPColorConstants
+                                                      .redGradient1,
+                                                  AMAPColorConstants
+                                                      .redGradient2,
+                                                ],
+                                                borderColor: Colors.white,
                                                 child: child),
                                             onTap: () async {
                                               await showDialog(
@@ -497,38 +423,16 @@ class AdminPage extends HookConsumerWidget {
                                         width: 20,
                                       ),
                                       Expanded(
-                                        child: ShrinkButton(
-                                          builder: (child) => Container(
+                                        child: WaitingButton(
+                                          builder: (child) => CardLayout(
                                               padding: const EdgeInsets.only(
                                                   top: 10, bottom: 12),
-                                              decoration: BoxDecoration(
-                                                  gradient:
-                                                      const LinearGradient(
-                                                    begin: Alignment.topLeft,
-                                                    end: Alignment.bottomRight,
-                                                    colors: [
-                                                      AMAPColorConstants
-                                                          .redGradient1,
-                                                      AMAPColorConstants
-                                                          .redGradient2,
-                                                    ],
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  border: Border.all(
-                                                      color: Colors.white,
-                                                      width: 2),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: AMAPColorConstants
-                                                          .redGradient2
-                                                          .withOpacity(0.2),
-                                                      spreadRadius: 5,
-                                                      blurRadius: 10,
-                                                      offset:
-                                                          const Offset(3, 3),
-                                                    )
-                                                  ]),
+                                              margin: const EdgeInsets.all(0),
+                                              colors: const [
+                                                AMAPColorConstants.redGradient1,
+                                                AMAPColorConstants.redGradient2,
+                                              ],
+                                              borderColor: Colors.white,
                                               child: child),
                                           onTap: () async {
                                             await showDialog(

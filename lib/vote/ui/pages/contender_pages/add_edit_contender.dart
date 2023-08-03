@@ -13,7 +13,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -329,7 +329,7 @@ class AddEditContenderPage extends HookConsumerWidget {
               const SizedBox(height: 50),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: ShrinkButton(
+                child: WaitingButton(
                   builder: (child) => Container(
                       width: double.infinity,
                       padding: const EdgeInsets.only(top: 8, bottom: 12),

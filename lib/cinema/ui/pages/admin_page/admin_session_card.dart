@@ -7,7 +7,7 @@ import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class AdminSessionCard extends HookConsumerWidget {
   final Session session;
@@ -100,7 +100,7 @@ class AdminSessionCard extends HookConsumerWidget {
                                 color: Colors.black),
                           ),
                         ),
-                        ShrinkButton(
+                        WaitingButton(
                           onTap: onDelete,
                           builder: (child) =>
                               CardButton(color: Colors.black, child: child),

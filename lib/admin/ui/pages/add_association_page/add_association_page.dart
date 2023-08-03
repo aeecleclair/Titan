@@ -10,7 +10,7 @@ import 'package:myecl/admin/ui/components/text_editing.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddAssociationPage extends HookConsumerWidget {
@@ -44,7 +44,7 @@ class AddAssociationPage extends HookConsumerWidget {
                   TextEditing(
                       controller: description,
                       label: AdminTextConstants.description),
-                  ShrinkButton(
+                  WaitingButton(
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
                         final value = await groupListNotifier.createGroup(

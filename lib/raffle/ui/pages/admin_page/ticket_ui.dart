@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/raffle/class/type_ticket_simple.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class TicketUI extends HookConsumerWidget {
   final TypeTicketSimple typeTicket;
@@ -72,7 +72,7 @@ class TicketUI extends HookConsumerWidget {
                         color: RaffleColorConstants.textDark),
                   ),
                 ),
-                ShrinkButton(
+                WaitingButton(
                   builder: (child) => CardButton(
                       color: RaffleColorConstants.redGradient1,
                       gradient: RaffleColorConstants.redGradient2,

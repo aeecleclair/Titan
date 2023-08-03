@@ -5,7 +5,7 @@ import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class ItemCard extends StatelessWidget {
   final Item item;
@@ -71,7 +71,7 @@ class ItemCard extends StatelessWidget {
                         const HeroIcon(HeroIcons.pencil, color: Colors.black),
                   ),
                 ),
-                ShrinkButton(
+                WaitingButton(
                   builder: (child) =>
                       CardButton(color: Colors.black, child: child),
                   onTap: onDelete,

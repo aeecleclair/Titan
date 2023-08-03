@@ -7,7 +7,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class PrizeCard extends StatelessWidget {
   final Prize prize;
@@ -68,7 +68,7 @@ class PrizeCard extends StatelessWidget {
                         child: HeroIcon(HeroIcons.pencil, color: Colors.white),
                       ),
                     ),
-                    ShrinkButton(
+                    WaitingButton(
                       builder: (child) => CardButton(
                           color: RaffleColorConstants.redGradient1,
                           gradient: RaffleColorConstants.redGradient2,
@@ -82,7 +82,7 @@ class PrizeCard extends StatelessWidget {
               : status == RaffleStatusType.locked
                   ? prize.quantity > 0
                       ? Center(
-                          child: ShrinkButton(
+                          child: WaitingButton(
                               builder: (child) => CardButton(
                                   color: RaffleColorConstants.gradient2,
                                   gradient: RaffleColorConstants.textDark,

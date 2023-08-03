@@ -11,7 +11,7 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -101,7 +101,7 @@ class ChangePassPage extends HookConsumerWidget {
                 const SizedBox(height: 40),
                 PasswordStrength(newPassword: newPassword),
                 const SizedBox(height: 60),
-                ShrinkButton(
+                WaitingButton(
                   builder: (child) => AddEditButtonLayout(
                     color: ColorConstants.gradient1,
                     gradient: ColorConstants.gradient2,

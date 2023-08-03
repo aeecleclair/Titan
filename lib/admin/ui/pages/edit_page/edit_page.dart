@@ -16,7 +16,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -85,7 +85,7 @@ class EditAssociationPage extends HookConsumerWidget {
                                   enabledColor: Colors.transparent,
                                 )),
                             const SizedBox(height: 20),
-                            ShrinkButton(
+                            WaitingButton(
                               onTap: () async {
                                 if (!key.currentState!.validate()) {
                                   return;

@@ -6,7 +6,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -207,7 +207,7 @@ class AmapMainPage extends HookConsumerWidget {
                           DeliverySection(
                               editable: order.id == Order.empty().id),
                           const SizedBox(height: 20),
-                          ShrinkButton(
+                          WaitingButton(
                               onTap: () async {
                                 if (availableDeliveriesIds
                                     .contains(delivery.id)) {

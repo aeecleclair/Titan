@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/contender_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
@@ -112,7 +112,7 @@ class ContenderCard extends HookConsumerWidget {
                           const HeroIcon(HeroIcons.pencil, color: Colors.black),
                     ),
                   ),
-                  ShrinkButton(
+                  WaitingButton(
                     builder: (child) =>
                         CardButton(color: Colors.black, child: child),
                     onTap: onDelete,

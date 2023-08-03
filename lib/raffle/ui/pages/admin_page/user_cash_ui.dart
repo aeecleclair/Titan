@@ -11,7 +11,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 
 class UserCashUi extends HookConsumerWidget {
@@ -159,7 +159,7 @@ class UserCashUi extends HookConsumerWidget {
                             const SizedBox(
                               width: 20,
                             ),
-                            ShrinkButton(
+                            WaitingButton(
                               builder: (child) => child,
                               onTap: () async {
                                 if (key.currentState == null) {

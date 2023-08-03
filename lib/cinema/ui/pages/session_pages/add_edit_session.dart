@@ -20,7 +20,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/date_entry.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -87,7 +87,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                         const TextStyle(color: Colors.black, fontSize: 20),
                     suffixIcon: Container(
                       padding: const EdgeInsets.all(10),
-                      child: ShrinkButton(
+                      child: WaitingButton(
                         onTap: () async {
                           if (imdbUrl.text.isEmpty) {
                             displayToastWithContext(
@@ -206,7 +206,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   canBeEmpty: true,
                 ),
                 const SizedBox(height: 50),
-                ShrinkButton(
+                WaitingButton(
                   builder: (child) => AddEditButtonLayout(child: child),
                   onTap: () async {
                     if (key.currentState == null) {

@@ -12,7 +12,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditRoomPage extends HookConsumerWidget {
@@ -60,7 +60,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 50),
-                  ShrinkButton(
+                  WaitingButton(
                     builder: (child) => AddEditButtonLayout(child: child),
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {

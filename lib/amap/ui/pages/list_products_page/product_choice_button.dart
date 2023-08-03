@@ -10,7 +10,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -35,7 +35,7 @@ class ProductChoiceButton extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Expanded(
-            child: ShrinkButton(
+            child: WaitingButton(
                 waitingColor: AMAPColorConstants.background,
                 builder: (child) => Container(
                     margin: const EdgeInsets.only(right: 10),
