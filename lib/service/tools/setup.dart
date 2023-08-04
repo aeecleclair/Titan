@@ -44,7 +44,7 @@ void setUpNotification(WidgetRef ref) {
     }
     final path = information.item1;
     final notifier = information.item2;
-    ref.read(notifier).refresh();
+    ref.refresh(notifier);
     return path;
   }
 
@@ -56,10 +56,11 @@ void setUpNotification(WidgetRef ref) {
           for (final message in messageList) {
             final actionModule = message.actionModule;
             final actionTable = message.actionTable;
-            if (!message.isVisible) {
-              if (actionModule != null && actionTable != null) {
-                handleAction(actionModule, actionTable);
-              }
+            if (!message.isVisible &&
+                actionModule != null &&
+                actionTable != null) {
+              handleAction(actionModule, actionTable);
+              continue;
             }
             if (actionModule == null || actionTable == null) {
               localNotificationService.showNotification(
