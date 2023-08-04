@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:myecl/service/class/message.dart' as message_class;
+import 'package:myecl/service/provider_list.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:rxdart/subjects.dart';
@@ -6,17 +10,15 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
 class LocalNotificationService {
-  LocalNotificationService();
+  LocalNotificationService() {
+    onNotificationClick.listen(onNotificationClickListener);
+  }
 
   final _localNotificationService = FlutterLocalNotificationsPlugin();
-  final BehaviorSubject<String?> onNotificationClick = BehaviorSubject()
-    ..listen(onNotificationClickListener);
+  final BehaviorSubject<message_class.Message> onNotificationClick =
+      BehaviorSubject();
 
   Future<void> init() async {
-    _localNotificationService
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()!
-        .requestPermission();
     tz.initializeTimeZones();
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/launcher_icon');
@@ -31,13 +33,9 @@ class LocalNotificationService {
             iOS: initializationSettingsDarwin,
             linux: initializationSettingsLinux);
     _localNotificationService.initialize(initializationSettings,
-        onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
-
-    final details =
-        await _localNotificationService.getNotificationAppLaunchDetails();
-    if (details != null && details.didNotificationLaunchApp) {
-      onNotificationClick.add(details.notificationResponse!.payload);
-    }
+        onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
+        onDidReceiveBackgroundNotificationResponse:
+            onDidReceiveBackgroundNotificationResponse);
   }
 
   Future<NotificationDetails> _notificationDetails() async {
@@ -162,28 +160,65 @@ class LocalNotificationService {
 
   void onDidReceiveLocalNotification(
       int id, String? title, String? body, String? payload) async {
-    // display a dialog with the notification details, tap ok to go to another page
-    print("Notification received: $id, $title, $body, $payload");
+    if (payload == null) {
+      return;
+    }
+    final message = message_class.Message.fromJson(
+        jsonDecode(utf8.decode(payload.runes.toList())));
+    onNotificationClick.add(message);
+  }
+
+  Future<String> handleAction(String actionModule, String actionTable) async {
+    final provider = providers[actionModule];
+    if (provider == null) {
+      return "";
+    }
+    final information = provider[actionTable];
+    if (information == null) {
+      return "";
+    }
+    final path = information.item1;
+    return path;
   }
 
   void onDidReceiveNotificationResponse(NotificationResponse response) async {
     if (response.payload == null) {
       return;
     }
-    if (response.payload!.isNotEmpty) {
-      onNotificationClick.add(response.payload!);
-      print(
-          "onDidReceiveNotificationResponse : Notification clicked: ${response.payload}");
-    }
+    final message = message_class.Message.fromJson(
+        jsonDecode(utf8.decode(response.payload!.runes.toList())));
+    onNotificationClick.add(message);
   }
 
-  static void onNotificationClickListener(String? payload) {
-    if (payload == null) {
+  void onNotificationClickListener(message_class.Message message) async {
+    if (message.actionModule != null && message.actionTable != null) {
+      final path =
+          await handleAction(message.actionModule!, message.actionTable!);
+      QR.to(
+          "titan.myecl.fr://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
+    }
+  }
+}
+
+@pragma("vm:entry-point")
+void onDidReceiveBackgroundNotificationResponse(
+    NotificationResponse response) async {
+  if (response.payload == null) {
+    return;
+  }
+  final message = message_class.Message.fromJson(
+      jsonDecode(utf8.decode(response.payload!.runes.toList())));
+  if (message.actionModule != null && message.actionTable != null) {
+    final provider = providers[message.actionModule];
+    if (provider == null) {
       return;
     }
-    if (payload.isNotEmpty) {
-      // Redirect to the given page
-      QR.to(payload);
+    final information = provider[message.actionTable];
+    if (information == null) {
+      return;
     }
+    final path = information.item1;
+    QR.to(
+        "$path?actionModule${message.actionModule!}&actionTable${message.actionTable!}");
   }
 }
