@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
@@ -34,15 +33,10 @@ class ModuleUI extends HookConsumerWidget {
                 Container(
                   width: 25,
                 ),
-                SizedBox(
-                    height: 50,
-                    child: Center(
-                        child: HeroIcon(
-                      m.icon,
-                      color: m.root == QR.currentPath
-                          ? DrawerColorConstants.selectedText
-                          : DrawerColorConstants.lightText,
-                    ))),
+                Center(
+                    child: m.getIcon(m.root == QR.currentPath
+                        ? DrawerColorConstants.selectedText
+                        : DrawerColorConstants.lightText)),
                 Container(
                   width: 20,
                 ),

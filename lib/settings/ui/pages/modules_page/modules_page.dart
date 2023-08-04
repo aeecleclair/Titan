@@ -48,10 +48,7 @@ class ModulesPage extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: Row(
                   children: [
-                    HeroIcon(
-                      module.icon,
-                      color: Colors.grey.shade700,
-                    ),
+                    module.getIcon(Colors.grey.shade700),
                     const SizedBox(
                       width: 20,
                     ),

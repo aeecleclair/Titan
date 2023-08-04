@@ -1,9 +1,11 @@
+import 'package:either_dart/either.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:heroicons/heroicons.dart';
-
 
 class Module {
   String name;
-  HeroIcons icon;
+  Either<HeroIcons, String> icon;
   String root;
   bool selected;
 
@@ -19,4 +21,14 @@ class Module {
         root: root ?? this.root,
         selected: selected ?? this.selected,
       );
+
+  Widget getIcon(Color color, {double size = 30}) {
+    return icon.fold(
+        (heroIcon) => HeroIcon(heroIcon, color: color, size: size),
+        (svgPath) => SvgPicture.asset(svgPath,
+            width: size,
+            height: size,
+              colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+        ));
+  }
 }
