@@ -24,6 +24,17 @@ class Message {
     isVisible = json['is_visible'];
   }
 
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['title'] = title;
+    data['content'] = content;
+    data['action_module'] = actionModule;
+    data['action_table'] = actionTable;
+    data['context'] = context;
+    data['is_visible'] = isVisible;
+    return data;
+  }
+
   @override
   String toString() {
     return 'Message{title: $title, content: $content, actionModule: $actionModule, actionTable: $actionTable, context: $context, isVisible: $isVisible}';
