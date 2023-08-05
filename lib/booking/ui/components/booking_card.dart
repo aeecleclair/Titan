@@ -180,11 +180,9 @@ class BookingCard extends HookConsumerWidget {
                     if (showButton || isAdmin)
                       GestureDetector(
                         onTap: onEdit,
-                        child: CardButton(
-                          color: Colors.grey.shade200,
-                          shadowColor: Colors.grey.withOpacity(0.2),
-                          child: const HeroIcon(HeroIcons.pencil,
-                              color: Colors.black),
+                        child: const CardButton(
+                          child:
+                              HeroIcon(HeroIcons.pencil, color: Colors.black),
                         ),
                       ),
                     if (showButton || isAdmin) const Spacer(),
@@ -201,15 +199,11 @@ class BookingCard extends HookConsumerWidget {
                       GestureDetector(
                         onTap: onConfirm,
                         child: CardButton(
-                          color: Colors.grey.shade200,
-                          shadowColor: Colors.grey.withOpacity(0.2),
-                          border: Border.all(
-                              color: isAdmin
-                                  ? booking.decision == Decision.approved
-                                      ? Colors.black
-                                      : Colors.transparent
-                                  : Colors.transparent,
-                              width: 2),
+                          borderColor: isAdmin
+                              ? booking.decision == Decision.approved
+                                  ? Colors.black
+                                  : Colors.transparent
+                              : Colors.transparent,
                           child: const HeroIcon(HeroIcons.check,
                               color: Colors.black),
                         ),
@@ -220,13 +214,11 @@ class BookingCard extends HookConsumerWidget {
                         onTap: onDecline,
                         child: CardButton(
                           color: Colors.black,
-                          border: Border.all(
-                              color: isAdmin
-                                  ? booking.decision == Decision.declined
-                                      ? Colors.white
-                                      : Colors.transparent
-                                  : Colors.transparent,
-                              width: 2),
+                          borderColor: isAdmin
+                              ? booking.decision == Decision.declined
+                                  ? Colors.white
+                                  : Colors.transparent
+                              : Colors.transparent,
                           child: const HeroIcon(HeroIcons.xMark,
                               color: Colors.white),
                         ),

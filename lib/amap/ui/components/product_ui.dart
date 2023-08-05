@@ -66,17 +66,19 @@ class ProductCard extends StatelessWidget {
                     GestureDetector(
                       onTap: onEdit,
                       child: const CardButton(
-                        color: AMAPColorConstants.greenGradient2,
-                        gradient: AMAPColorConstants.textDark,
+                        colors: [
+                          AMAPColorConstants.greenGradient2,
+                          AMAPColorConstants.textDark
+                        ],
                         child: HeroIcon(HeroIcons.pencil, color: Colors.white),
                       ),
                     ),
                     WaitingButton(
                       onTap: onDelete,
-                      builder: (child) => CardButton(
-                          color: AMAPColorConstants.redGradient1,
-                          gradient: AMAPColorConstants.redGradient2,
-                          child: child),
+                      builder: (child) => CardButton(colors: const [
+                        AMAPColorConstants.redGradient1,
+                        AMAPColorConstants.redGradient2
+                      ], child: child),
                       child:
                           const HeroIcon(HeroIcons.trash, color: Colors.white),
                     )

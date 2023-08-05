@@ -63,16 +63,18 @@ class PrizeCard extends StatelessWidget {
                     GestureDetector(
                       onTap: onEdit,
                       child: const CardButton(
-                        color: RaffleColorConstants.gradient2,
-                        gradient: RaffleColorConstants.textDark,
+                        colors: [
+                          RaffleColorConstants.gradient2,
+                          RaffleColorConstants.textDark
+                        ],
                         child: HeroIcon(HeroIcons.pencil, color: Colors.white),
                       ),
                     ),
                     WaitingButton(
-                      builder: (child) => CardButton(
-                          color: RaffleColorConstants.redGradient1,
-                          gradient: RaffleColorConstants.redGradient2,
-                          child: child),
+                      builder: (child) => CardButton(colors: const [
+                        RaffleColorConstants.redGradient1,
+                        RaffleColorConstants.redGradient2
+                      ], child: child),
                       onTap: onDelete,
                       child:
                           const HeroIcon(HeroIcons.trash, color: Colors.white),
@@ -83,10 +85,10 @@ class PrizeCard extends StatelessWidget {
                   ? prize.quantity > 0
                       ? Center(
                           child: WaitingButton(
-                              builder: (child) => CardButton(
-                                  color: RaffleColorConstants.gradient2,
-                                  gradient: RaffleColorConstants.textDark,
-                                  child: child),
+                              builder: (child) => CardButton(colors: const [
+                                    RaffleColorConstants.gradient2,
+                                    RaffleColorConstants.textDark
+                                  ], child: child),
                               onTap: onDraw,
                               child: const Row(
                                 children: [
