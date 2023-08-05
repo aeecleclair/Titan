@@ -67,24 +67,16 @@ class LoanMainPage extends HookConsumerWidget {
                           color: Colors.grey,
                         ),
                         const SizedBox(height: 10),
-                        SizedBox(
+                        HorizontalListView.builder(
                             height: 190,
-                            child: HorizontalListView(
-                              child: Row(
-                                children: [
-                                  const SizedBox(width: 10),
-                                  ...dictCateListWidget[0].map((e) => LoanCard(
-                                        loan: e,
-                                        onInfo: () {
-                                          loanNotifier.setLoan(e);
-                                          QR.to(LoanRouter.root +
-                                              LoanRouter.detail);
-                                        },
-                                      )),
-                                  const SizedBox(width: 10),
-                                ],
-                              ),
-                            ))
+                            items: dictCateListWidget[0],
+                            itemBuilder: (context, e, i) => LoanCard(
+                                  loan: e,
+                                  onInfo: () {
+                                    loanNotifier.setLoan(e);
+                                    QR.to(LoanRouter.root + LoanRouter.detail);
+                                  },
+                                ))
                       ])
                     : (dictCateListWidget[1].isEmpty)
                         ? SizedBox(
@@ -114,26 +106,16 @@ class LoanMainPage extends HookConsumerWidget {
                       color: Colors.grey,
                     ),
                     const SizedBox(height: 10),
-                    SizedBox(
+                    HorizontalListView.builder(
                         height: 190,
-                        child: HorizontalListView(
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 10),
-                              ...dictCateListWidget[1]
-                                  .map((e) => LoanCard(
-                                        loan: e,
-                                        onInfo: () {
-                                          loanNotifier.setLoan(e);
-                                          QR.to(LoanRouter.root +
-                                              LoanRouter.detail);
-                                        },
-                                      ))
-                                  .toList(),
-                              const SizedBox(width: 10),
-                            ],
-                          ),
-                        ))
+                        items: dictCateListWidget[1],
+                        itemBuilder: (context, e, i) => LoanCard(
+                              loan: e,
+                              onInfo: () {
+                                loanNotifier.setLoan(e);
+                                QR.to(LoanRouter.root + LoanRouter.detail);
+                              },
+                            ))
                   ])
               ])),
           if (isAdmin)

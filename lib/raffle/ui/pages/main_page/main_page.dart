@@ -13,6 +13,7 @@ import 'package:myecl/raffle/ui/components/section_title.dart';
 import 'package:myecl/raffle/ui/pages/main_page/raffle_card.dart';
 import 'package:myecl/raffle/ui/pages/main_page/ticket_card.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
@@ -99,23 +100,15 @@ class RaffleMainPage extends HookConsumerWidget {
                   }
                   return ticketSum.isEmpty
                       ? const Center(child: Text(RaffleTextConstants.noTicket))
-                      : ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: ticketSum.length + 2,
-                          itemBuilder: (context, index) {
-                            if (index == 0 || index == ticketSum.length + 1) {
-                              return const SizedBox(width: 15);
-                            }
-                            final key = ticketSum.keys.toList()[index - 1];
-                            return Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                child: TicketWidget(
-                                  ticket: ticketSum[key]!,
-                                  price: ticketPrice[key]!,
-                                ));
-                          });
+                      : HorizontalListView.builder(
+                          items: ticketSum.keys.toList(),
+                          itemBuilder: (context, key, index) => Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              child: TicketWidget(
+                                ticket: ticketSum[key]!,
+                                price: ticketPrice[key]!,
+                              )));
                 },
               ),
             ),

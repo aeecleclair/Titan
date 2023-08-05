@@ -84,27 +84,87 @@ class ItemBar extends HookConsumerWidget {
                               .toList()
                             ..sort((a, b) => a.name.compareTo(b.name));
                           itemList = sortedAvailable + sortedUnavailable;
-                          return HorizontalListView(
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                          return HorizontalListView.builder(
+                              items: itemList,
+                              itemBuilder: (context, e, i) {
+                                var currentValue =
+                                    selectedItems[data.indexOf(e)];
+                                return Column(
                                   children: [
-                                const SizedBox(width: 15),
-                                ...itemList.map((e) {
-                                  var currentValue =
-                                      selectedItems[data.indexOf(e)];
-                                  return Column(
-                                    children: [
-                                      CheckItemCard(
-                                        item: e,
-                                        isSelected: currentValue != 0,
-                                      ),
-                                      SizedBox(
-                                        width: 120,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
+                                    CheckItemCard(
+                                      item: e,
+                                      isSelected: currentValue != 0,
+                                    ),
+                                    SizedBox(
+                                      width: 120,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              color: Colors.black,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: GestureDetector(
+                                              child: HeroIcon(
+                                                HeroIcons.minus,
+                                                color: currentValue == 0
+                                                    ? Colors.grey.shade400
+                                                    : Colors.white,
+                                              ),
+                                              onTap: () {
+                                                if (currentValue > 0) {
+                                                  selectedItemsNotifier.set(
+                                                      data.indexOf(e),
+                                                      currentValue - 1);
+                                                  Map<Item, int>
+                                                      selectedItemsWithQuantity =
+                                                      Map.fromIterables(
+                                                          data, selectedItems);
+                                                  selectedItemsWithQuantity[e] =
+                                                      currentValue - 1;
+                                                  List<Item> selected =
+                                                      selectedItemsWithQuantity
+                                                          .keys
+                                                          .where((element) =>
+                                                              selectedItemsWithQuantity[
+                                                                  element] !=
+                                                              0)
+                                                          .toList();
+                                                  if (selected.isNotEmpty) {
+                                                    endNotifier
+                                                        .setEndFromSelected(
+                                                            start, selected);
+                                                    cautionNotifier
+                                                        .setCautionFromSelected(
+                                                            selectedItemsWithQuantity);
+                                                  } else {
+                                                    endNotifier.setEnd("");
+                                                    cautionNotifier
+                                                        .setCaution("");
+                                                  }
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 6),
+                                            child: Text(
+                                              currentValue.toString(),
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: currentValue == 0
+                                                    ? Colors.grey.shade400
+                                                    : Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
                                               padding: const EdgeInsets.all(5),
                                               decoration: BoxDecoration(
                                                 color: Colors.black,
@@ -113,22 +173,26 @@ class ItemBar extends HookConsumerWidget {
                                               ),
                                               child: GestureDetector(
                                                 child: HeroIcon(
-                                                  HeroIcons.minus,
-                                                  color: currentValue == 0
+                                                  HeroIcons.plus,
+                                                  color: currentValue ==
+                                                          e.totalQuantity -
+                                                              e.loanedQuantity
                                                       ? Colors.grey.shade400
                                                       : Colors.white,
                                                 ),
                                                 onTap: () {
-                                                  if (currentValue > 0) {
+                                                  if (currentValue <
+                                                      e.totalQuantity -
+                                                          e.loanedQuantity) {
                                                     selectedItemsNotifier.set(
                                                         data.indexOf(e),
-                                                        currentValue - 1);
+                                                        currentValue + 1);
                                                     Map<Item, int>
                                                         selectedItemsWithQuantity =
                                                         Map.fromIterables(data,
                                                             selectedItems);
                                                     selectedItemsWithQuantity[
-                                                        e] = currentValue - 1;
+                                                        e] = currentValue + 1;
                                                     List<Item> selected =
                                                         selectedItemsWithQuantity
                                                             .keys
@@ -151,86 +215,13 @@ class ItemBar extends HookConsumerWidget {
                                                     }
                                                   }
                                                 },
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 6),
-                                              child: Text(
-                                                currentValue.toString(),
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: currentValue == 0
-                                                      ? Colors.grey.shade400
-                                                      : Colors.black,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                                padding:
-                                                    const EdgeInsets.all(5),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black,
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                child: GestureDetector(
-                                                  child: HeroIcon(
-                                                    HeroIcons.plus,
-                                                    color: currentValue ==
-                                                            e.totalQuantity -
-                                                                e.loanedQuantity
-                                                        ? Colors.grey.shade400
-                                                        : Colors.white,
-                                                  ),
-                                                  onTap: () {
-                                                    if (currentValue <
-                                                        e.totalQuantity -
-                                                            e.loanedQuantity) {
-                                                      selectedItemsNotifier.set(
-                                                          data.indexOf(e),
-                                                          currentValue + 1);
-                                                      Map<Item, int>
-                                                          selectedItemsWithQuantity =
-                                                          Map.fromIterables(
-                                                              data,
-                                                              selectedItems);
-                                                      selectedItemsWithQuantity[
-                                                          e] = currentValue + 1;
-                                                      List<Item> selected =
-                                                          selectedItemsWithQuantity
-                                                              .keys
-                                                              .where((element) =>
-                                                                  selectedItemsWithQuantity[
-                                                                      element] !=
-                                                                  0)
-                                                              .toList();
-                                                      if (selected.isNotEmpty) {
-                                                        endNotifier
-                                                            .setEndFromSelected(
-                                                                start,
-                                                                selected);
-                                                        cautionNotifier
-                                                            .setCautionFromSelected(
-                                                                selectedItemsWithQuantity);
-                                                      } else {
-                                                        endNotifier.setEnd("");
-                                                        cautionNotifier
-                                                            .setCaution("");
-                                                      }
-                                                    }
-                                                  },
-                                                ))
-                                          ],
-                                        ),
+                                              ))
+                                        ],
                                       ),
-                                    ],
-                                  );
-                                }),
-                                const SizedBox(width: 15),
-                              ]));
+                                    ),
+                                  ],
+                                );
+                              });
                         },
                         loaderColor: ColorConstants.background2);
                   },

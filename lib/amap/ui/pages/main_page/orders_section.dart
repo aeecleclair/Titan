@@ -39,60 +39,55 @@ class OrderSection extends HookConsumerWidget {
           padding: EdgeInsets.symmetric(horizontal: 30),
           color: AMAPColorConstants.textDark),
       const SizedBox(height: 10),
-      SizedBox(
+      HorizontalListView(
         height: 195,
-        child: HorizontalListView(
-          child: Row(
-            children: [
-              const SizedBox(width: 15),
-              GestureDetector(
-                onTap: () {
-                  final e = Order.empty();
-                  deliveryIdNotifier.setId(e.deliveryId);
-                  orderNotifier.setOrder(e);
-                  addOrder();
-                },
-                child: const CardLayout(
-                    width: 100,
-                    height: 150,
-                    colors: [
-                      AMAPColorConstants.lightGradient1,
-                      AMAPColorConstants.greenGradient1
-                    ],
-                    child: Center(
-                      child: HeroIcon(
-                        HeroIcons.plus,
-                        color: Colors.white,
-                        size: 50,
-                      ),
-                    )),
-              ),
-              AsyncChild(
-                  value: orders,
-                  builder: (context, data) {
-                    data.sort(
-                        (a, b) => a.deliveryDate.compareTo(b.deliveryDate));
-                    return Column(
-                        children: data.map((e) {
-                      final canEdit = availableDeliveries
-                          .any((element) => element.id == e.deliveryId);
-                      return OrderUI(
-                          order: e,
-                          onTap: onTap,
-                          onEdit: () {
-                            deliveryIdNotifier.setId(e.deliveryId);
-                            orderNotifier.setOrder(e);
-                            onEdit();
-                          },
-                          showButton: canEdit);
-                    }).toList());
-                  },
-                  loaderColor: AMAPColorConstants.greenGradient2),
-              const SizedBox(width: 25),
-            ],
+        children: [
+          const SizedBox(width: 15),
+          GestureDetector(
+            onTap: () {
+              final e = Order.empty();
+              deliveryIdNotifier.setId(e.deliveryId);
+              orderNotifier.setOrder(e);
+              addOrder();
+            },
+            child: const CardLayout(
+                width: 100,
+                height: 150,
+                colors: [
+                  AMAPColorConstants.lightGradient1,
+                  AMAPColorConstants.greenGradient1
+                ],
+                child: Center(
+                  child: HeroIcon(
+                    HeroIcons.plus,
+                    color: Colors.white,
+                    size: 50,
+                  ),
+                )),
           ),
-        ),
-      )
+          AsyncChild(
+              value: orders,
+              builder: (context, data) {
+                data.sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
+                return Column(
+                    children: data.map((e) {
+                  final canEdit = availableDeliveries
+                      .any((element) => element.id == e.deliveryId);
+                  return OrderUI(
+                      order: e,
+                      onTap: onTap,
+                      onEdit: () {
+                        deliveryIdNotifier.setId(e.deliveryId);
+                        orderNotifier.setOrder(e);
+                        onEdit();
+                      },
+                      showButton: canEdit);
+                }).toList());
+              },
+              loaderColor: AMAPColorConstants.greenGradient2),
+          const SizedBox(width: 25),
+        ],
+      ),
     ]);
   }
 }

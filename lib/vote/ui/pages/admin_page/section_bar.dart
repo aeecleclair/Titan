@@ -7,7 +7,6 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
-import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
@@ -36,74 +35,55 @@ class SectionBar extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return HorizontalListView(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(width: 15),
-          if (status == Status.waiting)
-            ItemChip(
-              onTap: () {
-                QR.to(
-                    VoteRouter.root + VoteRouter.admin + VoteRouter.addSection);
-              },
-              child: const HeroIcon(
-                HeroIcons.plus,
-                color: Colors.black,
-              ),
-            ),
-          if (section.id != Section.empty().id)
-            AsyncChild(
-                value: sectionContender,
-                builder: (context, sections) => Row(
-                      children: sections
-                          .map((key, value) => MapEntry(
-                              SectionChip(
-                                  label: key.name,
-                                  selected: section.id == key.id,
-                                  isAdmin: status == Status.waiting,
-                                  onTap: () async {
-                                    tokenExpireWrapper(ref, () async {
-                                      sectionIdNotifier.setId(key.id);
-                                    });
-                                  },
-                                  onDelete: () async {
-                                    tokenExpireWrapper(ref, () async {
-                                      await showDialog(
-                                          context: context,
-                                          builder: (context) => CustomDialogBox(
-                                                title: VoteTextConstants
-                                                    .deleteSection,
-                                                descriptions: VoteTextConstants
-                                                    .deleteSectionDescription,
-                                                onYes: () async {
-                                                  final result =
-                                                      await sectionsNotifier
-                                                          .deleteSection(key);
-                                                  if (result) {
-                                                    sectionContenderListNotifier
-                                                        .deleteT(key);
-                                                    displayVoteToastWithContext(
-                                                        TypeMsg.msg,
-                                                        VoteTextConstants
-                                                            .deletedSection);
-                                                  } else {
-                                                    displayVoteToastWithContext(
-                                                        TypeMsg.error,
-                                                        VoteTextConstants
-                                                            .deletingError);
-                                                  }
-                                                },
-                                              ));
-                                    });
-                                  }),
-                              value))
-                          .keys
-                          .toList(),
-                    )),
-          const SizedBox(width: 15),
-        ],
-      ),
-    );
+    return AsyncChild(
+        value: sectionContender,
+        builder: (context, sections) => HorizontalListView.builder(
+              items: sections.keys.toList(),
+              firstChild: (status == Status.waiting)
+                  ? ItemChip(
+                      onTap: () {
+                        QR.to(VoteRouter.root +
+                            VoteRouter.admin +
+                            VoteRouter.addSection);
+                      },
+                      child: const HeroIcon(
+                        HeroIcons.plus,
+                        color: Colors.black,
+                      ),
+                    )
+                  : null,
+              itemBuilder: (context, key, i) => SectionChip(
+                  label: key.name,
+                  selected: section.id == key.id,
+                  isAdmin: status == Status.waiting,
+                  onTap: () async {
+                    tokenExpireWrapper(ref, () async {
+                      sectionIdNotifier.setId(key.id);
+                    });
+                  },
+                  onDelete: () async {
+                    tokenExpireWrapper(ref, () async {
+                      await showDialog(
+                          context: context,
+                          builder: (context) => CustomDialogBox(
+                                title: VoteTextConstants.deleteSection,
+                                descriptions:
+                                    VoteTextConstants.deleteSectionDescription,
+                                onYes: () async {
+                                  final result =
+                                      await sectionsNotifier.deleteSection(key);
+                                  if (result) {
+                                    sectionContenderListNotifier.deleteT(key);
+                                    displayVoteToastWithContext(TypeMsg.msg,
+                                        VoteTextConstants.deletedSection);
+                                  } else {
+                                    displayVoteToastWithContext(TypeMsg.error,
+                                        VoteTextConstants.deletingError);
+                                  }
+                                },
+                              ));
+                    });
+                  }),
+            ));
   }
 }

@@ -101,33 +101,24 @@ class AddEditBookingPage extends HookConsumerWidget {
                 const SizedBox(height: 20),
                 AsyncChild(
                     value: rooms,
-                    builder: (context, data) => HorizontalListView(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const SizedBox(width: 15),
-                              ...data.map(
-                                (e) {
-                                  final selected = room.value.id == e.id;
-                                  return ItemChip(
-                                    selected: selected,
-                                    onTap: () async {
-                                      room.value = e;
-                                    },
-                                    child: Text(
-                                      capitalize(e.name),
-                                      style: TextStyle(
-                                          color: selected
-                                              ? Colors.white
-                                              : Colors.black,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  );
-                                },
+                    builder: (context, data) => HorizontalListView.builder(
+                          items: data,
+                          itemBuilder: (context, e, i) {
+                            final selected = room.value.id == e.id;
+                            return ItemChip(
+                              selected: selected,
+                              onTap: () async {
+                                room.value = e;
+                              },
+                              child: Text(
+                                capitalize(e.name),
+                                style: TextStyle(
+                                    color:
+                                        selected ? Colors.white : Colors.black,
+                                    fontWeight: FontWeight.bold),
                               ),
-                              const SizedBox(width: 15),
-                            ],
-                          ),
+                            );
+                          },
                         )),
                 const SizedBox(height: 10),
                 Padding(

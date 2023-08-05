@@ -42,83 +42,76 @@ class ProductHandler extends HookConsumerWidget {
           color: AMAPColorConstants.textDark,
         ),
         const SizedBox(height: 10),
-        SizedBox(
-          height: 185,
-          child: HorizontalListView(
-            child: Row(children: [
-              const SizedBox(width: 10),
-              GestureDetector(
-                onTap: () {
-                  productNotifier.setProduct(Product.empty());
-                  QR.to(AmapRouter.root +
-                      AmapRouter.admin +
-                      AmapRouter.addEditProduct);
-                },
-                child: CardLayout(
-                    height: 155,
-                    width: 100,
-                    colors: const [
-                      AMAPColorConstants.lightGradient1,
-                      AMAPColorConstants.lightGradient2
-                    ],
-                    shadowColor: AMAPColorConstants.textDark.withOpacity(0.3),
-                    child: const Center(
-                      child: HeroIcon(
-                        HeroIcons.plus,
-                        color: Colors.white,
-                        size: 50,
-                      ),
-                    )),
-              ),
-              products.isEmpty
-                  ? const Center(child: Text(AMAPTextConstants.noProduct))
-                  : Row(
-                      children: products
-                          .map(
-                            (e) => ProductCard(
-                              product: e,
-                              onDelete: () async {
-                                await showDialog(
-                                    context: context,
-                                    builder: (context) => CustomDialogBox(
-                                          title:
-                                              AMAPTextConstants.deleteProduct,
-                                          descriptions: AMAPTextConstants
-                                              .deleteProductDescription,
-                                          onYes: () {
-                                            tokenExpireWrapper(ref, () async {
-                                              final value =
-                                                  await productsNotifier
-                                                      .deleteProduct(e);
-                                              if (value) {
-                                                displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    AMAPTextConstants
-                                                        .deletedProduct);
-                                              } else {
-                                                displayToastWithContext(
-                                                    TypeMsg.error,
-                                                    AMAPTextConstants
-                                                        .productInDelivery);
-                                              }
-                                            });
-                                          },
-                                        ));
-                              },
-                              onEdit: () {
-                                productNotifier.setProduct(e);
-                                QR.to(AmapRouter.root +
-                                    AmapRouter.admin +
-                                    AmapRouter.addEditProduct);
-                              },
-                            ),
-                          )
-                          .toList(),
-                    ),
-              const SizedBox(width: 10)
-            ]),
+        HorizontalListView(height: 185, children: [
+          const SizedBox(width: 10),
+          GestureDetector(
+            onTap: () {
+              productNotifier.setProduct(Product.empty());
+              QR.to(AmapRouter.root +
+                  AmapRouter.admin +
+                  AmapRouter.addEditProduct);
+            },
+            child: CardLayout(
+                height: 155,
+                width: 100,
+                colors: const [
+                  AMAPColorConstants.lightGradient1,
+                  AMAPColorConstants.lightGradient2
+                ],
+                shadowColor: AMAPColorConstants.textDark.withOpacity(0.3),
+                child: const Center(
+                  child: HeroIcon(
+                    HeroIcons.plus,
+                    color: Colors.white,
+                    size: 50,
+                  ),
+                )),
           ),
-        ),
+          products.isEmpty
+              ? const Center(child: Text(AMAPTextConstants.noProduct))
+              : Row(
+                  children: products
+                      .map(
+                        (e) => ProductCard(
+                          product: e,
+                          onDelete: () async {
+                            await showDialog(
+                                context: context,
+                                builder: (context) => CustomDialogBox(
+                                      title: AMAPTextConstants.deleteProduct,
+                                      descriptions: AMAPTextConstants
+                                          .deleteProductDescription,
+                                      onYes: () {
+                                        tokenExpireWrapper(ref, () async {
+                                          final value = await productsNotifier
+                                              .deleteProduct(e);
+                                          if (value) {
+                                            displayToastWithContext(
+                                                TypeMsg.msg,
+                                                AMAPTextConstants
+                                                    .deletedProduct);
+                                          } else {
+                                            displayToastWithContext(
+                                                TypeMsg.error,
+                                                AMAPTextConstants
+                                                    .productInDelivery);
+                                          }
+                                        });
+                                      },
+                                    ));
+                          },
+                          onEdit: () {
+                            productNotifier.setProduct(e);
+                            QR.to(AmapRouter.root +
+                                AmapRouter.admin +
+                                AmapRouter.addEditProduct);
+                          },
+                        ),
+                      )
+                      .toList(),
+                ),
+          const SizedBox(width: 10)
+        ]),
         const SizedBox(height: 10),
       ],
     );

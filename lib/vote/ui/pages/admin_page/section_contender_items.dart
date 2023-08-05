@@ -51,89 +51,77 @@ class SectionContenderItems extends HookConsumerWidget {
           );
         }
         return AsyncChild(
-          value: sections[section]!,
-          builder: (context, data) => SizedBox(
-            height: 190,
-            child: HorizontalListView(
-              child: Row(
-                children: [
-                  const SizedBox(width: 10),
-                  if (status == Status.waiting)
-                    GestureDetector(
-                      onTap: () {
-                        contenderNotifier.setId(Contender.empty());
-                        membersNotifier.setMembers([]);
-                        QR.to(VoteRouter.root +
-                            VoteRouter.admin +
-                            VoteRouter.addEditContender);
+            value: sections[section]!,
+            builder: (context, data) => HorizontalListView.builder(
+                height: 190,
+                firstChild: (status == Status.waiting)
+                    ? GestureDetector(
+                        onTap: () {
+                          contenderNotifier.setId(Contender.empty());
+                          membersNotifier.setMembers([]);
+                          QR.to(VoteRouter.root +
+                              VoteRouter.admin +
+                              VoteRouter.addEditContender);
+                        },
+                        child: const CardLayout(
+                          width: 120,
+                          height: 180,
+                          child: Center(
+                              child: HeroIcon(
+                            HeroIcons.plus,
+                            size: 40.0,
+                            color: Colors.black,
+                          )),
+                        ),
+                      )
+                    : null,
+                items: data,
+                itemBuilder: (context, e, i) => ContenderCard(
+                      contender: e,
+                      isAdmin: true,
+                      onEdit: () {
+                        tokenExpireWrapper(ref, () async {
+                          contenderNotifier.setId(e);
+                          membersNotifier.setMembers(e.members);
+                          QR.to(VoteRouter.root +
+                              VoteRouter.admin +
+                              VoteRouter.addEditContender);
+                        });
                       },
-                      child: const CardLayout(
-                        width: 120,
-                        height: 180,
-                        child: Center(
-                            child: HeroIcon(
-                          HeroIcons.plus,
-                          size: 40.0,
-                          color: Colors.black,
-                        )),
-                      ),
-                    ),
-                  ...data
-                      .map((e) => ContenderCard(
-                            contender: e,
-                            isAdmin: true,
-                            onEdit: () {
-                              tokenExpireWrapper(ref, () async {
-                                contenderNotifier.setId(e);
-                                membersNotifier.setMembers(e.members);
-                                QR.to(VoteRouter.root +
-                                    VoteRouter.admin +
-                                    VoteRouter.addEditContender);
-                              });
-                            },
-                            onDelete: () async {
-                              await showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return CustomDialogBox(
-                                        title:
-                                            VoteTextConstants.deletePretendance,
-                                        descriptions: VoteTextConstants
-                                            .deletePretendanceDesc,
-                                        onYes: () {
-                                          tokenExpireWrapper(ref, () async {
-                                            final value =
-                                                await contenderListNotifier
-                                                    .deleteContender(e);
-                                            if (value) {
-                                              displayVoteToastWithContext(
-                                                  TypeMsg.msg,
-                                                  VoteTextConstants
-                                                      .pretendanceDeleted);
-                                              contenderListNotifier
-                                                  .copy()
-                                                  .then((value) {
-                                                sectionContenderListNotifier
-                                                    .setTData(section, value);
-                                              });
-                                            } else {
-                                              displayVoteToastWithContext(
-                                                  TypeMsg.error,
-                                                  VoteTextConstants
-                                                      .pretendanceNotDeleted);
-                                            }
-                                          });
+                      onDelete: () async {
+                        await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CustomDialogBox(
+                                  title: VoteTextConstants.deletePretendance,
+                                  descriptions:
+                                      VoteTextConstants.deletePretendanceDesc,
+                                  onYes: () {
+                                    tokenExpireWrapper(ref, () async {
+                                      final value = await contenderListNotifier
+                                          .deleteContender(e);
+                                      if (value) {
+                                        displayVoteToastWithContext(
+                                            TypeMsg.msg,
+                                            VoteTextConstants
+                                                .pretendanceDeleted);
+                                        contenderListNotifier
+                                            .copy()
+                                            .then((value) {
+                                          sectionContenderListNotifier.setTData(
+                                              section, value);
                                         });
+                                      } else {
+                                        displayVoteToastWithContext(
+                                            TypeMsg.error,
+                                            VoteTextConstants
+                                                .pretendanceNotDeleted);
+                                      }
+                                    });
                                   });
-                            },
-                          ))
-                      .toList(),
-                  const SizedBox(width: 10),
-                ],
-              ),
-            ),
-          ),
-        );
+                            });
+                      },
+                    )));
       },
     );
   }

@@ -9,6 +9,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/buy_type_ticket_card.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/prize_card.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
@@ -76,20 +77,12 @@ class RaffleInfoPage extends HookConsumerWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: const Text(RaffleTextConstants.noTicketBuyable),
                     )
-                  : ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: typeTickets.length + 2,
-                      itemBuilder: (context, index) {
-                        if (index == 0 || index == typeTickets.length + 1) {
-                          return const SizedBox(width: 15);
-                        }
-                        return Container(
-                            margin: const EdgeInsets.all(10),
-                            child: BuyTypeTicketSimple(
-                                typeTicket: typeTickets[index - 1],
-                                raffle: raffle));
-                      }),
+                  : HorizontalListView.builder(
+                      items: typeTickets,
+                      itemBuilder: (context, typeTicket, index) => Container(
+                          margin: const EdgeInsets.all(10),
+                          child: BuyTypeTicketSimple(
+                              typeTicket: typeTicket, raffle: raffle))),
               orElseBuilder: (context, child) => Container(
                   height: 190,
                   padding: const EdgeInsets.symmetric(horizontal: 30),

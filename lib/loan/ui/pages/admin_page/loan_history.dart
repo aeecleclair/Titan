@@ -61,20 +61,11 @@ class HistoryLoan extends HookConsumerWidget {
                       },
                     ),
                     const SizedBox(height: 10),
-                    SizedBox(
-                      height: 110,
-                      child: HorizontalListView(
-                        child: Row(
-                          children: [
-                            const SizedBox(width: 10),
-                            ...data
-                                .map((e) => LoanCard(loan: e, isHistory: true))
-                                .toList(),
-                            const SizedBox(width: 10),
-                          ],
-                        ),
-                      ),
-                    )
+                    HorizontalListView.builder(
+                        height: 110,
+                        items: data,
+                        itemBuilder: (context, loan, i) =>
+                            LoanCard(loan: loan, isHistory: true))
                   ],
                 );
               });

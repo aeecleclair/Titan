@@ -102,30 +102,22 @@ class AddEditEventPage extends HookConsumerWidget {
                   color: Colors.grey,
                 ),
                 const SizedBox(height: 30),
-                HorizontalListView(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(width: 15),
-                      ...CalendarEventType.values.map((e) {
-                        final selected = eventType.value == e;
-                        return ItemChip(
+                HorizontalListView.builder(
+                    items: CalendarEventType.values,
+                    itemBuilder: (context, value, index) {
+                      final selected = eventType.value == value;
+                      return ItemChip(
                           selected: selected,
                           onTap: () async {
-                            eventType.value = e;
+                            eventType.value = value;
                           },
                           child: Text(
-                            calendarEventTypeToString(e),
+                            calendarEventTypeToString(value),
                             style: TextStyle(
                                 color: selected ? Colors.white : Colors.black,
                                 fontWeight: FontWeight.bold),
-                          ),
-                        );
-                      }),
-                      const SizedBox(width: 15),
-                    ],
-                  ),
-                ),
+                          ));
+                    }),
                 Column(children: [
                   const SizedBox(height: 20),
                   Padding(
@@ -313,28 +305,26 @@ class AddEditEventPage extends HookConsumerWidget {
                           height: 59,
                           child: AsyncChild(
                             value: rooms,
-                            builder: (context, rooms) => ListView.builder(
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                physics: const BouncingScrollPhysics(),
-                                itemCount: rooms.length,
-                                itemBuilder: (context, index) {
-                                  final selected = rooms[index].id == roomId;
-                                  return ItemChip(
-                                    onTap: () {
-                                      location.text = rooms[index].name;
-                                      roomIdNotifier.setRoomId(rooms[index].id);
-                                    },
-                                    selected: selected,
-                                    child: Text(rooms[index].name,
-                                        style: TextStyle(
-                                          color: selected
-                                              ? Colors.white
-                                              : Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  );
-                                }),
+                            builder: (context, rooms) =>
+                                HorizontalListView.builder(
+                                    items: rooms,
+                                    itemBuilder: (context, room, index) {
+                                      final selected = room.id == roomId;
+                                      return ItemChip(
+                                        onTap: () {
+                                          location.text = room.name;
+                                          roomIdNotifier.setRoomId(room.id);
+                                        },
+                                        selected: selected,
+                                        child: Text(room.name,
+                                            style: TextStyle(
+                                              color: selected
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                      );
+                                    }),
                           ))
                       : Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30),

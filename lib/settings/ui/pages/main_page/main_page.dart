@@ -125,23 +125,16 @@ class SettingsMainPage extends HookConsumerWidget {
                 errorBuilder: (e, s) =>
                     const HeroIcon(HeroIcons.userCircle, size: 140)),
             const SizedBox(height: 100),
-            HorizontalListView(
-              child: Row(children: [
-                const SizedBox(width: 15),
-                ...me.groups
-                    .map((e) => ItemChip(
-                          selected: true,
-                          child: Text(
-                            capitalize(e.name),
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ))
-                    .toList(),
-                const SizedBox(width: 15)
-              ]),
-            ),
+            HorizontalListView.builder(
+                items: me.groups,
+                itemBuilder: (context, item, i) => ItemChip(
+                      selected: true,
+                      child: Text(
+                        capitalize(item.name),
+                        style: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    )),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),

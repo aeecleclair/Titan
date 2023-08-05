@@ -68,85 +68,78 @@ class ListBooking extends HookConsumerWidget {
         if (toggle.value)
           Container(
             margin: const EdgeInsets.only(top: 10),
-            height: 175,
-            child: HorizontalListView(
-              child: Row(
-                children: [
-                  const SizedBox(width: 10),
-                  ...bookings.map((e) => BookingCard(
-                        booking: e,
-                        isAdmin: true,
-                        onEdit: () {
-                          bookingNotifier.setBooking(e);
-                          QR.to(BookingRouter.root +
-                              BookingRouter.admin +
-                              BookingRouter.addEdit);
-                        },
-                        onInfo: () {
-                          bookingNotifier.setBooking(e);
-                          QR.to(BookingRouter.root +
-                              BookingRouter.admin +
-                              BookingRouter.detail);
-                        },
-                        onConfirm: () async {
-                          await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return CustomDialogBox(
-                                    title: BookingTextConstants.confirm,
-                                    descriptions:
-                                        BookingTextConstants.confirmBooking,
-                                    onYes: () async {
-                                      await tokenExpireWrapper(ref, () async {
-                                        Booking newBooking = e.copyWith(
-                                            decision: Decision.approved);
-                                        bookingListNotifier
-                                            .toggleConfirmed(
-                                                newBooking, Decision.approved)
-                                            .then((value) {
-                                          if (value) {
-                                            confirmedBookingListNotifier
-                                                .addBooking(newBooking);
-                                          }
-                                        });
-                                      });
-                                    });
+            child: HorizontalListView.builder(
+              height: 175,
+              items: bookings,
+              itemBuilder: (context, e, i) => BookingCard(
+                booking: e,
+                isAdmin: true,
+                onEdit: () {
+                  bookingNotifier.setBooking(e);
+                  QR.to(BookingRouter.root +
+                      BookingRouter.admin +
+                      BookingRouter.addEdit);
+                },
+                onInfo: () {
+                  bookingNotifier.setBooking(e);
+                  QR.to(BookingRouter.root +
+                      BookingRouter.admin +
+                      BookingRouter.detail);
+                },
+                onConfirm: () async {
+                  await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return CustomDialogBox(
+                            title: BookingTextConstants.confirm,
+                            descriptions: BookingTextConstants.confirmBooking,
+                            onYes: () async {
+                              await tokenExpireWrapper(ref, () async {
+                                Booking newBooking =
+                                    e.copyWith(decision: Decision.approved);
+                                bookingListNotifier
+                                    .toggleConfirmed(
+                                        newBooking, Decision.approved)
+                                    .then((value) {
+                                  if (value) {
+                                    confirmedBookingListNotifier
+                                        .addBooking(newBooking);
+                                  }
+                                });
                               });
-                        },
-                        onDecline: () async {
-                          await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return CustomDialogBox(
-                                    title: BookingTextConstants.decline,
-                                    descriptions:
-                                        BookingTextConstants.declineBooking,
-                                    onYes: () async {
-                                      await tokenExpireWrapper(ref, () async {
-                                        Booking newBooking = e.copyWith(
-                                            decision: Decision.declined);
-                                        bookingListNotifier
-                                            .toggleConfirmed(
-                                                newBooking, Decision.declined)
-                                            .then((value) {
-                                          if (value) {
-                                            confirmedBookingListNotifier
-                                                .deleteBooking(newBooking);
-                                          }
-                                        });
-                                      });
-                                    });
+                            });
+                      });
+                },
+                onDecline: () async {
+                  await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return CustomDialogBox(
+                            title: BookingTextConstants.decline,
+                            descriptions: BookingTextConstants.declineBooking,
+                            onYes: () async {
+                              await tokenExpireWrapper(ref, () async {
+                                Booking newBooking =
+                                    e.copyWith(decision: Decision.declined);
+                                bookingListNotifier
+                                    .toggleConfirmed(
+                                        newBooking, Decision.declined)
+                                    .then((value) {
+                                  if (value) {
+                                    confirmedBookingListNotifier
+                                        .deleteBooking(newBooking);
+                                  }
+                                });
                               });
-                        },
-                        onCopy: () {
-                          bookingNotifier.setBooking(e.copyWith(id: ""));
-                          QR.to(BookingRouter.root +
-                              BookingRouter.admin +
-                              BookingRouter.addEdit);
-                        },
-                      )),
-                  const SizedBox(width: 10),
-                ],
+                            });
+                      });
+                },
+                onCopy: () {
+                  bookingNotifier.setBooking(e.copyWith(id: ""));
+                  QR.to(BookingRouter.root +
+                      BookingRouter.admin +
+                      BookingRouter.addEdit);
+                },
               ),
             ),
           ),
