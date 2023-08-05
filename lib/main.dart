@@ -2,7 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:myecl/login/providers/animation_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/router.dart';
@@ -25,6 +27,14 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
+    final animationController =
+        useAnimationController(duration: const Duration(seconds: 2));
+    final animationNotifier = ref.read(backgroundAnimationProvider.notifier);
+
+    Future(() {
+      animationNotifier.setController(animationController);
+    });
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'MyECL',

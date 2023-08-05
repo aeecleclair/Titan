@@ -26,15 +26,18 @@ class CreateAccountPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authTokenNotifier = ref.watch(authTokenProvider.notifier);
     final signUpNotifier = ref.watch(signUpProvider.notifier);
-    final activationCode = useTextEditingController();
+    final code = QR.params['code'] ?? '';
+    final isCodeGiven = code != '';
+    final activationCode = useTextEditingController(text: code.toString());
     final name = useTextEditingController();
     final password = useTextEditingController();
+    final passwordConfirmation = useTextEditingController();
     final firstname = useTextEditingController();
     final nickname = useTextEditingController();
     final birthday = useTextEditingController();
     final phone = useTextEditingController();
     final promo = useTextEditingController();
-    final lastIndex = useState(0);
+    final lastIndex = useState(isCodeGiven ? 1 : 0);
     List<DropdownMenuItem> items = Floors.values
         .map((e) => DropdownMenuItem(
               value: capitalize(e.toString().split('.').last),
@@ -43,8 +46,8 @@ class CreateAccountPage extends HookConsumerWidget {
         .toList();
 
     final floor = useTextEditingController(text: items[0].value.toString());
-    final currentPage = useState(0);
-    final pageController = usePageController();
+    final currentPage = useState(isCodeGiven ? 1 : 0);
+    final pageController = usePageController(initialPage: currentPage.value);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -59,17 +62,18 @@ class CreateAccountPage extends HookConsumerWidget {
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
     ];
 
     List<Widget> steps = [
-      CreateAccountField(
-        controller: activationCode,
-        label: LoginTextConstants.activationCode,
-        index: 1,
-        pageController: pageController,
-        currentPage: currentPage,
-        formKey: formKeys[0],
-      ),
+        CreateAccountField(
+          controller: activationCode,
+          label: LoginTextConstants.activationCode,
+          index: 1,
+          pageController: pageController,
+          currentPage: currentPage,
+          formKey: formKeys[0],
+        ),
       Column(
         children: [
           CreateAccountField(
@@ -89,33 +93,58 @@ class CreateAccountPage extends HookConsumerWidget {
           const Spacer(),
         ],
       ),
+      Column(
+        children: [
+          CreateAccountField(
+            controller: passwordConfirmation,
+            label: LoginTextConstants.confirmPassword,
+            index: 3,
+            pageController: pageController,
+            currentPage: currentPage,
+            formKey: formKeys[2],
+            keyboardType: TextInputType.visiblePassword,
+            validator: (value) {
+              if (value != password.text) {
+                return LoginTextConstants.passwordMustMatch;
+              }
+              return null;
+            },
+          ),
+          const Spacer(),
+          PasswordStrength(
+            newPassword: password,
+            textColor: ColorConstants.background2,
+          ),
+          const Spacer(),
+        ],
+      ),
       CreateAccountField(
         controller: name,
         label: LoginTextConstants.name,
-        index: 3,
+        index: 4,
         pageController: pageController,
         currentPage: currentPage,
-        formKey: formKeys[2],
+        formKey: formKeys[3],
         keyboardType: TextInputType.name,
         autofillHints: const [AutofillHints.familyName],
       ),
       CreateAccountField(
         controller: firstname,
         label: LoginTextConstants.firstname,
-        index: 4,
+        index: 5,
         pageController: pageController,
         currentPage: currentPage,
-        formKey: formKeys[3],
+        formKey: formKeys[4],
         keyboardType: TextInputType.name,
         autofillHints: const [AutofillHints.givenName],
       ),
       CreateAccountField(
         controller: nickname,
         label: LoginTextConstants.nickname,
-        index: 5,
+        index: 6,
         pageController: pageController,
         currentPage: currentPage,
-        formKey: formKeys[4],
+        formKey: formKeys[5],
         keyboardType: TextInputType.name,
         canBeEmpty: true,
         hint: LoginTextConstants.canBeEmpty,
@@ -142,7 +171,7 @@ class CreateAccountPage extends HookConsumerWidget {
           },
           child: AbsorbPointer(
             child: Form(
-              key: formKeys[5],
+              key: formKeys[6],
               child: TextFormField(
                 style: const TextStyle(
                   fontSize: 20,
@@ -178,10 +207,10 @@ class CreateAccountPage extends HookConsumerWidget {
       CreateAccountField(
         controller: phone,
         label: LoginTextConstants.phone,
-        index: 7,
+        index: 8,
         pageController: pageController,
         currentPage: currentPage,
-        formKey: formKeys[6],
+        formKey: formKeys[7],
         keyboardType: TextInputType.phone,
         autofillHints: const [AutofillHints.telephoneNumber],
         canBeEmpty: true,
@@ -190,10 +219,10 @@ class CreateAccountPage extends HookConsumerWidget {
       CreateAccountField(
         controller: promo,
         label: LoginTextConstants.promo,
-        index: 8,
+        index: 9,
         pageController: pageController,
         currentPage: currentPage,
-        formKey: formKeys[7],
+        formKey: formKeys[8],
         keyboardType: TextInputType.number,
         canBeEmpty: true,
         mustBeInt: true,
@@ -246,7 +275,7 @@ class CreateAccountPage extends HookConsumerWidget {
           ),
         ],
       ),
-      SignUpBar(
+      SignInUpBar(
         label: LoginTextConstants.endActivation,
         isLoading: false,
         onPressed: () async {
@@ -255,7 +284,9 @@ class CreateAccountPage extends HookConsumerWidget {
               birthday.text.isNotEmpty &&
               floor.text.isNotEmpty &&
               password.text.isNotEmpty &&
-              activationCode.text.isNotEmpty) {
+              activationCode.text.isNotEmpty &&
+              passwordConfirmation.text.isNotEmpty &&
+              password.text == passwordConfirmation.text) {
             CreateAccount finalcreateAccount = CreateAccount(
               name: name.text,
               firstname: firstname.text,
@@ -292,6 +323,11 @@ class CreateAccountPage extends HookConsumerWidget {
     final len = steps.length;
 
     return LoginTemplate(
+      callback: (AnimationController controller) {
+        if (!controller.isCompleted) {
+          controller.forward();
+        }
+      },
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
@@ -347,10 +383,11 @@ class CreateAccountPage extends HookConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      currentPage.value != 0
+                      currentPage.value != (isCodeGiven ? 1 : 0)
                           ? GestureDetector(
                               onTap: (() {
-                                FocusScope.of(context).requestFocus(FocusNode());
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
                                 currentPage.value--;
                                 lastIndex.value = currentPage.value;
                                 pageController.previousPage(
@@ -373,7 +410,8 @@ class CreateAccountPage extends HookConsumerWidget {
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
                                   pageController.nextPage(
-                                      duration: const Duration(milliseconds: 500),
+                                      duration:
+                                          const Duration(milliseconds: 500),
                                       curve: Curves.decelerate);
                                   currentPage.value++;
                                   lastIndex.value = currentPage.value;

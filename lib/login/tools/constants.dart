@@ -4,6 +4,7 @@ class LoginTextConstants {
   static const String activationCode = 'Code d\'activation';
   static const String birthday = 'Date de naissance';
   static const String canBeEmpty = 'Ce champ peut être vide';
+  static const String confirmPassword = 'Confirmer le mot de passe';
   static const String create = 'Créer';
   static const String createAccount = 'Créer un compte';
   static const String createAccountTitle = 'Créer un\ncompte';
@@ -32,6 +33,7 @@ class LoginTextConstants {
   static const String password = 'Mot de passe';
   static const String passwordLengthError =
       'Le mot de passe doit faire au moins 6 caractères';
+  static const String passwordMustMatch = 'Les mots de passe doivent correspondre';
   static const String passwordStrengthVeryWeak = 'Très faible';
   static const String passwordStrengthWeak = 'Faible';
   static const String passwordStrengthMedium = 'Moyen';

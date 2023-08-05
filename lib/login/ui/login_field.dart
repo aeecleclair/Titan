@@ -17,6 +17,7 @@ class CreateAccountField extends HookConsumerWidget {
   final bool canBeEmpty;
   final bool isPassword;
   final bool mustBeInt;
+  final String? Function(String?)? validator;
   const CreateAccountField({
     super.key,
     required this.controller,
@@ -31,6 +32,7 @@ class CreateAccountField extends HookConsumerWidget {
     this.hint = '',
     this.canBeEmpty = false,
     this.mustBeInt = false,
+    this.validator,
   });
 
   @override
@@ -55,6 +57,7 @@ class CreateAccountField extends HookConsumerWidget {
         AutofillGroup(
             child: Form(
           key: formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: TextFormField(
             style: const TextStyle(
               fontSize: 20,
@@ -122,15 +125,19 @@ class CreateAccountField extends HookConsumerWidget {
                     )),
                     errorStyle: const TextStyle(color: Colors.white)),
             validator: (value) {
-              if (!canBeEmpty && (value == null || value.isEmpty)) {
+              if (canBeEmpty) {
+                return null;
+              }
+              if (value == null || value.isEmpty) {
                 return LoginTextConstants.emptyFieldError;
-              } else if (isPassword && (value != null && value.length < 6)) {
+              } 
+              if (isPassword && value.length < 6) {
                 return LoginTextConstants.passwordLengthError;
-              } else if (mustBeInt &&
-                  (value != null && int.tryParse(value) == null)) {
+              } 
+              if (mustBeInt && int.tryParse(value) == null) {
                 return LoginTextConstants.mustBeIntError;
               }
-              return null;
+              return validator?.call(value);
             },
           ),
         )),

@@ -24,16 +24,20 @@ class RecoverPasswordPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authTokenNotifier = ref.watch(authTokenProvider.notifier);
     final signUpNotifier = ref.watch(signUpProvider.notifier);
-    final activationCode = useTextEditingController();
+    final code = QR.params['code'] ?? '';
+    final isCodeGiven = code != '';
+    final activationCode = useTextEditingController(text: code.toString());
     final password = useTextEditingController();
-    final currentPage = useState(0);
-    final lastIndex = useState(0);
-    final pageController = usePageController();
+    final passwordConfirmation = useTextEditingController();
+    final lastIndex = useState(isCodeGiven ? 1 : 0);
+    final currentPage = useState(isCodeGiven ? 1 : 0);
+    final pageController = usePageController(initialPage: currentPage.value);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
     List<GlobalKey<FormState>> formKeys = [
+      GlobalKey<FormState>(),
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
     ];
@@ -65,12 +69,39 @@ class RecoverPasswordPage extends HookConsumerWidget {
           ),
           const Spacer(),
         ],
-      ),
-      SignUpBar(
+      ),Column(
+          children: [
+            CreateAccountField(
+              controller: passwordConfirmation,
+              label: LoginTextConstants.confirmPassword,
+              index: 3,
+              pageController: pageController,
+              currentPage: currentPage,
+              formKey: formKeys[2],
+              keyboardType: TextInputType.visiblePassword,
+              validator: (value) {
+                if (value != password.text) {
+                  return LoginTextConstants.passwordMustMatch;
+                }
+                return null;
+              },
+            ),
+            const Spacer(),
+            PasswordStrength(
+              newPassword: passwordConfirmation,
+              textColor: ColorConstants.background2,
+            ),
+            const Spacer(),
+          ],
+        ),
+      SignInUpBar(
         label: LoginTextConstants.endResetPassword,
         isLoading: false,
         onPressed: () async {
-          if (password.text.isNotEmpty && activationCode.text.isNotEmpty) {
+          if (password.text.isNotEmpty &&
+              activationCode.text.isNotEmpty &&
+              passwordConfirmation.text.isNotEmpty &&
+              password.text == passwordConfirmation.text) {
             RecoverRequest recoverRequest = RecoverRequest(
               resetToken: activationCode.text,
               newPassword: password.text,
@@ -95,6 +126,11 @@ class RecoverPasswordPage extends HookConsumerWidget {
     final len = steps.length;
 
     return LoginTemplate(
+      callback: (AnimationController controller) {
+        if (!controller.isCompleted) {
+          controller.forward();
+        }
+      },
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
@@ -150,10 +186,11 @@ class RecoverPasswordPage extends HookConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      currentPage.value != 0
+                      currentPage.value != (isCodeGiven ? 1 : 0)
                           ? GestureDetector(
                               onTap: (() {
-                                FocusScope.of(context).requestFocus(FocusNode());
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
                                 currentPage.value--;
                                 lastIndex.value = currentPage.value;
                                 pageController.previousPage(
@@ -176,7 +213,8 @@ class RecoverPasswordPage extends HookConsumerWidget {
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
                                   pageController.nextPage(
-                                      duration: const Duration(milliseconds: 500),
+                                      duration:
+                                          const Duration(milliseconds: 500),
                                       curve: Curves.decelerate);
                                   currentPage.value++;
                                   lastIndex.value = currentPage.value;
