@@ -103,8 +103,10 @@ class ChangePassPage extends HookConsumerWidget {
                 const SizedBox(height: 60),
                 WaitingButton(
                   builder: (child) => AddEditButtonLayout(
-                    color: ColorConstants.gradient1,
-                    gradient: ColorConstants.gradient2,
+                    colors: const [
+                      ColorConstants.gradient1,
+                      ColorConstants.gradient2
+                    ],
                     child: child,
                   ),
                   onTap: () async {
