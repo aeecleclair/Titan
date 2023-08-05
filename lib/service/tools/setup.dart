@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/service/local_notification_service.dart';
+import 'package:myecl/service/providers/firebase_token_expiration_provider.dart';
 import 'package:myecl/service/providers/firebase_token_provider.dart';
 import 'package:myecl/service/providers/messages_provider.dart';
 import 'package:myecl/service/providers/topic_provider.dart';
@@ -25,14 +26,24 @@ void setUpNotification(WidgetRef ref) {
 
   FirebaseMessaging.instance.requestPermission().then((value) {
     if (value.authorizationStatus == AuthorizationStatus.authorized) {
-      firebaseToken.then((value) {
-        messageNotifier.setFirebaseToken(value);
-        messageNotifier.registerDevice();
-        logger.writeLog(Log(
-            message: "Firebase messaging token registered",
-            level: LogLevel.info));
-        topicsNotifier.getTopics();
-      });
+      final firebaseTokenExpiration =
+          ref.watch(firebaseTokenExpirationProvider);
+      final firebaseTokenExpirationNotifier =
+          ref.read(firebaseTokenExpirationProvider.notifier);
+      final now = DateTime.now();
+      if (firebaseTokenExpiration != null &&
+          firebaseTokenExpiration.isBefore(now)) {
+        firebaseToken.then((value) {
+          messageNotifier.setFirebaseToken(value);
+          messageNotifier.registerDevice();
+          firebaseTokenExpirationNotifier
+              .saveDate(now.add(const Duration(days: 30)));
+          logger.writeLog(Log(
+              message: "Firebase messaging token registered",
+              level: LogLevel.info));
+          topicsNotifier.getTopics();
+        });
+      }
     }
   });
 
@@ -79,8 +90,6 @@ void setUpNotification(WidgetRef ref) {
     handleMessages();
   });
 }
-
-
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
