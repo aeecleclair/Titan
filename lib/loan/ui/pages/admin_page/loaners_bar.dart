@@ -18,31 +18,23 @@ class LoanersBar extends HookConsumerWidget {
     final loaner = ref.watch(loanerProvider);
     return AsyncChild(
       value: adminLoanList,
-      builder: (context, loans) => HorizontalListView(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(width: 15),
-            ...loans.map((key, value) {
-              final selected = loaner.id == key.id;
-              return MapEntry(
-                  ItemChip(
-                    selected: selected,
-                    onTap: () async {
-                      onTap(key);
-                    },
-                    child: Text(
-                      capitalize(key.name),
-                      style: TextStyle(
-                          color: selected ? Colors.white : Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  value);
-            }).keys,
-            const SizedBox(width: 15),
-          ],
-        ),
+      builder: (context, loans) => HorizontalListView.builder(
+        items: loans.keys.toList(),
+        itemBuilder: (context, key, i) {
+          final selected = loaner.id == key.id;
+          return ItemChip(
+            selected: selected,
+            onTap: () async {
+              onTap(key);
+            },
+            child: Text(
+              capitalize(key.name),
+              style: TextStyle(
+                  color: selected ? Colors.white : Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
+          );
+        },
       ),
     );
   }

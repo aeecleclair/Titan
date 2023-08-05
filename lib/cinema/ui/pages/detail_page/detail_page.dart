@@ -15,6 +15,7 @@ import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/local_notification_service.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DetailPage extends HookConsumerWidget {
@@ -118,16 +119,11 @@ class DetailPage extends HookConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    SizedBox(
-                      height: 35,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: genres.length + 2,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index == 0 || index == genres.length + 1) {
-                            return const SizedBox(width: 20);
-                          } else {
-                            return Container(
+                    HorizontalListView.builder(
+                        height: 35,
+                        items: genres,
+                        horizontalSpace: 20,
+                        itemBuilder: (context, genre, index) => Container(
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 10),
                               padding: const EdgeInsets.symmetric(
@@ -137,17 +133,13 @@ class DetailPage extends HookConsumerWidget {
                                 borderRadius: BorderRadius.circular(18),
                               ),
                               child: Text(
-                                genres[index - 1],
+                                genre,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            );
-                          }
-                        },
-                      ),
-                    ),
+                            )),
                     const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),

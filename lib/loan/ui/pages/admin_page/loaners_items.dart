@@ -73,82 +73,71 @@ class LoanersItems extends HookConsumerWidget {
                     },
                   ),
                   const SizedBox(height: 10),
-                  SizedBox(
+                  HorizontalListView.builder(
                       height: 140,
-                      child: HorizontalListView(
-                        child: Row(
-                          children: [
-                            const SizedBox(width: 10),
-                            GestureDetector(
-                              onTap: () {
-                                itemNotifier.setItem(Item.empty());
-                                QR.to(LoanRouter.root +
-                                    LoanRouter.admin +
-                                    LoanRouter.addEditItem);
-                              },
-                              child: const CardLayout(
-                                width: 100,
-                                height: 140,
-                                child: Center(
-                                  child: HeroIcon(
-                                    HeroIcons.plus,
-                                    size: 40.0,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
+                      firstChild: GestureDetector(
+                        onTap: () {
+                          itemNotifier.setItem(Item.empty());
+                          QR.to(LoanRouter.root +
+                              LoanRouter.admin +
+                              LoanRouter.addEditItem);
+                        },
+                        child: const CardLayout(
+                          width: 100,
+                          height: 140,
+                          child: Center(
+                            child: HeroIcon(
+                              HeroIcons.plus,
+                              size: 40.0,
+                              color: Colors.black,
                             ),
-                            ...data.map((e) => ItemCard(
-                                  item: e,
-                                  showButtons: true,
-                                  onDelete: () async {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return CustomDialogBox(
-                                              descriptions: LoanTextConstants
-                                                  .deletingItem,
-                                              onYes: () {
-                                                tokenExpireWrapper(ref,
-                                                    () async {
-                                                  final value =
-                                                      await itemListNotifier
-                                                          .deleteItem(
-                                                              e, loaner.id);
-                                                  if (value) {
-                                                    itemListNotifier
-                                                        .copy()
-                                                        .then((value) {
-                                                      loanersItemsNotifier
-                                                          .setTData(
-                                                              loaner, value);
-                                                    });
-                                                    displayToastWithContext(
-                                                        TypeMsg.msg,
-                                                        LoanTextConstants
-                                                            .deletedItem);
-                                                  } else {
-                                                    displayToastWithContext(
-                                                        TypeMsg.error,
-                                                        LoanTextConstants
-                                                            .deletingError);
-                                                  }
-                                                });
-                                              },
-                                              title: LoanTextConstants.delete);
-                                        });
-                                  },
-                                  onEdit: () {
-                                    QR.to(LoanRouter.root +
-                                        LoanRouter.admin +
-                                        LoanRouter.addEditItem);
-                                    itemNotifier.setItem(e);
-                                  },
-                                )),
-                            const SizedBox(width: 10),
-                          ],
+                          ),
                         ),
-                      )),
+                      ),
+                      items: data,
+                      itemBuilder: (context, e, i) => ItemCard(
+                            item: e,
+                            showButtons: true,
+                            onDelete: () async {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return CustomDialogBox(
+                                        descriptions:
+                                            LoanTextConstants.deletingItem,
+                                        onYes: () {
+                                          tokenExpireWrapper(ref, () async {
+                                            final value = await itemListNotifier
+                                                .deleteItem(e, loaner.id);
+                                            if (value) {
+                                              itemListNotifier
+                                                  .copy()
+                                                  .then((value) {
+                                                loanersItemsNotifier.setTData(
+                                                    loaner, value);
+                                              });
+                                              displayToastWithContext(
+                                                  TypeMsg.msg,
+                                                  LoanTextConstants
+                                                      .deletedItem);
+                                            } else {
+                                              displayToastWithContext(
+                                                  TypeMsg.error,
+                                                  LoanTextConstants
+                                                      .deletingError);
+                                            }
+                                          });
+                                        },
+                                        title: LoanTextConstants.delete);
+                                  });
+                            },
+                            onEdit: () {
+                              QR.to(LoanRouter.root +
+                                  LoanRouter.admin +
+                                  LoanRouter.addEditItem);
+                              itemNotifier.setItem(e);
+                            },
+                          )),
                 ],
               );
             },

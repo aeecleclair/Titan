@@ -170,22 +170,15 @@ class AddEditContenderPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 50),
-              HorizontalListView(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 15),
-                    ...ListType.values.where((e) => e != ListType.blank).map(
-                          (e) => SectionChip(
-                            label: capitalize(e.toString().split('.').last),
-                            selected: listType.value == e,
-                            onTap: () async {
-                              listType.value = e;
-                            },
-                          ),
-                        ),
-                    const SizedBox(width: 15),
-                  ],
+              HorizontalListView.builder(
+                items:
+                    ListType.values.where((e) => e != ListType.blank).toList(),
+                itemBuilder: (context, e, i) => SectionChip(
+                  label: capitalize(e.toString().split('.').last),
+                  selected: listType.value == e,
+                  onTap: () async {
+                    listType.value = e;
+                  },
                 ),
               ),
               const SizedBox(height: 30),
@@ -198,22 +191,14 @@ class AddEditContenderPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              HorizontalListView(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 15),
-                    ...members.map(
-                      (e) => MemberCard(
-                        member: e,
-                        isAdmin: true,
-                        onDelete: () async {
-                          membersNotifier.removeMember(e);
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                  ],
+              HorizontalListView.builder(
+                items: members,
+                itemBuilder: (context, e, i) => MemberCard(
+                  member: e,
+                  isAdmin: true,
+                  onDelete: () async {
+                    membersNotifier.removeMember(e);
+                  },
                 ),
               ),
               const SizedBox(height: 30),

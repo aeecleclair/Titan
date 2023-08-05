@@ -50,94 +50,87 @@ class AccountHandler extends HookConsumerWidget {
             }
           },
         ),
-        SizedBox(
-            height: 135,
-            child: HorizontalListView(
-              child: Row(
-                children: [
-                  const SizedBox(width: 15),
-                  Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          gradient: const RadialGradient(
-                            colors: [
-                              RaffleColorConstants.gradient1,
-                              RaffleColorConstants.gradient2,
+        HorizontalListView(
+          height: 135,
+          children: [
+            const SizedBox(width: 15),
+            Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    gradient: const RadialGradient(
+                      colors: [
+                        RaffleColorConstants.gradient1,
+                        RaffleColorConstants.gradient2,
+                      ],
+                      center: Alignment.topLeft,
+                      radius: 1.8,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: RaffleColorConstants.textDark.withOpacity(0.2),
+                        spreadRadius: 5,
+                        blurRadius: 10,
+                        offset: const Offset(3, 3),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                    child: !searchingAmapUser
+                        ? Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  searchingAmapUserNotifier.setProduct(true);
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                  focusNotifier.setFocus(false);
+                                  editingController.clear();
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0),
+                                  child: const HeroIcon(
+                                    HeroIcons.xMark,
+                                    color: Colors.white,
+                                    size: 50,
+                                  ),
+                                ),
+                              ),
+                              AddingUserContainer(onAdd: () async {
+                                searchingAmapUserNotifier.setProduct(true);
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                focusNotifier.setFocus(false);
+                                await cashNotifier
+                                    .filterCashList(editingController.text);
+                                editingController.clear();
+                              })
                             ],
-                            center: Alignment.topLeft,
-                            radius: 1.8,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: RaffleColorConstants.textDark
-                                  .withOpacity(0.2),
-                              spreadRadius: 5,
-                              blurRadius: 10,
-                              offset: const Offset(3, 3),
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 17.0),
-                          child: !searchingAmapUser
-                              ? Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        searchingAmapUserNotifier
-                                            .setProduct(true);
-                                        FocusScope.of(context)
-                                            .requestFocus(FocusNode());
-                                        focusNotifier.setFocus(false);
-                                        editingController.clear();
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 12.0),
-                                        child: const HeroIcon(
-                                          HeroIcons.xMark,
-                                          color: Colors.white,
-                                          size: 50,
-                                        ),
-                                      ),
-                                    ),
-                                    AddingUserContainer(onAdd: () async {
-                                      searchingAmapUserNotifier
-                                          .setProduct(true);
-                                      FocusScope.of(context)
-                                          .requestFocus(FocusNode());
-                                      focusNotifier.setFocus(false);
-                                      await cashNotifier.filterCashList(
-                                          editingController.text);
-                                      editingController.clear();
-                                    })
-                                  ],
-                                )
-                              : GestureDetector(
-                                  onTap: () {
-                                    searchingAmapUserNotifier.setProduct(false);
-                                    focusNotifier.setFocus(true);
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12.0),
-                                    child: const HeroIcon(
-                                      HeroIcons.plus,
-                                      color: Colors.white,
-                                      size: 50,
-                                    ),
-                                  )),
-                        ),
-                      )),
-                  const CashContainer(),
-                  const SizedBox(width: 10),
-                ],
-              ),
-            )),
-        const SizedBox(height: 10),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              searchingAmapUserNotifier.setProduct(false);
+                              focusNotifier.setFocus(true);
+                            },
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: const HeroIcon(
+                                HeroIcons.plus,
+                                color: Colors.white,
+                                size: 50,
+                              ),
+                            )),
+                  ),
+                )),
+            const CashContainer(),
+            const SizedBox(width: 10),
+          ],
+        ),
       ],
     );
   }

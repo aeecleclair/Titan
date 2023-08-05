@@ -39,80 +39,78 @@ class TicketHandler extends HookConsumerWidget {
             color: RaffleColorConstants.textDark),
         const SizedBox(height: 10),
         HorizontalListView(
-          child: Row(
-            children: [
-              const SizedBox(width: 15, height: 125),
-              if (raffle.raffleStatusType == RaffleStatusType.creation)
-                GestureDetector(
-                    onTap: () {
-                      typeTicketNotifier.setPrize(TypeTicketSimple.empty());
-                      QR.to(RaffleRouter.root +
-                          RaffleRouter.admin +
-                          RaffleRouter.addEditTypeTicket);
-                    },
-                    child: CardLayout(
-                      height: 125,
-                      width: 100,
-                      colors: const [RaffleColorConstants.ticketBack],
-                      shadowColor:
-                          RaffleColorConstants.ticketBack.withOpacity(0.3),
-                      child: const Center(
-                        child: HeroIcon(
-                          HeroIcons.plus,
-                          color: Colors.white,
-                          size: 50,
-                        ),
+          children: [
+            const SizedBox(width: 15, height: 125),
+            if (raffle.raffleStatusType == RaffleStatusType.creation)
+              GestureDetector(
+                  onTap: () {
+                    typeTicketNotifier.setPrize(TypeTicketSimple.empty());
+                    QR.to(RaffleRouter.root +
+                        RaffleRouter.admin +
+                        RaffleRouter.addEditTypeTicket);
+                  },
+                  child: CardLayout(
+                    height: 125,
+                    width: 100,
+                    colors: const [RaffleColorConstants.ticketBack],
+                    shadowColor:
+                        RaffleColorConstants.ticketBack.withOpacity(0.3),
+                    child: const Center(
+                      child: HeroIcon(
+                        HeroIcons.plus,
+                        color: Colors.white,
+                        size: 50,
                       ),
-                    )),
-              AsyncChild(
-                  value: typeTickets,
-                  builder: (context, data) => Row(
-                      children: data
-                          .map((e) => TicketUI(
-                                typeTicket: e,
-                                onEdit: () {
-                                  typeTicketNotifier.setPrize(e);
-                                  QR.to(RaffleRouter.root +
-                                      RaffleRouter.admin +
-                                      RaffleRouter.addEditTypeTicket);
-                                },
-                                showButton: raffle.raffleStatusType ==
-                                    RaffleStatusType.creation,
-                                onDelete: () async {
-                                  await showDialog(
-                                      context: context,
-                                      builder: (context) => CustomDialogBox(
-                                            title: RaffleTextConstants
-                                                .deleteTicket,
-                                            descriptions: RaffleTextConstants
-                                                .deleteTicketDescription,
-                                            onYes: () {
-                                              tokenExpireWrapper(ref, () async {
-                                                final value =
-                                                    await typeTicketsNotifier
-                                                        .deleteTypeTicketSimple(
-                                                            e);
-                                                if (value) {
-                                                  displayToastWithContext(
-                                                      TypeMsg.msg,
-                                                      RaffleTextConstants
-                                                          .deletedTicket);
-                                                } else {
-                                                  displayToastWithContext(
-                                                      TypeMsg.error,
-                                                      RaffleTextConstants
-                                                          .deletingError);
-                                                }
-                                              });
-                                            },
-                                          ));
-                                },
-                              ))
-                          .toList()),
-                  loaderColor: RaffleColorConstants.gradient2),
-              const SizedBox(width: 5),
-            ],
-          ),
+                    ),
+                  )),
+            AsyncChild(
+                value: typeTickets,
+                builder: (context, data) => Row(
+                    children: data
+                        .map((e) => TicketUI(
+                              typeTicket: e,
+                              onEdit: () {
+                                typeTicketNotifier.setPrize(e);
+                                QR.to(RaffleRouter.root +
+                                    RaffleRouter.admin +
+                                    RaffleRouter.addEditTypeTicket);
+                              },
+                              showButton: raffle.raffleStatusType ==
+                                  RaffleStatusType.creation,
+                              onDelete: () async {
+                                await showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogBox(
+                                          title:
+                                              RaffleTextConstants.deleteTicket,
+                                          descriptions: RaffleTextConstants
+                                              .deleteTicketDescription,
+                                          onYes: () {
+                                            tokenExpireWrapper(ref, () async {
+                                              final value =
+                                                  await typeTicketsNotifier
+                                                      .deleteTypeTicketSimple(
+                                                          e);
+                                              if (value) {
+                                                displayToastWithContext(
+                                                    TypeMsg.msg,
+                                                    RaffleTextConstants
+                                                        .deletedTicket);
+                                              } else {
+                                                displayToastWithContext(
+                                                    TypeMsg.error,
+                                                    RaffleTextConstants
+                                                        .deletingError);
+                                              }
+                                            });
+                                          },
+                                        ));
+                              },
+                            ))
+                        .toList()),
+                loaderColor: RaffleColorConstants.gradient2),
+            const SizedBox(width: 5),
+          ],
         ),
       ],
     );

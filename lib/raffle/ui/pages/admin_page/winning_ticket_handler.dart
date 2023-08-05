@@ -19,29 +19,20 @@ class WinningTicketHandler extends HookConsumerWidget {
             padding: EdgeInsets.symmetric(horizontal: 30),
             color: RaffleColorConstants.textDark),
         const SizedBox(height: 10),
-        HorizontalListView(
-          child: Row(
-            children: [
-              const SizedBox(width: 15),
-              SizedBox(
-                  height: 150,
-                  child: AsyncChild(
-                      value: winningTicketList,
-                      builder: (context, data) {
-                        if (data.isEmpty) {
-                          return const Text(
-                              RaffleTextConstants.noWinningTicketYet);
-                        }
-                        return Row(
-                            children: data
-                                .map((e) => WinningTicketUI(ticket: e))
-                                .toList());
-                      },
-                      loaderColor: RaffleColorConstants.gradient2)),
-              const SizedBox(width: 5),
-            ],
-          ),
-        ),
+        SizedBox(
+            height: 150,
+            child: AsyncChild(
+                value: winningTicketList,
+                builder: (context, data) {
+                  if (data.isEmpty) {
+                    return const Text(RaffleTextConstants.noWinningTicketYet);
+                  }
+                  return HorizontalListView.builder(
+                      items: data,
+                      itemBuilder: (context, item, i) =>
+                          WinningTicketUI(ticket: item));
+                },
+                loaderColor: RaffleColorConstants.gradient2)),
       ],
     );
   }

@@ -134,47 +134,39 @@ class AdminPage extends HookConsumerWidget {
             const SizedBox(height: 30),
             AsyncChild(
               value: roomList,
-              builder: (context, data) => HorizontalListView(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 15),
-                    ItemChip(
-                      onTap: () {
-                        roomNotifier.setRoom(Room.empty());
-                        QR.to(BookingRouter.root +
-                            BookingRouter.admin +
-                            BookingRouter.room);
-                      },
-                      child: const HeroIcon(
-                        HeroIcons.plus,
-                        color: Colors.black,
-                        size: 20,
-                      ),
-                    ),
-                    ...data.map(
-                      (e) {
-                        final selected = room.id == e.id;
-                        return ItemChip(
-                          selected: selected,
-                          onTap: () {
-                            roomNotifier.setRoom(e);
-                            QR.to(BookingRouter.root +
-                                BookingRouter.admin +
-                                BookingRouter.room);
-                          },
-                          child: Text(
-                            capitalize(e.name),
-                            style: TextStyle(
-                                color: selected ? Colors.white : Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(width: 15),
-                  ],
+              builder: (context, rooms) => HorizontalListView.builder(
+                items: rooms,
+                firstChild: ItemChip(
+                  onTap: () {
+                    roomNotifier.setRoom(Room.empty());
+                    QR.to(BookingRouter.root +
+                        BookingRouter.admin +
+                        BookingRouter.room);
+                  },
+                  child: const HeroIcon(
+                    HeroIcons.plus,
+                    color: Colors.black,
+                    size: 20,
+                  ),
                 ),
+                itemBuilder: (context, r, index) {
+                  final selected = room.id == r.id;
+                  return ItemChip(
+                    selected: selected,
+                    onTap: () {
+                      roomNotifier.setRoom(r);
+                      QR.to(BookingRouter.root +
+                          BookingRouter.admin +
+                          BookingRouter.room);
+                    },
+                    child: Text(
+                      capitalize(r.name),
+                      style: TextStyle(
+                          color: selected ? Colors.white : Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  );
+                },
               ),
             ),
             const SizedBox(height: 30),

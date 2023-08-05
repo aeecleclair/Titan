@@ -84,131 +84,124 @@ class PrizeHandler extends HookConsumerWidget {
             padding: EdgeInsets.symmetric(horizontal: 30),
             color: RaffleColorConstants.textDark),
         const SizedBox(height: 10),
-        HorizontalListView(
-          child: Row(children: [
-            const SizedBox(width: 10),
-            if (raffle.raffleStatusType == RaffleStatusType.creation)
-              GestureDetector(
-                onTap: () {
-                  prizeNotifier.setPrize(Prize.empty());
-                  QR.to(RaffleRouter.root +
-                      RaffleRouter.admin +
-                      RaffleRouter.addEditPrize);
-                },
-                child: CardLayout(
-                    width: 100,
-                    height: 125,
-                    colors: const [
-                      RaffleColorConstants.blueGradient1,
-                      RaffleColorConstants.blueGradient2
-                    ],
-                    shadowColor: RaffleColorConstants.textDark.withOpacity(0.2),
-                    child: const Center(
-                      child: HeroIcon(
-                        HeroIcons.plus,
-                        color: Colors.white,
-                        size: 50,
-                      ),
-                    )),
-              ),
-            AsyncChild(
-                value: prizeList,
-                builder: (context, prizes) {
-                  prizes = prizes
-                      .where((element) => element.raffleId == raffle.id)
-                      .toList();
-                  return prizes.isEmpty
-                      ? const SizedBox(
-                          height: 150,
-                          child: Center(
-                            child: Text(RaffleTextConstants.noPrize),
-                          ),
-                        )
-                      : Row(
-                          children: prizes
-                              .map(
-                                (e) => PrizeCard(
-                                  prize: e,
-                                  onDelete: () async {
-                                    await showDialog(
-                                        context: context,
-                                        builder: (context) => CustomDialogBox(
-                                              title: RaffleTextConstants
-                                                  .deletePrize,
-                                              descriptions: RaffleTextConstants
-                                                  .deletePrizeDescription,
-                                              onYes: () {
-                                                tokenExpireWrapper(ref,
-                                                    () async {
-                                                  final value =
-                                                      await prizeListNotifier
-                                                          .deletePrize(e);
-                                                  if (value) {
-                                                    displayToastWithContext(
-                                                        TypeMsg.msg,
-                                                        RaffleTextConstants
-                                                            .deletedPrize);
-                                                  } else {
-                                                    displayToastWithContext(
-                                                        TypeMsg.error,
-                                                        RaffleTextConstants
-                                                            .deletingError);
-                                                  }
-                                                });
-                                              },
-                                            ));
-                                  },
-                                  onEdit: () {
-                                    prizeNotifier.setPrize(e);
-                                    QR.to(RaffleRouter.root +
-                                        RaffleRouter.admin +
-                                        RaffleRouter.addEditPrize);
-                                  },
-                                  status: raffle.raffleStatusType,
-                                  onDraw: () async {
-                                    await showDialog(
-                                        context: context,
-                                        builder: (context) => CustomDialogBox(
-                                              title:
-                                                  RaffleTextConstants.drawing,
-                                              descriptions: RaffleTextConstants
-                                                  .drawingDescription,
-                                              onYes: () {
-                                                tokenExpireWrapper(ref,
-                                                    () async {
-                                                  final value =
-                                                      await winningTicketListNotifier
-                                                          .drawPrize(e);
-                                                  value.when(
-                                                      data:
-                                                          (winningTicketList) {
-                                                        prizeListNotifier
-                                                            .setPrizeQuantityToZero(
-                                                                e.copyWith(
-                                                                    quantity:
-                                                                        0));
-                                                        displayWinningsDialog(
-                                                            winningTicketList);
-                                                      },
-                                                      error: (e, s) {
-                                                        displayToastWithContext(
-                                                            TypeMsg.error,
-                                                            RaffleTextConstants
-                                                                .drawingError);
-                                                      },
-                                                      loading: () {});
-                                                });
-                                              },
-                                            ));
-                                  },
-                                ),
-                              )
-                              .toList(),
-                        );
-                }),
-            const SizedBox(width: 10)
-          ]),
-        ),
+        HorizontalListView(children: [
+          const SizedBox(width: 10),
+          if (raffle.raffleStatusType == RaffleStatusType.creation)
+            GestureDetector(
+              onTap: () {
+                prizeNotifier.setPrize(Prize.empty());
+                QR.to(RaffleRouter.root +
+                    RaffleRouter.admin +
+                    RaffleRouter.addEditPrize);
+              },
+              child: CardLayout(
+                  width: 100,
+                  height: 125,
+                  colors: const [
+                    RaffleColorConstants.blueGradient1,
+                    RaffleColorConstants.blueGradient2
+                  ],
+                  shadowColor: RaffleColorConstants.textDark.withOpacity(0.2),
+                  child: const Center(
+                    child: HeroIcon(
+                      HeroIcons.plus,
+                      color: Colors.white,
+                      size: 50,
+                    ),
+                  )),
+            ),
+          AsyncChild(
+              value: prizeList,
+              builder: (context, prizes) {
+                prizes = prizes
+                    .where((element) => element.raffleId == raffle.id)
+                    .toList();
+                return prizes.isEmpty
+                    ? const SizedBox(
+                        height: 150,
+                        child: Center(
+                          child: Text(RaffleTextConstants.noPrize),
+                        ),
+                      )
+                    : Row(
+                        children: prizes
+                            .map(
+                              (e) => PrizeCard(
+                                prize: e,
+                                onDelete: () async {
+                                  await showDialog(
+                                      context: context,
+                                      builder: (context) => CustomDialogBox(
+                                            title:
+                                                RaffleTextConstants.deletePrize,
+                                            descriptions: RaffleTextConstants
+                                                .deletePrizeDescription,
+                                            onYes: () {
+                                              tokenExpireWrapper(ref, () async {
+                                                final value =
+                                                    await prizeListNotifier
+                                                        .deletePrize(e);
+                                                if (value) {
+                                                  displayToastWithContext(
+                                                      TypeMsg.msg,
+                                                      RaffleTextConstants
+                                                          .deletedPrize);
+                                                } else {
+                                                  displayToastWithContext(
+                                                      TypeMsg.error,
+                                                      RaffleTextConstants
+                                                          .deletingError);
+                                                }
+                                              });
+                                            },
+                                          ));
+                                },
+                                onEdit: () {
+                                  prizeNotifier.setPrize(e);
+                                  QR.to(RaffleRouter.root +
+                                      RaffleRouter.admin +
+                                      RaffleRouter.addEditPrize);
+                                },
+                                status: raffle.raffleStatusType,
+                                onDraw: () async {
+                                  await showDialog(
+                                      context: context,
+                                      builder: (context) => CustomDialogBox(
+                                            title: RaffleTextConstants.drawing,
+                                            descriptions: RaffleTextConstants
+                                                .drawingDescription,
+                                            onYes: () {
+                                              tokenExpireWrapper(ref, () async {
+                                                final value =
+                                                    await winningTicketListNotifier
+                                                        .drawPrize(e);
+                                                value.when(
+                                                    data: (winningTicketList) {
+                                                      prizeListNotifier
+                                                          .setPrizeQuantityToZero(
+                                                              e.copyWith(
+                                                                  quantity: 0));
+                                                      displayWinningsDialog(
+                                                          winningTicketList);
+                                                    },
+                                                    error: (e, s) {
+                                                      displayToastWithContext(
+                                                          TypeMsg.error,
+                                                          RaffleTextConstants
+                                                              .drawingError);
+                                                    },
+                                                    loading: () {});
+                                              });
+                                            },
+                                          ));
+                                },
+                              ),
+                            )
+                            .toList(),
+                      );
+              }),
+          const SizedBox(width: 10)
+        ]),
         const SizedBox(height: 10),
       ],
     );

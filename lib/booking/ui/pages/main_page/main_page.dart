@@ -44,6 +44,24 @@ class BookingMainPage extends HookConsumerWidget {
       displayToast(context, type, message);
     }
 
+    void handleBooking(Booking booking) {
+      bookingNotifier.setBooking(booking);
+      final recurrent = booking.recurrenceRule != "";
+      if (recurrent) {
+        final allDays = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
+        final recurrentDays = booking.recurrenceRule
+            .split(";")
+            .where((element) => element.contains("BYDAY"))
+            .first
+            .split("=")
+            .last
+            .split(",");
+        selectedDaysNotifier.setSelectedDays(
+            allDays.map((e) => recurrentDays.contains(e)).toList());
+      }
+      QR.to(BookingRouter.root + BookingRouter.addEdit);
+    }
+
     List<Appointment> appointments = <Appointment>[];
     confirmedBookings.whenData((confirmedBookings) {
       confirmedBookings.map((e) {
@@ -120,132 +138,74 @@ class BookingMainPage extends HookConsumerWidget {
                 value: bookings,
                 builder: (context, data) {
                   data.sort((a, b) => b.start.compareTo(a.start));
-                  return SizedBox(
+                  return HorizontalListView.builder(
                       height: 210,
-                      child: HorizontalListView(
-                          child: Row(children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 15),
-                          child: GestureDetector(
-                            onTap: () {
-                              bookingNotifier.setBooking(Booking.empty());
-                              selectedDaysNotifier.clear();
-                              QR.to(BookingRouter.root + BookingRouter.addEdit);
-                            },
-                            child: const CardLayout(
-                              width: 100,
-                              height: 170,
-                              child: Center(
-                                  child: HeroIcon(
-                                HeroIcons.plus,
-                                size: 40.0,
-                                color: Colors.black,
-                              )),
-                            ),
-                          ),
+                      firstChild: GestureDetector(
+                        onTap: () {
+                          bookingNotifier.setBooking(Booking.empty());
+                          selectedDaysNotifier.clear();
+                          QR.to(BookingRouter.root + BookingRouter.addEdit);
+                        },
+                        child: const CardLayout(
+                          width: 100,
+                          height: 170,
+                          child: Center(
+                              child: HeroIcon(
+                            HeroIcons.plus,
+                            size: 40.0,
+                            color: Colors.black,
+                          )),
                         ),
-                        ...data.map((e) => BookingCard(
-                              booking: e,
-                              onEdit: () {
-                                bookingNotifier.setBooking(e);
-                                final recurrent = e.recurrenceRule != "";
-                                if (recurrent) {
-                                  final allDays = [
-                                    "MO",
-                                    "TU",
-                                    "WE",
-                                    "TH",
-                                    "FR",
-                                    "SA",
-                                    "SU"
-                                  ];
-                                  final recurrentDays = e.recurrenceRule
-                                      .split(";")
-                                      .where((element) =>
-                                          element.contains("BYDAY"))
-                                      .first
-                                      .split("=")
-                                      .last
-                                      .split(",");
-                                  selectedDaysNotifier.setSelectedDays(allDays
-                                      .map((e) => recurrentDays.contains(e))
-                                      .toList());
-                                }
-                                QR.to(
-                                    BookingRouter.root + BookingRouter.addEdit);
-                              },
-                              onInfo: () {
-                                bookingNotifier.setBooking(e);
-                                QR.to(
-                                    BookingRouter.root + BookingRouter.detail);
-                              },
-                              onDelete: () async {
-                                await tokenExpireWrapper(ref, () async {
-                                  await showDialog(
-                                      context: context,
-                                      builder: (context) => CustomDialogBox(
-                                            descriptions: BookingTextConstants
-                                                .deleteBookingConfirmation,
-                                            onYes: () async {
-                                              final value =
-                                                  await allBookingsNotifier
-                                                      .deleteBooking(e);
-                                              if (value) {
-                                                bookingsNotifier
+                      ),
+                      items: data,
+                      itemBuilder: (context, e, i) => BookingCard(
+                            booking: e,
+                            onEdit: () {
+                              handleBooking(e);
+                            },
+                            onInfo: () {
+                              bookingNotifier.setBooking(e);
+                              QR.to(BookingRouter.root + BookingRouter.detail);
+                            },
+                            onDelete: () async {
+                              await tokenExpireWrapper(ref, () async {
+                                await showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogBox(
+                                          descriptions: BookingTextConstants
+                                              .deleteBookingConfirmation,
+                                          onYes: () async {
+                                            final value =
+                                                await allBookingsNotifier
                                                     .deleteBooking(e);
-                                                if (e.decision ==
-                                                    Decision.approved) {
-                                                  confirmedBookingsNotifier
-                                                      .deleteBooking(e);
-                                                }
-
-                                                displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    BookingTextConstants
-                                                        .deleteBooking);
-                                              } else {
-                                                displayToastWithContext(
-                                                    TypeMsg.error,
-                                                    BookingTextConstants
-                                                        .deletingError);
+                                            if (value) {
+                                              bookingsNotifier.deleteBooking(e);
+                                              if (e.decision ==
+                                                  Decision.approved) {
+                                                confirmedBookingsNotifier
+                                                    .deleteBooking(e);
                                               }
-                                            },
-                                            title: BookingTextConstants
-                                                .deleteBooking,
-                                          ));
-                                });
-                              },
-                              onCopy: () {
-                                bookingNotifier.setBooking(e.copyWith(id: ""));
-                                final recurrent = e.recurrenceRule != "";
-                                if (recurrent) {
-                                  final allDays = [
-                                    "MO",
-                                    "TU",
-                                    "WE",
-                                    "TH",
-                                    "FR",
-                                    "SA",
-                                    "SU"
-                                  ];
-                                  final recurrentDays = e.recurrenceRule
-                                      .split(";")
-                                      .where((element) =>
-                                          element.contains("BYDAY"))
-                                      .first
-                                      .split("=")
-                                      .last
-                                      .split(",");
-                                  selectedDaysNotifier.setSelectedDays(allDays
-                                      .map((e) => recurrentDays.contains(e))
-                                      .toList());
-                                }
-                                QR.to(
-                                    BookingRouter.root + BookingRouter.addEdit);
-                              },
-                            )),
-                        const SizedBox(width: 15)
-                      ])));
+
+                                              displayToastWithContext(
+                                                  TypeMsg.msg,
+                                                  BookingTextConstants
+                                                      .deleteBooking);
+                                            } else {
+                                              displayToastWithContext(
+                                                  TypeMsg.error,
+                                                  BookingTextConstants
+                                                      .deletingError);
+                                            }
+                                          },
+                                          title: BookingTextConstants
+                                              .deleteBooking,
+                                        ));
+                              });
+                            },
+                            onCopy: () {
+                              handleBooking(e.copyWith(id: ""));
+                            },
+                          ));
                 },
                 loaderColor: ColorConstants.background2),
           ]),
