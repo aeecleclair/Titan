@@ -109,8 +109,10 @@ class OrderUI extends HookConsumerWidget {
                           onEdit?.call();
                         },
                         child: const CardButton(
-                          color: AMAPColorConstants.greenGradient1,
-                          gradient: AMAPColorConstants.greenGradient2,
+                          colors: [
+                            AMAPColorConstants.greenGradient1,
+                            AMAPColorConstants.greenGradient2
+                          ],
                           child: HeroIcon(
                             HeroIcons.pencil,
                             color: Colors.white,
@@ -143,10 +145,10 @@ class OrderUI extends HookConsumerWidget {
                                     });
                                   })));
                         },
-                        builder: (child) => CardButton(
-                            color: AMAPColorConstants.redGradient1,
-                            gradient: AMAPColorConstants.redGradient2,
-                            child: child),
+                        builder: (child) => CardButton(colors: const [
+                          AMAPColorConstants.redGradient1,
+                          AMAPColorConstants.redGradient2
+                        ], child: child),
                         child: const HeroIcon(
                           HeroIcons.trash,
                           color: Colors.white,

@@ -264,10 +264,8 @@ class EventUi extends ConsumerWidget {
                         children: [
                           GestureDetector(
                             onTap: onEdit,
-                            child: CardButton(
-                              color: Colors.grey.shade200,
-                              shadowColor: Colors.grey.withOpacity(0.2),
-                              child: const HeroIcon(HeroIcons.pencil,
+                            child: const CardButton(
+                              child: HeroIcon(HeroIcons.pencil,
                                   color: Colors.black),
                             ),
                           ),
@@ -288,15 +286,11 @@ class EventUi extends ConsumerWidget {
                               }
                             },
                             child: CardButton(
-                              color: Colors.grey.shade200,
-                              shadowColor: Colors.grey.withOpacity(0.2),
-                              border: Border.all(
-                                  color: isAdmin
-                                      ? event.decision == Decision.approved
-                                          ? Colors.black
-                                          : Colors.transparent
-                                      : Colors.transparent,
-                                  width: 2),
+                              borderColor: isAdmin
+                                  ? event.decision == Decision.approved
+                                      ? Colors.black
+                                      : Colors.transparent
+                                  : Colors.transparent,
                               child: const HeroIcon(HeroIcons.check,
                                   color: Colors.black),
                             ),
@@ -310,13 +304,11 @@ class EventUi extends ConsumerWidget {
                             },
                             child: CardButton(
                               color: Colors.black,
-                              border: Border.all(
-                                  color: isAdmin
-                                      ? event.decision == Decision.declined
-                                          ? Colors.white
-                                          : Colors.transparent
-                                      : Colors.transparent,
-                                  width: 2),
+                              borderColor: isAdmin
+                                  ? event.decision == Decision.declined
+                                      ? Colors.white
+                                      : Colors.transparent
+                                  : Colors.transparent,
                               child: const HeroIcon(HeroIcons.xMark,
                                   color: Colors.white),
                             ),
