@@ -154,10 +154,10 @@ class AddEditProduct extends HookConsumerWidget {
                       const SizedBox(height: 40),
                       WaitingButton(
                         waitingColor: AMAPColorConstants.background,
-                        builder: (child) => AddEditButtonLayout(
-                            color: AMAPColorConstants.greenGradient1,
-                            gradient: AMAPColorConstants.greenGradient2,
-                            child: child),
+                        builder: (child) => AddEditButtonLayout(colors: const [
+                          AMAPColorConstants.greenGradient1,
+                          AMAPColorConstants.greenGradient2
+                        ], child: child),
                         onTap: () async {
                           if (formKey.currentState!.validate()) {
                             String cate = categoryController ==

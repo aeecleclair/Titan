@@ -123,10 +123,10 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                       const SizedBox(height: 30),
                                       WaitingButton(
                                         builder: (child) => AddEditButtonLayout(
-                                            color: AMAPColorConstants
-                                                .greenGradient1,
-                                            gradient: AMAPColorConstants
-                                                .greenGradient2,
+                                            colors: const [
+                                              AMAPColorConstants.greenGradient1,
+                                              AMAPColorConstants.greenGradient2
+                                            ],
                                             child: child),
                                         onTap: () async {
                                           if (formKey.currentState!
