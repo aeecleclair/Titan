@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/login/ui/create_account_page.dart';
 import 'package:myecl/login/ui/forget.dart';
 import 'package:myecl/login/ui/recover_password.dart';
 import 'package:myecl/login/ui/register.dart';
-import 'package:myecl/login/ui/sign_in.dart';
+import 'package:myecl/login/ui/app_sign_in.dart';
+import 'package:myecl/login/ui/web_sign_in.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -41,7 +43,7 @@ class LoginRouter {
 
   QRoute route() => QRoute(
         path: LoginRouter.root,
-        builder: () => const SignIn(),
+        builder: () => (kIsWeb) ? WebSignIn(): AppSignIn(),
         pageType: const QMaterialPage(),
         middleware: [AuthenticatedMiddleware(ref)],
       );
