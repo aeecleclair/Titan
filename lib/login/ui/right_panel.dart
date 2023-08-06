@@ -12,7 +12,7 @@ class RightPanel extends StatelessWidget {
     final len = 3;
     return Row(
       children: [
-        Spacer(flex: 3),
+        const Spacer(flex: 3),
         Expanded(
             flex: 8,
             child: Column(
@@ -57,7 +57,7 @@ class RightPanel extends StatelessWidget {
                 SmoothPageIndicator(
                   controller: pageController,
                   count: len,
-                  effect: WormEffect(
+                  effect: const WormEffect(
                       dotColor: Color.fromARGB(255, 211, 211, 211),
                       activeDotColor: Color.fromARGB(255, 48, 48, 48),
                       dotWidth: 20,
@@ -68,17 +68,17 @@ class RightPanel extends StatelessWidget {
                         curve: Curves.easeInOut);
                   },
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
               ],
             )),
         Expanded(flex: 5,
         child: Column(
           children: [
-            Spacer(),
+            const Spacer(),
             Image.asset('assets/images/eclair.png', width: 120, height: 120),
-            SizedBox(height: 30,),
-            Text("Développé par ECLAIR", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-            SizedBox(height: 50),
+            const SizedBox(height: 30,),
+            const Text("Développé par ECLAIR", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+            const SizedBox(height: 50),
           ]
         )),
       ],

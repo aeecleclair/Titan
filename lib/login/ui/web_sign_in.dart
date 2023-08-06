@@ -12,18 +12,16 @@ class WebSignIn extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/back.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            Row(children: [
+            const Row(children: [
               Expanded(child: LeftPanel()),
-              Expanded(
-                child: RightPanel(),
-              ),
+              Expanded(child: RightPanel()),
             ]),
           ],
         ),

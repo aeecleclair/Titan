@@ -105,7 +105,7 @@ class LeftPanel extends HookConsumerWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(LoginTextConstants.signIn,
+                      const Text(LoginTextConstants.signIn,
                           style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
@@ -113,8 +113,8 @@ class LeftPanel extends HookConsumerWidget {
                       Container(
                         margin: const EdgeInsets.only(left: 20),
                         child: isLoading
-                            ? Padding(
-                              padding: const EdgeInsets.all(12.0),
+                            ? const Padding(
+                              padding: EdgeInsets.all(12.0),
                               child: CircularProgressIndicator(
                                   color: Colors.white,
                                 ),
