@@ -71,7 +71,16 @@ class RightPanel extends StatelessWidget {
                 SizedBox(height: 50),
               ],
             )),
-        Spacer(flex: 5),
+        Expanded(flex: 5,
+        child: Column(
+          children: [
+            Spacer(),
+            Image.asset('assets/images/eclair.png', width: 120, height: 120),
+            SizedBox(height: 30,),
+            Text("Développé par ECLAIR", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+            SizedBox(height: 50),
+          ]
+        )),
       ],
     );
   }
