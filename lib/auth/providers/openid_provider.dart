@@ -168,8 +168,6 @@ class OpenIdTokenProvider
 
         checkWindowClosed();
         completer.future.then((_) {
-          print("window closed");
-          print(state);
           state.maybeWhen(
               loading: () {
                 state = AsyncValue.data({
@@ -178,11 +176,9 @@ class OpenIdTokenProvider
                 });
               },
               orElse: () {});
-          print(state);
         });
 
         void login(String data) async {
-          print("login");
           final receivedUri = Uri.parse(data);
           final token = receivedUri.queryParameters["code"];
           if (popupWin != null) {
@@ -190,11 +186,9 @@ class OpenIdTokenProvider
             popupWin = null;
           }
           try {
-            print(token);
             if (token != null && token.isNotEmpty) {
               final resp = await openIdRepository.getToken(token, clientId,
                   redirectUri.toString(), codeVerifier, "authorization_code");
-              print(resp);
               final accessToken = resp[tokenKey]!;
               final refreshToken = resp[refreshTokenKey]!;
               await _secureStorage.write(key: tokenName, value: refreshToken);
@@ -213,7 +207,6 @@ class OpenIdTokenProvider
         }
 
         html.window.onMessage.listen((event) {
-          print("login");
           if (event.data.toString().contains('code=')) {
             login(event.data);
           }
