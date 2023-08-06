@@ -18,8 +18,8 @@ class LeftPanel extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset('assets/images/Logo.svg',
-                            width: 55, height: 55),
+                        Image.asset('assets/images/logo.png',
+                            width: 70, height: 70),
                         SizedBox(width: 20),
                         Text('MyEcl',
                             style: TextStyle(
