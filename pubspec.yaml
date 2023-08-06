@@ -64,6 +64,8 @@ flutter:
     - assets/images/logo.png
     - assets/images/gift.png
     - assets/images/soli.png
+    - assets/images/login.svg
+    - assets/images/back.jpg
 
   uses-material-design: true
 
