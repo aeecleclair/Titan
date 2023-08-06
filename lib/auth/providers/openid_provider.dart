@@ -29,18 +29,11 @@ class IsLoggedInProvider extends StateNotifier<bool> {
   IsLoggedInProvider(bool b) : super(b);
 
   void refresh(AsyncValue<Map<String, String>> token) {
-    state = token.when(
-      data: (tokens) {
-        return tokens["token"] == ""
-            ? false
-            : !JwtDecoder.isExpired(tokens["token"] as String);
-      },
-      error: (e, s) {
-        return false;
-      },
-      loading: () {
-        return false;
-      },
+    state = token.maybeWhen(
+      data: (tokens) => tokens["token"] == ""
+          ? false
+          : !JwtDecoder.isExpired(tokens["token"] as String),
+      orElse: () => false,
     );
   }
 }
@@ -84,49 +77,33 @@ final loadingrovider = FutureProvider<bool>((ref) {
   final isCaching = ref.watch(isCachingProvider);
   return isCaching ||
       ref.watch(authTokenProvider).when(
-        data: (tokens) {
-          return tokens["token"] != "" && ref.watch(isLoggedInProvider);
-        },
-        error: (e, s) {
-          return false;
-        },
-        loading: () {
-          return true;
-        },
-      );
+            data: (tokens) =>
+                tokens["token"] != "" && ref.watch(isLoggedInProvider),
+            error: (e, s) => false,
+            loading: () => true,
+          );
 });
 
 final idProvider = FutureProvider<String>((ref) {
   final cacheManager = CacheManager();
   return ref.watch(authTokenProvider).when(
-    data: (tokens) {
-      final id = tokens["token"] == ""
-          ? ""
-          : JwtDecoder.decode(tokens["token"] as String)["sub"];
-      cacheManager.writeCache("id", id);
-      return id;
-    },
-    error: (e, s) {
-      return "";
-    },
-    loading: () async {
-      return await cacheManager.readCache("id");
-    },
-  );
+        data: (tokens) {
+          final id = tokens["token"] == ""
+              ? ""
+              : JwtDecoder.decode(tokens["token"] as String)["sub"];
+          cacheManager.writeCache("id", id);
+          return id;
+        },
+        error: (e, s) => "",
+        loading: () => cacheManager.readCache("id"),
+      );
 });
 
 final tokenProvider = Provider((ref) {
-  return ref.watch(authTokenProvider).when(
-    data: (tokens) {
-      return tokens["token"] as String;
-    },
-    error: (e, s) {
-      return "";
-    },
-    loading: () {
-      return "";
-    },
-  );
+  return ref.watch(authTokenProvider).maybeWhen(
+        data: (tokens) => tokens["token"] as String,
+        orElse: () => "",
+      );
 });
 
 class OpenIdTokenProvider
@@ -179,7 +156,33 @@ class OpenIdTokenProvider
         popupWin = html.window
             .open(authUrl, "Hyperion", "width=800, height=900, scrollbars=yes");
 
+        final completer = Completer();
+        void checkWindowClosed() {
+          if (popupWin != null && popupWin!.closed == true) {
+            completer.complete();
+          } else {
+            Future.delayed(
+                const Duration(milliseconds: 100), checkWindowClosed);
+          }
+        }
+
+        checkWindowClosed();
+        completer.future.then((_) {
+          print("window closed");
+          print(state);
+          state.maybeWhen(
+              loading: () {
+                state = AsyncValue.data({
+                  tokenKey: "",
+                  refreshTokenKey: "",
+                });
+              },
+              orElse: () {});
+          print(state);
+        });
+
         void login(String data) async {
+          print("login");
           final receivedUri = Uri.parse(data);
           final token = receivedUri.queryParameters["code"];
           if (popupWin != null) {
@@ -187,9 +190,11 @@ class OpenIdTokenProvider
             popupWin = null;
           }
           try {
+            print(token);
             if (token != null && token.isNotEmpty) {
               final resp = await openIdRepository.getToken(token, clientId,
                   redirectUri.toString(), codeVerifier, "authorization_code");
+              print(resp);
               final accessToken = resp[tokenKey]!;
               final refreshToken = resp[refreshTokenKey]!;
               await _secureStorage.write(key: tokenName, value: refreshToken);
@@ -208,6 +213,7 @@ class OpenIdTokenProvider
         }
 
         html.window.onMessage.listen((event) {
+          print("login");
           if (event.data.toString().contains('code=')) {
             login(event.data);
           }

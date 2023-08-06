@@ -15,6 +15,7 @@ class OpenIdRepository extends Repository {
       "grant_type": grantType,
       "refresh_token": token,
     };
+    print(body);
 
     final Map<String, String> headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -25,6 +26,7 @@ class OpenIdRepository extends Repository {
           .post(Uri.parse("${host}auth/token"),
               headers: headers, body: body)
           .timeout(const Duration(seconds: 5));
+      print(response.body);
       if (response.statusCode == 200) {
         final token = jsonDecode(response.body)["access_token"];
         final refreshToken = jsonDecode(response.body)["refresh_token"];
