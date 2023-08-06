@@ -1,4 +1,5 @@
 import 'package:myecl/centralisation/class/module.dart';
+import "dart:convert";
 
 class Section {
   Section({
@@ -11,7 +12,7 @@ class Section {
   late final bool? expanded;
 
   Section.fromJson(k, v) {
-    name = k;
+    name = utf8.decode(latin1.encode(k), allowMalformed: true);
     moduleList = List<Module>.from(v.map((e) => Module.fromJson(e)));
     expanded = true;
   }

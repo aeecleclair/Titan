@@ -7,6 +7,13 @@ import 'package:myecl/centralisation/class/section.dart';
 import 'package:myecl/centralisation/repositories/section_repository.dart';
 import 'package:myecl/centralisation/providers/centralisation_section_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:myecl/centralisation/providers/openLink.dart';
+import 'package:myecl/centralisation/providers/showLinkDetails.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
+import 'package:myecl/centralisation/providers/favoritesUtils.dart';
+import 'dart:convert';
+import 'dart:async';
 
 final favoritesProvider =
     StateNotifierProvider<FavoritesNotifier, List<Module>>(
@@ -15,59 +22,43 @@ final favoritesProvider =
 
 
 final SectionNotifier sectionNotifier = SectionNotifier();
+var _longPressProgress = 0.0;
 
 class LinksScreen extends HookConsumerWidget {
   @override
+
+
+
   Widget build(BuildContext context, WidgetRef ref) {
     final sectionNotifier = ref.watch(sectionProvider.notifier);
     final section = ref.watch(sectionProvider);
     final favorites = ref.watch(favoritesProvider);
 
-    print(favorites);
-
-
+    void _handleLongPressStart(BuildContext context, Module module) {
+      const updateInterval = Duration(milliseconds: 100);
+      Timer.periodic(updateInterval, (timer) {
+        if (_longPressProgress >= 0.5) {
+          timer.cancel();
+          showLinkDetails(context, module);
+        } else {
+          _longPressProgress += 0.1;
+        }
+      });
+    }
 
     void toggleFavorite(Module module) {
+      final favoritesProviderNotifier = ref.read(favoritesProvider.notifier);
+
       if (favorites.contains(module)) {
-        ref.read(favoritesProvider.notifier).toggleFavorite(module);
+        favoritesProviderNotifier.toggleFavorite(module);
       } else {
-        ref.read(favoritesProvider.notifier).toggleFavorite(module);
+        favoritesProviderNotifier.toggleFavorite(module);
       }
+
+      // Save updated favorites list to SharedPreferences
+      saveFavoritesToSharedPreferences(favorites);
     }
 
-    void _openLink(String url) async {
-      if (await canLaunch(url)) {
-        await launch(url);
-      } else {
-        throw 'Impossible d\'ouvrir le lien $url';
-      }
-    }
-
-    void _showLinkDetails(BuildContext context, Module module) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(module.name),
-            content: Text(module.description),
-            actions: [
-              TextButton(
-                child: Text('Accéder au site'),
-                onPressed: () {
-                  _openLink(module.url);
-                },
-              ),
-              TextButton(
-                child: Text('Fermer'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
 
 
     return Expanded(
@@ -78,47 +69,81 @@ class LinksScreen extends HookConsumerWidget {
           runSpacing: 8.0,
           children: section.when(
             data: (sections) => sections
-                .map<List<Widget>>(
-                  (section) => section.moduleList.map<Widget>(
-                    (e) => Container(
-                  width: MediaQuery.of(context).size.width / 2 - 12.0, // Largeur des ListTiles
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-
-
-                    leading: e.icon.toLowerCase().endsWith('.svg')
-                        ? SvgPicture.network(
-                      "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + e.icon,
-                    )
-                        : Image.network(
-                      "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + e.icon,
-                    ),
-
-                    title: Row(
-                      children: [
-                        SizedBox(width: 8.0), // Espacement entre l'icône et le titre
-                        Text(e.name),
-                        IconButton(
-                          icon: favorites.contains(e)
-                              ? Icon(Icons.star)
-                              : Icon(Icons.star_border),
-                          onPressed: () {
-                            toggleFavorite(e);
-                          },
+                .map<Widget>((section) {
+              final moduleWidgets = section.moduleList.map<Widget>(
+                    (e) => GestureDetector(
+                      onLongPressStart: (_) {
+                        _handleLongPressStart(context, e);
+                      },
+                      onLongPressEnd: (_) {
+                        _longPressProgress = 0.0;
+                      },
+                      child: Opacity(
+                        opacity: 1.0 - _longPressProgress,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 1  - 0.03 * MediaQuery.of(context).size.width,
+                          child: ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            leading: e.icon.toLowerCase().endsWith('.svg')
+                                ? Container(
+                              width: 50,
+                              height: 50,
+                              child: SvgPicture.network(
+                                "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + e.icon,
+                                fit: BoxFit.contain,
+                              ),
+                            )
+                                : Image.network(
+                              "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + e.icon,
+                              width: 50,
+                              height: 50,
+                            ),
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(e.name),
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: favorites.contains(e)
+                                      ? Icon(Icons.star)
+                                      : Icon(Icons.star_border),
+                                  onPressed: () {
+                                    toggleFavorite(e);
+                                  },
+                                ),
+                              ],
+                            ),
+                            onTap: () {
+                              openLink(e.url);
+                            },
+                          ),
                         ),
-                      ],
+                      ),
                     ),
-                    onTap: () {
-                      _openLink(e.url);
-                    },
-                    onLongPress: () {
-                      _showLinkDetails(context, e);
-                    },
+              ).toList();
+
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text(
+                      section.name, // Titre de la section
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-              ).toList(),
-            )
-                .expand((element) => element)
+                  ...moduleWidgets,
+                ],
+              );
+            })
                 .toList(),
             loading: () => [],
             error: (err, stack) => [],
@@ -128,8 +153,17 @@ class LinksScreen extends HookConsumerWidget {
     );
 
 
+
+
+
+
+
+
   }
+
 }
+
+
 
 class FavoritesNotifier extends StateNotifier<List<Module>> {
   FavoritesNotifier() : super([]);

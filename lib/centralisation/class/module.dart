@@ -1,3 +1,5 @@
+import "dart:convert";
+
 class Module {
   Module({
     required this.name,
@@ -13,8 +15,8 @@ class Module {
   late final bool? liked;
 
   Module.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    description = json['description'];
+    name = utf8.decode(latin1.encode(json['name']), allowMalformed: true);
+    description = utf8.decode(latin1.encode(json['description']), allowMalformed: true);
     icon = json['icon'];
     url = json['url'];
     liked = json['liked'];
