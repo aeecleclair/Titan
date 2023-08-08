@@ -22,7 +22,6 @@ class SectionNotifier extends ListNotifier<Section> {
       }
     }
     state = AsyncValue.data(allSections);
-    print(allSections);
   }
 
   void getLikedModule() async {

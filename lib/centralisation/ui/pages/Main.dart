@@ -7,7 +7,6 @@ import 'package:myecl/centralisation/class/section.dart';
 import 'package:myecl/centralisation/repositories/section_repository.dart';
 import 'package:myecl/centralisation/providers/centralisation_section_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:myecl/centralisation/providers/openLink.dart';
 import 'package:myecl/centralisation/providers/showLinkDetails.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
@@ -16,7 +15,7 @@ import 'dart:convert';
 import 'dart:async';
 
 final favoritesProvider =
-    StateNotifierProvider<FavoritesNotifier, List<Module>>(
+StateNotifierProvider<FavoritesNotifier, List<Module>>(
         (ref) => FavoritesNotifier());
 
 
@@ -34,6 +33,32 @@ class LinksScreen extends HookConsumerWidget {
     final section = ref.watch(sectionProvider);
     final favorites = ref.watch(favoritesProvider);
 
+    void showLinkDetails(BuildContext context, Module module) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(module.name),
+            content: Text(module.description),
+            actions: [
+              TextButton(
+                child: Text('Accéder au site'),
+                onPressed: () {
+                  openLink(module.url);
+                },
+              ),
+              TextButton(
+                child: Text('Fermer'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     void _handleLongPressStart(BuildContext context, Module module) {
       const updateInterval = Duration(milliseconds: 100);
       Timer.periodic(updateInterval, (timer) {
@@ -44,6 +69,11 @@ class LinksScreen extends HookConsumerWidget {
           _longPressProgress += 0.1;
         }
       });
+    }
+
+    void _handleLongPressEnd() {
+      // Réinitialisation à la fin du long appui
+      _longPressProgress = 0.0;
     }
 
     void toggleFavorite(Module module) {
@@ -65,82 +95,104 @@ class LinksScreen extends HookConsumerWidget {
       child: SingleChildScrollView(
         child: Wrap(
           alignment: WrapAlignment.spaceBetween,
-          spacing: 8.0,
-          runSpacing: 8.0,
+          spacing: 35.0,
+          runSpacing: 40.0,
           children: section.when(
             data: (sections) => sections
                 .map<Widget>((section) {
               final moduleWidgets = section.moduleList.map<Widget>(
                     (e) => GestureDetector(
-                      onLongPressStart: (_) {
-                        _handleLongPressStart(context, e);
-                      },
-                      onLongPressEnd: (_) {
-                        _longPressProgress = 0.0;
-                      },
-                      child: Opacity(
-                        opacity: 1.0 - _longPressProgress,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width / 1  - 0.03 * MediaQuery.of(context).size.width,
-                          child: ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: e.icon.toLowerCase().endsWith('.svg')
-                                ? Container(
-                              width: 50,
-                              height: 50,
-                              child: SvgPicture.network(
-                                "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + e.icon,
-                                fit: BoxFit.contain,
+                  onLongPressStart: (_) {
+                    _handleLongPressStart(context, e);
+                  },
+                  onLongPressEnd: (_) {
+                    _handleLongPressEnd();
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 10.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black12, width: 3),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        width: MediaQuery.of(context).size.width / 1  - 0.05 * MediaQuery.of(context).size.width,
+                        height: 70,
+                        child: ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          title: Row(
+                            children: [
+                              e.icon.toLowerCase().endsWith('.svg')
+                                  ? Container(
+                                margin: EdgeInsets.only(left: 10.0,right: 10.0, bottom : 3),
+                                child: SvgPicture.network(
+                                  "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + e.icon,
+                                ),
+                                width: 45,
+                                height: 45,
+                              )
+                                  : Container(
+                                margin: EdgeInsets.only(left: 10.0,right: 10.0, bottom : 3),
+                                child: Image.network(
+                                  "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + e.icon,
+                                ),
+                                width: 45,
+                                height: 45,
                               ),
-                            )
-                                : Image.network(
-                              "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + e.icon,
-                              width: 50,
-                              height: 50,
-                            ),
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(e.name),
-                                  ),
+                              SizedBox(width: 10), // Ajoute un espace entre le logo et le texte
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center, // Centre le texte verticalement
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      e.name,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                IconButton(
-                                  icon: favorites.contains(e)
-                                      ? Icon(Icons.star)
-                                      : Icon(Icons.star_border),
-                                  onPressed: () {
-                                    toggleFavorite(e);
-                                  },
-                                ),
-                              ],
-                            ),
-                            onTap: () {
-                              openLink(e.url);
-                            },
+                              ),
+                              IconButton(
+                                icon: favorites.contains(e)
+                                    ? Icon(Icons.star)
+                                    : Icon(Icons.star_border),
+                                onPressed: () {
+                                  toggleFavorite(e);
+                                },
+                              ),
+                            ],
                           ),
+                          onTap: () {
+                            openLink(e.url);
+                          },
                         ),
                       ),
-                    ),
+                  ),
+                ),
               ).toList();
-
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    padding: const EdgeInsets.symmetric(vertical: 14.0),
                     child: Text(
-                      section.name, // Titre de la section
+                      section.name,
                       style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 23,
+                        fontWeight: FontWeight.w900,
                       ),
                     ),
                   ),
-                  ...moduleWidgets,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: moduleWidgets,
+                  ),
                 ],
               );
             })
@@ -151,6 +203,7 @@ class LinksScreen extends HookConsumerWidget {
         ),
       ),
     );
+
 
 
 
@@ -176,3 +229,5 @@ class FavoritesNotifier extends StateNotifier<List<Module>> {
     }
   }
 }
+
+

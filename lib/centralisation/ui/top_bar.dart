@@ -80,26 +80,51 @@ class TopBar extends HookConsumerWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: module.icon.toLowerCase().endsWith('.svg')
+
+
                         ? Container(
-                      width: 40,
-                      height: 40,
+
+
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 0.5),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Container(
+                          margin : EdgeInsets.all(4.0),
                       child: SvgPicture.network(
                         "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + module.icon,
-                        fit: BoxFit.contain,
+
                       ),
-                    )
-                        : Image.network(
-                      "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + module.icon,
-                      width: 40,
-                      height: 40,
+                      width: 30,
+                      height: 30,
                     ),
+                    )
+                        : Container(
+
+
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black, width: 0.5),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Container(
+                        margin : EdgeInsets.all(4.0),
+
+                      child: Image.network(
+                        "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + module.icon,
+
+                      ),
+                      width: 30,
+                      height: 30,
+
+                    ),
+                  ),
                   ),
                 );
               }).toList(),
             ),
           ),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 5),
       ],
     );
 
