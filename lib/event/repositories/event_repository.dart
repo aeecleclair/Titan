@@ -1,23 +1,19 @@
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/services/event_notification.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class EventRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "calendar/events/";
-  final EventNotification eventNotification = EventNotification()..init();
 
   Future<List<Event>> getAllEvent() async {
     return List<Event>.from((await getList()).map((x) => Event.fromJson(x)));
   }
 
   Future<List<Event>> getConfirmedEventList() async {
-    final List<Event> eventList = List<Event>.from(
+    return List<Event>.from(
         (await getList(suffix: "confirmed")).map((x) => Event.fromJson(x)));
-    eventNotification.scheduleAllSession(eventList);
-    return eventList;
   }
 
   Future<List<Event>> getUserEventList(String id) async {

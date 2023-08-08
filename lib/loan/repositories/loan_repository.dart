@@ -1,26 +1,20 @@
 import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/services/loan_notification.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class LoanRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "loans/";
-  final LoanNotification loanNotification = LoanNotification()..init();
 
   Future<List<Loan>> getLoanListByLoanerId(String loanerId) async {
-    final List<Loan> loanList = List<Loan>.from(
+    return List<Loan>.from(
         (await getList(suffix: "loaners/$loanerId/loans?returned=false"))
             .map((x) => Loan.fromJson(x)));
-    loanNotification.scheduleAllEndedLoanByUser(loanList);
-    return loanList;
   }
 
   Future<List<Loan>> getMyLoanList() async {
-    final List<Loan> loanList = List<Loan>.from(
+    return List<Loan>.from(
         (await getList(suffix: "users/me")).map((x) => Loan.fromJson(x)));
-    loanNotification.scheduleAllEndedLoanByLoaner(loanList);
-    return loanList;
   }
 
   Future<Loan> getLoan(String id) async {
