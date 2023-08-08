@@ -64,6 +64,7 @@ flutter:
     - assets/images/logo.png
     - assets/images/gift.png
     - assets/images/soli.png
+    - assets/images/eclair.png
     - assets/images/login.svg
     - assets/images/back.jpg
 

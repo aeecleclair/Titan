@@ -52,13 +52,10 @@ class RightPanel extends HookConsumerWidget {
                                 isHovering.value = true;
                               },
                               child: Transform(
-                                // Transform widget
                                 transform: Matrix4.identity()
-                                  ..setEntry(3, 2, 0.001) // perspective
-                                  ..rotateX(
-                                      0.0003 * offset.value.dy) // changed
-                                  ..rotateY(
-                                      -0.0003 * offset.value.dx), // changed
+                                  ..setEntry(3, 2, 0.001)
+                                  ..rotateX(0.0003 * offset.value.dy)
+                                  ..rotateY(-0.0003 * offset.value.dx),
                                 alignment: FractionalOffset.center,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(20),
