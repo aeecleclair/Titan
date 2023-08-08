@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -61,20 +59,7 @@ void setUpNotification(WidgetRef ref) {
               localNotificationService.handleAction(actionModule, actionTable);
               continue;
             }
-            if (actionModule == null || actionTable == null) {
-              localNotificationService.showNotification(
-                message.context,
-                message.title,
-                message.content,
-              );
-            } else {
-              localNotificationService.showNotificationWithPayload(
-                message.context,
-                message.title,
-                message.content,
-                json.encode(message.toJson()),
-              );
-            }
+            localNotificationService.showNotification(message);
           }
         },
         orElse: () {},
@@ -107,12 +92,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
       final messages = await notificationRepository.getMessages(firebaseToken);
       for (final message in messages) {
         if (message.isVisible) {
-          localNotificationService.showNotificationWithPayload(
-            message.context,
-            message.title,
-            message.content,
-            json.encode(message.toJson()),
-          );
+          localNotificationService.showNotification(message);
         }
       }
     }

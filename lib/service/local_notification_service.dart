@@ -52,29 +52,23 @@ class LocalNotificationService {
         android: androidNotificationDetails, iOS: darwinNotificationDetails);
   }
 
-  Future<void> showNotification(String id, String? title, String? body) async {
-    await _localNotificationService.show(
-        generateIntFromString(id), title, body, await _notificationDetails());
-  }
-
-  Future<void> showNotificationWithPayload(
-      String id, String? title, String? body, String? payload) async {
-    await _localNotificationService.show(
-        generateIntFromString(id), title, body, await _notificationDetails(),
-        payload: payload);
-  }
-
-  Future<void> showScheduledNotification(
-      String id, String? title, String? body, DateTime date) async {
-    await _localNotificationService.zonedSchedule(
-        generateIntFromString(id),
-        title,
-        body,
-        tz.TZDateTime.from(date, tz.local),
-        await _notificationDetails(),
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime);
+  Future showNotification(message_class.Message message) async {
+    final notificationDetails = await _notificationDetails();
+    if (message.deliveryDateTime != null) {
+      _localNotificationService.zonedSchedule(
+          generateIntFromString(message.context),
+          message.title,
+          message.content,
+          tz.TZDateTime.from(message.deliveryDateTime!, tz.local),
+          notificationDetails,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.absoluteTime,
+          payload: json.encode(message.toJson()));
+    } else {
+      _localNotificationService.show(generateIntFromString(message.context),
+          message.title, message.content, notificationDetails,
+          payload: json.encode(message.toJson()));
+    }
   }
 
   Future<void> showPeriodicNotification(String id, String? title, String? body,
@@ -195,7 +189,7 @@ class LocalNotificationService {
       final path =
           await handleAction(message.actionModule!, message.actionTable!);
       QR.to(
-          "titan.myecl.fr://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
+          "fr.myecl.titan://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
     }
   }
 }
@@ -219,6 +213,6 @@ void onDidReceiveBackgroundNotificationResponse(
     }
     final path = information.item1;
     QR.to(
-        "$path?actionModule${message.actionModule!}&actionTable${message.actionTable!}");
+        "fr.myecl.titan://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
   }
 }

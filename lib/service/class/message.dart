@@ -5,6 +5,7 @@ class Message {
   late final String? actionTable;
   late final bool isVisible;
   late final String context;
+  late final DateTime? deliveryDateTime;
 
   Message({
     required this.title,
@@ -13,6 +14,7 @@ class Message {
     required this.actionTable,
     required this.context,
     required this.isVisible,
+    this.deliveryDateTime,
   });
 
   Message.fromJson(Map<String, dynamic> json) {
@@ -22,6 +24,9 @@ class Message {
     actionTable = json['action_table'];
     context = json['context'];
     isVisible = json['is_visible'];
+    deliveryDateTime = json['delivery_datetime'] != null
+        ? DateTime.parse(json['delivery_datetime'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -32,6 +37,7 @@ class Message {
     data['action_table'] = actionTable;
     data['context'] = context;
     data['is_visible'] = isVisible;
+    data['delivery_datetime'] = deliveryDateTime?.toIso8601String().split('T')[0];
     return data;
   }
 
