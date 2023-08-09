@@ -24,18 +24,16 @@ class DateEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: SizedBox(
-        child: AbsorbPointer(
-          child: TextEntry(
-            label: label,
-            controller: controller,
-            noValueError: TextConstants.noDateError,
-            enabled: enabled,
-            color: color,
-            enabledColor: enabledColor,
-            errorColor: errorColor,
-            suffixIcon: suffixIcon,
-          ),
+      child: AbsorbPointer(
+        child: TextEntry(
+          label: label,
+          controller: controller,
+          noValueError: TextConstants.noDateError,
+          enabled: enabled,
+          color: color,
+          enabledColor: enabledColor,
+          errorColor: errorColor,
+          suffixIcon: suffixIcon,
         ),
       ),
     );
