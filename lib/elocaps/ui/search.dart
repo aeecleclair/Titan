@@ -11,10 +11,9 @@ class SearchResult extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //final users = ref.watch(userList);
-    final AsyncValue<List<SimpleUser>> users = AsyncData([SimpleUser(id: "1", name: "test", firstname: 'ra', nickname: 'h1h'), SimpleUser(id: "2", name: "test2", firstname: 'ro', nickname: 'h2h')]);
-    print("######################");
-    users.whenData((value) => value.forEach((e) => print(e.getName())));
+    final users = ref.watch(userList);
+    final usersNotifier = ref.watch(userList.notifier);
+    
     return users.when(
             data: (u) {
               return Column(
@@ -46,6 +45,7 @@ class SearchResult extends HookConsumerWidget {
                           onTap: () {
                             borrower.value = e;
                             queryController.text = e.getName();
+                            usersNotifier.clear();
                           }))
                       .toList());
             },

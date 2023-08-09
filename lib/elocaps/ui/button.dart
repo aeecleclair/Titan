@@ -14,7 +14,7 @@ class MyButton extends StatelessWidget {
       height: 100,
       decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [
-          Color.fromARGB(255, 63, 2, 2),
+          Color.fromARGB(255, 115, 3, 3),
           Color.fromARGB(255, 231, 84, 31),
         ], begin: Alignment.bottomRight, end: Alignment.topLeft),
         borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -24,7 +24,7 @@ class MyButton extends StatelessWidget {
           text,
           style: const TextStyle(
             fontWeight: FontWeight.w700,
-            color: Color.fromARGB(255, 254, 164, 131),
+            color: Color.fromARGB(255, 249, 204, 188),
           ),
           maxLines: 1, 
         ),
