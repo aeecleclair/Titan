@@ -16,7 +16,6 @@ class AdminButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    assert(color != null || (colors != null && colors!.length > 1));
     final useColors = colors != null;
     return GestureDetector(
       onTap: onTap,
