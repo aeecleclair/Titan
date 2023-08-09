@@ -16,7 +16,7 @@ class AppointmentDataSource extends CalendarDataSource {
 }
 
 class Calendar extends HookConsumerWidget {
-  final CalendarDataSource<Object?>? dataSource;
+  final CalendarDataSource<Object?> dataSource;
   final AsyncValue<List<Object?>> items;
   const Calendar({super.key, required this.dataSource, required this.items});
 
