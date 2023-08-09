@@ -5,31 +5,36 @@ import 'package:myecl/tools/constants.dart';
 class AdminButton extends StatelessWidget {
   final VoidCallback onTap;
   final Color textColor;
-  final Color backgroundColor;
-  final Color? gradientColor;
+  final Color? color;
+  final List<Color>? colors;
   const AdminButton(
       {super.key,
       required this.onTap,
       this.textColor = Colors.white,
-      this.backgroundColor = Colors.black,
-      this.gradientColor});
+      this.color = Colors.black,
+      this.colors});
 
   @override
   Widget build(BuildContext context) {
+    assert(color != null || (colors != null && colors!.length > 1));
+    final useColors = colors != null;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-            gradient: RadialGradient(
-              colors: [backgroundColor, gradientColor ?? backgroundColor],
-              center: Alignment.topLeft,
-              radius: 2,
-            ),
+            gradient: useColors
+                ? RadialGradient(
+                    colors: colors!,
+                    center: Alignment.topLeft,
+                    radius: 2,
+                  )
+                : null,
+            color: color,
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
-                  color: (gradientColor ?? backgroundColor).withOpacity(0.2),
+                  color: (useColors ? colors!.last : color)!.withOpacity(0.2),
                   blurRadius: 10,
                   offset: const Offset(0, 5))
             ]),
