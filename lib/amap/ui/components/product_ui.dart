@@ -22,6 +22,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardLayout(
+      id: product.id,
       width: 130,
       height: showButton ? 155 : 130,
       colors: const [

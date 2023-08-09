@@ -36,6 +36,7 @@ class OrderUI extends HookConsumerWidget {
     }
 
     return CardLayout(
+      id: order.id,
       width: 195,
       height: isDetail ? 100 : 150,
       colors: const [

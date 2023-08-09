@@ -39,6 +39,7 @@ class DaysEvent extends HookConsumerWidget {
               final textColor =
                   start.compareTo(now) <= 0 ? Colors.white : Colors.black;
               return CardLayout(
+                id: event.id,
                 margin: const EdgeInsets.all(10),
                 height: 135,
                 width: double.infinity,

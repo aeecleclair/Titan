@@ -19,6 +19,7 @@ class MemberCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardLayout(
+      id: member.id,
       width: 150,
       height: isAdmin ? 145 : 110,
       margin: const EdgeInsets.all(10),

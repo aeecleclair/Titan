@@ -12,6 +12,7 @@ class ItemCardInLoan extends StatelessWidget {
   Widget build(BuildContext context) {
     var item = itemQty.itemSimple;
     return CardLayout(
+      id: item.id,
       width: 140,
       height: 80,
       padding: const EdgeInsets.symmetric(horizontal: 17.0),

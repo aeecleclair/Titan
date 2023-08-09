@@ -41,6 +41,7 @@ class DeliveryUi extends HookConsumerWidget {
     }
 
     return CardLayout(
+      id: delivery.id,
       height: 160,
       width: 280,
       shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
