@@ -93,8 +93,10 @@ class AmapMainPage extends HookConsumerWidget {
                         onTap: () {
                           QR.to(AmapRouter.root + AmapRouter.admin);
                         },
-                        backgroundColor: AMAPColorConstants.greenGradient1,
-                        gradientColor: AMAPColorConstants.greenGradient2,
+                        colors: const [
+                          AMAPColorConstants.greenGradient1,
+                          AMAPColorConstants.greenGradient2
+                        ],
                       ),
                   ],
                 ),
