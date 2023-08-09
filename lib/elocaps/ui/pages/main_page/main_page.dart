@@ -20,6 +20,7 @@ class EloCapsMainPage extends HookConsumerWidget {
         duration: const Duration(milliseconds: 3000), initialValue: 0)
       ..repeat(reverse: true);
 
+
     return ElocapsTemplate(
         child: Stack(
       children: [
@@ -61,48 +62,52 @@ class EloCapsMainPage extends HookConsumerWidget {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Podium(
-                                rank: 2,
-                                text: "2. ${ranking[1]}",
-                                height: 70),
-                            Podium(
-                                rank: 1,
-                                text: "1. ${ranking[0]}",
-                                height: 100),
-                            Podium(
-                              rank: 3,
-                              text: "3. ${ranking[2]}",
-                              height: 50,
-                            ),
-                          ],
-                        ),
-                        ...List.generate(ranking.length - 3, (index) {
-                          index += 3;
-                          return Podium(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Podium(
+                                  rank: 2,
+                                  text: "2. ${ranking[1]}",
+                                  height: 70),
+                              Podium(
+                                  rank: 1,
+                                  text: "1. ${ranking[0]}",
+                                  height: 100),
+                              Podium(
+                                rank: 3,
+                                text: "3. ${ranking[2]}",
+                                height: 50,
+                              ),
+                            ],
+                          ),
+                          ...List.generate(ranking.length - 3, (index) {
+                            index += 3;
+                            return Podium(
                               rank: index + 1,
                               text: "${index + 1}. ${ranking[index]}",
-                              );
-                        })])),
-
+                            );
+                          })
+                        ])),
                 const SizedBox(height: 25),
-                Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [GestureDetector(
-                  onTap: () {
-                    QR.to(ElocapsRouter.root + ElocapsRouter.history);
-                  },
-                  child: const MyButton(text: "Voir mes Parties"),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    QR.to(ElocapsRouter.root + ElocapsRouter.game);
-                  },
-                  child: const MyButton(text: "Lancez une partie"),
-                ),
-              ])],
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          QR.to(ElocapsRouter.root + ElocapsRouter.history);
+                        },
+                        child: const MyButton(text: "Voir mes Parties"),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          QR.to(ElocapsRouter.root + ElocapsRouter.game);
+                        },
+                        child: const MyButton(text: "Lancez une partie"),
+                      ),
+                    ])
+              ],
             ))),
       ],
     ));
