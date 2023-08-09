@@ -25,6 +25,7 @@ class PrizeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardLayout(
+      id: prize.id,
       width: 130,
       height: 125,
       colors: const [

@@ -34,6 +34,7 @@ class ContenderCard extends HookConsumerWidget {
         .watch(statusProvider)
         .maybeWhen(data: (status) => status, orElse: () => Status.waiting);
     return CardLayout(
+        id: contender.id,
         width: 250,
         height: (contender.listType != ListType.blank &&
                 status == Status.waiting &&

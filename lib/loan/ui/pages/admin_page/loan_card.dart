@@ -36,6 +36,7 @@ class LoanCard extends StatelessWidget {
         }
       },
       child: CardLayout(
+        id: loan.id,
         width: 250,
         height: (isAdmin && !isDetail)
             ? 170
