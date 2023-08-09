@@ -14,13 +14,37 @@ import 'package:myecl/centralisation/providers/favoritesUtils.dart';
 import 'dart:convert';
 import 'dart:async';
 
+class FavoritesNotifier extends StateNotifier<List<Module>> {
+  FavoritesNotifier() : super([]) {
+    loadFavorites();
+  }
+
+  Future<void> loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoritesJson = prefs.getString('favorites');
+
+    if (favoritesJson != null) {
+      final favoritesList = json.decode(favoritesJson) as List<dynamic>;
+      final favorites = favoritesList.map((moduleJson) => Module.fromJson(moduleJson)).toList();
+      state = favorites;
+    }
+  }
+
+
+  void toggleFavorite(Module module) {
+    if (state.contains(module)) {
+      state = state.where((m) => m != module).toList();
+    } else {
+      state = [...state, module];
+    }
+    saveFavoritesToSharedPreferences(state); // Sauvegarder les favoris après modification
+  }
+}
+
 final favoritesProvider =
 StateNotifierProvider<FavoritesNotifier, List<Module>>(
         (ref) => FavoritesNotifier());
 
-
-
-final SectionNotifier sectionNotifier = SectionNotifier();
 var _longPressProgress = 0.0;
 
 class LinksScreen extends HookConsumerWidget {
@@ -29,7 +53,6 @@ class LinksScreen extends HookConsumerWidget {
 
 
   Widget build(BuildContext context, WidgetRef ref) {
-    final sectionNotifier = ref.watch(sectionProvider.notifier);
     final section = ref.watch(sectionProvider);
     final favorites = ref.watch(favoritesProvider);
 
@@ -38,8 +61,8 @@ class LinksScreen extends HookConsumerWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(module.name),
-            content: Text(module.description),
+            title: Text(utf8.decode(module.name.codeUnits)),
+            content: Text(utf8.decode(module.description.codeUnits)),
             actions: [
               TextButton(
                 child: Text('Accéder au site'),
@@ -72,22 +95,15 @@ class LinksScreen extends HookConsumerWidget {
     }
 
     void _handleLongPressEnd() {
-      // Réinitialisation à la fin du long appui
       _longPressProgress = 0.0;
     }
 
     void toggleFavorite(Module module) {
       final favoritesProviderNotifier = ref.read(favoritesProvider.notifier);
-
-      if (favorites.contains(module)) {
-        favoritesProviderNotifier.toggleFavorite(module);
-      } else {
-        favoritesProviderNotifier.toggleFavorite(module);
-      }
-
-      // Save updated favorites list to SharedPreferences
-      saveFavoritesToSharedPreferences(favorites);
+      favoritesProviderNotifier.toggleFavorite(module);
     }
+
+
 
 
 
@@ -145,11 +161,11 @@ class LinksScreen extends HookConsumerWidget {
                               SizedBox(width: 10), // Ajoute un espace entre le logo et le texte
                               Expanded(
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center, // Centre le texte verticalement
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      e.name,
+                                      utf8.decode(e.name.codeUnits),
                                       style: TextStyle(
                                         fontSize: 18,
                                       ),
@@ -182,7 +198,7 @@ class LinksScreen extends HookConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 14.0),
                     child: Text(
-                      section.name,
+                      utf8.decode(section.name.codeUnits),
                       style: TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.w900,
@@ -205,29 +221,11 @@ class LinksScreen extends HookConsumerWidget {
     );
 
 
-
-
-
-
-
-
-
-  }
-
-}
-
-
-
-class FavoritesNotifier extends StateNotifier<List<Module>> {
-  FavoritesNotifier() : super([]);
-
-  void toggleFavorite(Module module) {
-    if (state.contains(module)) {
-      state = state.where((m) => m != module).toList();
-    } else {
-      state = [...state, module];
-    }
   }
 }
+
+
+
+
 
 

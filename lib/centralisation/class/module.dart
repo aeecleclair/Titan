@@ -15,8 +15,8 @@ class Module {
   late final bool? liked;
 
   Module.fromJson(Map<String, dynamic> json) {
-    name = utf8.decode(latin1.encode(json['name']), allowMalformed: true);
-    description = utf8.decode(latin1.encode(json['description']), allowMalformed: true);
+    name = json['name'];
+    description = json['description'];
     icon = json['icon'];
     url = json['url'];
     liked = json['liked'];
@@ -64,4 +64,15 @@ class Module {
   String toString() {
   return 'Module{name: $name, description: $description, icon: $icon, url: $url, liked: $liked}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Module &&
+        other.name == name && 
+        other.url == url;
+  }
+
 }
+

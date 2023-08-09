@@ -29,7 +29,6 @@ class SectionNotifier extends ListNotifier<Section> {
     for (Module module in allModules) {
       if (prefs.getBool(module.name) == true) {
         modulesLiked.add(module);
-        modulesLiked.add(module);
       }
     }
   }

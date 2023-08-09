@@ -12,7 +12,7 @@ class Section {
   late final bool? expanded;
 
   Section.fromJson(k, v) {
-    name = utf8.decode(latin1.encode(k), allowMalformed: true);
+    name = k;
     moduleList = List<Module>.from(v.map((e) => Module.fromJson(e)));
     expanded = true;
   }
