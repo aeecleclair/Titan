@@ -14,7 +14,7 @@ class WebSignIn extends StatelessWidget {
             Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/back.jpg'),
+                  image: AssetImage('assets/web/back.webp'),
                   fit: BoxFit.cover,
                 ),
               ),

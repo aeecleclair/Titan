@@ -66,7 +66,15 @@ flutter:
     - assets/images/soli.png
     - assets/images/eclair.png
     - assets/images/login.svg
-    - assets/images/back.jpg
+    - assets/web/back.webp
+    - assets/web/AMAP.webp
+    - assets/web/Calendrier.webp
+    - assets/web/Ciné.webp
+    - assets/web/Parametres.webp
+    - assets/web/Pret.webp
+    - assets/web/Tombola.webp
+    - assets/web/Vote.webp
+
 
   uses-material-design: true
 
