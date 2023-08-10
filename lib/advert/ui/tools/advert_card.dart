@@ -14,20 +14,17 @@ class AdvertCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = 300;
+    double height = 300;
+    double imageHeight = 200;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 10),
-        width: 300,
-        height: 250,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
-          color: Colors.black,
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: Image.network(
-              'https://picsum.photos/seed/664/600',
-            ).image,
-          ),
+          color: Colors.white,
           boxShadow: const [
             BoxShadow(
               blurRadius: 5,
@@ -38,110 +35,118 @@ class AdvertCard extends StatelessWidget {
           ],
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Column(
+        child: Stack(
           children: [
             Column(
               children: [
-                ClipRRect(
+                Container(
+                  width: width,
+                  height: imageHeight,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: Image.network(
+                        'https://picsum.photos/seed/664/600',
+                      ).image,
+                    ),
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.black.withOpacity(0.5),
-                            Colors.black.withOpacity(0.0),
-                          ],
-                          stops: const [0.7, 1.0],
-                        ),
-                      ),
-                      child: Column(
+                  ),
+                ),
+                SizedBox(
+                  width: width,
+                  height: height - imageHeight,
+                  child: Column(
+                    children: [
+                      Column(
                         children: [
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 17),
-                            child: AutoSizeText(
-                              advert.title,
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              minFontSize: 18,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 30,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 17),
-                            child: AutoSizeText(
-                              "${AdvertTextConstants.the} ${DateFormat('dd/MM/yyyy').format(advert.date)} ${AdvertTextConstants.at} ${DateFormat('HH:mm').format(advert.date)} - ${AdvertTextConstants.by} ${advert.author}",
-                              maxLines: 1,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                              ),
+                          Container(
+                            width: double.infinity,
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                AutoSizeText(
+                                  advert.title,
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  minFontSize: 14,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    )),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 17),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: advert.announcer
-                        .map((e) => TagChip(
-                              tagname: e,
-                            ))
-                        .toList(),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: AutoSizeText(
+                          overflow: TextOverflow.ellipsis,
+                          advert.content,
+                          textAlign: TextAlign.justify,
+                          maxLines: 3,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-            const Spacer(),
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.0),
-                      Colors.black.withOpacity(0.5),
-                    ],
-                    stops: const [0.0, 0.3],
+            Positioned(
+              top: imageHeight - 23,
+              left: 20,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                    BoxShadow(
+                      blurRadius: 5,
+                      color: Colors.black.withOpacity(0.4),
+                      offset: const (2, 2),
+                      spreadRadius: 3,
+                    )
+                  ]),
+                  padding: const EdgeInsets.symmetric(horizontal: 17),
+                  child: AutoSizeText(
+                    DateFormat('dd/MM\nyyyy').format(advert.date),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    style: const TextStyle(
+                      color: Colors.blue,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 30, bottom: 12, left: 17, right: 17),
-                  child: AutoSizeText(
-                      overflow: TextOverflow.ellipsis,
-                      advert.content,
-                      textAlign: TextAlign.justify,
-                      maxLines: 5,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                      )),
-                ),
               ),
-            )
+            ),
+            Positioned(
+              top: imageHeight - 20,
+              right: 5,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: advert.announcer
+                    .map((e) => TagChip(
+                          tagname: e,
+                        ))
+                    .toList(),
+              ),
+            ),
           ],
         ),
       ),

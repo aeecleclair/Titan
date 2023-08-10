@@ -38,7 +38,7 @@ class TagChip extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               blurRadius: 5,
-              color: darkerbgColor.withOpacity(0.2),
+              color: darkerbgColor.withOpacity(0.4),
               offset: const Offset(2, 2),
               spreadRadius: 3,
             )

@@ -7,26 +7,26 @@ class AnnouncerRepository extends Repository {
   final ext = "advert/";
 
   Future<List<Announcer>> getAllAnnouncer() async {
-    return List<Announcer>.from((await getList(suffix: "announcer/")).map((x) => Announcer.fromJson(x)));
+    return List<Announcer>.from((await getList(suffix: "advertisers/")).map((x) => Announcer.fromJson(x)));
   }
 
   Future<List<Announcer>> getMyAnnouncer() async {
-    return List<Announcer>.from((await getList(suffix: "users/me/announcer")).map((x) => Announcer.fromJson(x)));
+    return List<Announcer>.from((await getList(suffix: "users/me/advertisers")).map((x) => Announcer.fromJson(x)));
   }
 
   Future<Announcer> getAnnouncer(String id) async {
-    return Announcer.fromJson(await getOne("announcer/$id"));
+    return Announcer.fromJson(await getOne("advertisers/$id"));
   }
 
   Future<Announcer> createAnnouncer(Announcer announcer) async {
-    return Announcer.fromJson(await create(announcer.toJson(), suffix: "announcer/"));
+    return Announcer.fromJson(await create(announcer.toJson(), suffix: "advertisers/"));
   }
 
   Future<bool> updateAnnouncer(Announcer announcer) async {
-    return await update(announcer.toJson(), "announcer/${announcer.id}");
+    return await update(announcer.toJson(), "advertisers/${announcer.id}");
   }
 
   Future<bool> deleteAnnouncer(String announcerId) async {
-    return await delete("announcer/$announcerId");
+    return await delete("advertisers/$announcerId");
   }
 }
