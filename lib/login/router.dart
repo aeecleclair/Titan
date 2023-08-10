@@ -5,7 +5,7 @@ import 'package:myecl/login/ui/forget.dart';
 import 'package:myecl/login/ui/recover_password.dart';
 import 'package:myecl/login/ui/register.dart';
 import 'package:myecl/login/ui/app_sign_in.dart';
-import 'package:myecl/login/ui/web_sign_in.dart';
+import 'package:myecl/login/ui/web/web_sign_in.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
