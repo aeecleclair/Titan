@@ -10,8 +10,8 @@ import 'package:myecl/user/providers/user_provider.dart';
 class Consts {
   Consts._();
 
-  static const double padding = 30.0;
-  static const double avatarRadius = 60.0;
+  static const double padding = 20.0;
+  static const double avatarRadius = 50.0;
   static const Color greenGradient1 = Color(0xff79a400);
   static const Color greenGradient2 = Color(0xff387200);
   static const Color redGradient1 = Color(0xFF9E131F);
@@ -41,10 +41,10 @@ class EmailChangeDialog extends HookConsumerWidget {
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0))),
         elevation: 0.0,
+        insetPadding: const EdgeInsets.all(20.0),
         backgroundColor: Colors.transparent,
         child: Stack(clipBehavior: Clip.none, children: [
           Container(
-            height: 500,
             padding: const EdgeInsets.only(
               top: Consts.avatarRadius + Consts.padding,
               bottom: Consts.padding,
@@ -74,7 +74,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 16.0),
+                const SizedBox(height: 12.0),
                 displayForm.value ? Form(
                   key: formKey,
                   autovalidateMode: AutovalidateMode.always,
@@ -87,7 +87,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                           fontSize: 16.0,
                         ),
                       ),
-                      const SizedBox(height: 48.0),
+                      const SizedBox(height: 15.0),
                       TextFormField(
                         controller: emailController,
                         cursorColor: Colors.black,
@@ -113,7 +113,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 72.0),
+                      const SizedBox(height: 30.0),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
