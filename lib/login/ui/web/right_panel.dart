@@ -68,21 +68,21 @@ class RightPanel extends HookConsumerWidget {
                   (initialPage - index - 1) % screenShots.length - 1];
               return Column(
                 children: [
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(width: 20,),
+                      const SizedBox(width: 20,),
                       if (screenShot.title.isNotEmpty)
                         Text(
                           screenShot.title,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         ),
                       if (screenShot.title.isNotEmpty)
-                        Text(
+                        const Text(
                           " - ",
                           style: TextStyle(
                               fontSize: 25,
@@ -93,7 +93,7 @@ class RightPanel extends HookConsumerWidget {
                         child: AutoSizeText(
                           screenShot.description,
                           maxLines: 1,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
@@ -160,7 +160,7 @@ class RightPanel extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                 ],
               );
             }),
