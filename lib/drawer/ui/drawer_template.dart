@@ -47,12 +47,14 @@ class DrawerTemplate extends HookConsumerWidget {
           QR.context != null &&
           !displayedDialog.value &&
           !alreadyDisplayed) {
-        displayedDialog.value = true;
-        showDialog(
-                context: QR.context!,
-                builder: (BuildContext context) => const EmailChangeDialog())
-            .then((value) {
-          alreadyDisplayedNotifier.setAlreadyDisplayed();
+        Future.delayed(const Duration(milliseconds: 100), () {
+          displayedDialog.value = true;
+          showDialog(
+                  context: QR.context!,
+                  builder: (BuildContext context) => const EmailChangeDialog())
+              .then((value) {
+            alreadyDisplayedNotifier.setAlreadyDisplayed();
+          });
         });
       }
     });
