@@ -73,7 +73,7 @@ class MainPage extends HookConsumerWidget {
               },
             ),
           ),
-          if (isAdmin)
+          if (true) //TODO
             Positioned(
               bottom: 20,
               right: 30,
