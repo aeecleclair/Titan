@@ -64,8 +64,22 @@ flutter:
     - assets/images/logo.png
     - assets/images/gift.png
     - assets/images/soli.png
+    - assets/images/eclair.png
+    - assets/images/login.png
+    - assets/images/logo_alpha.png
 
   uses-material-design: true
+
+specific:
+  # Add custom information for our Fastlane actions
+  assets:
+    # For each asset, a list of flags describing for what Titan flavor assets should be included.
+    # ex: `.env: [web, alpha]`
+    # If an assets if not in this mapping it will always be included
+    assets/images/eclair.png: [web, alpha]
+    assets/images/login.png: [web]
+    assets/images/logo_alpha.png: [alpha]
+    assets/images/logo.png: [non_alpha]
 
 flutter_icons:
   android: "launcher_icon"
