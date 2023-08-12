@@ -1,3 +1,3 @@
-import 'package:myecl/cinema/servide/cinema_service.dart';
+import 'package:myecl/cinema/notification_service.dart';
 
 final providers = {"cinema": cinemaProviders};
