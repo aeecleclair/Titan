@@ -63,8 +63,10 @@ class LeftPanel extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Spacer(),
-              SvgPicture.asset('assets/images/login.svg',
-                  width: 350, height: 350),
+              Expanded(
+                  flex: 5,
+                  child: SvgPicture.asset('assets/images/login.svg',
+                      width: 350, height: double.infinity)),
               const SizedBox(height: 70),
               ShrinkButton(
                 onTap: () async {
@@ -114,11 +116,11 @@ class LeftPanel extends HookConsumerWidget {
                         margin: const EdgeInsets.only(left: 20),
                         child: isLoading
                             ? const Padding(
-                              padding: EdgeInsets.all(12.0),
-                              child: CircularProgressIndicator(
+                                padding: EdgeInsets.all(12.0),
+                                child: CircularProgressIndicator(
                                   color: Colors.white,
                                 ),
-                            )
+                              )
                             : const HeroIcon(
                                 HeroIcons.arrowRight,
                                 color: Colors.white,
