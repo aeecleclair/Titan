@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/login/ui/create_account_page.dart';
 import 'package:myecl/login/ui/forget.dart';
 import 'package:myecl/login/ui/recover_password.dart';
@@ -43,7 +44,9 @@ class LoginRouter {
 
   QRoute route() => QRoute(
         path: LoginRouter.root,
-        builder: () => (kIsWeb) ? WebSignIn(): AppSignIn(),
+        builder: () => (kIsWeb && ref.watch(isWebFormatProvider))
+            ? const WebSignIn()
+            : const AppSignIn(),
         pageType: const QMaterialPage(),
         middleware: [AuthenticatedMiddleware(ref)],
       );
