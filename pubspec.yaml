@@ -22,14 +22,14 @@ dependencies:
     sdk: flutter
   flutter_appauth: ^6.0.0
   flutter_dotenv: ^5.0.2
-  flutter_hooks: ^0.18.2+1
+  flutter_hooks: ^0.20.0
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.1
   flutter_secure_storage: ^8.0.0
   flutter_svg: ^2.0.7
   google_fonts: ^5.0.0
-  heroicons: ^0.8.0
+  heroicons: ^0.9.0
   hooks_riverpod: ^2.1.1
   http: ^1.0.0
   http_parser: ^4.0.2
@@ -64,6 +64,17 @@ flutter:
     - assets/images/logo.png
     - assets/images/gift.png
     - assets/images/soli.png
+    - assets/images/eclair.png
+    - assets/images/login.svg
+    - assets/web/back.webp
+    - assets/web/AMAP.webp
+    - assets/web/Calendrier.webp
+    - assets/web/Ciné.webp
+    - assets/web/Parametres.webp
+    - assets/web/Pret.webp
+    - assets/web/Tombola.webp
+    - assets/web/Vote.webp
+
 
   uses-material-design: true
 
