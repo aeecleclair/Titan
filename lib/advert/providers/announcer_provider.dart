@@ -10,17 +10,17 @@ final announcerProvider =
 class AnnouncerNotifier extends StateNotifier<List<Announcer>> {
   AnnouncerNotifier() : super([]);
 
-  void addAnnounce(Announcer i) {
+  void addAnnouncer(Announcer i) {
     final copy = state.sublist(0);
     copy.add(i);
     state = copy;
   }
-  void removeAnnounce(Announcer i) {
+  void removeAnnouncer(Announcer i) {
     final copy = state.sublist(0);
     copy.remove(i);
     state = copy;
   }
-  void clearAnnounce() {
+  void clearAnnouncer() {
     state = [];
   }
 }
