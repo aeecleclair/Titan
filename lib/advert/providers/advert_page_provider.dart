@@ -6,6 +6,7 @@ enum AdvertPage {
   detailFromMainPage,
   detailFromAdminPage,
   addEditAdvert,
+  addRemAnnouncer,
 }
 
 final advertPageProvider =

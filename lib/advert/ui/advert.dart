@@ -5,7 +5,6 @@ import 'package:myecl/advert/ui/page_switcher.dart';
 import 'package:myecl/advert/ui/top_bar.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 
-
 class AdvertHomePage extends ConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
   final AnimationController controller;
@@ -39,6 +38,9 @@ class AdvertHomePage extends ConsumerWidget {
             break;
           case AdvertPage.addEditAdvert:
             pageNotifier.setAdvertPage(AdvertPage.admin);
+            break;
+          case AdvertPage.addRemAnnouncer:
+            pageNotifier.setAdvertPage(AdvertPage.main);
             break;
         }
         return false;
