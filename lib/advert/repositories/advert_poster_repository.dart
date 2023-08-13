@@ -9,7 +9,7 @@ class AdvertPosterRepository extends LogoRepository {
   final ext = "advert/";
 
   Future<Image> getAdvertPoster(String id) async {
-    final uint8List = await getLogo(id, suffix: "/poster");
+    final uint8List = await getLogo(id, suffix: "adverts/$id/picture");
     if (uint8List.isEmpty) {
       return Image.asset("assets/images/logo.png");
     }
@@ -18,7 +18,7 @@ class AdvertPosterRepository extends LogoRepository {
 
   Future<Image> addAdvertPoster(String path, String id) async {
     final image = await saveLogoToTemp(path);
-    final uint8List = await addLogo(image.path, id, suffix: "/poster");
+    final uint8List = await addLogo(image.path, "", suffix: "adverts/$id/poster");
     return Image.memory(uint8List);
   }
 } 
