@@ -1,35 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/providers/animation_provider.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/event/ui/top_bar.dart';
+import 'package:myecl/event/router.dart';
+import 'package:myecl/event/tools/constants.dart';
+import 'package:myecl/tools/ui/top_bar.dart';
 
-class EventTemplate extends ConsumerWidget {
+class EventTemplate extends StatelessWidget {
   final Widget child;
   const EventTemplate({Key? key, required this.child}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final animationNotifier = ref.watch(animationProvider.notifier);
-    final controller =
-        ref.watch(swipeControllerProvider(animationNotifier.animation!));
-    final controllerNotifier = ref
-        .watch(swipeControllerProvider(animationNotifier.animation!).notifier);
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         color: Colors.white,
         child: SafeArea(
-          child: IgnorePointer(
-            ignoring: controller.isCompleted,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TopBar(
-                  controllerNotifier: controllerNotifier,
-                ),
-                Expanded(child: child)
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [const TopBar(
+              title: EventTextConstants.title,
+              root: EventRouter.root,
+            ), Expanded(child: child)],
           ),
         ),
       ),

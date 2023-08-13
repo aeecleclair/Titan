@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/cinema/providers/main_page_index_provider.dart';
+import 'package:myecl/cinema/providers/scroll_provider.dart';
 import 'package:myecl/cinema/router.dart';
-import 'package:myecl/cinema/ui/top_bar.dart';
-import 'package:myecl/drawer/providers/animation_provider.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/cinema/tools/constants.dart';
+import 'package:myecl/tools/ui/top_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class CinemaTemplate extends ConsumerWidget {
+class CinemaTemplate extends HookConsumerWidget {
   final Widget child;
   const CinemaTemplate({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final animationNotifier = ref.watch(animationProvider.notifier);
-    final controller =
-        ref.watch(swipeControllerProvider(animationNotifier.animation!));
-    final controllerNotifier = ref
-        .watch(swipeControllerProvider(animationNotifier.animation!).notifier);
+    final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
+    final scrollNotifier = ref.watch(scrollProvider.notifier);
     return Scaffold(
       body: (QR.currentPath != CinemaRouter.root + CinemaRouter.detail)
-          ? IgnorePointer(
-              ignoring: controller.isCompleted,
-              child: SafeArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    TopBar(
-                      controllerNotifier: controllerNotifier,
-                    ),
-                    Expanded(child: child)
-                  ],
-                ),
+          ? SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  TopBar(
+                    title: CinemaTextConstants.cinema,
+                    root: CinemaRouter.root,
+                    onBack: () {
+                      initialPageNotifier.reset();
+                      scrollNotifier.reset();
+                    },
+                  ),
+                  Expanded(child: child)
+                ],
               ),
             )
-          : IgnorePointer(ignoring: controller.isCompleted, child: child),
+          : child,
     );
   }
 }

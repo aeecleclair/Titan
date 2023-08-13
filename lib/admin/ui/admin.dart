@@ -1,39 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/ui/top_bar.dart';
-import 'package:myecl/drawer/providers/animation_provider.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/router.dart';
+import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/top_bar.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
-class AdminTemplate extends ConsumerWidget {
+class AdminTemplate extends HookConsumerWidget {
   final Widget child;
-  const AdminTemplate(
-      {Key? key, required this.child})
-      : super(key: key);
+  const AdminTemplate({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final animationNotifier = ref.watch(animationProvider.notifier);
-    final controller =
-    ref.watch(swipeControllerProvider(animationNotifier.animation!));
-    final controllerNotifier = ref
-        .watch(swipeControllerProvider(animationNotifier.animation!).notifier);
+    final meNotifier = ref.watch(asyncUserProvider.notifier);
     return Scaffold(
-        body: Container(
+      body: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
         ),
         child: SafeArea(
-          child: IgnorePointer(
-            ignoring: controller.isCompleted,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TopBar(
-                  controllerNotifier: controllerNotifier,
-                ),
-                Expanded(child: child),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              TopBar(
+                  title: AdminTextConstants.administration,
+                  root: AdminRouter.root,
+                  onBack: () {
+                    tokenExpireWrapper(ref, () async {
+                      await meNotifier.loadMe();
+                    });
+                  }),
+              Expanded(child: child)
+            ],
           ),
         ),
       ),

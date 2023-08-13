@@ -72,7 +72,7 @@ class DrawerTemplate extends HookConsumerWidget {
               double cornerval = isWebFormat ? 0 : 30.0 * animationVal;
               return Stack(
                 children: [
-                  CustomDrawer(controllerNotifier: controllerNotifier),
+                  const CustomDrawer(),
                   Transform(
                       alignment: Alignment.centerLeft,
                       transform: Matrix4.identity()
@@ -88,7 +88,10 @@ class DrawerTemplate extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(cornerval),
                           child: Stack(
                             children: [
-                              child,
+                              IgnorePointer(
+                                ignoring: controller.isCompleted,
+                                child: child,
+                              ),
                               MouseRegion(
                                 cursor: SystemMouseCursors.click,
                                 onEnter: (event) {
