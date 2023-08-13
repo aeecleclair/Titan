@@ -1,3 +1,4 @@
+import 'package:myecl/advert/class/announcer.dart';
 import 'package:myecl/tools/functions.dart';
 
 class Advert {
@@ -5,8 +6,7 @@ class Advert {
   late final String title;
   late final String content;
   late final DateTime date;
-  late final String author;
-  late final List<String> announcer;
+  late final Announcer announcer;
   late final List<String> tags;
   
   Advert({
@@ -14,7 +14,6 @@ class Advert {
     required this.title,
     required this.content,
     required this.date,
-    required this.author,
     required this.announcer,
     required this.tags
   });
@@ -23,10 +22,9 @@ class Advert {
     id = json["id"];
     title = json["title"];
     content = json["content"];
-    date = DateTime.parse(json["start"]);
-    author = json["author"];
-    announcer = json["announcer"];
-    tags = json["tags"];
+    date = DateTime.parse(json["date"]);
+    announcer = Announcer.fromJson(json["advertiser"]);
+    tags = json["tags"].split(', ');
   }
 
   Map<String, dynamic> toJson() {
@@ -35,9 +33,8 @@ class Advert {
     data["title"] = title;
     data["content"] = content;
     data["date"] = processDateToAPI(date);
-    data["author"] = author;
-    data["announcer"] = announcer;
-    data["tags"] = tags;
+    data["advertiser_id"] = announcer.id;
+    data["tags"] = tags.join(', ');
     return data;
   }
 
@@ -48,7 +45,6 @@ class Advert {
         title: title ?? this.title,
         content: content ?? this.content,
         date: date ?? this.date,
-        author: author ?? this.author,
         announcer: announcer ?? this.announcer,
         tags: tags ?? this.tags);
     }
@@ -59,13 +55,12 @@ class Advert {
       title: "",
       content: "",
       date: DateTime.now(),
-      author: "",
-      announcer: [],
+      announcer: Announcer.empty(),
       tags: []);
   }
 
   @override
   String toString() {
-    return 'Advert{id: $id, title: $title, content: $content, date: $date, author: $author, announcer: $announcer, tags: $tags}';
+    return 'Advert{id: $id, title: $title, content: $content, date: $date, announcer: $announcer, tags: $tags}';
   }
 }
