@@ -35,14 +35,9 @@ class TagChip extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: borderColor),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 5,
-              color: darkerbgColor.withOpacity(0.4),
-              offset: const Offset(2, 2),
-              spreadRadius: 3,
-            )
-          ]),
+          // 
+          
+          ),
       child: Align(
         alignment: Alignment.center,
         child: Text(
