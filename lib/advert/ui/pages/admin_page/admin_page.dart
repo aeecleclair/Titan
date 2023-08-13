@@ -39,11 +39,11 @@ class AdminPage extends HookConsumerWidget {
                 final userAnnouncerAdvert = advertData.where((advert) =>
                     userAnnouncerData
                         .where((element) =>
-                            advert.announcer.contains(element.name))
+                            advert.announcer.name==element.name)
                         .isNotEmpty);
                 return Column(
                   children: [
-                    const AnnouncerBar(useUserAnnouncers: true),
+                    const AnnouncerBar(useUserAnnouncers: true, multipleSelect: true,),
                     GestureDetector(
                       onTap: () {
                         advertNotifier.setAdvert(Advert.empty());
@@ -82,7 +82,7 @@ class AdminPage extends HookConsumerWidget {
                     ...userAnnouncerAdvert
                         .map((advert) => selected
                                     .where((e) =>
-                                        advert.announcer.contains(e.name))
+                                        advert.announcer.name == e.name)
                                     .isNotEmpty ||
                                 selected.isEmpty
                             ? AdminAdvertCard(

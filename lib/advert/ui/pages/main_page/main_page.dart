@@ -33,7 +33,7 @@ class MainPage extends HookConsumerWidget {
               data: (data) {
                 return Column(
                   children: [
-                    const AnnouncerBar(useUserAnnouncers: false),
+                    const AnnouncerBar(useUserAnnouncers: false, multipleSelect: true),
                     const SizedBox(
                       height: 20,
                     ),
@@ -42,8 +42,7 @@ class MainPage extends HookConsumerWidget {
                         child: Column(
                             children: data
                                 .map((advert) => selected
-                                            .where((e) => advert.announcer
-                                                .contains(e.name))
+                                            .where((e) => advert.announcer.name == e.name)
                                             .isNotEmpty ||
                                         selected.isEmpty
                                     ? AdvertCard(
@@ -73,13 +72,13 @@ class MainPage extends HookConsumerWidget {
               },
             ),
           ),
-          if (true) //TODO
+          if (true) //TODO admin
             Positioned(
               bottom: 20,
               right: 30,
               child: GestureDetector(
                 onTap: () {
-                  selectedNotifier.clearAnnounce();
+                  selectedNotifier.clearAnnouncer();
                   pageNotifier.setAdvertPage(AdvertPage.admin);
                 },
                 child: Container(
@@ -103,6 +102,44 @@ class MainPage extends HookConsumerWidget {
                           color: Colors.white, size: 20),
                       SizedBox(width: 10),
                       Text("Admin",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        if (true) //TODO super admin
+            Positioned(
+              bottom: 80,
+              right: 30,
+              child: GestureDetector(
+                onTap: () {
+                  pageNotifier.setAdvertPage(AdvertPage.addRemAnnouncer);
+                },
+                child: Container(
+                  width: 120,
+                  margin: const EdgeInsets.symmetric(vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.white, width: 1),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.grey.shade200.withOpacity(0.2),
+                            blurRadius: 10,
+                            offset: const Offset(0, 5))
+                      ]),
+                  child: const Row(
+                    children: [
+                      HeroIcon(HeroIcons.userGroup,
+                          color: Colors.white, size: 20),
+                      SizedBox(width: 10),
+                      Text("Super",
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,

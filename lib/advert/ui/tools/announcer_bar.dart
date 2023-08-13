@@ -5,7 +5,8 @@ import 'package:myecl/advert/providers/announcer_list_provider.dart';
 
 class AnnouncerBar extends HookConsumerWidget {
   final bool useUserAnnouncers;
-  const AnnouncerBar({super.key, required this.useUserAnnouncers});
+  final bool multipleSelect;
+  const AnnouncerBar({super.key, required this.multipleSelect, required this.useUserAnnouncers});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +23,18 @@ class AnnouncerBar extends HookConsumerWidget {
             const SizedBox(width: 15),
             ...userAnnouncers.map(
               (e) => GestureDetector(
-                onTap: () {selected.contains(e)?selectedNotifier.removeAnnounce(e):selectedNotifier.addAnnounce(e);},
+                onTap: () {
+                  if (multipleSelect) {
+                    selected.contains(e)?selectedNotifier.removeAnnouncer(e):selectedNotifier.addAnnouncer(e);
+                  } else {
+                    bool contain = selected.contains(e);
+                    selectedNotifier.clearAnnouncer();
+                    if (!contain) {
+                      selectedNotifier.addAnnouncer(e);
+                    }
+                  }
+                  },
+                  
                 child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Chip(
