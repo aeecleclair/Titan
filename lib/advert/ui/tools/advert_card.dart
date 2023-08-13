@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/tools/constants.dart';
-import 'package:myecl/advert/ui/tools/tag_chip.dart';
 
 class AdvertCard extends StatelessWidget {
   final VoidCallback onTap;
@@ -16,7 +15,7 @@ class AdvertCard extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = 300;
     double height = 300;
-    double imageHeight = 200;
+    double imageHeight = 175;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -55,7 +54,8 @@ class AdvertCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                Container(
+                  padding: const EdgeInsets.only(top:20,left:10,right:10),
                   width: width,
                   height: height - imageHeight,
                   child: Column(
@@ -64,39 +64,35 @@ class AdvertCard extends StatelessWidget {
                         children: [
                           Container(
                             width: double.infinity,
-                            child: Column(
-                              children: [
-                                const SizedBox(
-                                  height: 12,
-                                ),
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child:
                                 AutoSizeText(
                                   advert.title,
                                   textAlign: TextAlign.left,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
-                                  minFontSize: 14,
+                                  minFontSize: 15,
                                   style: const TextStyle(
                                     color: Colors.black,
-                                    fontSize: 18,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                const SizedBox(height: 5),
-                              ],
                             ),
-                          ),
                         ],
                       ),
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: AutoSizeText(
                           overflow: TextOverflow.ellipsis,
                           advert.content,
                           textAlign: TextAlign.justify,
                           maxLines: 3,
+                          minFontSize: 13,
+                          maxFontSize: 15,
                           style: const TextStyle(
                             color: Colors.black,
-                            fontSize: 13,
+                            fontSize: 15,
                           ),
                         ),
                       ),
@@ -106,30 +102,52 @@ class AdvertCard extends StatelessWidget {
               ],
             ),
             Positioned(
-              top: imageHeight - 23,
-              left: 20,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
+              top: imageHeight - 40,
+              left: 15,
+              child: Container(
+                decoration:  BoxDecoration(
+                    borderRadius:
+                        const BorderRadius.all(Radius.circular(8)),
                     boxShadow: [
-                    BoxShadow(
-                      blurRadius: 5,
-                      color: Colors.black.withOpacity(0.4),
-                      offset: const (2, 2),
-                      spreadRadius: 3,
-                    )
-                  ]),
-                  padding: const EdgeInsets.symmetric(horizontal: 17),
-                  child: AutoSizeText(
-                    DateFormat('dd/MM\nyyyy').format(advert.date),
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    style: const TextStyle(
-                      color: Colors.blue,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+                      BoxShadow(
+                        blurRadius: 5,
+                        color: Colors.black.withOpacity(0.3),
+                        offset: const Offset(2, 2),
+                        spreadRadius: 3,
+                      )
+                    ]),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  child: Container(
+                    color: Colors.white,
+                    height: 50,
+                    width: 50,
+                    padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AutoSizeText(
+                          DateFormat('dd').format(advert.date),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            height: 1.0,
+                          ),
+                        ),
+                                                AutoSizeText(
+                          AdvertTextConstants.months[int.parse(DateFormat('MM').format(advert.date))-1],
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            height: 1.0,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -137,16 +155,40 @@ class AdvertCard extends StatelessWidget {
             ),
             Positioned(
               top: imageHeight - 20,
-              right: 5,
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: advert.announcer
-                    .map((e) => TagChip(
-                          tagname: e,
-                        ))
-                    .toList(),
+              right: 15,
+              child: Container(
+                decoration:  BoxDecoration(
+                    borderRadius:
+                        const BorderRadius.all(Radius.circular(8)),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 5,
+                        color: Colors.black.withOpacity(0.3),
+                        offset: const Offset(2, 2),
+                        spreadRadius: 3,
+                      )
+                    ]),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  child: Container(
+                    color: Colors.white,
+                    height: 30,
+                    padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+                    alignment: Alignment.center,
+                    child: AutoSizeText(
+                          advert.announcer.name,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    ),
+                  ),
+                ),
               ),
-            ),
+            
           ],
         ),
       ),
