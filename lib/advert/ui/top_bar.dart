@@ -34,10 +34,13 @@ class TopBar extends HookConsumerWidget {
                             controllerNotifier.toggle();
                             break;
                           case AdvertPage.admin:
-                            selectedNotifier.clearAnnounce();
+                            selectedNotifier.clearAnnouncer();
                             pageNotifier.setAdvertPage(AdvertPage.main);
                             break;
                           case AdvertPage.detailFromMainPage:
+                            pageNotifier.setAdvertPage(AdvertPage.main);
+                            break;
+                          case AdvertPage.addRemAnnouncer:
                             pageNotifier.setAdvertPage(AdvertPage.main);
                             break;
                           case AdvertPage.detailFromAdminPage:

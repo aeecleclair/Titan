@@ -4,6 +4,7 @@ import 'package:myecl/advert/providers/advert_page_provider.dart';
 import 'package:myecl/advert/ui/pages/detail_page/detail.dart';
 import 'package:myecl/advert/ui/pages/form_page/add_edit_advert_page.dart';
 import 'package:myecl/advert/ui/pages/admin_page/admin_page.dart';
+import 'package:myecl/advert/ui/pages/form_page/add_rem_announcer_page.dart';
 import 'package:myecl/advert/ui/pages/main_page/main_page.dart';
 
 
@@ -24,6 +25,8 @@ class PageSwitcher extends ConsumerWidget {
         return const DetailPage();
       case AdvertPage.addEditAdvert:
         return const AddEditAdvertPage();
+      case AdvertPage.addRemAnnouncer:
+        return const AddRemAnnouncerPage();
       default:
         return const Text('Unknown page');
     }
