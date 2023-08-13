@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/centralisation/class/module.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:myecl/centralisation/class/section.dart';
-import 'package:myecl/centralisation/repositories/section_repository.dart';
 import 'package:myecl/centralisation/providers/centralisation_section_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myecl/centralisation/providers/openLink.dart';
-import 'package:myecl/centralisation/providers/showLinkDetails.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
 import 'package:myecl/centralisation/providers/favoritesUtils.dart';
 import 'dart:convert';
 import 'dart:async';
 
-
 class FavoritesNotifier extends StateNotifier<List<Module>> {
   FavoritesNotifier() : super([]) {
     loadFavorites();
   }
-
-
 
   Future<void> loadFavorites() async {
     final prefs = await SharedPreferences.getInstance();
@@ -28,11 +20,12 @@ class FavoritesNotifier extends StateNotifier<List<Module>> {
 
     if (favoritesJson != null) {
       final favoritesList = json.decode(favoritesJson) as List<dynamic>;
-      final favorites = favoritesList.map((moduleJson) => Module.fromJson(moduleJson)).toList();
+      final favorites = favoritesList
+          .map((moduleJson) => Module.fromJson(moduleJson))
+          .toList();
       state = favorites;
     }
   }
-
 
   void toggleFavorite(Module module) {
     if (state.contains(module)) {
@@ -40,22 +33,20 @@ class FavoritesNotifier extends StateNotifier<List<Module>> {
     } else {
       state = [...state, module];
     }
-    saveFavoritesToSharedPreferences(state); // Sauvegarder les favoris après modification
+    saveFavoritesToSharedPreferences(
+        state); // Sauvegarder les favoris après modification
   }
 }
 
-
 final favoritesProvider =
-StateNotifierProvider<FavoritesNotifier, List<Module>>(
+    StateNotifierProvider<FavoritesNotifier, List<Module>>(
         (ref) => FavoritesNotifier());
-
 
 class LinksScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final section = ref.watch(sectionProvider);
     final favorites = ref.watch(favoritesProvider);
-
 
     void showLinkDetails(BuildContext context, Module module) {
       showDialog(
@@ -66,13 +57,13 @@ class LinksScreen extends HookConsumerWidget {
             content: Text(utf8.decode(module.description.codeUnits)),
             actions: [
               TextButton(
-                child: Text('Accéder au site'),
+                child: const Text('Accéder au site'),
                 onPressed: () {
                   openLink(module.url);
                 },
               ),
               TextButton(
-                child: Text('Fermer'),
+                child: const Text('Fermer'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -95,81 +86,89 @@ class LinksScreen extends HookConsumerWidget {
           spacing: 35.0,
           runSpacing: 40.0,
           children: section.when(
-            data: (sections) => sections
-                .map<Widget>((section) {
-              final moduleWidgets = section.moduleList.map<Widget>(
+            data: (sections) => sections.map<Widget>((section) {
+              final moduleWidgets = section.moduleList
+                  .map<Widget>(
                     (e) => Container(
-                  margin: EdgeInsets.only(bottom: 10.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black12, width: 3),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    width: MediaQuery.of(context).size.width / 1  - 0.05 * MediaQuery.of(context).size.width,
-                    height: 70,
-                    child: ListTile(
-                      tileColor: Colors.red,
-                      splashColor: Colors.blue,
-                      onLongPress: () {
-
-                        showLinkDetails(context,e);
-                        },
-                      contentPadding: EdgeInsets.zero,
-                      title: Row(
-                        children: [
-                          e.icon.toLowerCase().endsWith('.svg')
-                              ? Container(
-                            margin: EdgeInsets.only(left: 10.0,right: 10.0, bottom : 3),
-                            child: SvgPicture.network(
-                              "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + e.icon,
-                            ),
-                            width: 45,
-                            height: 45,
-                          )
-                              : Container(
-                            margin: EdgeInsets.only(left: 10.0,right: 10.0, bottom : 3),
-                            child: Image.network(
-                              "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + e.icon,
-                            ),
-                            width: 45,
-                            height: 45,
+                      margin: const EdgeInsets.only(bottom: 10.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black12, width: 3),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        width: MediaQuery.of(context).size.width / 1 -
+                            0.05 * MediaQuery.of(context).size.width,
+                        height: 70,
+                        child: TextButton(
+                          style: ButtonStyle(
+                            overlayColor: MaterialStateProperty.all<Color>(
+                                const Color.fromARGB(37, 0, 0, 0)),
                           ),
-                          SizedBox(width: 10), // Ajoute un espace entre le logo et le texte
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  utf8.decode(e.name.codeUnits),
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                  ),
+                          onLongPress: () {
+                            showLinkDetails(context, e);
+                          },
+                          child: Row(
+                            children: [
+                              e.icon.toLowerCase().endsWith('.svg')
+                                  ? Container(
+                                      margin: const EdgeInsets.only(
+                                          left: 10.0, right: 10.0, bottom: 3),
+                                      width: 45,
+                                      height: 45,
+                                      child: SvgPicture.network(
+                                        "https://centralisation.eclair.ec-lyon.fr/assets/icons/${e.icon}",
+                                      ),
+                                    )
+                                  : Container(
+                                      margin: const EdgeInsets.only(
+                                          left: 10.0, right: 10.0, bottom: 3),
+                                      width: 45,
+                                      height: 45,
+                                      child: Image.network(
+                                        "https://centralisation.eclair.ec-lyon.fr/assets/icons/${e.icon}",
+                                      ),
+                                    ),
+                              const SizedBox(
+                                  width:
+                                      10), // Ajoute un espace entre le logo et le texte
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      utf8.decode(e.name.codeUnits),
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                              IconButton(
+                                icon: favorites.contains(e)
+                                    ? const Icon(Icons.star, color: Colors.grey)
+                                    : const Icon(Icons.star_border,
+                                        color: Colors.grey),
+                                onPressed: () {
+                                  toggleFavorite(e);
+                                },
+                              ),
+                            ],
                           ),
-                          IconButton(
-                            icon: favorites.contains(e)
-                                ? Icon(Icons.star)
-                                : Icon(Icons.star_border),
-                            onPressed: () {
-                              toggleFavorite(e);
-                            },
-                          ),
-                        ],
+                          onPressed: () {
+                            openLink(e.url);
+                          },
+                        ),
                       ),
-                        onTap: () {
-                          openLink(e.url);
-                        },
-                      ),
-                  ),
-                ),
-              ).toList();
+                    ),
+                  )
+                  .toList();
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,7 +177,7 @@ class LinksScreen extends HookConsumerWidget {
                     padding: const EdgeInsets.symmetric(vertical: 14.0),
                     child: Text(
                       utf8.decode(section.name.codeUnits),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.w900,
                       ),
@@ -190,8 +189,7 @@ class LinksScreen extends HookConsumerWidget {
                   ),
                 ],
               );
-            })
-                .toList(),
+            }).toList(),
             loading: () => [],
             error: (err, stack) => [],
           ),
