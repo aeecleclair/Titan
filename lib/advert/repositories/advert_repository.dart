@@ -7,7 +7,9 @@ class AdvertRepository extends Repository {
   final ext = 'advert/';
 
   Future<List<Advert>> getAllAdvert() async {
-    return (await getList()).map((e) => Advert.fromJson(e)).toList();
+    return (await getList(suffix: 'adverts'))
+        .map((e) => Advert.fromJson(e))
+        .toList();
   }
 
   Future<Advert> getAdvert(String id) async {
@@ -15,14 +17,14 @@ class AdvertRepository extends Repository {
   }
 
   Future<Advert> addAdvert(Advert advert) async {
-    return Advert.fromJson(await create(advert.toJson()));
+    return Advert.fromJson(await create(advert.toJson(), suffix: 'adverts'));
   }
 
   Future<bool> updateAdvert(Advert advert) async {
-    return await update(advert.toJson(), "/${advert.id}");
+    return await update(advert.toJson(), "adverts/${advert.id}");
   }
 
   Future<bool> deleteAdvert(String id) async {
-    return await delete("/$id");
+    return await delete("adverts/$id");
   }
 }
