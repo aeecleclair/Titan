@@ -26,7 +26,7 @@ class AdminAdvertCard extends HookConsumerWidget {
         Positioned(
           right: 15,
           child: Container(
-            margin: const EdgeInsets.only(top: 130),
+            margin: const EdgeInsets.only(top: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
