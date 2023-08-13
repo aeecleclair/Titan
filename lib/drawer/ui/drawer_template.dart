@@ -9,7 +9,7 @@ import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
 import 'package:myecl/drawer/providers/already_displayed_popup.dart';
 import 'package:myecl/drawer/ui/quit_dialog.dart';
-import 'package:myecl/others/ui/email_change_popup.dart';
+import 'package:myecl/drawer/ui/email_change_popup.dart';
 import 'package:myecl/tools/providers/should_notify_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 

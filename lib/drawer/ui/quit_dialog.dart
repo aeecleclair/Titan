@@ -22,15 +22,18 @@ class QuitDialog extends HookConsumerWidget {
         },
         child: Container(
             color: Colors.black54,
-            child: CustomDialogBox(
-                descriptions: DrawerTextConstants.logingOut,
-                title: DrawerTextConstants.logOut,
-                onYes: () {
-                  auth.deleteToken();
-                  isCachingNotifier.set(false);
-                  displayToast(
-                      context, TypeMsg.msg, DrawerTextConstants.logOut);
-                  QR.to(LoginRouter.root);
-                })));
+            child: GestureDetector(
+              onTap: () {},
+              child: CustomDialogBox(
+                  descriptions: DrawerTextConstants.logingOut,
+                  title: DrawerTextConstants.logOut,
+                  onYes: () {
+                    auth.deleteToken();
+                    isCachingNotifier.set(false);
+                    displayToast(
+                        context, TypeMsg.msg, DrawerTextConstants.logOut);
+                    QR.to(LoginRouter.root);
+                  }),
+            )));
   }
 }
