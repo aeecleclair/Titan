@@ -26,7 +26,8 @@ class AdvertAdminPage extends HookConsumerWidget {
         ref.watch(userAnnouncerListProvider.notifier);
     final userAnnouncerList = ref.watch(userAnnouncerListProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
-    final selected = ref.watch(announcerProvider);
+    final selectedAnnouncers = ref.watch(announcerProvider);
+    final selectedAnnouncersNotifier = ref.read(announcerProvider.notifier);
     return AdvertTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -86,11 +87,11 @@ class AdvertAdminPage extends HookConsumerWidget {
                           ))),
                     ),
                     ...userAnnouncerAdvert
-                        .map((advert) => selected
+                        .map((advert) => selectedAnnouncers
                                     .where(
                                         (e) => advert.announcer.name == e.name)
                                     .isNotEmpty ||
-                                selected.isEmpty
+                                selectedAnnouncers.isEmpty
                             ? AdminAdvertCard(
                                 onTap: () {
                                   advertNotifier.setAdvert(advert);
@@ -99,6 +100,8 @@ class AdvertAdminPage extends HookConsumerWidget {
                                 },
                                 onEdit: () {
                                   advertNotifier.setAdvert(advert);
+                                  selectedAnnouncersNotifier.clearAnnouncer(); //TODO ne marche pas pour une raison obscure...
+                                  selectedAnnouncersNotifier.addAnnouncer(advert.announcer); //TODO ne marche pas pour une raison obscure...
                                   QR.to(AdvertRouter.root +
                                       AdvertRouter.admin +
                                       AdvertRouter.addEditAdvert);
