@@ -1,13 +1,10 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/centralisation/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/centralisation/providers/centralisation_page_provider.dart';
-import 'package:myecl/centralisation/tools/functions.dart';
-import 'package:myecl/centralisation/providers/FavoritesNotifier.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -16,7 +13,6 @@ class TopBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(centralisationPageProvider);
-    final favorites = ref.watch(favoritesProvider);
 
     return Column(
       children: [
@@ -49,12 +45,15 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            const Text(
-              CentralisationTextConstants.centralisation,
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.w700,
-                color: Colors.black,
+            const Expanded(
+              child: AutoSizeText(
+                CentralisationTextConstants.centralisation,
+                maxLines: 1,
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                ),
               ),
             ),
             const SizedBox(
