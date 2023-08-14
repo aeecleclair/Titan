@@ -7,8 +7,8 @@ import 'package:myecl/centralisation/ui/centralisation.dart';
 import 'package:myecl/centralisation/ui/pages/liked_card.dart';
 import 'package:myecl/centralisation/ui/pages/section_list.dart';
 
-class LinksScreen extends HookConsumerWidget {
-  const LinksScreen({super.key});
+class CentralisationMainPage extends HookConsumerWidget {
+  const CentralisationMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
