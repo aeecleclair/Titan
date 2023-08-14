@@ -53,7 +53,7 @@ class AddEditPretendancePage extends HookConsumerWidget {
     final members = ref.watch(pretendanceMembersProvider);
     final membersNotifier = ref.watch(pretendanceMembersProvider.notifier);
     final pretendanceLogosNotifier =
-    ref.watch(pretendanceLogosProvider.notifier);
+        ref.watch(pretendanceLogosProvider.notifier);
     final logoNotifier = ref.watch(pretendenceLogoProvider.notifier);
     final logo = useState<Uint8List?>(null);
     final logoFile = useState<Image?>(null);
@@ -112,34 +112,34 @@ class AddEditPretendancePage extends HookConsumerWidget {
                       ),
                       child: logoFile.value != null
                           ? Container(
-                        width: 160,
-                        height: 160,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: logo.value != null
-                                ? Image.memory(
-                              logo.value!,
-                              fit: BoxFit.cover,
-                            ).image
-                                : logoFile.value!.image,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      )
+                              width: 160,
+                              height: 160,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: logo.value != null
+                                      ? Image.memory(
+                                          logo.value!,
+                                          fit: BoxFit.cover,
+                                        ).image
+                                      : logoFile.value!.image,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
                           : const HeroIcon(
-                        HeroIcons.userCircle,
-                        size: 160,
-                        color: Colors.grey,
-                      ),
+                              HeroIcons.userCircle,
+                              size: 160,
+                              color: Colors.grey,
+                            ),
                     ),
                     Positioned(
                       bottom: 0,
                       left: 0,
                       child: GestureDetector(
                         onTap: () async {
-                          final XFile? image =
-                          await picker.pickImage(source: ImageSource.gallery);
+                          final XFile? image = await picker.pickImage(
+                              source: ImageSource.gallery);
                           if (image != null) {
                             logo.value = await File(image.path).readAsBytes();
                             logoFile.value = Image.file(File(image.path));
@@ -161,7 +161,8 @@ class AddEditPretendancePage extends HookConsumerWidget {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: ColorConstants.gradient2.withOpacity(0.3),
+                                color:
+                                    ColorConstants.gradient2.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 4,
                                 offset: const Offset(2, 3),
@@ -199,15 +200,15 @@ class AddEditPretendancePage extends HookConsumerWidget {
                     const SizedBox(width: 15),
                     ...ListType.values.where((e) => e != ListType.blank).map(
                           (e) => SectionChip(
-                        label: capitalize(e.toString().split('.').last),
-                        selected: listType.value == e,
-                        isAdmin: false,
-                        onTap: () async {
-                          listType.value = e;
-                        },
-                        onDelete: () {},
-                      ),
-                    ),
+                            label: capitalize(e.toString().split('.').last),
+                            selected: listType.value == e,
+                            isAdmin: false,
+                            onTap: () async {
+                              listType.value = e;
+                            },
+                            onDelete: () {},
+                          ),
+                        ),
                     const SizedBox(width: 15),
                   ],
                 ),
@@ -232,7 +233,7 @@ class AddEditPretendancePage extends HookConsumerWidget {
                   children: [
                     const SizedBox(width: 15),
                     ...members.map(
-                          (e) => MemberCard(
+                      (e) => MemberCard(
                         member: e,
                         onDelete: () async {
                           membersNotifier.removeMember(e);
@@ -289,8 +290,8 @@ class AddEditPretendancePage extends HookConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                                 focusedBorder: UnderlineInputBorder(
-                                  borderSide:
-                                  BorderSide(color: Colors.black, width: 2.0),
+                                  borderSide: BorderSide(
+                                      color: Colors.black, width: 2.0),
                                 ),
                               ),
                             ),
@@ -332,7 +333,7 @@ class AddEditPretendancePage extends HookConsumerWidget {
                               child: Container(
                                   width: double.infinity,
                                   padding:
-                                  const EdgeInsets.only(top: 8, bottom: 12),
+                                      const EdgeInsets.only(top: 8, bottom: 12),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     color: Colors.black,
@@ -393,8 +394,8 @@ class AddEditPretendancePage extends HookConsumerWidget {
                       ),
                       child: const Center(
                           child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ))),
+                        color: Colors.white,
+                      ))),
                   onTap: () async {
                     if (key.currentState == null) {
                       return;
@@ -402,7 +403,7 @@ class AddEditPretendancePage extends HookConsumerWidget {
                     if (key.currentState!.validate()) {
                       await tokenExpireWrapper(ref, () async {
                         final pretendanceList =
-                        ref.watch(pretendanceListProvider);
+                            ref.watch(pretendanceListProvider);
                         Pretendance newPretendence = Pretendance(
                           name: name.text,
                           id: isEdit ? pretendance.id : '',
@@ -414,22 +415,22 @@ class AddEditPretendancePage extends HookConsumerWidget {
                         );
                         final value = isEdit
                             ? await pretendanceListNotifier
-                            .updatePretendance(newPretendence)
+                                .updatePretendance(newPretendence)
                             : await pretendanceListNotifier
-                            .addPretendance(newPretendence);
+                                .addPretendance(newPretendence);
                         if (value) {
                           QR.back();
                           if (isEdit) {
-                            displayVoteToastWithContext(
-                                TypeMsg.msg, VoteTextConstants.editedPretendance);
+                            displayVoteToastWithContext(TypeMsg.msg,
+                                VoteTextConstants.editedPretendance);
                             pretendanceList.when(
                                 data: (list) {
                                   if (logo.value != null) {
-                                    Future.delayed(const Duration(milliseconds: 1),
-                                            () {pretendanceLogosNotifier.setTData(
-                                            pretendance,
-                                                const AsyncLoading());
-                                        });
+                                    Future.delayed(
+                                        const Duration(milliseconds: 1), () {
+                                      pretendanceLogosNotifier.setTData(
+                                          pretendance, const AsyncLoading());
+                                    });
                                     logoNotifier.updateLogo(
                                         pretendance.id, logo.value!);
                                     pretendanceLogosNotifier.setTData(
@@ -445,17 +446,17 @@ class AddEditPretendancePage extends HookConsumerWidget {
                                 error: (error, s) {},
                                 loading: () {});
                           } else {
-                            displayVoteToastWithContext(
-                                TypeMsg.msg, VoteTextConstants.addedPretendance);
+                            displayVoteToastWithContext(TypeMsg.msg,
+                                VoteTextConstants.addedPretendance);
                             pretendanceList.when(
                                 data: (list) {
                                   final newPretendance = list.last;
                                   if (logo.value != null) {
-                                    Future.delayed(const Duration(milliseconds: 1),
-                                            () {pretendanceLogosNotifier.setTData(
-                                            pretendance,
-                                            const AsyncLoading());
-                                        });
+                                    Future.delayed(
+                                        const Duration(milliseconds: 1), () {
+                                      pretendanceLogosNotifier.setTData(
+                                          pretendance, const AsyncLoading());
+                                    });
                                     logoNotifier.updateLogo(
                                         newPretendance.id, logo.value!);
                                     pretendanceLogosNotifier.setTData(

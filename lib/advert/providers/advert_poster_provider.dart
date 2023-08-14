@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
@@ -15,8 +17,8 @@ class AdvertPosterNotifier extends SingleNotifier<Image> {
     return await _advertPosterRepository.getAdvertPoster(id);
   }
 
-  Future<Image> updateAdvertPoster(String id, String path) async {
-    return await _advertPosterRepository.addAdvertPoster(path, id);
+  Future<Image> updateAdvertPoster(String id, Uint8List bytes) async {
+    return await _advertPosterRepository.addAdvertPoster(bytes, id);
   }
 }
 

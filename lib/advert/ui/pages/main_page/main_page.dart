@@ -2,26 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/providers/advert_list_provider.dart';
-import 'package:myecl/advert/providers/advert_page_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
+import 'package:myecl/advert/providers/is_advert_admin_provider.dart';
 import 'package:myecl/advert/providers/is_user_admin_provider.dart';
+import 'package:myecl/advert/ui/router.dart';
 import 'package:myecl/advert/ui/tools/announcer_bar.dart';
 import 'package:myecl/advert/ui/tools/advert_card.dart';
 import 'package:myecl/tools/ui/refresher.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-class MainPage extends HookConsumerWidget {
-  const MainPage({Key? key}) : super(key: key);
+class AdvertMainPage extends HookConsumerWidget {
+  const AdvertMainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final advertNotifier = ref.watch(advertProvider.notifier);
-    final pageNotifier = ref.watch(advertPageProvider.notifier);
     final advertList = ref.watch(advertListProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final selected = ref.watch(announcerProvider);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
     final isAdmin = ref.watch(isUserAdmin);
+    final isAdvertAdmin = ref.watch(isAdvertAdminProvider);
     return Expanded(
       child: Stack(
         children: [
@@ -33,7 +35,8 @@ class MainPage extends HookConsumerWidget {
               data: (data) {
                 return Column(
                   children: [
-                    const AnnouncerBar(useUserAnnouncers: false, multipleSelect: true),
+                    const AnnouncerBar(
+                        useUserAnnouncers: false, multipleSelect: true),
                     const SizedBox(
                       height: 20,
                     ),
@@ -42,14 +45,15 @@ class MainPage extends HookConsumerWidget {
                         child: Column(
                             children: data
                                 .map((advert) => selected
-                                            .where((e) => advert.announcer.name == e.name)
+                                            .where((e) =>
+                                                advert.announcer.name == e.name)
                                             .isNotEmpty ||
                                         selected.isEmpty
                                     ? AdvertCard(
                                         onTap: () {
                                           advertNotifier.setAdvert(advert);
-                                          pageNotifier.setAdvertPage(
-                                              AdvertPage.detailFromMainPage);
+                                          QR.to(AdvertRouter.root +
+                                              AdvertRouter.detail);
                                         },
                                         advert: advert)
                                     : Container())
@@ -72,14 +76,14 @@ class MainPage extends HookConsumerWidget {
               },
             ),
           ),
-          if (true) //TODO admin
+          if (isAdvertAdmin)
             Positioned(
               bottom: 20,
               right: 30,
               child: GestureDetector(
                 onTap: () {
                   selectedNotifier.clearAnnouncer();
-                  pageNotifier.setAdvertPage(AdvertPage.admin);
+                  QR.to(AdvertRouter.root + AdvertRouter.admin);
                 },
                 child: Container(
                   width: 120,
@@ -111,13 +115,13 @@ class MainPage extends HookConsumerWidget {
                 ),
               ),
             ),
-        if (true) //TODO super admin
+          if (isAdmin)
             Positioned(
               bottom: 80,
               right: 30,
               child: GestureDetector(
                 onTap: () {
-                  pageNotifier.setAdvertPage(AdvertPage.addRemAnnouncer);
+                  QR.to(AdvertRouter.root + AdvertRouter.addRemAnnoucer);
                 },
                 child: Container(
                   width: 120,

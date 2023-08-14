@@ -2,7 +2,8 @@ import 'dart:ui';
 
 class AdvertTextConstants {
   static const String add = "Ajouter";
-  static const String modifyAnnouncingAssociation = "Modifier une association d'annonce";
+  static const String modifyAnnouncingAssociation =
+      "Modifier une association d'annonce";
   static const String edit = "Modifier";
   static const String advert = "Annonce";
   static const String strassAdvert = "AdminiSTRation";

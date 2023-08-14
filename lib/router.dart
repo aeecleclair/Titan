@@ -10,13 +10,15 @@ import 'package:myecl/home/ui/home.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/others/ui/loading_page.dart';
-import 'package:myecl/others/ui/no_internert_page.dart';
+import 'package:myecl/others/ui/no_internet_page.dart';
 import 'package:myecl/others/ui/update_page.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/tombola/router.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+
+import 'advert/ui/router.dart';
 
 final appRouterProvider = Provider<AppRouter>((ref) => AppRouter(ref));
 
@@ -47,6 +49,7 @@ class AppRouter {
         builder: () => const Scaffold(body: UpdatePage()),
       ),
       AdminRouter(ref).route(),
+      AdvertRouter(ref).route(),
       AmapRouter(ref).route(),
       BookingRouter(ref).route(),
       CinemaRouter(ref).route(),

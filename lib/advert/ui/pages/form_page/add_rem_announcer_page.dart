@@ -3,20 +3,19 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/advert/class/announcer.dart';
-import 'package:myecl/advert/providers/advert_page_provider.dart';
 import 'package:myecl/advert/providers/all_announcer_list_provider.dart';
 import 'package:myecl/advert/providers/announcer_list_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class AddRemAnnouncerPage extends HookConsumerWidget {
   const AddRemAnnouncerPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(advertPageProvider.notifier);
     final announcerListNotifier = ref.watch(announcerListProvider.notifier);
     final announcers = ref.watch(allAnnouncerList);
     final associations = ref.watch(allGroupListProvider);
@@ -68,8 +67,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                 await announcerListNotifier
                                                     .addAnnouncer(newAnnouncer);
                                             if (value) {
-                                              pageNotifier
-                                                  .setAdvertPage(AdvertPage.main);
+                                              QR.back();
                                               displayToastWithContext(
                                                   TypeMsg.msg,
                                                   AdvertTextConstants
@@ -109,10 +107,14 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                           tokenExpireWrapper(ref, () async {
                                             final value =
                                                 await announcerListNotifier
-                                                    .deleteAnnouncer(announcers.where((element) => e.id==e.id,).toList()[0]);
+                                                    .deleteAnnouncer(announcers
+                                                        .where(
+                                                          (element) =>
+                                                              e.id == e.id,
+                                                        )
+                                                        .toList()[0]);
                                             if (value) {
-                                              pageNotifier
-                                                  .setAdvertPage(AdvertPage.main);
+                                              QR.back();
                                               displayToastWithContext(
                                                   TypeMsg.msg,
                                                   AdvertTextConstants
