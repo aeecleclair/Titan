@@ -33,6 +33,7 @@ class CinemaMainPage extends HookConsumerWidget {
     final isWebFormat = ref.watch(isWebFormatProvider);
     pageController.addListener(() {
       scrollNotifier.setScroll(pageController.page!);
+      currentPage = pageController.page!.round();
     });
 
     return CinemaTemplate(
