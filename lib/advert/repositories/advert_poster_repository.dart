@@ -18,7 +18,7 @@ class AdvertPosterRepository extends LogoRepository {
   }
 
   Future<Image> addAdvertPoster(Uint8List bytes, String id) async {
-    final uint8List = await addLogo(bytes, "", suffix: "adverts/$id/poster");
+    final uint8List = await addLogo(bytes, "", suffix: "adverts/$id/picture");
     return Image.memory(uint8List);
   }
 } 

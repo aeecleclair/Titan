@@ -17,7 +17,9 @@ class AdvertTemplate extends StatelessWidget {
             children: [const TopBar(
               title: AdvertTextConstants.advert,
               root: AdvertRouter.root,
-            ), Expanded(child: child)],
+            ), 
+            const SizedBox(height: 30,),            
+            Expanded(child: child)],
           ),
         ),
       ),

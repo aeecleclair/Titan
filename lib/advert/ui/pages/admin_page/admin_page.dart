@@ -51,7 +51,9 @@ class AdvertAdminPage extends HookConsumerWidget {
                     GestureDetector(
                       onTap: () {
                         advertNotifier.setAdvert(Advert.empty());
-                        QR.to(AdvertRouter.root + AdvertRouter.addEditAdvert);
+                        QR.to(AdvertRouter.root +
+                            AdvertRouter.admin +
+                            AdvertRouter.addEditAdvert);
                       },
                       child: Container(
                           margin: const EdgeInsets.only(
@@ -98,6 +100,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                                 onEdit: () {
                                   advertNotifier.setAdvert(advert);
                                   QR.to(AdvertRouter.root +
+                                      AdvertRouter.admin +
                                       AdvertRouter.addEditAdvert);
                                 },
                                 onDelete: () async {

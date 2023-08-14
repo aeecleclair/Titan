@@ -122,7 +122,7 @@ class AdvertMainPage extends HookConsumerWidget {
               right: 30,
               child: GestureDetector(
                 onTap: () {
-                  QR.to(AdvertRouter.root + AdvertRouter.addRemAnnoucer);
+                  QR.to(AdvertRouter.root +  AdvertRouter.addRemAnnoucer);
                 },
                 child: Container(
                   width: 120,
