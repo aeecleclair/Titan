@@ -53,7 +53,7 @@ class UserRepository extends Repository {
 
   Future<bool> askMailMigration(String mail) async {
     try {
-      return await create({"new_email": mail}, suffix: "/migrate-mail");
+      return await create({"new_email": mail}, suffix: "migrate-mail");
     } catch (e) {
       return false;
     }
