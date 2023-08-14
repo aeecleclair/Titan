@@ -22,8 +22,7 @@ class AdvertCard extends HookConsumerWidget {
     double height = 300;
     double imageHeight = 175;
     final advertPosters = ref.watch(advertPostersProvider);
-    final advertPostersNotifier =
-        ref.watch(advertPostersProvider.notifier);
+    final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final logoNotifier = ref.watch(advertPosterProvider.notifier);
     return GestureDetector(
       onTap: onTap,
@@ -48,68 +47,63 @@ class AdvertCard extends HookConsumerWidget {
             Column(
               children: [
                 advertPosters.when(
-                                data: (data) {
-                                  if (data[advert] != null) {
-                                    return data[advert]!.when(
-                                        data: (data) {
-                                      if (data.isNotEmpty) {
-                                        return Container(
-                                          width: width,
-                                          height: imageHeight,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: data.first.image,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        );
-                                      } else {
-                                        Future.delayed(
-                                            const Duration(milliseconds: 1),
-                                            () {
-                                          advertPostersNotifier.setTData(
-                                              advert, const AsyncLoading());
-                                        });
-                                        tokenExpireWrapper(ref, () async {
-                                          logoNotifier
-                                              .getAdvertPoster(advert.id)
-                                              .then((value) {
-                                            advertPostersNotifier.setTData(
-                                                advert,
-                                                AsyncData([value]));
-                                          });
-                                        });
-                                        return  HeroIcon(
-                                          HeroIcons.photo,
-                                          size: width,
-                                        );
-                                      }
-                                    }, loading: () {
-                                      return  SizedBox(
-                                        height: imageHeight,
-                                        width: width,
-                                        child: const Center(
-                                          child: CircularProgressIndicator(),
-                                        ),
-                                      );
-                                    }, error: (error, stack) {
-                                      return  SizedBox(
-                                        height: imageHeight,
-                                        width: width,
-                                        child: const Center(
-                                          child: HeroIcon(
-                                              HeroIcons.exclamationCircle),
-                                        ),
-                                      );
-                                    });
-                                  } else {
-                                    return const SizedBox.shrink();
-                                  }
-                                },
-                                loading: () =>
-                                    const CircularProgressIndicator(),
-                                error: (error, stack) => Text('Error $error')),
+                    data: (data) {
+                      if (data[advert] != null) {
+                        return data[advert]!.when(data: (data) {
+                          if (data.isNotEmpty) {
+                            return Container(
+                              width: width,
+                              height: imageHeight,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                                image: DecorationImage(
+                                  image: data.first.image,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            );
+                          } else {
+                            Future.delayed(const Duration(milliseconds: 1), () {
+                              advertPostersNotifier.setTData(
+                                  advert, const AsyncLoading());
+                            });
+                            tokenExpireWrapper(ref, () async {
+                              logoNotifier
+                                  .getAdvertPoster(advert.id)
+                                  .then((value) {
+                                advertPostersNotifier.setTData(
+                                    advert, AsyncData([value]));
+                              });
+                            });
+                            return HeroIcon(
+                              HeroIcons.photo,
+                              size: width,
+                            );
+                          }
+                        }, loading: () {
+                          return SizedBox(
+                            height: imageHeight,
+                            width: width,
+                            child: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }, error: (error, stack) {
+                          return SizedBox(
+                            height: imageHeight,
+                            width: width,
+                            child: const Center(
+                              child: HeroIcon(HeroIcons.exclamationCircle),
+                            ),
+                          );
+                        });
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
+                    loading: () => const CircularProgressIndicator(),
+                    error: (error, stack) => Text('Error $error')),
 
                 // Container(
                 //   width: width,
@@ -128,7 +122,7 @@ class AdvertCard extends HookConsumerWidget {
                 //   ),
                 // ),
                 Container(
-                  padding: const EdgeInsets.only(top:20,left:10,right:10),
+                  padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
                   width: width,
                   height: height - imageHeight,
                   child: Column(
@@ -138,20 +132,19 @@ class AdvertCard extends HookConsumerWidget {
                           Container(
                             width: double.infinity,
                             margin: const EdgeInsets.only(bottom: 5),
-                            child:
-                                AutoSizeText(
-                                  advert.title,
-                                  textAlign: TextAlign.left,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  minFontSize: 15,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                            child: AutoSizeText(
+                              advert.title,
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              minFontSize: 15,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
+                          ),
                         ],
                       ),
                       Container(
@@ -178,9 +171,8 @@ class AdvertCard extends HookConsumerWidget {
               top: imageHeight - 40,
               left: 15,
               child: Container(
-                decoration:  BoxDecoration(
-                    borderRadius:
-                        const BorderRadius.all(Radius.circular(8)),
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
                     boxShadow: [
                       BoxShadow(
                         blurRadius: 5,
@@ -195,7 +187,8 @@ class AdvertCard extends HookConsumerWidget {
                     color: Colors.white,
                     height: 50,
                     width: 50,
-                    padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -210,8 +203,10 @@ class AdvertCard extends HookConsumerWidget {
                             height: 1.0,
                           ),
                         ),
-                                                AutoSizeText(
-                          AdvertTextConstants.months[int.parse(DateFormat('MM').format(advert.date))-1],
+                        AutoSizeText(
+                          AdvertTextConstants.months[
+                              int.parse(DateFormat('MM').format(advert.date)) -
+                                  1],
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.black,
@@ -230,9 +225,8 @@ class AdvertCard extends HookConsumerWidget {
               top: imageHeight - 20,
               right: 15,
               child: Container(
-                decoration:  BoxDecoration(
-                    borderRadius:
-                        const BorderRadius.all(Radius.circular(8)),
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
                     boxShadow: [
                       BoxShadow(
                         blurRadius: 5,
@@ -246,22 +240,22 @@ class AdvertCard extends HookConsumerWidget {
                   child: Container(
                     color: Colors.white,
                     height: 30,
-                    padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     alignment: Alignment.center,
                     child: AutoSizeText(
-                          advert.announcer.name,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                      advert.announcer.name,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
               ),
-            
+            ),
           ],
         ),
       ),

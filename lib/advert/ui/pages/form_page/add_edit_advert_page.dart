@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -131,10 +132,15 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                 final XFile? image = await picker.pickImage(
                                     source: ImageSource.gallery);
                                 if (image != null) {
-                                  poster.value =
-                                      await File(image.path).readAsBytes();
-                                  posterFile.value =
-                                      Image.file(File(image.path));
+                                  if (kIsWeb) {
+                                    poster.value = await image.readAsBytes();
+                                    posterFile.value =
+                                        Image.network(image.path);
+                                  } else {
+                                    final file = File(image.path);
+                                    poster.value = await file.readAsBytes();
+                                    posterFile.value = Image.file(file);
+                                  }
                                 }
                               },
                               child: Container(
