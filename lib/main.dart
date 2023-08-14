@@ -39,6 +39,12 @@ class MyApp extends HookConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: 'MyECL',
       scrollBehavior: MyCustomScrollBehavior(),
+      supportedLocales: const [Locale('en', 'US'), Locale('fr', 'FR')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       theme: ThemeData(
           primarySwatch: Colors.orange,
           textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
