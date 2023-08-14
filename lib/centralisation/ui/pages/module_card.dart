@@ -32,7 +32,7 @@ class ModuleCard extends HookConsumerWidget {
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25.0),
+            borderRadius: BorderRadius.circular(20.0),
           )),
           overlayColor: MaterialStateProperty.all<Color>(
               const Color.fromARGB(37, 0, 0, 0)),

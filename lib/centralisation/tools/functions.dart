@@ -11,8 +11,8 @@ void showLinkDetails(BuildContext context, Module module) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text(utf8.decode(module.name.codeUnits)),
-        content: Text(utf8.decode(module.description.codeUnits)),
+        title: Text(module.name),
+        content: Text(module.description),
         actions: [
           TextButton(
             child: const Text('Accéder au site'),
