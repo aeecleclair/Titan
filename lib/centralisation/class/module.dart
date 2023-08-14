@@ -30,7 +30,7 @@ class Module {
       data['liked'] = false;
     } else {
       data['liked'] = liked ;
-    };
+    }
     return data;
   }
 
@@ -62,15 +62,5 @@ class Module {
   String toString() {
   return 'Module{name: $name, description: $description, icon: $icon, url: $url, liked: $liked}';
   }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Module &&
-        other.name == name && 
-        other.url == url;
-  }
-
 }
 

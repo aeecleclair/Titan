@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/centralisation/class/module.dart';
-import 'package:myecl/centralisation/providers/FavoritesNotifier.dart';
+import 'package:myecl/centralisation/providers/favorites_providers.dart';
 import 'package:myecl/centralisation/tools/functions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
