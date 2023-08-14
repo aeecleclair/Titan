@@ -10,7 +10,7 @@ class AdvertPosterRepository extends LogoRepository {
   final ext = "advert/";
 
   Future<Image> getAdvertPoster(String id) async {
-    final uint8List = await getLogo(id, suffix: "adverts/$id/picture");
+    final uint8List = await getLogo("", suffix: "adverts/$id/picture");
     if (uint8List.isEmpty) {
       return Image.asset("assets/images/logo.png");
     }
