@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/providers/is_admin.dart';
 import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/providers/is_advert_admin_provider.dart';
-import 'package:myecl/advert/providers/is_user_admin_provider.dart';
+import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/ui/router.dart';
 import 'package:myecl/advert/ui/tools/announcer_bar.dart';
 import 'package:myecl/advert/ui/tools/advert_card.dart';
@@ -22,9 +23,9 @@ class AdvertMainPage extends HookConsumerWidget {
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final selected = ref.watch(announcerProvider);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
-    final isAdmin = ref.watch(isUserAdmin);
+    final isAdmin = ref.watch(isAdminProvider);
     final isAdvertAdmin = ref.watch(isAdvertAdminProvider);
-    return Expanded(
+    return AdvertTemplate(
       child: Stack(
         children: [
           Refresher(
