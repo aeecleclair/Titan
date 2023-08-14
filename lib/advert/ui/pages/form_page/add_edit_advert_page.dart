@@ -13,6 +13,7 @@ import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
+import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/ui/tools/announcer_bar.dart';
 import 'package:myecl/advert/ui/pages/form_page/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
@@ -59,7 +60,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return Expanded(
+    return AdvertTemplate(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Form(
