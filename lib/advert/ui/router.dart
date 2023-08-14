@@ -39,11 +39,11 @@ class AdvertRouter {
                 AdminMiddleware(ref, isAdvertAdminProvider),
               ],
               children: [
-                QRoute(path: detail, builder: () => const AdvertDetailPage()),
                 QRoute(
                     path: addEditAdvert,
                     builder: () => const AdvertAddEditAdvertPage()),
               ]),
+          QRoute(path: detail, builder: () => const AdvertDetailPage()),
           QRoute(
             path: addRemAnnoucer,
             builder: () => const AddRemAnnouncerPage(),

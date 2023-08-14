@@ -44,7 +44,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
     final poster = useState<Uint8List?>(null);
     final posterFile = useState<Image?>(null);
 
-    //final selected = ref.watch(announcerProvider);
 
     ref.watch(advertPostersProvider).whenData((value) {
       if (value[advert] != null) {
