@@ -42,25 +42,18 @@ class ModuleCard extends HookConsumerWidget {
         },
         child: Row(
           children: [
-            module.icon.endsWith('.svg')
-                ? Container(
-                    margin: const EdgeInsets.only(
-                        left: 10.0, right: 10.0, bottom: 3),
-                    width: 45,
-                    height: 45,
-                    child: SvgPicture.network(
+            Container(
+              margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 3),
+              width: 45,
+              height: 45,
+              child: module.icon.endsWith('.svg')
+                  ? SvgPicture.network(
+                      "https://centralisation.eclair.ec-lyon.fr/assets/icons/${module.icon}",
+                    )
+                  : Image.network(
                       "https://centralisation.eclair.ec-lyon.fr/assets/icons/${module.icon}",
                     ),
-                  )
-                : Container(
-                    margin: const EdgeInsets.only(
-                        left: 10.0, right: 10.0, bottom: 3),
-                    width: 45,
-                    height: 45,
-                    child: Image.network(
-                      "https://centralisation.eclair.ec-lyon.fr/assets/icons/${module.icon}",
-                    ),
-                  ),
+            ),
             const SizedBox(width: 10),
             Expanded(
               child: Column(
@@ -78,7 +71,7 @@ class ModuleCard extends HookConsumerWidget {
               ),
             ),
             IconButton(
-              icon: favorites.contains(module)
+              icon: favorites.map((e) => e.name).contains(module.name)
                   ? const Icon(Icons.star, color: Colors.grey)
                   : const Icon(Icons.star_border, color: Colors.grey),
               onPressed: () {
