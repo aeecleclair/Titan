@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/centralisation/providers/centralisation_section_provider.dart';
 import 'package:myecl/centralisation/providers/FavoritesNotifier.dart';
+import 'package:myecl/centralisation/ui/centralisation.dart';
 
 import 'package:myecl/centralisation/ui/pages/liked_card.dart';
 import 'package:myecl/centralisation/ui/pages/section_list.dart';
@@ -14,7 +15,7 @@ class LinksScreen extends HookConsumerWidget {
     final section = ref.watch(sectionProvider);
     final favorites = ref.watch(favoritesProvider);
 
-    return Expanded(
+    return CentralisationTemplate(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(children: [
