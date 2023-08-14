@@ -237,7 +237,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                       .addAdvert(newAdvert);
                               if (value) {
                                 QR.back();
-                                ;
                                 if (isEdit) {
                                   displayAdvertToastWithContext(TypeMsg.msg,
                                       AdvertTextConstants.editedAdvert);

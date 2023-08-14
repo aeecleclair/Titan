@@ -1,10 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/advert/class/advert.dart';
+import 'package:myecl/advert/providers/advert_poster_provider.dart';
+import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class AdvertCard extends StatelessWidget {
+class AdvertCard extends HookConsumerWidget {
   final VoidCallback onTap;
   final Advert advert;
 
@@ -12,10 +17,14 @@ class AdvertCard extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     double width = 300;
     double height = 300;
     double imageHeight = 175;
+    final advertPosters = ref.watch(advertPostersProvider);
+    final advertPostersNotifier =
+        ref.watch(advertPostersProvider.notifier);
+    final logoNotifier = ref.watch(advertPosterProvider.notifier);
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -38,22 +47,86 @@ class AdvertCard extends StatelessWidget {
           children: [
             Column(
               children: [
-                Container(
-                  width: width,
-                  height: imageHeight,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: Image.network(
-                        'https://picsum.photos/seed/664/600',
-                      ).image,
-                    ),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
-                ),
+                advertPosters.when(
+                                data: (data) {
+                                  if (data[advert] != null) {
+                                    return data[advert]!.when(
+                                        data: (data) {
+                                      if (data.isNotEmpty) {
+                                        return Container(
+                                          width: width,
+                                          height: imageHeight,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              image: data.first.image,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        Future.delayed(
+                                            const Duration(milliseconds: 1),
+                                            () {
+                                          advertPostersNotifier.setTData(
+                                              advert, const AsyncLoading());
+                                        });
+                                        tokenExpireWrapper(ref, () async {
+                                          logoNotifier
+                                              .getAdvertPoster(advert.id)
+                                              .then((value) {
+                                            advertPostersNotifier.setTData(
+                                                advert,
+                                                AsyncData([value]));
+                                          });
+                                        });
+                                        return  HeroIcon(
+                                          HeroIcons.photo,
+                                          size: width,
+                                        );
+                                      }
+                                    }, loading: () {
+                                      return  SizedBox(
+                                        height: imageHeight,
+                                        width: width,
+                                        child: const Center(
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      );
+                                    }, error: (error, stack) {
+                                      return  SizedBox(
+                                        height: imageHeight,
+                                        width: width,
+                                        child: const Center(
+                                          child: HeroIcon(
+                                              HeroIcons.exclamationCircle),
+                                        ),
+                                      );
+                                    });
+                                  } else {
+                                    return const SizedBox.shrink();
+                                  }
+                                },
+                                loading: () =>
+                                    const CircularProgressIndicator(),
+                                error: (error, stack) => Text('Error $error')),
+
+                // Container(
+                //   width: width,
+                //   height: imageHeight,
+                //   decoration: BoxDecoration(
+                //     image: DecorationImage(
+                //       fit: BoxFit.cover,
+                //       image: Image.network(
+                //         'https://picsum.photos/seed/664/600',
+                //       ).image,
+                //     ),
+                //     borderRadius: const BorderRadius.only(
+                //       topLeft: Radius.circular(20),
+                //       topRight: Radius.circular(20),
+                //     ),
+                //   ),
+                // ),
                 Container(
                   padding: const EdgeInsets.only(top:20,left:10,right:10),
                   width: width,
