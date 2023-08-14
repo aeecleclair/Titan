@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/cinema/class/session.dart';
+import 'package:myecl/cinema/providers/cinema_topic_provider.dart';
 import 'package:myecl/cinema/providers/scroll_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SessionCard extends HookConsumerWidget {
@@ -29,6 +31,12 @@ class SessionCard extends HookConsumerWidget {
         ref.watch(sessionPosterMapProvider.notifier);
     final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
     final isWebFormat = ref.watch(isWebFormatProvider);
+    final cinemaTopics = ref.watch(cinemaTopicsProvider);
+    final cinemaTopicsNotifier = ref.watch(cinemaTopicsProvider.notifier);
+    final selected = cinemaTopics.when(
+        data: (data) => data.contains(session.id),
+        loading: () => false,
+        error: (e, s) => false);
 
     double minScale = 0.8;
     double scale = 1;
@@ -133,24 +141,71 @@ class SessionCard extends HookConsumerWidget {
                                   ],
                                 ),
                               )
-                            : Container(
-                                height: maxHeigth * scale,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  image: DecorationImage(
-                                      image: data.first.image,
-                                      fit: BoxFit.cover),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: const Offset(
-                                          0, 3), // changes position of shadow
+                            : Stack(
+                                children: [
+                                  Container(
+                                    height: maxHeigth * scale,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      image: DecorationImage(
+                                          image: data.first.image,
+                                          fit: BoxFit.cover),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: const Offset(0, 3),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  Positioned(
+                                    top: 10,
+                                    right: 10,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        cinemaTopicsNotifier
+                                            .toggleSubscription(session.id);
+                                        if (selected) {
+                                          displayToast(context, TypeMsg.msg,
+                                              "Le rappel a été supprimé");
+                                        } else {
+                                          displayToast(context, TypeMsg.msg,
+                                              "Un rappel a été ajouté");
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 50,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.8),
+                                          borderRadius:
+                                              BorderRadius.circular(18),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.white.withOpacity(0.2),
+                                              spreadRadius: 5,
+                                              blurRadius: 7,
+                                              offset: const Offset(0, 3),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Center(
+                                          child: HeroIcon(
+                                            selected
+                                                ? HeroIcons.bellSlash
+                                                : HeroIcons.bell,
+                                            size: 30,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               );
                       } else {
                         Future.delayed(const Duration(milliseconds: 1), () {
