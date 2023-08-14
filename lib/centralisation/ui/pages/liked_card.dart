@@ -15,7 +15,7 @@ class LikedCard extends StatelessWidget {
         openLink(module.url);
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
         child: Column(
           children: [
             Container(

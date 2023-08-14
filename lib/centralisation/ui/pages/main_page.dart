@@ -33,9 +33,15 @@ class LinksScreen extends HookConsumerWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: favorites.map((module) =>
-                  LikedCard(module: module)
-                ).toList(),
+                children: [
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  ...favorites.map((module) => LikedCard(module: module)),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                ],
               ),
             ),
           ),
