@@ -3,18 +3,19 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/providers/advert_list_provider.dart';
-import 'package:myecl/advert/providers/advert_page_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_list_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/pages/admin_page/admin_advert_card.dart';
+import 'package:myecl/advert/ui/router.dart';
 import 'package:myecl/advert/ui/tools/announcer_bar.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/refresher.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-class AdminPage extends HookConsumerWidget {
-  const AdminPage({Key? key}) : super(key: key);
+class AdvertAdminPage extends HookConsumerWidget {
+  const AdvertAdminPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,7 +25,6 @@ class AdminPage extends HookConsumerWidget {
         ref.watch(userAnnouncerListProvider.notifier);
     final userAnnouncerList = ref.watch(userAnnouncerListProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
-    final pageNotifier = ref.watch(advertPageProvider.notifier);
     final selected = ref.watch(announcerProvider);
     return Expanded(
       child: Refresher(
@@ -38,16 +38,19 @@ class AdminPage extends HookConsumerWidget {
               data: (userAnnouncerData) {
                 final userAnnouncerAdvert = advertData.where((advert) =>
                     userAnnouncerData
-                        .where((element) =>
-                            advert.announcer.name==element.name)
+                        .where(
+                            (element) => advert.announcer.name == element.name)
                         .isNotEmpty);
                 return Column(
                   children: [
-                    const AnnouncerBar(useUserAnnouncers: true, multipleSelect: true,),
+                    const AnnouncerBar(
+                      useUserAnnouncers: true,
+                      multipleSelect: true,
+                    ),
                     GestureDetector(
                       onTap: () {
                         advertNotifier.setAdvert(Advert.empty());
-                        pageNotifier.setAdvertPage(AdvertPage.addEditAdvert);
+                        QR.to(AdvertRouter.root + AdvertRouter.addEditAdvert);
                       },
                       child: Container(
                           margin: const EdgeInsets.only(
@@ -81,20 +84,20 @@ class AdminPage extends HookConsumerWidget {
                     ),
                     ...userAnnouncerAdvert
                         .map((advert) => selected
-                                    .where((e) =>
-                                        advert.announcer.name == e.name)
+                                    .where(
+                                        (e) => advert.announcer.name == e.name)
                                     .isNotEmpty ||
                                 selected.isEmpty
                             ? AdminAdvertCard(
                                 onTap: () {
                                   advertNotifier.setAdvert(advert);
-                                  pageNotifier.setAdvertPage(
-                                      AdvertPage.detailFromAdminPage);
+                                  QR.to(
+                                      AdvertRouter.root + AdvertRouter.detail);
                                 },
                                 onEdit: () {
                                   advertNotifier.setAdvert(advert);
-                                  pageNotifier
-                                      .setAdvertPage(AdvertPage.addEditAdvert);
+                                  QR.to(AdvertRouter.root +
+                                      AdvertRouter.addEditAdvert);
                                 },
                                 onDelete: () async {
                                   await showDialog(

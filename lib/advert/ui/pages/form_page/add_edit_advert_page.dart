@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -7,7 +8,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/providers/advert_list_provider.dart';
-import 'package:myecl/advert/providers/advert_page_provider.dart';
 import 'package:myecl/advert/providers/advert_poster_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
@@ -18,14 +18,13 @@ import 'package:myecl/advert/ui/pages/form_page/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-class AddEditAdvertPage extends HookConsumerWidget {
-  const AddEditAdvertPage({Key? key}) : super(key: key);
+class AdvertAddEditAdvertPage extends HookConsumerWidget {
+  const AdvertAddEditAdvertPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(advertPageProvider.notifier);
-
     final advert = ref.watch(advertProvider);
     final key = GlobalKey<FormState>();
     final isEdit = advert.id != Advert.empty().id;
@@ -40,7 +39,7 @@ class AddEditAdvertPage extends HookConsumerWidget {
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final posterNotifier = ref.watch(advertPosterProvider.notifier);
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
-    final poster = useState<String?>(null);
+    final poster = useState<Uint8List?>(null);
     final posterFile = useState<Image?>(null);
 
     //final selected = ref.watch(announcerProvider);
@@ -108,8 +107,8 @@ class AddEditAdvertPage extends HookConsumerWidget {
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
                                         image: poster.value != null
-                                            ? Image.file(
-                                                File(poster.value!),
+                                            ? Image.memory(
+                                                poster.value!,
                                                 fit: BoxFit.cover,
                                               ).image
                                             : posterFile.value!.image,
@@ -131,7 +130,8 @@ class AddEditAdvertPage extends HookConsumerWidget {
                                 final XFile? image = await picker.pickImage(
                                     source: ImageSource.gallery);
                                 if (image != null) {
-                                  poster.value = image.path;
+                                  poster.value =
+                                      await File(image.path).readAsBytes();
                                   posterFile.value =
                                       Image.file(File(image.path));
                                 }
@@ -167,7 +167,8 @@ class AddEditAdvertPage extends HookConsumerWidget {
                 height: 50,
               ),
               const AnnouncerBar(
-                useUserAnnouncers: true, multipleSelect: false,
+                useUserAnnouncers: true,
+                multipleSelect: false,
               ),
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -222,21 +223,20 @@ class AddEditAdvertPage extends HookConsumerWidget {
                             await tokenExpireWrapper(ref, () async {
                               final advertList = ref.watch(advertListProvider);
                               Advert newAdvert = Advert(
-                                id: isEdit ? advert.id : '',
-                                announcer: selectedAnnoncers[0],
-                                content: content.text,
-                                date: DateTime.now(),
-                                tags: textTagsController.text.split(', '),
-                                title: title.text
-
-                              );
+                                  id: isEdit ? advert.id : '',
+                                  announcer: selectedAnnoncers[0],
+                                  content: content.text,
+                                  date: DateTime.now(),
+                                  tags: textTagsController.text.split(', '),
+                                  title: title.text);
                               final value = isEdit
                                   ? await advertListNotifier
                                       .updateAdvert(newAdvert)
                                   : await advertListNotifier
                                       .addAdvert(newAdvert);
                               if (value) {
-                                pageNotifier.setAdvertPage(AdvertPage.admin);
+                                QR.back();
+                                ;
                                 if (isEdit) {
                                   displayAdvertToastWithContext(TypeMsg.msg,
                                       AdvertTextConstants.editedAdvert);
@@ -248,8 +248,8 @@ class AddEditAdvertPage extends HookConsumerWidget {
                                           advertPostersNotifier.setTData(
                                               advert,
                                               AsyncData([
-                                                Image.file(
-                                                  File(poster.value!),
+                                                Image.memory(
+                                                  poster.value!,
                                                   fit: BoxFit.cover,
                                                 ),
                                               ]));
@@ -269,8 +269,8 @@ class AddEditAdvertPage extends HookConsumerWidget {
                                           advertPostersNotifier.setTData(
                                               newAdvert,
                                               AsyncData([
-                                                Image.file(
-                                                  File(poster.value!),
+                                                Image.memory(
+                                                  poster.value!,
                                                   fit: BoxFit.cover,
                                                 )
                                               ]));

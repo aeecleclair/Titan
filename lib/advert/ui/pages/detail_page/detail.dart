@@ -3,18 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/advert/providers/advert_page_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/ui/tools/tag_chip.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-class DetailPage extends HookConsumerWidget {
-  const DetailPage({super.key});
+class AdvertDetailPage extends HookConsumerWidget {
+  const AdvertDetailPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final advert = ref.watch(advertProvider);
-    final page = ref.watch(advertPageProvider);
-    final pageNotifier = ref.watch(advertPageProvider.notifier);
 
     return Stack(
       children: [
@@ -42,11 +40,7 @@ class DetailPage extends HookConsumerWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (page == AdvertPage.detailFromMainPage) {
-                        pageNotifier.setAdvertPage(AdvertPage.main);
-                      } else {
-                        pageNotifier.setAdvertPage(AdvertPage.admin);
-                      }
+                      QR.back();
                     },
                     child: Container(
                       padding: const EdgeInsets.all(8),
@@ -150,7 +144,8 @@ class DetailPage extends HookConsumerWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       alignment: Alignment.center,
-                      child: const Text( //TODO
+                      child: const Text(
+                        //TODO
                         "",
                         style: TextStyle(
                           fontSize: 18,
@@ -165,10 +160,12 @@ class DetailPage extends HookConsumerWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 30),
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: ([advert.announcer.name] + advert.tags).length,
+                        itemCount:
+                            ([advert.announcer.name] + advert.tags).length,
                         itemBuilder: (BuildContext context, int index) {
                           return TagChip(
-                              tagname: ([advert.announcer.name] + advert.tags)[index]);
+                              tagname: ([advert.announcer.name] +
+                                  advert.tags)[index]);
                         },
                       ),
                     ),
