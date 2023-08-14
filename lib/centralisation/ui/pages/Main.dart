@@ -3,44 +3,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/centralisation/class/module.dart';
 import 'package:myecl/centralisation/providers/centralisation_section_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myecl/centralisation/providers/openLink.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:myecl/centralisation/providers/favoritesUtils.dart';
+import 'package:myecl/centralisation/providers/FavoritesNotifier.dart';
+import 'package:myecl/centralisation/tools/functions.dart';
 import 'dart:convert';
-import 'dart:async';
-
-class FavoritesNotifier extends StateNotifier<List<Module>> {
-  FavoritesNotifier() : super([]) {
-    loadFavorites();
-  }
-
-  Future<void> loadFavorites() async {
-    final prefs = await SharedPreferences.getInstance();
-    final favoritesJson = prefs.getString('favorites');
-
-    if (favoritesJson != null) {
-      final favoritesList = json.decode(favoritesJson) as List<dynamic>;
-      final favorites = favoritesList
-          .map((moduleJson) => Module.fromJson(moduleJson))
-          .toList();
-      state = favorites;
-    }
-  }
-
-  void toggleFavorite(Module module) {
-    if (state.contains(module)) {
-      state = state.where((m) => m != module).toList();
-    } else {
-      state = [...state, module];
-    }
-    saveFavoritesToSharedPreferences(
-        state);
-  }
-}
-
-final favoritesProvider =
-    StateNotifierProvider<FavoritesNotifier, List<Module>>(
-        (ref) => FavoritesNotifier());
 
 class LinksScreen extends HookConsumerWidget {
   @override
@@ -48,31 +13,6 @@ class LinksScreen extends HookConsumerWidget {
     final section = ref.watch(sectionProvider);
     final favorites = ref.watch(favoritesProvider);
 
-    void showLinkDetails(BuildContext context, Module module) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(utf8.decode(module.name.codeUnits)),
-            content: Text(utf8.decode(module.description.codeUnits)),
-            actions: [
-              TextButton(
-                child: const Text('Accéder au site'),
-                onPressed: () {
-                  openLink(module.url);
-                },
-              ),
-              TextButton(
-                child: const Text('Fermer'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
 
     void toggleFavorite(Module module) {
       final favoritesProviderNotifier = ref.read(favoritesProvider.notifier);
@@ -92,19 +32,28 @@ class LinksScreen extends HookConsumerWidget {
                     (e) => Container(
                       margin: const EdgeInsets.only(bottom: 10.0),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black12, width: 3),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(25)),
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        width: MediaQuery.of(context).size.width / 1 -
-                            0.05 * MediaQuery.of(context).size.width,
-                        height: 70,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              blurRadius: 8,
+                              spreadRadius: 2,
+                              offset: const Offset(2, 3),
+                            ),
+                          ]),
+                      width: MediaQuery.of(context).size.width / 1 -
+                          0.05 * MediaQuery.of(context).size.width,
+                      height: 70,
+
                         child: TextButton(
+
                           style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        )
+                        ),
                             overlayColor: MaterialStateProperty.all<Color>(
                                 const Color.fromARGB(37, 0, 0, 0)),
                           ),
@@ -165,7 +114,6 @@ class LinksScreen extends HookConsumerWidget {
                             openLink(e.url);
                           },
                         ),
-                      ),
                     ),
                   )
                   .toList();

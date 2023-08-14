@@ -23,37 +23,6 @@ class SectionNotifier extends ListNotifier<Section> {
     }
     state = AsyncValue.data(allSections);
   }
-
-  void getLikedModule() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    for (Module module in allModules) {
-      if (prefs.getBool(module.name) == true) {
-        modulesLiked.add(module);
-      }
-    }
-  }
-
-  void associateLike(Module m) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(m.name, true);
-    m.liked = true;
-  }
-
-  void removeLike(Module m) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove(m.name);
-    m.liked = false;
-  }
-
-  void expandSection(Section s) async {
-    s.expanded = true;
-    state = AsyncValue.data(allSections);
-  }
-
-  void contractSection(Section s) async {
-    s.expanded = false;
-    state = AsyncValue.data(allSections);
-  }
 }
 
 final sectionProvider =

@@ -20,7 +20,7 @@ class CentralisationHomePage extends HookConsumerWidget {
     final page = ref.watch(centralisationPageProvider);
     final pageNotifier = ref.watch(centralisationPageProvider.notifier);
 
-    // Return the Scaffold widget instead of void
+
     return Scaffold(
       body: WillPopScope(
         onWillPop: () async {

@@ -4,10 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/centralisation/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/centralisation/providers/centralisation_page_provider.dart';
-import 'package:myecl/centralisation/providers/openLink.dart';
-import 'package:myecl/centralisation/ui/pages/Main.dart';
+import 'package:myecl/centralisation/tools/functions.dart';
+import 'package:myecl/centralisation/providers/FavoritesNotifier.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -16,7 +16,6 @@ class TopBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(centralisationPageProvider);
-    final pageNotifier = ref.watch(centralisationPageProvider.notifier);
     final favorites = ref.watch(favoritesProvider);
 
     return Column(
@@ -34,7 +33,9 @@ class TopBar extends HookConsumerWidget {
                   return IconButton(
                     onPressed: () {
                       switch (page) {
-                      // Ajouter les actions correspondantes à vos besoins
+                        case CentralisationPage.main:
+                          controllerNotifier.toggle();
+                          break;
                       }
                     },
                     icon: HeroIcon(
@@ -76,36 +77,60 @@ class TopBar extends HookConsumerWidget {
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: module.icon.toLowerCase().endsWith('.svg')
-                        ? Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 0.5),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.all(4.0),
-                        child: SvgPicture.network(
-                          "https://centralisation.eclair.ec-lyon.fr/assets/icons/" +
-                              module.icon,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 70,
+                          height: 70,
+                          decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(Radius.circular(25)),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  blurRadius: 8,
+                                  spreadRadius: 2,
+                                  offset: const Offset(2, 3),
+                                ),
+                              ]),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.all(4.0),
+                                child: module.icon.toLowerCase().endsWith('.svg')
+                                    ? SvgPicture.network(
+                                  "https://centralisation.eclair.ec-lyon.fr/assets/icons/" +
+                                      module.icon,
+                                  width: 30,
+                                  height: 30,
+                                )
+                                    : Image.network(
+                                  "https://centralisation.eclair.ec-lyon.fr/assets/icons/" +
+                                      module.icon,
+                                  width: 30,
+                                  height: 30,
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center ,
+                                width: 60,
+                                height: 30,
+                                padding: EdgeInsets.only(bottom: 7),
+                                child:
+                                  AutoSizeText(
+                                    module.name,
+                                    style: TextStyle(fontSize: 16),
+                                    minFontSize: 10,
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                  ),
+
+                              ),
+                            ],
+                          ),
                         ),
-                        width: 30,
-                        height: 30,
-                      ),
-                    )
-                        : Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 0.5),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.all(4.0),
-                        child: Image.network(
-                          "https://centralisation.eclair.ec-lyon.fr/assets/icons/" +
-                              module.icon,
-                        ),
-                        width: 30,
-                        height: 30,
-                      ),
+                      ],
                     ),
                   ),
                 );
@@ -127,5 +152,3 @@ class TopBar extends HookConsumerWidget {
     );
   }
 }
-
-
