@@ -3,6 +3,7 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/service/class/topic.dart';
 import 'package:myecl/service/repositories/notification_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class TopicsProvider extends ListNotifier<Topic> {
   final NotificationRepository notificationRepository =
@@ -30,9 +31,8 @@ class TopicsProvider extends ListNotifier<Topic> {
         data: (data) {
           if (data.contains(topic)) {
             return unsubscribeTopic(topic);
-          } else {
-            return subscribeTopic(topic);
           }
+          return subscribeTopic(topic);
         },
         orElse: () => false);
   }
@@ -42,5 +42,8 @@ final topicsProvider =
     StateNotifierProvider<TopicsProvider, AsyncValue<List<Topic>>>((ref) {
   final token = ref.watch(tokenProvider);
   TopicsProvider notifier = TopicsProvider(token: token);
+  tokenExpireWrapperAuth(ref, () async {
+    notifier.getTopics();
+  });
   return notifier;
 });
