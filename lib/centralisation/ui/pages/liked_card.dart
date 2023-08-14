@@ -36,7 +36,7 @@ class LikedCard extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.all(4.0),
-                    child: module.icon.toLowerCase().endsWith('.svg')
+                    child: module.icon.endsWith('.svg')
                         ? SvgPicture.network(
                             "https://centralisation.eclair.ec-lyon.fr/assets/icons/${module.icon}",
                             width: 30,
