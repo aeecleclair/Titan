@@ -18,7 +18,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight);
       icon = HeroIcons.check;
-      duration = 1000;
+      duration = 1500;
       break;
     case TypeMsg.error:
       linearGradient = const LinearGradient(
