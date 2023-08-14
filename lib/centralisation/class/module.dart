@@ -1,5 +1,3 @@
-import "dart:convert";
-
 class Module {
   Module({
     required this.name,

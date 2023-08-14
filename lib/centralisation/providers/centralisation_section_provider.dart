@@ -3,7 +3,6 @@ import 'package:myecl/centralisation/class/module.dart';
 import 'package:myecl/centralisation/class/section.dart';
 import 'package:myecl/centralisation/repositories/section_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SectionNotifier extends ListNotifier<Section> {
