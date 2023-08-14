@@ -30,6 +30,7 @@ class CinemaRouter {
         builder: () => const CinemaMainPage(),
         middleware: [AuthenticatedMiddleware(ref), NotificationMiddleWare(ref)],
         children: [
+          QRoute(path: detail, builder: () => const DetailPage()),
           QRoute(path: admin, builder: () => const AdminPage(), middleware: [
             AdminMiddleware(ref, isCinemaAdminProvider),
           ], children: [
