@@ -4,7 +4,7 @@ import 'package:myecl/centralisation/class/module.dart';
 import 'package:myecl/centralisation/providers/centralisation_section_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myecl/centralisation/providers/openLink.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:myecl/centralisation/providers/favoritesUtils.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -34,7 +34,7 @@ class FavoritesNotifier extends StateNotifier<List<Module>> {
       state = [...state, module];
     }
     saveFavoritesToSharedPreferences(
-        state); // Sauvegarder les favoris après modification
+        state);
   }
 }
 
@@ -134,11 +134,11 @@ class LinksScreen extends HookConsumerWidget {
                                     ),
                               const SizedBox(
                                   width:
-                                      10), // Ajoute un espace entre le logo et le texte
+                                      10),
                               Expanded(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
                                       utf8.decode(e.name.codeUnits),

@@ -5,11 +5,8 @@ import 'package:myecl/centralisation/tools/constants.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/centralisation/providers/centralisation_page_provider.dart';
 import 'package:myecl/centralisation/providers/openLink.dart';
-import 'package:myecl/centralisation/ui/pages/main.dart';
+import 'package:myecl/centralisation/ui/pages/Main.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-
-
 
 
 class TopBar extends HookConsumerWidget {
@@ -80,53 +77,55 @@ class TopBar extends HookConsumerWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: module.icon.toLowerCase().endsWith('.svg')
-
-
                         ? Container(
-
-
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 0.5),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: Container(
-                          margin : EdgeInsets.all(4.0),
-                      child: SvgPicture.network(
-                        "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + module.icon,
-
-                      ),
-                      width: 30,
-                      height: 30,
-                    ),
-                    )
-                        : Container(
-
-
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black, width: 0.5),
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: Container(
-                        margin : EdgeInsets.all(4.0),
-
-                      child: Image.network(
-                        "https://centralisation.eclair.ec-lyon.fr/assets/icons/" + module.icon,
-
+                        margin: EdgeInsets.all(4.0),
+                        child: SvgPicture.network(
+                          "https://centralisation.eclair.ec-lyon.fr/assets/icons/" +
+                              module.icon,
+                        ),
+                        width: 30,
+                        height: 30,
                       ),
-                      width: 30,
-                      height: 30,
-
+                    )
+                        : Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black, width: 0.5),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Container(
+                        margin: EdgeInsets.all(4.0),
+                        child: Image.network(
+                          "https://centralisation.eclair.ec-lyon.fr/assets/icons/" +
+                              module.icon,
+                        ),
+                        width: 30,
+                        height: 30,
+                      ),
                     ),
-                  ),
                   ),
                 );
               }).toList(),
             ),
           ),
         ),
-        SizedBox(height: 5),
+        if (favorites.isNotEmpty && page == CentralisationPage.main)
+          SizedBox(height: 5),
+        if (page == CentralisationPage.main && favorites.isNotEmpty)
+          Container(
+            color: Colors.grey.shade300,
+            height: 3,
+            width: double.infinity,
+          ),
+        if (page == CentralisationPage.main && favorites.isEmpty)
+          SizedBox(height: 25),
       ],
     );
-
   }
 }
+
+
