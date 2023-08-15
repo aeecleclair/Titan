@@ -15,8 +15,7 @@ class LoginTemplate extends HookConsumerWidget {
     AnimationController? controller = ref.watch(backgroundAnimationProvider);
     controller ??= useAnimationController(duration: const Duration(seconds: 2));
     callback(controller);
-    return Scaffold(
-      body: Stack(
+    return Stack(
         children: [
           SizedBox.expand(
             child: CustomPaint(
@@ -29,7 +28,6 @@ class LoginTemplate extends HookConsumerWidget {
             child: Center(child: child),
           ),
         ],
-      ),
     );
   }
 }

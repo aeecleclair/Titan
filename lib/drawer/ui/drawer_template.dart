@@ -44,69 +44,74 @@ class DrawerTemplate extends HookConsumerWidget {
       animationNotifier.setController(animationController);
     });
 
-    return Stack(
-      children: [
-        GestureDetector(
-            onHorizontalDragStart: controllerNotifier.onDragStart,
-            onHorizontalDragUpdate: controllerNotifier.onDragUpdate,
-            onHorizontalDragEnd: (details) => controllerNotifier.onDragEnd(
-                details, MediaQuery.of(context).size.width),
-            onTap: () {},
-            child: AnimatedBuilder(
-                animation: controller,
-                builder: (BuildContext context, _) {
-                  double animationVal = controller.value;
-                  double translateVal = animationVal * maxSlide;
-                  double scaleVal =
-                      1 - (isWebFormat ? 0 : (animationVal * 0.3));
-                  double cornerval = isWebFormat ? 0 : 30.0 * animationVal;
-                  return Stack(
-                    children: [
-                      const CustomDrawer(),
-                      Transform(
-                          alignment: Alignment.centerLeft,
-                          transform: Matrix4.identity()
-                            ..translate(translateVal)
-                            ..scale(scaleVal),
-                          child: GestureDetector(
-                            onTap: () {
-                              if (controller.isCompleted) {
-                                controllerNotifier.close();
-                              }
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(cornerval),
-                              child: Stack(
-                                children: [
-                                  IgnorePointer(
-                                ignoring: controller.isCompleted,
-                                child: child,
+    return Scaffold(
+      body: Stack(
+        children: [
+          GestureDetector(
+              onHorizontalDragStart: controllerNotifier.onDragStart,
+              onHorizontalDragUpdate: controllerNotifier.onDragUpdate,
+              onHorizontalDragEnd: (details) => controllerNotifier.onDragEnd(
+                  details, MediaQuery.of(context).size.width),
+              onTap: () {},
+              child: AnimatedBuilder(
+                  animation: controller,
+                  builder: (BuildContext context, _) {
+                    double animationVal = controller.value;
+                    double translateVal = animationVal * maxSlide;
+                    double scaleVal =
+                        1 - (isWebFormat ? 0 : (animationVal * 0.3));
+                    double cornerval = isWebFormat ? 0 : 30.0 * animationVal;
+                    return Stack(
+                      children: [
+                        const CustomDrawer(),
+                        Transform(
+                            alignment: Alignment.centerLeft,
+                            transform: Matrix4.identity()
+                              ..translate(translateVal)
+                              ..scale(scaleVal),
+                            child: GestureDetector(
+                              onTap: () {
+                                if (controller.isCompleted) {
+                                  controllerNotifier.close();
+                                }
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(cornerval),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                        color: Colors.white,
+                                        child: SafeArea(
+                                            child: IgnorePointer(
+                                          ignoring: controller.isCompleted,
+                                          child: child,
+                                        ))),
+                                    MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      onEnter: (event) {
+                                        controllerNotifier.toggle();
+                                      },
+                                      child: Container(
+                                        color: Colors.transparent,
+                                        width: 20,
+                                        height: double.infinity,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
-                                  MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    onEnter: (event) {
-                                      controllerNotifier.toggle();
-                                    },
-                                    child: Container(
-                                      color: Colors.transparent,
-                                      width: 20,
-                                      height: double.infinity,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ))
-                    ],
-                  );
-                })),
-        if (isLoggedIn &&
-            shouldNotify &&
-            QR.context != null &&
-            !alreadyDisplayed)
-          const EmailChangeDialog(),
-        if (displayQuit) const QuitDialog()
-      ],
+                            ))
+                      ],
+                    );
+                  })),
+          if (isLoggedIn &&
+              shouldNotify &&
+              QR.context != null &&
+              !alreadyDisplayed)
+            const EmailChangeDialog(),
+          if (displayQuit) const QuitDialog()
+        ],
+      ),
     );
   }
 }
