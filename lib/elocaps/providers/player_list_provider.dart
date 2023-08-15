@@ -13,8 +13,13 @@ class PlayerListNotifier extends ListNotifier<Player> {
   }
 
   Future<AsyncValue<List<Player>>> loadRanking() async {
+    List<Player> list = await _leaderboardrepository.getLeaderBoard("single")
+    ..addAll(await _leaderboardrepository.getLeaderBoard("cd"))
+    ..addAll(await _leaderboardrepository.getLeaderBoard("capacks"))
+    ..addAll(await _leaderboardrepository.getLeaderBoard("semiCapacks")); 
+    
     return await loadList(
-        () async => _leaderboardrepository.getLeaderBoard("single")); 
+        () async => Future.value(list)); 
   }
 
 }
