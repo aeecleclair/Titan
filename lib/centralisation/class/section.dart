@@ -16,18 +16,6 @@ class Section {
     expanded = true;
   }
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['name'] = name;
-    data['module_list'] = moduleList;
-    if (expanded == null) {
-      data['expanded'] = true;
-    } else {
-      data['expanded'] = false;
-    }
-    return data;
-  }
-
   Section copyWith({String? name, List<Module>? moduleList, bool? expanded}) =>
       Section(
           name: name ?? this.name,
