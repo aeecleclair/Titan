@@ -8,6 +8,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myecl/advert/class/advert.dart';
+import 'package:myecl/advert/class/announcer.dart';
 import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/advert_poster_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
@@ -43,6 +44,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final poster = useState<Uint8List?>(null);
     final posterFile = useState<Image?>(null);
+
+    final posterForgotten = useState(false);
+    final announcerForgotten = useState(false);
 
     ref.watch(advertPostersProvider).whenData((value) {
       if (value[advert] != null) {
@@ -83,75 +87,86 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    Center(
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              final XFile? image = await picker.pickImage(
-                                  source: ImageSource.gallery);
-                              if (image != null) {
-                                if (kIsWeb) {
-                                  poster.value = await image.readAsBytes();
-                                  posterFile.value = Image.network(image.path);
-                                } else {
-                                  final file = File(image.path);
-                                  poster.value = await file.readAsBytes();
-                                  posterFile.value = Image.file(file);
+                    FormField<File>(
+                      validator: (e) {
+                        if (poster.value == null) {
+                          return "Veuillez choisir une image.";
+                        }
+                        return null;
+                      },
+                      builder: (formFieldState) => Center(
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                final XFile? image = await picker.pickImage(
+                                    source: ImageSource.gallery);
+                                if (image != null) {
+                                  if (kIsWeb) {
+                                    poster.value = await image.readAsBytes();
+                                    posterFile.value =
+                                        Image.network(image.path);
+                                  } else {
+                                    final file = File(image.path);
+                                    poster.value = await file.readAsBytes();
+                                    posterFile.value = Image.file(file);
+                                  }
                                 }
-                              }
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    spreadRadius: 5,
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3),
-                                  ),
-                                ],
-                              ),
-                              child: posterFile.value != null
-                                  ? Stack(
-                                      children: [
-                                        Container(
-                                          width: 285,
-                                          height: 160,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(5)),
-                                            image: DecorationImage(
-                                              image: poster.value != null
-                                                  ? Image.memory(
-                                                      poster.value!,
-                                                      fit: BoxFit.cover,
-                                                    ).image
-                                                  : posterFile.value!.image,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          child: const Center(
-                                            child: HeroIcon(
-                                              HeroIcons.photo,
-                                              size: 40,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  : const HeroIcon(
-                                      HeroIcons.photo,
-                                      size: 160,
-                                      color: Colors.grey,
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: formFieldState.hasError
+                                          ? Colors.red
+                                          : Colors.black.withOpacity(0.1),
+                                      spreadRadius: 5,
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 3),
                                     ),
+                                  ],
+                                ),
+                                child: posterFile.value != null
+                                    ? Stack(
+                                        children: [
+                                          Container(
+                                            width: 285,
+                                            height: 160,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(5)),
+                                              image: DecorationImage(
+                                                image: poster.value != null
+                                                    ? Image.memory(
+                                                        poster.value!,
+                                                        fit: BoxFit.cover,
+                                                      ).image
+                                                    : posterFile.value!.image,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            child: const Center(
+                                              child: HeroIcon(
+                                                HeroIcons.photo,
+                                                size: 40,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : const HeroIcon(
+                                        HeroIcons.photo,
+                                        size: 160,
+                                        color: Colors.grey,
+                                      ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     TextEntry(
@@ -170,10 +185,34 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
               const SizedBox(
                 height: 50,
               ),
-              AnnouncerBar(
-                useUserAnnouncers: true,
-                multipleSelect: false,
-                isNotClickable: isEdit,
+              FormField<List<Announcer>>(
+                validator: (e) {
+                  if (selectedAnnoncers.isEmpty) {
+                    return "Veuillez choisir un annonceur.";
+                  }
+                  return null;
+                },
+                builder: (formFieldState) => Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    boxShadow: formFieldState.hasError
+                        ? [
+                            const BoxShadow(
+                              color: Colors.red,
+                              spreadRadius: 3,
+                              blurRadius: 3,
+                              offset: Offset(2, 2),
+                            ),
+                          ]
+                        : [],
+                  ),
+                  child: AnnouncerBar(
+                    useUserAnnouncers: true,
+                    multipleSelect: false,
+                    isNotClickable: isEdit,
+                  ),
+                ),
               ),
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -186,6 +225,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                         label: AdvertTextConstants.tags,
                         suffix: '',
                         isInt: false,
+                        canBeEmpty: true,
                         controller: textTagsController,
                         onChanged: (value) {},
                       ),
@@ -223,7 +263,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                           if (key.currentState == null) {
                             return;
                           }
-                          if (selectedAnnoncers.isEmpty) {}
                           if (key.currentState!.validate() &&
                               selectedAnnoncers.isNotEmpty &&
                               poster.value != null) {
