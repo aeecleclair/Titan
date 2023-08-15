@@ -305,7 +305,7 @@ class CreateAccountPage extends HookConsumerWidget {
                 displayToastWithContext(
                     TypeMsg.msg, LoginTextConstants.accountActivated);
                 authTokenNotifier.deleteToken();
-                QR.back();
+                QR.to(LoginRouter.root);
               } else {
                 displayToastWithContext(
                     TypeMsg.error, LoginTextConstants.accountNotActivated);
