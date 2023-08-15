@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class CustomDialogBox extends StatefulWidget {
   final String title, descriptions;
@@ -35,7 +36,7 @@ class CustomDialogBoxState extends State<CustomDialogBox> {
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: contentBox(context),
+      child: contentBox(QR.context!),
     );
   }
 

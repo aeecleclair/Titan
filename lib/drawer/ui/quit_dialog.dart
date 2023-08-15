@@ -3,10 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/drawer/providers/display_quit_popup.dart';
 import 'package:myecl/drawer/tools/constants.dart';
-import 'package:myecl/login/router.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/dialog.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 
 class QuitDialog extends HookConsumerWidget {
   const QuitDialog({Key? key}) : super(key: key);
@@ -32,7 +30,7 @@ class QuitDialog extends HookConsumerWidget {
                     isCachingNotifier.set(false);
                     displayToast(
                         context, TypeMsg.msg, DrawerTextConstants.logOut);
-                    QR.to(LoginRouter.root);
+                    displayQuitNotifier.setDisplay(false);
                   }),
             )));
   }
