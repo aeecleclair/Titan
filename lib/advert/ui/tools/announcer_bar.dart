@@ -6,10 +6,13 @@ import 'package:myecl/advert/providers/announcer_list_provider.dart';
 class AnnouncerBar extends HookConsumerWidget {
   final bool useUserAnnouncers;
   final bool multipleSelect;
-  const AnnouncerBar(
-      {super.key,
-      required this.multipleSelect,
-      required this.useUserAnnouncers});
+  final bool? isNotClickable;
+  const AnnouncerBar({
+    super.key,
+    required this.multipleSelect,
+    required this.useUserAnnouncers,
+    this.isNotClickable,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,8 +22,10 @@ class AnnouncerBar extends HookConsumerWidget {
     final announcerList = useUserAnnouncers
         ? ref.watch(userAnnouncerListProvider)
         : ref.watch(announcerListProvider);
-    
-    
+    final darkerColor = (isNotClickable != null && isNotClickable == true)
+        ? Colors.grey[800]
+        : Colors.black;
+
     return announcerList.when(
       data: (userAnnouncers) {
         return SingleChildScrollView(
@@ -31,6 +36,7 @@ class AnnouncerBar extends HookConsumerWidget {
             ...userAnnouncers.map(
               (e) => GestureDetector(
                 onTap: () {
+                  if (isNotClickable != null && isNotClickable == true) return;
                   if (multipleSelect) {
                     selectedId.contains(e.id)
                         ? selectedNotifier.removeAnnouncer(e)
@@ -53,12 +59,12 @@ class AnnouncerBar extends HookConsumerWidget {
                           style: TextStyle(
                               color: selectedId.contains(e.id)
                                   ? Colors.white
-                                  : Colors.black,
+                                  : darkerColor,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
                       backgroundColor: selectedId.contains(e.id)
-                          ? Colors.black
+                          ? darkerColor
                           : Colors.grey.shade200,
                     )),
               ),
