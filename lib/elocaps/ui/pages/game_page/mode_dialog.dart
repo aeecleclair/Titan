@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,6 +16,12 @@ class ModeDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<CapsMode> capsModeList = CapsMode.values;
+    final players = [
+      PlayerForm(num: 1, queryController: useTextEditingController(text: "")),
+      PlayerForm(num: 2, queryController: useTextEditingController(text: "")),
+      PlayerForm(num: 3, queryController: useTextEditingController(text: "")),
+      PlayerForm(num: 4, queryController: useTextEditingController(text: "")),
+    ];
     final modeChosen = ref.watch(modeChosenProvider);
     final modeChosenNotifier = ref.watch(modeChosenProvider.notifier);
 
@@ -53,11 +58,9 @@ class ModeDialog extends HookConsumerWidget {
                   return GestureDetector(
                     onTap: () {
                       modeChosenNotifier.setMode(capsModeList[index]);
-                      listForm.value = modeChosen == CapsMode.single ? listForm.value.sublist(0,2):[
-      PlayerForm(num: 1, queryController: useTextEditingController(text: "")),
-      PlayerForm(num: 2, queryController: useTextEditingController(text: "")),
-      PlayerForm(num: 3, queryController: useTextEditingController(text: "")),
-      PlayerForm(num: 4, queryController: useTextEditingController(text: "")),];
+                      listForm.value = capsModeList[index] == CapsMode.cd
+                          ? players
+                          : players.sublist(0, 2);
                       Navigator.pop(context);
                     },
                     child: Padding(
