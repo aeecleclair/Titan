@@ -18,10 +18,13 @@ class Refresher extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (kIsWeb) {
-      return SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics()),
-          child: child);
+      return LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(
+                  parent: BouncingScrollPhysics()),
+              child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: child)));
     } else {
       return Platform.isAndroid ? buildAndroidList(ref) : buildIOSList(ref);
     }
