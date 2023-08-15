@@ -18,21 +18,22 @@ class Refresher extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return LayoutBuilder(builder: (context, constraints) {
+      ConstrainedBox constrainedBox = ConstrainedBox(
+          constraints: BoxConstraints(minHeight: constraints.maxHeight),
+          child: child);
       if (kIsWeb) {
         return SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(
                 parent: BouncingScrollPhysics()),
-            child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: child));
+            child: constrainedBox);
       }
       return Platform.isAndroid
-          ? buildAndroidList(ref, constraints)
-          : buildIOSList(ref, constraints);
+          ? buildAndroidList(ref, constrainedBox)
+          : buildIOSList(ref, constrainedBox);
     });
   }
 
-  Widget buildAndroidList(WidgetRef ref, BoxConstraints constraints) =>
+  Widget buildAndroidList(WidgetRef ref, ConstrainedBox constrainedBox) =>
       RefreshIndicator(
         onRefresh: () async {
           tokenExpireWrapper(ref, onRefresh);
@@ -40,12 +41,10 @@ class Refresher extends HookConsumerWidget {
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(
               parent: BouncingScrollPhysics()),
-          child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              child: child),
+          child: constrainedBox,
         ),
       );
-  Widget buildIOSList(WidgetRef ref, BoxConstraints constraints) =>
+  Widget buildIOSList(WidgetRef ref, ConstrainedBox constrainedBox) =>
       CustomScrollView(
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
@@ -56,9 +55,7 @@ class Refresher extends HookConsumerWidget {
             },
           ),
           SliverToBoxAdapter(
-              child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: child)),
+              child: constrainedBox),
         ],
       );
 }
