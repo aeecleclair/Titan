@@ -106,23 +106,6 @@ class AdvertCard extends HookConsumerWidget {
                   loading: () => const CircularProgressIndicator(),
                   error: (error, stack) => Text('Error $error'),
                 ),
-
-                // Container(
-                //   width: width,
-                //   height: imageHeight,
-                //   decoration: BoxDecoration(
-                //     image: DecorationImage(
-                //       fit: BoxFit.cover,
-                //       image: Image.network(
-                //         'https://picsum.photos/seed/664/600',
-                //       ).image,
-                //     ),
-                //     borderRadius: const BorderRadius.only(
-                //       topLeft: Radius.circular(20),
-                //       topRight: Radius.circular(20),
-                //     ),
-                //   ),
-                // ),
                 Container(
                   padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
                   width: width,
@@ -132,7 +115,7 @@ class AdvertCard extends HookConsumerWidget {
                       Column(
                         children: [
                           Container(
-                            width: double.infinity,
+                            width: width,
                             margin: const EdgeInsets.only(bottom: 5),
                             child: AutoSizeText(
                               advert.title,
@@ -149,19 +132,16 @@ class AdvertCard extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      Container(
-                        width: double.infinity,
-                        child: AutoSizeText(
-                          overflow: TextOverflow.ellipsis,
-                          advert.content,
-                          textAlign: TextAlign.justify,
-                          maxLines: 3,
-                          minFontSize: 13,
-                          maxFontSize: 15,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                          ),
+                      AutoSizeText(
+                        overflow: TextOverflow.ellipsis,
+                        advert.content.trim(),
+                        textAlign: TextAlign.justify,
+                        maxLines: 3,
+                        minFontSize: 13,
+                        maxFontSize: 15,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
                         ),
                       ),
                     ],
