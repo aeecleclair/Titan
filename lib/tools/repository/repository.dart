@@ -98,14 +98,14 @@ abstract class Repository {
   }
 
   /// Get ext/id/suffix
-  Future<dynamic> getOne(String id, {String suffix = ""}) async {
+  Future<dynamic> getOne(String id, {String suffix = "", bool decode = false}) async {
     try {
       final response =
           await http.get(Uri.parse(host + ext + id + suffix), headers: headers);
       if (response.statusCode == 200) {
         try {
           String toDecode = response.body;
-          if (host == displayHost) {
+          if (host == displayHost || decode) {
             toDecode = utf8.decode(response.body.runes.toList());
           }
           cacheManager.writeCache(ext + id + suffix, toDecode);

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -27,7 +28,6 @@ class TopBar extends HookConsumerWidget {
       children: [
         const SizedBox(height: 15),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
               width: 70,
@@ -57,11 +57,16 @@ class TopBar extends HookConsumerWidget {
                 },
               ),
             ),
-            Text(title,
-                style: const TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black)),
+            Expanded(
+              child: Center(
+                child: AutoSizeText(title,
+                    maxLines: 1,
+                    style: const TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black)),
+              ),
+            ),
             SizedBox(width: 70, child: rightIcon),
           ],
         ),

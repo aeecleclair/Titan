@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/booking/router.dart';
+import 'package:myecl/centralisation/router.dart';
 import 'package:myecl/cinema/router.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/home/router.dart';
@@ -49,6 +50,7 @@ class AppRouter {
       AdminRouter(ref).route(),
       AmapRouter(ref).route(),
       BookingRouter(ref).route(),
+      CentralisationRouter(ref).route(),
       CinemaRouter(ref).route(),
       EventRouter(ref).route(),
       HomeRouter(ref).route(),

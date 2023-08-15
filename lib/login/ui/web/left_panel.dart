@@ -132,7 +132,7 @@ class LeftPanel extends HookConsumerWidget {
                 ),
               ),
               const Spacer(flex: 3),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: Row(
                   children: [
