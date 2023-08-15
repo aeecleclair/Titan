@@ -90,7 +90,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                           Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.1),
@@ -102,9 +101,10 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                             ),
                             child: posterFile.value != null
                                 ? Container(
-                                    width: 160,
+                                    width: 285,
                                     height: 160,
                                     decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(Radius.circular(5)),
                                       image: DecorationImage(
                                         image: poster.value != null
                                             ? Image.memory(
@@ -142,8 +142,8 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                 }
                               },
                               child: Container(
+                                width: 285,
                                 height: 160,
-                                width: 160,
                                 padding: const EdgeInsets.all(7),
                                 child: const HeroIcon(
                                   HeroIcons.photo,
