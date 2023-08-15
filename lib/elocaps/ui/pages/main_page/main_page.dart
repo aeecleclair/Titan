@@ -24,7 +24,7 @@ class EloCapsMainPage extends HookConsumerWidget {
     return ElocapsTemplate(
         child: Stack(
       children: [
-        Expanded(
+        SizedBox.expand(
             child: CustomPaint(
                 size: Size.infinite,
                 painter: MyCustomPainter(animation: animation))),
