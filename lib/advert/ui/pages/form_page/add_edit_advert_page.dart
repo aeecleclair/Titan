@@ -87,69 +87,68 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  spreadRadius: 5,
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3),
-                                ),
-                              ],
-                            ),
-                            child: posterFile.value != null
-                                ? Container(
-                                    width: 285,
-                                    height: 160,
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                      image: DecorationImage(
-                                        image: poster.value != null
-                                            ? Image.memory(
-                                                poster.value!,
-                                                fit: BoxFit.cover,
-                                              ).image
-                                            : posterFile.value!.image,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  )
-                                : const HeroIcon(
-                                    HeroIcons.photo,
-                                    size: 160,
-                                    color: Colors.grey,
-                                  ),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            child: GestureDetector(
-                              onTap: () async {
-                                final XFile? image = await picker.pickImage(
-                                    source: ImageSource.gallery);
-                                if (image != null) {
-                                  if (kIsWeb) {
-                                    poster.value = await image.readAsBytes();
-                                    posterFile.value =
-                                        Image.network(image.path);
-                                  } else {
-                                    final file = File(image.path);
-                                    poster.value = await file.readAsBytes();
-                                    posterFile.value = Image.file(file);
-                                  }
+                          GestureDetector(
+                            onTap: () async {
+                              final XFile? image = await picker.pickImage(
+                                  source: ImageSource.gallery);
+                              if (image != null) {
+                                if (kIsWeb) {
+                                  poster.value = await image.readAsBytes();
+                                  posterFile.value = Image.network(image.path);
+                                } else {
+                                  final file = File(image.path);
+                                  poster.value = await file.readAsBytes();
+                                  posterFile.value = Image.file(file);
                                 }
-                              },
-                              child: Container(
-                                width: 285,
-                                height: 160,
-                                padding: const EdgeInsets.all(7),
-                                child: const HeroIcon(
-                                  HeroIcons.photo,
-                                  color: Colors.white,
-                                ),
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    spreadRadius: 5,
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 3),
+                                  ),
+                                ],
                               ),
+                              child: posterFile.value != null
+                                  ? Stack(
+                                      children: [
+                                        Container(
+                                          width: 285,
+                                          height: 160,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(5)),
+                                            image: DecorationImage(
+                                              image: poster.value != null
+                                                  ? Image.memory(
+                                                      poster.value!,
+                                                      fit: BoxFit.cover,
+                                                    ).image
+                                                  : posterFile.value!.image,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          child: const Center(
+                                            child: HeroIcon(
+                                              HeroIcons.photo,
+                                              size: 40,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : const HeroIcon(
+                                      HeroIcons.photo,
+                                      size: 160,
+                                      color: Colors.grey,
+                                    ),
                             ),
                           ),
                         ],
@@ -206,8 +205,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 5,
                                 blurRadius: 10,
-                                offset: const Offset(
-                                    3, 3), // changes position of shadow
+                                offset: const Offset(3, 3),
                               ),
                             ],
                           ),
@@ -225,7 +223,10 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                           if (key.currentState == null) {
                             return;
                           }
-                          if (key.currentState!.validate()) {
+                          if (selectedAnnoncers.isEmpty) {}
+                          if (key.currentState!.validate() &&
+                              selectedAnnoncers.isNotEmpty &&
+                              poster.value != null) {
                             await tokenExpireWrapper(ref, () async {
                               final advertList = ref.watch(advertListProvider);
                               Advert newAdvert = Advert(
@@ -268,18 +269,16 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                   advertList.when(
                                       data: (list) {
                                         final newAdvert = list.last;
-                                        if (poster.value != null) {
-                                          posterNotifier.updateAdvertPoster(
-                                              newAdvert.id, poster.value!);
-                                          advertPostersNotifier.setTData(
-                                              newAdvert,
-                                              AsyncData([
-                                                Image.memory(
-                                                  poster.value!,
-                                                  fit: BoxFit.cover,
-                                                )
-                                              ]));
-                                        }
+                                        posterNotifier.updateAdvertPoster(
+                                            newAdvert.id, poster.value!);
+                                        advertPostersNotifier.setTData(
+                                            newAdvert,
+                                            AsyncData([
+                                              Image.memory(
+                                                poster.value!,
+                                                fit: BoxFit.cover,
+                                              )
+                                            ]));
                                       },
                                       error: (error, s) {},
                                       loading: () {});
@@ -306,8 +305,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                   color: Colors.grey.withOpacity(0.5),
                                   spreadRadius: 5,
                                   blurRadius: 10,
-                                  offset: const Offset(
-                                      3, 3), // changes position of shadow
+                                  offset: const Offset(3, 3),
                                 ),
                               ],
                             ),
