@@ -8,12 +8,14 @@ import 'package:qlevar_router/qlevar_router.dart';
 class TopBar extends HookConsumerWidget {
   final String title;
   final String root;
+  final VoidCallback? onMenu;
   final VoidCallback? onBack;
   final Widget? rightIcon;
   const TopBar(
       {Key? key,
       required this.title,
       required this.root,
+      this.onMenu,
       this.onBack,
       this.rightIcon})
       : super(key: key);
@@ -38,10 +40,11 @@ class TopBar extends HookConsumerWidget {
                             final controllerNotifier = ref.watch(
                                 swipeControllerProvider(animation).notifier);
                             controllerNotifier.toggle();
-                            onBack?.call();
+                            onMenu?.call();
                           }
                         } else {
                           QR.back();
+                          onBack?.call();
                         }
                       },
                       icon: HeroIcon(

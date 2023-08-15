@@ -25,7 +25,7 @@ class AdminTemplate extends HookConsumerWidget {
               TopBar(
                   title: AdminTextConstants.administration,
                   root: AdminRouter.root,
-                  onBack: () {
+                  onMenu: () {
                     tokenExpireWrapper(ref, () async {
                       await meNotifier.loadMe();
                     });

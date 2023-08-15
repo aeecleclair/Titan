@@ -24,7 +24,7 @@ class CinemaTemplate extends HookConsumerWidget {
                   TopBar(
                     title: CinemaTextConstants.cinema,
                     root: CinemaRouter.root,
-                    onBack: () {
+                    onMenu: () {
                       initialPageNotifier.reset();
                       scrollNotifier.reset();
                     },
