@@ -17,46 +17,44 @@ class Refresher extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kIsWeb) {
-      return SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics()),
+    return LayoutBuilder(builder: (context, constraints) {
+      ConstrainedBox constrainedBox = ConstrainedBox(
+          constraints: BoxConstraints(minHeight: constraints.maxHeight),
           child: child);
-    } else {
-      return Platform.isAndroid ? buildAndroidList(ref) : buildIOSList(ref);
-    }
-  }
-
-  Widget buildAndroidList(WidgetRef ref) => LayoutBuilder(
-        builder: (context, constraints) => RefreshIndicator(
-          onRefresh: () async {
-            tokenExpireWrapper(ref, onRefresh);
-          },
-          child: SingleChildScrollView(
+      if (kIsWeb) {
+        return SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(
                 parent: BouncingScrollPhysics()),
-            child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: child),
-          ),
+            child: constrainedBox);
+      }
+      return Platform.isAndroid
+          ? buildAndroidList(ref, constrainedBox)
+          : buildIOSList(ref, constrainedBox);
+    });
+  }
+
+  Widget buildAndroidList(WidgetRef ref, ConstrainedBox constrainedBox) =>
+      RefreshIndicator(
+        onRefresh: () async {
+          tokenExpireWrapper(ref, onRefresh);
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics()),
+          child: constrainedBox,
         ),
       );
-  Widget buildIOSList(WidgetRef ref) => LayoutBuilder(
-        builder: (context, constraints) => CustomScrollView(
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            CupertinoSliverRefreshControl(
-              onRefresh: () async {
-                tokenExpireWrapper(ref, onRefresh);
-              },
-            ),
-            SliverToBoxAdapter(
-                child: ConstrainedBox(
-                    constraints:
-                        BoxConstraints(minHeight: constraints.maxHeight),
-                    child: child)),
-          ],
-        ),
+  Widget buildIOSList(WidgetRef ref, ConstrainedBox constrainedBox) =>
+      CustomScrollView(
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          CupertinoSliverRefreshControl(
+            onRefresh: () async {
+              tokenExpireWrapper(ref, onRefresh);
+            },
+          ),
+          SliverToBoxAdapter(child: constrainedBox),
+        ],
       );
 }
