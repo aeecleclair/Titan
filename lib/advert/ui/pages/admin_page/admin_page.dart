@@ -100,8 +100,8 @@ class AdvertAdminPage extends HookConsumerWidget {
                                 },
                                 onEdit: () {
                                   advertNotifier.setAdvert(advert);
-                                  selectedAnnouncersNotifier.clearAnnouncer(); //TODO ne marche pas pour une raison obscure...
-                                  selectedAnnouncersNotifier.addAnnouncer(advert.announcer); //TODO ne marche pas pour une raison obscure...
+                                  selectedAnnouncersNotifier.clearAnnouncer();
+                                  selectedAnnouncersNotifier.addAnnouncer(advert.announcer);
                                   QR.to(AdvertRouter.root +
                                       AdvertRouter.admin +
                                       AdvertRouter.addEditAdvert);

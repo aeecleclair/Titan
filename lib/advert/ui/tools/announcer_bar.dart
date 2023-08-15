@@ -6,35 +6,43 @@ import 'package:myecl/advert/providers/announcer_list_provider.dart';
 class AnnouncerBar extends HookConsumerWidget {
   final bool useUserAnnouncers;
   final bool multipleSelect;
-  const AnnouncerBar({super.key, required this.multipleSelect, required this.useUserAnnouncers});
+  const AnnouncerBar(
+      {super.key,
+      required this.multipleSelect,
+      required this.useUserAnnouncers});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = ref.watch(announcerProvider);
+    final selectedId = selected.map((e) => e.id).toList();
     final selectedNotifier = ref.read(announcerProvider.notifier);
-    final announcerList = useUserAnnouncers? ref.watch(userAnnouncerListProvider):ref.watch(announcerListProvider);
+    final announcerList = useUserAnnouncers
+        ? ref.watch(userAnnouncerListProvider)
+        : ref.watch(announcerListProvider);
+    
+    
     return announcerList.when(
-      data: (userAnnouncers) => SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
+      data: (userAnnouncers) {
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             const SizedBox(width: 15),
             ...userAnnouncers.map(
               (e) => GestureDetector(
                 onTap: () {
                   if (multipleSelect) {
-                    selected.contains(e)?selectedNotifier.removeAnnouncer(e):selectedNotifier.addAnnouncer(e);
+                    selectedId.contains(e.id)
+                        ? selectedNotifier.removeAnnouncer(e)
+                        : selectedNotifier.addAnnouncer(e);
                   } else {
-                    bool contain = selected.contains(e);
+                    bool contain = selectedId.contains(e.id);
                     selectedNotifier.clearAnnouncer();
                     if (!contain) {
                       selectedNotifier.addAnnouncer(e);
                     }
                   }
-                  },
-                  
+                },
                 child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Chip(
@@ -43,22 +51,22 @@ class AnnouncerBar extends HookConsumerWidget {
                         child: Text(
                           e.name,
                           style: TextStyle(
-                              color: selected.contains(e)
+                              color: selectedId.contains(e.id)
                                   ? Colors.white
                                   : Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      backgroundColor: selected.contains(e)
+                      backgroundColor: selectedId.contains(e.id)
                           ? Colors.black
                           : Colors.grey.shade200,
                     )),
               ),
             ),
             const SizedBox(width: 15),
-          ],
-        ),
-      ),
+          ]),
+        );
+      },
       error: (Object error, StackTrace stackTrace) {
         return Center(
           child: Text('Error: $error'),
