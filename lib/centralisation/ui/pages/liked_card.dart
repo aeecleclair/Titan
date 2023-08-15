@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/centralisation/class/module.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myecl/centralisation/tools/constants.dart';
 import 'package:myecl/centralisation/tools/functions.dart';
 
 class LikedCard extends StatelessWidget {
@@ -38,12 +39,12 @@ class LikedCard extends StatelessWidget {
                     margin: const EdgeInsets.all(4.0),
                     child: module.icon.endsWith('.svg')
                         ? SvgPicture.network(
-                            "https://centralisation.eclair.ec-lyon.fr/assets/icons/${module.icon}",
+                            "${CentralisationTextConstants.imagePath}${module.icon}",
                             width: 30,
                             height: 30,
                           )
                         : Image.network(
-                            "https://centralisation.eclair.ec-lyon.fr/assets/icons/${module.icon}",
+                            "${CentralisationTextConstants.imagePath}${module.icon}",
                             width: 30,
                             height: 30,
                           ),

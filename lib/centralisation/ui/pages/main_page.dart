@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/centralisation/providers/centralisation_section_provider.dart';
 import 'package:myecl/centralisation/providers/favorites_providers.dart';
+import 'package:myecl/centralisation/tools/constants.dart';
 import 'package:myecl/centralisation/ui/centralisation.dart';
 
 import 'package:myecl/centralisation/ui/pages/liked_card.dart';
@@ -42,8 +43,16 @@ class CentralisationMainPage extends HookConsumerWidget {
             data: (sections) => sections
                 .map<Widget>((section) => SectionList(section: section))
                 .toList(),
-            loading: () => [],
-            error: (err, stack) => [],
+            loading: () => [
+              const Center(
+                child: CircularProgressIndicator(),
+              )
+            ],
+            error: (err, stack) => [
+              Center(
+                child: Text('${CentralisationTextConstants.error} : $err'),
+              )
+            ],
           ),
         ]),
       ),

@@ -1,10 +1,7 @@
 import 'package:myecl/centralisation/class/module.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
+import 'package:myecl/centralisation/tools/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-
 
 void showLinkDetails(BuildContext context, Module module) {
   showDialog(
@@ -15,13 +12,13 @@ void showLinkDetails(BuildContext context, Module module) {
         content: Text(module.description),
         actions: [
           TextButton(
-            child: const Text('Accéder au site'),
+            child: const Text(CentralisationTextConstants.openLink),
             onPressed: () {
               openLink(module.url);
             },
           ),
           TextButton(
-            child: const Text('Fermer'),
+            child: const Text(CentralisationTextConstants.close),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -32,18 +29,10 @@ void showLinkDetails(BuildContext context, Module module) {
   );
 }
 
-
-
 void openLink(String url) async {
   if (await canLaunchUrl(Uri.parse(url))) {
     await launchUrl(Uri.parse(url));
   } else {
-    throw 'Impossible d\'ouvrir le lien $url';
+    throw '${CentralisationTextConstants.unableToOpen} $url';
   }
-}
-
-Future<void> saveFavoritesToSharedPreferences(List<Module> favoritesList) async {
-  final prefs = await SharedPreferences.getInstance();
-  final favoritesJson = favoritesList.map((module) => module.toJson()).toList();
-  await prefs.setString('favorites', json.encode(favoritesJson));
 }

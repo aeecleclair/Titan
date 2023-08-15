@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/centralisation/class/module.dart';
 import 'package:myecl/centralisation/providers/favorites_providers.dart';
+import 'package:myecl/centralisation/tools/constants.dart';
 import 'package:myecl/centralisation/tools/functions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -48,10 +49,10 @@ class ModuleCard extends HookConsumerWidget {
               height: 45,
               child: module.icon.endsWith('.svg')
                   ? SvgPicture.network(
-                      "https://centralisation.eclair.ec-lyon.fr/assets/icons/${module.icon}",
+                      "${CentralisationTextConstants.imagePath}${module.icon}",
                     )
                   : Image.network(
-                      "https://centralisation.eclair.ec-lyon.fr/assets/icons/${module.icon}",
+                      "${CentralisationTextConstants.imagePath}${module.icon}",
                     ),
             ),
             const SizedBox(width: 10),
