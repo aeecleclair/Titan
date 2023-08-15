@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -44,9 +43,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final poster = useState<Uint8List?>(null);
     final posterFile = useState<Image?>(null);
-
-    final posterForgotten = useState(false);
-    final announcerForgotten = useState(false);
 
     ref.watch(advertPostersProvider).whenData((value) {
       if (value[advert] != null) {
