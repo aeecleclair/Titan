@@ -107,7 +107,7 @@ class AdvertMainPage extends HookConsumerWidget {
                                     HeroIcon(HeroIcons.userGroup,
                                         color: Colors.white, size: 20),
                                     SizedBox(width: 10),
-                                    Text("Super",
+                                    Text("Gestion",
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
