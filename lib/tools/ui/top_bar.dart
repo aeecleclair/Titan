@@ -9,12 +9,14 @@ class TopBar extends HookConsumerWidget {
   final String title;
   final String root;
   final VoidCallback? onMenu;
+  final VoidCallback? onBack;
   final Widget? rightIcon;
   const TopBar(
       {Key? key,
       required this.title,
       required this.root,
       this.onMenu,
+      this.onBack,
       this.rightIcon})
       : super(key: key);
 
@@ -42,6 +44,7 @@ class TopBar extends HookConsumerWidget {
                           }
                         } else {
                           QR.back();
+                          onBack?.call();
                         }
                       },
                       icon: HeroIcon(
