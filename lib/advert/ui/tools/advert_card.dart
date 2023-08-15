@@ -118,7 +118,7 @@ class AdvertCard extends HookConsumerWidget {
                             width: width,
                             margin: const EdgeInsets.only(bottom: 5),
                             child: AutoSizeText(
-                              advert.title,
+                              advert.title.trim(),
                               textAlign: TextAlign.left,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,

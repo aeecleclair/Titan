@@ -44,7 +44,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
     final poster = useState<Uint8List?>(null);
     final posterFile = useState<Image?>(null);
 
-
     ref.watch(advertPostersProvider).whenData((value) {
       if (value[advert] != null) {
         value[advert]!.whenData((data) {
@@ -172,9 +171,10 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
               const SizedBox(
                 height: 50,
               ),
-              const AnnouncerBar(
+              AnnouncerBar(
                 useUserAnnouncers: true,
                 multipleSelect: false,
+                isNotClickable: isEdit,
               ),
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),

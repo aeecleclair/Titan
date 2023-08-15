@@ -99,12 +99,13 @@ class AdvertAdminPage extends HookConsumerWidget {
                                       AdvertRouter.root + AdvertRouter.detail);
                                 },
                                 onEdit: () {
-                                  advertNotifier.setAdvert(advert);
-                                  selectedAnnouncersNotifier.clearAnnouncer();
-                                  selectedAnnouncersNotifier.addAnnouncer(advert.announcer);
                                   QR.to(AdvertRouter.root +
                                       AdvertRouter.admin +
                                       AdvertRouter.addEditAdvert);
+                                  advertNotifier.setAdvert(advert);
+                                  selectedAnnouncersNotifier.clearAnnouncer();
+                                  selectedAnnouncersNotifier
+                                      .addAnnouncer(advert.announcer);
                                 },
                                 onDelete: () async {
                                   await showDialog(
