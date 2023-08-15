@@ -199,7 +199,7 @@ class AdvertDetailPage extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Text(
               advert.content,
-              textAlign: TextAlign.left,
+              textAlign: TextAlign.justify,
               style: const TextStyle(
                 fontSize: 15,
               ),

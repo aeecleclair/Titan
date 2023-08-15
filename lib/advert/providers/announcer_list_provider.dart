@@ -14,12 +14,10 @@ class AnnouncerListNotifier extends ListNotifier<Announcer> {
 
   Future<AsyncValue<List<Announcer>>> loadAllAnnouncerList() async {
     return await loadList(_announcerRepository.getAllAnnouncer);
-    //return state = AsyncData([Announcer(name: 'Eclair', groupManagerId: '1', id: '1'),Announcer(name: 'Raid', groupManagerId: '1', id: '2'),Announcer(name: 'JE', groupManagerId: '1', id: '3'),Announcer(name: 'Cosmos', groupManagerId: '1', id: '4')]);
   }
 
   Future<AsyncValue<List<Announcer>>> loadMyAnnouncerList() async {
     return await loadList(_announcerRepository.getMyAnnouncer);
-    //return state = AsyncData([Announcer(name: 'Eclair', groupManagerId: '1', id: '1'),Announcer(name: 'Raid', groupManagerId: '1', id: '2')]);
   }
 
   Future<bool> addAnnouncer(Announcer announcer) async {
