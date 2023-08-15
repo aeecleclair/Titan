@@ -54,8 +54,7 @@ class Refresher extends HookConsumerWidget {
               tokenExpireWrapper(ref, onRefresh);
             },
           ),
-          SliverToBoxAdapter(
-              child: constrainedBox),
+          SliverToBoxAdapter(child: constrainedBox),
         ],
       );
 }
