@@ -47,63 +47,65 @@ class AdvertCard extends HookConsumerWidget {
             Column(
               children: [
                 advertPosters.when(
-                    data: (data) {
-                      if (data[advert] != null) {
-                        return data[advert]!.when(data: (data) {
-                          if (data.isNotEmpty) {
-                            return Container(
-                              width: width,
-                              height: imageHeight,
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                                image: DecorationImage(
-                                  image: data.first.image,
-                                  fit: BoxFit.cover,
-                                ),
+                  data: (data) {
+                    if (data[advert] != null) {
+                      return data[advert]!.when(data: (data) {
+                        if (data.isNotEmpty) {
+                          return Container(
+                            width: width,
+                            height: imageHeight,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20)),
+                              image: DecorationImage(
+                                image: data.first.image,
+                                fit: BoxFit.cover,
                               ),
-                            );
-                          } else {
-                            Future.delayed(const Duration(milliseconds: 1), () {
+                            ),
+                          );
+                        } else {
+                          Future.delayed(const Duration(milliseconds: 1), () {
+                            advertPostersNotifier.setTData(
+                                advert, const AsyncLoading());
+                          });
+                          tokenExpireWrapper(ref, () async {
+                            logoNotifier
+                                .getAdvertPoster(advert.id)
+                                .then((value) {
                               advertPostersNotifier.setTData(
-                                  advert, const AsyncLoading());
+                                  advert, AsyncData([value]));
                             });
-                            tokenExpireWrapper(ref, () async {
-                              logoNotifier
-                                  .getAdvertPoster(advert.id)
-                                  .then((value) {
-                                advertPostersNotifier.setTData(
-                                    advert, AsyncData([value]));
-                              });
-                            });
-                            return HeroIcon(
-                              HeroIcons.photo,
-                              size: width,
-                            );
-                          }
-                        }, loading: () {
-                          return SizedBox(
-                            height: imageHeight,
-                            width: width,
-                            child: const Center(
-                              child: CircularProgressIndicator(),
-                            ),
+                          });
+                          return HeroIcon(
+                            HeroIcons.photo,
+                            size: width,
                           );
-                        }, error: (error, stack) {
-                          return SizedBox(
-                            height: imageHeight,
-                            width: width,
-                            child: const Center(
-                              child: HeroIcon(HeroIcons.exclamationCircle),
-                            ),
-                          );
-                        });
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                    loading: () => const CircularProgressIndicator(),
-                    error: (error, stack) => Text('Error $error')),
+                        }
+                      }, loading: () {
+                        return SizedBox(
+                          height: imageHeight,
+                          width: width,
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }, error: (error, stack) {
+                        return SizedBox(
+                          height: imageHeight,
+                          width: width,
+                          child: const Center(
+                            child: HeroIcon(HeroIcons.exclamationCircle),
+                          ),
+                        );
+                      });
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
+                  loading: () => const CircularProgressIndicator(),
+                  error: (error, stack) => Text('Error $error'),
+                ),
 
                 // Container(
                 //   width: width,

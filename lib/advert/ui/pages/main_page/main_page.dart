@@ -36,6 +36,91 @@ class AdvertMainPage extends HookConsumerWidget {
               data: (data) {
                 return Column(
                   children: [
+                    SizedBox(
+                      width: 300,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          if (isAdvertAdmin)
+                            GestureDetector(
+                              onTap: () {
+                                selectedNotifier.clearAnnouncer();
+                                QR.to(AdvertRouter.root + AdvertRouter.admin);
+                              },
+                              child: Container(
+                                width: 120,
+                                margin: const EdgeInsets.symmetric(vertical: 5),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 8),
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border:
+                                        Border.all(color: Colors.white, width: 1),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.shade200
+                                              .withOpacity(0.2),
+                                          blurRadius: 10,
+                                          offset: const Offset(0, 5))
+                                    ]),
+                                child: const Row(
+                                  children: [
+                                    HeroIcon(HeroIcons.userGroup,
+                                        color: Colors.white, size: 20),
+                                    SizedBox(width: 10),
+                                    Text("Admin",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          if (isAdmin)
+                            GestureDetector(
+                              onTap: () {
+                                QR.to(AdvertRouter.root +
+                                    AdvertRouter.addRemAnnoucer);
+                              },
+                              child: Container(
+                                width: 120,
+                                margin: const EdgeInsets.symmetric(vertical: 5),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 8),
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border:
+                                        Border.all(color: Colors.white, width: 1),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.shade200
+                                              .withOpacity(0.2),
+                                          blurRadius: 10,
+                                          offset: const Offset(0, 5))
+                                    ]),
+                                child: const Row(
+                                  children: [
+                                    HeroIcon(HeroIcons.userGroup,
+                                        color: Colors.white, size: 20),
+                                    SizedBox(width: 10),
+                                    Text("Super",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     const AnnouncerBar(
                         useUserAnnouncers: false, multipleSelect: true),
                     const SizedBox(
@@ -77,83 +162,6 @@ class AdvertMainPage extends HookConsumerWidget {
               },
             ),
           ),
-          if (isAdvertAdmin)
-            Positioned(
-              bottom: 20,
-              right: 30,
-              child: GestureDetector(
-                onTap: () {
-                  selectedNotifier.clearAnnouncer();
-                  QR.to(AdvertRouter.root + AdvertRouter.admin);
-                },
-                child: Container(
-                  width: 120,
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.white, width: 1),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.shade200.withOpacity(0.2),
-                            blurRadius: 10,
-                            offset: const Offset(0, 5))
-                      ]),
-                  child: const Row(
-                    children: [
-                      HeroIcon(HeroIcons.userGroup,
-                          color: Colors.white, size: 20),
-                      SizedBox(width: 10),
-                      Text("Admin",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          if (isAdmin)
-            Positioned(
-              bottom: 80,
-              right: 30,
-              child: GestureDetector(
-                onTap: () {
-                  QR.to(AdvertRouter.root +  AdvertRouter.addRemAnnoucer);
-                },
-                child: Container(
-                  width: 120,
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.white, width: 1),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.shade200.withOpacity(0.2),
-                            blurRadius: 10,
-                            offset: const Offset(0, 5))
-                      ]),
-                  child: const Row(
-                    children: [
-                      HeroIcon(HeroIcons.userGroup,
-                          color: Colors.white, size: 20),
-                      SizedBox(width: 10),
-                      Text("Super",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)),
-                    ],
-                  ),
-                ),
-              ),
-            ),
         ],
       ),
     );
