@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -87,6 +88,9 @@ class AdvertAdminPage extends HookConsumerWidget {
                           ))),
                     ),
                     ...userAnnouncerAdvert
+                        .toList()
+                        .sortedBy((element) => element.date)
+                        .reversed
                         .map((advert) => selectedAnnouncers
                                     .where(
                                         (e) => advert.announcer.name == e.name)

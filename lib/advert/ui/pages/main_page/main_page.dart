@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -55,8 +56,8 @@ class AdvertMainPage extends HookConsumerWidget {
                                 decoration: BoxDecoration(
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(10),
-                                    border:
-                                        Border.all(color: Colors.white, width: 1),
+                                    border: Border.all(
+                                        color: Colors.white, width: 1),
                                     boxShadow: [
                                       BoxShadow(
                                           color: Colors.grey.shade200
@@ -92,8 +93,8 @@ class AdvertMainPage extends HookConsumerWidget {
                                 decoration: BoxDecoration(
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(10),
-                                    border:
-                                        Border.all(color: Colors.white, width: 1),
+                                    border: Border.all(
+                                        color: Colors.white, width: 1),
                                     boxShadow: [
                                       BoxShadow(
                                           color: Colors.grey.shade200
@@ -130,6 +131,8 @@ class AdvertMainPage extends HookConsumerWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 30),
                         child: Column(
                             children: data
+                                .sortedBy((element) => element.date)
+                                .reversed
                                 .map((advert) => selected
                                             .where((e) =>
                                                 advert.announcer.name == e.name)
