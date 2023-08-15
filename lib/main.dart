@@ -38,6 +38,7 @@ class MyApp extends HookConsumerWidget {
     });
 
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: WillPopScope(
             onWillPop: () async {
               if (QR.history.last.path.split('/').length <= 2) {
