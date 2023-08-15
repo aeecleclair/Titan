@@ -17,8 +17,7 @@ class AnnouncerNotifier extends StateNotifier<List<Announcer>> {
   }
   void removeAnnouncer(Announcer i) {
     final copy = state.sublist(0);
-    copy.remove(i);
-    state = copy;
+    state = copy.where((element) => element.id != i.id,).toList();
   }
   void clearAnnouncer() {
     state = [];

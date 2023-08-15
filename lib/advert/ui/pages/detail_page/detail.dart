@@ -23,7 +23,7 @@ class AdvertDetailPage extends HookConsumerWidget {
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: 300,
             child: Stack(
               children: [
