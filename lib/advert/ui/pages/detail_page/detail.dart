@@ -181,7 +181,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 30),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: ([advert.announcer.name] + advert.tags).length,
+                    itemCount: ([advert.announcer.name] + advert.tags.where((element) => element != "").toList()).length,
                     itemBuilder: (BuildContext context, int index) {
                       return TagChip(
                           tagname:
