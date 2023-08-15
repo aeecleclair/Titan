@@ -15,11 +15,7 @@ class SectionNotifier extends ListNotifier<Section> {
 
   initState() async {
     allSections = await sectionRepository.getSectionList();
-    for (Section section in allSections) {
-      for (Module module in section.moduleList) {
-        allModules.add(module);
-      }
-    }
+    allModules = allSections.expand((element) => element.moduleList).toList();
     state = AsyncValue.data(allSections);
   }
 }
