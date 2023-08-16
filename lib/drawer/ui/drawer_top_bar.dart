@@ -11,6 +11,7 @@ import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -20,6 +21,8 @@ class DrawerTopBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final pathForwardingNotifier = ref.read(pathForwardingProvider.notifier);
+    final pathForwarding = ref.watch(pathForwardingProvider);
     final user = ref.watch(userProvider);
     final profilePicture = ref.watch(profilePictureProvider);
     final hasScrolled = ref.watch(hasScrolledProvider.notifier);
@@ -29,13 +32,14 @@ class DrawerTopBar extends HookConsumerWidget {
     final dropDownAnimation = useAnimationController(
         duration: const Duration(milliseconds: 250), initialValue: 0.0);
 
-    void onBack() {
+    void onBack(String path) {
       if (animation != null) {
         final controllerNotifier =
             ref.watch(swipeControllerProvider(animation).notifier);
         controllerNotifier.toggle();
       }
-      QR.to(SettingsRouter.root);
+      QR.to(path);
+      pathForwardingNotifier.forward(path);
       hasScrolled.setHasScrolled(false);
     }
 
@@ -60,7 +64,7 @@ class DrawerTopBar extends HookConsumerWidget {
                       dropDownAnimation.reverse();
                     }
                   } else {
-                    onBack();
+                    onBack(SettingsRouter.root);
                   }
                 },
                 behavior: HitTestBehavior.opaque,
@@ -198,15 +202,15 @@ class DrawerTopBar extends HookConsumerWidget {
                     offset: Offset(0, -10 * (1 - dropDownAnimation.value)),
                     child: GestureDetector(
                       behavior: HitTestBehavior.translucent,
-                      onTap: onBack,
+                      onTap: () => onBack(SettingsRouter.root),
                       child: Row(
                         children: [
                           HeroIcon(
                             HeroIcons.cog,
-                            color:
-                                QR.currentPath.startsWith(SettingsRouter.root)
-                                    ? DrawerColorConstants.selectedText
-                                    : DrawerColorConstants.lightText,
+                            color: pathForwarding.path
+                                    .startsWith(SettingsRouter.root)
+                                ? DrawerColorConstants.selectedText
+                                : DrawerColorConstants.lightText,
                             size: 25,
                           ),
                           Container(
@@ -214,7 +218,7 @@ class DrawerTopBar extends HookConsumerWidget {
                           ),
                           Text(DrawerTextConstants.settings,
                               style: TextStyle(
-                                color: QR.currentPath
+                                color: pathForwarding.path
                                         .startsWith(SettingsRouter.root)
                                     ? DrawerColorConstants.selectedText
                                     : DrawerColorConstants.lightText,
@@ -232,12 +236,13 @@ class DrawerTopBar extends HookConsumerWidget {
                       offset: Offset(0, -15 * (1 - dropDownAnimation.value)),
                       child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
-                        onTap: onBack,
+                        onTap: () => onBack(AdminRouter.root),
                         child: Row(
                           children: [
                             HeroIcon(
                               HeroIcons.userGroup,
-                              color: QR.currentPath.startsWith(AdminRouter.root)
+                              color: pathForwarding.path
+                                      .startsWith(AdminRouter.root)
                                   ? DrawerColorConstants.selectedText
                                   : DrawerColorConstants.lightText,
                               size: 25,
@@ -247,7 +252,7 @@ class DrawerTopBar extends HookConsumerWidget {
                             ),
                             Text(DrawerTextConstants.admin,
                                 style: TextStyle(
-                                  color: QR.currentPath
+                                  color: pathForwarding.path
                                           .startsWith(AdminRouter.root)
                                       ? DrawerColorConstants.selectedText
                                       : DrawerColorConstants.lightText,
