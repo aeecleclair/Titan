@@ -10,6 +10,7 @@ class CustomDialogBox extends StatefulWidget {
   final Color noColor = ColorConstants.background2;
 
   final Function() onYes;
+  final Function()? onNo;
 
   static const double _padding = 20;
   static const double _avatarRadius = 45;
@@ -20,7 +21,8 @@ class CustomDialogBox extends StatefulWidget {
       {Key? key,
       required this.title,
       required this.descriptions,
-      required this.onYes})
+      required this.onYes,
+      this.onNo})
       : super(key: key);
 
   @override
@@ -87,7 +89,9 @@ class CustomDialogBoxState extends State<CustomDialogBox> {
                     children: [
                       TextButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            widget.onNo == null
+                                ? Navigator.of(context).pop()
+                                : widget.onNo?.call();
                           },
                           child: Text(
                             "Non",
@@ -98,7 +102,9 @@ class CustomDialogBoxState extends State<CustomDialogBox> {
                           )),
                       TextButton(
                           onPressed: () async {
-                            Navigator.of(context).pop();
+                            if (widget.onNo == null) {
+                              Navigator.of(context).pop();
+                            }
                             await widget.onYes();
                           },
                           child: Text(

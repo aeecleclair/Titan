@@ -31,6 +31,9 @@ class QuitDialog extends HookConsumerWidget {
                     displayToast(
                         context, TypeMsg.msg, DrawerTextConstants.logOut);
                     displayQuitNotifier.setDisplay(false);
+                  },
+                  onNo: () {
+                    displayQuitNotifier.setDisplay(false);
                   }),
             )));
   }
