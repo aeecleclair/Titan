@@ -2,8 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/class/top_bar_callback.dart';
 import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/drawer/providers/top_bar_callback_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class TopBar extends HookConsumerWidget {
@@ -24,6 +26,11 @@ class TopBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final animation = ref.watch(animationProvider);
+    final topBarCallBackNotifier = ref.watch(topBarCallBackProvider.notifier);
+    Future(() {
+      topBarCallBackNotifier.setCallBacks(
+          TopBarCallback(moduleRoot: root, onMenu: onMenu, onBack: onBack));
+    });
     return Column(
       children: [
         const SizedBox(height: 15),

@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/drawer/providers/top_bar_callback_provider.dart';
 import 'package:myecl/login/providers/animation_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -41,15 +42,18 @@ class MyApp extends HookConsumerWidget {
         debugShowCheckedModeBanner: false,
         home: WillPopScope(
             onWillPop: () async {
-              if (QR.history.last.path.split('/').length <= 2) {
+              final topBarCallBack = ref.watch(topBarCallBackProvider);
+              if (QR.currentPath.split('/').length <= 2) {
                 final animation = ref.watch(animationProvider);
                 if (animation != null) {
                   final controllerNotifier =
                       ref.watch(swipeControllerProvider(animation).notifier);
                   controllerNotifier.toggle();
+                  topBarCallBack.onMenu?.call();
                 }
                 return false;
               }
+              topBarCallBack.onBack?.call();
               return true;
             },
             child: MaterialApp.router(
