@@ -19,6 +19,7 @@ class AdvertDetailPage extends HookConsumerWidget {
     final advertPosters = ref.watch(advertPostersProvider);
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final logoNotifier = ref.watch(advertPosterProvider.notifier);
+    final filteredTagList = advert.tags.where((element) => element != "").toList();
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -181,11 +182,11 @@ class AdvertDetailPage extends HookConsumerWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 30),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: ([advert.announcer.name] + advert.tags.where((element) => element != "").toList()).length,
+                    itemCount: ([advert.announcer.name] + filteredTagList).length,
                     itemBuilder: (BuildContext context, int index) {
                       return TagChip(
                           tagname:
-                              ([advert.announcer.name] + advert.tags)[index]);
+                              ([advert.announcer.name] + filteredTagList)[index]);
                     },
                   ),
                 ),
