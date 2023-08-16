@@ -10,6 +10,7 @@ import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddRemAnnouncerPage extends HookConsumerWidget {
@@ -39,7 +40,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                     child: Column(children: [
                   const Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(AdvertTextConstants.modifyAnnouncingAssociation,
+                    child: Text(AdvertTextConstants.modifyAnnouncingGroup,
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
@@ -67,9 +68,9 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                             tokenExpireWrapper(ref, () async {
                                               final value =
                                                   await announcerListNotifier
-                                                      .addAnnouncer(newAnnouncer);
+                                                      .addAnnouncer(
+                                                          newAnnouncer);
                                               if (value) {
-                                                QR.back();
                                                 displayToastWithContext(
                                                     TypeMsg.msg,
                                                     AdvertTextConstants
@@ -80,6 +81,8 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                     AdvertTextConstants
                                                         .addingError);
                                               }
+                                              announcerListNotifier
+                                                  .loadAllAnnouncerList();
                                             });
                                           },
                                           child: Container(
@@ -87,7 +90,8 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                 vertical: 20),
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Text(
                                                   e.name,
@@ -97,7 +101,8 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                           FontWeight.w500),
                                                 ),
                                                 const HeroIcon(HeroIcons.plus,
-                                                    size: 25, color: Colors.black)
+                                                    size: 25,
+                                                    color: Colors.black)
                                               ],
                                             ),
                                           ),
@@ -105,36 +110,54 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                     .toList() +
                                 canRemove
                                     .map((e) => GestureDetector(
-                                          onTap: () {
-                                            tokenExpireWrapper(ref, () async {
-                                              final value =
-                                                  await announcerListNotifier
-                                                      .deleteAnnouncer(announcers
-                                                          .where(
-                                                            (element) =>
-                                                                e.id == e.id,
-                                                          )
-                                                          .toList()[0]);
-                                              if (value) {
-                                                QR.back();
-                                                displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    AdvertTextConstants
-                                                        .removedAnnouncer);
-                                              } else {
-                                                displayToastWithContext(
-                                                    TypeMsg.error,
-                                                    AdvertTextConstants
-                                                        .removingError);
-                                              }
-                                            });
+                                          onTap: () async {
+                                            await showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return CustomDialogBox(
+                                                    title: AdvertTextConstants
+                                                        .deleting,
+                                                    descriptions:
+                                                        AdvertTextConstants
+                                                            .deleteAnnouncer,
+                                                    onYes: () {
+                                                      tokenExpireWrapper(ref,
+                                                          () async {
+                                                        final value =
+                                                            await announcerListNotifier
+                                                                .deleteAnnouncer(
+                                                                    announcers
+                                                                        .where(
+                                                                          (element) =>
+                                                                              e.id ==
+                                                                              e.id,
+                                                                        )
+                                                                        .toList()[0]);
+                                                        if (value) {
+                                                          displayToastWithContext(
+                                                              TypeMsg.msg,
+                                                              AdvertTextConstants
+                                                                  .removedAnnouncer);
+                                                        } else {
+                                                          displayToastWithContext(
+                                                              TypeMsg.error,
+                                                              AdvertTextConstants
+                                                                  .removingError);
+                                                        }
+                                                        announcerListNotifier
+                                                            .loadAllAnnouncerList();
+                                                      });
+                                                    },
+                                                  );
+                                                });
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 20),
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Text(
                                                   e.name,
@@ -144,7 +167,8 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                           FontWeight.w500),
                                                 ),
                                                 const HeroIcon(HeroIcons.minus,
-                                                    size: 25, color: Colors.black)
+                                                    size: 25,
+                                                    color: Colors.black)
                                               ],
                                             ),
                                           ),

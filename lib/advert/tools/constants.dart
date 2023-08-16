@@ -4,13 +4,13 @@ class AdvertTextConstants {
   static const String admin = 'Admin';
   static const String management = 'Gestion';
   static const String add = 'Ajouter';
-  static const String modifyAnnouncingAssociation =
-      'Modifier une association d\'annonce';
+  static const String modifyAnnouncingGroup = 'Modifier un groupe d\'annonce';
   static const String edit = 'Modifier';
   static const String advert = 'Annonce';
   static const String strassAdvert = 'AdminiSTRation';
   static const String assoAdvert = 'Association';
   static const String deleteAdvert = 'Supprimer l\'annonce ?';
+  static const String deleteAnnouncer = 'Supprimer l\'annonceur ?';
   static const String deleting = 'Suppression';
   static const String title = 'Titre';
   static const String content = 'Contenu';
