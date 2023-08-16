@@ -24,20 +24,18 @@ class TagChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       height: 30,
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomLeft,
-            colors: [
-              bgColor,
-              darkerbgColor,
-            ],
-            stops: const [0.7, 1.0],
-          ),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: borderColor),
-          // 
-          
-          ),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomLeft,
+          colors: [
+            bgColor,
+            darkerbgColor,
+          ],
+          stops: const [0.7, 1.0],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: borderColor),
+      ),
       child: Align(
         alignment: Alignment.center,
         child: Text(
