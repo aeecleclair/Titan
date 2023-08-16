@@ -20,7 +20,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final announcerListNotifier = ref.watch(announcerListProvider.notifier);
     final announcers = ref.watch(allAnnouncerList);
-    final associations = ref.watch(allGroupListProvider);
+    final groups = ref.watch(allGroupListProvider);
     final announcerIds = announcers.map((x) => x.groupManagerId).toList();
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -49,11 +49,11 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  associations.when(data: (associationList) {
-                    final canAdd = associationList
+                  groups.when(data: (groupList) {
+                    final canAdd = groupList
                         .where((x) => !announcerIds.contains(x.id))
                         .toList();
-                    final canRemove = associationList
+                    final canRemove = groupList
                         .where((x) => announcerIds.contains(x.id))
                         .toList();
                     return (canAdd + canRemove).isNotEmpty
