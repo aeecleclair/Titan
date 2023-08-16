@@ -41,9 +41,20 @@ class AdvertAdminPage extends HookConsumerWidget {
               data: (userAnnouncerData) {
                 final userAnnouncerAdvert = advertData.where((advert) =>
                     userAnnouncerData
-                        .where(
-                            (element) => advert.announcer.name == element.name)
+                        .where((element) => advert.announcer.id == element.id)
                         .isNotEmpty);
+                final sortedUserAnnouncerAdverts = userAnnouncerAdvert
+                    .toList()
+                    .sortedBy((element) => element.date)
+                    .reversed;
+                final filteredSortedUserAnnouncerAdverts =
+                    sortedUserAnnouncerAdverts
+                        .where((advert) =>
+                            selectedAnnouncers
+                                .where((e) => advert.announcer.id == e.id)
+                                .isNotEmpty ||
+                            selectedAnnouncers.isEmpty)
+                        .toList();
                 return Column(
                   children: [
                     const AnnouncerBar(
@@ -87,48 +98,37 @@ class AdvertAdminPage extends HookConsumerWidget {
                             color: Colors.grey.shade500,
                           ))),
                     ),
-                    ...userAnnouncerAdvert
-                        .toList()
-                        .sortedBy((element) => element.date)
-                        .reversed
-                        .map((advert) => selectedAnnouncers
-                                    .where(
-                                        (e) => advert.announcer.name == e.name)
-                                    .isNotEmpty ||
-                                selectedAnnouncers.isEmpty
-                            ? AdminAdvertCard(
-                                onTap: () {
-                                  advertNotifier.setAdvert(advert);
-                                  QR.to(
-                                      AdvertRouter.root + AdvertRouter.detail);
-                                },
-                                onEdit: () {
-                                  QR.to(AdvertRouter.root +
-                                      AdvertRouter.admin +
-                                      AdvertRouter.addEditAdvert);
-                                  advertNotifier.setAdvert(advert);
-                                  selectedAnnouncersNotifier.clearAnnouncer();
-                                  selectedAnnouncersNotifier
-                                      .addAnnouncer(advert.announcer);
-                                },
-                                onDelete: () async {
-                                  await showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return CustomDialogBox(
-                                          title: AdvertTextConstants.deleting,
-                                          descriptions:
-                                              AdvertTextConstants.deleteAdvert,
-                                          onYes: () {
-                                            advertListNotifier
-                                                .deleteAdvert(advert);
-                                          },
-                                        );
-                                      });
-                                },
-                                advert: advert)
-                            : Container())
-                        .toList(),
+                    ...filteredSortedUserAnnouncerAdverts.map(
+                      (advert) => AdminAdvertCard(
+                          onTap: () {
+                            advertNotifier.setAdvert(advert);
+                            QR.to(AdvertRouter.root + AdvertRouter.detail);
+                          },
+                          onEdit: () {
+                            QR.to(AdvertRouter.root +
+                                AdvertRouter.admin +
+                                AdvertRouter.addEditAdvert);
+                            advertNotifier.setAdvert(advert);
+                            selectedAnnouncersNotifier.clearAnnouncer();
+                            selectedAnnouncersNotifier
+                                .addAnnouncer(advert.announcer);
+                          },
+                          onDelete: () async {
+                            await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CustomDialogBox(
+                                    title: AdvertTextConstants.deleting,
+                                    descriptions:
+                                        AdvertTextConstants.deleteAdvert,
+                                    onYes: () {
+                                      advertListNotifier.deleteAdvert(advert);
+                                    },
+                                  );
+                                });
+                          },
+                          advert: advert),
+                    ),
                   ],
                 );
               },
