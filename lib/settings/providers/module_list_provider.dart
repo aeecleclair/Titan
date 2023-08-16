@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/advert/ui/router.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/centralisation/router.dart';
@@ -32,6 +33,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
     AmapRouter.module,
+    AdvertRouter.module,
     BookingRouter.module,
     CinemaRouter.module,
     CentralisationRouter.module,

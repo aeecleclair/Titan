@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/router.dart';
+import 'package:myecl/advert/ui/router.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/centralisation/router.dart';
@@ -11,7 +12,7 @@ import 'package:myecl/home/ui/home.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/others/ui/loading_page.dart';
-import 'package:myecl/others/ui/no_internert_page.dart';
+import 'package:myecl/others/ui/no_internet_page.dart';
 import 'package:myecl/others/ui/update_page.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/tombola/router.dart';
@@ -48,6 +49,7 @@ class AppRouter {
         builder: () => const Scaffold(body: UpdatePage()),
       ),
       AdminRouter(ref).route(),
+      AdvertRouter(ref).route(),
       AmapRouter(ref).route(),
       BookingRouter(ref).route(),
       CentralisationRouter(ref).route(),
