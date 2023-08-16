@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 class AdvertTextConstants {
+  static const String admin = 'Admin';
+  static const String management = 'Gestion';
   static const String add = 'Ajouter';
   static const String modifyAnnouncingAssociation =
       'Modifier une association d\'annonce';

@@ -13,6 +13,7 @@ import 'package:myecl/advert/ui/tools/announcer_bar.dart';
 import 'package:myecl/advert/ui/tools/advert_card.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/advert/tools/constants.dart';
 
 class AdvertMainPage extends HookConsumerWidget {
   const AdvertMainPage({Key? key}) : super(key: key);
@@ -78,7 +79,7 @@ class AdvertMainPage extends HookConsumerWidget {
                                     HeroIcon(HeroIcons.userGroup,
                                         color: Colors.white, size: 20),
                                     SizedBox(width: 10),
-                                    Text("Admin",
+                                    Text(AdvertTextConstants.admin,
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
@@ -115,7 +116,7 @@ class AdvertMainPage extends HookConsumerWidget {
                                     HeroIcon(HeroIcons.userGroup,
                                         color: Colors.white, size: 20),
                                     SizedBox(width: 10),
-                                    Text("Gestion",
+                                    Text(AdvertTextConstants.management,
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
