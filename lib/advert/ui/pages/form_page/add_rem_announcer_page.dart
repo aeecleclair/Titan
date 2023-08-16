@@ -52,10 +52,10 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                     final canAdd = associationList
                         .where((x) => !announcerIds.contains(x.id))
                         .toList();
-                    final canRem = associationList
+                    final canRemove = associationList
                         .where((x) => announcerIds.contains(x.id))
                         .toList();
-                    return (canAdd + canRem).isNotEmpty
+                    return (canAdd + canRemove).isNotEmpty
                         ? Column(
                             children: canAdd
                                     .map((e) => GestureDetector(
@@ -103,7 +103,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                           ),
                                         ))
                                     .toList() +
-                                canRem
+                                canRemove
                                     .map((e) => GestureDetector(
                                           onTap: () {
                                             tokenExpireWrapper(ref, () async {
