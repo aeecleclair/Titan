@@ -11,13 +11,11 @@ class AnnouncerNotifier extends StateNotifier<List<Announcer>> {
   AnnouncerNotifier() : super([]);
 
   void addAnnouncer(Announcer i) {
-    final copy = state.sublist(0);
-    copy.add(i);
-    state = copy;
+    state.add(i);
+    state = state;
   }
   void removeAnnouncer(Announcer i) {
-    final copy = state.sublist(0);
-    state = copy.where((element) => element.id != i.id,).toList();
+    state = state.where((element) => element.id != i.id,).toList();
   }
   void clearAnnouncer() {
     state = [];
