@@ -34,7 +34,15 @@ class AdvertMainPage extends HookConsumerWidget {
               await advertListNotifier.loadAdverts();
             },
             child: advertList.when(
-              data: (data) {
+              data: (advertData) {
+                final sortedAdvertData =
+                    advertData.sortedBy((element) => element.date).reversed;
+                final filteredSortedadvertData = sortedAdvertData.where(
+                    (advert) =>
+                        selected
+                            .where((e) => advert.announcer.name == e.name)
+                            .isNotEmpty ||
+                        selected.isEmpty);
                 return Column(
                   children: [
                     SizedBox(
@@ -129,24 +137,17 @@ class AdvertMainPage extends HookConsumerWidget {
                     ),
                     Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: Column(
-                            children: data
-                                .sortedBy((element) => element.date)
-                                .reversed
-                                .map((advert) => selected
-                                            .where((e) =>
-                                                advert.announcer.name == e.name)
-                                            .isNotEmpty ||
-                                        selected.isEmpty
-                                    ? AdvertCard(
-                                        onTap: () {
-                                          advertNotifier.setAdvert(advert);
-                                          QR.to(AdvertRouter.root +
-                                              AdvertRouter.detail);
-                                        },
-                                        advert: advert)
-                                    : Container())
-                                .toList())),
+                        child: Column(children: [
+                          ...filteredSortedadvertData.map(
+                            (advert) => AdvertCard(
+                                onTap: () {
+                                  advertNotifier.setAdvert(advert);
+                                  QR.to(
+                                      AdvertRouter.root + AdvertRouter.detail);
+                                },
+                                advert: advert),
+                          ),
+                        ])),
                     const SizedBox(
                       height: 20,
                     ),
