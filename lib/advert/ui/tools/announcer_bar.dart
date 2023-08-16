@@ -6,12 +6,12 @@ import 'package:myecl/advert/providers/announcer_list_provider.dart';
 class AnnouncerBar extends HookConsumerWidget {
   final bool useUserAnnouncers;
   final bool multipleSelect;
-  final bool? isNotClickable;
+  final bool isNotClickable ;
   const AnnouncerBar({
     super.key,
     required this.multipleSelect,
     required this.useUserAnnouncers,
-    this.isNotClickable,
+    this.isNotClickable = false,
   });
 
   @override
@@ -22,7 +22,7 @@ class AnnouncerBar extends HookConsumerWidget {
     final announcerList = useUserAnnouncers
         ? ref.watch(userAnnouncerListProvider)
         : ref.watch(announcerListProvider);
-    final darkerColor = (isNotClickable != null && isNotClickable == true)
+    final darkerColor = (isNotClickable)
         ? Colors.grey[800]
         : Colors.black;
 
@@ -36,7 +36,7 @@ class AnnouncerBar extends HookConsumerWidget {
             ...userAnnouncers.map(
               (e) => GestureDetector(
                 onTap: () {
-                  if (isNotClickable != null && isNotClickable == true) return;
+                  if (isNotClickable) return;
                   if (multipleSelect) {
                     selectedId.contains(e.id)
                         ? selectedNotifier.removeAnnouncer(e)
