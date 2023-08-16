@@ -86,7 +86,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                     FormField<File>(
                       validator: (e) {
                         if (poster.value == null) {
-                          return "Veuillez choisir une image.";
+                          return AdvertTextConstants.choosingPoster;
                         }
                         return null;
                       },
@@ -184,7 +184,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
               FormField<List<Announcer>>(
                 validator: (e) {
                   if (selectedAnnoncers.isEmpty) {
-                    return "Veuillez choisir un annonceur.";
+                    return AdvertTextConstants.choosingAnnouncer;
                   }
                   return null;
                 },
