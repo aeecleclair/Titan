@@ -19,7 +19,9 @@ class AdvertDetailPage extends HookConsumerWidget {
     final advertPosters = ref.watch(advertPostersProvider);
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final logoNotifier = ref.watch(advertPosterProvider.notifier);
-    final filteredTagList = advert.tags.where((element) => element != "").toList();
+    final filteredTagList =
+        advert.tags.where((element) => element != "").toList();
+    final inTagChipsList = [advert.announcer.name] + filteredTagList;
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -83,7 +85,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(top:30),
+                  padding: const EdgeInsets.only(top: 30),
                   child: Row(
                     children: [
                       const SizedBox(
@@ -114,8 +116,8 @@ class AdvertDetailPage extends HookConsumerWidget {
                       ),
                       const Spacer(),
                       Container(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 12),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(18),
@@ -138,7 +140,8 @@ class AdvertDetailPage extends HookConsumerWidget {
                               width: 7,
                             ),
                             Text(
-                              DateFormat('dd/MM/yyyy - HH:mm').format(advert.date),
+                              DateFormat('dd/MM/yyyy - HH:mm')
+                                  .format(advert.date),
                               style: const TextStyle(fontSize: 16),
                               textAlign: TextAlign.center,
                             ),
@@ -182,11 +185,9 @@ class AdvertDetailPage extends HookConsumerWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 30),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: ([advert.announcer.name] + filteredTagList).length,
+                    itemCount: (inTagChipsList).length,
                     itemBuilder: (BuildContext context, int index) {
-                      return TagChip(
-                          tagname:
-                              ([advert.announcer.name] + filteredTagList)[index]);
+                      return TagChip(tagname: (inTagChipsList)[index]);
                     },
                   ),
                 ),
