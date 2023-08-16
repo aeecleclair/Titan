@@ -281,27 +281,27 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                 if (isEdit) {
                                   displayAdvertToastWithContext(TypeMsg.msg,
                                       AdvertTextConstants.editedAdvert);
-                                  advertList.when(
-                                      data: (list) {
-                                        if (poster.value != null) {
-                                          posterNotifier.updateAdvertPoster(
-                                              advert.id, poster.value!);
-                                          advertPostersNotifier.setTData(
-                                              advert,
-                                              AsyncData([
-                                                Image.memory(
-                                                  poster.value!,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ]));
-                                        }
-                                      },
-                                      error: (error, s) {},
-                                      loading: () {});
+                                  advertList.maybeWhen(
+                                    data: (list) {
+                                      if (poster.value != null) {
+                                        posterNotifier.updateAdvertPoster(
+                                            advert.id, poster.value!);
+                                        advertPostersNotifier.setTData(
+                                            advert,
+                                            AsyncData([
+                                              Image.memory(
+                                                poster.value!,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ]));
+                                      }
+                                    },
+                                    orElse: () {},
+                                  );
                                 } else {
                                   displayAdvertToastWithContext(TypeMsg.msg,
                                       AdvertTextConstants.addedAdvert);
-                                  advertList.when(
+                                  advertList.maybeWhen(
                                       data: (list) {
                                         final newAdvert = list.last;
                                         posterNotifier.updateAdvertPoster(
@@ -315,8 +315,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                               )
                                             ]));
                                       },
-                                      error: (error, s) {},
-                                      loading: () {});
+                                      orElse: () {});
                                 }
                               } else {
                                 displayAdvertToastWithContext(TypeMsg.error,
