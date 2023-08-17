@@ -12,6 +12,8 @@ import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
+import 'package:myecl/service/class/message.dart';
+import 'package:myecl/service/local_notification_service.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -36,6 +38,7 @@ class SessionCard extends HookConsumerWidget {
     final isWebFormat = ref.watch(isWebFormatProvider);
     final cinemaTopics = ref.watch(cinemaTopicsProvider);
     final cinemaTopicsNotifier = ref.watch(cinemaTopicsProvider.notifier);
+    final localNotificationService = LocalNotificationService();
     final selected = cinemaTopics.when(
         data: (data) => data.contains(session.id),
         loading: () => false,
@@ -44,9 +47,8 @@ class SessionCard extends HookConsumerWidget {
         duration: const Duration(milliseconds: 500),
         initialValue: selected ? 1 : 0);
 
-    final curvedAnimation = CurvedAnimation(
-        parent: animation,
-        curve: Curves.easeInOut);
+    final curvedAnimation =
+        CurvedAnimation(parent: animation, curve: Curves.easeInOut);
 
     double minScale = 0.8;
     double scale = 1;
@@ -188,11 +190,30 @@ class SessionCard extends HookConsumerWidget {
                                                     .toggleSubscription(
                                                         session.id);
                                                 if (selected) {
+                                                  localNotificationService
+                                                      .cancelNotificationById(
+                                                          session.id);
                                                   displayToast(
                                                       context,
                                                       TypeMsg.msg,
                                                       "Le rappel a été supprimé");
                                                 } else {
+                                                  localNotificationService
+                                                      .showNotification(Message(
+                                                          actionModule: '',
+                                                          actionTable: '',
+                                                          content: 'La séance '
+                                                              '${session.name}'
+                                                              ' commence dans 10 minutes',
+                                                          context: session.id,
+                                                          isVisible: true,
+                                                          title: 'Cinéma',
+                                                          deliveryDateTime: session
+                                                              .start
+                                                              .subtract(
+                                                                  const Duration(
+                                                                      minutes:
+                                                                          10))));
                                                   displayToast(
                                                       context,
                                                       TypeMsg.msg,
@@ -220,9 +241,11 @@ class SessionCard extends HookConsumerWidget {
                                                 ),
                                                 child: Center(
                                                   child: Transform.rotate(
-                                                    origin: const Offset(0, -20),
+                                                    origin:
+                                                        const Offset(0, -20),
                                                     // Bounce
-                                                    angle: sin(curvedAnimation.value *
+                                                    angle: sin(curvedAnimation
+                                                                .value *
                                                             pi *
                                                             2) *
                                                         0.2,
